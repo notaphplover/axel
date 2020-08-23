@@ -1,0 +1,15 @@
+{
+  "name": "axel",
+  "version": "0.0.1",
+  "description": "mtg simulator",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "axel",
+    "mtg"
+  ],
+  "author": "Roberto Pintos López",
+  "license": "ISC"
+}
