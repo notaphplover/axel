@@ -4,6 +4,7 @@
   "description": "mtg simulator",
   "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "test"
   },
   "keywords": [
