@@ -14,6 +14,7 @@
   "author": "Roberto Pintos López",
   "license": "ISC",
   "devDependencies": {
+    "jest": "^26.4.2",
     "typescript": "^4.0.2"
   }
 }
