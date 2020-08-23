@@ -11,5 +11,8 @@
     "mtg"
   ],
   "author": "Roberto Pintos López",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.0.2"
+  }
 }
