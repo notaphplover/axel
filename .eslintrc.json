@@ -1,0 +1,118 @@
+{
+  "root": true,
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "@typescript-eslint/camelcase": [
+      "warn",
+      {
+        "properties": "never"
+      }
+    ],
+    "@typescript-eslint/consistent-type-definitions": [
+      "error",
+      "interface"
+    ],
+    "@typescript-eslint/explicit-member-accessibility": [
+      "error",
+      {
+        "overrides": {
+          "constructors": "no-public"
+        }
+      }
+    ],
+    "@typescript-eslint/generic-type-naming": [
+      "warn",
+      "^T[A-Z][a-zA-Z]+$"
+    ],
+    "@typescript-eslint/member-ordering": [
+      "warn"
+    ],
+    "@typescript-eslint/no-dynamic-delete": "error",
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/no-empty-interface": "warn",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-floating-promises": [
+      "error"
+    ],
+    "no-magic-numbers": "off",
+    "@typescript-eslint/no-magic-numbers": [
+      "warn",
+      {
+        "ignore": [0],
+        "ignoreArrayIndexes": true,
+        "ignoreEnums": true,
+        "ignoreReadonlyClassProperties": true
+      }
+    ],
+    "@typescript-eslint/no-require-imports": "error",
+    "@typescript-eslint/no-unnecessary-condition": "error",
+    "@typescript-eslint/no-unused-expressions": [
+      "error"
+    ],
+    "@typescript-eslint/no-untyped-public-signature": [
+      "error"
+    ],
+    "@typescript-eslint/no-useless-constructor": "error",
+    "@typescript-eslint/prefer-for-of": "error",
+    "@typescript-eslint/prefer-nullish-coalescing": [
+      "off"
+    ],
+    "@typescript-eslint/prefer-optional-chain": "off",
+    "@typescript-eslint/prefer-readonly": [
+      "warn"
+    ],
+    "@typescript-eslint/promise-function-async": [
+      "error"
+    ],
+    "@typescript-eslint/require-await": "off",
+    "@typescript-eslint/restrict-plus-operands": [
+      "error",
+      {
+        "checkCompoundAssignments": true
+      }
+    ],
+    "@typescript-eslint/strict-boolean-expressions": [
+      "error",
+      {
+        "ignoreRhs": true
+      }
+    ],
+    "@typescript-eslint/typedef": [
+      "error",
+      {
+        "arrayDestructuring": true,
+        "arrowParameter": true,
+        "memberVariableDeclaration": true,
+        "objectDestructuring": true,
+        "parameter": true,
+        "propertyDeclaration": true,
+        "variableDeclaration": true
+      }
+    ],
+    "@typescript-eslint/unified-signatures": "error"
+  }
+}
