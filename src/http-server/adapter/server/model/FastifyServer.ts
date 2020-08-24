@@ -1,8 +1,7 @@
-import { Server } from '../../domain/model/Server';
+import { injectable } from 'inversify';
 import fastify from 'fastify';
 import { FastifyRouter } from './FastifyRouter';
-import { AddressInfo } from 'net';
-import { injectable } from 'inversify';
+import { Server } from '../../../domain/model/Server';
 
 @injectable()
 export class FastifyServer implements Server {
