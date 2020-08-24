@@ -1,4 +1,4 @@
-import { Server } from '../../domain/Server';
+import { Server } from '../../domain/model/Server';
 import fastify from 'fastify';
 import { FastifyRouter } from './FastifyRouter';
 import { AddressInfo } from 'net';
