@@ -2,7 +2,9 @@ import { Server } from '../../domain/Server';
 import fastify from 'fastify';
 import { FastifyRouter } from './FastifyRouter';
 import { AddressInfo } from 'net';
+import { injectable } from 'inversify';
 
+@injectable()
 export class FastifyServer implements Server {
   private readonly routers: FastifyRouter[];
 
