@@ -22,11 +22,6 @@ export class FastifyServer implements Server {
     const start = async () => {
       try {
         await fastifyServer.listen(3000);
-        fastifyServer.log.info(
-          `Server listening on ${
-            (fastifyServer.server.address() as AddressInfo).port
-          }`,
-        );
       } catch (err) {
         fastifyServer.log.error(err);
         process.exit(1);
