@@ -1,4 +1,4 @@
-import { floatToInt } from '../../../common/number/floatToInt';
+import { floatToInt } from '../../../common/domain/parse/floatToInt';
 import { InvalidNumberOfCardsError } from '../../exception/InvalidNumberOfCardsError';
 
 export class Deck<TCard> {
