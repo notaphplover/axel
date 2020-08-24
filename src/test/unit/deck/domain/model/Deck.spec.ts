@@ -103,4 +103,32 @@ describe(Deck.name, () => {
       });
     });
   });
+
+  describe(`.${Deck.prototype.shuffle.name}`, () => {
+    const cards: number[] = [0, 1, 2, 3];
+    const deck: Deck<number> = new Deck(cards);
+
+    let result: unknown;
+
+    describe('when called', () => {
+      beforeAll(() => {
+        jest
+          .spyOn(global.Math, 'random')
+          .mockReturnValueOnce(0)
+          .mockReturnValueOnce(0)
+          .mockReturnValueOnce(0);
+
+        deck.shuffle();
+        result = deck.draw(cards.length);
+      });
+
+      afterAll(() => {
+        jest.spyOn(global.Math, 'random').mockRestore();
+      });
+
+      it('must shuffle all the cards', () => {
+        expect(result).toStrictEqual([1, 2, 3, 0]);
+      });
+    });
+  });
 });
