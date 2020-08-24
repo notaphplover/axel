@@ -1,0 +1,74 @@
+import { Deck } from '../../../../../deck/domain/model/Deck';
+import { InvalidNumberOfCardsError } from '../../../../../deck/exception/InvalidNumberOfCardsError';
+
+describe(Deck.name, () => {
+  describe(`.${Deck.prototype.draw.name}`, () => {
+    describe('when called, with an integer greater than zero and less or equals the cards amount', () => {
+      const cards: number[] = [0, 1, 2, 3];
+      const deck: Deck<number> = new Deck(cards);
+
+      let result: unknown;
+
+      beforeAll(() => {
+        result = deck.draw(2);
+      });
+
+      it('must return as many cards as requested', () => {
+        expect(result).toStrictEqual([2, 3]);
+      });
+    });
+
+    describe('when called, with an integer greater than the cards amount', () => {
+      const cards: number[] = [0, 1, 2, 3];
+      const deck: Deck<number> = new Deck(cards);
+
+      let result: unknown;
+
+      beforeAll(() => {
+        result = deck.draw(4);
+      });
+
+      it('must return all the cards', () => {
+        expect(result).toStrictEqual([0, 1, 2, 3]);
+      });
+    });
+
+    describe('when called, with an integer less than zero', () => {
+      const cards: number[] = [0, 1, 2, 3];
+      const deck: Deck<number> = new Deck(cards);
+
+      let result: unknown;
+
+      beforeAll(() => {
+        try {
+          result = deck.draw(-2);
+        } catch (err) {
+          result = err;
+        }
+      });
+
+      it('must throw an error', () => {
+        expect(result).toBeInstanceOf(InvalidNumberOfCardsError);
+      });
+    });
+
+    describe('when called, with a non integer', () => {
+      const cards: number[] = [0, 1, 2, 3];
+      const deck: Deck<number> = new Deck(cards);
+
+      let result: unknown;
+
+      beforeAll(() => {
+        try {
+          result = deck.draw(2.5);
+        } catch (err) {
+          result = err;
+        }
+      });
+
+      it('must throw an error', () => {
+        expect(result).toBeInstanceOf(InvalidNumberOfCardsError);
+      });
+    });
+  });
+});
