@@ -12,6 +12,9 @@
     "mtg"
   ],
   "author": "Roberto Pintos López",
+  "engines": {
+    "node": ">=12"
+  },
   "license": "ISC",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.9.1",
