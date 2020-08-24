@@ -4,7 +4,7 @@ import { InvalidNumberOfCardsError } from '../../exception/InvalidNumberOfCardsE
 export class Deck<TCard> {
   constructor(private readonly cards: TCard[]) {}
 
-  public draw(number: number): TCard[] | undefined {
+  public draw(number: number): TCard[] {
     if (number < 0) {
       throw new InvalidNumberOfCardsError(number);
     }
