@@ -1,5 +1,5 @@
-import { floatToInt } from '../../../common/domain/parse/floatToInt';
 import { InvalidNumberOfCardsError } from '../../exception/InvalidNumberOfCardsError';
+import { common } from '../../../common';
 
 export class Deck<TCard> {
   constructor(private readonly cards: TCard[]) {}
@@ -9,7 +9,7 @@ export class Deck<TCard> {
       throw new InvalidNumberOfCardsError(number);
     }
 
-    const numberOfCards: number = floatToInt(number);
+    const numberOfCards: number = common.parse.floatToInt(number);
 
     if (number !== numberOfCards) {
       throw new InvalidNumberOfCardsError(number);
