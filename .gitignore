@@ -1,3 +1,6 @@
+# Typescript compiled files
+dist/
+
 # npm installed packages
 node_modules/
 
