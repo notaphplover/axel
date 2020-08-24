@@ -1,11 +1,11 @@
-import { Deck } from '../../../../../deck/domain/model/Deck';
+import { ArrayDeck } from '../../../../../deck/domain/model/ArrayDeck';
 import { InvalidNumberOfCardsError } from '../../../../../deck/exception/InvalidNumberOfCardsError';
 
-describe(Deck.name, () => {
-  describe(`.${Deck.prototype.draw.name}`, () => {
+describe(ArrayDeck.name, () => {
+  describe(`.${ArrayDeck.prototype.draw.name}`, () => {
     describe('when called, with an integer greater than zero and less or equals the cards amount', () => {
       const cards: number[] = [0, 1, 2, 3];
-      const deck: Deck<number> = new Deck(cards);
+      const deck: ArrayDeck<number> = new ArrayDeck(cards);
 
       let result: unknown;
 
@@ -20,7 +20,7 @@ describe(Deck.name, () => {
 
     describe('when called, with an integer greater than the cards amount', () => {
       const cards: number[] = [0, 1, 2, 3];
-      const deck: Deck<number> = new Deck(cards);
+      const deck: ArrayDeck<number> = new ArrayDeck(cards);
 
       let result: unknown;
 
@@ -35,7 +35,7 @@ describe(Deck.name, () => {
 
     describe('when called, with an integer less than zero', () => {
       const cards: number[] = [0, 1, 2, 3];
-      const deck: Deck<number> = new Deck(cards);
+      const deck: ArrayDeck<number> = new ArrayDeck(cards);
 
       let result: unknown;
 
@@ -54,7 +54,7 @@ describe(Deck.name, () => {
 
     describe('when called, with a non integer', () => {
       const cards: number[] = [0, 1, 2, 3];
-      const deck: Deck<number> = new Deck(cards);
+      const deck: ArrayDeck<number> = new ArrayDeck(cards);
 
       let result: unknown;
 
@@ -72,10 +72,10 @@ describe(Deck.name, () => {
     });
   });
 
-  describe(`.${Deck.prototype.drawOne.name}`, () => {
+  describe(`.${ArrayDeck.prototype.drawOne.name}`, () => {
     describe('when called with cards', () => {
       const cards: number[] = [0, 1, 2, 3];
-      const deck: Deck<number> = new Deck(cards);
+      const deck: ArrayDeck<number> = new ArrayDeck(cards);
 
       let result: unknown;
 
@@ -90,7 +90,7 @@ describe(Deck.name, () => {
 
     describe('when called with no cards', () => {
       const cards: number[] = [];
-      const deck: Deck<number> = new Deck(cards);
+      const deck: ArrayDeck<number> = new ArrayDeck(cards);
 
       let result: unknown;
 
@@ -104,9 +104,9 @@ describe(Deck.name, () => {
     });
   });
 
-  describe(`.${Deck.prototype.shuffle.name}`, () => {
+  describe(`.${ArrayDeck.prototype.shuffle.name}`, () => {
     const cards: number[] = [0, 1, 2, 3];
-    const deck: Deck<number> = new Deck(cards);
+    const deck: ArrayDeck<number> = new ArrayDeck(cards);
 
     let result: unknown;
 
