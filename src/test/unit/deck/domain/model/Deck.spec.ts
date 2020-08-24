@@ -71,4 +71,36 @@ describe(Deck.name, () => {
       });
     });
   });
+
+  describe(`.${Deck.prototype.drawOne.name}`, () => {
+    describe('when called with cards', () => {
+      const cards: number[] = [0, 1, 2, 3];
+      const deck: Deck<number> = new Deck(cards);
+
+      let result: unknown;
+
+      beforeAll(() => {
+        result = deck.drawOne();
+      });
+
+      it('must return a card', () => {
+        expect(result).toStrictEqual(3);
+      });
+    });
+
+    describe('when called with no cards', () => {
+      const cards: number[] = [];
+      const deck: Deck<number> = new Deck(cards);
+
+      let result: unknown;
+
+      beforeAll(() => {
+        result = deck.drawOne();
+      });
+
+      it('must return a card', () => {
+        expect(result).toBeUndefined();
+      });
+    });
+  });
 });
