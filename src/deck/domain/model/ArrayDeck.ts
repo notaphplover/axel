@@ -1,7 +1,8 @@
 import { InvalidNumberOfCardsError } from '../../exception/InvalidNumberOfCardsError';
 import { common } from '../../../common';
+import { Deck } from './Deck';
 
-export class ArrayDeck<TCard> {
+export class ArrayDeck<TCard> implements Deck<TCard> {
   constructor(private readonly cards: TCard[]) {}
 
   public draw(number: number): TCard[] {
