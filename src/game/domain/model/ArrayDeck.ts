@@ -1,5 +1,5 @@
 import { Deck } from './Deck';
-import { InvalidNumberOfCardsError } from '../../exception/InvalidNumberOfCardsError';
+import { InvalidNumberOfCardsError } from '../exception/InvalidNumberOfCardsError';
 import { common } from '../../../common';
 
 export class ArrayDeck<TCard> implements Deck<TCard> {
