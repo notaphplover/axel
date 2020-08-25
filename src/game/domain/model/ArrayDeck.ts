@@ -1,6 +1,6 @@
+import { Deck } from './Deck';
 import { InvalidNumberOfCardsError } from '../../exception/InvalidNumberOfCardsError';
 import { common } from '../../../common';
-import { Deck } from './Deck';
 
 export class ArrayDeck<TCard> implements Deck<TCard> {
   constructor(private readonly cards: TCard[]) {}
@@ -22,12 +22,13 @@ export class ArrayDeck<TCard> implements Deck<TCard> {
   }
 
   public drawOne(): TCard | undefined {
-    return this.draw(1)?.[0];
+    const cardsDrawn: TCard[] = this.draw(1);
+    return cardsDrawn.length === 0 ? undefined : cardsDrawn[0];
   }
 
   public shuffle(): void {
-    for (let i = this.cards.length - 1; i > 0; --i) {
-      let randomIndex = Math.floor(Math.random() * (i + 1));
+    for (let i: number = this.cards.length - 1; i > 0; --i) {
+      const randomIndex: number = Math.floor(Math.random() * (i + 1));
       const choosenCard: TCard = this.cards[randomIndex];
       this.cards[randomIndex] = this.cards[i];
       this.cards[i] = choosenCard;
