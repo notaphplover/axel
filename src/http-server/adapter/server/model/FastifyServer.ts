@@ -1,7 +1,7 @@
-import { injectable } from 'inversify';
-import fastify from 'fastify';
+import fastify, { FastifyInstance } from 'fastify';
 import { FastifyRouter } from './FastifyRouter';
 import { Server } from '../../../domain/model/Server';
+import { injectable } from 'inversify';
 
 @injectable()
 export class FastifyServer implements Server {
@@ -12,13 +12,15 @@ export class FastifyServer implements Server {
   }
 
   public async bootstrap(): Promise<void> {
-    const fastifyServer = fastify({ logger: true });
+    const fastifyServer: FastifyInstance = fastify({ logger: true });
 
-    for (const router of this.routers) {
-      fastifyServer.register(router.injectRoutes);
-    }
+    await Promise.all(
+      this.routers.map((router: FastifyRouter) =>
+        fastifyServer.register(router.injectRoutes.bind(router)),
+      ),
+    );
 
-    const start = async () => {
+    const start: () => Promise<void> = async () => {
       try {
         await fastifyServer.listen(3000);
       } catch (err) {

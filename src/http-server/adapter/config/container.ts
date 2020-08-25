@@ -1,6 +1,6 @@
 import { ContainerModule, interfaces } from 'inversify';
-import { HTTP_SERVER_TYPES } from '../../domain/config/types';
 import { FastifyServer } from '../server/model/FastifyServer';
+import { HTTP_SERVER_TYPES } from '../../domain/config/types';
 
 export const httpServerContainer: ContainerModule = new ContainerModule(
   (bind: interfaces.Bind) => {
