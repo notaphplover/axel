@@ -26,12 +26,6 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "@typescript-eslint/camelcase": [
-      "warn",
-      {
-        "properties": "never"
-      }
-    ],
     "@typescript-eslint/consistent-type-definitions": [
       "error",
       "interface"
@@ -44,12 +38,20 @@
         }
       }
     ],
-    "@typescript-eslint/generic-type-naming": [
-      "warn",
-      "^T[A-Z][a-zA-Z]+$"
-    ],
     "@typescript-eslint/member-ordering": [
       "warn"
+    ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variableLike",
+        "format": ["camelCase"]
+      },
+      {
+        "selector": "typeParameter",
+        "filter": "^T[A-Z][a-zA-Z]+$",
+        "format": ["PascalCase"]
+      }
     ],
     "@typescript-eslint/no-dynamic-delete": "error",
     "@typescript-eslint/no-inferrable-types": "off",
@@ -59,21 +61,9 @@
       "error"
     ],
     "no-magic-numbers": "off",
-    "@typescript-eslint/no-magic-numbers": [
-      "warn",
-      {
-        "ignore": [0],
-        "ignoreArrayIndexes": true,
-        "ignoreEnums": true,
-        "ignoreReadonlyClassProperties": true
-      }
-    ],
     "@typescript-eslint/no-require-imports": "error",
     "@typescript-eslint/no-unnecessary-condition": "error",
     "@typescript-eslint/no-unused-expressions": [
-      "error"
-    ],
-    "@typescript-eslint/no-untyped-public-signature": [
       "error"
     ],
     "@typescript-eslint/no-useless-constructor": "error",
@@ -96,10 +86,7 @@
       }
     ],
     "@typescript-eslint/strict-boolean-expressions": [
-      "error",
-      {
-        "ignoreRhs": true
-      }
+      "error"
     ],
     "@typescript-eslint/typedef": [
       "error",
@@ -113,6 +100,7 @@
         "variableDeclaration": true
       }
     ],
-    "@typescript-eslint/unified-signatures": "error"
+    "@typescript-eslint/unified-signatures": "error",
+    "sort-imports": "error"
   }
 }
