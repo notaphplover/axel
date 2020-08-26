@@ -1,6 +1,6 @@
 import { Deck } from './Deck';
 import { InvalidNumberOfCardsError } from '../exception/InvalidNumberOfCardsError';
-import { common } from '../../../common';
+import { common } from '../../../common/domain';
 
 export class ArrayDeck<TCard> implements Deck<TCard> {
   constructor(private readonly cards: TCard[]) {}
