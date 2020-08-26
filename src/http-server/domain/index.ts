@@ -1,4 +1,4 @@
-import { Server } from './domain/model/Server';
+import { Server } from './model/Server';
 
 export { Server };
 
