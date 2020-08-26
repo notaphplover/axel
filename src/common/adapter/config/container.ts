@@ -1,13 +1,13 @@
 import { Container, ContainerModule, interfaces } from 'inversify';
+import { COMMON_DOMAIN_TYPES } from '../../domain/config/types';
 import { FastifyServer } from '../server/model/FastifyServer';
-import { HTTP_SERVER_TYPES } from '../../domain/config/types';
 
-const httpServerContainer: ContainerModule = new ContainerModule(
+const commonContainer: ContainerModule = new ContainerModule(
   (bind: interfaces.Bind) => {
-    bind(HTTP_SERVER_TYPES.SERVER).to(FastifyServer).inSingletonScope();
+    bind(COMMON_DOMAIN_TYPES.SERVER).to(FastifyServer).inSingletonScope();
   },
 );
 
 export const container: Container = new Container();
 
-container.load(httpServerContainer);
+container.load(commonContainer);

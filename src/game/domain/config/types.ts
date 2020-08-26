@@ -1,6 +1,2 @@
 // eslint-disable-next-line @typescript-eslint/typedef
-export const GAME_TYPES = {
-  model: {
-    GAME_DB_MODEL: Symbol.for('gameDbModel'),
-  },
-};
+export const GAME_DOMAIN_TYPES = {};

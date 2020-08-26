@@ -1,5 +1,5 @@
 import { SearchRepository } from './db/SearchRepository';
-import { Server } from './model/Server';
+import { Server } from './server/Server';
 import { floatToInt } from './parse/floatToInt';
 import { hasValue } from './utils/hasValue';
 

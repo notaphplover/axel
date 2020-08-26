@@ -1,6 +1,6 @@
 import fastify, { FastifyInstance } from 'fastify';
 import { FastifyRouter } from './FastifyRouter';
-import { Server } from '../../../domain/model/Server';
+import { Server } from '../../../domain/server/Server';
 import { injectable } from 'inversify';
 
 @injectable()
