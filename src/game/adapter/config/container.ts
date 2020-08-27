@@ -6,6 +6,8 @@ import { GAME_PORT_TYPES } from '../../port/config/types';
 import { GameDbSearchReporitory } from '../db/repository/GameDbSearchRepository';
 import { GameDbToGamePort } from '../../port/db/GameDbToGamePort';
 import { GameFindQueryToGameDbFilterQueryPort } from '../../port/db/GameFindQueryToGameDbFilterQueryPort';
+import { GameToGameApiV1Port } from '../../port/api/GameToGameApiV1Port';
+import { GetGameByIdV1RequestHandler } from '../server/reqHandler/GetGameByIdV1RequestHandler';
 import { gameDbModel } from '../db/model/GameDb';
 
 function bindAdapters(bind: interfaces.Bind) {
@@ -13,6 +15,9 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(GAME_ADAPTER_TYPES.db.repository.GAME_DB_SEARCH_REPOSITORY).to(
     GameDbSearchReporitory,
   );
+  bind(
+    GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
+  ).to(GetGameByIdV1RequestHandler);
 }
 
 function bindDomain(bind: interfaces.Bind) {
@@ -22,6 +27,7 @@ function bindDomain(bind: interfaces.Bind) {
 }
 
 function bindPorts(bind: interfaces.Bind) {
+  bind(GAME_PORT_TYPES.api.GAME_TO_GAME_API_V1_PORT).to(GameToGameApiV1Port);
   bind(GAME_PORT_TYPES.db.GAME_DB_TO_GAME_PORT).to(GameDbToGamePort);
   bind(
     GAME_PORT_TYPES.db.GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY,

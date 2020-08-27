@@ -1,3 +1,3 @@
-export interface RequestHandler<TRequest, TOutput> {
-  handle(req: TRequest): Promise<TOutput>;
+export interface RequestHandler<TContext, TOutput> {
+  handle(req: TContext): Promise<TOutput>;
 }

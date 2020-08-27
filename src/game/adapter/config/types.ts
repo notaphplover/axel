@@ -8,4 +8,11 @@ export const GAME_ADAPTER_TYPES = {
       GAME_DB_SEARCH_REPOSITORY: Symbol.for('GameDbSearchReporitory'),
     },
   },
+  server: {
+    reqHandler: {
+      GET_GAME_BY_ID_V1_REQUEST_HANDLER: Symbol.for(
+        'GetGameByIdV1RequestHandler',
+      ),
+    },
+  },
 };
