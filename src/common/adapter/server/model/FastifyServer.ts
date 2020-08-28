@@ -1,15 +1,19 @@
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
+import { inject, injectable } from 'inversify';
 import { ApiVersion } from '../../api/ApiVersion';
 import { FastifyRouter } from './FastifyRouter';
 import { Server } from '../../../domain/server/Server';
-import { injectable } from 'inversify';
+import { gameAdapter } from '../../../../game/adapter';
 
 @injectable()
 export class FastifyServer implements Server {
   private readonly routers: FastifyRouter[];
 
-  constructor() {
-    this.routers = [];
+  constructor(
+    @inject(gameAdapter.config.types.server.router.GAME_ROUTER)
+    gameRouter: FastifyRouter,
+  ) {
+    this.routers = [gameRouter];
   }
 
   public async bootstrap(): Promise<void> {
