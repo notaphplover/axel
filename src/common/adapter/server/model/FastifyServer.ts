@@ -1,4 +1,5 @@
-import fastify, { FastifyInstance } from 'fastify';
+import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
+import { ApiVersion } from '../../api/ApiVersion';
 import { FastifyRouter } from './FastifyRouter';
 import { Server } from '../../../domain/server/Server';
 import { injectable } from 'inversify';
@@ -14,11 +15,28 @@ export class FastifyServer implements Server {
   public async bootstrap(): Promise<void> {
     const fastifyServer: FastifyInstance = fastify({ logger: true });
 
-    await Promise.all(
-      this.routers.map((router: FastifyRouter) =>
-        fastifyServer.register(router.injectRoutes.bind(router)),
-      ),
-    );
+    const registerRouterVersion: (
+      router: FastifyRouter,
+      version: ApiVersion,
+    ) => PromiseLike<void> = (router: FastifyRouter, version: ApiVersion) =>
+      fastifyServer.register(
+        async (server: FastifyInstance, options: FastifyServerOptions) =>
+          router.injectRoutes(server, options, version),
+        {
+          prefix: `/${version}`,
+        },
+      );
+
+    const registerRouter: (router: FastifyRouter) => Promise<void[]> = async (
+      router: FastifyRouter,
+    ) =>
+      Promise.all(
+        Object.values(ApiVersion).map(async (version: ApiVersion) =>
+          registerRouterVersion(router, version),
+        ),
+      );
+
+    await Promise.all(this.routers.map(registerRouter));
 
     const start: () => Promise<void> = async () => {
       try {
