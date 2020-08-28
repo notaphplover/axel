@@ -1,6 +1,11 @@
 import { ApiVersion } from './api/ApiVersion';
+import { FastifyRequestHandler } from './server/model/FastifyRequestHandler';
 import { FastifyRouter } from './server/model/FastifyRouter';
 import { MongooseSearchRepository } from './db/MongooseSearchRepository';
-import { RequestHandler } from './server/model/RequestHandler';
 
-export { ApiVersion, FastifyRouter, MongooseSearchRepository, RequestHandler };
+export {
+  ApiVersion,
+  FastifyRequestHandler,
+  FastifyRouter,
+  MongooseSearchRepository,
+};
