@@ -34,7 +34,7 @@ export class GameRouter implements FastifyRouter {
   }
 
   private async injectRoutesV1(server: FastifyInstance): Promise<void> {
-    server.get(`${GAME_ROUTER_PATH_PREFIX}/:gameId`, {
+    server.get(`/${GAME_ROUTER_PATH_PREFIX}/:gameId`, {
       handler: this.getGameByIdV1RequestHandler.handle.bind(this),
       schema: { params: { gameId: { type: 'string' } } },
     });
