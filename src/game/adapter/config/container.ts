@@ -6,6 +6,7 @@ import { GAME_PORT_TYPES } from '../../port/config/types';
 import { GameDbSearchReporitory } from '../db/repository/GameDbSearchRepository';
 import { GameDbToGamePort } from '../../port/db/GameDbToGamePort';
 import { GameFindQueryToGameDbFilterQueryPort } from '../../port/db/GameFindQueryToGameDbFilterQueryPort';
+import { GameRouter } from '../server/router/GameRouter';
 import { GameToGameApiV1Port } from '../../port/api/GameToGameApiV1Port';
 import { GetGameByIdV1RequestHandler } from '../server/reqHandler/GetGameByIdV1RequestHandler';
 import { gameDbModel } from '../db/model/GameDb';
@@ -18,6 +19,7 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
   ).to(GetGameByIdV1RequestHandler);
+  bind(GAME_ADAPTER_TYPES.server.router.GAME_ROUTER).to(GameRouter);
 }
 
 function bindDomain(bind: interfaces.Bind) {

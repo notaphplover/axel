@@ -14,5 +14,8 @@ export const GAME_ADAPTER_TYPES = {
         'GetGameByIdV1RequestHandler',
       ),
     },
+    router: {
+      GAME_ROUTER: Symbol.for('GameRouter'),
+    },
   },
 };
