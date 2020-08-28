@@ -1,13 +1,15 @@
 import { Interactor, SearchRepository } from '../../../common/domain';
+import { inject, injectable } from 'inversify';
+import { GAME_ADAPTER_TYPES } from '../../adapter/config/types';
 import { Game } from '../model/Game';
 import { GameFindQuery } from '../query/GameFindQuery';
-import { injectable } from 'inversify';
 
 @injectable()
 export class FindGameInteractor
   implements Interactor<GameFindQuery, Promise<Game | null>> {
   constructor(
-    protected readonly gameSearchRepository: SearchRepository<
+    @inject(GAME_ADAPTER_TYPES.db.repository.GAME_DB_SEARCH_REPOSITORY)
+    private readonly gameSearchRepository: SearchRepository<
       Game,
       GameFindQuery
     >,
