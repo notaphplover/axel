@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
+import { FastifyRequestHandler } from '../../../../common/adapter';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
 import { GAME_PORT_TYPES } from '../../../port/config/types';
 import { Game } from '../../../domain/model/Game';
@@ -7,11 +8,10 @@ import { GameApiV1 } from '../../api/model/GameApiV1';
 import { GameFindQuery } from '../../../domain/query/GameFindQuery';
 import { Interactor } from '../../../../common/domain';
 import { Port } from '../../../../common/port';
-import { RequestHandler } from '../../../../common/adapter';
 
 @injectable()
 export class GetGameByIdV1RequestHandler
-  implements RequestHandler<[FastifyRequest, FastifyReply], Promise<void>> {
+  implements FastifyRequestHandler<Promise<void>> {
   constructor(
     @inject(GAME_DOMAIN_TYPES.interactor.FIND_GAME_INTERACTOR)
     private readonly findGameInteractor: Interactor<
@@ -22,11 +22,12 @@ export class GetGameByIdV1RequestHandler
     private readonly gameToGameApiV1Port: Port<Game, GameApiV1>,
   ) {}
 
-  public async handle([req, rep]: [FastifyRequest, FastifyReply]): Promise<
-    Promise<void>
-  > {
+  public async handle(
+    request: FastifyRequest,
+    reply: FastifyReply,
+  ): Promise<Promise<void>> {
     const findGameQuery: GameFindQuery = {
-      id: (req.params as { gameId: string }).gameId,
+      id: (request.params as { gameId: string }).gameId,
     };
 
     const findResult: Game | null = await this.findGameInteractor.interact(
@@ -34,9 +35,9 @@ export class GetGameByIdV1RequestHandler
     );
 
     if (findResult === null) {
-      rep.callNotFound();
+      reply.callNotFound();
     } else {
-      await rep.send(this.gameToGameApiV1Port.transform(findResult));
+      await reply.send(this.gameToGameApiV1Port.transform(findResult));
     }
   }
 }
