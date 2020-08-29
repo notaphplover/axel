@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
+import { Converter } from '../../../../common/domain';
 import { FastifyRequestHandler } from '../../../../common/adapter';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
 import { GAME_PORT_TYPES } from '../../../port/config/types';
@@ -7,7 +8,6 @@ import { Game } from '../../../domain/model/Game';
 import { GameApiV1 } from '../../api/model/GameApiV1';
 import { GameFindQuery } from '../../../domain/query/GameFindQuery';
 import { Interactor } from '../../../../common/domain';
-import { Port } from '../../../../common/port';
 
 @injectable()
 export class GetGameByIdV1RequestHandler
@@ -19,7 +19,7 @@ export class GetGameByIdV1RequestHandler
       Promise<Game | null>
     >,
     @inject(GAME_PORT_TYPES.api.GAME_TO_GAME_API_V1_PORT)
-    private readonly gameToGameApiV1Port: Port<Game, GameApiV1>,
+    private readonly gameToGameApiV1Port: Converter<Game, GameApiV1>,
   ) {}
 
   public async handle(

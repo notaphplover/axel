@@ -1,5 +1,5 @@
 import { Document, FilterQuery, Model } from 'mongoose';
-import { Port } from '../../port';
+import { Converter } from '../../domain';
 import { SearchRepository } from '../../domain';
 import { injectable } from 'inversify';
 
@@ -11,8 +11,8 @@ export abstract class MongooseSearchRepository<
 > implements SearchRepository<TModel, TQuery> {
   constructor(
     protected readonly model: Model<TModelDb>,
-    protected readonly modelDbToModelPort: Port<TModelDb, TModel>,
-    protected readonly queryToFilterQueryPort: Port<
+    protected readonly modelDbToModelPort: Converter<TModelDb, TModel>,
+    protected readonly queryToFilterQueryPort: Converter<
       TQuery,
       FilterQuery<TModelDb>
     >,
