@@ -31,9 +31,9 @@ function bindDomain(bind: interfaces.Bind) {
 function bindPorts(bind: interfaces.Bind) {
   bind(GAME_PORT_TYPES.api.GAME_TO_GAME_API_V1_PORT).to(GameToGameApiV1Port);
   bind(GAME_PORT_TYPES.db.GAME_DB_TO_GAME_PORT).to(GameDbToGamePort);
-  bind(
-    GAME_PORT_TYPES.db.GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY,
-  ).toConstantValue(GameFindQueryToGameDbFilterQueryPort);
+  bind(GAME_PORT_TYPES.db.GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY).to(
+    GameFindQueryToGameDbFilterQueryPort,
+  );
 }
 
 export const gameContainer: ContainerModule = new ContainerModule(
