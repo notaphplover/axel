@@ -3,4 +3,7 @@ export const GAME_DOMAIN_TYPES = {
   interactor: {
     FIND_GAME_INTERACTOR: Symbol.for('FindGameInteractor'),
   },
+  repository: {
+    GAME_SEARCH_REPOSITORY: Symbol.for('GameSearchRepository'),
+  },
 };

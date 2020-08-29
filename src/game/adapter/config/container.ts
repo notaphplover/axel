@@ -22,9 +22,6 @@ function bindAdapters(bind: interfaces.Bind) {
       .GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER,
   ).to(GameFindQueryToGameDbFilterQueryConverter);
   bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
-  bind(GAME_ADAPTER_TYPES.db.repository.GAME_DB_SEARCH_REPOSITORY).to(
-    GameDbSearchReporitory,
-  );
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
   ).to(GetGameByIdV1RequestHandler);
@@ -34,6 +31,9 @@ function bindAdapters(bind: interfaces.Bind) {
 function bindDomain(bind: interfaces.Bind) {
   bind(GAME_DOMAIN_TYPES.interactor.FIND_GAME_INTERACTOR).to(
     FindGameInteractor,
+  );
+  bind(GAME_DOMAIN_TYPES.repository.GAME_SEARCH_REPOSITORY).to(
+    GameDbSearchReporitory,
   );
 }
 
