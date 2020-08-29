@@ -10,8 +10,8 @@ export abstract class MongooseSearchRepository<
   TQuery
 > implements SearchRepository<TModel, TQuery> {
   constructor(
-    protected model: Model<TModelDb>,
-    protected modelDbToModelPort: Port<TModelDb, TModel>,
+    protected readonly model: Model<TModelDb>,
+    protected readonly modelDbToModelPort: Port<TModelDb, TModel>,
     protected readonly queryToFilterQueryPort: Port<
       TQuery,
       FilterQuery<TModelDb>
