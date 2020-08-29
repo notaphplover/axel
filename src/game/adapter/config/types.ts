@@ -1,6 +1,17 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_ADAPTER_TYPES = {
+  api: {
+    converter: {
+      GAME_TO_GAME_API_V1_CONVERTER: Symbol.for('GameToGameApiV1Converter'),
+    },
+  },
   db: {
+    converter: {
+      GAME_DB_TO_GAME_CONVERTER: Symbol.for('GameDbToGameConverter'),
+      GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER: Symbol.for(
+        'GameFindQueryToGameDbFilterQueryConverter',
+      ),
+    },
     model: {
       GAME_DB_MODEL: Symbol.for('gameDbModel'),
     },

@@ -2,8 +2,8 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../common/domain';
 import { FastifyRequestHandler } from '../../../../common/adapter';
+import { GAME_ADAPTER_TYPES } from '../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
-import { GAME_PORT_TYPES } from '../../../port/config/types';
 import { Game } from '../../../domain/model/Game';
 import { GameApiV1 } from '../../api/model/GameApiV1';
 import { GameFindQuery } from '../../../domain/query/GameFindQuery';
@@ -18,7 +18,7 @@ export class GetGameByIdV1RequestHandler
       GameFindQuery,
       Promise<Game | null>
     >,
-    @inject(GAME_PORT_TYPES.api.GAME_TO_GAME_API_V1_PORT)
+    @inject(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER)
     private readonly gameToGameApiV1Port: Converter<Game, GameApiV1>,
   ) {}
 
