@@ -49,7 +49,7 @@
   "dependencies": {
     "fastify": "^3.3.0",
     "inversify": "^5.0.1",
-    "mongoose": "^5.10.1",
+    "mongoose": "^5.10.2",
     "reflect-metadata": "^0.1.13"
   }
 }
