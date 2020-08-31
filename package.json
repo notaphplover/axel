@@ -51,6 +51,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "fastify": "^3.3.0",
+    "http-status-codes": "^2.1.2",
     "inversify": "^5.0.1",
     "mongoose": "^5.10.2",
     "reflect-metadata": "^0.1.13"
