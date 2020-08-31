@@ -6,3 +6,6 @@ node_modules/
 
 ### Visual Studio Code ###
 .vscode
+
+### local env files from modules
+src/*/env/local.env
