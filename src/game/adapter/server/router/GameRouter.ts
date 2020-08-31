@@ -7,7 +7,7 @@ import { FastifyInstance, FastifyServerOptions } from 'fastify';
 import { inject, injectable } from 'inversify';
 import { GAME_ADAPTER_TYPES } from '../../config/types';
 
-const GAME_ROUTER_PATH_PREFIX: string = 'game';
+const GAME_ROUTER_PATH_PREFIX: string = 'games';
 
 @injectable()
 export class GameRouter implements FastifyRouter {
