@@ -8,6 +8,7 @@ import { Game } from '../../../domain/model/Game';
 import { GameApiV1 } from '../../api/model/GameApiV1';
 import { GameFindQuery } from '../../../domain/query/GameFindQuery';
 import { Interactor } from '../../../../common/domain';
+import { StatusCodes } from 'http-status-codes';
 
 @injectable()
 export class GetGameByIdV1RequestHandler
@@ -35,7 +36,9 @@ export class GetGameByIdV1RequestHandler
     );
 
     if (findResult === null) {
-      reply.callNotFound();
+      await reply
+        .code(StatusCodes.NOT_FOUND)
+        .send(`The game with id "${findGameQuery.id as string}" was not found`);
     } else {
       await reply.send(this.gameToGameApiV1Port.transform(findResult));
     }
