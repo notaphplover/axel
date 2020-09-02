@@ -11,8 +11,8 @@ export abstract class MongooseSearchRepository<
 > implements SearchRepository<TModel, TQuery> {
   constructor(
     protected readonly model: Model<TModelDb>,
-    protected readonly modelDbToModelPort: Converter<TModelDb, TModel>,
-    protected readonly queryToFilterQueryPort: Converter<
+    protected readonly modelDbToModelConverter: Converter<TModelDb, TModel>,
+    protected readonly queryToFilterQueryConverter: Converter<
       TQuery,
       FilterQuery<TModelDb>
     >,
@@ -20,10 +20,10 @@ export abstract class MongooseSearchRepository<
 
   public async find(query: TQuery): Promise<TModel[]> {
     const entitiesDbFound: TModelDb[] = await this.model.find(
-      this.queryToFilterQueryPort.transform(query),
+      this.queryToFilterQueryConverter.transform(query),
     );
     const entities: TModel[] = entitiesDbFound.map(
-      this.modelDbToModelPort.transform.bind(this),
+      this.modelDbToModelConverter.transform.bind(this),
     );
 
     return entities;
@@ -31,13 +31,13 @@ export abstract class MongooseSearchRepository<
 
   public async findOne(query: TQuery): Promise<TModel | null> {
     const entityDbFound: TModelDb | null = await this.model.findOne(
-      this.queryToFilterQueryPort.transform(query),
+      this.queryToFilterQueryConverter.transform(query),
     );
 
     const entity: TModel | null =
       entityDbFound === null
         ? null
-        : this.modelDbToModelPort.transform(entityDbFound);
+        : this.modelDbToModelConverter.transform(entityDbFound);
 
     return entity;
   }

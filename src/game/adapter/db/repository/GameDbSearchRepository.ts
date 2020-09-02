@@ -18,16 +18,20 @@ export class GameDbSearchReporitory extends MongooseSearchRepository<
     @inject(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL)
     model: Model<GameDb>,
     @inject(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER)
-    gameDbToGamePort: Converter<GameDb, Game>,
+    gameDbToGameConverter: Converter<GameDb, Game>,
     @inject(
       GAME_ADAPTER_TYPES.db.converter
         .GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER,
     )
-    gameFindQueryToGameDbFilterQueryPort: Converter<
+    gameFindQueryToGameDbFilterQueryConverter: Converter<
       GameFindQuery,
       FilterQuery<GameDb>
     >,
   ) {
-    super(model, gameDbToGamePort, gameFindQueryToGameDbFilterQueryPort);
+    super(
+      model,
+      gameDbToGameConverter,
+      gameFindQueryToGameDbFilterQueryConverter,
+    );
   }
 }
