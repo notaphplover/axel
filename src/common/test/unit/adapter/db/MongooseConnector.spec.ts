@@ -25,8 +25,8 @@ describe(MongooseConector.name, () => {
         await mongooseConnector.connect();
       });
 
-      it('must call mongoose connect', () => {
-        expect(connect).toHaveBeenCalled();
+      it(`must call mongoose.${connect.name}()`, () => {
+        expect(connect).toHaveBeenCalledTimes(1);
       });
     });
   });
