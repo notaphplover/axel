@@ -7,13 +7,11 @@ import { GameDbToGameConverter } from '../db/converter/GameDbToGameConverter';
 import { GameFindQueryToGameDbFilterQueryConverter } from '../db/converter/GameFindQueryToGameDbFilterQueryConverter';
 import { GameRouter } from '../server/router/GameRouter';
 import { GameToGameApiV1Converter } from '../api/converter/GameToGameApiV1Converter';
+import { GameToGameDbConverter } from '../db/converter/GameToGameDbConverter';
 import { GetGameByIdV1RequestHandler } from '../server/reqHandler/GetGameByIdV1RequestHandler';
 import { gameDbModel } from '../db/model/GameDb';
 
 function bindAdapters(bind: interfaces.Bind) {
-  bind(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER).to(
-    GameToGameApiV1Converter,
-  );
   bind(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER).to(
     GameDbToGameConverter,
   );
@@ -22,6 +20,12 @@ function bindAdapters(bind: interfaces.Bind) {
       .GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER,
   ).to(GameFindQueryToGameDbFilterQueryConverter);
   bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
+  bind(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER).to(
+    GameToGameApiV1Converter,
+  );
+  bind(GAME_ADAPTER_TYPES.db.converter.GAME_TO_GAME_DB_CONVERTER).to(
+    GameToGameDbConverter,
+  );
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
   ).to(GetGameByIdV1RequestHandler);
