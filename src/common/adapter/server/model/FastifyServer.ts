@@ -1,7 +1,9 @@
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import { inject, injectable } from 'inversify';
 import { ApiVersion } from '../../api/ApiVersion';
+import { COMMON_ADAPTER_TYPES } from '../../config/types';
 import { FastifyRouter } from './FastifyRouter';
+import { MongooseConector } from '../../db/MongooseConnector';
 import { Server } from '../../../domain/server/Server';
 import { gameAdapter } from '../../../../game/adapter';
 
@@ -12,6 +14,8 @@ export class FastifyServer implements Server {
   constructor(
     @inject(gameAdapter.config.types.server.router.GAME_ROUTER)
     gameRouter: FastifyRouter,
+    @inject(COMMON_ADAPTER_TYPES.db.MONGOOSE_CONNECTOR)
+    private readonly mongooseConnector: MongooseConector,
   ) {
     this.routers = [gameRouter];
   }
@@ -19,6 +23,21 @@ export class FastifyServer implements Server {
   public async bootstrap(): Promise<void> {
     const fastifyServer: FastifyInstance = fastify({ logger: true });
 
+    const promises: Promise<unknown>[] = [
+      this.bootstrapDb(),
+      ...this.registerRouters(fastifyServer),
+    ];
+
+    await Promise.all(promises);
+
+    await this.startServer(fastifyServer);
+  }
+
+  private async bootstrapDb(): Promise<unknown> {
+    return this.mongooseConnector.connect();
+  }
+
+  private registerRouters(fastifyServer: FastifyInstance): Promise<unknown>[] {
     const registerRouterVersion: (
       router: FastifyRouter,
       version: ApiVersion,
@@ -40,8 +59,10 @@ export class FastifyServer implements Server {
         ),
       );
 
-    await Promise.all(this.routers.map(registerRouter));
+    return this.routers.map(registerRouter);
+  }
 
+  private async startServer(fastifyServer: FastifyInstance): Promise<void> {
     const start: () => Promise<void> = async () => {
       try {
         await fastifyServer.listen(3000);
