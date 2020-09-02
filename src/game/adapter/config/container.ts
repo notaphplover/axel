@@ -2,6 +2,7 @@ import { ContainerModule, interfaces } from 'inversify';
 import { FindGameInteractor } from '../../domain/interactor/FindGameInteractor';
 import { GAME_ADAPTER_TYPES } from '../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../domain/config/types';
+import { GameCreationQueryToGamesConverter } from '../../domain/converter/GameCreationQueryToGamesConverter';
 import { GameDbInsertRepository } from '../db/repository/GameDbInsertRepository';
 import { GameDbSearchReporitory } from '../db/repository/GameDbSearchRepository';
 import { GameDbToGameConverter } from '../db/converter/GameDbToGameConverter';
@@ -34,6 +35,9 @@ function bindAdapters(bind: interfaces.Bind) {
 }
 
 function bindDomain(bind: interfaces.Bind) {
+  bind(GAME_DOMAIN_TYPES.converter.GAME_CREATION_QUERY_TO_GAMES_CONVERTER).to(
+    GameCreationQueryToGamesConverter,
+  );
   bind(GAME_DOMAIN_TYPES.interactor.FIND_GAME_INTERACTOR).to(
     FindGameInteractor,
   );
