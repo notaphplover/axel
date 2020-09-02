@@ -9,3 +9,6 @@ node_modules/
 
 ### local env files from modules
 src/*/env/local.env
+
+### auto generated .env file
+.env

@@ -6,6 +6,8 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint src",
+    "setup:local": "node ./dist/scripts/setUpLocalEnv.js",
+    "setup:local:ts": "TS_NODE_FILES=true ts-node ./src/scripts/setUpLocalEnv.ts",
     "start": "TS_NODE_FILES=true ts-node ./src/index.ts",
     "start:prod": "node ./dist/index.js",
     "test": "jest"
