@@ -1,5 +1,5 @@
-import { ArrayDeck } from '../../../../../game/domain/model/ArrayDeck';
-import { InvalidNumberOfCardsError } from '../../../../../game/domain/exception/InvalidNumberOfCardsError';
+import { ArrayDeck } from '../../../../domain/model/ArrayDeck';
+import { InvalidNumberOfCardsError } from '../../../../domain/exception/InvalidNumberOfCardsError';
 
 describe(ArrayDeck.name, () => {
   describe(`.${ArrayDeck.prototype.draw.name}`, () => {
