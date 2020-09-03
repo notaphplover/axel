@@ -11,8 +11,7 @@ import { Interactor } from '../../../../common/domain';
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()
-export class GetGameByIdV1RequestHandler
-  implements FastifyRequestHandler<Promise<void>> {
+export class GetGameByIdV1RequestHandler implements FastifyRequestHandler {
   constructor(
     @inject(GAME_DOMAIN_TYPES.interactor.FIND_GAME_INTERACTOR)
     private readonly findGameInteractor: Interactor<
@@ -26,7 +25,7 @@ export class GetGameByIdV1RequestHandler
   public async handle(
     request: FastifyRequest,
     reply: FastifyReply,
-  ): Promise<Promise<void>> {
+  ): Promise<void> {
     const findGameQuery: GameFindQuery = {
       id: (request.params as { gameId: string }).gameId,
     };
