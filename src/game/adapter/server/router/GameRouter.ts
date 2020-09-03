@@ -15,9 +15,7 @@ export class GameRouter implements FastifyRouter {
     @inject(
       GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
     )
-    private readonly getGameByIdV1RequestHandler: FastifyRequestHandler<
-      Promise<void>
-    >,
+    private readonly getGameByIdV1RequestHandler: FastifyRequestHandler,
   ) {}
 
   public async injectRoutes(
