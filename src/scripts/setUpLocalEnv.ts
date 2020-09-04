@@ -4,8 +4,6 @@ import {
   createReadStream,
   createWriteStream,
   existsSync,
-  lstatSync,
-  readdirSync,
 } from 'fs';
 import { common } from '../common/domain';
 import { join } from 'path';
@@ -19,25 +17,10 @@ const modulesBlackList: Set<string> = new Set(['scripts', 'test']);
 const ENV_MERGE: string = 'local';
 const ENV_MERGE_DESTINATION: string = join(rootDir, '.env');
 
-function isDirectory(source: string): boolean {
-  return lstatSync(source).isDirectory();
-}
+const getDirectories: (source: string) => string[] =
+  common.io.directory.getDirectories;
 
-function isFile(source: string): boolean {
-  return lstatSync(source).isFile();
-}
-
-function getDirectories(source: string): string[] {
-  return readdirSync(source).filter((directoryName: string) =>
-    isDirectory(join(source, directoryName)),
-  );
-}
-
-function getFiles(source: string): string[] {
-  return readdirSync(source).filter((fileName: string) =>
-    isFile(join(source, fileName)),
-  );
-}
+const getFiles: (source: string) => string[] = common.io.file.getFiles;
 
 function detectModules(baseFolder: string): string[] {
   return getDirectories(baseFolder)
@@ -94,6 +77,22 @@ function mergeReadables(...streams: Readable[]): PassThrough {
   return pass;
 }
 
+function mergeEnvFiles(
+  modulePaths: string[],
+  env: string,
+  destinationPath: string,
+): void {
+  mergeReadables(
+    ...(modulePaths
+      .map((modulePath: string) => {
+        return getSampleEnvFileStream(modulePath, env);
+      })
+      .filter(
+        (stream: Readable | undefined) => stream !== undefined,
+      ) as Readable[]),
+  ).pipe(createWriteStream(destinationPath));
+}
+
 (() => {
   console.log('Scanning for modules...');
 
@@ -111,15 +110,8 @@ function mergeReadables(...streams: Readable[]): PassThrough {
 
   console.log('Merging env files into .env ...');
 
-  mergeReadables(
-    ...(modulePaths
-      .map((modulePath: string) => {
-        return getSampleEnvFileStream(modulePath, ENV_MERGE);
-      })
-      .filter(
-        (stream: Readable | undefined) => stream !== undefined,
-      ) as Readable[]),
-  ).pipe(createWriteStream(ENV_MERGE_DESTINATION));
+  mergeEnvFiles(modulePaths, ENV_MERGE, ENV_MERGE_DESTINATION);
+
 
   console.log('Done');
 })();
