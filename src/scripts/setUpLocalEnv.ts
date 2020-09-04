@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import { JsonSchemaGenerator, jsonSchemaDomain } from '../json-schema/domain';
 import { PassThrough, Readable } from 'stream';
 import {
   copyFileSync,
@@ -6,13 +8,18 @@ import {
   existsSync,
 } from 'fs';
 import { common } from '../common/domain';
+import { container } from '../common/adapter/config/container';
 import { join } from 'path';
 
 const rootDir: string = common.io.rootDir;
 
 const srcFolder: string = join(rootDir, 'src');
 
-const modulesBlackList: Set<string> = new Set(['scripts', 'test']);
+const modulesBlackList: Set<string> = new Set([
+  'json-schema',
+  'scripts',
+  'test',
+]);
 
 const ENV_MERGE: string = 'local';
 const ENV_MERGE_DESTINATION: string = join(rootDir, '.env');
@@ -21,6 +28,10 @@ const getDirectories: (source: string) => string[] =
   common.io.directory.getDirectories;
 
 const getFiles: (source: string) => string[] = common.io.file.getFiles;
+
+const jsonSchemaGenerator: JsonSchemaGenerator = container.get(
+  jsonSchemaDomain.config.types.generator.JSON_SCHEMA_GENERATOR,
+);
 
 function detectModules(baseFolder: string): string[] {
   return getDirectories(baseFolder)
@@ -93,7 +104,7 @@ function mergeEnvFiles(
   ).pipe(createWriteStream(destinationPath));
 }
 
-(() => {
+void (async () => {
   console.log('Scanning for modules...');
 
   const modulePaths: string[] = detectModules(srcFolder);
@@ -112,6 +123,11 @@ function mergeEnvFiles(
 
   mergeEnvFiles(modulePaths, ENV_MERGE, ENV_MERGE_DESTINATION);
 
+  console.log('Generating JSON validation schemas...');
+
+  await Promise.all(
+    modulePaths.map(jsonSchemaGenerator.generate.bind(jsonSchemaGenerator)),
+  );
 
   console.log('Done');
 })();
