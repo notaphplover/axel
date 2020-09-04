@@ -12,3 +12,6 @@ src/*/env/local.env
 
 ### auto generated .env file
 .env
+
+### auto-generated json schemas
+src/*/adapter/json-schema/

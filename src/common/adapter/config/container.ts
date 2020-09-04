@@ -5,6 +5,7 @@ import { CommonDotEnvLoader } from '../env/CommonDotEnvLoader';
 import { FastifyServer } from '../server/model/FastifyServer';
 import { MongooseConector } from '../db/MongooseConnector';
 import { gameContainer } from '../../../game/adapter/config/container';
+import { jsonSchemaContainer } from '../../../json-schema/adapter/config/container';
 
 function bindAdapter(bind: interfaces.Bind): void {
   bind(COMMON_ADAPTER_TYPES.db.MONGOOSE_CONNECTOR).to(MongooseConector);
@@ -28,3 +29,4 @@ export const container: Container = new Container();
 
 container.load(commonContainer);
 container.load(gameContainer);
+container.load(jsonSchemaContainer);
