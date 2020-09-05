@@ -22,8 +22,8 @@ const modelMockDbFixture: ModelMockDb = { foo: FOO_VALUE } as ModelMockDb;
 
 describe(MongooseInsertRepository.name, () => {
   let model: Model<ModelMockDb>;
-  let modelDbToModelPort: Converter<ModelMockDb, ModelMock>;
-  let modelToModelDbPort: Converter<ModelMock, ModelMockDb>;
+  let modelDbToModelConverter: Converter<ModelMockDb, ModelMock>;
+  let modelToModelDbConverter: Converter<ModelMock, ModelMockDb>;
   let mongooseInsertRepository: MongooseInsertRepository<
     ModelMock,
     ModelMockDb
@@ -33,18 +33,18 @@ describe(MongooseInsertRepository.name, () => {
     model = ({
       insertMany: jest.fn(),
     } as Partial<Model<ModelMockDb>>) as Model<ModelMockDb>;
-    modelDbToModelPort = {
+    modelDbToModelConverter = {
       transform: jest.fn(),
     };
 
-    modelToModelDbPort = {
+    modelToModelDbConverter = {
       transform: jest.fn(),
     };
 
     mongooseInsertRepository = new MongooseInsertRepositoryMock(
       model,
-      modelDbToModelPort,
-      modelToModelDbPort,
+      modelDbToModelConverter,
+      modelToModelDbConverter,
     );
   });
 
@@ -56,10 +56,10 @@ describe(MongooseInsertRepository.name, () => {
         (model.insertMany as jest.Mock).mockResolvedValueOnce([
           modelMockDbFixture,
         ]);
-        (modelDbToModelPort.transform as jest.Mock).mockReturnValueOnce(
+        (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
           modelMockFixture,
         );
-        (modelToModelDbPort.transform as jest.Mock).mockReturnValueOnce(
+        (modelToModelDbConverter.transform as jest.Mock).mockReturnValueOnce(
           modelMockDbFixture,
         );
 
@@ -67,8 +67,8 @@ describe(MongooseInsertRepository.name, () => {
       });
 
       it('must call modelToModelDbPort.transform()', () => {
-        expect(modelToModelDbPort.transform).toHaveBeenCalledTimes(1);
-        expect(modelToModelDbPort.transform).toHaveBeenCalledWith(
+        expect(modelToModelDbConverter.transform).toHaveBeenCalledTimes(1);
+        expect(modelToModelDbConverter.transform).toHaveBeenCalledWith(
           modelMockFixture,
         );
       });
@@ -79,8 +79,8 @@ describe(MongooseInsertRepository.name, () => {
       });
 
       it('must call modelDbToModelPort.transform()', () => {
-        expect(modelDbToModelPort.transform).toHaveBeenCalledTimes(1);
-        expect(modelDbToModelPort.transform).toHaveBeenCalledWith(
+        expect(modelDbToModelConverter.transform).toHaveBeenCalledTimes(1);
+        expect(modelDbToModelConverter.transform).toHaveBeenCalledWith(
           modelMockDbFixture,
         );
       });

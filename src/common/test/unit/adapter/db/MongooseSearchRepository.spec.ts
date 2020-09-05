@@ -29,8 +29,11 @@ const queryMockDbFixture: FilterQuery<ModelMockDb> = { foo: FOO_VALUE };
 
 describe(MongooseSearchRepository.name, () => {
   let model: Model<ModelMockDb>;
-  let modelDbToModelPort: Converter<ModelMock, ModelMockDb>;
-  let queryToFilterQueryPort: Converter<QueryMock, FilterQuery<ModelMockDb>>;
+  let modelDbToModelConverter: Converter<ModelMock, ModelMockDb>;
+  let queryToFilterQueryConverter: Converter<
+    QueryMock,
+    FilterQuery<ModelMockDb>
+  >;
   let mongooseSearchRepository: MongooseSearchRepository<
     ModelMock,
     ModelMockDb,
@@ -42,15 +45,15 @@ describe(MongooseSearchRepository.name, () => {
       find: jest.fn(),
       findOne: jest.fn(),
     } as Partial<Model<ModelMockDb>>) as Model<ModelMockDb>;
-    modelDbToModelPort = {
+    modelDbToModelConverter = {
       transform: jest.fn(),
     };
-    queryToFilterQueryPort = { transform: jest.fn() };
+    queryToFilterQueryConverter = { transform: jest.fn() };
 
     mongooseSearchRepository = new MongooseSearchRepositoryMock(
       model,
-      modelDbToModelPort,
-      queryToFilterQueryPort,
+      modelDbToModelConverter,
+      queryToFilterQueryConverter,
     );
   });
 
@@ -60,10 +63,10 @@ describe(MongooseSearchRepository.name, () => {
 
       beforeAll(async () => {
         (model.find as jest.Mock).mockResolvedValueOnce([modelMockDbFixture]);
-        (modelDbToModelPort.transform as jest.Mock).mockReturnValueOnce(
+        (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
           modelMockFixture,
         );
-        (queryToFilterQueryPort.transform as jest.Mock).mockReturnValueOnce(
+        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
           queryMockDbFixture,
         );
 
@@ -71,8 +74,8 @@ describe(MongooseSearchRepository.name, () => {
       });
 
       it('must call queryToFilterQueryPort.transform()', () => {
-        expect(queryToFilterQueryPort.transform).toHaveBeenCalledTimes(1);
-        expect(queryToFilterQueryPort.transform).toHaveBeenCalledWith(
+        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
+        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
           queryMockFixture,
         );
       });
@@ -83,8 +86,8 @@ describe(MongooseSearchRepository.name, () => {
       });
 
       it('must call modelDbToModelPort.transform()', () => {
-        expect(modelDbToModelPort.transform).toHaveBeenCalledTimes(1);
-        expect(modelDbToModelPort.transform).toHaveBeenCalledWith(
+        expect(modelDbToModelConverter.transform).toHaveBeenCalledTimes(1);
+        expect(modelDbToModelConverter.transform).toHaveBeenCalledWith(
           modelMockDbFixture,
         );
       });
