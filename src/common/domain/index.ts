@@ -2,6 +2,7 @@ import { Converter } from './converter/Converter';
 import { Interactor } from './interactor/Interactor';
 import { SearchRepository } from './db/SearchRepository';
 import { Server } from './server/Server';
+import { Validator } from './validator/Validator';
 import { floatToInt } from './parse/floatToInt';
 import { getDirectories } from './io/directory/getDirectories';
 import { getFiles } from './io/file/getFiles';
@@ -11,7 +12,7 @@ import { isFile } from './io/file/isFile';
 import { mergeReadables } from './io/stream/mergeReadables';
 import { rootDir } from './io/rootDir';
 
-export { Converter, Interactor, SearchRepository, Server };
+export { Converter, Interactor, SearchRepository, Server, Validator };
 
 // eslint-disable-next-line @typescript-eslint/typedef
 export const common = {
