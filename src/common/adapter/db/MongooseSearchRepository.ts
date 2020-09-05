@@ -22,8 +22,8 @@ export abstract class MongooseSearchRepository<
     const entitiesDbFound: TModelDb[] = await this.model.find(
       this.queryToFilterQueryConverter.transform(query),
     );
-    const entities: TModel[] = entitiesDbFound.map(
-      this.modelDbToModelConverter.transform.bind(this.modelDbToModelConverter),
+    const entities: TModel[] = entitiesDbFound.map((entityDb: TModelDb) =>
+      this.modelDbToModelConverter.transform(entityDb),
     );
 
     return entities;

@@ -15,14 +15,14 @@ export abstract class MongooseInsertRepository<
   ) {}
 
   public async insert(entities: TModel[]): Promise<TModel[]> {
-    const entitiesDb: TModelDb[] = entities.map(
-      this.modelToModelDbConverter.transform.bind(this.modelToModelDbConverter),
+    const entitiesDb: TModelDb[] = entities.map((entity: TModel) =>
+      this.modelToModelDbConverter.transform(entity),
     );
     const entitiesDbCreated: TModelDb[] = await this.model.insertMany(
       entitiesDb,
     );
     const entitiesCreated: TModel[] = entitiesDbCreated.map(
-      this.modelDbToModelConverter.transform.bind(this.modelDbToModelConverter),
+      (entityDb: TModelDb) => this.modelDbToModelConverter.transform(entityDb),
     );
 
     return entitiesCreated;

@@ -84,7 +84,9 @@ describe(MongooseSearchRepository.name, () => {
 
       it('must call modelDbToModelPort.transform()', () => {
         expect(modelDbToModelPort.transform).toHaveBeenCalledTimes(1);
-        expect(model.find).toHaveBeenCalledWith(modelMockDbFixture);
+        expect(modelDbToModelPort.transform).toHaveBeenCalledWith(
+          modelMockDbFixture,
+        );
       });
 
       it('must return a model', () => {
