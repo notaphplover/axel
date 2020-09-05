@@ -23,7 +23,7 @@ export abstract class MongooseSearchRepository<
       this.queryToFilterQueryConverter.transform(query),
     );
     const entities: TModel[] = entitiesDbFound.map(
-      this.modelDbToModelConverter.transform.bind(this),
+      this.modelDbToModelConverter.transform.bind(this.modelDbToModelConverter),
     );
 
     return entities;
