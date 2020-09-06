@@ -27,6 +27,11 @@ export const GAME_ADAPTER_TYPES = {
       GAME_ROUTER: Symbol.for('GameRouter'),
     },
   },
+  validator: {
+    GAME_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
+      'GameCreationQueryApiV1Validator',
+    ),
+  },
 };
 
 // eslint-disable-next-line @typescript-eslint/typedef

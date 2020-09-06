@@ -3,6 +3,7 @@ import { CreateGamesInteractor } from '../../domain/interactor/CreateGamesIntera
 import { FindGameInteractor } from '../../domain/interactor/FindGameInteractor';
 import { GAME_ADAPTER_TYPES } from '../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../domain/config/types';
+import { GameCreationQueryApiV1Validator } from '../api/validator/GameCreationQueryApiV1Validator';
 import { GameCreationQueryToGamesConverter } from '../../domain/converter/GameCreationQueryToGamesConverter';
 import { GameDbInsertRepository } from '../db/repository/GameDbInsertRepository';
 import { GameDbSearchReporitory } from '../db/repository/GameDbSearchRepository';
@@ -33,6 +34,9 @@ function bindAdapters(bind: interfaces.Bind) {
     GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
   ).to(GetGameByIdV1RequestHandler);
   bind(GAME_ADAPTER_TYPES.server.router.GAME_ROUTER).to(GameRouter);
+  bind(GAME_ADAPTER_TYPES.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR)
+    .to(GameCreationQueryApiV1Validator)
+    .inSingletonScope();
 }
 
 function bindDomain(bind: interfaces.Bind) {
