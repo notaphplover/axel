@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 @injectable()
 export abstract class DotEnvLoader<T> implements EnvLoader<T> {
-  public innerIndex: Index<T> | undefined;
+  protected innerIndex: Index<T> | undefined;
 
   constructor(@unmanaged() protected readonly path: string) {
     this.innerIndex = undefined;
