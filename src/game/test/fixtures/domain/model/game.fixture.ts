@@ -2,7 +2,7 @@ import { FixtureFactory } from '../../../../../common/test';
 import { Game } from '../../../../domain/model/Game';
 import { GameFixtureFactory } from './GameFixtureFactory';
 
-const game: Game = {
+export const game: Game = {
   round: 2,
 };
 
