@@ -30,7 +30,7 @@ describe(GetGameByIdV1RequestHandler.name, () => {
   });
 
   describe('.handle()', () => {
-    describe('.when called and a game is found', () => {
+    describe('when called and a game is found', () => {
       let requestFixture: FastifyRequest;
       let replyFixture: FastifyReply;
 
@@ -73,7 +73,7 @@ describe(GetGameByIdV1RequestHandler.name, () => {
       });
     });
 
-    describe('.when called and no game is found', () => {
+    describe('when called and no game is found', () => {
       let requestFixture: FastifyRequest;
       let replyFixture: FastifyReply;
 
