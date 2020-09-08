@@ -1,7 +1,7 @@
 import { ContainerModule, interfaces } from 'inversify';
 import { JSON_SCHEMA_ADAPTER_TYPES } from './types';
 import { JSON_SCHEMA_DOMAIN_TYPES } from '../../domain/config/types';
-import { TJSGenerator } from '../TJSGenerator';
+import { TJSGenerator } from '../generator/TJSGenerator';
 import { ajv } from '../validator/Ajv';
 
 function bindAdapter(bind: interfaces.Bind) {

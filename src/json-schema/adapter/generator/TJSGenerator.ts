@@ -1,7 +1,7 @@
 import * as TJS from 'typescript-json-schema';
 import * as fs from 'fs';
 import * as path from 'path';
-import { getFiles } from '../../common/domain/io/file/getFiles';
+import { getFiles } from '../../../common/domain/io/file/getFiles';
 import { injectable } from 'inversify';
 
 const settings: TJS.PartialArgs = { required: true };
