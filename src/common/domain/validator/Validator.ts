@@ -1,3 +1,5 @@
+import { ValidationResult } from './ValidationResult';
+
 export interface Validator<T> {
-  validate(value: unknown): value is T;
+  validate(value: unknown): ValidationResult<T>;
 }
