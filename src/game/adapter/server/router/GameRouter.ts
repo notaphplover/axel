@@ -16,6 +16,8 @@ export class GameRouter implements FastifyRouter {
       GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
     )
     private readonly getGameByIdV1RequestHandler: FastifyRequestHandler,
+    @inject(GAME_ADAPTER_TYPES.server.reqHandler.POST_GAME_V1_REQUEST_HANDLER)
+    private readonly postGameV1RequestHandler: FastifyRequestHandler,
   ) {}
 
   public async injectRoutes(
@@ -37,6 +39,11 @@ export class GameRouter implements FastifyRouter {
         this.getGameByIdV1RequestHandler,
       ),
       schema: { params: { gameId: { type: 'string' } } },
+    });
+    server.post(`/${GAME_ROUTER_PATH_PREFIX}`, {
+      handler: this.postGameV1RequestHandler.handle.bind(
+        this.postGameV1RequestHandler,
+      ),
     });
   }
 }

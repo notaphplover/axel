@@ -13,6 +13,7 @@ import { GameRouter } from '../server/router/GameRouter';
 import { GameToGameApiV1Converter } from '../api/converter/GameToGameApiV1Converter';
 import { GameToGameDbConverter } from '../db/converter/GameToGameDbConverter';
 import { GetGameByIdV1RequestHandler } from '../server/reqHandler/GetGameByIdV1RequestHandler';
+import { PostGameV1RequestHandler } from '../server/reqHandler/PostGameV1RequestHandler';
 import { gameDbModel } from '../db/model/GameDb';
 
 function bindAdapters(bind: interfaces.Bind) {
@@ -33,6 +34,9 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
   ).to(GetGameByIdV1RequestHandler);
+  bind(GAME_ADAPTER_TYPES.server.reqHandler.POST_GAME_V1_REQUEST_HANDLER).to(
+    PostGameV1RequestHandler,
+  );
   bind(GAME_ADAPTER_TYPES.server.router.GAME_ROUTER).to(GameRouter);
   bind(GAME_ADAPTER_TYPES.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR)
     .to(GameCreationQueryApiV1Validator)
