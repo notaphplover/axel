@@ -60,7 +60,7 @@ describe(DotEnvLoader.name, () => {
     });
   });
 
-  describe('.load', () => {
+  describe('.load()', () => {
     let dotEnvLoader: DotEnvLoader<MockType>;
 
     beforeAll(() => {
