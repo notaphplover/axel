@@ -1,3 +1,8 @@
+import {
+  ValidationFail,
+  ValidationResult,
+  ValidationSuccess,
+} from './validator/ValidationResult';
 import { Converter } from './converter/Converter';
 import { Interactor } from './interactor/Interactor';
 import { SearchRepository } from './db/SearchRepository';
@@ -12,7 +17,16 @@ import { isFile } from './io/file/isFile';
 import { mergeReadables } from './io/stream/mergeReadables';
 import { rootDir } from './io/rootDir';
 
-export { Converter, Interactor, SearchRepository, Server, Validator };
+export {
+  Converter,
+  Interactor,
+  SearchRepository,
+  Server,
+  ValidationFail,
+  ValidationResult,
+  ValidationSuccess,
+  Validator,
+};
 
 // eslint-disable-next-line @typescript-eslint/typedef
 export const common = {
