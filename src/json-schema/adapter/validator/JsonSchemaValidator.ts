@@ -1,14 +1,13 @@
 import Ajv, { ErrorObject } from 'ajv';
 import { ValidationResult, Validator } from '../../../common/domain';
-import { inject, injectable, unmanaged } from 'inversify';
-import { JSON_SCHEMA_ADAPTER_TYPES } from '../config/types';
+import { injectable, unmanaged } from 'inversify';
 
 @injectable()
 export abstract class JsonSchemaValidator<T> implements Validator<T> {
   private readonly validator: Ajv.ValidateFunction;
 
   constructor(
-    @inject(JSON_SCHEMA_ADAPTER_TYPES.validator.AJV) ajv: Ajv.Ajv,
+    @unmanaged() ajv: Ajv.Ajv,
     @unmanaged() schema: Record<string, unknown>,
   ) {
     this.validator = ajv.compile(schema);

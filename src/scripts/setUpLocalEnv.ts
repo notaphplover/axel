@@ -15,10 +15,12 @@ const rootDir: string = common.io.rootDir;
 
 const srcFolder: string = join(rootDir, 'src');
 
+const layerModulesFolder: string = join(srcFolder, 'layer-modules');
+
 const modulesBlackList: Set<string> = new Set([
   'json-schema',
+  'layer-modules',
   'scripts',
-  'test',
 ]);
 
 const ENV_MERGE: string = 'local';
@@ -33,7 +35,17 @@ const jsonSchemaGenerator: JsonSchemaGenerator = container.get(
   jsonSchemaDomain.config.types.generator.JSON_SCHEMA_GENERATOR,
 );
 
-function detectModules(baseFolder: string): string[] {
+function detectModulesAtFolders(baseFolders: string[]): string[] {
+  const modules: string[] = [];
+
+  for (const folder of baseFolders) {
+    modules.push(...detectModulesAtFolder(folder));
+  }
+
+  return modules;
+}
+
+function detectModulesAtFolder(baseFolder: string): string[] {
   return getDirectories(baseFolder)
     .filter((folderName: string) => !modulesBlackList.has(folderName))
     .map((folderName: string) => join(baseFolder, folderName));
@@ -107,7 +119,10 @@ function mergeEnvFiles(
 void (async () => {
   console.log('Scanning for modules...');
 
-  const modulePaths: string[] = detectModules(srcFolder);
+  const modulePaths: string[] = detectModulesAtFolders([
+    srcFolder,
+    layerModulesFolder,
+  ]);
 
   console.log(`Found ${modulePaths.length} modules.`);
 
