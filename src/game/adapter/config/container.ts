@@ -4,7 +4,7 @@ import { FindGameInteractor } from '../../domain/interactor/FindGameInteractor';
 import { GAME_ADAPTER_TYPES } from '../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../domain/config/types';
 import { GameCreationQueryApiV1Validator } from '../api/validator/GameCreationQueryApiV1Validator';
-import { GameCreationQueryToGamesConverter } from '../../domain/converter/GameCreationQueryToGamesConverter';
+import { GameCreationQueryToNoIdGamesConverter } from '../../domain/converter/GameCreationQueryToNoIdGamesConverter';
 import { GameDbInsertRepository } from '../db/repository/GameDbInsertRepository';
 import { GameDbSearchReporitory } from '../db/repository/GameDbSearchRepository';
 import { GameDbToGameConverter } from '../db/converter/GameDbToGameConverter';
@@ -44,9 +44,9 @@ function bindAdapters(bind: interfaces.Bind) {
 }
 
 function bindDomain(bind: interfaces.Bind) {
-  bind(GAME_DOMAIN_TYPES.converter.GAME_CREATION_QUERY_TO_GAMES_CONVERTER).to(
-    GameCreationQueryToGamesConverter,
-  );
+  bind(
+    GAME_DOMAIN_TYPES.converter.GAME_CREATION_QUERY_TO_NO_ID_GAMES_CONVERTER,
+  ).to(GameCreationQueryToNoIdGamesConverter);
   bind(GAME_DOMAIN_TYPES.interactor.CREATE_GAMES_INTERACTOR).to(
     CreateGamesInteractor,
   );

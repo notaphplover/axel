@@ -7,6 +7,7 @@ import { injectable } from 'inversify';
 export class GameToGameApiV1Converter implements Converter<Game, GameApiV1> {
   public transform(input: Game): GameApiV1 {
     return {
+      id: input.id,
       round: input.round,
     };
   }

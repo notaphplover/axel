@@ -5,33 +5,34 @@ import { injectable } from 'inversify';
 
 @injectable()
 export abstract class MongooseInsertRepository<
-  TModel,
+  TInModel,
+  TOutModel,
   TModelDb extends Document
-> implements InsertRepository<TModel> {
+> implements InsertRepository<TInModel, TOutModel> {
   constructor(
     protected readonly model: Model<TModelDb>,
-    protected readonly modelDbToModelConverter: Converter<TModelDb, TModel>,
-    protected readonly modelToModelDbConverter: Converter<TModel, TModelDb>,
+    protected readonly modelDbToModelConverter: Converter<TModelDb, TOutModel>,
+    protected readonly modelToModelDbConverter: Converter<TInModel, TModelDb>,
   ) {}
 
-  public async insert(entities: TModel[]): Promise<TModel[]> {
-    const entitiesDb: TModelDb[] = entities.map((entity: TModel) =>
+  public async insert(entities: TInModel[]): Promise<TOutModel[]> {
+    const entitiesDb: TModelDb[] = entities.map((entity: TInModel) =>
       this.modelToModelDbConverter.transform(entity),
     );
     const entitiesDbCreated: TModelDb[] = await this.model.insertMany(
       entitiesDb,
     );
-    const entitiesCreated: TModel[] = entitiesDbCreated.map(
+    const entitiesCreated: TOutModel[] = entitiesDbCreated.map(
       (entityDb: TModelDb) => this.modelDbToModelConverter.transform(entityDb),
     );
 
     return entitiesCreated;
   }
 
-  public async insertOne(entity: TModel): Promise<TModel> {
+  public async insertOne(entity: TInModel): Promise<TOutModel> {
     const entityDb: TModelDb = this.modelToModelDbConverter.transform(entity);
     const entityDbCreated: TModelDb = await this.model.insertMany(entityDb);
-    const entityCreated: TModel = this.modelDbToModelConverter.transform(
+    const entityCreated: TOutModel = this.modelDbToModelConverter.transform(
       entityDbCreated,
     );
 

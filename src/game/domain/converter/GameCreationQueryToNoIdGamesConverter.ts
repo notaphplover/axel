@@ -1,12 +1,12 @@
 import { Converter } from '../../../common/domain';
-import { Game } from '../model/Game';
 import { GameCreationQuery } from '../query/GameCreationQuery';
+import { NoIdGame } from '../model/Game';
 import { injectable } from 'inversify';
 
 @injectable()
-export class GameCreationQueryToGamesConverter
-  implements Converter<GameCreationQuery, Game[]> {
-  public transform(input: GameCreationQuery): Game[] {
+export class GameCreationQueryToNoIdGamesConverter
+  implements Converter<GameCreationQuery, NoIdGame[]> {
+  public transform(input: GameCreationQuery): NoIdGame[] {
     return [{ round: input.round }];
   }
 }

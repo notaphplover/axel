@@ -1,13 +1,14 @@
+import { Game, NoIdGame } from '../../../domain/model/Game';
 import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../config/types';
-import { Game } from '../../../domain/model/Game';
 import { GameDb } from '../model/GameDb';
 import { Model } from 'mongoose';
 import { MongooseInsertRepository } from '../../../../layer-modules/db/adapter';
 
 @injectable()
 export class GameDbInsertRepository extends MongooseInsertRepository<
+  NoIdGame,
   Game,
   GameDb
 > {

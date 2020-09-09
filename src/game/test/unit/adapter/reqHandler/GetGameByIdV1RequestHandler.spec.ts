@@ -9,7 +9,7 @@ import { GetGameByIdV1RequestHandler } from '../../../../adapter/server/reqHandl
 import { StatusCodes } from 'http-status-codes';
 import { commonTest } from '../../../../../common/test';
 import { gameApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/gameApiV1.fixture';
-import { gameFixtureFactory } from '../../../fixtures/domain/model/game.fixture';
+import { gameFixtureFactory } from '../../../fixtures/domain/model/fixtures';
 
 describe(GetGameByIdV1RequestHandler.name, () => {
   let findGameInteractor: Interactor<GameFindQuery, Promise<Game | null>>;

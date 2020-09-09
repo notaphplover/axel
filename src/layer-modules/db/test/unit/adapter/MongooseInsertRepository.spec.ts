@@ -12,6 +12,7 @@ type ModelMockDb = ModelMock & Document;
 
 class MongooseInsertRepositoryMock extends MongooseInsertRepository<
   ModelMock,
+  ModelMock,
   ModelMockDb
 > {}
 
@@ -25,6 +26,7 @@ describe(MongooseInsertRepository.name, () => {
   let modelDbToModelConverter: Converter<ModelMockDb, ModelMock>;
   let modelToModelDbConverter: Converter<ModelMock, ModelMockDb>;
   let mongooseInsertRepository: MongooseInsertRepository<
+    ModelMock,
     ModelMock,
     ModelMockDb
   >;

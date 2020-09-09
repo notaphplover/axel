@@ -7,6 +7,7 @@ import { injectable } from 'inversify';
 export class GameDbToGameConverter implements Converter<GameDb, Game> {
   public transform(input: GameDb): Game {
     return {
+      id: input._id as string,
       round: input.round,
     };
   }
