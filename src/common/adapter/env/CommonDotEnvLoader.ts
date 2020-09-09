@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { CommonDotEnvVariables } from './CommonDotEnvVariables';
-import { DotEnvLoader } from './DotEnvLoader';
+import { DotEnvLoader } from '../../../layer-modules/env/adapter';
 import { Index } from '../../../layer-modules/env/domain';
 import { common } from '../../domain';
 import { env } from 'process';
