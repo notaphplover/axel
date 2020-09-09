@@ -57,7 +57,7 @@
     "fastify": "^3.3.0",
     "http-status-codes": "^2.1.2",
     "inversify": "^5.0.1",
-    "mongoose": "^5.10.3",
+    "mongoose": "^5.10.4",
     "reflect-metadata": "^0.1.13"
   }
 }
