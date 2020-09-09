@@ -2,6 +2,7 @@ import { Converter } from '../../../../common/domain';
 import { FilterQuery } from 'mongoose';
 import { GameDb } from '../../../adapter/db/model/GameDb';
 import { GameFindQuery } from '../../../domain/query/GameFindQuery';
+import { Types } from 'mongoose';
 import { common } from '../../../../common/domain';
 import { injectable } from 'inversify';
 
@@ -14,7 +15,7 @@ export class GameFindQueryToGameDbFilterQueryConverter
     const filterQuery: FilterQuery<GameDb> = {};
 
     if (hasValue(input.id)) {
-      filterQuery._id = input.id;
+      filterQuery._id = Types.ObjectId(input.id);
     }
 
     if (hasValue(input.round)) {
