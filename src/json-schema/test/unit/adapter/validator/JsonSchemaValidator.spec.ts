@@ -3,8 +3,8 @@ import Ajv, { ErrorObject } from 'ajv';
 import {
   ValidationFail,
   ValidationSuccess,
-} from '../../../../domain/validator/ValidationResult';
-import { JsonSchemaValidator } from '../../../../../json-schema/adapter';
+} from '../../../../../common/domain/validator/ValidationResult';
+import { JsonSchemaValidator } from '../../../../adapter';
 
 interface TypeMock {
   foo: string;
