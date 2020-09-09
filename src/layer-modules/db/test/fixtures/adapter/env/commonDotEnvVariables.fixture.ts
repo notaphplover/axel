@@ -1,6 +1,6 @@
-import { CommonDotEnvVariables } from '../../../../adapter/env/CommonDotEnvVariables';
+import { CommonDotEnvVariables } from '../../../../adapter/env/DbDotEnvVariables';
 import { CommonDotEnvVariablesFixtureFactory } from './CommonDotEnvVariablesFixtureFactory';
-import { FixtureFactory } from '../../domain/fixture/FixtureFactory';
+import { FixtureFactory } from '../../../../../../common/test/fixtures/domain/fixture/FixtureFactory';
 
 const commonDotEnvVariables: CommonDotEnvVariables = {
   MONGO_CONNECTION_AUTH_SOURCE: 'source',

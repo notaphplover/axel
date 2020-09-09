@@ -1,13 +1,13 @@
 import { inject, injectable } from 'inversify';
-import { COMMON_DOMAIN_TYPES } from '../../../common/domain/config/types';
-import { CommonDotEnvVariables } from '../../../common/adapter/env/CommonDotEnvVariables';
+import { CommonDotEnvVariables } from './env/DbDotEnvVariables';
+import { DB_ADAPTER_TYPES } from './config/types';
 import { EnvLoader } from '../../env/domain';
 import { connect } from 'mongoose';
 
 @injectable()
 export class MongooseConector {
   constructor(
-    @inject(COMMON_DOMAIN_TYPES.COMMON_ENV_LOADER)
+    @inject(DB_ADAPTER_TYPES.env.DB_ENV_LOADER)
     private readonly commonEnvLoader: EnvLoader<CommonDotEnvVariables>,
   ) {}
 
