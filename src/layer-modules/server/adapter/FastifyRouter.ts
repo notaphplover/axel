@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
-import { ApiVersion } from '../../../common/adapter';
+import { ApiVersion } from '../../api/adapter';
 
 export interface FastifyRouter<
   TOptions extends FastifyServerOptions = FastifyServerOptions

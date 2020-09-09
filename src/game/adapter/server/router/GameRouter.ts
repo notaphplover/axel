@@ -4,7 +4,7 @@ import {
   FastifyRouter,
 } from '../../../../layer-modules/server/adapter';
 import { inject, injectable } from 'inversify';
-import { ApiVersion } from '../../../../common/adapter';
+import { ApiVersion } from '../../../../layer-modules/api/adapter';
 import { GAME_ADAPTER_TYPES } from '../../config/types';
 
 const GAME_ROUTER_PATH_PREFIX: string = 'games';
