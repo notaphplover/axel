@@ -14,7 +14,13 @@ export class GameCreationQueryApiV1Validator extends JsonSchemaFileValidator<
   ) {
     super(
       ajv,
-      join(__dirname, '../../json-schema/GameCreationQueryApiV1.schema'),
+      join(
+        __dirname,
+        '..',
+        '..',
+        'json-schema',
+        'GameCreationQueryApiV1.schema',
+      ),
     );
   }
 }
