@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { CommonDotEnvVariables } from '../../../../../common/adapter/env/CommonDotEnvVariables';
-import { EnvLoader } from '../../../../../common/domain/env/EnvLoader';
+import { EnvLoader } from '../../../../env/domain';
 import { MongooseConector } from '../../../adapter/MongooseConnector';
 import { commonDotEnvVariablesFixtureFactory } from '../../../../../common/test/fixtures/adapter/env/commonDotEnvVariables.fixture';
 

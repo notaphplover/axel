@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { COMMON_DOMAIN_TYPES } from '../../../common/domain/config/types';
 import { CommonDotEnvVariables } from '../../../common/adapter/env/CommonDotEnvVariables';
-import { EnvLoader } from '../../../common/domain/env/EnvLoader';
+import { EnvLoader } from '../../env/domain';
 import { connect } from 'mongoose';
 
 @injectable()
