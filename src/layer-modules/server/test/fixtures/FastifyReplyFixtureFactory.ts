@@ -1,5 +1,5 @@
 import { FastifyReply } from 'fastify';
-import { FixtureFactory } from '../../domain/fixture/FixtureFactory';
+import { FixtureFactory } from '../../../../common/test';
 
 export class FastifyReplyFixtureFactory
   implements FixtureFactory<FastifyReply> {

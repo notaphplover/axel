@@ -1,6 +1,6 @@
 import { FixtureFactory } from './fixtures/domain/fixture/FixtureFactory';
 import { FixtureFactoryImpl } from './fixtures/domain/fixture/FixtureFactoryImpl';
-import { fastifyReplyFixtureFactory } from './fixtures/adapter/server/fastify.fixture';
+import { fastifyReplyFixtureFactory } from '../../layer-modules/server/test/fixtures/fastify.fixture';
 
 export { FixtureFactory, FixtureFactoryImpl };
 

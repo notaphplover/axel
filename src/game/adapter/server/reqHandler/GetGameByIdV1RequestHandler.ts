@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../common/domain';
-import { FastifyRequestHandler } from '../../../../common/adapter';
+import { FastifyRequestHandler } from '../../../../layer-modules/server/adapter';
 import { GAME_ADAPTER_TYPES } from '../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
 import { Game } from '../../../domain/model/Game';

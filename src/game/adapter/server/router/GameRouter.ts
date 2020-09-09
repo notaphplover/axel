@@ -1,10 +1,10 @@
+import { FastifyInstance, FastifyServerOptions } from 'fastify';
 import {
-  ApiVersion,
   FastifyRequestHandler,
   FastifyRouter,
-} from '../../../../common/adapter';
-import { FastifyInstance, FastifyServerOptions } from 'fastify';
+} from '../../../../layer-modules/server/adapter';
 import { inject, injectable } from 'inversify';
+import { ApiVersion } from '../../../../common/adapter';
 import { GAME_ADAPTER_TYPES } from '../../config/types';
 
 const GAME_ROUTER_PATH_PREFIX: string = 'games';
