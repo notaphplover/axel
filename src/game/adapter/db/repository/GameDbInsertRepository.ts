@@ -4,7 +4,7 @@ import { GAME_ADAPTER_TYPES } from '../../config/types';
 import { Game } from '../../../domain/model/Game';
 import { GameDb } from '../model/GameDb';
 import { Model } from 'mongoose';
-import { MongooseInsertRepository } from '../../../../common/adapter';
+import { MongooseInsertRepository } from '../../../../layer-modules/db/adapter';
 
 @injectable()
 export class GameDbInsertRepository extends MongooseInsertRepository<

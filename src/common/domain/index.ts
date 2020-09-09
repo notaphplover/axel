@@ -5,7 +5,6 @@ import {
 } from './validator/ValidationResult';
 import { Converter } from './converter/Converter';
 import { Interactor } from './interactor/Interactor';
-import { SearchRepository } from './db/SearchRepository';
 import { Server } from './server/Server';
 import { Validator } from './validator/Validator';
 import { floatToInt } from './parse/floatToInt';
@@ -20,7 +19,6 @@ import { rootDir } from './io/rootDir';
 export {
   Converter,
   Interactor,
-  SearchRepository,
   Server,
   ValidationFail,
   ValidationResult,

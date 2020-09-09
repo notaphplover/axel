@@ -7,7 +7,7 @@ import {
 } from 'fastify';
 import { FastifyRouter } from '../../../../../adapter/server/model/FastifyRouter';
 import { FastifyServer } from '../../../../../adapter/server/model/FastifyServer';
-import { MongooseConector } from '../../../../../adapter/db/MongooseConnector';
+import { MongooseConector } from '../../../../../../layer-modules/db/adapter';
 
 jest.mock('fastify', () =>
   jest.fn().mockImplementation(() => {

@@ -3,7 +3,7 @@ import { inject, injectable } from 'inversify';
 import { GAME_DOMAIN_TYPES } from '../config/types';
 import { Game } from '../model/Game';
 import { GameCreationQuery } from '../query/GameCreationQuery';
-import { InsertRepository } from '../../../common/domain/db/InsertRepository';
+import { InsertRepository } from '../../../layer-modules/db/domain';
 
 @injectable()
 export class CreateGamesInteractor

@@ -1,10 +1,10 @@
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import { inject, injectable } from 'inversify';
 import { ApiVersion } from '../../api/ApiVersion';
-import { COMMON_ADAPTER_TYPES } from '../../config/types';
 import { FastifyRouter } from './FastifyRouter';
-import { MongooseConector } from '../../db/MongooseConnector';
+import { MongooseConector } from '../../../../layer-modules/db/adapter';
 import { Server } from '../../../domain/server/Server';
+import { dbAdapter } from '../../../../layer-modules/db/adapter';
 import { gameAdapter } from '../../../../game/adapter';
 
 @injectable()
@@ -14,7 +14,7 @@ export class FastifyServer implements Server {
   constructor(
     @inject(gameAdapter.config.types.server.router.GAME_ROUTER)
     gameRouter: FastifyRouter,
-    @inject(COMMON_ADAPTER_TYPES.db.MONGOOSE_CONNECTOR)
+    @inject(dbAdapter.config.types.db.MONGOOSE_CONNECTOR)
     private readonly mongooseConnector: MongooseConector,
   ) {
     this.routers = [gameRouter];

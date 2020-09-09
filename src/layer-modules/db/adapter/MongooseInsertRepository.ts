@@ -1,6 +1,6 @@
 import { Document, Model } from 'mongoose';
-import { Converter } from '../../domain/converter/Converter';
-import { InsertRepository } from '../../domain/db/InsertRepository';
+import { Converter } from '../../../common/domain';
+import { InsertRepository } from '../domain/InsertRepository';
 import { injectable } from 'inversify';
 
 @injectable()

@@ -1,6 +1,6 @@
 import { Document, FilterQuery, Model } from 'mongoose';
-import { Converter } from '../../domain';
-import { SearchRepository } from '../../domain';
+import { Converter } from '../../../common/domain';
+import { SearchRepository } from '../domain/SearchRepository';
 import { injectable } from 'inversify';
 
 @injectable()

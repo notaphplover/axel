@@ -5,7 +5,7 @@ import { GAME_ADAPTER_TYPES } from '../../config/types';
 import { Game } from '../../../domain/model/Game';
 import { GameDb } from '../model/GameDb';
 import { GameFindQuery } from '../../../domain/query/GameFindQuery';
-import { MongooseSearchRepository } from '../../../../common/adapter';
+import { MongooseSearchRepository } from '../../../../layer-modules/db/adapter';
 
 @injectable()
 export class GameDbSearchReporitory extends MongooseSearchRepository<

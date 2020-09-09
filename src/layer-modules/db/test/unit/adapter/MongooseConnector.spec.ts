@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-import { CommonDotEnvVariables } from '../../../../adapter/env/CommonDotEnvVariables';
-import { EnvLoader } from '../../../../domain/env/EnvLoader';
-import { MongooseConector } from '../../../../adapter/db/MongooseConnector';
-import { commonDotEnvVariablesFixtureFactory } from '../../../fixtures/adapter/env/commonDotEnvVariables.fixture';
+import { CommonDotEnvVariables } from '../../../../../common/adapter/env/CommonDotEnvVariables';
+import { EnvLoader } from '../../../../../common/domain/env/EnvLoader';
+import { MongooseConector } from '../../../adapter/MongooseConnector';
+import { commonDotEnvVariablesFixtureFactory } from '../../../../../common/test/fixtures/adapter/env/commonDotEnvVariables.fixture';
 
 jest.mock('mongoose');
 import { connect } from 'mongoose';

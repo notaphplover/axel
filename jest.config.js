@@ -4,7 +4,11 @@ module.exports = {
     {
       displayName: 'Unit',
       collectCoverageFrom: ['**/*.ts'],
-      coveragePathIgnorePatterns: ['/node_modules/', '<rootDir>/*/test/'],
+      coveragePathIgnorePatterns: [
+        '/node_modules/',
+        '<rootDir>/*/test/',
+        '<rootDir>/layer-modules/*/test/',
+      ],
       coverageThreshold: {
         global: {
           branches: 70,
@@ -16,7 +20,10 @@ module.exports = {
       moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
       rootDir: 'src',
       testEnvironment: 'node',
-      testMatch: ['<rootDir>/*/test/unit/**/*.spec.ts'],
+      testMatch: [
+        '<rootDir>/*/test/unit/**/*.spec.ts',
+        '<rootDir>/layer-modules/*/test/unit/**/*.spec.ts',
+      ],
       testPathIgnorePatterns: ['/node_modules'],
       transform: {
         '^.+\\.ts?$': 'ts-jest',
@@ -25,7 +32,11 @@ module.exports = {
     {
       displayName: 'End to End',
       collectCoverageFrom: ['**/*.ts'],
-      coveragePathIgnorePatterns: ['/node_modules/', '<rootDir>/*/test/'],
+      coveragePathIgnorePatterns: [
+        '/node_modules/',
+        '<rootDir>/*/test/',
+        '<rootDir>/layer-modules/*/test/',
+      ],
       coverageThreshold: {
         global: {
           branches: 70,
@@ -37,7 +48,10 @@ module.exports = {
       moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
       rootDir: 'src',
       testEnvironment: 'node',
-      testMatch: ['<rootDir>/*/test/end-to-end/**/*.spec.ts'],
+      testMatch: [
+        '<rootDir>/*/test/end-to-end/**/*.spec.ts',
+        '<rootDir>/layer-modules/*/test/end-to-end/**/*.spec.ts',
+      ],
       transform: {
         '^.+\\.ts?$': 'ts-jest',
       },

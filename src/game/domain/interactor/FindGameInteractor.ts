@@ -1,8 +1,9 @@
-import { Interactor, SearchRepository } from '../../../common/domain';
 import { inject, injectable } from 'inversify';
 import { GAME_DOMAIN_TYPES } from '../config/types';
 import { Game } from '../model/Game';
 import { GameFindQuery } from '../query/GameFindQuery';
+import { Interactor } from '../../../common/domain';
+import { SearchRepository } from '../../../layer-modules/db/domain';
 
 @injectable()
 export class FindGameInteractor

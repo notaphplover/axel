@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { Document, Model } from 'mongoose';
-import { Converter } from '../../../../domain';
-import { MongooseInsertRepository } from '../../../../adapter';
+import { Converter } from '../../../../../common/domain';
+import { MongooseInsertRepository } from '../../../adapter/MongooseInsertRepository';
 
 class ModelMock {
   constructor(public foo: string) {}
