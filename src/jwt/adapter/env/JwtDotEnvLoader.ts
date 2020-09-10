@@ -15,6 +15,9 @@ export class JwtDotEnvLoader extends DotEnvLoader<JwtDotEnvVariables> {
 
   protected parseIndex(): Index<JwtDotEnvVariables> {
     return {
+      JWT_AUDIENCE: env.JWT_AUDIENCE as string,
+      JWT_EXPIRATION_MS: parseInt(env.JWT_EXPIRATION_MS as string),
+      JWT_ISSUER: env.JWT_ISSUER as string,
       JWT_RSA_PRIVATE_KEY: env.JWT_RSA_PRIVATE_KEY as string,
       JWT_RSA_PUBLIC_KEY: env.JWT_RSA_PUBLIC_KEY as string,
     };
