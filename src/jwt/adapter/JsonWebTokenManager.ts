@@ -1,9 +1,9 @@
 import { inject, injectable } from 'inversify';
+import jwt, { VerifyErrors } from 'jsonwebtoken';
 import { EnvLoader } from '../../layer-modules/env/domain';
 import { JWT_ADAPTER_TYPES } from './config/types';
 import { JwtDotEnvVariables } from './env/JwtDotEnvVariables';
 import { JwtManager } from '../domain';
-import jwt from 'jsonwebtoken';
 
 @injectable()
 export class JsonWebTokenManager<TToken extends Record<string, unknown>>
@@ -35,14 +35,56 @@ export class JsonWebTokenManager<TToken extends Record<string, unknown>>
     };
   }
 
-  public create(payload: TToken): string {
-    return jwt.sign(payload, this.privateKey, this.signOptions);
+  public async create(payload: TToken): Promise<string> {
+    return this.promisifyJwtSign(payload);
   }
 
-  public parse(jwtToken: string): TToken {
-    return (jwt.verify(jwtToken, this.publicKey, this.verifyOptions) as Record<
-      string,
-      unknown
-    >) as TToken;
+  public async parse(jwtToken: string): Promise<TToken> {
+    return this.promisifyJwtVerify(jwtToken);
+  }
+
+  private async promisifyJwtSign(payload: TToken): Promise<string> {
+    return new Promise(
+      (
+        resolve: (value: string) => void,
+        reject: (reason?: unknown) => void,
+      ) => {
+        jwt.sign(
+          payload,
+          this.privateKey,
+          this.signOptions,
+          (err: Error | null, encoded: string | undefined) => {
+            if (err === null) {
+              resolve(encoded as string);
+            } else {
+              reject(err);
+            }
+          },
+        );
+      },
+    );
+  }
+
+  private async promisifyJwtVerify(jwtToken: string): Promise<TToken> {
+    return new Promise(
+      (
+        resolve: (value: TToken) => void,
+        reject: (reason?: unknown) => void,
+      ) => {
+        jwt.verify(
+          jwtToken,
+          this.publicKey,
+          this.verifyOptions,
+          // eslint-disable-next-line @typescript-eslint/ban-types
+          (err: VerifyErrors | null, decoded: object | undefined) => {
+            if (err === null) {
+              resolve(decoded as TToken);
+            } else {
+              reject(err);
+            }
+          },
+        );
+      },
+    );
   }
 }

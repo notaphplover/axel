@@ -1,4 +1,4 @@
 export interface JwtManager<TToken> {
-  create(payload: TToken): string;
-  parse(jwtToken: string): TToken;
+  create(payload: TToken): Promise<string>;
+  parse(jwtToken: string): Promise<TToken>;
 }
