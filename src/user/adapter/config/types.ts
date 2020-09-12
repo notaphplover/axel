@@ -24,4 +24,9 @@ export const USER_ADAPTER_TYPES = {
       USER_DB_MODEL: Symbol.for('UserDbModel'),
     },
   },
+  server: {
+    reqHandler: {
+      POST_USER_V1_REQUEST_HANDLER: Symbol.for('PostUserV1RequestHandler'),
+    },
+  },
 };
