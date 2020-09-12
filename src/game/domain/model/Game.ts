@@ -1,7 +1,4 @@
-export interface NoIdGame {
-  round: number;
-}
-
-export interface Game extends NoIdGame {
+export interface Game {
   id: string;
+  round: number;
 }

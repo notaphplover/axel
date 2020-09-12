@@ -1,8 +1,8 @@
 import mongoose, { Document, Model, Schema, Types } from 'mongoose';
-import { NoIdGame } from '../../../domain/model/Game';
 
-export interface GameDb extends NoIdGame, Document {
+export interface GameDb extends Document {
   _id: Types.ObjectId;
+  round: number;
 }
 
 const gameDbSchema: Schema = new Schema({
