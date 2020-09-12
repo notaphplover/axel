@@ -22,7 +22,10 @@ export class UserDbInsertRepository extends MongooseInsertRepository<
     @inject(
       USER_ADAPTER_TYPES.db.converter.USER_CREATION_QUERY_TO_USER_DBS_CONVERTER,
     )
-    userCreationQueryToUserDbsConverter: Converter<UserCreationQuery, UserDb[]>,
+    userCreationQueryToUserDbsConverter: Converter<
+      UserCreationQuery,
+      Promise<UserDb[]>
+    >,
   ) {
     super(model, userDbToUserConverter, userCreationQueryToUserDbsConverter);
   }
