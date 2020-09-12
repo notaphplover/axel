@@ -9,9 +9,16 @@ import { UserDbInsertRepository } from '../db/repository/UserDbInsertRepository'
 import { UserDbSearchReporitory } from '../db/repository/UserDbSearchRepository';
 import { UserDbToUserConverter } from '../db/converter/UserDbToUserConverter';
 import { UserFindQueryToUserDbFilterQueryConverter } from '../db/converter/UserFindQueryToUserDbFilterQueryConverter';
+import { UserToUserApiV1Converter } from '../api/converter/UserToUserApiV1Converter';
 import { userDbModel } from '../db/model/UserDb';
 
 function bindAdapters(bind: interfaces.Bind) {
+  bind(USER_ADAPTER_TYPES.api.converter.USER_TO_USER_API_V1_CONVERTER).to(
+    UserToUserApiV1Converter,
+  );
+  bind(
+    USER_ADAPTER_TYPES.api.validator.USER_CREATION_QUERY_API_V1_VALIDATOR,
+  ).to(UserCreationQueryApiV1Validator);
   bind(
     USER_ADAPTER_TYPES.db.converter.USER_CREATION_QUERY_TO_USER_DBS_CONVERTER,
   ).to(UserCreationQueryToUserDbsConverter);
@@ -23,9 +30,6 @@ function bindAdapters(bind: interfaces.Bind) {
       .USER_FIND_QUERY_TO_USER_DB_FILTER_QUERY_CONVERTER,
   ).to(UserFindQueryToUserDbFilterQueryConverter);
   bind(USER_ADAPTER_TYPES.db.model.USER_DB_MODEL).toConstantValue(userDbModel);
-  bind(
-    USER_ADAPTER_TYPES.api.validator.USER_CREATION_QUERY_API_V1_VALIDATOR,
-  ).to(UserCreationQueryApiV1Validator);
 }
 
 function bindDomain(bind: interfaces.Bind) {
