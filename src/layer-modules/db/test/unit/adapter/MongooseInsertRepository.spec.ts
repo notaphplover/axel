@@ -26,8 +26,14 @@ const queryMockFixture: QueryMock = { foo: FOO_VALUE };
 
 describe(MongooseInsertRepository.name, () => {
   let model: Model<ModelMockDb>;
-  let modelDbToModelConverter: Converter<ModelMockDb, ModelMock>;
-  let queryToInputModelDbs: Converter<QueryMock, ModelMockDb[]>;
+  let modelDbToModelConverter: Converter<
+    ModelMockDb,
+    ModelMock | Promise<ModelMock>
+  >;
+  let queryToInputModelDbs: Converter<
+    QueryMock,
+    ModelMockDb[] | Promise<ModelMockDb[]>
+  >;
 
   let mongooseInsertRepository: MongooseInsertRepository<
     ModelMock,
