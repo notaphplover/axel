@@ -17,6 +17,7 @@ import { StatusCodes } from 'http-status-codes';
 import { commonTest } from '../../../../../common/test';
 import { gameApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/fixtures';
 import { gameCreationQueryApiV1FixtureFactory } from '../../../fixtures/adapter/api/query/fixtures';
+import { gameCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { gameFixtureFactory } from '../../../fixtures/domain/model/fixtures';
 
 describe(PostGameV1RequestHandler.name, () => {
@@ -78,12 +79,9 @@ describe(PostGameV1RequestHandler.name, () => {
       });
 
       it('must call createGamesInteractor.interact()', () => {
-        const expectedGameCreationQuery: GameCreationQuery = {
-          round: gameCreationQueryApiV1FixtureFactory.get().round,
-        };
         expect(createGamesInteractor.interact).toHaveBeenCalledTimes(1);
         expect(createGamesInteractor.interact).toHaveBeenCalledWith(
-          expectedGameCreationQuery,
+          gameCreationQueryFixtureFactory.get(),
         );
       });
 
