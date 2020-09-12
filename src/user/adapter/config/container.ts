@@ -2,12 +2,16 @@ import { ContainerModule, interfaces } from 'inversify';
 import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
 import { USER_ADAPTER_TYPES } from './types';
 import { USER_DOMAIN_TYPES } from '../../domain/config/types';
+import { UserCreationQueryToUserDbsConverter } from '../db/converter/UserCreationQueryToUserDbsConverter';
 import { UserDbSearchReporitory } from '../db/repository/UserDbSearchRepository';
 import { UserDbToUserConverter } from '../db/converter/UserDbToUserConverter';
 import { UserFindQueryToUserDbFilterQueryConverter } from '../db/converter/UserFindQueryToUserDbFilterQueryConverter';
 import { userDbModel } from '../db/model/UserDb';
 
 function bindAdapters(bind: interfaces.Bind) {
+  bind(
+    USER_ADAPTER_TYPES.db.converter.USER_CREATION_QUERY_TO_USER_DBS_CONVERTER,
+  ).to(UserCreationQueryToUserDbsConverter);
   bind(USER_ADAPTER_TYPES.db.converter.USER_DB_TO_USER_CONVERTER).to(
     UserDbToUserConverter,
   );

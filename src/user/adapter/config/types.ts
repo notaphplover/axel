@@ -2,6 +2,9 @@
 export const USER_ADAPTER_TYPES = {
   db: {
     converter: {
+      USER_CREATION_QUERY_TO_USER_DBS_CONVERTER: Symbol.for(
+        'UserCreationQueryToUserDbsConverter',
+      ),
       USER_DB_TO_USER_CONVERTER: Symbol.for('UserDbToUserConverter'),
       USER_FIND_QUERY_TO_USER_DB_FILTER_QUERY_CONVERTER: Symbol.for(
         'UserFindQueryToUserDbFilterQueryConverter',
