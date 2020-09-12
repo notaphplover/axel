@@ -1,7 +1,7 @@
 import { DbDotEnvVariables } from '../../../../adapter/env/DbDotEnvVariables';
-import { FixtureFactoryImpl } from '../../../../../../common/test/fixtures/domain/fixture/FixtureFactoryImpl';
+import { PrototypeBasedFixtureFactory } from '../../../../../../common/test';
 
-export class DbDotEnvVariablesFixtureFactory extends FixtureFactoryImpl<
+export class DbDotEnvVariablesFixtureFactory extends PrototypeBasedFixtureFactory<
   DbDotEnvVariables
 > {
   public get(): DbDotEnvVariables {

@@ -1,6 +1,6 @@
 import { FixtureFactory } from './FixtureFactory';
 
-export abstract class FixtureFactoryImpl<TData>
+export abstract class PrototypeBasedFixtureFactory<TData>
   implements FixtureFactory<TData> {
   constructor(protected data: TData) {}
 

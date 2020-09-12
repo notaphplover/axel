@@ -1,7 +1,7 @@
-import { FixtureFactoryImpl } from '../../../../../common/test';
 import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
+import { PrototypeBasedFixtureFactory } from '../../../../../common/test';
 
-export class GameFindQueryFixtureFactory extends FixtureFactoryImpl<
+export class GameFindQueryFixtureFactory extends PrototypeBasedFixtureFactory<
   GameFindQuery
 > {
   public get(): GameFindQuery {

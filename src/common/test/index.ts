@@ -1,8 +1,8 @@
 import { FixtureFactory } from './fixtures/domain/fixture/FixtureFactory';
-import { FixtureFactoryImpl } from './fixtures/domain/fixture/FixtureFactoryImpl';
+import { PrototypeBasedFixtureFactory } from './fixtures/domain/fixture/PrototypeBasedFixtureFactory';
 import { fastifyReplyFixtureFactory } from '../../layer-modules/server/test/fixtures/fastify.fixture';
 
-export { FixtureFactory, FixtureFactoryImpl };
+export { FixtureFactory, PrototypeBasedFixtureFactory };
 
 // eslint-disable-next-line @typescript-eslint/typedef
 export const commonTest = {
