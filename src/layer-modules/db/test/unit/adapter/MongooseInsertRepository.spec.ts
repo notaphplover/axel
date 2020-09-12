@@ -10,9 +10,11 @@ class ModelMock {
 
 type ModelMockDb = ModelMock & Document;
 
+type QueryMock = ModelMock;
+
 class MongooseInsertRepositoryMock extends MongooseInsertRepository<
   ModelMock,
-  ModelMock,
+  QueryMock,
   ModelMockDb
 > {}
 
@@ -20,11 +22,13 @@ const FOO_VALUE: string = 'bar';
 
 const modelMockFixture: ModelMock = { foo: FOO_VALUE };
 const modelMockDbFixture: ModelMockDb = { foo: FOO_VALUE } as ModelMockDb;
+const queryMockFixture: QueryMock = { foo: FOO_VALUE };
 
 describe(MongooseInsertRepository.name, () => {
   let model: Model<ModelMockDb>;
   let modelDbToModelConverter: Converter<ModelMockDb, ModelMock>;
-  let modelToModelDbConverter: Converter<ModelMock, ModelMockDb>;
+  let queryToInputModelDbs: Converter<QueryMock, ModelMockDb[]>;
+
   let mongooseInsertRepository: MongooseInsertRepository<
     ModelMock,
     ModelMock,
@@ -39,14 +43,14 @@ describe(MongooseInsertRepository.name, () => {
       transform: jest.fn(),
     };
 
-    modelToModelDbConverter = {
+    queryToInputModelDbs = {
       transform: jest.fn(),
     };
 
     mongooseInsertRepository = new MongooseInsertRepositoryMock(
       model,
       modelDbToModelConverter,
-      modelToModelDbConverter,
+      queryToInputModelDbs,
     );
   });
 
@@ -61,17 +65,17 @@ describe(MongooseInsertRepository.name, () => {
         (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
           modelMockFixture,
         );
-        (modelToModelDbConverter.transform as jest.Mock).mockReturnValueOnce(
+        (queryToInputModelDbs.transform as jest.Mock).mockReturnValueOnce([
           modelMockDbFixture,
-        );
+        ]);
 
-        result = await mongooseInsertRepository.insert([modelMockFixture]);
+        result = await mongooseInsertRepository.insert(queryMockFixture);
       });
 
       it('must call modelToModelDbPort.transform()', () => {
-        expect(modelToModelDbConverter.transform).toHaveBeenCalledTimes(1);
-        expect(modelToModelDbConverter.transform).toHaveBeenCalledWith(
-          modelMockFixture,
+        expect(queryToInputModelDbs.transform).toHaveBeenCalledTimes(1);
+        expect(queryToInputModelDbs.transform).toHaveBeenCalledWith(
+          queryMockFixture,
         );
       });
 

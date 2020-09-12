@@ -1,5 +1,3 @@
-export interface InsertRepository<TInModel, TOutModel> {
-  insert(entities: TInModel[]): Promise<TOutModel[]>;
-
-  insertOne(entity: TInModel): Promise<TOutModel>;
+export interface InsertRepository<TModel, TQuery> {
+  insert(query: TQuery): Promise<TModel[]>;
 }

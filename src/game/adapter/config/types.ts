@@ -7,8 +7,10 @@ export const GAME_ADAPTER_TYPES = {
   },
   db: {
     converter: {
+      GAME_CREATION_QUERY_TO_GAME_DBS_CONVERTER: Symbol.for(
+        'GameCreationQueryToGameDbsConverter',
+      ),
       GAME_DB_TO_GAME_CONVERTER: Symbol.for('GameDbToGameConverter'),
-      GAME_TO_GAME_DB_CONVERTER: Symbol.for('GameToGameDbConverter'),
       GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER: Symbol.for(
         'GameFindQueryToGameDbFilterQueryConverter',
       ),

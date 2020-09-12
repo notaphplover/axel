@@ -1,10 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_DOMAIN_TYPES = {
-  converter: {
-    GAME_CREATION_QUERY_TO_NO_ID_GAMES_CONVERTER: Symbol.for(
-      'GameCreationQueryToNoIdGamesConverter',
-    ),
-  },
   interactor: {
     CREATE_GAMES_INTERACTOR: Symbol.for('CreateGamesInteractor'),
     FIND_GAME_INTERACTOR: Symbol.for('FindGameInteractor'),

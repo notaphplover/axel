@@ -1,20 +1,23 @@
 import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../config/types';
-import { Game } from '../../../domain/model/Game';
+import { GameCreationQuery } from '../../../domain/query/GameCreationQuery';
 import { GameDb } from '../model/GameDb';
 import { Model } from 'mongoose';
 
 @injectable()
-export class GameToGameDbConverter implements Converter<Game, GameDb> {
+export class GameCreationQueryToGameDbsConverter
+  implements Converter<GameCreationQuery, GameDb[]> {
   constructor(
     @inject(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL)
     private readonly gameDbModel: Model<GameDb>,
   ) {}
 
-  public transform(input: Game): GameDb {
-    return new this.gameDbModel({
-      round: input.round,
-    });
+  public transform(query: GameCreationQuery): GameDb[] {
+    return [
+      new this.gameDbModel({
+        round: query.round,
+      }),
+    ];
   }
 }

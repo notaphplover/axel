@@ -4,14 +4,13 @@ import { FindGameInteractor } from '../../domain/interactor/FindGameInteractor';
 import { GAME_ADAPTER_TYPES } from '../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../domain/config/types';
 import { GameCreationQueryApiV1Validator } from '../api/validator/GameCreationQueryApiV1Validator';
-import { GameCreationQueryToNoIdGamesConverter } from '../../domain/converter/GameCreationQueryToNoIdGamesConverter';
+import { GameCreationQueryToGameDbsConverter } from '../db/converter/GameCreationQueryToGameDbsConverter';
 import { GameDbInsertRepository } from '../db/repository/GameDbInsertRepository';
 import { GameDbSearchReporitory } from '../db/repository/GameDbSearchRepository';
 import { GameDbToGameConverter } from '../db/converter/GameDbToGameConverter';
 import { GameFindQueryToGameDbFilterQueryConverter } from '../db/converter/GameFindQueryToGameDbFilterQueryConverter';
 import { GameRouter } from '../server/router/GameRouter';
 import { GameToGameApiV1Converter } from '../api/converter/GameToGameApiV1Converter';
-import { GameToGameDbConverter } from '../db/converter/GameToGameDbConverter';
 import { GetGameByIdV1RequestHandler } from '../server/reqHandler/GetGameByIdV1RequestHandler';
 import { PostGameV1RequestHandler } from '../server/reqHandler/PostGameV1RequestHandler';
 import { gameDbModel } from '../db/model/GameDb';
@@ -25,11 +24,11 @@ function bindAdapters(bind: interfaces.Bind) {
       .GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER,
   ).to(GameFindQueryToGameDbFilterQueryConverter);
   bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.GAME_CREATION_QUERY_TO_GAME_DBS_CONVERTER,
+  ).to(GameCreationQueryToGameDbsConverter);
   bind(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER).to(
     GameToGameApiV1Converter,
-  );
-  bind(GAME_ADAPTER_TYPES.db.converter.GAME_TO_GAME_DB_CONVERTER).to(
-    GameToGameDbConverter,
   );
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
@@ -44,9 +43,6 @@ function bindAdapters(bind: interfaces.Bind) {
 }
 
 function bindDomain(bind: interfaces.Bind) {
-  bind(
-    GAME_DOMAIN_TYPES.converter.GAME_CREATION_QUERY_TO_NO_ID_GAMES_CONVERTER,
-  ).to(GameCreationQueryToNoIdGamesConverter);
   bind(GAME_DOMAIN_TYPES.interactor.CREATE_GAMES_INTERACTOR).to(
     CreateGamesInteractor,
   );
