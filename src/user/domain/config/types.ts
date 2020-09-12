@@ -4,6 +4,7 @@ export const USER_DOMAIN_TYPES = {
     FIND_USER_INTERACTOR: Symbol.for('FindUserInteractor'),
   },
   repository: {
+    USER_INSERT_REPOSITORY: Symbol.for('UserInsertRepository'),
     USER_SEARCH_REPOSITORY: Symbol.for('UserSearchRepository'),
   },
 };
