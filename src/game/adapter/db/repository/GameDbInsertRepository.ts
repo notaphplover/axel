@@ -18,7 +18,7 @@ export class GameDbInsertRepository extends MongooseInsertRepository<
     model: Model<GameDb>,
     @inject(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER)
     gameDbToGameConverter: Converter<GameDb, Game>,
-    @inject(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER)
+    @inject(GAME_ADAPTER_TYPES.db.converter.GAME_TO_GAME_DB_CONVERTER)
     gameToGameDbConverter: Converter<Game, GameDb>,
   ) {
     super(model, gameDbToGameConverter, gameToGameDbConverter);
