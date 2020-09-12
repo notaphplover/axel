@@ -8,7 +8,6 @@ export interface UserDb extends Document {
   roles: UserRole[];
   username: string;
   hash: string;
-  salt: string;
 }
 
 const userDbSchema: Schema = new Schema({
