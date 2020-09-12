@@ -11,19 +11,24 @@ export abstract class MongooseSearchRepository<
 > implements SearchRepository<TModel, TQuery> {
   constructor(
     protected readonly model: Model<TModelDb>,
-    protected readonly modelDbToModelConverter: Converter<TModelDb, TModel>,
+    protected readonly modelDbToModelConverter: Converter<
+      TModelDb,
+      TModel | Promise<TModel>
+    >,
     protected readonly queryToFilterQueryConverter: Converter<
       TQuery,
-      FilterQuery<TModelDb>
+      FilterQuery<TModelDb> | Promise<FilterQuery<TModelDb>>
     >,
   ) {}
 
   public async find(query: TQuery): Promise<TModel[]> {
     const entitiesDbFound: TModelDb[] = await this.model.find(
-      this.queryToFilterQueryConverter.transform(query),
+      await this.queryToFilterQueryConverter.transform(query),
     );
-    const entities: TModel[] = entitiesDbFound.map((entityDb: TModelDb) =>
-      this.modelDbToModelConverter.transform(entityDb),
+    const entities: TModel[] = await Promise.all(
+      entitiesDbFound.map((entityDb: TModelDb) =>
+        this.modelDbToModelConverter.transform(entityDb),
+      ),
     );
 
     return entities;
@@ -31,13 +36,13 @@ export abstract class MongooseSearchRepository<
 
   public async findOne(query: TQuery): Promise<TModel | null> {
     const entityDbFound: TModelDb | null = await this.model.findOne(
-      this.queryToFilterQueryConverter.transform(query),
+      await this.queryToFilterQueryConverter.transform(query),
     );
 
     const entity: TModel | null =
       entityDbFound === null
         ? null
-        : this.modelDbToModelConverter.transform(entityDbFound);
+        : await this.modelDbToModelConverter.transform(entityDbFound);
 
     return entity;
   }

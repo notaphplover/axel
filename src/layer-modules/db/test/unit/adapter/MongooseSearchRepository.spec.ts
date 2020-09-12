@@ -29,10 +29,13 @@ const queryMockDbFixture: FilterQuery<ModelMockDb> = { foo: FOO_VALUE };
 
 describe(MongooseSearchRepository.name, () => {
   let model: Model<ModelMockDb>;
-  let modelDbToModelConverter: Converter<ModelMock, ModelMockDb>;
+  let modelDbToModelConverter: Converter<
+    ModelMock,
+    ModelMockDb | Promise<ModelMockDb>
+  >;
   let queryToFilterQueryConverter: Converter<
     QueryMock,
-    FilterQuery<ModelMockDb>
+    FilterQuery<ModelMockDb> | Promise<FilterQuery<ModelMockDb>>
   >;
   let mongooseSearchRepository: MongooseSearchRepository<
     ModelMock,
