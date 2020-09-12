@@ -13,7 +13,7 @@ export const userCreationQuery: UserCreationQuery = {
   password: 'sample-password',
 };
 
-export const userCreationQueryFixtures: FixtureFactory<UserCreationQuery> = new DeepCloneFixtureFactory(
+export const userCreationQueryFixtureFactory: FixtureFactory<UserCreationQuery> = new DeepCloneFixtureFactory(
   userCreationQuery,
 );
 
