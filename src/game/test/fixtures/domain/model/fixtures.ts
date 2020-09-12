@@ -1,13 +1,14 @@
+import {
+  DeepCloneFixtureFactory,
+  FixtureFactory,
+} from '../../../../../common/test';
 import { Game, NoIdGame } from '../../../../domain/model/Game';
-import { FixtureFactory } from '../../../../../common/test';
-import { GameFixtureFactory } from './GameFixtureFactory';
-import { NoIdGameFixtureFactory } from './NoIdGameFixtureFactory';
 
 export const noIdGame: NoIdGame = {
   round: 2,
 };
 
-export const noIdGameFixtureFactory: FixtureFactory<NoIdGame> = new NoIdGameFixtureFactory(
+export const noIdGameFixtureFactory: FixtureFactory<NoIdGame> = new DeepCloneFixtureFactory(
   noIdGame,
 );
 
@@ -16,6 +17,6 @@ export const game: Game = {
   round: noIdGame.round,
 };
 
-export const gameFixtureFactory: FixtureFactory<Game> = new GameFixtureFactory(
+export const gameFixtureFactory: FixtureFactory<Game> = new DeepCloneFixtureFactory(
   game,
 );

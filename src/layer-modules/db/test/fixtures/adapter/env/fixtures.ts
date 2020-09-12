@@ -1,6 +1,8 @@
+import {
+  DeepCloneFixtureFactory,
+  FixtureFactory,
+} from '../../../../../../common/test';
 import { DbDotEnvVariables } from '../../../../adapter/env/DbDotEnvVariables';
-import { DbDotEnvVariablesFixtureFactory } from './DbDotEnvVariablesFixtureFactory';
-import { FixtureFactory } from '../../../../../../common/test/fixtures/domain/fixture/FixtureFactory';
 
 const commonDotEnvVariables: DbDotEnvVariables = {
   MONGO_CONNECTION_AUTH_SOURCE: 'source',
@@ -9,6 +11,6 @@ const commonDotEnvVariables: DbDotEnvVariables = {
   MONGO_CONNECTION_USER: 'user',
 };
 
-export const commonDotEnvVariablesFixtureFactory: FixtureFactory<DbDotEnvVariables> = new DbDotEnvVariablesFixtureFactory(
+export const commonDotEnvVariablesFixtureFactory: FixtureFactory<DbDotEnvVariables> = new DeepCloneFixtureFactory(
   commonDotEnvVariables,
 );
