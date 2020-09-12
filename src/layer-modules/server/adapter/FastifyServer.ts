@@ -6,6 +6,7 @@ import { MongooseConector } from '../../../layer-modules/db/adapter';
 import { Server } from '../domain/Server';
 import { dbAdapter } from '../../db/adapter';
 import { gameAdapter } from '../../../game/adapter';
+import { userAdapter } from '../../../user/adapter';
 
 @injectable()
 export class FastifyServer implements Server {
@@ -16,8 +17,10 @@ export class FastifyServer implements Server {
     gameRouter: FastifyRouter,
     @inject(dbAdapter.config.types.db.MONGOOSE_CONNECTOR)
     private readonly mongooseConnector: MongooseConector,
+    @inject(userAdapter.config.types.server.router.USER_ROUTER)
+    userRouter: FastifyRouter,
   ) {
-    this.routers = [gameRouter];
+    this.routers = [gameRouter, userRouter];
   }
 
   public async bootstrap(): Promise<void> {
