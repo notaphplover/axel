@@ -1,6 +1,7 @@
 import { ContainerModule, interfaces } from 'inversify';
 import { CreateUsersInteractor } from '../../domain/interactor/CreateUsersInteractor';
 import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
+import { PasswordHasher } from '../security/PasswordHasher';
 import { PostUserV1RequestHandler } from '../server/reqHandler/PostUserV1RequestHandler';
 import { USER_ADAPTER_TYPES } from './types';
 import { USER_DOMAIN_TYPES } from '../../domain/config/types';
@@ -35,6 +36,7 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(USER_ADAPTER_TYPES.server.reqHandler.POST_USER_V1_REQUEST_HANDLER).to(
     PostUserV1RequestHandler,
   );
+  bind(USER_ADAPTER_TYPES.security.PASSWORD_HASHER).to(PasswordHasher);
   bind(USER_ADAPTER_TYPES.server.router.USER_ROUTER).to(UserRouter);
 }
 
