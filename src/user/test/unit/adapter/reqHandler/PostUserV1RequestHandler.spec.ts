@@ -14,12 +14,12 @@ import { User } from '../../../../domain/model/User';
 import { UserApiV1 } from '../../../../adapter/api/model/UserApiV1';
 import { UserCreationQuery } from '../../../../domain/query/UserCreationQuery';
 import { UserCreationQueryApiV1 } from '../../../../adapter/api/query/UserCreationQueryApiV1';
+import { UserRole } from '../../../../domain/model/UserRole';
 import { commonTest } from '../../../../../common/test';
 import { userApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/fixtures';
 import { userCreationQueryApiV1FixtureFactory } from '../../../fixtures/adapter/api/query/fixtures';
 import { userCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
-import { UserRole } from '../../../../domain/model/UserRole';
 
 describe(PostUserV1RequestHandler.name, () => {
   let createUsersInteractor: Interactor<UserCreationQuery, Promise<User[]>>;
