@@ -1,5 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const USER_ADAPTER_TYPES = {
+  api: {
+    validator: {
+      USER_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
+        'UserCreationQueryApiV1Validator',
+      ),
+    },
+  },
   db: {
     converter: {
       USER_CREATION_QUERY_TO_USER_DBS_CONVERTER: Symbol.for(

@@ -3,6 +3,7 @@ import { CreateUsersInteractor } from '../../domain/interactor/CreateUsersIntera
 import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
 import { USER_ADAPTER_TYPES } from './types';
 import { USER_DOMAIN_TYPES } from '../../domain/config/types';
+import { UserCreationQueryApiV1Validator } from '../api/validator/UserCreationQueryApiV1Validator';
 import { UserCreationQueryToUserDbsConverter } from '../db/converter/UserCreationQueryToUserDbsConverter';
 import { UserDbInsertRepository } from '../db/repository/UserDbInsertRepository';
 import { UserDbSearchReporitory } from '../db/repository/UserDbSearchRepository';
@@ -22,6 +23,9 @@ function bindAdapters(bind: interfaces.Bind) {
       .USER_FIND_QUERY_TO_USER_DB_FILTER_QUERY_CONVERTER,
   ).to(UserFindQueryToUserDbFilterQueryConverter);
   bind(USER_ADAPTER_TYPES.db.model.USER_DB_MODEL).toConstantValue(userDbModel);
+  bind(
+    USER_ADAPTER_TYPES.api.validator.USER_CREATION_QUERY_API_V1_VALIDATOR,
+  ).to(UserCreationQueryApiV1Validator);
 }
 
 function bindDomain(bind: interfaces.Bind) {
