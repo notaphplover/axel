@@ -1,5 +1,8 @@
-import { NoIdUser } from './NoIdUser';
+import { UserRole } from './UserRole';
 
-export interface User extends NoIdUser {
+export interface User {
+  email: string;
   id: string;
+  roles: UserRole[];
+  username: string;
 }

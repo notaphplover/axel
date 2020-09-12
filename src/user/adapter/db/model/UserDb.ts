@@ -1,9 +1,12 @@
 import mongoose, { Document, Model, Schema, Types } from 'mongoose';
-import { NoIdUser } from '../../../domain/model/NoIdUser';
+import { UserRole } from '../../../domain/model/UserRole';
 
-export interface UserDb extends NoIdUser, Document {
+export interface UserDb extends Document {
   _id: Types.ObjectId;
 
+  email: string;
+  roles: UserRole[];
+  username: string;
   hash: string;
   salt: string;
 }

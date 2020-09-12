@@ -2,7 +2,6 @@ import { ContainerModule, interfaces } from 'inversify';
 import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
 import { USER_ADAPTER_TYPES } from './types';
 import { USER_DOMAIN_TYPES } from '../../domain/config/types';
-import { UserCreationQueryToNoIdUsersConverter } from '../../domain/converter/UserCreationQueryToNoIdUsersConverter';
 import { UserDbSearchReporitory } from '../db/repository/UserDbSearchRepository';
 import { UserDbToUserConverter } from '../db/converter/UserDbToUserConverter';
 import { UserFindQueryToUserDbFilterQueryConverter } from '../db/converter/UserFindQueryToUserDbFilterQueryConverter';
@@ -20,9 +19,6 @@ function bindAdapters(bind: interfaces.Bind) {
 }
 
 function bindDomain(bind: interfaces.Bind) {
-  bind(
-    USER_DOMAIN_TYPES.converter.USER_CREATION_QUERY_TO_NO_ID_USERS_CONVERTER,
-  ).to(UserCreationQueryToNoIdUsersConverter);
   bind(USER_DOMAIN_TYPES.interactor.FIND_USER_INTERACTOR).to(
     FindUserInteractor,
   );

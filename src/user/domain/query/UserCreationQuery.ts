@@ -4,4 +4,5 @@ export interface UserCreationQuery {
   email: string;
   roles: UserRole[];
   username: string;
+  password: string;
 }

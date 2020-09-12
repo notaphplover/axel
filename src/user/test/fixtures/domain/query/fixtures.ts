@@ -10,6 +10,7 @@ export const userCreationQuery: UserCreationQuery = {
   email: user.email,
   roles: user.roles,
   username: user.username,
+  password: 'sample-password',
 };
 
 export const userCreationQueryFixtures: FixtureFactory<UserCreationQuery> = new DeepCloneFixtureFactory(
