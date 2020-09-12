@@ -15,7 +15,7 @@ import { GameCreationQueryApiV1 } from '../../../../adapter/api/query/GameCreati
 import { PostGameV1RequestHandler } from '../../../../adapter/server/reqHandler/PostGameV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
 import { commonTest } from '../../../../../common/test';
-import { gameApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/gameApiV1.fixture';
+import { gameApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/fixtures';
 import { gameCreationQueryApiV1FixtureFactory } from '../../../fixtures/adapter/api/query/fixtures';
 import { gameFixtureFactory } from '../../../fixtures/domain/model/fixtures';
 
