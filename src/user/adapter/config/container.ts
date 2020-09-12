@@ -1,4 +1,5 @@
 import { ContainerModule, interfaces } from 'inversify';
+import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
 import { USER_ADAPTER_TYPES } from './types';
 import { USER_DOMAIN_TYPES } from '../../domain/config/types';
 import { UserDbSearchReporitory } from '../db/repository/UserDbSearchRepository';
@@ -18,6 +19,9 @@ function bindAdapters(bind: interfaces.Bind) {
 }
 
 function bindDomain(bind: interfaces.Bind) {
+  bind(USER_DOMAIN_TYPES.interactor.FIND_USER_INTERACTOR).to(
+    FindUserInteractor,
+  );
   bind(USER_DOMAIN_TYPES.repository.USER_SEARCH_REPOSITORY).to(
     UserDbSearchReporitory,
   );
