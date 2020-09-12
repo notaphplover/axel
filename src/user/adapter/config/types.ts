@@ -28,5 +28,17 @@ export const USER_ADAPTER_TYPES = {
     reqHandler: {
       POST_USER_V1_REQUEST_HANDLER: Symbol.for('PostUserV1RequestHandler'),
     },
+    router: {
+      USER_ROUTER: Symbol.for('UserRouter'),
+    },
+  },
+};
+
+// eslint-disable-next-line @typescript-eslint/typedef
+export const USER_ADAPTER_PUBLIC_TYPES = {
+  server: {
+    router: {
+      USER_ROUTER: USER_ADAPTER_TYPES.server.router.USER_ROUTER,
+    },
   },
 };

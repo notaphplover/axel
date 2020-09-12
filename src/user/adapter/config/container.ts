@@ -10,6 +10,7 @@ import { UserDbInsertRepository } from '../db/repository/UserDbInsertRepository'
 import { UserDbSearchReporitory } from '../db/repository/UserDbSearchRepository';
 import { UserDbToUserConverter } from '../db/converter/UserDbToUserConverter';
 import { UserFindQueryToUserDbFilterQueryConverter } from '../db/converter/UserFindQueryToUserDbFilterQueryConverter';
+import { UserRouter } from '../server/router/UserRouter';
 import { UserToUserApiV1Converter } from '../api/converter/UserToUserApiV1Converter';
 import { userDbModel } from '../db/model/UserDb';
 
@@ -34,6 +35,7 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(USER_ADAPTER_TYPES.server.reqHandler.POST_USER_V1_REQUEST_HANDLER).to(
     PostUserV1RequestHandler,
   );
+  bind(USER_ADAPTER_TYPES.server.router.USER_ROUTER).to(UserRouter);
 }
 
 function bindDomain(bind: interfaces.Bind) {
