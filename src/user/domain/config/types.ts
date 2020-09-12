@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const USER_DOMAIN_TYPES = {
   interactor: {
+    CREATE_USERS_INTERACTOR: Symbol.for('CreateUsersInteractor'),
     FIND_USER_INTERACTOR: Symbol.for('FindUserInteractor'),
   },
   repository: {
