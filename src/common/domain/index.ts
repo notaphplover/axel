@@ -7,6 +7,7 @@ import { Converter } from './converter/Converter';
 import { Filter } from './filter/Filter';
 import { Interactor } from './interactor/Interactor';
 import { Validator } from './validator/Validator';
+import { ValidatorFunctionBasedFilter } from './filter/ValidatorFunctionBasedFilter';
 import { floatToInt } from './parse/floatToInt';
 import { getDirectories } from './io/directory/getDirectories';
 import { getFiles } from './io/file/getFiles';
@@ -24,6 +25,7 @@ export {
   ValidationResult,
   ValidationSuccess,
   Validator,
+  ValidatorFunctionBasedFilter,
 };
 
 // eslint-disable-next-line @typescript-eslint/typedef
