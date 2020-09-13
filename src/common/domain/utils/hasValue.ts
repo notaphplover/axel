@@ -1,3 +1,5 @@
-export function hasValue(object: unknown): boolean {
-  return null != object;
+export function hasValue<TType>(
+  value: TType,
+): value is Exclude<TType, null | undefined> {
+  return value != null;
 }
