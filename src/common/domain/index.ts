@@ -4,6 +4,7 @@ import {
   ValidationSuccess,
 } from './validator/ValidationResult';
 import { Converter } from './converter/Converter';
+import { Filter } from './filter/Filter';
 import { Interactor } from './interactor/Interactor';
 import { Validator } from './validator/Validator';
 import { floatToInt } from './parse/floatToInt';
@@ -17,6 +18,7 @@ import { rootDir } from './io/rootDir';
 
 export {
   Converter,
+  Filter,
   Interactor,
   ValidationFail,
   ValidationResult,
