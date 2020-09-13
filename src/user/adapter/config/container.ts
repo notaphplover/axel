@@ -1,4 +1,5 @@
 import { ContainerModule, interfaces } from 'inversify';
+import { CreateUserTokenInteractor } from '../../domain/interactor/CreateUserTokenInteractor';
 import { CreateUsersInteractor } from '../../domain/interactor/CreateUsersInteractor';
 import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
 import { PasswordHasher } from '../security/PasswordHasher';
@@ -45,6 +46,9 @@ function bindAdapters(bind: interfaces.Bind) {
 }
 
 function bindDomain(bind: interfaces.Bind) {
+  bind(USER_DOMAIN_TYPES.interactor.CREATE_USER_TOKEN_INTERACTOR).to(
+    CreateUserTokenInteractor,
+  );
   bind(USER_DOMAIN_TYPES.interactor.CREATE_USERS_INTERACTOR).to(
     CreateUsersInteractor,
   );
