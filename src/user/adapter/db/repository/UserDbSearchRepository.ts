@@ -1,6 +1,6 @@
+import { Converter, Filter } from '../../../../common/domain';
 import { FilterQuery, Model } from 'mongoose';
 import { inject, injectable } from 'inversify';
-import { Converter } from '../../../../common/domain';
 import { MongooseSearchRepository } from '../../../../layer-modules/db/adapter';
 import { USER_ADAPTER_TYPES } from '../../config/types';
 import { User } from '../../../domain/model/User';
@@ -27,11 +27,14 @@ export class UserDbSearchReporitory extends MongooseSearchRepository<
       UserFindQuery,
       FilterQuery<UserDb>
     >,
+    @inject(USER_ADAPTER_TYPES.db.filter.POST_USER_DB_SEARCH_FILTER)
+    postUserDbSearchFilter: Filter<UserDb, UserFindQuery>,
   ) {
     super(
       model,
       userDbToUserConverter,
       userFindQueryToUserDbFilterQueryConverter,
+      postUserDbSearchFilter,
     );
   }
 }
