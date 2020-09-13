@@ -1,5 +1,5 @@
+import { Converter, Filter } from '../../../common/domain';
 import { Document, FilterQuery, Model } from 'mongoose';
-import { Converter } from '../../../common/domain';
 import { SearchRepository } from '../domain/SearchRepository';
 import { injectable } from 'inversify';
 
@@ -19,12 +19,23 @@ export abstract class MongooseSearchRepository<
       TQuery,
       FilterQuery<TModelDb> | Promise<FilterQuery<TModelDb>>
     >,
+    protected readonly postSearchFilter: Filter<TModelDb, TQuery> | null = null,
   ) {}
 
   public async find(query: TQuery): Promise<TModel[]> {
-    const entitiesDbFound: TModelDb[] = await this.model.find(
-      await this.queryToFilterQueryConverter.transform(query),
+    const mongooseQuery: FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
+      query,
     );
+
+    let entitiesDbFound: TModelDb[] = await this.model.find(mongooseQuery);
+
+    if (this.postSearchFilter !== null) {
+      entitiesDbFound = await this.postSearchFilter.filter(
+        entitiesDbFound,
+        query,
+      );
+    }
+
     const entities: TModel[] = await Promise.all(
       entitiesDbFound.map((entityDb: TModelDb) =>
         this.modelDbToModelConverter.transform(entityDb),
@@ -35,9 +46,20 @@ export abstract class MongooseSearchRepository<
   }
 
   public async findOne(query: TQuery): Promise<TModel | null> {
-    const entityDbFound: TModelDb | null = await this.model.findOne(
-      await this.queryToFilterQueryConverter.transform(query),
+    const mongooseQuery: FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
+      query,
     );
+
+    let entityDbFound: TModelDb | null = await this.model.findOne(
+      mongooseQuery,
+    );
+
+    if (entityDbFound !== null && this.postSearchFilter !== null) {
+      entityDbFound = await this.postSearchFilter.filterOne(
+        entityDbFound,
+        query,
+      );
+    }
 
     const entity: TModel | null =
       entityDbFound === null

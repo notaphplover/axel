@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import { Converter, Filter } from '../../../../../common/domain';
 import { Document, FilterQuery, Model } from 'mongoose';
-import { Converter } from '../../../../../common/domain';
 import { MongooseSearchRepository } from '../../../adapter/MongooseSearchRepository';
 
 class ModelMock {
@@ -37,7 +37,16 @@ describe(MongooseSearchRepository.name, () => {
     QueryMock,
     FilterQuery<ModelMockDb> | Promise<FilterQuery<ModelMockDb>>
   >;
-  let mongooseSearchRepository: MongooseSearchRepository<
+  let nullPostSearchFilter: null;
+  let nonNullPostSearchFilter: Filter<ModelMockDb, QueryMock>;
+
+  let noPostSearchMongooseSearchRepository: MongooseSearchRepository<
+    ModelMock,
+    ModelMockDb,
+    QueryMock
+  >;
+
+  let postSearchMongooseSearchRepository: MongooseSearchRepository<
     ModelMock,
     ModelMockDb,
     QueryMock
@@ -52,16 +61,29 @@ describe(MongooseSearchRepository.name, () => {
       transform: jest.fn(),
     };
     queryToFilterQueryConverter = { transform: jest.fn() };
+    nullPostSearchFilter = null;
+    nonNullPostSearchFilter = {
+      filter: jest.fn(),
+      filterOne: jest.fn(),
+    };
 
-    mongooseSearchRepository = new MongooseSearchRepositoryMock(
+    noPostSearchMongooseSearchRepository = new MongooseSearchRepositoryMock(
       model,
       modelDbToModelConverter,
       queryToFilterQueryConverter,
+      nullPostSearchFilter,
+    );
+
+    postSearchMongooseSearchRepository = new MongooseSearchRepositoryMock(
+      model,
+      modelDbToModelConverter,
+      queryToFilterQueryConverter,
+      nonNullPostSearchFilter,
     );
   });
 
   describe(`.${MongooseSearchRepository.prototype.find.name}`, () => {
-    describe('when called', () => {
+    describe('when called, and no post search filter is established', () => {
       let result: unknown;
 
       beforeAll(async () => {
@@ -73,7 +95,15 @@ describe(MongooseSearchRepository.name, () => {
           queryMockDbFixture,
         );
 
-        result = await mongooseSearchRepository.find(queryMockFixture);
+        result = await noPostSearchMongooseSearchRepository.find(
+          queryMockFixture,
+        );
+      });
+
+      afterAll(() => {
+        (model.find as jest.Mock).mockClear();
+        (modelDbToModelConverter.transform as jest.Mock).mockClear();
+        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
       });
 
       it('must call queryToFilterQueryPort.transform()', () => {
@@ -97,6 +127,135 @@ describe(MongooseSearchRepository.name, () => {
 
       it('must return a model', () => {
         expect(result).toStrictEqual([modelMockFixture]);
+      });
+    });
+
+    describe('when called, and a post search filter is established', () => {
+      let result: unknown;
+
+      beforeAll(async () => {
+        (model.find as jest.Mock).mockResolvedValueOnce([modelMockDbFixture]);
+        (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
+          modelMockFixture,
+        );
+        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+          queryMockDbFixture,
+        );
+        (nonNullPostSearchFilter.filter as jest.Mock).mockResolvedValueOnce([
+          modelMockDbFixture,
+        ]);
+
+        result = await postSearchMongooseSearchRepository.find(
+          queryMockFixture,
+        );
+      });
+
+      afterAll(() => {
+        (model.find as jest.Mock).mockClear();
+        (modelDbToModelConverter.transform as jest.Mock).mockClear();
+        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+        (nonNullPostSearchFilter.filter as jest.Mock).mockClear();
+      });
+
+      it('must call postSearchFilter.filter() with the models found', () => {
+        expect(nonNullPostSearchFilter.filter).toHaveBeenCalledTimes(1);
+        expect(nonNullPostSearchFilter.filter).toHaveBeenCalledWith(
+          [modelMockDbFixture],
+          queryMockFixture,
+        );
+      });
+
+      it('must return a model', () => {
+        expect(result).toStrictEqual([modelMockFixture]);
+      });
+    });
+  });
+
+  describe(`.${MongooseSearchRepository.prototype.findOne.name}`, () => {
+    describe('when called, and no post search filter is established', () => {
+      let result: unknown;
+
+      beforeAll(async () => {
+        (model.findOne as jest.Mock).mockResolvedValueOnce(modelMockDbFixture);
+        (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
+          modelMockFixture,
+        );
+        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+          queryMockDbFixture,
+        );
+
+        result = await noPostSearchMongooseSearchRepository.findOne(
+          queryMockFixture,
+        );
+      });
+
+      afterAll(() => {
+        (model.findOne as jest.Mock).mockClear();
+        (modelDbToModelConverter.transform as jest.Mock).mockClear();
+        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+      });
+
+      it('must call queryToFilterQueryPort.transform()', () => {
+        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
+        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
+          queryMockFixture,
+        );
+      });
+
+      it(`must call model.${Model.findOne.name}()`, () => {
+        expect(model.findOne).toHaveBeenCalledTimes(1);
+        expect(model.findOne).toHaveBeenCalledWith(queryMockDbFixture);
+      });
+
+      it('must call modelDbToModelPort.transform()', () => {
+        expect(modelDbToModelConverter.transform).toHaveBeenCalledTimes(1);
+        expect(modelDbToModelConverter.transform).toHaveBeenCalledWith(
+          modelMockDbFixture,
+        );
+      });
+
+      it('must return a model', () => {
+        expect(result).toStrictEqual(modelMockFixture);
+      });
+    });
+
+    describe('when called, and a post search filter is established', () => {
+      let result: unknown;
+
+      beforeAll(async () => {
+        (model.findOne as jest.Mock).mockResolvedValueOnce(modelMockDbFixture);
+        (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
+          modelMockFixture,
+        );
+        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+          queryMockDbFixture,
+        );
+        (nonNullPostSearchFilter.filterOne as jest.Mock).mockResolvedValueOnce(
+          modelMockDbFixture,
+        );
+
+        result = await postSearchMongooseSearchRepository.findOne(
+          queryMockFixture,
+        );
+      });
+
+      afterAll(() => {
+        (model.findOne as jest.Mock).mockClear();
+        (modelDbToModelConverter.transform as jest.Mock).mockClear();
+        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+        (nonNullPostSearchFilter.filterOne as jest.Mock).mockClear();
+      });
+
+      it('must call postSearchFilter.filterOne() with the models found', () => {
+        expect(nonNullPostSearchFilter.filterOne).toHaveBeenCalledTimes(1);
+        expect(nonNullPostSearchFilter.filterOne).toHaveBeenCalledWith(
+          modelMockDbFixture,
+          queryMockFixture,
+        );
+      });
+
+      it('must return a model', () => {
+        expect(result).toStrictEqual(modelMockFixture);
       });
     });
   });
