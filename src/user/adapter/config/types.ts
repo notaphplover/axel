@@ -44,6 +44,7 @@ export const USER_ADAPTER_TYPES = {
       POST_USER_V1_REQUEST_HANDLER: Symbol.for('PostUserV1RequestHandler'),
     },
     router: {
+      AUTH_ROUTER: Symbol.for('AuthRouter'),
       USER_ROUTER: Symbol.for('UserRouter'),
     },
   },
@@ -53,6 +54,7 @@ export const USER_ADAPTER_TYPES = {
 export const USER_ADAPTER_PUBLIC_TYPES = {
   server: {
     router: {
+      AUTH_ROUTER: USER_ADAPTER_TYPES.server.router.AUTH_ROUTER,
       USER_ROUTER: USER_ADAPTER_TYPES.server.router.USER_ROUTER,
     },
   },

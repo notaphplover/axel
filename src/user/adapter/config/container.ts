@@ -1,5 +1,6 @@
 import { ContainerModule, interfaces } from 'inversify';
 import { AuthCreationQueryApiV1Validator } from '../api/validator/AuthCreationQueryApiV1Validator';
+import { AuthRouter } from '../server/router/AuthRouter';
 import { CreateUserTokenInteractor } from '../../domain/interactor/CreateUserTokenInteractor';
 import { CreateUsersInteractor } from '../../domain/interactor/CreateUsersInteractor';
 import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
@@ -55,6 +56,7 @@ function bindAdapters(bind: interfaces.Bind) {
     PostUserV1RequestHandler,
   );
   bind(USER_ADAPTER_TYPES.security.PASSWORD_HASHER).to(PasswordHasher);
+  bind(USER_ADAPTER_TYPES.server.router.AUTH_ROUTER).to(AuthRouter);
   bind(USER_ADAPTER_TYPES.server.router.USER_ROUTER).to(UserRouter);
 }
 
