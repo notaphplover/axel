@@ -1,4 +1,5 @@
 import { ContainerModule, interfaces } from 'inversify';
+import { AuthCreationQueryApiV1Validator } from '../api/validator/AuthCreationQueryApiV1Validator';
 import { CreateUserTokenInteractor } from '../../domain/interactor/CreateUserTokenInteractor';
 import { CreateUsersInteractor } from '../../domain/interactor/CreateUsersInteractor';
 import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
@@ -25,6 +26,9 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(
     USER_ADAPTER_TYPES.api.converter.USER_TOKEN_TO_USER_TOKEN_API_V1_CONVERTER,
   ).to(UserTokenToUserTokenApiV1Converter);
+  bind(
+    USER_ADAPTER_TYPES.api.validator.AUTH_CREATION_QUERY_API_V1_VALIDATOR,
+  ).to(AuthCreationQueryApiV1Validator);
   bind(
     USER_ADAPTER_TYPES.api.validator.USER_CREATION_QUERY_API_V1_VALIDATOR,
   ).to(UserCreationQueryApiV1Validator);

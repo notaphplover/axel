@@ -8,6 +8,9 @@ export const USER_ADAPTER_TYPES = {
       USER_TO_USER_API_V1_CONVERTER: Symbol.for('UserToUserApiV1Converter'),
     },
     validator: {
+      AUTH_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
+        'AuthCreationQueryApiV1Validator',
+      ),
       USER_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
         'UserCreationQueryApiV1Validator',
       ),
