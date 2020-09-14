@@ -1,3 +1,3 @@
-export interface UserTokenapiV1 {
+export interface UserTokenApiV1 {
   token: string;
 }

@@ -38,6 +38,9 @@ export const USER_ADAPTER_TYPES = {
   },
   server: {
     reqHandler: {
+      POST_AUTH_USER_TOKEN_V1_REQUEST_HANDLER: Symbol.for(
+        'PostAuthTokenV1RequestHandler',
+      ),
       POST_USER_V1_REQUEST_HANDLER: Symbol.for('PostUserV1RequestHandler'),
     },
     router: {

@@ -4,6 +4,7 @@ import { CreateUserTokenInteractor } from '../../domain/interactor/CreateUserTok
 import { CreateUsersInteractor } from '../../domain/interactor/CreateUsersInteractor';
 import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
 import { PasswordHasher } from '../security/PasswordHasher';
+import { PostAuthTokenV1RequestHandler } from '../server/reqHandler/PostAuthUserTokenV1RequestHandler';
 import { PostUserDbSearchFilter } from '../db/filter/PostUserDbSearchFilter';
 import { PostUserV1RequestHandler } from '../server/reqHandler/PostUserV1RequestHandler';
 import { USER_ADAPTER_TYPES } from './types';
@@ -46,6 +47,10 @@ function bindAdapters(bind: interfaces.Bind) {
     PostUserDbSearchFilter,
   );
   bind(USER_ADAPTER_TYPES.db.model.USER_DB_MODEL).toConstantValue(userDbModel);
+  bind(
+    USER_ADAPTER_TYPES.server.reqHandler
+      .POST_AUTH_USER_TOKEN_V1_REQUEST_HANDLER,
+  ).to(PostAuthTokenV1RequestHandler);
   bind(USER_ADAPTER_TYPES.server.reqHandler.POST_USER_V1_REQUEST_HANDLER).to(
     PostUserV1RequestHandler,
   );
