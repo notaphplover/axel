@@ -3,7 +3,9 @@ import { Converter } from '../../../../common/domain';
 import { UserDb } from '../model/UserDb';
 import { UserFindQuery } from '../../../domain/query/UserFindQuery';
 import { hasValue } from '../../../../common/domain/utils/hasValue';
+import { injectable } from 'inversify';
 
+@injectable()
 export class UserFindQueryToUserDbFilterQueryConverter
   implements Converter<UserFindQuery, FilterQuery<UserDb>> {
   public transform(input: UserFindQuery): MongooseFilterQuery<UserDb> {

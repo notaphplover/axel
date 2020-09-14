@@ -1,5 +1,7 @@
 import { Filter } from './Filter';
+import { injectable } from 'inversify';
 
+@injectable()
 export abstract class ValidatorFunctionBasedFilter<TModel, TQuery>
   implements Filter<TModel, TQuery> {
   public async filter(models: TModel[], filter: TQuery): Promise<TModel[]> {
