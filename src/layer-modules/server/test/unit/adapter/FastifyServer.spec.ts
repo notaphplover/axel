@@ -41,6 +41,7 @@ function buildRouterMock(): FastifyRouter {
 }
 
 describe(FastifyServer.name, () => {
+  let authRouter: FastifyRouter;
   let gameRouter: FastifyRouter;
   let mongooseConnector: MongooseConector;
   let userRouter: FastifyRouter;
@@ -54,6 +55,7 @@ describe(FastifyServer.name, () => {
   });
 
   beforeAll(() => {
+    authRouter = buildRouterMock();
     gameRouter = buildRouterMock();
     userRouter = buildRouterMock();
 
@@ -62,6 +64,7 @@ describe(FastifyServer.name, () => {
     } as MongooseConector;
 
     fastifyServer = new FastifyServer(
+      authRouter,
       gameRouter,
       mongooseConnector,
       userRouter,

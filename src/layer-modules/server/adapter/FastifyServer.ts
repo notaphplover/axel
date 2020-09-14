@@ -13,6 +13,8 @@ export class FastifyServer implements Server {
   private readonly routers: FastifyRouter[];
 
   constructor(
+    @inject(userAdapter.config.types.server.router.AUTH_ROUTER)
+    authRouter: FastifyRouter,
     @inject(gameAdapter.config.types.server.router.GAME_ROUTER)
     gameRouter: FastifyRouter,
     @inject(dbAdapter.config.types.db.MONGOOSE_CONNECTOR)
@@ -20,7 +22,7 @@ export class FastifyServer implements Server {
     @inject(userAdapter.config.types.server.router.USER_ROUTER)
     userRouter: FastifyRouter,
   ) {
-    this.routers = [gameRouter, userRouter];
+    this.routers = [authRouter, gameRouter, userRouter];
   }
 
   public async bootstrap(): Promise<void> {
