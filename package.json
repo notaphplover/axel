@@ -10,7 +10,9 @@
     "setup:local:ts": "TS_NODE_FILES=true ts-node ./src/scripts/setUpLocalEnv.ts",
     "start": "TS_NODE_FILES=true ts-node ./src/index.ts",
     "start:prod": "node ./dist/index.js",
-    "test": "jest"
+    "test": "jest",
+    "test:integration": "jest --selectProjects Integration",
+    "test:unit": "jest --selectProjects Unit"
   },
   "keywords": [
     "axel",
