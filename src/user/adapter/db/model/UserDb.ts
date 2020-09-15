@@ -10,7 +10,7 @@ export interface UserDb extends Document {
   username: string;
 }
 
-const userDbSchema: Schema = new Schema({
+export const userDbSchema: Schema = new Schema({
   email: { type: String, required: true },
   hash: { type: String, required: true },
   roles: { type: Array, of: String, required: true },
