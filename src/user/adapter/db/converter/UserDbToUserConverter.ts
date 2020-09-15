@@ -9,7 +9,7 @@ export class UserDbToUserConverter implements Converter<UserDb, User> {
     return {
       email: input.email,
       id: input._id.toHexString(),
-      roles: input.roles,
+      roles: [...input.roles],
       username: input.username,
     };
   }
