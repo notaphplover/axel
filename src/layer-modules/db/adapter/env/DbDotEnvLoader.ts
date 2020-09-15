@@ -1,16 +1,20 @@
+import { AppEnvVariables, appAdapter } from '../../../../app/adapter';
+import { EnvLoader, Index } from '../../../env/domain';
+import { inject, injectable } from 'inversify';
 import { DbDotEnvVariables } from './DbDotEnvVariables';
 import { DotEnvLoader } from '../../../env/adapter';
-import { Index } from '../../../env/domain';
 import { env } from 'process';
-import { injectable } from 'inversify';
 import { join } from 'path';
 
 const CONFIG_DIR: string = join(__dirname, '..', '..', 'env');
 
 @injectable()
 export class DbDotEnvLoader extends DotEnvLoader<DbDotEnvVariables> {
-  constructor() {
-    super(join(CONFIG_DIR, 'local.env'));
+  constructor(
+    @inject(appAdapter.config.types.env.APP_ENV_LOADER)
+    appEnvLoader: EnvLoader<AppEnvVariables>,
+  ) {
+    super(join(CONFIG_DIR, `${appEnvLoader.index.APP_ENV}.env`));
   }
 
   protected parseIndex(): Index<DbDotEnvVariables> {
