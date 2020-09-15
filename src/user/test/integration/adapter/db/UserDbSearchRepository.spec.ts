@@ -48,7 +48,7 @@ describe(UserDbSearchReporitory.name, () => {
   });
 
   describe('.find()', () => {
-    describe('when called, with username find query and an user satisfies the query', () => {
+    describe('when called and some users satisfies the query', () => {
       let userModelMock: Model<UserDb>;
 
       let result: unknown;
@@ -60,7 +60,7 @@ describe(UserDbSearchReporitory.name, () => {
 
         await clearCollection(userModelMock);
 
-        await userModelMock.insertMany([
+        const [userDbInserted]: UserDb[] = await userModelMock.insertMany([
           new userModelMock({
             email: userFixtureFactory.get().email,
             roles: userFixtureFactory.get().roles,
@@ -79,16 +79,17 @@ describe(UserDbSearchReporitory.name, () => {
           USER_DOMAIN_TYPES.repository.USER_SEARCH_REPOSITORY,
         );
 
-        result = await userDbSearchRepository.find({
-          username: userFindQueryFixtureFactory.get().username,
-        });
+        const userFindQueryFixture: UserFindQuery = userFindQueryFixtureFactory.get();
+        userFindQueryFixture.id = userDbInserted._id.toHexString();
+
+        result = await userDbSearchRepository.find(userFindQueryFixture);
       });
 
       afterAll(async () => {
         await clearCollection(userModelMock);
       });
 
-      it('must return the user', () => {
+      it('must return the users', () => {
         const expectedUserResult: User = userFixtureFactory.get();
 
         expect(result).toHaveProperty('length');
@@ -102,7 +103,7 @@ describe(UserDbSearchReporitory.name, () => {
       });
     });
 
-    describe('when called, with username find query and no user satisfies the query', () => {
+    describe('when called and no user satisfies the query', () => {
       let userModelMock: Model<UserDb>;
 
       let result: unknown;
@@ -124,9 +125,9 @@ describe(UserDbSearchReporitory.name, () => {
           USER_DOMAIN_TYPES.repository.USER_SEARCH_REPOSITORY,
         );
 
-        result = await userDbSearchRepository.find({
-          username: userFindQueryFixtureFactory.get().username,
-        });
+        result = await userDbSearchRepository.find(
+          userFindQueryFixtureFactory.get(),
+        );
       });
 
       afterAll(async () => {

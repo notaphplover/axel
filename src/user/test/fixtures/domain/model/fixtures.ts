@@ -8,7 +8,7 @@ import { UserToken } from '../../../../domain/model/UserToken';
 
 export const user: User = {
   email: 'mail@sample.com',
-  id: 'sample-user-id',
+  id: '5f5cb76273fd1130685e00ec',
   roles: [UserRole.ADMIN, UserRole.CLIENT],
   username: 'sample-username',
 };
