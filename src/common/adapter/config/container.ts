@@ -1,4 +1,5 @@
 import { Container } from 'inversify';
+import { appAdapter } from '../../../app/adapter';
 import { dbAdapter } from '../../../layer-modules/db/adapter';
 import { gameAdapter } from '../../../game/adapter';
 import { jsonSchemaAdapter } from '../../../json-schema/adapter';
@@ -8,6 +9,7 @@ import { userAdapter } from '../../../user/adapter';
 
 export const container: Container = new Container();
 
+container.load(appAdapter.config.container);
 container.load(dbAdapter.config.container);
 container.load(gameAdapter.config.container);
 container.load(jsonSchemaAdapter.config.container);
