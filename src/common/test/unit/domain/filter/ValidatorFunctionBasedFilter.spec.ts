@@ -1,4 +1,5 @@
-import { ValidatorFunctionBasedFilter } from '../../../domain';
+import 'reflect-metadata';
+import { ValidatorFunctionBasedFilter } from '../../../../domain';
 
 interface TModelMock {
   foo: string;
