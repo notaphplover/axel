@@ -1,4 +1,4 @@
-import { APP_ADAPTER_TYPES } from './config/types';
+import { APP_ADAPTER_PUBLIC_TYPES } from './config/types';
 import { AppEnvVariables } from './env/AppEnvVariables';
 import { appContainer } from './config/container';
 
@@ -8,6 +8,6 @@ export { AppEnvVariables };
 export const appAdapter = {
   config: {
     container: appContainer,
-    types: APP_ADAPTER_TYPES,
+    types: APP_ADAPTER_PUBLIC_TYPES,
   },
 };

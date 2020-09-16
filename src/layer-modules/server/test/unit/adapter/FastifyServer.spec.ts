@@ -41,10 +41,8 @@ function buildRouterMock(): FastifyRouter {
 }
 
 describe(FastifyServer.name, () => {
-  let authRouter: FastifyRouter;
-  let gameRouter: FastifyRouter;
   let mongooseConnector: MongooseConector;
-  let userRouter: FastifyRouter;
+  let router: FastifyRouter;
 
   let fastifyServer: FastifyServer;
 
@@ -55,22 +53,14 @@ describe(FastifyServer.name, () => {
   });
 
   beforeAll(() => {
-    authRouter = buildRouterMock();
-    gameRouter = buildRouterMock();
-    userRouter = buildRouterMock();
-
     mongooseConnector = {
       connect: jest.fn() as () => Promise<void>,
     } as MongooseConector;
+    router = buildRouterMock();
 
-    fastifyServer = new FastifyServer(
-      authRouter,
-      gameRouter,
-      mongooseConnector,
-      userRouter,
-    );
+    routers = [router];
 
-    routers = [gameRouter];
+    fastifyServer = new FastifyServer(mongooseConnector, routers);
   });
 
   describe(`.${FastifyServer.prototype.bootstrap.name}`, () => {

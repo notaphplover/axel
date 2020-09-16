@@ -1,30 +1,18 @@
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
-import { inject, injectable } from 'inversify';
 import { ApiVersion } from '../../api/adapter';
 import { FastifyRouter } from './FastifyRouter';
 import { MongooseConector } from '../../../layer-modules/db/adapter';
 import { Server } from '../domain/Server';
-import { dbAdapter } from '../../db/adapter';
-import { gameAdapter } from '../../../game/adapter';
-import { userAdapter } from '../../../user/adapter';
+import { injectable } from 'inversify';
 
 @injectable()
 export class FastifyServer implements Server {
-  private readonly routers: FastifyRouter[];
-
   private fastifyInstance: FastifyInstance | undefined;
 
   constructor(
-    @inject(userAdapter.config.types.server.router.AUTH_ROUTER)
-    authRouter: FastifyRouter,
-    @inject(gameAdapter.config.types.server.router.GAME_ROUTER)
-    gameRouter: FastifyRouter,
-    @inject(dbAdapter.config.types.db.MONGOOSE_CONNECTOR)
     private readonly mongooseConnector: MongooseConector,
-    @inject(userAdapter.config.types.server.router.USER_ROUTER)
-    userRouter: FastifyRouter,
+    private readonly routers: FastifyRouter[],
   ) {
-    this.routers = [authRouter, gameRouter, userRouter];
     this.fastifyInstance = undefined;
   }
 
