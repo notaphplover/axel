@@ -43,7 +43,7 @@ mongooseIntegrationDescribe(UserDbSearchReporitory.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        const collectionName: string = 'TestUserUsernameSucessFindQuery';
+        const collectionName: string = 'UserDbSearchRepositoryModel';
 
         userModelMock = createUserMongooseModelMock(collectionName);
 
