@@ -5,7 +5,7 @@ export interface GameDb extends Document {
   round: number;
 }
 
-const gameDbSchema: Schema = new Schema({
+export const gameDbSchema: Schema = new Schema({
   round: { type: Number, required: true },
 });
 
