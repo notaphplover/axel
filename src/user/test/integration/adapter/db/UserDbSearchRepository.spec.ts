@@ -1,8 +1,4 @@
 import 'reflect-metadata';
-import {
-  MongooseConector,
-  dbAdapter,
-} from '../../../../../layer-modules/db/adapter';
 import { UserDb, userDbSchema } from '../../../../adapter/db/model/UserDb';
 import mongoose, { Document, Model } from 'mongoose';
 import { Container } from 'inversify';
@@ -13,8 +9,12 @@ import { User } from '../../../../domain/model/User';
 import { UserDbSearchReporitory } from '../../../../adapter/db/repository/UserDbSearchRepository';
 import { UserFindQuery } from '../../../../domain/query/UserFindQuery';
 import { container } from '../../../../../common/adapter/config/container';
+import { dbTest } from '../../../../../layer-modules/db/test';
 import { userFindQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+
+const mongooseIntegrationDescribe: jest.Describe =
+  dbTest.integration.utils.mongooseIntegrationDescribe;
 
 async function clearCollection<T extends Document>(
   model: Model<T>,
@@ -35,18 +35,7 @@ function injectUserMongooseModelMock(
     .toConstantValue(model);
 }
 
-describe(UserDbSearchReporitory.name, () => {
-  beforeAll(async () => {
-    const mongooseConnector: MongooseConector = container.get(
-      dbAdapter.config.types.db.MONGOOSE_CONNECTOR,
-    );
-    await mongooseConnector.connect();
-  });
-
-  afterAll(async () => {
-    await mongoose.connection.close();
-  });
-
+mongooseIntegrationDescribe(UserDbSearchReporitory.name, () => {
   describe('.find()', () => {
     describe('when called and some users satisfies the query', () => {
       let userModelMock: Model<UserDb>;
