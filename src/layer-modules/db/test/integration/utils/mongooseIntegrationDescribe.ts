@@ -1,11 +1,12 @@
 import { MongooseConector, dbAdapter } from '../../../adapter';
 import { commonTest } from '../../../../../common/test';
 import { container } from '../../../../../common/adapter/config/container';
-import mongoose from 'mongoose';
 
 export const mongooseIntegrationDescribe: jest.Describe = commonTest.integration.utils.customDescribe(
   describe,
   () => {
+    let mongooseConnector: MongooseConector;
+
     beforeAll(async () => {
       const mongooseConnector: MongooseConector = container.get(
         dbAdapter.config.types.db.MONGOOSE_CONNECTOR,
@@ -14,7 +15,7 @@ export const mongooseIntegrationDescribe: jest.Describe = commonTest.integration
     });
 
     afterAll(async () => {
-      await mongoose.connection.close();
+      await mongooseConnector.close();
     });
   },
 );
