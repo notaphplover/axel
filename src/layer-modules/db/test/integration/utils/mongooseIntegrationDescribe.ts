@@ -8,7 +8,7 @@ export const mongooseIntegrationDescribe: jest.Describe = commonTest.integration
     let mongooseConnector: MongooseConector;
 
     beforeAll(async () => {
-      const mongooseConnector: MongooseConector = container.get(
+      mongooseConnector = container.get(
         dbAdapter.config.types.db.MONGOOSE_CONNECTOR,
       );
       await mongooseConnector.connect();
