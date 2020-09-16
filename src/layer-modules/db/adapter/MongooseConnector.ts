@@ -1,8 +1,8 @@
-import { connect, connection } from 'mongoose';
 import { inject, injectable } from 'inversify';
 import { DB_ADAPTER_TYPES } from './config/types';
 import { DbDotEnvVariables } from './env/DbDotEnvVariables';
 import { EnvLoader } from '../../env/domain';
+import mongoose from 'mongoose';
 
 @injectable()
 export class MongooseConector {
@@ -12,11 +12,11 @@ export class MongooseConector {
   ) {}
 
   public async close(): Promise<void> {
-    await connection.close();
+    await mongoose.disconnect();
   }
 
   public async connect(): Promise<void> {
-    await connect(this.dbEnvLoader.index.MONGO_CONNECTION_URL, {
+    await mongoose.connect(this.dbEnvLoader.index.MONGO_CONNECTION_URL, {
       authSource: this.dbEnvLoader.index.MONGO_CONNECTION_AUTH_SOURCE,
       auth: {
         user: this.dbEnvLoader.index.MONGO_CONNECTION_USER,
