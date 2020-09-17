@@ -13,7 +13,12 @@ import { GameRouter } from '../server/router/GameRouter';
 import { GameToGameApiV1Converter } from '../api/converter/GameToGameApiV1Converter';
 import { GetGameByIdV1RequestHandler } from '../server/reqHandler/GetGameByIdV1RequestHandler';
 import { PostGameV1RequestHandler } from '../server/reqHandler/PostGameV1RequestHandler';
+import { artifactDbModel } from '../db/model/card/ArtifactDb';
+import { cardDbModel } from '../db/model/card/CardDb';
+import { creatureDbModel } from '../db/model/card/CreatureDb';
+import { enchantmentDbModel } from '../db/model/card/EnchantmentDb';
 import { gameDbModel } from '../db/model/GameDb';
+import { landDbModel } from '../db/model/card/LandDb';
 
 function bindAdapters(bind: interfaces.Bind) {
   bind(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER).to(
@@ -23,12 +28,27 @@ function bindAdapters(bind: interfaces.Bind) {
     GAME_ADAPTER_TYPES.db.converter
       .GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER,
   ).to(GameFindQueryToGameDbFilterQueryConverter);
-  bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
   bind(
     GAME_ADAPTER_TYPES.db.converter.GAME_CREATION_QUERY_TO_GAME_DBS_CONVERTER,
   ).to(GameCreationQueryToGameDbsConverter);
+  bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
+  bind(GAME_ADAPTER_TYPES.db.model.card.ARTIFACT_DB_MODEL).toConstantValue(
+    artifactDbModel,
+  );
+  bind(GAME_ADAPTER_TYPES.db.model.card.CARD_DB_MODEL).toConstantValue(
+    cardDbModel,
+  );
+  bind(GAME_ADAPTER_TYPES.db.model.card.CREATURE_DB_MODEL).toConstantValue(
+    creatureDbModel,
+  );
+  bind(GAME_ADAPTER_TYPES.db.model.card.ENCHANTMENT_DB_MODEL).toConstantValue(
+    enchantmentDbModel,
+  );
   bind(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER).to(
     GameToGameApiV1Converter,
+  );
+  bind(GAME_ADAPTER_TYPES.db.model.card.LAND_DB_MODEL).toConstantValue(
+    landDbModel,
   );
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
