@@ -11,10 +11,10 @@ export interface UserDb extends Document {
 }
 
 export const userDbSchema: Schema = new Schema({
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   hash: { type: String, required: true },
   roles: { type: Array, of: String, required: true },
-  username: { type: String, required: true },
+  username: { type: String, required: true, unique: true },
 });
 
 export const userDbModel: Model<UserDb> = mongoose.model<UserDb>(
