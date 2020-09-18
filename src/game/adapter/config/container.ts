@@ -3,6 +3,7 @@ import { ArtifactCreationQueryToArtifactDbsConverter } from '../db/converter/car
 import { ArtifactDbInsertRepository } from '../db/repository/card/ArtifactDbInsertRepository';
 import { ArtifactDbToArtifactConverter } from '../db/converter/card/ArtifactDbToArtifactConverter';
 import { CardDbToCardConverter } from '../db/converter/card/CardDbToCardConverter';
+import { CardFindQueryToCardDbFilterQueryConverter } from '../db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
 import { CreateGamesInteractor } from '../../domain/interactor/CreateGamesInteractor';
 import { CreatureCreationQueryToCreatureDbsConverter } from '../db/converter/card/CreatureCreationQueryToCreatureDbsConverter';
 import { CreatureDbInsertRepository } from '../db/repository/card/CreatureDbInsertRepository';
@@ -58,6 +59,10 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(GAME_ADAPTER_TYPES.db.converter.card.CARD_DB_TO_CARD_CONVERTER).to(
     CardDbToCardConverter,
   );
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.card
+      .CARD_FIND_QUERY_TO_CARD_DB_FILTER_QUERY_CONVERTER,
+  ).to(CardFindQueryToCardDbFilterQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.card
       .CREATURE_CREATION_QUERY_TO_CREATURE_DBS_CONVERTER,

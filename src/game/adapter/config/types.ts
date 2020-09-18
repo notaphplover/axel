@@ -22,6 +22,9 @@ export const GAME_ADAPTER_TYPES = {
           'ArtifactDbToArtifactConverter',
         ),
         CARD_DB_TO_CARD_CONVERTER: Symbol.for('CardDbToCardConverter'),
+        CARD_FIND_QUERY_TO_CARD_DB_FILTER_QUERY_CONVERTER: Symbol.for(
+          'CardFindQueryToCardDbFilterQueryConverter',
+        ),
         CREATURE_CREATION_QUERY_TO_CREATURE_DBS_CONVERTER: Symbol.for(
           'CreatureCreationQueryToCreatureDbsConverter',
         ),
