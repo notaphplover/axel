@@ -2,6 +2,7 @@ import { ContainerModule, interfaces } from 'inversify';
 import { ArtifactCreationQueryToArtifactDbsConverter } from '../db/converter/card/ArtifactCreationQueryToArtifactDbsConverter';
 import { ArtifactDbInsertRepository } from '../db/repository/card/ArtifactDbInsertRepository';
 import { ArtifactDbToArtifactConverter } from '../db/converter/card/ArtifactDbToArtifactConverter';
+import { CardDbToCardConverter } from '../db/converter/card/CardDbToCardConverter';
 import { CreateGamesInteractor } from '../../domain/interactor/CreateGamesInteractor';
 import { CreatureCreationQueryToCreatureDbsConverter } from '../db/converter/card/CreatureCreationQueryToCreatureDbsConverter';
 import { CreatureDbInsertRepository } from '../db/repository/card/CreatureDbInsertRepository';
@@ -54,6 +55,9 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(
     GAME_ADAPTER_TYPES.db.converter.card.ARTIFACT_DB_TO_ARTIFACT_CONVERTER,
   ).to(ArtifactDbToArtifactConverter);
+  bind(GAME_ADAPTER_TYPES.db.converter.card.CARD_DB_TO_CARD_CONVERTER).to(
+    CardDbToCardConverter,
+  );
   bind(
     GAME_ADAPTER_TYPES.db.converter.card
       .CREATURE_CREATION_QUERY_TO_CREATURE_DBS_CONVERTER,
