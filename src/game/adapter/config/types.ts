@@ -14,6 +14,30 @@ export const GAME_ADAPTER_TYPES = {
       GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER: Symbol.for(
         'GameFindQueryToGameDbFilterQueryConverter',
       ),
+      card: {
+        ARTIFACT_CREATION_QUERY_TO_ARTIFACT_DBS_CONVERTER: Symbol.for(
+          'ArtifactCreationQueryToArtifactDbsConverter',
+        ),
+        ARTIFACT_DB_TO_ARTIFACT_CONVERTER: Symbol.for(
+          'ArtifactDbToArtifactConverter',
+        ),
+        CREATURE_CREATION_QUERY_TO_CREATURE_DBS_CONVERTER: Symbol.for(
+          'CreatureCreationQueryToCreatureDbsConverter',
+        ),
+        CREATURE_DB_TO_CREATURE_CONVERTER: Symbol.for(
+          'CreatureDbToCreatureConverter',
+        ),
+        ENCHANTMENT_CREATION_QUERY_TO_ENCHANTMENT_DBS_CONVERTER: Symbol.for(
+          'EnchantmentCreationQueryToEnchantmentDbsConverter',
+        ),
+        ENCHANTMENT_DB_TO_ENCHANTMENT_CONVERTER: Symbol.for(
+          'EnchantmentDbToEnchantmentConverter',
+        ),
+        LAND_CREATION_QUERY_TO_LAND_DBS_CONVERTER: Symbol.for(
+          'LandCreationQueryToLandDbsConverter',
+        ),
+        LAND_DB_TO_LAND_CONVERTER: Symbol.for('LandDbToLandConverter'),
+      },
     },
     model: {
       GAME_DB_MODEL: Symbol.for('gameDbModel'),

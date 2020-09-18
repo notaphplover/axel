@@ -1,5 +1,11 @@
 import { ContainerModule, interfaces } from 'inversify';
+import { ArtifactCreationQueryToArtifactDbsConverter } from '../db/converter/card/ArtifactCreationQueryToArtifactDbsConverter';
+import { ArtifactDbToArtifactConverter } from '../db/converter/card/ArtifactDbToArtifactConverter';
 import { CreateGamesInteractor } from '../../domain/interactor/CreateGamesInteractor';
+import { CreatureCreationQueryToCreatureDbsConverter } from '../db/converter/card/CreatureCreationQueryToCreatureDbsConverter';
+import { CreatureDbToCreatureConverter } from '../db/converter/card/CreatureDbToCreatureConverter';
+import { EnchantmentCreationQueryToEnchantmentDbsConverter } from '../db/converter/card/EnchantmentCreationQueryToEnchantmentDbsConverter';
+import { EnchantmentDbToEnchantmentConverter } from '../db/converter/card/EnchantmentDbToEnchantmentConverter';
 import { FindGameInteractor } from '../../domain/interactor/FindGameInteractor';
 import { GAME_ADAPTER_TYPES } from '../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../domain/config/types';
@@ -12,6 +18,8 @@ import { GameFindQueryToGameDbFilterQueryConverter } from '../db/converter/GameF
 import { GameRouter } from '../server/router/GameRouter';
 import { GameToGameApiV1Converter } from '../api/converter/GameToGameApiV1Converter';
 import { GetGameByIdV1RequestHandler } from '../server/reqHandler/GetGameByIdV1RequestHandler';
+import { LandCreationQueryToLandDbsConverter } from '../db/converter/card/LandCreationQueryToLandDbsConverter';
+import { LandDbToLandConverter } from '../db/converter/card/LandDbToLandConverter';
 import { PostGameV1RequestHandler } from '../server/reqHandler/PostGameV1RequestHandler';
 import { artifactDbModel } from '../db/model/card/ArtifactDb';
 import { cardDbModel } from '../db/model/card/CardDb';
@@ -21,6 +29,10 @@ import { gameDbModel } from '../db/model/GameDb';
 import { landDbModel } from '../db/model/card/LandDb';
 
 function bindAdapters(bind: interfaces.Bind) {
+  bind(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER).to(
+    GameToGameApiV1Converter,
+  );
+
   bind(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER).to(
     GameDbToGameConverter,
   );
@@ -31,6 +43,36 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(
     GAME_ADAPTER_TYPES.db.converter.GAME_CREATION_QUERY_TO_GAME_DBS_CONVERTER,
   ).to(GameCreationQueryToGameDbsConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.card
+      .ARTIFACT_CREATION_QUERY_TO_ARTIFACT_DBS_CONVERTER,
+  ).to(ArtifactCreationQueryToArtifactDbsConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.card.ARTIFACT_DB_TO_ARTIFACT_CONVERTER,
+  ).to(ArtifactDbToArtifactConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.card
+      .CREATURE_CREATION_QUERY_TO_CREATURE_DBS_CONVERTER,
+  ).to(CreatureCreationQueryToCreatureDbsConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.card.CREATURE_DB_TO_CREATURE_CONVERTER,
+  ).to(CreatureDbToCreatureConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.card
+      .ENCHANTMENT_CREATION_QUERY_TO_ENCHANTMENT_DBS_CONVERTER,
+  ).to(EnchantmentCreationQueryToEnchantmentDbsConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.card
+      .ENCHANTMENT_DB_TO_ENCHANTMENT_CONVERTER,
+  ).to(EnchantmentDbToEnchantmentConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.card
+      .LAND_CREATION_QUERY_TO_LAND_DBS_CONVERTER,
+  ).to(LandCreationQueryToLandDbsConverter);
+  bind(GAME_ADAPTER_TYPES.db.converter.card.LAND_DB_TO_LAND_CONVERTER).to(
+    LandDbToLandConverter,
+  );
+
   bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
   bind(GAME_ADAPTER_TYPES.db.model.card.ARTIFACT_DB_MODEL).toConstantValue(
     artifactDbModel,
@@ -44,9 +86,7 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(GAME_ADAPTER_TYPES.db.model.card.ENCHANTMENT_DB_MODEL).toConstantValue(
     enchantmentDbModel,
   );
-  bind(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER).to(
-    GameToGameApiV1Converter,
-  );
+
   bind(GAME_ADAPTER_TYPES.db.model.card.LAND_DB_MODEL).toConstantValue(
     landDbModel,
   );

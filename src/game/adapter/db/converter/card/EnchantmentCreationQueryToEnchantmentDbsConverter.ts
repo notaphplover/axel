@@ -1,10 +1,11 @@
+import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../../common/domain';
 import { EnchantmentCreationQuery } from '../../../../domain/query/card/EnchantmentCreationQuery';
 import { EnchantmentDb } from '../../model/card/EnchantmentDb';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { Model } from 'mongoose';
-import { inject } from 'inversify';
 
+@injectable()
 export class EnchantmentCreationQueryToEnchantmentDbsConverter
   implements Converter<EnchantmentCreationQuery, EnchantmentDb[]> {
   constructor(

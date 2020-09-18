@@ -1,10 +1,11 @@
+import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { LandCreationQuery } from '../../../../domain/query/card/LandCreationQuery';
 import { LandDb } from '../../model/card/LandDb';
 import { Model } from 'mongoose';
-import { inject } from 'inversify';
 
+@injectable()
 export class LandCreationQueryToLandDbsConverter
   implements Converter<LandCreationQuery, LandDb[]> {
   constructor(

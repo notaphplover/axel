@@ -1,10 +1,11 @@
+import { inject, injectable } from 'inversify';
 import { ArtifactCreationQuery } from '../../../../domain/query/card/ArtifactCreationQuery';
 import { ArtifactDb } from '../../model/card/ArtifactDb';
 import { Converter } from '../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { Model } from 'mongoose';
-import { inject } from 'inversify';
 
+@injectable()
 export class ArtifactCreationQueryToArtifactDbsConverter
   implements Converter<ArtifactCreationQuery, ArtifactDb[]> {
   constructor(
