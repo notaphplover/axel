@@ -1,10 +1,13 @@
 import { ContainerModule, interfaces } from 'inversify';
 import { ArtifactCreationQueryToArtifactDbsConverter } from '../db/converter/card/ArtifactCreationQueryToArtifactDbsConverter';
+import { ArtifactDbInsertRepository } from '../db/repository/card/ArtifactDbInsertRepository';
 import { ArtifactDbToArtifactConverter } from '../db/converter/card/ArtifactDbToArtifactConverter';
 import { CreateGamesInteractor } from '../../domain/interactor/CreateGamesInteractor';
 import { CreatureCreationQueryToCreatureDbsConverter } from '../db/converter/card/CreatureCreationQueryToCreatureDbsConverter';
+import { CreatureDbInsertRepository } from '../db/repository/card/CreatureDbInsertRepository';
 import { CreatureDbToCreatureConverter } from '../db/converter/card/CreatureDbToCreatureConverter';
 import { EnchantmentCreationQueryToEnchantmentDbsConverter } from '../db/converter/card/EnchantmentCreationQueryToEnchantmentDbsConverter';
+import { EnchantmentDbInsertRepository } from '../db/repository/card/EnchantmentDbInsertRepository';
 import { EnchantmentDbToEnchantmentConverter } from '../db/converter/card/EnchantmentDbToEnchantmentConverter';
 import { FindGameInteractor } from '../../domain/interactor/FindGameInteractor';
 import { GAME_ADAPTER_TYPES } from '../../adapter/config/types';
@@ -19,6 +22,7 @@ import { GameRouter } from '../server/router/GameRouter';
 import { GameToGameApiV1Converter } from '../api/converter/GameToGameApiV1Converter';
 import { GetGameByIdV1RequestHandler } from '../server/reqHandler/GetGameByIdV1RequestHandler';
 import { LandCreationQueryToLandDbsConverter } from '../db/converter/card/LandCreationQueryToLandDbsConverter';
+import { LandDbInsertRepository } from '../db/repository/card/LandDbInsertRepository';
 import { LandDbToLandConverter } from '../db/converter/card/LandDbToLandConverter';
 import { PostGameV1RequestHandler } from '../server/reqHandler/PostGameV1RequestHandler';
 import { artifactDbModel } from '../db/model/card/ArtifactDb';
@@ -114,6 +118,18 @@ function bindDomain(bind: interfaces.Bind) {
   );
   bind(GAME_DOMAIN_TYPES.repository.GAME_SEARCH_REPOSITORY).to(
     GameDbSearchReporitory,
+  );
+  bind(GAME_DOMAIN_TYPES.repository.card.ARTIFACT_INSERT_REPOSITORY).to(
+    ArtifactDbInsertRepository,
+  );
+  bind(GAME_DOMAIN_TYPES.repository.card.CREATURE_INSERT_REPOSITORY).to(
+    CreatureDbInsertRepository,
+  );
+  bind(GAME_DOMAIN_TYPES.repository.card.ENCHANTMENT_INSERT_REPOSITORY).to(
+    EnchantmentDbInsertRepository,
+  );
+  bind(GAME_DOMAIN_TYPES.repository.card.LAND_INSERT_REPOSITORY).to(
+    LandDbInsertRepository,
   );
 }
 
