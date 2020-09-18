@@ -1,17 +1,15 @@
 import 'reflect-metadata';
-import {
-  ArtifactDb,
-  artifactDbSchema,
-} from '../../../../../adapter/db/model/card/ArtifactDb';
 import mongoose, { Document, Model } from 'mongoose';
 import { Artifact } from '../../../../../domain/model/card/Artifact';
 import { ArtifactCreationQuery } from '../../../../../domain/query/card/ArtifactCreationQuery';
+import { ArtifactDb } from '../../../../../adapter/db/model/card/ArtifactDb';
 import { ArtifactDbInsertRepository } from '../../../../../adapter/db/repository/card/ArtifactDbInsertRepository';
 import { Container } from 'inversify';
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { InsertRepository } from '../../../../../../layer-modules/db/domain';
 import { artifactCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
+import { artifactDbSchema } from '../../../../../adapter/db/model/card/ArtifactDb';
 import { artifactFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
 import { container } from '../../../../../../common/adapter/config/container';
 import { dbTest } from '../../../../../../layer-modules/db/test';

@@ -3,6 +3,7 @@ import mongoose, {
   Model,
   Schema,
   SchemaDefinition,
+  SchemaOptions,
   Types,
 } from 'mongoose';
 import { CardType } from '../../../../domain/model/card/CardType';
@@ -17,12 +18,17 @@ export interface CardDb extends Document {
   type: CardType;
 }
 
-export const cardDbSchemaDefinition: SchemaDefinition = {
+export const cardDbBaseSchemaDefinition: SchemaDefinition = {
   cost: { type: resourceSchemaDefinition },
   type: { type: String, required: true },
 };
 
-export const cardDbSchema: Schema = new Schema(cardDbSchemaDefinition);
+const cardDbSchemaOptions: SchemaOptions = { discriminatorKey: 'type' };
+
+export const cardDbSchema: Schema = new Schema(
+  cardDbBaseSchemaDefinition,
+  cardDbSchemaOptions,
+);
 
 export const cardDbModel: Model<CardDb> = mongoose.model<CardDb>(
   'Card',

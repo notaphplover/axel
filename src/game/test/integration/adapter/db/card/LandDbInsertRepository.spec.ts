@@ -1,8 +1,4 @@
 import 'reflect-metadata';
-import {
-  LandDb,
-  landDbSchema,
-} from '../../../../../adapter/db/model/card/LandDb';
 import mongoose, { Document, Model } from 'mongoose';
 import { Container } from 'inversify';
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
@@ -10,10 +6,12 @@ import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { InsertRepository } from '../../../../../../layer-modules/db/domain';
 import { Land } from '../../../../../domain/model/card/Land';
 import { LandCreationQuery } from '../../../../../domain/query/card/LandCreationQuery';
+import { LandDb } from '../../../../../adapter/db/model/card/LandDb';
 import { LandDbInsertRepository } from '../../../../../adapter/db/repository/card/LandDbInsertRepository';
 import { container } from '../../../../../../common/adapter/config/container';
 import { dbTest } from '../../../../../../layer-modules/db/test';
 import { landCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
+import { landDbSchema } from '../../../../../adapter/db/model/card/LandDb';
 import { landFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
 
 const mongooseIntegrationDescribe: jest.Describe =

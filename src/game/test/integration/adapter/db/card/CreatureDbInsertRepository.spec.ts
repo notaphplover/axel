@@ -1,18 +1,16 @@
 import 'reflect-metadata';
-import {
-  CreatureDb,
-  creatureDbSchema,
-} from '../../../../../adapter/db/model/card/CreatureDb';
 import mongoose, { Document, Model } from 'mongoose';
 import { Container } from 'inversify';
 import { Creature } from '../../../../../domain/model/card/Creature';
 import { CreatureCreationQuery } from '../../../../../domain/query/card/CreatureCreationQuery';
+import { CreatureDb } from '../../../../../adapter/db/model/card/CreatureDb';
 import { CreatureDbInsertRepository } from '../../../../../adapter/db/repository/card/CreatureDbInsertRepository';
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { InsertRepository } from '../../../../../../layer-modules/db/domain';
 import { container } from '../../../../../../common/adapter/config/container';
 import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
+import { creatureDbSchema } from '../../../../../adapter/db/model/card/CreatureDb';
 import { creatureFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
 import { dbTest } from '../../../../../../layer-modules/db/test';
 

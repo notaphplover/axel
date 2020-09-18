@@ -43,7 +43,7 @@ mongooseIntegrationDescribe(GameDbSearchReporitory.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        const collectionName: string = 'GameDbSearchRepositoryModel';
+        const collectionName: string = 'GameDbSearchRepositoryModelSuccess';
 
         gameModelMock = createGameMongooseModelMock(collectionName);
 
@@ -93,7 +93,7 @@ mongooseIntegrationDescribe(GameDbSearchReporitory.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        const collectionName: string = 'TestGameGamenameFailFindQuery';
+        const collectionName: string = 'GameDbSearchRepositoryModelFail';
 
         gameModelMock = createGameMongooseModelMock(collectionName);
 

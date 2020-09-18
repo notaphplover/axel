@@ -1,7 +1,7 @@
 import {
   CardDb,
   MONGO_DB_CARD_COLLECTION_NAME,
-  cardDbSchemaDefinition,
+  cardDbBaseSchemaDefinition,
 } from './CardDb';
 import mongoose, { Model, Schema, SchemaDefinition } from 'mongoose';
 import { CardType } from '../../../../domain/model/card/CardType';
@@ -11,9 +11,16 @@ export interface ArtifactDb extends CardDb {
   type: CardType.Artifact;
 }
 
-export const artifactDbSchemaDefinition: SchemaDefinition = _.merge(
-  cardDbSchemaDefinition,
+export const artifactDbAdditionalPropertiesSchemaDefinition: SchemaDefinition = {};
+
+export const artifactDbSchemaDefinition: SchemaDefinition = _.merge<
+  SchemaDefinition,
+  Partial<SchemaDefinition>,
+  Partial<SchemaDefinition>
+>(
   {},
+  cardDbBaseSchemaDefinition,
+  artifactDbAdditionalPropertiesSchemaDefinition,
 );
 
 export const artifactDbSchema: Schema = new Schema(artifactDbSchemaDefinition);

@@ -1,12 +1,9 @@
 import 'reflect-metadata';
-import {
-  EnchantmentDb,
-  enchantmentDbSchema,
-} from '../../../../../adapter/db/model/card/EnchantmentDb';
 import mongoose, { Document, Model } from 'mongoose';
 import { Container } from 'inversify';
 import { Enchantment } from '../../../../../domain/model/card/Enchantment';
 import { EnchantmentCreationQuery } from '../../../../../domain/query/card/EnchantmentCreationQuery';
+import { EnchantmentDb } from '../../../../../adapter/db/model/card/EnchantmentDb';
 import { EnchantmentDbInsertRepository } from '../../../../../adapter/db/repository/card/EnchantmentDbInsertRepository';
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
@@ -14,6 +11,7 @@ import { InsertRepository } from '../../../../../../layer-modules/db/domain';
 import { container } from '../../../../../../common/adapter/config/container';
 import { dbTest } from '../../../../../../layer-modules/db/test';
 import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
+import { enchantmentDbSchema } from '../../../../../adapter/db/model/card/EnchantmentDb';
 import { enchantmentFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
 
 const mongooseIntegrationDescribe: jest.Describe =

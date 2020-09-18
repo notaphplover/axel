@@ -1,7 +1,7 @@
 import {
   CardDb,
   MONGO_DB_CARD_COLLECTION_NAME,
-  cardDbSchemaDefinition,
+  cardDbBaseSchemaDefinition,
 } from './CardDb';
 import mongoose, { Model, Schema, SchemaDefinition } from 'mongoose';
 import { CardType } from '../../../../domain/model/card/CardType';
@@ -11,9 +11,16 @@ export interface EnchantmentDb extends CardDb {
   type: CardType.Enchantment;
 }
 
-export const enchantmentDbSchemaDefinition: SchemaDefinition = _.merge(
-  cardDbSchemaDefinition,
+export const enchantmentDbAdditionalPropertiesSchemaDefinition: SchemaDefinition = {};
+
+export const enchantmentDbSchemaDefinition: SchemaDefinition = _.merge<
+  SchemaDefinition,
+  Partial<SchemaDefinition>,
+  Partial<SchemaDefinition>
+>(
   {},
+  cardDbBaseSchemaDefinition,
+  enchantmentDbAdditionalPropertiesSchemaDefinition,
 );
 
 export const enchantmentDbSchema: Schema = new Schema(
