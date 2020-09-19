@@ -22,7 +22,7 @@ export class AppEnvLoader extends DotEnvLoader<AppEnvVariables> {
   protected parseIndex(): Index<AppEnvVariables> {
     return {
       APP_ENV: this.env,
-      APP_SERVER_PORT: parseFloat(env.APP_SERVER as string),
+      APP_SERVER_PORT: parseFloat(env.APP_SERVER_PORT as string),
     };
   }
 }

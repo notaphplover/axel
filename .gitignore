@@ -10,6 +10,9 @@ node_modules/
 ### local env files from modules
 src/*/env/local.env
 src/layer-modules/*/env/local.env
+### docker.env files from modules
+src/*/env/docker.env
+src/layer-modules/*/env/docker.env
 
 ### auto generated .env file
 .env

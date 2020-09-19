@@ -23,7 +23,7 @@ const modulesBlackList: Set<string> = new Set([
   'scripts',
 ]);
 
-const ENV_MERGE: string = 'local';
+const ENV_MERGE: string = 'docker';
 const ENV_MERGE_DESTINATION: string = join(rootDir, '.env');
 
 const getDirectories: (source: string) => string[] =

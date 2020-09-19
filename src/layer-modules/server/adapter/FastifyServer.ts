@@ -81,7 +81,7 @@ export class FastifyServer implements Server {
   private async startInstance(fastifyInstance: FastifyInstance): Promise<void> {
     const start: () => Promise<void> = async () => {
       try {
-        await fastifyInstance.listen(this.port);
+        await fastifyInstance.listen(this.port, '0.0.0.0');
       } catch (err) {
         fastifyInstance.log.error(err);
         process.exit(1);
