@@ -12,6 +12,7 @@ export class FastifyServer implements Server {
   constructor(
     private readonly mongooseConnector: MongooseConector,
     private readonly routers: FastifyRouter[],
+    private readonly port: number,
   ) {
     this.fastifyInstance = undefined;
   }
@@ -80,7 +81,7 @@ export class FastifyServer implements Server {
   private async startInstance(fastifyInstance: FastifyInstance): Promise<void> {
     const start: () => Promise<void> = async () => {
       try {
-        await fastifyInstance.listen(3000);
+        await fastifyInstance.listen(this.port);
       } catch (err) {
         fastifyInstance.log.error(err);
         process.exit(1);

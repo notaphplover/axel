@@ -1,33 +1,28 @@
-import { EnvLoader, Index } from '../../../layer-modules/env/domain';
 import { AppEnvVariables } from './AppEnvVariables';
+import { DotEnvLoader } from '../../../layer-modules/env/adapter';
+import { Index } from '../../../layer-modules/env/domain';
 import { env } from 'process';
 import { injectable } from 'inversify';
+import { join } from 'path';
 
 export const DEFAULT_APP_ENV: string = 'local';
 
+const CONFIG_DIR: string = join(__dirname, '..', '..', 'env');
+
 @injectable()
-export class AppEnvLoader implements EnvLoader<AppEnvVariables> {
-  private innerIndex: Index<AppEnvVariables> | undefined;
+export class AppEnvLoader extends DotEnvLoader<AppEnvVariables> {
+  private readonly env: string;
 
   constructor() {
-    this.innerIndex = undefined;
+    const envName: string = env.APP_ENV ?? DEFAULT_APP_ENV;
+    super(join(CONFIG_DIR, `${envName}.env`));
+    this.env = envName;
   }
 
-  public get index(): Index<AppEnvVariables> {
-    if (undefined === this.innerIndex) {
-      this.load();
-    }
-
-    return this.innerIndex as Index<AppEnvVariables>;
-  }
-
-  public load(): void {
-    this.innerIndex = this.parseIndex();
-  }
-
-  private parseIndex(): Index<AppEnvVariables> {
+  protected parseIndex(): Index<AppEnvVariables> {
     return {
-      APP_ENV: env.APP_ENV ?? DEFAULT_APP_ENV,
+      APP_ENV: this.env,
+      APP_SERVER_PORT: parseFloat(env.APP_SERVER as string),
     };
   }
 }

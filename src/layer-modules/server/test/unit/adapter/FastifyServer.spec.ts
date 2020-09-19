@@ -60,7 +60,9 @@ describe(FastifyServer.name, () => {
 
     routers = [router];
 
-    fastifyServer = new FastifyServer(mongooseConnector, routers);
+    const portToListen: number = 3000;
+
+    fastifyServer = new FastifyServer(mongooseConnector, routers, portToListen);
   });
 
   describe(`.${FastifyServer.prototype.bootstrap.name}`, () => {
