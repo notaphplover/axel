@@ -7,7 +7,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class FastifyServer implements Server {
-  private fastifyInstance: FastifyInstance | undefined;
+  protected fastifyInstance: FastifyInstance | undefined;
 
   constructor(
     private readonly mongooseConnector: MongooseConector,
@@ -26,7 +26,7 @@ export class FastifyServer implements Server {
     this.fastifyInstance = fastifyInstance;
 
     const promises: Promise<unknown>[] = [
-      this.bootstrapDb(),
+      this.mongooseConnector.connect(),
       ...this.registerRouters(fastifyInstance),
     ];
 
@@ -44,11 +44,10 @@ export class FastifyServer implements Server {
 
     this.fastifyInstance = undefined;
 
-    await fastifyInstance.close();
-  }
-
-  private async bootstrapDb(): Promise<unknown> {
-    return this.mongooseConnector.connect();
+    await Promise.all([
+      this.mongooseConnector.close(),
+      fastifyInstance.close(),
+    ]);
   }
 
   private registerRouters(
