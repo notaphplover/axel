@@ -5,8 +5,8 @@ import {
   FastifyLoggerInstance,
   FastifyServerOptions,
 } from 'fastify';
+import { FastifyPortListeningServer } from '../../../adapter/FastifyPortListeningServer';
 import { FastifyRouter } from '../../../adapter/FastifyRouter';
-import { FastifyServer } from '../../../adapter/FastifyServer';
 import { MongooseConector } from '../../../../db/adapter';
 
 jest.mock('fastify', () =>
@@ -40,11 +40,11 @@ function buildRouterMock(): FastifyRouter {
   };
 }
 
-describe(FastifyServer.name, () => {
+describe(FastifyPortListeningServer.name, () => {
   let mongooseConnector: MongooseConector;
   let router: FastifyRouter;
 
-  let fastifyServer: FastifyServer;
+  let fastifyServer: FastifyPortListeningServer;
 
   let routers: FastifyRouter[];
 
@@ -62,10 +62,14 @@ describe(FastifyServer.name, () => {
 
     const portToListen: number = 3000;
 
-    fastifyServer = new FastifyServer(mongooseConnector, routers, portToListen);
+    fastifyServer = new FastifyPortListeningServer(
+      mongooseConnector,
+      routers,
+      portToListen,
+    );
   });
 
-  describe(`.${FastifyServer.prototype.bootstrap.name}`, () => {
+  describe(`.${FastifyPortListeningServer.prototype.bootstrap.name}`, () => {
     describe('when called', () => {
       beforeAll(async () => {
         await fastifyServer.bootstrap();
