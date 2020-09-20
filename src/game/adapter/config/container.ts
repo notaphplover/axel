@@ -12,6 +12,7 @@ import { CreatureDbToCreatureConverter } from '../db/converter/card/CreatureDbTo
 import { EnchantmentCreationQueryToEnchantmentDbsConverter } from '../db/converter/card/EnchantmentCreationQueryToEnchantmentDbsConverter';
 import { EnchantmentDbInsertRepository } from '../db/repository/card/EnchantmentDbInsertRepository';
 import { EnchantmentDbToEnchantmentConverter } from '../db/converter/card/EnchantmentDbToEnchantmentConverter';
+import { FindCardsInteractor } from '../../domain/interactor/card/FindCardsInteractor';
 import { FindGameInteractor } from '../../domain/interactor/FindGameInteractor';
 import { GAME_ADAPTER_TYPES } from '../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../domain/config/types';
@@ -122,6 +123,9 @@ function bindDomain(bind: interfaces.Bind) {
   );
   bind(GAME_DOMAIN_TYPES.interactor.FIND_GAME_INTERACTOR).to(
     FindGameInteractor,
+  );
+  bind(GAME_DOMAIN_TYPES.interactor.card.FIND_CARDS_INTERACTOR).to(
+    FindCardsInteractor,
   );
   bind(GAME_DOMAIN_TYPES.repository.GAME_INSERT_REPOSITORY).to(
     GameDbInsertRepository,
