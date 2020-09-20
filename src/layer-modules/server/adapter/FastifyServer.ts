@@ -1,7 +1,7 @@
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import { ApiVersion } from '../../api/adapter';
 import { FastifyRouter } from './FastifyRouter';
-import { MongooseConector } from '../../../layer-modules/db/adapter';
+import { MongooseConector } from '../../db/adapter';
 import { Server } from '../domain/Server';
 import { injectable } from 'inversify';
 
@@ -12,7 +12,6 @@ export class FastifyServer implements Server {
   constructor(
     private readonly mongooseConnector: MongooseConector,
     private readonly routers: FastifyRouter[],
-    private readonly port: number,
   ) {
     this.fastifyInstance = undefined;
   }
@@ -31,8 +30,6 @@ export class FastifyServer implements Server {
     ];
 
     await Promise.all(promises);
-
-    await this.startInstance(fastifyInstance);
   }
 
   public async close(): Promise<void> {
@@ -75,18 +72,5 @@ export class FastifyServer implements Server {
       );
 
     return this.routers.map(registerRouter);
-  }
-
-  private async startInstance(fastifyInstance: FastifyInstance): Promise<void> {
-    const start: () => Promise<void> = async () => {
-      try {
-        await fastifyInstance.listen(this.port, '0.0.0.0');
-      } catch (err) {
-        fastifyInstance.log.error(err);
-        process.exit(1);
-      }
-    };
-
-    await start();
   }
 }

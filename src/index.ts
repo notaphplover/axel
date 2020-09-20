@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 import 'reflect-metadata';
 import { AppEnvVariables, appAdapter } from './app/adapter';
-import { FastifyRouter, FastifyServer } from './layer-modules/server/adapter';
+import {
+  FastifyPortListeningServer,
+  FastifyRouter,
+} from './layer-modules/server/adapter';
 import { MongooseConector, dbAdapter } from './layer-modules/db/adapter';
 import { EnvLoader } from './layer-modules/env/domain';
 import { container } from './common/adapter/config/container';
@@ -29,7 +32,7 @@ void (async () => {
     appAdapter.config.types.env.APP_ENV_LOADER,
   );
 
-  const httpServer: FastifyServer = new FastifyServer(
+  const httpServer: FastifyPortListeningServer = new FastifyPortListeningServer(
     mongooseConnector,
     [authRouter, gameRouter, userRouter],
     appEnvLoader.index.APP_SERVER_PORT,

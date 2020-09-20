@@ -1,10 +1,10 @@
+import { FastifyPortListeningServer } from './FastifyPortListeningServer';
 import { FastifyRequestHandler } from './FastifyRequestHandler';
 import { FastifyRouter } from './FastifyRouter';
-import { FastifyServer } from './FastifyServer';
 import { SERVER_ADAPTER_PUBLIC_TYPES } from './config/types';
 import { serverContainer } from './config/container';
 
-export { FastifyRequestHandler, FastifyRouter, FastifyServer };
+export { FastifyRequestHandler, FastifyRouter, FastifyPortListeningServer };
 
 // eslint-disable-next-line @typescript-eslint/typedef
 export const serverAdapter = {
