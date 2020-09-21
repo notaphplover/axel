@@ -5,7 +5,12 @@ import { ArtifactDbToArtifactConverter } from '../db/converter/card/ArtifactDbTo
 import { CardDbSearchRepository } from '../db/repository/card/CardDbSearchRepository';
 import { CardDbToCardConverter } from '../db/converter/card/CardDbToCardConverter';
 import { CardFindQueryToCardDbFilterQueryConverter } from '../db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
+import { CreateArtifactsInteractor } from '../../domain/interactor/card/CreateArtifactsInteractor';
+import { CreateCardsInteractor } from '../../domain/interactor/card/CreateCardsInteractor';
+import { CreateCreaturesInteractor } from '../../domain/interactor/card/CreateCreaturesInteractor';
+import { CreateEnchantmentsInteractor } from '../../domain/interactor/card/CreateEnchantmentsInteractor';
 import { CreateGamesInteractor } from '../../domain/interactor/CreateGamesInteractor';
+import { CreateLandsInteractor } from '../../domain/interactor/card/CreateLandsInteractor';
 import { CreatureCreationQueryToCreatureDbsConverter } from '../db/converter/card/CreatureCreationQueryToCreatureDbsConverter';
 import { CreatureDbInsertRepository } from '../db/repository/card/CreatureDbInsertRepository';
 import { CreatureDbToCreatureConverter } from '../db/converter/card/CreatureDbToCreatureConverter';
@@ -123,6 +128,21 @@ function bindDomain(bind: interfaces.Bind) {
   );
   bind(GAME_DOMAIN_TYPES.interactor.FIND_GAME_INTERACTOR).to(
     FindGameInteractor,
+  );
+  bind(GAME_DOMAIN_TYPES.interactor.card.CREATE_ARTIFACTS_INTERACTOR).to(
+    CreateArtifactsInteractor,
+  );
+  bind(GAME_DOMAIN_TYPES.interactor.card.CREATE_CARDS_INTERACTOR).to(
+    CreateCardsInteractor,
+  );
+  bind(GAME_DOMAIN_TYPES.interactor.card.CREATE_CREATURES_INTERACTOR).to(
+    CreateCreaturesInteractor,
+  );
+  bind(GAME_DOMAIN_TYPES.interactor.card.CREATE_ENCHANTMENTS_INTERACTOR).to(
+    CreateEnchantmentsInteractor,
+  );
+  bind(GAME_DOMAIN_TYPES.interactor.card.CREATE_LANDS_INTERACTOR).to(
+    CreateLandsInteractor,
   );
   bind(GAME_DOMAIN_TYPES.interactor.card.FIND_CARDS_INTERACTOR).to(
     FindCardsInteractor,

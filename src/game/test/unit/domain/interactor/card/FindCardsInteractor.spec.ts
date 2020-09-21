@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
+import 'reflect-metadata';
 import { Card } from '../../../../../domain/model/card/Card';
 import { CardFindQuery } from '../../../../../domain/query/card/CardFindQuery';
 import { FindCardsInteractor } from '../../../../../domain/interactor/card/FindCardsInteractor';

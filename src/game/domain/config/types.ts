@@ -4,6 +4,13 @@ export const GAME_DOMAIN_TYPES = {
     CREATE_GAMES_INTERACTOR: Symbol.for('CreateGamesInteractor'),
     FIND_GAME_INTERACTOR: Symbol.for('FindGameInteractor'),
     card: {
+      CREATE_ARTIFACTS_INTERACTOR: Symbol.for('CreateArtifactsInteractor'),
+      CREATE_CARDS_INTERACTOR: Symbol.for('CreateCardsInteractor'),
+      CREATE_CREATURES_INTERACTOR: Symbol.for('CreateCreaturesInteractor'),
+      CREATE_ENCHANTMENTS_INTERACTOR: Symbol.for(
+        'CreateEnchantmentsInteractor',
+      ),
+      CREATE_LANDS_INTERACTOR: Symbol.for('CreateLandsInteractor'),
       FIND_CARDS_INTERACTOR: Symbol.for('FindCardsInteractor'),
     },
   },
