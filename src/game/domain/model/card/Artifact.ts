@@ -1,6 +1,6 @@
-import { Card } from './Card';
+import { BaseCard } from './BaseCard';
 import { CardType } from './CardType';
 
-export interface Artifact extends Card {
+export interface Artifact extends BaseCard {
   type: CardType.Artifact;
 }

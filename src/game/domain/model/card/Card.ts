@@ -1,8 +1,6 @@
-import { CardType } from './CardType';
-import { Resource } from './Resource';
+import { Artifact } from './Artifact';
+import { Creature } from './Creature';
+import { Enchantment } from './Enchantment';
+import { Land } from './Land';
 
-export interface Card {
-  cost: Resource;
-  id: string;
-  type: CardType;
-}
+export type Card = Artifact | Creature | Enchantment | Land;

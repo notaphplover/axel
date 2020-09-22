@@ -1,6 +1,6 @@
-import { Card } from './Card';
+import { BaseCard } from './BaseCard';
 import { CardType } from './CardType';
 
-export interface Enchantment extends Card {
+export interface Enchantment extends BaseCard {
   type: CardType.Enchantment;
 }
