@@ -14,6 +14,7 @@ import {
 } from '../../../../fixtures/domain/model/fixtures';
 import { Artifact } from '../../../../../domain/model/card/Artifact';
 import { ArtifactCreationQuery } from '../../../../../domain/query/card/ArtifactCreationQuery';
+import { CardType } from '../../../../../domain/model/card/CardType';
 import { CreateCardsInteractor } from '../../../../../domain/interactor/card/CreateCardsInteractor';
 import { Creature } from '../../../../../domain/model/card/Creature';
 import { CreatureCreationQuery } from '../../../../../domain/query/card/CreatureCreationQuery';
@@ -22,8 +23,6 @@ import { EnchantmentCreationQuery } from '../../../../../domain/query/card/Encha
 import { Interactor } from '../../../../../../common/domain';
 import { Land } from '../../../../../domain/model/card/Land';
 import { LandCreationQuery } from '../../../../../domain/query/card/LandCreationQuery';
-import { CardType } from '../../../../../domain/model/card/CardType';
-import { assert } from 'console';
 
 describe(CreateCardsInteractor.name, () => {
   let createArtifactsInteractor: Interactor<

@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
 import { Artifact } from '../../model/card/Artifact';
 import { ArtifactCreationQuery } from '../../query/card/ArtifactCreationQuery';
+import { BaseCardCreationQuery } from '../../query/card/BaseCardCreationQuery';
 import { Card } from '../../model/card/Card';
-import { CardCreationQuery } from '../../query/card/CardCreationQuery';
 import { CardType } from '../../model/card/CardType';
 import { Creature } from '../../model/card/Creature';
 import { CreatureCreationQuery } from '../../query/card/CreatureCreationQuery';
@@ -15,7 +15,7 @@ import { LandCreationQuery } from '../../query/card/LandCreationQuery';
 
 @injectable()
 export class CreateCardsInteractor
-  implements Interactor<CardCreationQuery, Promise<Card[]>> {
+  implements Interactor<BaseCardCreationQuery, Promise<Card[]>> {
   constructor(
     @inject(GAME_DOMAIN_TYPES.interactor.card.CREATE_ARTIFACTS_INTERACTOR)
     private readonly createArtifactsInteractor: Interactor<
@@ -39,7 +39,7 @@ export class CreateCardsInteractor
     >,
   ) {}
 
-  public async interact(query: CardCreationQuery): Promise<Card[]> {
+  public async interact(query: BaseCardCreationQuery): Promise<Card[]> {
     switch (query.type) {
       case CardType.Artifact:
         return this.createArtifactsInteractor.interact(
