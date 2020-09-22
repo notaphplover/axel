@@ -4,6 +4,13 @@ export const GAME_ADAPTER_TYPES = {
     converter: {
       GAME_TO_GAME_API_V1_CONVERTER: Symbol.for('GameToGameApiV1Converter'),
     },
+    validator: {
+      card: {
+        CARD_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
+          'CardCreationQueryApiV1Validator',
+        ),
+      },
+    },
   },
   db: {
     converter: {
