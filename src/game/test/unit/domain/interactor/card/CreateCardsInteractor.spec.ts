@@ -14,6 +14,7 @@ import {
 } from '../../../../fixtures/domain/model/fixtures';
 import { Artifact } from '../../../../../domain/model/card/Artifact';
 import { ArtifactCreationQuery } from '../../../../../domain/query/card/ArtifactCreationQuery';
+import { CardCreationQuery } from '../../../../../domain/query/card/CardCreationQuery';
 import { CardType } from '../../../../../domain/model/card/CardType';
 import { CreateCardsInteractor } from '../../../../../domain/interactor/card/CreateCardsInteractor';
 import { Creature } from '../../../../../domain/model/card/Creature';
@@ -179,7 +180,7 @@ describe(CreateCardsInteractor.name, () => {
               white: 5,
             },
             type: 'CreateCardsInteractor test wrong card type' as CardType,
-          });
+          } as CardCreationQuery);
         } catch (err) {
           result = err;
         }

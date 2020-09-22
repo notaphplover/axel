@@ -3,6 +3,7 @@ import { Artifact } from '../../model/card/Artifact';
 import { ArtifactCreationQuery } from '../../query/card/ArtifactCreationQuery';
 import { BaseCardCreationQuery } from '../../query/card/BaseCardCreationQuery';
 import { Card } from '../../model/card/Card';
+import { CardCreationQuery } from '../../query/card/CardCreationQuery';
 import { CardType } from '../../model/card/CardType';
 import { Creature } from '../../model/card/Creature';
 import { CreatureCreationQuery } from '../../query/card/CreatureCreationQuery';
@@ -39,22 +40,16 @@ export class CreateCardsInteractor
     >,
   ) {}
 
-  public async interact(query: BaseCardCreationQuery): Promise<Card[]> {
+  public async interact(query: CardCreationQuery): Promise<Card[]> {
     switch (query.type) {
       case CardType.Artifact:
-        return this.createArtifactsInteractor.interact(
-          query as ArtifactCreationQuery,
-        );
+        return this.createArtifactsInteractor.interact(query);
       case CardType.Creature:
-        return this.createCreaturesInteractor.interact(
-          query as CreatureCreationQuery,
-        );
+        return this.createCreaturesInteractor.interact(query);
       case CardType.Enchantment:
-        return this.createEnchantmentsInteractor.interact(
-          query as EnchantmentCreationQuery,
-        );
+        return this.createEnchantmentsInteractor.interact(query);
       case CardType.Land:
-        return this.createLandsInteractor.interact(query as LandCreationQuery);
+        return this.createLandsInteractor.interact(query);
       default:
         throw new Error('Unexpected card type');
     }
