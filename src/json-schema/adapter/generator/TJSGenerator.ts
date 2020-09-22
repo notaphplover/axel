@@ -1,6 +1,7 @@
 import * as TJS from 'typescript-json-schema';
 import * as fs from 'fs';
 import * as path from 'path';
+import { getDirectories } from '../../../common/domain/io/directory/getDirectories';
 import { getFiles } from '../../../common/domain/io/file/getFiles';
 import { injectable } from 'inversify';
 
@@ -37,16 +38,30 @@ export class TJSGenerator {
       path.join(modulePath, 'adapter', 'api', 'query'),
     ];
 
-    const files: string[] = [];
-
-    for (const directory of directoriesToProcess) {
+    const getFilesAtDirectoryRecursivelly: (
+      directory: string,
+      files: string[],
+    ) => void = (directory: string, files: string[]): void => {
       if (fs.existsSync(directory)) {
         files.push(
           ...getFiles(directory).map((file: string) =>
             path.join(directory, file),
           ),
         );
+
+        for (const innerDirectory of getDirectories(directory)) {
+          getFilesAtDirectoryRecursivelly(
+            path.join(directory, innerDirectory),
+            files,
+          );
+        }
       }
+    };
+
+    const files: string[] = [];
+
+    for (const directory of directoriesToProcess) {
+      getFilesAtDirectoryRecursivelly(directory, files);
     }
 
     return files;
