@@ -6,6 +6,7 @@ import { CardCreationQueryApiV1Validator } from '../api/validator/card/CardCreat
 import { CardDbSearchRepository } from '../db/repository/card/CardDbSearchRepository';
 import { CardDbToCardConverter } from '../db/converter/card/CardDbToCardConverter';
 import { CardFindQueryToCardDbFilterQueryConverter } from '../db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
+import { CardTypeToCardTypeApiV1Converter } from '../api/converter/card/CardTypeToCardTypeApiV1Converter';
 import { CreateArtifactsInteractor } from '../../domain/interactor/card/CreateArtifactsInteractor';
 import { CreateCardsInteractor } from '../../domain/interactor/card/CreateCardsInteractor';
 import { CreateCreaturesInteractor } from '../../domain/interactor/card/CreateCreaturesInteractor';
@@ -47,6 +48,10 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER).to(
     GameToGameApiV1Converter,
   );
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.card
+      .CARD_TYPE_TO_CARD_TYPE_API_V1_CONVERTER,
+  ).to(CardTypeToCardTypeApiV1Converter);
   bind(
     GAME_ADAPTER_TYPES.api.converter.card.RESOURCE_TO_RESOURCE_API_V1_CONVERTER,
   ).to(ResourceToResourceApiV1Converter);
