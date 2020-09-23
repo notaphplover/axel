@@ -3,6 +3,11 @@ export const GAME_ADAPTER_TYPES = {
   api: {
     converter: {
       GAME_TO_GAME_API_V1_CONVERTER: Symbol.for('GameToGameApiV1Converter'),
+      card: {
+        RESOURCE_TO_RESOURCE_API_V1_CONVERTER: Symbol.for(
+          'ResourceToResourceApiV1Converter',
+        ),
+      },
     },
     validator: {
       card: {
