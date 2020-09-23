@@ -5,6 +5,9 @@ export const GAME_ADAPTER_TYPES = {
       GAME_TO_GAME_API_V1_CONVERTER: Symbol.for('GameToGameApiV1Converter'),
       card: {
         CARD_TO_CARD_API_V1_CONVERTER: Symbol.for('CardToCardApiV1Converter'),
+        CARD_TYPE_API_V1_TO_CARD_TYPE_CONVERTER: Symbol.for(
+          'CardTypeApiV1ToCardTypeConverter',
+        ),
         CARD_TYPE_TO_CARD_TYPE_API_V1_CONVERTER: Symbol.for(
           'CardTypeToCardTypeApiV1Converter',
         ),

@@ -7,6 +7,7 @@ import { CardDbSearchRepository } from '../db/repository/card/CardDbSearchReposi
 import { CardDbToCardConverter } from '../db/converter/card/CardDbToCardConverter';
 import { CardFindQueryToCardDbFilterQueryConverter } from '../db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
 import { CardToCardApiV1Converter } from '../api/converter/card/CardToCardApiV1Converter';
+import { CardTypeApiV1ToCardTypeConverter } from '../api/converter/card/CardTypeApiV1ToCardTypeConverter';
 import { CardTypeToCardTypeApiV1Converter } from '../api/converter/card/CardTypeToCardTypeApiV1Converter';
 import { CreateArtifactsInteractor } from '../../domain/interactor/card/CreateArtifactsInteractor';
 import { CreateCardsInteractor } from '../../domain/interactor/card/CreateCardsInteractor';
@@ -50,6 +51,10 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER).to(
     GameToGameApiV1Converter,
   );
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.card
+      .CARD_TYPE_API_V1_TO_CARD_TYPE_CONVERTER,
+  ).to(CardTypeApiV1ToCardTypeConverter);
   bind(GAME_ADAPTER_TYPES.api.converter.card.CARD_TO_CARD_API_V1_CONVERTER).to(
     CardToCardApiV1Converter,
   );
