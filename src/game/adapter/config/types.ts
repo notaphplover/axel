@@ -8,6 +8,9 @@ export const GAME_ADAPTER_TYPES = {
         CARD_TYPE_TO_CARD_TYPE_API_V1_CONVERTER: Symbol.for(
           'CardTypeToCardTypeApiV1Converter',
         ),
+        RESOURCE_API_V1_TO_RESOURCE_CONVERTER: Symbol.for(
+          'ResourceApiV1ToResourceConverter',
+        ),
         RESOURCE_TO_RESOURCE_API_V1_CONVERTER: Symbol.for(
           'ResourceToResourceApiV1Converter',
         ),

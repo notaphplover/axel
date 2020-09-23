@@ -37,6 +37,7 @@ import { LandCreationQueryToLandDbsConverter } from '../db/converter/card/LandCr
 import { LandDbInsertRepository } from '../db/repository/card/LandDbInsertRepository';
 import { LandDbToLandConverter } from '../db/converter/card/LandDbToLandConverter';
 import { PostGameV1RequestHandler } from '../server/reqHandler/PostGameV1RequestHandler';
+import { ResourceApiV1ToResourceConverter } from '../api/converter/card/ResourceApiV1ToResourceConverter';
 import { ResourceToResourceApiV1Converter } from '../api/converter/card/ResourceToResourceApiV1Converter';
 import { artifactDbModel } from '../db/model/card/ArtifactDb';
 import { cardDbModel } from '../db/model/card/CardDb';
@@ -56,6 +57,9 @@ function bindAdapters(bind: interfaces.Bind) {
     GAME_ADAPTER_TYPES.api.converter.card
       .CARD_TYPE_TO_CARD_TYPE_API_V1_CONVERTER,
   ).to(CardTypeToCardTypeApiV1Converter);
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.card.RESOURCE_API_V1_TO_RESOURCE_CONVERTER,
+  ).to(ResourceApiV1ToResourceConverter);
   bind(
     GAME_ADAPTER_TYPES.api.converter.card.RESOURCE_TO_RESOURCE_API_V1_CONVERTER,
   ).to(ResourceToResourceApiV1Converter);
