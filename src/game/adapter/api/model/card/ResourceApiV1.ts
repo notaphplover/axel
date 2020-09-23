@@ -1,6 +1,6 @@
 import { ResourceTypeApiV1 } from './ResourceTypeApiV1';
 
-export interface Resource {
+export interface ResourceApiV1 {
   [ResourceTypeApiV1.Black]: number;
   [ResourceTypeApiV1.Blue]: number;
   [ResourceTypeApiV1.Green]: number;
