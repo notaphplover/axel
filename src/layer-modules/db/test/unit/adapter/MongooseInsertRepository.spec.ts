@@ -2,6 +2,8 @@
 import 'reflect-metadata';
 import { Document, Model } from 'mongoose';
 import { Converter } from '../../../../../common/domain';
+import { EntitiesNotCreatedError } from '../../../domain/exception/EntitiesNotCreatedError';
+import { MongoError } from 'mongodb';
 import { MongooseInsertRepository } from '../../../adapter/MongooseInsertRepository';
 
 class ModelMock {
@@ -99,6 +101,33 @@ describe(MongooseInsertRepository.name, () => {
 
       it('must return a model', () => {
         expect(result).toStrictEqual([modelMockFixture]);
+      });
+    });
+
+    describe('when called, and a duplicated key error is thrown', () => {
+      let result: unknown;
+
+      beforeAll(async () => {
+        const errorFixture: MongoError = new MongoError(
+          'Test when a duplicate key error is throown',
+        );
+        errorFixture.code = 11000;
+
+        (model.insertMany as jest.Mock).mockRejectedValueOnce(errorFixture);
+
+        (queryToInputModelDbs.transform as jest.Mock).mockReturnValueOnce([
+          modelMockDbFixture,
+        ]);
+
+        try {
+          result = await mongooseInsertRepository.insert(queryMockFixture);
+        } catch (err) {
+          result = err;
+        }
+      });
+
+      it('must throw a EntitiesNotCreatedError', () => {
+        expect(result).toBeInstanceOf(EntitiesNotCreatedError);
       });
     });
   });
