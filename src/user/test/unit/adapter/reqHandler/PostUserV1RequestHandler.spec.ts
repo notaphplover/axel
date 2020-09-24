@@ -20,6 +20,7 @@ import { userApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/fix
 import { userCreationQueryApiV1FixtureFactory } from '../../../fixtures/adapter/api/query/fixtures';
 import { userCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+import { EntitiesNotCreatedError } from '../../../../../layer-modules/db/domain';
 
 describe(PostUserV1RequestHandler.name, () => {
   let createUsersInteractor: Interactor<UserCreationQuery, Promise<User[]>>;
@@ -95,11 +96,57 @@ describe(PostUserV1RequestHandler.name, () => {
         );
       });
 
+      it('must call reply code with the HTTP CREATED code', () => {
+        expect(replyFixture.code).toHaveBeenCalledTimes(1);
+        expect(replyFixture.code).toHaveBeenCalledWith(StatusCodes.CREATED);
+      });
+
       it('must call reply.send with the userApiV1 generated', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
         expect(replyFixture.send).toHaveBeenCalledWith(
           userApiV1FixtureFactory.get(),
         );
+      });
+    });
+
+    describe('when called and the request is valid and a duplicated key error is thrown', () => {
+      let duplicatedKeyError: EntitiesNotCreatedError;
+      let requestFixture: FastifyRequest;
+      let replyFixture: FastifyReply;
+
+      beforeAll(async () => {
+        requestFixture = ({
+          body: userCreationQueryApiV1FixtureFactory.get(),
+        } as Partial<FastifyRequest>) as FastifyRequest;
+        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+
+        duplicatedKeyError = new EntitiesNotCreatedError(
+          'Test when a duplicated error is thrown',
+        );
+        (createUsersInteractor.interact as jest.Mock).mockRejectedValueOnce(
+          duplicatedKeyError,
+        );
+        const userCreationQueryApiV1ValidatorValidationResult: ValidationResult<UserCreationQueryApiV1> = {
+          model: userCreationQueryApiV1FixtureFactory.get(),
+          result: true,
+        };
+        (userCreationQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
+          userCreationQueryApiV1ValidatorValidationResult,
+        );
+
+        await postUserV1RequestHandler.handle(requestFixture, replyFixture);
+      });
+
+      it('must call reply code with the HTTP BAD_REQUEST code', () => {
+        expect(replyFixture.code).toHaveBeenCalledTimes(1);
+        expect(replyFixture.code).toHaveBeenCalledWith(StatusCodes.BAD_REQUEST);
+      });
+
+      it('must call reply.send with the error message generated', () => {
+        expect(replyFixture.send).toHaveBeenCalledTimes(1);
+        expect(replyFixture.send).toHaveBeenCalledWith({
+          message: duplicatedKeyError.message,
+        });
       });
     });
 
@@ -133,9 +180,9 @@ describe(PostUserV1RequestHandler.name, () => {
 
       it('must call reply.send() with the validation errror message', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
-        expect(replyFixture.send).toHaveBeenCalledWith(
-          userCreationQueryApiV1ValidatorValidationResult.errorMessage,
-        );
+        expect(replyFixture.send).toHaveBeenCalledWith({
+          message: userCreationQueryApiV1ValidatorValidationResult.errorMessage,
+        });
       });
     });
   });

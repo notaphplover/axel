@@ -6,6 +6,7 @@ import {
 } from '../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
+import { EntitiesNotCreatedError } from '../../../../layer-modules/db/domain';
 import { FastifyRequestHandler } from '../../../../layer-modules/server/adapter';
 import { StatusCodes } from 'http-status-codes';
 import { USER_ADAPTER_TYPES } from '../../config/types';
@@ -48,19 +49,29 @@ export class PostUserV1RequestHandler implements FastifyRequestHandler {
         password: validationResult.model.password,
         username: validationResult.model.username,
       };
-      const [userCreated]: User[] = await this.createUsersInteractor.interact(
-        userCreationQuery,
-      );
 
-      const userApiV1Created: UserApiV1 = this.userToUserApiV1Converter.transform(
-        userCreated,
-      );
+      try {
+        const [userCreated]: User[] = await this.createUsersInteractor.interact(
+          userCreationQuery,
+        );
+        const userApiV1Created: UserApiV1 = this.userToUserApiV1Converter.transform(
+          userCreated,
+        );
 
-      await reply.send(userApiV1Created);
+        await reply.code(StatusCodes.CREATED).send(userApiV1Created);
+      } catch (err) {
+        if (err instanceof EntitiesNotCreatedError) {
+          await reply
+            .code(StatusCodes.BAD_REQUEST)
+            .send({ message: err.message });
+        } else {
+          throw err;
+        }
+      }
     } else {
       await reply
         .code(StatusCodes.BAD_REQUEST)
-        .send(validationResult.errorMessage);
+        .send({ message: validationResult.errorMessage });
     }
   }
 }

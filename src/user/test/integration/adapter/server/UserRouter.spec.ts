@@ -40,7 +40,7 @@ fastifyIntegrationDescribeGenerator(userRouter, fastifyServerTestOutputParam)(
 
       describe('when called', () => {
         let responseBodyFixture: Record<string, unknown>;
-        let response: unknown;
+        let response: LightMyRequestResponse;
 
         beforeAll(async () => {
           responseBodyFixture = {
@@ -63,9 +63,7 @@ fastifyIntegrationDescribeGenerator(userRouter, fastifyServerTestOutputParam)(
 
         it('must call postUserV1RequestHandler.handle to handle the request', () => {
           expect(postUserV1RequestHandlerMock.handle).toHaveBeenCalledTimes(1);
-          expect(
-            JSON.parse((response as LightMyRequestResponse).body),
-          ).toStrictEqual(responseBodyFixture);
+          expect(JSON.parse(response.body)).toStrictEqual(responseBodyFixture);
         });
       });
     });
