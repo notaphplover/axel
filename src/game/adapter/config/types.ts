@@ -85,6 +85,9 @@ export const GAME_ADAPTER_TYPES = {
         'GetGameByIdV1RequestHandler',
       ),
       POST_GAME_V1_REQUEST_HANDLER: Symbol.for('PostGameV1RequestHandler'),
+      card: {
+        POST_CARD_V1_REQUEST_HANDLER: Symbol.for('PostCardV1RequestHandler'),
+      },
     },
     router: {
       GAME_ROUTER: Symbol.for('GameRouter'),
