@@ -12,6 +12,7 @@
     "start": "TS_NODE_FILES=true ts-node ./src/index.ts",
     "start:prod": "node ./dist/index.js",
     "test": "jest",
+    "test:end2end": "jest --selectProjects End2End",
     "test:integration": "jest --selectProjects Integration",
     "test:unit": "jest --selectProjects Unit"
   },
@@ -44,6 +45,7 @@
     "@types/node": "^12.12.6",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
+    "axios": "^0.20.0",
     "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jest": "^24.0.2",

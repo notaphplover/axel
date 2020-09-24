@@ -57,7 +57,7 @@ module.exports = {
       },
     },
     {
-      displayName: 'End to End',
+      displayName: 'End2End',
       collectCoverageFrom: ['**/*.ts'],
       coveragePathIgnorePatterns: [
         '/node_modules/',
