@@ -30,6 +30,9 @@ export const GAME_ADAPTER_TYPES = {
         CARD_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
           'CardCreationQueryApiV1Validator',
         ),
+        CARD_FIND_QUERY_API_V1_VALIDATOR: Symbol.for(
+          'CardFindQueryApiV1Validator',
+        ),
       },
     },
   },

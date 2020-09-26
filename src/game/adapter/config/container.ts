@@ -7,6 +7,7 @@ import { CardCreationQueryApiV1Validator } from '../api/validator/card/CardCreat
 import { CardDbSearchRepository } from '../db/repository/card/CardDbSearchRepository';
 import { CardDbToCardConverter } from '../db/converter/card/CardDbToCardConverter';
 import { CardFindQueryApiV1ToCardFindQueryConverter } from '../api/converter/card/CardFindQueryApiV1ToCardFindQueryConverter';
+import { CardFindQueryApiV1Validator } from '../api/validator/card/CardFindQueryApiV1Validator';
 import { CardFindQueryToCardDbFilterQueryConverter } from '../db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
 import { CardRouter } from '../server/router/card/CardRouter';
 import { CardToCardApiV1Converter } from '../api/converter/card/CardToCardApiV1Converter';
@@ -84,6 +85,9 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(
     GAME_ADAPTER_TYPES.api.validator.card.CARD_CREATION_QUERY_API_V1_VALIDATOR,
   ).to(CardCreationQueryApiV1Validator);
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.card.CARD_FIND_QUERY_API_V1_VALIDATOR,
+  ).to(CardFindQueryApiV1Validator);
 
   bind(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER).to(
     GameDbToGameConverter,
