@@ -91,6 +91,9 @@ export const GAME_ADAPTER_TYPES = {
     },
     router: {
       GAME_ROUTER: Symbol.for('GameRouter'),
+      card: {
+        CARD_ROUTER: Symbol.for('CardRouter'),
+      },
     },
   },
   validator: {

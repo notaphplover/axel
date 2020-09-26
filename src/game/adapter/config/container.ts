@@ -7,6 +7,7 @@ import { CardCreationQueryApiV1Validator } from '../api/validator/card/CardCreat
 import { CardDbSearchRepository } from '../db/repository/card/CardDbSearchRepository';
 import { CardDbToCardConverter } from '../db/converter/card/CardDbToCardConverter';
 import { CardFindQueryToCardDbFilterQueryConverter } from '../db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
+import { CardRouter } from '../server/router/card/CardRouter';
 import { CardToCardApiV1Converter } from '../api/converter/card/CardToCardApiV1Converter';
 import { CardTypeApiV1ToCardTypeConverter } from '../api/converter/card/CardTypeApiV1ToCardTypeConverter';
 import { CardTypeToCardTypeApiV1Converter } from '../api/converter/card/CardTypeToCardTypeApiV1Converter';
@@ -153,6 +154,7 @@ function bindAdapters(bind: interfaces.Bind) {
     GAME_ADAPTER_TYPES.server.reqHandler.card.POST_CARD_V1_REQUEST_HANDLER,
   ).to(PostCardV1RequestHandler);
   bind(GAME_ADAPTER_TYPES.server.router.GAME_ROUTER).to(GameRouter);
+  bind(GAME_ADAPTER_TYPES.server.router.card.CARD_ROUTER).to(CardRouter);
   bind(GAME_ADAPTER_TYPES.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR)
     .to(GameCreationQueryApiV1Validator)
     .inSingletonScope();
