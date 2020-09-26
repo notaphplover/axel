@@ -37,6 +37,7 @@ import { GameDbToGameConverter } from '../db/converter/GameDbToGameConverter';
 import { GameFindQueryToGameDbFilterQueryConverter } from '../db/converter/GameFindQueryToGameDbFilterQueryConverter';
 import { GameRouter } from '../server/router/GameRouter';
 import { GameToGameApiV1Converter } from '../api/converter/GameToGameApiV1Converter';
+import { GetCardsV1RequestHandler } from '../server/reqHandler/card/GetCardsV1RequestHandler';
 import { GetGameByIdV1RequestHandler } from '../server/reqHandler/GetGameByIdV1RequestHandler';
 import { LandCreationQueryToLandDbsConverter } from '../db/converter/card/LandCreationQueryToLandDbsConverter';
 import { LandDbInsertRepository } from '../db/repository/card/LandDbInsertRepository';
@@ -160,8 +161,12 @@ function bindAdapters(bind: interfaces.Bind) {
     PostGameV1RequestHandler,
   );
   bind(
+    GAME_ADAPTER_TYPES.server.reqHandler.card.GET_CARDS_V1_REQUEST_HANDLER,
+  ).to(GetCardsV1RequestHandler);
+  bind(
     GAME_ADAPTER_TYPES.server.reqHandler.card.POST_CARD_V1_REQUEST_HANDLER,
   ).to(PostCardV1RequestHandler);
+
   bind(GAME_ADAPTER_TYPES.server.router.GAME_ROUTER).to(GameRouter);
   bind(GAME_ADAPTER_TYPES.server.router.card.CARD_ROUTER).to(CardRouter);
   bind(GAME_ADAPTER_TYPES.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR)

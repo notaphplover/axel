@@ -4,11 +4,16 @@ import {
 } from '../../../../../../common/test';
 import {
   artifactCreationQuery,
+  artifactFindQuery,
   creatureCreationQuery,
+  creatureFindQuery,
   enchantmentCreationQuery,
+  enchantmentFindQuery,
   landCreationQuery,
+  landFindQuery,
 } from '../../../domain/query/fixtures';
 import { ArtifactCreationQueryApiV1 } from '../../../../../adapter/api/query/card/ArtifactCreationQueryApiV1';
+import { CardFindQueryApiV1 } from '../../../../../adapter/api/query/card/CardFindQueryApiV1';
 import { CardTypeApiV1 } from '../../../../../adapter/api/model/card/CardTypeApiV1';
 import { CreatureCreationQueryApiV1 } from '../../../../../adapter/api/query/card/CreatureCreationQueryApiV1';
 import { EnchantmentCreationQueryApiV1 } from '../../../../../adapter/api/query/card/EnchantmentCreationQueryApiV1';
@@ -32,6 +37,15 @@ export const artifactCreationQueryApiV1FixtureFactory: FixtureFactory<ArtifactCr
   artifactCreationQueryApiV1,
 );
 
+export const artifactFindQueryApiV1: CardFindQueryApiV1 = {
+  id: artifactFindQuery.id,
+  types: CardTypeApiV1.Artifact,
+};
+
+export const artifactFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQueryApiV1> = new DeepCloneFixtureFactory(
+  artifactFindQueryApiV1,
+);
+
 export const creatureCreationQueryApiV1: CreatureCreationQueryApiV1 = {
   cost: {
     black: creatureCreationQuery.cost.black,
@@ -50,6 +64,15 @@ export const creatureCreationQueryApiV1FixtureFactory: FixtureFactory<CreatureCr
   creatureCreationQueryApiV1,
 );
 
+export const creatureFindQueryApiV1: CardFindQueryApiV1 = {
+  id: creatureFindQuery.id,
+  types: CardTypeApiV1.Creature,
+};
+
+export const creatureFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQueryApiV1> = new DeepCloneFixtureFactory(
+  creatureFindQueryApiV1,
+);
+
 export const enchantmentCreationQueryApiV1: EnchantmentCreationQueryApiV1 = {
   cost: {
     black: enchantmentCreationQuery.cost.black,
@@ -64,6 +87,15 @@ export const enchantmentCreationQueryApiV1: EnchantmentCreationQueryApiV1 = {
 
 export const enchantmentCreationQueryApiV1FixtureFactory: FixtureFactory<EnchantmentCreationQueryApiV1> = new DeepCloneFixtureFactory(
   enchantmentCreationQueryApiV1,
+);
+
+export const enchantmentFindQueryApiV1: CardFindQueryApiV1 = {
+  id: enchantmentFindQuery.id,
+  types: CardTypeApiV1.Enchantment,
+};
+
+export const enchantmentFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQueryApiV1> = new DeepCloneFixtureFactory(
+  enchantmentFindQueryApiV1,
 );
 
 const gameCreationQueryApiV1: GameCreationQueryApiV1 = {
@@ -88,4 +120,13 @@ export const landCreationQueryApiV1: LandCreationQueryApiV1 = {
 
 export const landCreationQueryApiV1FixtureFactory: FixtureFactory<LandCreationQueryApiV1> = new DeepCloneFixtureFactory(
   landCreationQueryApiV1,
+);
+
+export const landFindQueryApiV1: CardFindQueryApiV1 = {
+  id: landFindQuery.id,
+  types: CardTypeApiV1.Land,
+};
+
+export const landFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQueryApiV1> = new DeepCloneFixtureFactory(
+  landFindQueryApiV1,
 );
