@@ -13,8 +13,8 @@ const CONFIG_DIR: string = join(__dirname, '..', '..', 'env');
 export class AppEnvLoader extends DotEnvLoader<AppEnvVariables> {
   private readonly env: string;
 
-  constructor() {
-    const envName: string = env.APP_ENV ?? DEFAULT_APP_ENV;
+  constructor(envArg?: string) {
+    const envName: string = envArg ?? env.APP_ENV ?? DEFAULT_APP_ENV;
     super(join(CONFIG_DIR, `${envName}.env`));
     this.env = envName;
   }
