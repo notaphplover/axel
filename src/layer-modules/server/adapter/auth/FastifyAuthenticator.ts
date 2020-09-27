@@ -23,7 +23,9 @@ export class FastifyAuthenticator<TToken> {
     reply: FastifyReply,
   ): Promise<TToken | null> {
     if (request.headers.authorization === undefined) {
-      return reply.code(StatusCodes.FORBIDDEN).send(NO_AUTH_HEADER_ERR_MESSAGE);
+      await reply.code(StatusCodes.FORBIDDEN).send(NO_AUTH_HEADER_ERR_MESSAGE);
+
+      return null;
     }
 
     const authorizationHeader: string = request.headers.authorization;
@@ -41,7 +43,8 @@ export class FastifyAuthenticator<TToken> {
     );
 
     try {
-      return this.jwtManager.parse(jwtToken);
+      const parsedObject: TToken = await this.jwtManager.parse(jwtToken);
+      return parsedObject;
     } catch (err) {
       await reply
         .code(StatusCodes.BAD_REQUEST)
