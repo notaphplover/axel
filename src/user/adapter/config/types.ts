@@ -16,6 +16,9 @@ export const USER_ADAPTER_TYPES = {
       ),
     },
   },
+  auth: {
+    FASTIFY_USER_AUTHENTICATOR: Symbol.for('FastifyUserAuthenticator'),
+  },
   db: {
     converter: {
       USER_CREATION_QUERY_TO_USER_DBS_CONVERTER: Symbol.for(
@@ -52,6 +55,10 @@ export const USER_ADAPTER_TYPES = {
 
 // eslint-disable-next-line @typescript-eslint/typedef
 export const USER_ADAPTER_PUBLIC_TYPES = {
+  auth: {
+    FASTIFY_USER_AUTHENTICATOR:
+      USER_ADAPTER_TYPES.auth.FASTIFY_USER_AUTHENTICATOR,
+  },
   server: {
     router: {
       AUTH_ROUTER: USER_ADAPTER_TYPES.server.router.AUTH_ROUTER,

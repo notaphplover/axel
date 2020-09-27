@@ -3,6 +3,7 @@ import { AuthCreationQueryApiV1Validator } from '../api/validator/AuthCreationQu
 import { AuthRouter } from '../server/router/AuthRouter';
 import { CreateUserTokenInteractor } from '../../domain/interactor/CreateUserTokenInteractor';
 import { CreateUsersInteractor } from '../../domain/interactor/CreateUsersInteractor';
+import { FastifyUserAuthenticator } from '../auth/FastifyUserAuthenticator';
 import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
 import { PasswordHasher } from '../security/PasswordHasher';
 import { PostAuthTokenV1RequestHandler } from '../server/reqHandler/PostAuthUserTokenV1RequestHandler';
@@ -34,6 +35,9 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(
     USER_ADAPTER_TYPES.api.validator.USER_CREATION_QUERY_API_V1_VALIDATOR,
   ).to(UserCreationQueryApiV1Validator);
+  bind(USER_ADAPTER_TYPES.auth.FASTIFY_USER_AUTHENTICATOR).to(
+    FastifyUserAuthenticator,
+  );
   bind(
     USER_ADAPTER_TYPES.db.converter.USER_CREATION_QUERY_TO_USER_DBS_CONVERTER,
   ).to(UserCreationQueryToUserDbsConverter);
