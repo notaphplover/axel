@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "docker:rebuild:app": "docker-compose -f docker-compose.yml -f docker-compose.test.yml rm -fv app && docker-compose -f docker-compose.yml -f docker-compose.test.yml build app",
     "docker:up:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up",
     "lint": "eslint src",
     "setup:local": "node ./dist/scripts/setUpLocalEnv.js",
