@@ -17,12 +17,16 @@ import { UserDbInsertRepository } from '../db/repository/UserDbInsertRepository'
 import { UserDbSearchReporitory } from '../db/repository/UserDbSearchRepository';
 import { UserDbToUserConverter } from '../db/converter/UserDbToUserConverter';
 import { UserFindQueryToUserDbFilterQueryConverter } from '../db/converter/UserFindQueryToUserDbFilterQueryConverter';
+import { UserRoleToUserRoleApiV1Converter } from '../api/converter/UserRoleToUserRoleApiV1Converter';
 import { UserRouter } from '../server/router/UserRouter';
 import { UserToUserApiV1Converter } from '../api/converter/UserToUserApiV1Converter';
 import { UserTokenToUserTokenApiV1Converter } from '../api/converter/UserTokenToUserTokenApiV1Converter';
 import { userDbModel } from '../db/model/UserDb';
 
 function bindAdapters(bind: interfaces.Bind) {
+  bind(
+    USER_ADAPTER_TYPES.api.converter.USER_ROLE_TO_USER_ROLE_API_V1_CONVERTER,
+  ).to(UserRoleToUserRoleApiV1Converter);
   bind(USER_ADAPTER_TYPES.api.converter.USER_TO_USER_API_V1_CONVERTER).to(
     UserToUserApiV1Converter,
   );

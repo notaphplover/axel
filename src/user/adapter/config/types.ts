@@ -2,6 +2,9 @@
 export const USER_ADAPTER_TYPES = {
   api: {
     converter: {
+      USER_ROLE_TO_USER_ROLE_API_V1_CONVERTER: Symbol.for(
+        'UserRoleToUserRoleApiV1Converter',
+      ),
       USER_TOKEN_TO_USER_TOKEN_API_V1_CONVERTER: Symbol.for(
         'UserTokenToUserTokenApiV1Converter',
       ),
