@@ -4,12 +4,13 @@ import {
 } from '../../../../../../common/test';
 import { user, userToken } from '../../../domain/model/fixtures';
 import { UserApiV1 } from '../../../../../adapter/api/model/UserApiV1';
+import { UserRoleApiV1 } from '../../../../../adapter/api/model/UserRoleApiV1';
 import { UserTokenApiV1 } from '../../../../../adapter/api/model/UserTokenApiV1';
 
 export const userApiV1: UserApiV1 = {
   email: user.email,
   id: user.id,
-  roles: [...user.roles],
+  roles: [UserRoleApiV1.ADMIN, UserRoleApiV1.CLIENT],
   username: user.username,
 };
 
