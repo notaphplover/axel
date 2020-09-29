@@ -88,7 +88,10 @@ export class TJSGenerator {
     const schemaDir: string = path.join(modulePath, 'adapter', 'json-schema');
 
     if (!fs.existsSync(schemaDir)) {
-      fs.mkdirSync(schemaDir);
+      fs.mkdirSync(schemaDir, {
+        mode: '0754',
+        recursive: true,
+      });
     }
 
     for (let i: number = 0; i < symbols.length; i += FILE_BATCH_SIZE) {
