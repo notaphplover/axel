@@ -18,7 +18,7 @@ const rootDir: string = common.io.rootDir;
 
 const srcFolder: string = join(rootDir, 'src');
 
-const layerModulesFolder: string = join(srcFolder, 'layer-modules');
+const srcLayerModulesFolder: string = join(srcFolder, 'layer-modules');
 
 const modulesBlackList: Set<string> = new Set([
   'json-schema',
@@ -122,29 +122,29 @@ function mergeEnvFiles(
 void (async () => {
   console.log('Scanning for modules...');
 
-  const modulePaths: string[] = detectModulesAtFolders([
+  const srcModulePaths: string[] = detectModulesAtFolders([
     srcFolder,
-    layerModulesFolder,
+    srcLayerModulesFolder,
   ]);
 
-  console.log(`Found ${modulePaths.length} modules.`);
+  console.log(`Found ${srcModulePaths.length} modules.`);
 
-  modulePaths.forEach((modulePath: string) => {
+  srcModulePaths.forEach((modulePath: string) => {
     console.log(` - ${modulePath}`);
   });
 
   console.log('Copying sample files into env files ...');
 
-  modulePaths.forEach(copySampleEnvFiles);
+  srcModulePaths.forEach(copySampleEnvFiles);
 
   console.log('Merging env files into .env ...');
 
-  mergeEnvFiles(modulePaths, ENV_MERGE, ENV_MERGE_DESTINATION);
+  mergeEnvFiles(srcModulePaths, ENV_MERGE, ENV_MERGE_DESTINATION);
 
   console.log('Generating JSON validation schemas...');
 
   await Promise.all(
-    modulePaths.map(jsonSchemaGenerator.generate.bind(jsonSchemaGenerator)),
+    srcModulePaths.map(jsonSchemaGenerator.generate.bind(jsonSchemaGenerator)),
   );
 
   console.log('Done');

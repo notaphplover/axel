@@ -56,7 +56,6 @@
     "jest": "^26.4.2",
     "light-my-request": "^4.0.2",
     "lint-staged": "^10.4.0",
-    "ncp": "^2.0.0",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.4.0",
