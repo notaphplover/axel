@@ -9,7 +9,7 @@ import {
 } from 'fs';
 import { Container } from 'inversify';
 import { common } from '../common/domain';
-import { configAdapter } from '../layer-modules/config';
+import { configAdapter } from '../layer-modules/config/adapter';
 import { join } from 'path';
 
 const container: Container = configAdapter.container;

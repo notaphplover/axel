@@ -8,7 +8,7 @@ import {
 import { MongooseConector, dbAdapter } from './layer-modules/db/adapter';
 import { Container } from 'inversify';
 import { EnvLoader } from './layer-modules/env/domain';
-import { configAdapter } from './layer-modules/config';
+import { configAdapter } from './layer-modules/config/adapter';
 import { gameAdapter } from './game/adapter';
 import { userAdapter } from './user/adapter';
 

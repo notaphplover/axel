@@ -8,7 +8,7 @@ import { EnchantmentDbInsertRepository } from '../../../../../adapter/db/reposit
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { InsertRepository } from '../../../../../../layer-modules/db/domain';
-import { configAdapter } from '../../../../../../layer-modules/config';
+import { configAdapter } from '../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../layer-modules/db/test';
 import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
 import { enchantmentDbSchema } from '../../../../../adapter/db/model/card/EnchantmentDb';

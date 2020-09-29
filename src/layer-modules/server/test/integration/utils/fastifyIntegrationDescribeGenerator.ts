@@ -2,7 +2,7 @@ import { MongooseConector, dbAdapter } from '../../../../db/adapter';
 import { Container } from 'inversify';
 import { FastifyRouter } from '../../../adapter/FastifyRouter';
 import { FastifyServerTest } from '../FastifyServerTest';
-import { configAdapter } from '../../../../config';
+import { configAdapter } from '../../../../config/adapter';
 import { customDescribe } from '../../../../../common/test/integration/utills/customDescribe';
 
 const container: Container = configAdapter.container;

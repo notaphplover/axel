@@ -17,7 +17,7 @@ import { USER_ADAPTER_TYPES } from '../../adapter/config/types';
 import { UserApiV1 } from '../../adapter/api/model/UserApiV1';
 import { UserCreationQueryApiV1 } from '../../adapter/api/query/UserCreationQueryApiV1';
 import { UserDb } from '../../adapter/db/model/UserDb';
-import { configAdapter } from '../../../layer-modules/config';
+import { configAdapter } from '../../../layer-modules/config/adapter';
 
 const container: Container = configAdapter.container;
 

@@ -11,7 +11,7 @@ import { InsertRepository } from '../../../../../../layer-modules/db/domain';
 import { artifactCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
 import { artifactDbSchema } from '../../../../../adapter/db/model/card/ArtifactDb';
 import { artifactFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
-import { configAdapter } from '../../../../../../layer-modules/config';
+import { configAdapter } from '../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../layer-modules/db/test';
 
 const container: Container = configAdapter.container;

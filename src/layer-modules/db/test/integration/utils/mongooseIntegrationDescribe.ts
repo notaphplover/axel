@@ -1,7 +1,7 @@
 import { MongooseConector, dbAdapter } from '../../../adapter';
 import { Container } from 'inversify';
 import { commonTest } from '../../../../../common/test';
-import { configAdapter } from '../../../../config';
+import { configAdapter } from '../../../../config/adapter';
 
 const container: Container = configAdapter.container;
 

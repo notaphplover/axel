@@ -8,7 +8,7 @@ import { Game } from '../../../../domain/model/Game';
 import { GameCreationQuery } from '../../../../domain/query/GameCreationQuery';
 import { GameDbInsertRepository } from '../../../../adapter/db/repository/GameDbInsertRepository';
 import { InsertRepository } from '../../../../../layer-modules/db/domain';
-import { configAdapter } from '../../../../../layer-modules/config';
+import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../layer-modules/db/test';
 import { gameCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { gameFixtureFactory } from '../../../fixtures/domain/model/fixtures';
