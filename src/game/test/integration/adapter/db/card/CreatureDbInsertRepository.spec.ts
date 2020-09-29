@@ -8,11 +8,13 @@ import { CreatureDbInsertRepository } from '../../../../../adapter/db/repository
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { InsertRepository } from '../../../../../../layer-modules/db/domain';
-import { container } from '../../../../../../common/adapter/config/container';
+import { configAdapter } from '../../../../../../layer-modules/config';
 import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
 import { creatureDbSchema } from '../../../../../adapter/db/model/card/CreatureDb';
 import { creatureFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
 import { dbTest } from '../../../../../../layer-modules/db/test';
+
+const container: Container = configAdapter.container;
 
 const mongooseIntegrationDescribe: jest.Describe =
   dbTest.integration.utils.mongooseIntegrationDescribe;

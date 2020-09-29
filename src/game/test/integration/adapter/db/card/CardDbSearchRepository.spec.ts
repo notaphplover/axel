@@ -25,8 +25,10 @@ import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { Land } from '../../../../../domain/model/card/Land';
 import { LandDb } from '../../../../../adapter/db/model/card/LandDb';
 import { SearchRepository } from '../../../../../../layer-modules/db/domain';
-import { container } from '../../../../../../common/adapter/config/container';
+import { configAdapter } from '../../../../../../layer-modules/config';
 import { dbTest } from '../../../../../../layer-modules/db/test';
+
+const container: Container = configAdapter.container;
 
 const mongooseIntegrationDescribe: jest.Describe =
   dbTest.integration.utils.mongooseIntegrationDescribe;

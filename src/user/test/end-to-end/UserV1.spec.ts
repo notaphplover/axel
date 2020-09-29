@@ -9,6 +9,7 @@ import {
 import { AppEnvLoader } from '../../../app/adapter/env/AppEnvLoader';
 import { AppEnvVariables } from '../../../app/adapter';
 import { AuthCreationQueryApiV1 } from '../../adapter/api/query/AuthCreationQueryApiV1';
+import { Container } from 'inversify';
 import { EnvLoader } from '../../../layer-modules/env/domain';
 import { Model } from 'mongoose';
 import { StatusCodes } from 'http-status-codes';
@@ -16,7 +17,9 @@ import { USER_ADAPTER_TYPES } from '../../adapter/config/types';
 import { UserApiV1 } from '../../adapter/api/model/UserApiV1';
 import { UserCreationQueryApiV1 } from '../../adapter/api/query/UserCreationQueryApiV1';
 import { UserDb } from '../../adapter/db/model/UserDb';
-import { container } from '../../../common/adapter/config/container';
+import { configAdapter } from '../../../layer-modules/config';
+
+const container: Container = configAdapter.container;
 
 const dockerAppEnvLoader: EnvLoader<AppEnvVariables> = new AppEnvLoader(
   'docker',

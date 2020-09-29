@@ -1,8 +1,11 @@
 import { MongooseConector, dbAdapter } from '../../../../db/adapter';
+import { Container } from 'inversify';
 import { FastifyRouter } from '../../../adapter/FastifyRouter';
 import { FastifyServerTest } from '../FastifyServerTest';
-import { container } from '../../../../../common/adapter/config/container';
+import { configAdapter } from '../../../../config';
 import { customDescribe } from '../../../../../common/test/integration/utills/customDescribe';
+
+const container: Container = configAdapter.container;
 
 export interface FastifyServerTestOutputParam {
   value?: FastifyServerTest;

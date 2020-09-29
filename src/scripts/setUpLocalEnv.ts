@@ -7,9 +7,12 @@ import {
   createWriteStream,
   existsSync,
 } from 'fs';
+import { Container } from 'inversify';
 import { common } from '../common/domain';
-import { container } from '../common/adapter/config/container';
+import { configAdapter } from '../layer-modules/config';
 import { join } from 'path';
+
+const container: Container = configAdapter.container;
 
 const rootDir: string = common.io.rootDir;
 

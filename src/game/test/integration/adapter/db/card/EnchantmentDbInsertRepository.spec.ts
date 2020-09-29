@@ -8,11 +8,13 @@ import { EnchantmentDbInsertRepository } from '../../../../../adapter/db/reposit
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { InsertRepository } from '../../../../../../layer-modules/db/domain';
-import { container } from '../../../../../../common/adapter/config/container';
+import { configAdapter } from '../../../../../../layer-modules/config';
 import { dbTest } from '../../../../../../layer-modules/db/test';
 import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
 import { enchantmentDbSchema } from '../../../../../adapter/db/model/card/EnchantmentDb';
 import { enchantmentFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+
+const container: Container = configAdapter.container;
 
 const mongooseIntegrationDescribe: jest.Describe =
   dbTest.integration.utils.mongooseIntegrationDescribe;

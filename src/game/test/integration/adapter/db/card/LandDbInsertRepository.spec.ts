@@ -8,11 +8,13 @@ import { Land } from '../../../../../domain/model/card/Land';
 import { LandCreationQuery } from '../../../../../domain/query/card/LandCreationQuery';
 import { LandDb } from '../../../../../adapter/db/model/card/LandDb';
 import { LandDbInsertRepository } from '../../../../../adapter/db/repository/card/LandDbInsertRepository';
-import { container } from '../../../../../../common/adapter/config/container';
+import { configAdapter } from '../../../../../../layer-modules/config';
 import { dbTest } from '../../../../../../layer-modules/db/test';
 import { landCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
 import { landDbSchema } from '../../../../../adapter/db/model/card/LandDb';
 import { landFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+
+const container: Container = configAdapter.container;
 
 const mongooseIntegrationDescribe: jest.Describe =
   dbTest.integration.utils.mongooseIntegrationDescribe;

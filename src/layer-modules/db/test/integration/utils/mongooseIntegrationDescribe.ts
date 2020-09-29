@@ -1,6 +1,9 @@
 import { MongooseConector, dbAdapter } from '../../../adapter';
+import { Container } from 'inversify';
 import { commonTest } from '../../../../../common/test';
-import { container } from '../../../../../common/adapter/config/container';
+import { configAdapter } from '../../../../config';
+
+const container: Container = configAdapter.container;
 
 export const mongooseIntegrationDescribe: jest.Describe = commonTest.integration.utils.customDescribe(
   describe,

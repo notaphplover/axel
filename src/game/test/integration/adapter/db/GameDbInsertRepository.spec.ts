@@ -8,10 +8,12 @@ import { Game } from '../../../../domain/model/Game';
 import { GameCreationQuery } from '../../../../domain/query/GameCreationQuery';
 import { GameDbInsertRepository } from '../../../../adapter/db/repository/GameDbInsertRepository';
 import { InsertRepository } from '../../../../../layer-modules/db/domain';
-import { container } from '../../../../../common/adapter/config/container';
+import { configAdapter } from '../../../../../layer-modules/config';
 import { dbTest } from '../../../../../layer-modules/db/test';
 import { gameCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { gameFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+
+const container: Container = configAdapter.container;
 
 const mongooseIntegrationDescribe: jest.Describe =
   dbTest.integration.utils.mongooseIntegrationDescribe;

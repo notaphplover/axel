@@ -6,10 +6,13 @@ import {
   FastifyRouter,
 } from './layer-modules/server/adapter';
 import { MongooseConector, dbAdapter } from './layer-modules/db/adapter';
+import { Container } from 'inversify';
 import { EnvLoader } from './layer-modules/env/domain';
-import { container } from './common/adapter/config/container';
+import { configAdapter } from './layer-modules/config';
 import { gameAdapter } from './game/adapter';
 import { userAdapter } from './user/adapter';
+
+const container: Container = configAdapter.container;
 
 void (async () => {
   const authRouter: FastifyRouter = container.get(

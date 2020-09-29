@@ -8,10 +8,12 @@ import { USER_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { User } from '../../../../domain/model/User';
 import { UserDbSearchReporitory } from '../../../../adapter/db/repository/UserDbSearchRepository';
 import { UserFindQuery } from '../../../../domain/query/UserFindQuery';
-import { container } from '../../../../../common/adapter/config/container';
+import { configAdapter } from '../../../../../layer-modules/config';
 import { dbTest } from '../../../../../layer-modules/db/test';
 import { userFindQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+
+const container: Container = configAdapter.container;
 
 const mongooseIntegrationDescribe: jest.Describe =
   dbTest.integration.utils.mongooseIntegrationDescribe;
