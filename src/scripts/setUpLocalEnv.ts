@@ -1,20 +1,26 @@
 import 'reflect-metadata';
 import { JsonSchemaGenerator, jsonSchemaDomain } from '../json-schema/domain';
 import { PassThrough, Readable } from 'stream';
+import { basename, join } from 'path';
 import {
   copyFileSync,
   createReadStream,
   createWriteStream,
   existsSync,
+  mkdirSync,
 } from 'fs';
 import { Container } from 'inversify';
 import { common } from '../common/domain';
 import { configAdapter } from '../layer-modules/config/adapter';
-import { join } from 'path';
+import { ncp } from 'ncp';
 
 const container: Container = configAdapter.container;
 
 const rootDir: string = common.io.rootDir;
+
+const distFolder: string = join(rootDir, 'dist');
+
+const distLayerModulesFolder: string = join(distFolder, 'layer-modules');
 
 const srcFolder: string = join(rootDir, 'src');
 
@@ -75,6 +81,85 @@ function copySampleEnvFiles(modulePath: string): void {
         join(moduleEnvDirectory, newFile),
       );
     });
+}
+
+async function copyEnvToDist(): Promise<void> {
+  const modulePathToModulePathAndFolderMapper: (
+    modulePath: string,
+  ) => [string, string] = (modulePath: string) => [
+    basename(modulePath),
+    modulePath,
+  ];
+
+  const distModulePaths: string[] = detectModulesAtFolders([
+    distFolder,
+    distLayerModulesFolder,
+  ]);
+
+  const distModulePathsByFolder: Map<string, string> = new Map(
+    distModulePaths.map((modulePath: string) =>
+      modulePathToModulePathAndFolderMapper(modulePath),
+    ),
+  );
+
+  const srcModulePaths: string[] = detectModulesAtFolders([
+    srcFolder,
+    srcLayerModulesFolder,
+  ]);
+
+  const srcModulePathsByFolder: Map<string, string> = new Map(
+    srcModulePaths.map((modulePath: string) =>
+      modulePathToModulePathAndFolderMapper(modulePath),
+    ),
+  );
+
+  const copyPromises: Promise<void>[] = [];
+
+  for (const [srcModuleName, srcModulePath] of srcModulePathsByFolder) {
+    const distModulePath: string | undefined = distModulePathsByFolder.get(
+      srcModuleName,
+    );
+
+    if (distModulePath !== undefined) {
+      const srcGeneratedJsonSchemaAdapterFolder: string = join(
+        srcModulePath,
+        'env',
+      );
+      const distGeneratedJsonSchemaAdapterFolder: string = join(
+        distModulePath,
+        'env',
+      );
+
+      if (existsSync(srcGeneratedJsonSchemaAdapterFolder)) {
+        if (!existsSync(distGeneratedJsonSchemaAdapterFolder)) {
+          mkdirSync(distGeneratedJsonSchemaAdapterFolder, {
+            mode: '0754',
+            recursive: true,
+          });
+        }
+
+        copyPromises.push(
+          new Promise<void>(
+            (resolve: () => void, reject: (reason: unknown) => void) => {
+              ncp(
+                srcGeneratedJsonSchemaAdapterFolder,
+                distGeneratedJsonSchemaAdapterFolder,
+                (err: Error[] | null) => {
+                  if (err === null) {
+                    resolve();
+                  } else {
+                    reject(err);
+                  }
+                },
+              );
+            },
+          ),
+        );
+      }
+    }
+  }
+
+  await Promise.all(copyPromises);
 }
 
 function getSampleEnvFileStream(
@@ -140,6 +225,10 @@ void (async () => {
   console.log('Merging env files into .env ...');
 
   mergeEnvFiles(srcModulePaths, ENV_MERGE, ENV_MERGE_DESTINATION);
+
+  console.log('Copying env files to the build ...');
+
+  await copyEnvToDist();
 
   console.log('Generating JSON validation schemas...');
 
