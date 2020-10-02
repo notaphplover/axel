@@ -3,12 +3,23 @@ import {
   FixtureFactory,
 } from '../../../../../common/test';
 import { Artifact } from '../../../../domain/model/card/Artifact';
+import { CardDetail } from '../../../../domain/model/card/CardDetail';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { Creature } from '../../../../domain/model/card/Creature';
 import { Enchantment } from '../../../../domain/model/card/Enchantment';
 import { Game } from '../../../../domain/model/Game';
 import { Land } from '../../../../domain/model/card/Land';
 import { Resource } from '../../../../domain/model/card/Resource';
+
+export const cardDetail: CardDetail = {
+  description: 'Sample description',
+  image: 'http://sample.com/sample-image',
+  title: 'Sample title',
+};
+
+export const cardDetailFixtureFactory: FixtureFactory<CardDetail> = new DeepCloneFixtureFactory(
+  cardDetail,
+);
 
 export const resource: Resource = {
   black: 1,

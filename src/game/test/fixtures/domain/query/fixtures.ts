@@ -2,7 +2,14 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../common/test';
-import { artifact, creature, enchantment, game, land } from '../model/fixtures';
+import {
+  artifact,
+  cardDetail,
+  creature,
+  enchantment,
+  game,
+  land,
+} from '../model/fixtures';
 import { ArtifactCreationQuery } from '../../../../domain/query/card/ArtifactCreationQuery';
 import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { CardType } from '../../../../domain/model/card/CardType';
@@ -14,6 +21,7 @@ import { LandCreationQuery } from '../../../../domain/query/card/LandCreationQue
 
 export const artifactCreationQuery: ArtifactCreationQuery = {
   cost: artifact.cost,
+  detail: cardDetail,
   type: CardType.Artifact,
 };
 
@@ -32,6 +40,7 @@ export const artifactFindQueryFixtureFactory: FixtureFactory<CardFindQuery> = ne
 
 export const creatureCreationQuery: CreatureCreationQuery = {
   cost: creature.cost,
+  detail: cardDetail,
   type: CardType.Creature,
   power: creature.power,
   toughness: creature.toughness,
@@ -52,6 +61,7 @@ export const creatureFindQueryFixtureFactory: FixtureFactory<CardFindQuery> = ne
 
 export const enchantmentCreationQuery: EnchantmentCreationQuery = {
   cost: enchantment.cost,
+  detail: cardDetail,
   type: CardType.Enchantment,
 };
 
@@ -87,6 +97,7 @@ export const gameFindQueryFixtureFactory: FixtureFactory<GameFindQuery> = new De
 
 export const landCreationQuery: LandCreationQuery = {
   cost: land.cost,
+  detail: cardDetail,
   type: CardType.Land,
 };
 

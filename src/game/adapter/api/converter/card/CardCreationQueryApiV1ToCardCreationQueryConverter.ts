@@ -3,6 +3,8 @@ import { BaseCardCreationQuery } from '../../../../domain/query/card/BaseCardCre
 import { BaseCardCreationQueryApiV1 } from '../../query/card/BaseCardCreationQueryApiV1';
 import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
 import { CardCreationQueryApiV1 } from '../../query/card/CardCreationQueryApiV1';
+import { CardDetail } from '../../../../domain/model/card/CardDetail';
+import { CardDetailApiV1 } from '../../model/card/CardDetailApiV1';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
 import { Converter } from '../../../../../common/domain';
@@ -16,6 +18,14 @@ import { ResourceApiV1 } from '../../model/card/ResourceApiV1';
 export class CardCreationQueryApiV1ToCardCreationQueryConverter
   implements Converter<CardCreationQueryApiV1, CardCreationQuery> {
   constructor(
+    @inject(
+      GAME_ADAPTER_TYPES.api.converter.card
+        .CARD_DETAIL_API_V1_TO_CARD_DETAIL_CONVERTER,
+    )
+    private readonly cardDetailApiV1ToCardDetailConverter: Converter<
+      CardDetailApiV1,
+      CardDetail
+    >,
     @inject(
       GAME_ADAPTER_TYPES.api.converter.card
         .CARD_TYPE_API_V1_TO_CARD_TYPE_CONVERTER,
@@ -37,9 +47,7 @@ export class CardCreationQueryApiV1ToCardCreationQueryConverter
   public transform(input: CardCreationQueryApiV1): CardCreationQuery {
     switch (input.type) {
       case CardTypeApiV1.Creature:
-        return this.transformCreatureCreationQuery(
-          input as CreatureCreationQueryApiV1,
-        );
+        return this.transformCreatureCreationQuery(input);
       default:
         return this.transformBaseCardCreationQuery(input) as CardCreationQuery;
     }
@@ -50,6 +58,7 @@ export class CardCreationQueryApiV1ToCardCreationQueryConverter
   ): BaseCardCreationQuery {
     return {
       cost: this.resourceApiV1ToResourceConverter.transform(input.cost),
+      detail: this.cardDetailApiV1ToCardDetailConverter.transform(input.detail),
       type: this.cardTypeApiV1ToCardTypeConverter.transform(input.type),
     };
   }
@@ -63,6 +72,7 @@ export class CardCreationQueryApiV1ToCardCreationQueryConverter
 
     return {
       cost: baseCardCreationQuery.cost,
+      detail: baseCardCreationQuery.detail,
       power: input.power,
       toughness: input.toughness,
       type: CardType.Creature,
