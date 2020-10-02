@@ -80,6 +80,9 @@ mongooseIntegrationDescribe(ArtifactDbInsertRepository.name, () => {
         expect((innerResult as Artifact).cost).toStrictEqual(
           artifactFixtureFactory.get().cost,
         );
+        expect((innerResult as Artifact).detail).toStrictEqual(
+          artifactFixtureFactory.get().detail,
+        );
         expect((innerResult as Artifact).type).toStrictEqual(
           artifactFixtureFactory.get().type,
         );

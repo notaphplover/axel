@@ -87,6 +87,9 @@ mongooseIntegrationDescribe(EnchantmentDbInsertRepository.name, () => {
         expect((innerResult as Enchantment).cost).toStrictEqual(
           enchantmentFixtureFactory.get().cost,
         );
+        expect((innerResult as Enchantment).detail).toStrictEqual(
+          enchantmentFixtureFactory.get().detail,
+        );
         expect((innerResult as Enchantment).type).toStrictEqual(
           enchantmentFixtureFactory.get().type,
         );

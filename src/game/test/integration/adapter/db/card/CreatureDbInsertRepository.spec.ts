@@ -80,6 +80,9 @@ mongooseIntegrationDescribe(CreatureDbInsertRepository.name, () => {
         expect((innerResult as Creature).cost).toStrictEqual(
           creatureFixtureFactory.get().cost,
         );
+        expect((innerResult as Creature).detail).toStrictEqual(
+          creatureFixtureFactory.get().detail,
+        );
         expect((innerResult as Creature).type).toStrictEqual(
           creatureFixtureFactory.get().type,
         );

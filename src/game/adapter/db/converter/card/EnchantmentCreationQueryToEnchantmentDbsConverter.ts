@@ -17,6 +17,7 @@ export class EnchantmentCreationQueryToEnchantmentDbsConverter
     return [
       new this.enchantmentDbModel({
         cost: input.cost,
+        detail: input.detail,
         type: input.type,
       }),
     ];

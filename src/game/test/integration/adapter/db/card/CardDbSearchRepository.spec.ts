@@ -84,11 +84,13 @@ mongooseIntegrationDescribe(CardDbSearchRepository.name, () => {
         let artifactResult: unknown;
 
         beforeAll(async () => {
+          const artifactFixture: Artifact = artifactFixtureFactory.get();
           // eslint-disable-next-line @typescript-eslint/typedef
           [artifactDbInserted] = (await cardModelMock.insertMany([
             new cardModelMock({
-              cost: artifactFixtureFactory.get().cost,
-              type: artifactFixtureFactory.get().type,
+              cost: artifactFixture.cost,
+              detail: artifactFixture.detail,
+              type: artifactFixture.type,
             }),
           ])) as [ArtifactDb];
 
@@ -110,6 +112,15 @@ mongooseIntegrationDescribe(CardDbSearchRepository.name, () => {
           expect((cardResult as Artifact).id).toStrictEqual(
             artifactDbInserted._id.toHexString(),
           );
+          expect((cardResult as Artifact).detail.description).toStrictEqual(
+            artifactDbInserted.detail.description,
+          );
+          expect((cardResult as Artifact).detail.image).toStrictEqual(
+            artifactDbInserted.detail.image,
+          );
+          expect((cardResult as Artifact).detail.title).toStrictEqual(
+            artifactDbInserted.detail.title,
+          );
           expect((cardResult as Artifact).cost).toStrictEqual(
             artifactDbInserted.cost,
           );
@@ -123,13 +134,16 @@ mongooseIntegrationDescribe(CardDbSearchRepository.name, () => {
         let creatureResult: unknown;
 
         beforeAll(async () => {
+          const creatureFixture: Creature = creatureFixtureFactory.get();
+
           // eslint-disable-next-line @typescript-eslint/typedef
           [creatureDbInserted] = (await cardModelMock.insertMany([
             new cardModelMock({
-              cost: creatureFixtureFactory.get().cost,
-              power: creatureFixtureFactory.get().power,
-              toughness: creatureFixtureFactory.get().toughness,
-              type: creatureFixtureFactory.get().type,
+              cost: creatureFixture.cost,
+              detail: creatureFixture.detail,
+              power: creatureFixture.power,
+              toughness: creatureFixture.toughness,
+              type: creatureFixture.type,
             }),
           ])) as [CreatureDb];
 
@@ -154,6 +168,15 @@ mongooseIntegrationDescribe(CardDbSearchRepository.name, () => {
           expect((cardResult as Creature).cost).toStrictEqual(
             creatureDbInserted.cost,
           );
+          expect((cardResult as Creature).detail.description).toStrictEqual(
+            creatureDbInserted.detail.description,
+          );
+          expect((cardResult as Creature).detail.image).toStrictEqual(
+            creatureDbInserted.detail.image,
+          );
+          expect((cardResult as Creature).detail.title).toStrictEqual(
+            creatureDbInserted.detail.title,
+          );
           expect((cardResult as Creature).power).toStrictEqual(
             creatureDbInserted.power,
           );
@@ -170,11 +193,14 @@ mongooseIntegrationDescribe(CardDbSearchRepository.name, () => {
         let enchantmentResult: unknown;
 
         beforeAll(async () => {
+          const enchantmentFixture: Enchantment = enchantmentFixtureFactory.get();
+
           // eslint-disable-next-line @typescript-eslint/typedef
           [enchantmentDbInserted] = (await cardModelMock.insertMany([
             new cardModelMock({
-              cost: enchantmentFixtureFactory.get().cost,
-              type: enchantmentFixtureFactory.get().type,
+              cost: enchantmentFixture.cost,
+              detail: enchantmentFixture.detail,
+              type: enchantmentFixture.type,
             }),
           ])) as [EnchantmentDb];
 
@@ -199,6 +225,15 @@ mongooseIntegrationDescribe(CardDbSearchRepository.name, () => {
           expect((cardResult as Enchantment).cost).toStrictEqual(
             enchantmentDbInserted.cost,
           );
+          expect((cardResult as Enchantment).detail.description).toStrictEqual(
+            enchantmentDbInserted.detail.description,
+          );
+          expect((cardResult as Enchantment).detail.image).toStrictEqual(
+            enchantmentDbInserted.detail.image,
+          );
+          expect((cardResult as Enchantment).detail.title).toStrictEqual(
+            enchantmentDbInserted.detail.title,
+          );
           expect((cardResult as Enchantment).type).toBe(
             enchantmentDbInserted.type,
           );
@@ -211,11 +246,14 @@ mongooseIntegrationDescribe(CardDbSearchRepository.name, () => {
         let landResult: unknown;
 
         beforeAll(async () => {
+          const landFixture: Land = landFixtureFactory.get();
+
           // eslint-disable-next-line @typescript-eslint/typedef
           [landDbInserted] = (await cardModelMock.insertMany([
             new cardModelMock({
-              cost: landFixtureFactory.get().cost,
-              type: landFixtureFactory.get().type,
+              cost: landFixture.cost,
+              detail: landFixture.detail,
+              type: landFixture.type,
             }),
           ])) as [LandDb];
 
@@ -228,7 +266,7 @@ mongooseIntegrationDescribe(CardDbSearchRepository.name, () => {
           );
         });
 
-        it('must return the artifact cards', () => {
+        it('must return the land cards', () => {
           expect(landResult).toHaveProperty('length');
           expect((landResult as Array<unknown>).length).toBe(1);
 
@@ -238,6 +276,15 @@ mongooseIntegrationDescribe(CardDbSearchRepository.name, () => {
             landDbInserted._id.toHexString(),
           );
           expect((cardResult as Land).cost).toStrictEqual(landDbInserted.cost);
+          expect((cardResult as Land).detail.description).toStrictEqual(
+            landDbInserted.detail.description,
+          );
+          expect((cardResult as Land).detail.image).toStrictEqual(
+            landDbInserted.detail.image,
+          );
+          expect((cardResult as Land).detail.title).toStrictEqual(
+            landDbInserted.detail.title,
+          );
           expect((cardResult as Land).type).toBe(landDbInserted.type);
         });
       });

@@ -36,6 +36,7 @@ export const resourceFixtureFactory: FixtureFactory<Resource> = new DeepCloneFix
 
 export const artifact: Artifact = {
   cost: resource,
+  detail: cardDetail,
   id: '5f5cb76243fda130685e00dc',
   type: CardType.Artifact,
 };
@@ -46,6 +47,7 @@ export const artifactFixtureFactory: FixtureFactory<Artifact> = new DeepCloneFix
 
 export const creature: Creature = {
   cost: resource,
+  detail: cardDetail,
   id: '5f5cb76243faa130688e00dc',
   type: CardType.Creature,
   power: 2,
@@ -58,6 +60,7 @@ export const creatureFixtureFactory: FixtureFactory<Creature> = new DeepCloneFix
 
 export const enchantment: Enchantment = {
   cost: resource,
+  detail: cardDetail,
   id: '5f5cb76243fda130685e00dc',
   type: CardType.Enchantment,
 };
@@ -68,6 +71,7 @@ export const enchantmentFixtureFactory: FixtureFactory<Enchantment> = new DeepCl
 
 export const land: Land = {
   cost: resource,
+  detail: cardDetail,
   id: '5f5cb76c43fda630685e00dc',
   type: CardType.Land,
 };

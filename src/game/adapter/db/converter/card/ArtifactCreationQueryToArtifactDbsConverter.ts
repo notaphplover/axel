@@ -17,6 +17,7 @@ export class ArtifactCreationQueryToArtifactDbsConverter
     return [
       new this.artifactDbModel({
         cost: input.cost,
+        detail: input.detail,
         type: input.type,
       }),
     ];

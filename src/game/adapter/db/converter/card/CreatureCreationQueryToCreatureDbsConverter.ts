@@ -17,6 +17,7 @@ export class CreatureCreationQueryToCreatureDbsConverter
     return [
       new this.creatureDbModel({
         cost: input.cost,
+        detail: input.detail,
         type: input.type,
         power: input.power,
         toughness: input.toughness,
