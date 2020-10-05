@@ -41,6 +41,7 @@ export const resourceApiV1: ResourceApiV1 = {
 
 export const artifactApiV1: ArtifactApiV1 = {
   cost: resourceApiV1,
+  detail: cardDetailApiV1,
   id: artifact.id,
   type: CardTypeApiV1.Artifact,
 };
@@ -51,6 +52,7 @@ export const artifactApiV1FixtureFactory: FixtureFactory<ArtifactApiV1> = new De
 
 export const creatureApiV1: CreatureApiV1 = {
   cost: resourceApiV1,
+  detail: cardDetailApiV1,
   id: creature.id,
   power: creature.power,
   toughness: creature.toughness,
@@ -63,6 +65,7 @@ export const creatureApiV1FixtureFactory: FixtureFactory<CreatureApiV1> = new De
 
 export const enchantmentApiV1: EnchantmentApiV1 = {
   cost: resourceApiV1,
+  detail: cardDetailApiV1,
   id: enchantment.id,
   type: CardTypeApiV1.Enchantment,
 };
@@ -73,6 +76,7 @@ export const enchantmentApiV1FixtureFactory: FixtureFactory<EnchantmentApiV1> = 
 
 export const landApiV1: LandApiV1 = {
   cost: resourceApiV1,
+  detail: cardDetailApiV1,
   id: land.id,
   type: CardTypeApiV1.Land,
 };
