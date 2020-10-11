@@ -9,8 +9,8 @@ import { MongooseConector, dbAdapter } from './layer-modules/db/adapter';
 import { Container } from 'inversify';
 import { EnvLoader } from './layer-modules/env/domain';
 import { configAdapter } from './layer-modules/config/adapter';
-import { gameAdapter } from './game/adapter';
-import { userAdapter } from './user/adapter';
+import { gameAdapter } from './data-modules/game/adapter';
+import { userAdapter } from './data-modules/user/adapter';
 
 const container: Container = configAdapter.container;
 
