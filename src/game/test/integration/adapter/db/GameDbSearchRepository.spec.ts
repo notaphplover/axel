@@ -5,7 +5,7 @@ import { Container } from 'inversify';
 import { GAME_ADAPTER_TYPES } from '../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { Game } from '../../../../domain/model/Game';
-import { GameDbSearchReporitory } from '../../../../adapter/db/repository/GameDbSearchRepository';
+import { GameDbSearchRepository } from '../../../../adapter/db/repository/GameDbSearchRepository';
 import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
 import { SearchRepository } from '../../../../../layer-modules/db/domain';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
@@ -37,7 +37,7 @@ function injectGameMongooseModelMock(
     .toConstantValue(model);
 }
 
-mongooseIntegrationDescribe(GameDbSearchReporitory.name, () => {
+mongooseIntegrationDescribe(GameDbSearchRepository.name, () => {
   describe('.find()', () => {
     describe('when called and some games satisfies the query', () => {
       let gameModelMock: Model<GameDb>;

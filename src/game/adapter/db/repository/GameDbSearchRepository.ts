@@ -8,7 +8,7 @@ import { GameFindQuery } from '../../../domain/query/GameFindQuery';
 import { MongooseSearchRepository } from '../../../../layer-modules/db/adapter';
 
 @injectable()
-export class GameDbSearchReporitory extends MongooseSearchRepository<
+export class GameDbSearchRepository extends MongooseSearchRepository<
   Game,
   GameDb,
   GameFindQuery

@@ -5,7 +5,7 @@ import { CreatureDbInsertRepository } from '../../../db/repository/card/Creature
 import { EnchantmentDbInsertRepository } from '../../../db/repository/card/EnchantmentDbInsertRepository';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameDbInsertRepository } from '../../../db/repository/GameDbInsertRepository';
-import { GameDbSearchReporitory } from '../../../db/repository/GameDbSearchRepository';
+import { GameDbSearchRepository } from '../../../db/repository/GameDbSearchRepository';
 import { LandDbInsertRepository } from '../../../db/repository/card/LandDbInsertRepository';
 import { interfaces } from 'inversify';
 
@@ -14,7 +14,7 @@ export function bindGameDomainRepository(bind: interfaces.Bind): void {
     GameDbInsertRepository,
   );
   bind(GAME_DOMAIN_TYPES.repository.GAME_SEARCH_REPOSITORY).to(
-    GameDbSearchReporitory,
+    GameDbSearchRepository,
   );
   bind(GAME_DOMAIN_TYPES.repository.card.ARTIFACT_INSERT_REPOSITORY).to(
     ArtifactDbInsertRepository,
