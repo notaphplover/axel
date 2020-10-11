@@ -19,6 +19,7 @@ export const GAME_DOMAIN_TYPES = {
     GAME_SEARCH_REPOSITORY: Symbol.for('GameSearchRepository'),
     card: {
       ARTIFACT_INSERT_REPOSITORY: Symbol.for('ArtifactInsertRepository'),
+      CARD_DECK_INSERT_REPOSITORY: Symbol.for('CardDeckInsertRepository'),
       CARD_SEARCH_REPOSITORY: Symbol.for('CardSearchRepository'),
       CREATURE_INSERT_REPOSITORY: Symbol.for('CreatureInsertRepository'),
       ENCHANTMENT_INSERT_REPOSITORY: Symbol.for('EnchantmentInsertRepository'),

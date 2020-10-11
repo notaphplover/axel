@@ -2,8 +2,16 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../common/test';
-import { artifact, creature, enchantment, game, land } from '../model/fixtures';
+import {
+  artifact,
+  cardDeck,
+  creature,
+  enchantment,
+  game,
+  land,
+} from '../model/fixtures';
 import { ArtifactCreationQuery } from '../../../../domain/query/card/ArtifactCreationQuery';
+import { CardDeckCreationQuery } from '../../../../domain/query/card/CardDeckCreationQuery';
 import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
@@ -105,4 +113,15 @@ export const landFindQuery: CardFindQuery = {
 
 export const landFindQueryFixtureFactory: FixtureFactory<CardFindQuery> = new DeepCloneFixtureFactory(
   landFindQuery,
+);
+
+export const cardDeckCreationQuery: CardDeckCreationQuery = {
+  description: cardDeck.description,
+  format: cardDeck.format,
+  name: cardDeck.name,
+  sections: cardDeck.sections,
+};
+
+export const cardDeckCreationQueryFixtures: FixtureFactory<CardDeckCreationQuery> = new DeepCloneFixtureFactory(
+  cardDeckCreationQuery,
 );

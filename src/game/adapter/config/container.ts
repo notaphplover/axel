@@ -7,6 +7,7 @@ import { CardCreationQueryApiV1Validator } from '../api/validator/card/CardCreat
 import { CardDbSearchRepository } from '../db/repository/card/CardDbSearchRepository';
 import { CardDbToCardConverter } from '../db/converter/card/CardDbToCardConverter';
 import { CardDeckCreationQueryToCardDeckDbsConverter } from '../db/converter/card/CardDeckCreationQueryToCardDeckDbsConverter';
+import { CardDeckDbInsertRepository } from '../db/repository/card/CardDeckDbInsertRepository';
 import { CardDeckDbToCardDeckConverter } from '../db/converter/card/CardDeckDbToCardDeckConverter';
 import { CardDetailApiV1ToCardDetailConverter } from '../api/converter/card/CardDetailApiV1ToCardDetailConverter';
 import { CardDetailToCardDetailV1Converter } from '../api/converter/card/CardDetailToCardDetailApiV1Converter';
@@ -230,6 +231,9 @@ function bindDomain(bind: interfaces.Bind) {
   );
   bind(GAME_DOMAIN_TYPES.repository.card.ARTIFACT_INSERT_REPOSITORY).to(
     ArtifactDbInsertRepository,
+  );
+  bind(GAME_DOMAIN_TYPES.repository.card.CARD_DECK_INSERT_REPOSITORY).to(
+    CardDeckDbInsertRepository,
   );
   bind(GAME_DOMAIN_TYPES.repository.card.CARD_SEARCH_REPOSITORY).to(
     CardDbSearchRepository,
