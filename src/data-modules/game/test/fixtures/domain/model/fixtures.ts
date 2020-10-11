@@ -1,12 +1,10 @@
 import {
-  CardDeck,
-  CardDeckSections,
-} from '../../../../domain/model/deck/CardDeck';
-import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../common/test';
 import { Artifact } from '../../../../domain/model/card/Artifact';
+import { CardDeck } from '../../../../domain/model/deck/CardDeck';
+import { CardDeckSections } from '../../../../domain/model/deck/CardDeckSections';
 import { CardDetail } from '../../../../domain/model/card/CardDetail';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { Creature } from '../../../../domain/model/card/Creature';

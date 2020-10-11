@@ -1,13 +1,5 @@
+import { CardDeckSections } from './CardDeckSections';
 import { GameFormat } from '../GameFormat';
-
-export interface CardDeckSections {
-  core: CardSetReferences;
-  sideboard: CardSetReferences;
-}
-
-export interface CardSetReferences {
-  references: string[];
-}
 
 export interface CardDeck {
   sections: CardDeckSections;
