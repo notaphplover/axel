@@ -1,9 +1,9 @@
 import { ArtifactCreationQueryToArtifactDbsConverter } from '../../../db/converter/card/ArtifactCreationQueryToArtifactDbsConverter';
 import { ArtifactDbToArtifactConverter } from '../../../db/converter/card/ArtifactDbToArtifactConverter';
 import { CardDbToCardConverter } from '../../../db/converter/card/CardDbToCardConverter';
-import { CardDeckCreationQueryToCardDeckDbsConverter } from '../../../db/converter/card/CardDeckCreationQueryToCardDeckDbsConverter';
-import { CardDeckDbToCardDeckConverter } from '../../../db/converter/card/CardDeckDbToCardDeckConverter';
-import { CardDeckFindQueryToCardDeckDbFilterQueryConverter } from '../../../db/converter/card/CardDeckFindQueryToCardDeckDbFilterQueryConverter';
+import { CardDeckCreationQueryToCardDeckDbsConverter } from '../../../db/converter/deck/CardDeckCreationQueryToCardDeckDbsConverter';
+import { CardDeckDbToCardDeckConverter } from '../../../db/converter/deck/CardDeckDbToCardDeckConverter';
+import { CardDeckFindQueryToCardDeckDbFilterQueryConverter } from '../../../db/converter/deck/CardDeckFindQueryToCardDeckDbFilterQueryConverter';
 import { CardFindQueryToCardDbFilterQueryConverter } from '../../../db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
 import { CreatureCreationQueryToCreatureDbsConverter } from '../../../db/converter/card/CreatureCreationQueryToCreatureDbsConverter';
 import { CreatureDbToCreatureConverter } from '../../../db/converter/card/CreatureDbToCreatureConverter';
@@ -17,7 +17,7 @@ import { LandCreationQueryToLandDbsConverter } from '../../../db/converter/card/
 import { LandDbToLandConverter } from '../../../db/converter/card/LandDbToLandConverter';
 import { artifactDbModel } from '../../../db/model/card/ArtifactDb';
 import { cardDbModel } from '../../../db/model/card/CardDb';
-import { cardDeckDbModel } from '../../../db/model/card/CardDeckDb';
+import { cardDeckDbModel } from '../../../db/model/deck/CardDeckDb';
 import { creatureDbModel } from '../../../db/model/card/CreatureDb';
 import { enchantmentDbModel } from '../../../db/model/card/EnchantmentDb';
 import { gameDbModel } from '../../../db/model/GameDb';
@@ -47,17 +47,6 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   );
   bind(
     GAME_ADAPTER_TYPES.db.converter.card
-      .CARD_DECK_CREATION_QUERY_TO_CARD_DBS_CONVERTER,
-  ).to(CardDeckCreationQueryToCardDeckDbsConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.card.CARD_DECK_DB_TO_CARD_DECK_CONVERTER,
-  ).to(CardDeckDbToCardDeckConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.card
-      .CARD_DECK_FIND_QUERY_TO_CARD_DECK_DB_FILTER_QUERY_CONVERTER,
-  ).to(CardDeckFindQueryToCardDeckDbFilterQueryConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.card
       .CARD_FIND_QUERY_TO_CARD_DB_FILTER_QUERY_CONVERTER,
   ).to(CardFindQueryToCardDbFilterQueryConverter);
   bind(
@@ -82,6 +71,18 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   bind(GAME_ADAPTER_TYPES.db.converter.card.LAND_DB_TO_LAND_CONVERTER).to(
     LandDbToLandConverter,
   );
+
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.deck
+      .CARD_DECK_CREATION_QUERY_TO_CARD_DBS_CONVERTER,
+  ).to(CardDeckCreationQueryToCardDeckDbsConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.deck.CARD_DECK_DB_TO_CARD_DECK_CONVERTER,
+  ).to(CardDeckDbToCardDeckConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.deck
+      .CARD_DECK_FIND_QUERY_TO_CARD_DECK_DB_FILTER_QUERY_CONVERTER,
+  ).to(CardDeckFindQueryToCardDeckDbFilterQueryConverter);
 
   bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
   bind(GAME_ADAPTER_TYPES.db.model.card.ARTIFACT_DB_MODEL).toConstantValue(

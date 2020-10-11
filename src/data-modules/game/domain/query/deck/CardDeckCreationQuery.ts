@@ -1,4 +1,4 @@
-import { CardDeckSections } from '../../model/card/CardDeck';
+import { CardDeckSections } from '../../model/deck/CardDeck';
 import { GameFormat } from '../../model/GameFormat';
 
 export interface CardDeckCreationQuery {

@@ -1,7 +1,7 @@
 import {
   CardDeck,
   CardDeckSections,
-} from '../../../../domain/model/card/CardDeck';
+} from '../../../../domain/model/deck/CardDeck';
 import {
   DeepCloneFixtureFactory,
   FixtureFactory,

@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
-import { CardDeck } from '../../../../domain/model/card/CardDeck';
-import { CardDeckCreationQuery } from '../../../../domain/query/card/CardDeckCreationQuery';
-import { CardDeckDb } from '../../model/card/CardDeckDb';
+import { CardDeck } from '../../../../domain/model/deck/CardDeck';
+import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
+import { CardDeckDb } from '../../model/deck/CardDeckDb';
 import { Converter } from '../../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { Model } from 'mongoose';
@@ -18,11 +18,11 @@ export class CardDeckDbInsertRepository extends MongooseInsertRepository<
     @inject(GAME_ADAPTER_TYPES.db.model.card.CARD_DECK_DB_MODEL)
     model: Model<CardDeckDb>,
     @inject(
-      GAME_ADAPTER_TYPES.db.converter.card.CARD_DECK_DB_TO_CARD_DECK_CONVERTER,
+      GAME_ADAPTER_TYPES.db.converter.deck.CARD_DECK_DB_TO_CARD_DECK_CONVERTER,
     )
     cardDeckDbToCardDeckConverter: Converter<CardDeckDb, CardDeck>,
     @inject(
-      GAME_ADAPTER_TYPES.db.converter.card
+      GAME_ADAPTER_TYPES.db.converter.deck
         .CARD_DECK_CREATION_QUERY_TO_CARD_DBS_CONVERTER,
     )
     cardDeckCreationQueryToCardDeckDbsConverter: Converter<

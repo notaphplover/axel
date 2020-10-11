@@ -1,8 +1,8 @@
 import { FilterQuery, Model } from 'mongoose';
 import { inject, injectable } from 'inversify';
-import { CardDeck } from '../../../../domain/model/card/CardDeck';
-import { CardDeckDb } from '../../model/card/CardDeckDb';
-import { CardDeckFindQuery } from '../../../../domain/query/card/CardDeckFindQuery';
+import { CardDeck } from '../../../../domain/model/deck/CardDeck';
+import { CardDeckDb } from '../../model/deck/CardDeckDb';
+import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
 import { Converter } from '../../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { MongooseSearchRepository } from '../../../../../../layer-modules/db/adapter';
@@ -18,11 +18,11 @@ export class CardDeckDbSearchRepository extends MongooseSearchRepository<
     @inject(GAME_ADAPTER_TYPES.db.model.card.CARD_DECK_DB_MODEL)
     model: Model<CardDeckDb>,
     @inject(
-      GAME_ADAPTER_TYPES.db.converter.card.CARD_DECK_DB_TO_CARD_DECK_CONVERTER,
+      GAME_ADAPTER_TYPES.db.converter.deck.CARD_DECK_DB_TO_CARD_DECK_CONVERTER,
     )
     cardDeckDbToCardDeckConverter: Converter<CardDeckDb, CardDeck>,
     @inject(
-      GAME_ADAPTER_TYPES.db.converter.card
+      GAME_ADAPTER_TYPES.db.converter.deck
         .CARD_DECK_FIND_QUERY_TO_CARD_DECK_DB_FILTER_QUERY_CONVERTER,
     )
     cardDeckFindQueryToCardDeckDbFilterQueryConverter: Converter<

@@ -16,15 +16,6 @@ export const GAME_ADAPTER_DB_TYPES = {
         'ArtifactDbToArtifactConverter',
       ),
       CARD_DB_TO_CARD_CONVERTER: Symbol.for('CardDbToCardConverter'),
-      CARD_DECK_CREATION_QUERY_TO_CARD_DBS_CONVERTER: Symbol.for(
-        'CardDeckCreationQueryToCardDbsConverter',
-      ),
-      CARD_DECK_DB_TO_CARD_DECK_CONVERTER: Symbol.for(
-        'CardDeckDbToCardDeckConverter',
-      ),
-      CARD_DECK_FIND_QUERY_TO_CARD_DECK_DB_FILTER_QUERY_CONVERTER: Symbol.for(
-        'CardDeckFindQueryToCardDeckDbFilterQueryConverter ',
-      ),
       CARD_FIND_QUERY_TO_CARD_DB_FILTER_QUERY_CONVERTER: Symbol.for(
         'CardFindQueryToCardDbFilterQueryConverter',
       ),
@@ -44,6 +35,17 @@ export const GAME_ADAPTER_DB_TYPES = {
         'LandCreationQueryToLandDbsConverter',
       ),
       LAND_DB_TO_LAND_CONVERTER: Symbol.for('LandDbToLandConverter'),
+    },
+    deck: {
+      CARD_DECK_CREATION_QUERY_TO_CARD_DBS_CONVERTER: Symbol.for(
+        'CardDeckCreationQueryToCardDbsConverter',
+      ),
+      CARD_DECK_DB_TO_CARD_DECK_CONVERTER: Symbol.for(
+        'CardDeckDbToCardDeckConverter',
+      ),
+      CARD_DECK_FIND_QUERY_TO_CARD_DECK_DB_FILTER_QUERY_CONVERTER: Symbol.for(
+        'CardDeckFindQueryToCardDeckDbFilterQueryConverter ',
+      ),
     },
   },
   model: {

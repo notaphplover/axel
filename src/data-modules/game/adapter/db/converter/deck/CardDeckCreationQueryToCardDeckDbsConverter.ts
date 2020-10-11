@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
-import { CardDeckCreationQuery } from '../../../../domain/query/card/CardDeckCreationQuery';
-import { CardDeckDb } from '../../model/card/CardDeckDb';
+import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
+import { CardDeckDb } from '../../model/deck/CardDeckDb';
 import { Converter } from '../../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { Model } from 'mongoose';

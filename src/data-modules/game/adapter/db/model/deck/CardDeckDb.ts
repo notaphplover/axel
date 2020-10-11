@@ -5,7 +5,7 @@ import mongoose, {
   SchemaDefinition,
   Types,
 } from 'mongoose';
-import { CardDeckSections } from '../../../../domain/model/card/CardDeck';
+import { CardDeckSections } from '../../../../domain/model/deck/CardDeck';
 import { GameFormat } from '../../../../domain/model/GameFormat';
 
 export interface CardDeckDb extends Document {

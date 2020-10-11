@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { CardDeck } from '../../../../../domain/model/card/CardDeck';
-import { CardDeckFindQuery } from '../../../../../domain/query/card/CardDeckFindQuery';
-import { FindCardDecksInteractor } from '../../../../../domain/interactor/card/FindCardDecksInteractor';
+import { CardDeck } from '../../../../../domain/model/deck/CardDeck';
+import { CardDeckFindQuery } from '../../../../../domain/query/deck/CardDeckFindQuery';
+import { FindCardDecksInteractor } from '../../../../../domain/interactor/deck/FindCardDecksInteractor';
 import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
 import { cardDeckFindQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
 import { cardDeckFixtureFactory } from '../../../../fixtures/domain/model/fixtures';

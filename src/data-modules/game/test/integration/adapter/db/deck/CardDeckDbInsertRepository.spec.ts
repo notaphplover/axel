@@ -2,11 +2,11 @@ import 'reflect-metadata';
 import {
   CardDeckDb,
   cardDeckDbSchema,
-} from '../../../../../adapter/db/model/card/CardDeckDb';
+} from '../../../../../adapter/db/model/deck/CardDeckDb';
 import mongoose, { Document, Model } from 'mongoose';
-import { CardDeck } from '../../../../../domain/model/card/CardDeck';
-import { CardDeckCreationQuery } from '../../../../../domain/query/card/CardDeckCreationQuery';
-import { CardDeckDbInsertRepository } from '../../../../../adapter/db/repository/card/CardDeckDbInsertRepository';
+import { CardDeck } from '../../../../../domain/model/deck/CardDeck';
+import { CardDeckCreationQuery } from '../../../../../domain/query/deck/CardDeckCreationQuery';
+import { CardDeckDbInsertRepository } from '../../../../../adapter/db/repository/deck/CardDeckDbInsertRepository';
 import { Container } from 'inversify';
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
@@ -61,7 +61,7 @@ mongooseIntegrationDescribe(CardDeckDbInsertRepository.name, () => {
           CardDeck,
           CardDeckCreationQuery
         > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.card.CARD_DECK_INSERT_REPOSITORY,
+          GAME_DOMAIN_TYPES.repository.deck.CARD_DECK_INSERT_REPOSITORY,
         );
 
         result = await cardDeckDbInsertRepository.insert(

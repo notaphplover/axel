@@ -1,6 +1,6 @@
 import { FilterQuery, Types } from 'mongoose';
-import { CardDeckDb } from '../../model/card/CardDeckDb';
-import { CardDeckFindQuery } from '../../../../domain/query/card/CardDeckFindQuery';
+import { CardDeckDb } from '../../model/deck/CardDeckDb';
+import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
 import { Converter } from '../../../../../../common/domain';
 import { hasValue } from '../../../../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
