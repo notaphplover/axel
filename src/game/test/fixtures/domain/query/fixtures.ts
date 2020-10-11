@@ -19,6 +19,7 @@ import { EnchantmentCreationQuery } from '../../../../domain/query/card/Enchantm
 import { GameCreationQuery } from '../../../../domain/query/GameCreationQuery';
 import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
 import { LandCreationQuery } from '../../../../domain/query/card/LandCreationQuery';
+import { CardDeckFindQuery } from '../../../../domain/query/card/CardDeckFindQuery';
 
 export const artifactCreationQuery: ArtifactCreationQuery = {
   cost: artifact.cost,
@@ -122,6 +123,14 @@ export const cardDeckCreationQuery: CardDeckCreationQuery = {
   sections: cardDeck.sections,
 };
 
-export const cardDeckCreationQueryFixtures: FixtureFactory<CardDeckCreationQuery> = new DeepCloneFixtureFactory(
+export const cardDeckCreationQueryFixtureFactory: FixtureFactory<CardDeckCreationQuery> = new DeepCloneFixtureFactory(
   cardDeckCreationQuery,
+);
+
+export const cardDeckFindQuery: CardDeckFindQuery = {
+  id: cardDeck.id,
+};
+
+export const cardDeckFindQueryFixtureFactory: FixtureFactory<CardDeckFindQuery> = new DeepCloneFixtureFactory(
+  cardDeckFindQuery,
 );

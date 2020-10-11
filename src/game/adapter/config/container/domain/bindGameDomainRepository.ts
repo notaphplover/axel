@@ -1,6 +1,7 @@
 import { ArtifactDbInsertRepository } from '../../../db/repository/card/ArtifactDbInsertRepository';
 import { CardDbSearchRepository } from '../../../db/repository/card/CardDbSearchRepository';
 import { CardDeckDbInsertRepository } from '../../../db/repository/card/CardDeckDbInsertRepository';
+import { CardDeckDbSearchRepository } from '../../../db/repository/card/CardDeckDbSearchRepository';
 import { CreatureDbInsertRepository } from '../../../db/repository/card/CreatureDbInsertRepository';
 import { EnchantmentDbInsertRepository } from '../../../db/repository/card/EnchantmentDbInsertRepository';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
@@ -21,6 +22,9 @@ export function bindGameDomainRepository(bind: interfaces.Bind): void {
   );
   bind(GAME_DOMAIN_TYPES.repository.card.CARD_DECK_INSERT_REPOSITORY).to(
     CardDeckDbInsertRepository,
+  );
+  bind(GAME_DOMAIN_TYPES.repository.card.CARD_DECK_SEARCH_REPOSITORY).to(
+    CardDeckDbSearchRepository,
   );
   bind(GAME_DOMAIN_TYPES.repository.card.CARD_SEARCH_REPOSITORY).to(
     CardDbSearchRepository,

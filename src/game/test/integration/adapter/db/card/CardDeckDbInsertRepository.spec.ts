@@ -11,7 +11,7 @@ import { Container } from 'inversify';
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { InsertRepository } from '../../../../../../layer-modules/db/domain';
-import { cardDeckCreationQueryFixtures } from '../../../../fixtures/domain/query/fixtures';
+import { cardDeckCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
 import { cardDeckFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
 import { configAdapter } from '../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../layer-modules/db/test';
@@ -65,7 +65,7 @@ mongooseIntegrationDescribe(CardDeckDbInsertRepository.name, () => {
         );
 
         result = await cardDeckDbInsertRepository.insert(
-          cardDeckCreationQueryFixtures.get(),
+          cardDeckCreationQueryFixtureFactory.get(),
         );
       });
 
