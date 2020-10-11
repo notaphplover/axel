@@ -9,9 +9,11 @@ node_modules/
 
 ### local env files from modules
 src/*/env/local.env
+src/data-modules/*/env/local.env
 src/layer-modules/*/env/local.env
 ### docker.env files from modules
 src/*/env/docker.env
+src/data-modules/*/env/docker.env
 src/layer-modules/*/env/docker.env
 
 ### auto generated .env file
@@ -19,4 +21,5 @@ src/layer-modules/*/env/docker.env
 
 ### auto-generated json schemas
 src/*/adapter/json-schema/
+src/data-modules/*/adapter/json-schema/
 src/layer-modules/*/adapter/json-schema/

@@ -7,6 +7,7 @@ module.exports = {
       coveragePathIgnorePatterns: [
         '/node_modules/',
         '<rootDir>/*/test/',
+        '<rootDir>/data-modules/*/test/',
         '<rootDir>/layer-modules/*/test/',
       ],
       coverageThreshold: {
@@ -22,6 +23,7 @@ module.exports = {
       testEnvironment: 'node',
       testMatch: [
         '<rootDir>/*/test/unit/**/*.spec.ts',
+        '<rootDir>/data-modules/*/test/unit/**/*.spec.ts',
         '<rootDir>/layer-modules/*/test/unit/**/*.spec.ts',
       ],
       testPathIgnorePatterns: ['/node_modules'],
@@ -35,6 +37,7 @@ module.exports = {
       coveragePathIgnorePatterns: [
         '/node_modules/',
         '<rootDir>/*/test/',
+        '<rootDir>/data-modules/*/test/',
         '<rootDir>/layer-modules/*/test/',
       ],
       coverageThreshold: {
@@ -50,6 +53,7 @@ module.exports = {
       testEnvironment: 'node',
       testMatch: [
         '<rootDir>/*/test/integration/**/*.spec.ts',
+        '<rootDir>/data-modules/*/test/integration/**/*.spec.ts',
         '<rootDir>/layer-modules/*/test/integration/**/*.spec.ts',
       ],
       transform: {
@@ -62,6 +66,7 @@ module.exports = {
       coveragePathIgnorePatterns: [
         '/node_modules/',
         '<rootDir>/*/test/',
+        '<rootDir>/data-modules/*/test/',
         '<rootDir>/layer-modules/*/test/',
       ],
       coverageThreshold: {
@@ -77,6 +82,7 @@ module.exports = {
       testEnvironment: 'node',
       testMatch: [
         '<rootDir>/*/test/end-to-end/**/*.spec.ts',
+        '<rootDir>/data-modules/*/test/end-to-end/**/*.spec.ts',
         '<rootDir>/layer-modules/*/test/end-to-end/**/*.spec.ts',
       ],
       transform: {

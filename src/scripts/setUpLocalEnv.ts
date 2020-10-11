@@ -20,14 +20,19 @@ const rootDir: string = common.io.rootDir;
 
 const distFolder: string = join(rootDir, 'dist');
 
+const distDataModulesFolder: string = join(distFolder, 'data-modules');
+
 const distLayerModulesFolder: string = join(distFolder, 'layer-modules');
 
 const srcFolder: string = join(rootDir, 'src');
+
+const srcDataModulesFolder: string = join(srcFolder, 'data-modules');
 
 const srcLayerModulesFolder: string = join(srcFolder, 'layer-modules');
 
 const modulesBlackList: Set<string> = new Set([
   'json-schema',
+  'data-modules',
   'layer-modules',
   'scripts',
 ]);
@@ -93,6 +98,7 @@ async function copyEnvToDist(): Promise<void> {
 
   const distModulePaths: string[] = detectModulesAtFolders([
     distFolder,
+    distDataModulesFolder,
     distLayerModulesFolder,
   ]);
 
@@ -104,6 +110,7 @@ async function copyEnvToDist(): Promise<void> {
 
   const srcModulePaths: string[] = detectModulesAtFolders([
     srcFolder,
+    srcDataModulesFolder,
     srcLayerModulesFolder,
   ]);
 
@@ -209,6 +216,7 @@ void (async () => {
 
   const srcModulePaths: string[] = detectModulesAtFolders([
     srcFolder,
+    srcDataModulesFolder,
     srcLayerModulesFolder,
   ]);
 
