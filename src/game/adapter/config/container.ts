@@ -9,6 +9,7 @@ import { CardDbToCardConverter } from '../db/converter/card/CardDbToCardConverte
 import { CardDeckCreationQueryToCardDeckDbsConverter } from '../db/converter/card/CardDeckCreationQueryToCardDeckDbsConverter';
 import { CardDeckDbInsertRepository } from '../db/repository/card/CardDeckDbInsertRepository';
 import { CardDeckDbToCardDeckConverter } from '../db/converter/card/CardDeckDbToCardDeckConverter';
+import { CardDeckFindQueryToCardDeckDbFilterQueryConverter } from '../db/converter/card/CardDeckFindQueryToCardDeckDbFilterQueryConverter';
 import { CardDetailApiV1ToCardDetailConverter } from '../api/converter/card/CardDetailApiV1ToCardDetailConverter';
 import { CardDetailToCardDetailV1Converter } from '../api/converter/card/CardDetailToCardDetailApiV1Converter';
 import { CardFindQueryApiV1ToCardFindQueryConverter } from '../api/converter/card/CardFindQueryApiV1ToCardFindQueryConverter';
@@ -131,6 +132,10 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(
     GAME_ADAPTER_TYPES.db.converter.card.CARD_DECK_DB_TO_CARD_DECK_CONVERTER,
   ).to(CardDeckDbToCardDeckConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.card
+      .CARD_DECK_FIND_QUERY_TO_CARD_DECK_DB_FILTER_QUERY_CONVERTER,
+  ).to(CardDeckFindQueryToCardDeckDbFilterQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.card
       .CARD_FIND_QUERY_TO_CARD_DB_FILTER_QUERY_CONVERTER,
