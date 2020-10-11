@@ -18,7 +18,7 @@ export class CardDbSearchRepository extends MongooseSearchRepository<
     @inject(GAME_ADAPTER_TYPES.db.model.card.CARD_DB_MODEL)
     model: Model<CardDb>,
     @inject(GAME_ADAPTER_TYPES.db.converter.card.CARD_DB_TO_CARD_CONVERTER)
-    cardDbToGameConverter: Converter<CardDb, Card>,
+    cardDbToCardConverter: Converter<CardDb, Card>,
     @inject(
       GAME_ADAPTER_TYPES.db.converter.card
         .CARD_FIND_QUERY_TO_CARD_DB_FILTER_QUERY_CONVERTER,
@@ -30,7 +30,7 @@ export class CardDbSearchRepository extends MongooseSearchRepository<
   ) {
     super(
       model,
-      cardDbToGameConverter,
+      cardDbToCardConverter,
       cardFindQueryToCardDbFilterQueryConverter,
     );
   }
