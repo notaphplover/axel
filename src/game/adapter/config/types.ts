@@ -59,6 +59,9 @@ export const GAME_ADAPTER_TYPES = {
           'ArtifactDbToArtifactConverter',
         ),
         CARD_DB_TO_CARD_CONVERTER: Symbol.for('CardDbToCardConverter'),
+        CARD_DECK_CREATION_QUERY_TO_CARD_DBS_CONVERTER: Symbol.for(
+          'CardDeckCreationQueryToCardDbsConverter',
+        ),
         CARD_DECK_DB_TO_CARD_DECK_CONVERTER: Symbol.for(
           'CardDeckDbToCardDeckConverter',
         ),
