@@ -12,6 +12,7 @@ import {
 } from '../model/fixtures';
 import { ArtifactCreationQuery } from '../../../../domain/query/card/ArtifactCreationQuery';
 import { CardDeckCreationQuery } from '../../../../domain/query/card/CardDeckCreationQuery';
+import { CardDeckFindQuery } from '../../../../domain/query/card/CardDeckFindQuery';
 import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
@@ -19,7 +20,6 @@ import { EnchantmentCreationQuery } from '../../../../domain/query/card/Enchantm
 import { GameCreationQuery } from '../../../../domain/query/GameCreationQuery';
 import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
 import { LandCreationQuery } from '../../../../domain/query/card/LandCreationQuery';
-import { CardDeckFindQuery } from '../../../../domain/query/card/CardDeckFindQuery';
 
 export const artifactCreationQuery: ArtifactCreationQuery = {
   cost: artifact.cost,
