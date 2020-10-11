@@ -6,11 +6,11 @@ export interface CardDeckSections {
 }
 
 export interface CardSetReferences {
-  references: number[];
+  references: string[];
 }
 
 export interface CardDeck {
-  sections: CardDeckSections
+  sections: CardDeckSections;
   description: string;
   format: GameFormat;
   id: string;

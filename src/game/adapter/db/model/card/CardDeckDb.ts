@@ -10,20 +10,20 @@ import { GameFormat } from '../../../../domain/model/GameFormat';
 
 export interface CardDeckDb extends Document {
   _id: Types.ObjectId;
-  sections: CardDeckSections
   description: string;
   format: GameFormat;
   name: string;
+  sections: CardDeckSections;
 }
 
 const cardSetReferencesDbSchemaDefinition: SchemaDefinition = {
-  references: { type: Array, of: Number, required: true }
-}
+  references: { type: Array, of: String, required: true },
+};
 
 const cardDeckSectionsDbSchemaDefinition: SchemaDefinition = {
   core: { type: cardSetReferencesDbSchemaDefinition, required: true },
-  sideboard: { type: cardSetReferencesDbSchemaDefinition, required: true }
-}
+  sideboard: { type: cardSetReferencesDbSchemaDefinition, required: true },
+};
 
 export const cardDeckDbSchemaDefinition: SchemaDefinition = {
   sections: { type: cardDeckSectionsDbSchemaDefinition, required: true },
