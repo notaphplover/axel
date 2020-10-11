@@ -98,12 +98,15 @@ function bindAdapters(bind: interfaces.Bind) {
     GAME_ADAPTER_TYPES.api.converter.card.RESOURCE_TO_RESOURCE_API_V1_CONVERTER,
   ).to(ResourceToResourceApiV1Converter);
 
+  bind(GAME_ADAPTER_TYPES.api.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR)
+    .to(GameCreationQueryApiV1Validator)
+    .inSingletonScope();
   bind(
     GAME_ADAPTER_TYPES.api.validator.card.CARD_CREATION_QUERY_API_V1_VALIDATOR,
-  ).to(CardCreationQueryApiV1Validator);
+  ).to(CardCreationQueryApiV1Validator).inSingletonScope();
   bind(
     GAME_ADAPTER_TYPES.api.validator.card.CARD_FIND_QUERY_API_V1_VALIDATOR,
-  ).to(CardFindQueryApiV1Validator);
+  ).to(CardFindQueryApiV1Validator).inSingletonScope();
 
   bind(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER).to(
     GameDbToGameConverter,
@@ -198,9 +201,6 @@ function bindAdapters(bind: interfaces.Bind) {
 
   bind(GAME_ADAPTER_TYPES.server.router.GAME_ROUTER).to(GameRouter);
   bind(GAME_ADAPTER_TYPES.server.router.card.CARD_ROUTER).to(CardRouter);
-  bind(GAME_ADAPTER_TYPES.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR)
-    .to(GameCreationQueryApiV1Validator)
-    .inSingletonScope();
 }
 
 function bindDomain(bind: interfaces.Bind) {
