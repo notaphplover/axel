@@ -1,6 +1,6 @@
-import { GAME_ADAPTER_API_TYPES } from "./gameAdapterApiTypes";
-import { GAME_ADAPTER_DB_TYPES } from "./gameAdapterDbTypes";
-import { GAME_ADAPTER_SERVER_TYPES } from "./gameAdapterServerTypes";
+import { GAME_ADAPTER_API_TYPES } from './gameAdapterApiTypes';
+import { GAME_ADAPTER_DB_TYPES } from './gameAdapterDbTypes';
+import { GAME_ADAPTER_SERVER_TYPES } from './gameAdapterServerTypes';
 
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_ADAPTER_TYPES = {
