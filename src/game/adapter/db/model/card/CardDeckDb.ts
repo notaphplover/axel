@@ -17,7 +17,7 @@ export interface CardDeckDb extends Document {
 }
 
 const cardSetReferencesDbSchemaDefinition: SchemaDefinition = {
-  references: { type: Array, of: String, required: true },
+  references: { type: Array, of: Schema.Types.ObjectId, required: true },
 };
 
 const cardDeckSectionsDbSchemaDefinition: SchemaDefinition = {
