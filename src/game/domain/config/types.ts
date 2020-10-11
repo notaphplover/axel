@@ -12,6 +12,7 @@ export const GAME_DOMAIN_TYPES = {
         'CreateEnchantmentsInteractor',
       ),
       CREATE_LANDS_INTERACTOR: Symbol.for('CreateLandsInteractor'),
+      FIND_CARD_DECKS_INTERACTOR: Symbol.for('FindCardDecksInteractor'),
       FIND_CARDS_INTERACTOR: Symbol.for('FindCardsInteractor'),
     },
   },
