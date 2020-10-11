@@ -1,3 +1,3 @@
 export interface CardDeckFindQuery {
-  id: string;
+  id?: string;
 }
