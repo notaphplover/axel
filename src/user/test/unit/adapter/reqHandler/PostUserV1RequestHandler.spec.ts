@@ -8,6 +8,7 @@ import {
   Validator,
 } from '../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { EntitiesNotCreatedError } from '../../../../../layer-modules/db/domain';
 import { PostUserV1RequestHandler } from '../../../../adapter/server/reqHandler/PostUserV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
 import { User } from '../../../../domain/model/User';
@@ -20,7 +21,6 @@ import { userApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/fix
 import { userCreationQueryApiV1FixtureFactory } from '../../../fixtures/adapter/api/query/fixtures';
 import { userCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
-import { EntitiesNotCreatedError } from '../../../../../layer-modules/db/domain';
 
 describe(PostUserV1RequestHandler.name, () => {
   let createUsersInteractor: Interactor<UserCreationQuery, Promise<User[]>>;
