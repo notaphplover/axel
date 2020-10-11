@@ -155,7 +155,9 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(GAME_ADAPTER_TYPES.db.model.card.CARD_DB_MODEL).toConstantValue(
     cardDbModel,
   );
-  bind(GAME_ADAPTER_TYPES.db.model.card.CARD_DECK_DB_MODEL).toConstantValue(cardDeckDbModel)
+  bind(GAME_ADAPTER_TYPES.db.model.card.CARD_DECK_DB_MODEL).toConstantValue(
+    cardDeckDbModel,
+  );
   bind(GAME_ADAPTER_TYPES.db.model.card.CREATURE_DB_MODEL).toConstantValue(
     creatureDbModel,
   );
