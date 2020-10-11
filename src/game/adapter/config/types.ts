@@ -85,6 +85,7 @@ export const GAME_ADAPTER_TYPES = {
       card: {
         ARTIFACT_DB_MODEL: Symbol.for('ArtifactDbModel'),
         CARD_DB_MODEL: Symbol.for('CardDbModel'),
+        CARD_DECK_DB_MODEL: Symbol.for('CardDeckDbModel'),
         CREATURE_DB_MODEL: Symbol.for('CreatureDbModel'),
         ENCHANTMENT_DB_MODEL: Symbol.for('EnchantmentDbModel'),
         LAND_DB_MODEL: Symbol.for('LandDbModel'),

@@ -50,6 +50,7 @@ import { ResourceApiV1ToResourceConverter } from '../api/converter/card/Resource
 import { ResourceToResourceApiV1Converter } from '../api/converter/card/ResourceToResourceApiV1Converter';
 import { artifactDbModel } from '../db/model/card/ArtifactDb';
 import { cardDbModel } from '../db/model/card/CardDb';
+import { cardDeckDbModel } from '../db/model/card/CardDeckDb';
 import { creatureDbModel } from '../db/model/card/CreatureDb';
 import { enchantmentDbModel } from '../db/model/card/EnchantmentDb';
 import { gameDbModel } from '../db/model/GameDb';
@@ -154,6 +155,7 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(GAME_ADAPTER_TYPES.db.model.card.CARD_DB_MODEL).toConstantValue(
     cardDbModel,
   );
+  bind(GAME_ADAPTER_TYPES.db.model.card.CARD_DECK_DB_MODEL).toConstantValue(cardDeckDbModel)
   bind(GAME_ADAPTER_TYPES.db.model.card.CREATURE_DB_MODEL).toConstantValue(
     creatureDbModel,
   );
