@@ -1,4 +1,5 @@
 import { CreateArtifactsInteractor } from '../../../../domain/interactor/card/CreateArtifactsInteractor';
+import { CreateCardDecksInteractor } from '../../../../domain/interactor/card/CreateCardDecksInteractor';
 import { CreateCardsInteractor } from '../../../../domain/interactor/card/CreateCardsInteractor';
 import { CreateCreaturesInteractor } from '../../../../domain/interactor/card/CreateCreaturesInteractor';
 import { CreateEnchantmentsInteractor } from '../../../../domain/interactor/card/CreateEnchantmentsInteractor';
@@ -18,6 +19,9 @@ export function bindGameDomainInteractor(bind: interfaces.Bind): void {
   );
   bind(GAME_DOMAIN_TYPES.interactor.card.CREATE_ARTIFACTS_INTERACTOR).to(
     CreateArtifactsInteractor,
+  );
+  bind(GAME_DOMAIN_TYPES.interactor.card.CREATE_CARD_DECKS_INTERACTOR).to(
+    CreateCardDecksInteractor,
   );
   bind(GAME_DOMAIN_TYPES.interactor.card.CREATE_CARDS_INTERACTOR).to(
     CreateCardsInteractor,

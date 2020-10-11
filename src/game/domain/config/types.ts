@@ -5,6 +5,7 @@ export const GAME_DOMAIN_TYPES = {
     FIND_GAME_INTERACTOR: Symbol.for('FindGameInteractor'),
     card: {
       CREATE_ARTIFACTS_INTERACTOR: Symbol.for('CreateArtifactsInteractor'),
+      CREATE_CARD_DECKS_INTERACTOR: Symbol.for('CreateCardDecksInteractor'),
       CREATE_CARDS_INTERACTOR: Symbol.for('CreateCardsInteractor'),
       CREATE_CREATURES_INTERACTOR: Symbol.for('CreateCreaturesInteractor'),
       CREATE_ENCHANTMENTS_INTERACTOR: Symbol.for(
