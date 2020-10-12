@@ -42,5 +42,10 @@ export const GAME_ADAPTER_API_TYPES = {
         'CardFindQueryApiV1Validator',
       ),
     },
+    deck: {
+      CARD_DECK_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
+        'CardDeckCreationQueryApiV1Validator',
+      ),
+    },
   },
 };
