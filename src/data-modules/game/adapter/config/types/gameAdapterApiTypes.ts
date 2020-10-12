@@ -6,7 +6,7 @@ export const GAME_ADAPTER_API_TYPES = {
     ),
     GAME_TO_GAME_API_V1_CONVERTER: Symbol.for('GameToGameApiV1Converter'),
     card: {
-      CARD_CREATION_QUERY_API_V1_TO_CARD_CREATION_QUERY_API_CONVERTER: Symbol.for(
+      CARD_CREATION_QUERY_API_V1_TO_CARD_CREATION_QUERY_CONVERTER: Symbol.for(
         'CardCreationQueryApiV1ToCardCreationQueryConverter',
       ),
       CARD_DETAIL_API_V1_TO_CARD_DETAIL_CONVERTER: Symbol.for(

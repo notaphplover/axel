@@ -29,7 +29,7 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
   );
   bind(
     GAME_ADAPTER_TYPES.api.converter.card
-      .CARD_CREATION_QUERY_API_V1_TO_CARD_CREATION_QUERY_API_CONVERTER,
+      .CARD_CREATION_QUERY_API_V1_TO_CARD_CREATION_QUERY_CONVERTER,
   ).to(CardCreationQueryApiV1ToCardCreationQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.api.converter.card

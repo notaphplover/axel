@@ -20,7 +20,7 @@ export class PostCardV1RequestHandler implements FastifyRequestHandler {
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.card
-        .CARD_CREATION_QUERY_API_V1_TO_CARD_CREATION_QUERY_API_CONVERTER,
+        .CARD_CREATION_QUERY_API_V1_TO_CARD_CREATION_QUERY_CONVERTER,
     )
     private readonly cardCreationQueryApiV1ToCardCreationQueryConverter: Converter<
       CardCreationQueryApiV1,
