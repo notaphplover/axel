@@ -17,7 +17,7 @@ export class CardTypeToCardTypeApiV1Converter
     if (input in cardTypeToCardTypeApiV1Map) {
       return cardTypeToCardTypeApiV1Map[input];
     } else {
-      throw new Error(`Unecpected card type "${input}"`);
+      throw new Error(`Unexpected card type "${input}"`);
     }
   }
 }
