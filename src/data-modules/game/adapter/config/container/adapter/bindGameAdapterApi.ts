@@ -1,6 +1,7 @@
 import { CardCreationQueryApiV1ToCardCreationQueryConverter } from '../../../api/converter/card/CardCreationQueryApiV1ToCardCreationQueryConverter';
 import { CardCreationQueryApiV1Validator } from '../../../api/validator/card/CardCreationQueryApiV1Validator';
 import { CardDeckCreationQueryApiV1Validator } from '../../../api/validator/deck/CardDeckCreationQueryApiV1Validator';
+import { CardDeckSectionsApiV1ToCardDeckSectionsConverter } from '../../../api/converter/deck/CardDeckSectionsApiV1ToCardDeckSectionsConverter';
 import { CardDeckSectionsToCardDeckSectionsApiV1Converter } from '../../../api/converter/deck/CardDeckSectionsToCardDeckSectionsApiV1Converter';
 import { CardDeckToCardDeckApiV1Converter } from '../../../api/converter/deck/CardDeckToCardDeckApiV1Converter';
 import { CardDetailApiV1ToCardDetailConverter } from '../../../api/converter/card/CardDetailApiV1ToCardDetailConverter';
@@ -67,6 +68,10 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.converter.card.RESOURCE_TO_RESOURCE_API_V1_CONVERTER,
   ).to(ResourceToResourceApiV1Converter);
 
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.deck
+      .CARD_DECK_SECTION_API_V1_TO_CARD_DECK_SECTIONS_CONVERTER,
+  ).to(CardDeckSectionsApiV1ToCardDeckSectionsConverter);
   bind(
     GAME_ADAPTER_TYPES.api.converter.deck
       .CARD_DECK_SECTION_TO_CARD_DECK_SECTIONS_API_V1_CONVERTER,
