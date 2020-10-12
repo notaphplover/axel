@@ -33,6 +33,9 @@ export const GAME_ADAPTER_API_TYPES = {
       ),
     },
     deck: {
+      CARD_DECK_SECTION_TO_CARD_DECK_SECTIONS_API_V1_CONVERTER: Symbol.for(
+        'CardDeckSectionsToCardDeckSectionsApiV1Converter',
+      ),
       CARD_SET_REFERENCES_TO_CARD_SET_REFERENCES_API_V1_CONVERTER: Symbol.for(
         'CardSetReferencesToCardSetReferencesApiV1Converter',
       ),
