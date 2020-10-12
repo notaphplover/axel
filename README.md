@@ -35,7 +35,13 @@ npm run setup:local
 docker-compose up
 ```
 
-5. Enjoy!
+5. Start local server
+
+```
+npm run start
+```
+
+6. Enjoy!
 
 ### Tests
 
@@ -46,3 +52,7 @@ npm t
 ```
 
 ***Note***: Non unit tests may require all the docker images up
+
+```
+npm run docker:up:test
+```
