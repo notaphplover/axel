@@ -1,3 +1,5 @@
+[![Build status](https://github.com/notaphplover/axel/workflows/ci/badge.svg)](https://github.com/notaphplover/axel/workflows/ci/badge.svg)
+
 # Axel
 
 The not-an-mtg-engine open project! (In progress)
