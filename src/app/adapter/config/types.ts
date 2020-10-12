@@ -18,4 +18,9 @@ export const APP_ADAPTER_PUBLIC_TYPES = {
   env: {
     APP_ENV_LOADER: APP_ADAPTER_TYPES.env.APP_ENV_LOADER,
   },
+  server: {
+    router: {
+      STATUS_ROUTER: APP_ADAPTER_TYPES.server.router.STATUS_ROUTER,
+    },
+  },
 };

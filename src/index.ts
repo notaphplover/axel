@@ -31,6 +31,10 @@ void (async () => {
     dbAdapter.config.types.db.MONGOOSE_CONNECTOR,
   );
 
+  const statusRouter: FastifyRouter = container.get(
+    appAdapter.config.types.server.router.STATUS_ROUTER,
+  );
+
   const userRouter: FastifyRouter = container.get(
     userAdapter.config.types.server.router.USER_ROUTER,
   );
@@ -41,7 +45,7 @@ void (async () => {
 
   const httpServer: FastifyPortListeningServer = new FastifyPortListeningServer(
     mongooseConnector,
-    [authRouter, cardRouter, gameRouter, userRouter],
+    [authRouter, cardRouter, gameRouter, statusRouter, userRouter],
     appEnvLoader.index.APP_SERVER_PORT,
   );
 
