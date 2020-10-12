@@ -13,6 +13,7 @@ import { CardTypeApiV1ToCardTypeConverter } from '../../../api/converter/card/Ca
 import { CardTypeToCardTypeApiV1Converter } from '../../../api/converter/card/CardTypeToCardTypeApiV1Converter';
 import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameCreationQueryApiV1Validator } from '../../../api/validator/GameCreationQueryApiV1Validator';
+import { GameFormatApiV1ToGameFormatConverter } from '../../../api/converter/GameFormatApiV1ToGameFormatConverter';
 import { GameFormatToGameFormatApiV1Converter } from '../../../api/converter/GameFormatToGameFormatApiV1Converter';
 import { GameToGameApiV1Converter } from '../../../api/converter/GameToGameApiV1Converter';
 import { ResourceApiV1ToResourceConverter } from '../../../api/converter/card/ResourceApiV1ToResourceConverter';
@@ -24,6 +25,10 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.converter
       .GAME_FORMAT_TO_GAME_FORMAT_API_V1_CONVERTER,
   ).to(GameFormatToGameFormatApiV1Converter);
+  bind(
+    GAME_ADAPTER_TYPES.api.converter
+      .GAME_FORMAT_API_V1_TO_GAME_FORMAT_CONVERTER,
+  ).to(GameFormatApiV1ToGameFormatConverter);
   bind(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER).to(
     GameToGameApiV1Converter,
   );

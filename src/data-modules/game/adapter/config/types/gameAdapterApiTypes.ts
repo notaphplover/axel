@@ -1,6 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_ADAPTER_API_TYPES = {
   converter: {
+    GAME_FORMAT_API_V1_TO_GAME_FORMAT_CONVERTER: Symbol.for(
+      'GameFormatApiV1ToGameFormatConverter',
+    ),
     GAME_FORMAT_TO_GAME_FORMAT_API_V1_CONVERTER: Symbol.for(
       'GameFormatToGameFormatApiV1Converter',
     ),
