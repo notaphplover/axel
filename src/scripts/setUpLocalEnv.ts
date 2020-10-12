@@ -89,6 +89,10 @@ function copySampleEnvFiles(modulePath: string): void {
 }
 
 async function copyEnvToDist(): Promise<void> {
+  if (!existsSync(distFolder)) {
+    return;
+  }
+
   const modulePathToModulePathAndFolderMapper: (
     modulePath: string,
   ) => [string, string] = (modulePath: string) => [
