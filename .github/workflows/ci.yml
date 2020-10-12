@@ -14,6 +14,6 @@ jobs:
       - name: Setup local files
         run: npm run setup:local:ts
       - name: Launch docker images
-        run: npm run docker:up:test
-      - name: Launch tests
+        run: npm run docker:up:ci
+      - name: Launch Tests
         run: npm t
