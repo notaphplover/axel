@@ -9,6 +9,11 @@ export const GAME_ADAPTER_SERVER_TYPES = {
       GET_CARDS_V1_REQUEST_HANDLER: Symbol.for('GetCardsV1RequestHandler'),
       POST_CARD_V1_REQUEST_HANDLER: Symbol.for('PostCardV1RequestHandler'),
     },
+    deck: {
+      POST_CARD_DECK_V1_REQUEST_HANDLER: Symbol.for(
+        'PostCardDeckV1RequestHandler',
+      ),
+    },
   },
   router: {
     GAME_ROUTER: Symbol.for('GameRouter'),
