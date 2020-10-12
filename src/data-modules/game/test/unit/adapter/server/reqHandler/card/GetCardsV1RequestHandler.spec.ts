@@ -5,18 +5,18 @@ import {
   Interactor,
   ValidationSuccess,
   Validator,
-} from '../../../../../../../common/domain';
+} from '../../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { Card } from '../../../../../domain/model/card/Card';
-import { CardApiV1 } from '../../../../../adapter/api/model/card/CardApiV1';
-import { CardFindQuery } from '../../../../../domain/query/card/CardFindQuery';
-import { CardFindQueryApiV1 } from '../../../../../adapter/api/query/card/CardFindQueryApiV1';
-import { GetCardsV1RequestHandler } from '../../../../../adapter/server/reqHandler/card/GetCardsV1RequestHandler';
-import { artifactApiV1FixtureFactory } from '../../../../fixtures/adapter/api/model/fixtures';
-import { artifactFindQueryApiV1FixtureFactory } from '../../../../fixtures/adapter/api/query/fixtures';
-import { artifactFindQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
-import { artifactFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
-import { fastifyReplyFixtureFactory } from '../../../../../../../layer-modules/server/test/fixtures/fastify.fixture';
+import { Card } from '../../../../../../domain/model/card/Card';
+import { CardApiV1 } from '../../../../../../adapter/api/model/card/CardApiV1';
+import { CardFindQuery } from '../../../../../../domain/query/card/CardFindQuery';
+import { CardFindQueryApiV1 } from '../../../../../../adapter/api/query/card/CardFindQueryApiV1';
+import { GetCardsV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/GetCardsV1RequestHandler';
+import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/fixtures';
+import { artifactFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/fixtures';
+import { artifactFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/fixtures';
+import { artifactFixtureFactory } from '../../../../../fixtures/domain/model/fixtures';
+import { fastifyReplyFixtureFactory } from '../../../../../../../../layer-modules/server/test/fixtures/fastify.fixture';
 
 describe(GetCardsV1RequestHandler.name, () => {
   let cardFindQueryApiV1ToCardFindQueryConverter: Converter<

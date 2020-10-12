@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { Converter, Interactor } from '../../../../../../common/domain';
+import { Converter, Interactor } from '../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { Game } from '../../../../domain/model/Game';
-import { GameApiV1 } from '../../../../adapter/api/model/GameApiV1';
-import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
-import { GetGameByIdV1RequestHandler } from '../../../../adapter/server/reqHandler/GetGameByIdV1RequestHandler';
+import { Game } from '../../../../../domain/model/Game';
+import { GameApiV1 } from '../../../../../adapter/api/model/GameApiV1';
+import { GameFindQuery } from '../../../../../domain/query/GameFindQuery';
+import { GetGameByIdV1RequestHandler } from '../../../../../adapter/server/reqHandler/GetGameByIdV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
-import { commonTest } from '../../../../../../common/test';
-import { gameApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/fixtures';
-import { gameFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+import { commonTest } from '../../../../../../../common/test';
+import { gameApiV1FixtureFactory } from '../../../../fixtures/adapter/api/model/fixtures';
+import { gameFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
 
 describe(GetGameByIdV1RequestHandler.name, () => {
   let findGameInteractor: Interactor<GameFindQuery, Promise<Game | null>>;

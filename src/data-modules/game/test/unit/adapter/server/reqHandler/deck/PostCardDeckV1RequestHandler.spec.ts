@@ -6,19 +6,19 @@ import {
   ValidationFail,
   ValidationResult,
   Validator,
-} from '../../../../../../../common/domain';
+} from '../../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { CardDeck } from '../../../../../domain/model/deck/CardDeck';
-import { CardDeckApiV1 } from '../../../../../adapter/api/model/deck/CardDeckApiV1';
-import { CardDeckCreationQuery } from '../../../../../domain/query/deck/CardDeckCreationQuery';
-import { CardDeckCreationQueryApiV1 } from '../../../../../adapter/api/query/deck/CardDeckCreationQueryApiV1';
-import { PostCardDeckV1RequestHandler } from '../../../../../adapter/server/reqHandler/deck/PostCardDeckV1RequestHandler';
+import { CardDeck } from '../../../../../../domain/model/deck/CardDeck';
+import { CardDeckApiV1 } from '../../../../../../adapter/api/model/deck/CardDeckApiV1';
+import { CardDeckCreationQuery } from '../../../../../../domain/query/deck/CardDeckCreationQuery';
+import { CardDeckCreationQueryApiV1 } from '../../../../../../adapter/api/query/deck/CardDeckCreationQueryApiV1';
+import { PostCardDeckV1RequestHandler } from '../../../../../../adapter/server/reqHandler/deck/PostCardDeckV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
-import { cardDeckApiV1FixtureFactory } from '../../../../fixtures/adapter/api/model/fixtures';
-import { cardDeckCreationQueryApiV1FixtureFactory } from '../../../../fixtures/adapter/api/query/fixtures';
-import { cardDeckCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
-import { cardDeckFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
-import { commonTest } from '../../../../../../../common/test';
+import { cardDeckApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/fixtures';
+import { cardDeckCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/fixtures';
+import { cardDeckCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/fixtures';
+import { cardDeckFixtureFactory } from '../../../../../fixtures/domain/model/fixtures';
+import { commonTest } from '../../../../../../../../common/test';
 
 describe(PostCardDeckV1RequestHandler.name, () => {
   let cardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter: Converter<

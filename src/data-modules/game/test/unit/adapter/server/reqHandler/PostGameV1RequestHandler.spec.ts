@@ -6,19 +6,19 @@ import {
   ValidationFail,
   ValidationResult,
   Validator,
-} from '../../../../../../common/domain';
+} from '../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { Game } from '../../../../domain/model/Game';
-import { GameApiV1 } from '../../../../adapter/api/model/GameApiV1';
-import { GameCreationQuery } from '../../../../domain/query/GameCreationQuery';
-import { GameCreationQueryApiV1 } from '../../../../adapter/api/query/GameCreationQueryApiV1';
-import { PostGameV1RequestHandler } from '../../../../adapter/server/reqHandler/PostGameV1RequestHandler';
+import { Game } from '../../../../../domain/model/Game';
+import { GameApiV1 } from '../../../../../adapter/api/model/GameApiV1';
+import { GameCreationQuery } from '../../../../../domain/query/GameCreationQuery';
+import { GameCreationQueryApiV1 } from '../../../../../adapter/api/query/GameCreationQueryApiV1';
+import { PostGameV1RequestHandler } from '../../../../../adapter/server/reqHandler/PostGameV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
-import { commonTest } from '../../../../../../common/test';
-import { gameApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/fixtures';
-import { gameCreationQueryApiV1FixtureFactory } from '../../../fixtures/adapter/api/query/fixtures';
-import { gameCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
-import { gameFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+import { commonTest } from '../../../../../../../common/test';
+import { gameApiV1FixtureFactory } from '../../../../fixtures/adapter/api/model/fixtures';
+import { gameCreationQueryApiV1FixtureFactory } from '../../../../fixtures/adapter/api/query/fixtures';
+import { gameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
+import { gameFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
 
 describe(PostGameV1RequestHandler.name, () => {
   let createGamesInteractor: Interactor<GameCreationQuery, Promise<Game[]>>;
