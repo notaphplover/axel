@@ -7,6 +7,9 @@ export const APP_ADAPTER_TYPES = {
     reqHandler: {
       GET_STATUS_V1_REQUEST_HANDLER: Symbol.for('GetStatusV1RequestHandler'),
     },
+    router: {
+      STATUS_ROUTER: Symbol.for('StatusRouter'),
+    },
   },
 };
 
