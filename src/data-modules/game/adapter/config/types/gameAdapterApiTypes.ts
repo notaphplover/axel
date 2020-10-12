@@ -32,6 +32,11 @@ export const GAME_ADAPTER_API_TYPES = {
         'ResourceToResourceApiV1Converter',
       ),
     },
+    deck: {
+      CARD_SET_REFERENCES_TO_CARD_SET_REFERENCES_API_V1_CONVERTER: Symbol.for(
+        'CardSetReferencesToCardSetReferencesApiV1Converter',
+      ),
+    },
   },
   validator: {
     GAME_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
