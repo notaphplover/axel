@@ -36,6 +36,9 @@ export const GAME_ADAPTER_API_TYPES = {
       ),
     },
     deck: {
+      CARD_DECK_CREATION_QUERY_API_V1_TO_CARD_DECK_CREATION_QUERY_CONVERTER: Symbol.for(
+        'CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter',
+      ),
       CARD_DECK_SECTION_API_V1_TO_CARD_DECK_SECTIONS_CONVERTER: Symbol.for(
         'CardDeckSectionsApiV1ToCardDeckSectionsConverter',
       ),
