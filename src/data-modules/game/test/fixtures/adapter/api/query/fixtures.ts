@@ -9,8 +9,13 @@ import {
   enchantmentFindQuery,
   landFindQuery,
 } from '../../../domain/query/fixtures';
-import { cardDetailApiV1, resourceApiV1 } from '../model/fixtures';
+import {
+  cardDeckApiV1,
+  cardDetailApiV1,
+  resourceApiV1,
+} from '../model/fixtures';
 import { ArtifactCreationQueryApiV1 } from '../../../../../adapter/api/query/card/ArtifactCreationQueryApiV1';
+import { CardDeckCreationQueryApiV1 } from '../../../../../adapter/api/query/deck/CardDeckCreationQueryApiV1';
 import { CardFindQueryApiV1 } from '../../../../../adapter/api/query/card/CardFindQueryApiV1';
 import { CardTypeApiV1 } from '../../../../../adapter/api/model/card/CardTypeApiV1';
 import { CreatureCreationQueryApiV1 } from '../../../../../adapter/api/query/card/CreatureCreationQueryApiV1';
@@ -104,3 +109,17 @@ export const landFindQueryApiV1: CardFindQueryApiV1 = {
 export const landFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQueryApiV1> = new DeepCloneFixtureFactory(
   landFindQueryApiV1,
 );
+
+export const cardDeckCreationQueryApiV1: CardDeckCreationQueryApiV1 = {
+  description: cardDeckApiV1.description,
+  format: cardDeckApiV1.format,
+  name: cardDeckApiV1.name,
+  sections: {
+    core: {
+      references: [...cardDeckApiV1.sections.core.references],
+    },
+    sideboard: {
+      references: [...cardDeckApiV1.sections.sideboard.references],
+    },
+  },
+};
