@@ -15,6 +15,7 @@ export const GAME_DOMAIN_TYPES = {
     },
     deck: {
       CREATE_CARD_DECKS_INTERACTOR: Symbol.for('CreateCardDecksInteractor'),
+      FIND_CARD_DECK_INTERACTOR: Symbol.for('FindCardDeckInteractor'),
       FIND_CARD_DECKS_INTERACTOR: Symbol.for('FindCardDecksInteractor'),
     },
   },
