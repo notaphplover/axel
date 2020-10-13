@@ -1,0 +1,11 @@
+FROM stefanscherer/node-windows:12.18.3-nanoserver-1909
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm ci --quiet
+
+COPY . .
+
+CMD [ "npm", "run", "start"]
