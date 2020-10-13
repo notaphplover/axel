@@ -45,7 +45,8 @@ jobs:
           username: whoan
           password: "${{ secrets.GITHUB_TOKEN }}"  # you don't need to manually set this secret. GitHub does it on your behalf
           registry: docker.pkg.github.com
-          image_name: mongo:4.4.1-bionic
+          image_name: mongo
+          image_tag: 4.4.1-bionic
         if: ${{ matrix.os != 'windows-latest' }}
 
       - name: Cache NodeJS image (Default)
@@ -54,7 +55,8 @@ jobs:
           username: whoan
           password: "${{ secrets.GITHUB_TOKEN }}"  # you don't need to manually set this secret. GitHub does it on your behalf
           registry: docker.pkg.github.com
-          image_name: node:12.18.4-alpine
+          image_name: node
+          image_tag: 12.18.4-alpine
         if: ${{ matrix.os != 'windows-latest' }}
 
       - name: Launch docker images (Default)
