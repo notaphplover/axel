@@ -3,21 +3,34 @@ on: [push]
 jobs:
   build:
     name: test
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+        os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Git checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          node-version: '12'
+          node-version: ${{ matrix.node-version }}
+
       - name: Install dependencies
         run: npm ci
+
       - name: Compile source files
         run: npm run build
+
       - name: Setup local files
         run: npm run setup:local
+
       - name: Launch docker images
         run: npm run docker:up:ci
+
       - name: Wait test server
         run: node ./dist/scripts/waitForApiServer.js
+
       - name: Launch Tests
         run: npm t
