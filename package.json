@@ -5,17 +5,19 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "delete:prod": "pm2 delete \"axel-backend\"",
     "docker:rebuild:app": "docker-compose -f docker-compose.yml -f docker-compose.test.yml rm -fv app && docker-compose -f docker-compose.yml -f docker-compose.test.yml build app",
     "docker:down:ci": "docker-compose -f docker-compose.yml -f docker-compose.test.yml down",
     "docker:up:ci": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d",
-    "docker:up:ci:windows": "docker-compose -f docker-compose.windows.yml -f docker-compose.windows.test.yml up -d",
+    "docker:up:ci:windows": "docker-compose -f docker-compose.windows.yml up -d && npm run start:prod",
     "docker:up:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up",
     "lint": "eslint src",
     "prebuild": "rimraf dist",
     "setup:local": "node ./dist/scripts/setUpLocalEnv.js",
     "setup:local:ts": "TS_NODE_FILES=true ts-node ./src/scripts/setUpLocalEnv.ts",
     "start": "TS_NODE_FILES=true ts-node ./src/index.ts",
-    "start:prod": "node ./dist/index.js",
+    "start:prod": "pm2 start ./dist/index.js --watch --name \"axel-backend\"",
+    "stop:prod": "pm2 stop \"axel-backend\"",
     "test": "jest",
     "test:end2end": "jest --selectProjects End2End",
     "test:integration": "jest --selectProjects Integration",
@@ -76,6 +78,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
     "mongoose": "^5.10.9",
+    "pm2": "^4.5.0",
     "reflect-metadata": "^0.1.13"
   }
 }
