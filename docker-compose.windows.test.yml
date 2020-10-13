@@ -6,6 +6,7 @@ services:
       dockerfile: DockerfileWindows
     environment:
       APP_ENV: docker
+    isolation: 'hyperv'
     ports:
       - "${APP_SERVER_PORT}:${APP_SERVER_PORT}"
     volumes:
