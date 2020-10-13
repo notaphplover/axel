@@ -1,8 +1,9 @@
 version: '3'
 services:
   app:
-    build: .
-    dockerfile: DockerfileWindows
+    build:
+      context: .
+      dockerfile: DockerfileWindows
     environment:
       APP_ENV: docker
     ports:
