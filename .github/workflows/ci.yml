@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x, 14.x]
-        os: [ubuntu-latest, windows-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
@@ -39,18 +39,18 @@ jobs:
       - name: Setup local files
         run: npm run setup:local
 
-      - name: Launch docker images (Default)
+      - name: Launch docker images (Docker friendly OS)
         run: npm run docker:up:ci
-        if: ${{ matrix.os != 'windows-latest' }}
+        if: ${{ matrix.os == 'ubuntu-latest' }}
 
-      - name: Wait test server
+      - name: Wait test server (Docker friendly OS)
         run: node ./dist/scripts/waitForApiServer.js
-        if: ${{ matrix.os != 'windows-latest' }}
+        if: ${{ matrix.os == 'ubuntu-latest' }}
 
-      - name: Launch Tests (Default)
+      - name: Launch Tests (Docker friendly OS)
         run: npm t
-        if: ${{ matrix.os != 'windows-latest' }}
+        if: ${{ matrix.os == 'ubuntu-latest' }}
 
-      - name: Launch Unit Tests (Windows)
+      - name: Launch Unit Tests (Non Docker friendly OS)
         run: npm run test:unit
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: ${{ matrix.os == 'macos-latest' || matrix.os == 'windows-latest' }}
