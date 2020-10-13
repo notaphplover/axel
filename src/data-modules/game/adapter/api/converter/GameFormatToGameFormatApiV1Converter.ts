@@ -9,7 +9,7 @@ const gameFormatToGameFormatApiV1Map: {
   [GameFormat.UNRESTRICTED]: GameFormatApiV1.UNRESTRICTED,
 };
 
-injectable();
+@injectable()
 export class GameFormatToGameFormatApiV1Converter
   implements Converter<GameFormat, GameFormatApiV1> {
   public transform(input: GameFormat): GameFormatApiV1 {
