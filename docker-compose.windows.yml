@@ -1,9 +1,0 @@
-version: '3'
-services:
-  db:
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_CONNECTION_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_CONNECTION_PASSWORD}
-    image: mongo:4.4.1-windowsservercore-ltsc2016
-    ports:
-      - 27017:27017
