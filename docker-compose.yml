@@ -6,4 +6,4 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_CONNECTION_PASSWORD}
     image: mongo:4.4.1-bionic
     ports:
-      - 27017:27017
+      - 29056:27017
