@@ -26,8 +26,13 @@ jobs:
       - name: Setup local files
         run: npm run setup:local
 
-      - name: Launch docker images
+      - name: Launch docker images (Default)
         run: npm run docker:up:ci
+        if: ${{ matrix.os != 'windows-latest' }}
+
+      - name: Launch docker images (Windows)
+        run: npm run docker:up:ci:windows
+        if: ${{ matrix.os == 'windows-latest' }}
 
       - name: Wait test server
         run: node ./dist/scripts/waitForApiServer.js
