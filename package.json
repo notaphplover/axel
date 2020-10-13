@@ -8,6 +8,7 @@
     "docker:rebuild:app": "docker-compose -f docker-compose.yml -f docker-compose.test.yml rm -fv app && docker-compose -f docker-compose.yml -f docker-compose.test.yml build app",
     "docker:down:ci": "docker-compose -f docker-compose.yml -f docker-compose.test.yml down",
     "docker:up:ci": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d",
+    "docker:up:ci:windows": "docker-compose -f docker-compose.windows.yml -f docker-compose.test.yml up -d",
     "docker:up:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up",
     "lint": "eslint src",
     "prebuild": "rimraf dist",
