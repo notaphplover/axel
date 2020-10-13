@@ -39,6 +39,24 @@ jobs:
       - name: Setup local files
         run: npm run setup:local
 
+      - name: Cache MongoDb image (Default)
+        uses: whoan/docker-build-with-cache-action@v5
+        with:
+          username: whoan
+          password: "${{ secrets.GITHUB_TOKEN }}"  # you don't need to manually set this secret. GitHub does it on your behalf
+          registry: docker.pkg.github.com
+          image_name: mongo:4.4.1-bionic
+        if: ${{ matrix.os != 'windows-latest' }}
+
+      - name: Cache NodeJS image (Default)
+        uses: whoan/docker-build-with-cache-action@v5
+        with:
+          username: whoan
+          password: "${{ secrets.GITHUB_TOKEN }}"  # you don't need to manually set this secret. GitHub does it on your behalf
+          registry: docker.pkg.github.com
+          image_name: node:12.18.4-alpine
+        if: ${{ matrix.os != 'windows-latest' }}
+
       - name: Launch docker images (Default)
         run: npm run docker:up:ci
         if: ${{ matrix.os != 'windows-latest' }}
