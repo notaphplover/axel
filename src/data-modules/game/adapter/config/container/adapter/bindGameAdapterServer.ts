@@ -1,4 +1,5 @@
 import { CardRouter } from '../../../server/router/card/CardRouter';
+import { DeckRouter } from '../../../server/router/deck/DeckRouter';
 import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameRouter } from '../../../server/router/GameRouter';
 import { GetCardDeckByIdV1RequestHandler } from '../../../server/reqHandler/deck/GetCardDeckByIdV1RequestHandler';
@@ -24,7 +25,8 @@ export function bindGameAdapterServer(bind: interfaces.Bind): void {
   ).to(PostCardV1RequestHandler);
 
   bind(
-    GAME_ADAPTER_TYPES.server.reqHandler.deck.GET_CARD_DECK_BY_ID_V1_REQUEST_HANDLER,
+    GAME_ADAPTER_TYPES.server.reqHandler.deck
+      .GET_CARD_DECK_BY_ID_V1_REQUEST_HANDLER,
   ).to(GetCardDeckByIdV1RequestHandler);
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.deck.POST_CARD_DECK_V1_REQUEST_HANDLER,
@@ -32,4 +34,5 @@ export function bindGameAdapterServer(bind: interfaces.Bind): void {
 
   bind(GAME_ADAPTER_TYPES.server.router.GAME_ROUTER).to(GameRouter);
   bind(GAME_ADAPTER_TYPES.server.router.card.CARD_ROUTER).to(CardRouter);
+  bind(GAME_ADAPTER_TYPES.server.router.deck.DECK_ROUTER).to(DeckRouter);
 }

@@ -17,6 +17,9 @@ export const GAME_ADAPTER_PUBLIC_TYPES = {
       card: {
         CARD_ROUTER: GAME_ADAPTER_TYPES.server.router.card.CARD_ROUTER,
       },
+      deck: {
+        DECK_ROUTER: GAME_ADAPTER_TYPES.server.router.deck.DECK_ROUTER,
+      },
     },
   },
 };
