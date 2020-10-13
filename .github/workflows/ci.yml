@@ -45,6 +45,7 @@ jobs:
 
       - name: Wait test server
         run: node ./dist/scripts/waitForApiServer.js
+        if: ${{ matrix.os != 'windows-latest' }}
 
       - name: Launch Tests (Default)
         run: npm t
