@@ -28,9 +28,9 @@ describe(FindCardDecksInteractor.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        (cardDeckSearchRepository.find as jest.Mock).mockResolvedValueOnce(
+        (cardDeckSearchRepository.find as jest.Mock).mockResolvedValueOnce([
           cardDeckFixtureFactory.get(),
-        );
+        ]);
 
         result = await findCardDecksInteractor.interact(
           cardDeckFindQueryFixtureFactory.get(),
@@ -45,7 +45,7 @@ describe(FindCardDecksInteractor.name, () => {
       });
 
       it('must return the repository result', () => {
-        expect(result).toStrictEqual(cardDeckFixtureFactory.get());
+        expect(result).toStrictEqual([cardDeckFixtureFactory.get()]);
       });
     });
   });
