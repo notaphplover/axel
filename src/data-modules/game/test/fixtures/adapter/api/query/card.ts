@@ -8,21 +8,16 @@ import {
   creatureFindQuery,
   enchantmentFindQuery,
   landFindQuery,
-} from '../../../domain/query/fixtures';
-import {
-  cardDeckApiV1,
-  cardDetailApiV1,
-  resourceApiV1,
-} from '../model/fixtures';
+} from '../../../domain/query/card';
+import { cardDetailApiV1, resourceApiV1 } from '../model/card';
 import { ArtifactCreationQueryApiV1 } from '../../../../../adapter/api/query/card/ArtifactCreationQueryApiV1';
-import { CardDeckCreationQueryApiV1 } from '../../../../../adapter/api/query/deck/CardDeckCreationQueryApiV1';
 import { CardFindQueryApiV1 } from '../../../../../adapter/api/query/card/CardFindQueryApiV1';
 import { CardTypeApiV1 } from '../../../../../adapter/api/model/card/CardTypeApiV1';
 import { CreatureCreationQueryApiV1 } from '../../../../../adapter/api/query/card/CreatureCreationQueryApiV1';
 import { EnchantmentCreationQueryApiV1 } from '../../../../../adapter/api/query/card/EnchantmentCreationQueryApiV1';
 import { GameCreationQueryApiV1 } from '../../../../../adapter/api/query/GameCreationQueryApiV1';
 import { LandCreationQueryApiV1 } from '../../../../../adapter/api/query/card/LandCreationQueryApiV1';
-import { game } from '../../../domain/model/fixtures';
+import { game } from '../../../domain/model';
 
 export const artifactCreationQueryApiV1: ArtifactCreationQueryApiV1 = {
   cost: resourceApiV1,
@@ -108,22 +103,4 @@ export const landFindQueryApiV1: CardFindQueryApiV1 = {
 
 export const landFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQueryApiV1> = new DeepCloneFixtureFactory(
   landFindQueryApiV1,
-);
-
-export const cardDeckCreationQueryApiV1: CardDeckCreationQueryApiV1 = {
-  description: cardDeckApiV1.description,
-  format: cardDeckApiV1.format,
-  name: cardDeckApiV1.name,
-  sections: {
-    core: {
-      references: [...cardDeckApiV1.sections.core.references],
-    },
-    sideboard: {
-      references: [...cardDeckApiV1.sections.sideboard.references],
-    },
-  },
-};
-
-export const cardDeckCreationQueryApiV1FixtureFactory: FixtureFactory<CardDeckCreationQueryApiV1> = new DeepCloneFixtureFactory(
-  cardDeckCreationQueryApiV1,
 );

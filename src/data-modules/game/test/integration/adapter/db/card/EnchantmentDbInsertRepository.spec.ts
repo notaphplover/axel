@@ -10,9 +10,9 @@ import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
-import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
+import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 import { enchantmentDbSchema } from '../../../../../adapter/db/model/card/EnchantmentDb';
-import { enchantmentFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+import { enchantmentFixtureFactory } from '../../../../fixtures/domain/model/card';
 
 const container: Container = configAdapter.container;
 

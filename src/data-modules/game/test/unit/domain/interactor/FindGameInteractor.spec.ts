@@ -4,8 +4,8 @@ import { FindGameInteractor } from '../../../../domain/interactor/FindGameIntera
 import { Game } from '../../../../domain/model/Game';
 import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
 import { SearchRepository } from '../../../../../../layer-modules/db/domain';
-import { gameFindQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
-import { gameFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+import { gameFindQueryFixtureFactory } from '../../../fixtures/domain/query/card';
+import { gameFixtureFactory } from '../../../fixtures/domain/model';
 
 describe(FindGameInteractor.name, () => {
   let gameSearchRepository: SearchRepository<Game, GameFindQuery>;

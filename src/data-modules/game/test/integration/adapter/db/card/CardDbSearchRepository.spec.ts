@@ -8,7 +8,7 @@ import {
   creatureFixtureFactory,
   enchantmentFixtureFactory,
   landFixtureFactory,
-} from '../../../../fixtures/domain/model/fixtures';
+} from '../../../../fixtures/domain/model/card';
 import mongoose, { Document, Model } from 'mongoose';
 import { Artifact } from '../../../../../domain/model/card/Artifact';
 import { ArtifactDb } from '../../../../../adapter/db/model/card/ArtifactDb';

@@ -12,10 +12,10 @@ import { CardApiV1 } from '../../../../../../adapter/api/model/card/CardApiV1';
 import { CardCreationQuery } from '../../../../../../domain/query/card/CardCreationQuery';
 import { CardCreationQueryApiV1 } from '../../../../../../adapter/api/query/card/CardCreationQueryApiV1';
 import { PostCardV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/PostCardV1RequestHandler';
-import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/fixtures';
-import { artifactCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/fixtures';
-import { artifactCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/fixtures';
-import { artifactFixtureFactory } from '../../../../../fixtures/domain/model/fixtures';
+import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
+import { artifactCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
+import { artifactCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
+import { artifactFixtureFactory } from '../../../../../fixtures/domain/model/card';
 import { fastifyReplyFixtureFactory } from '../../../../../../../../layer-modules/server/test/fixtures/fastify.fixture';
 
 describe(PostCardV1RequestHandler.name, () => {

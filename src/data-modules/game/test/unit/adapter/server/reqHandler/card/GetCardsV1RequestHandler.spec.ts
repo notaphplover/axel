@@ -12,10 +12,10 @@ import { CardApiV1 } from '../../../../../../adapter/api/model/card/CardApiV1';
 import { CardFindQuery } from '../../../../../../domain/query/card/CardFindQuery';
 import { CardFindQueryApiV1 } from '../../../../../../adapter/api/query/card/CardFindQueryApiV1';
 import { GetCardsV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/GetCardsV1RequestHandler';
-import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/fixtures';
-import { artifactFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/fixtures';
-import { artifactFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/fixtures';
-import { artifactFixtureFactory } from '../../../../../fixtures/domain/model/fixtures';
+import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
+import { artifactFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
+import { artifactFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
+import { artifactFixtureFactory } from '../../../../../fixtures/domain/model/card';
 import { fastifyReplyFixtureFactory } from '../../../../../../../../layer-modules/server/test/fixtures/fastify.fixture';
 
 describe(GetCardsV1RequestHandler.name, () => {

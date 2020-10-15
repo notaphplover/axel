@@ -4,8 +4,8 @@ import { CardDeck } from '../../../../../domain/model/deck/CardDeck';
 import { CardDeckCreationQuery } from '../../../../../domain/query/deck/CardDeckCreationQuery';
 import { CreateCardDecksInteractor } from '../../../../../domain/interactor/deck/CreateCardDecksInteractor';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
-import { cardDeckCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
-import { cardDeckFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+import { cardDeckCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/deck';
+import { cardDeckFixtureFactory } from '../../../../fixtures/domain/model/deck';
 
 describe(CreateCardDecksInteractor.name, () => {
   let cardDeckInsertRepository: InsertRepository<

@@ -10,9 +10,9 @@ import { LandDb } from '../../../../../adapter/db/model/card/LandDb';
 import { LandDbInsertRepository } from '../../../../../adapter/db/repository/card/LandDbInsertRepository';
 import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
-import { landCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
+import { landCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 import { landDbSchema } from '../../../../../adapter/db/model/card/LandDb';
-import { landFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+import { landFixtureFactory } from '../../../../fixtures/domain/model/card';
 
 const container: Container = configAdapter.container;
 

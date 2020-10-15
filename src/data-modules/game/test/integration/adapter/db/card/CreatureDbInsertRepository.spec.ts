@@ -9,9 +9,9 @@ import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
-import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
+import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 import { creatureDbSchema } from '../../../../../adapter/db/model/card/CreatureDb';
-import { creatureFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+import { creatureFixtureFactory } from '../../../../fixtures/domain/model/card';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 
 const container: Container = configAdapter.container;

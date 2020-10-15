@@ -4,8 +4,8 @@ import { Card } from '../../../../../domain/model/card/Card';
 import { CardFindQuery } from '../../../../../domain/query/card/CardFindQuery';
 import { FindCardsInteractor } from '../../../../../domain/interactor/card/FindCardsInteractor';
 import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
-import { artifactFindQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
-import { artifactFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+import { artifactFindQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { artifactFixtureFactory } from '../../../../fixtures/domain/model/card';
 
 describe(FindCardsInteractor.name, () => {
   let cardSearchRepository: SearchRepository<Card, CardFindQuery>;

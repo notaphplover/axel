@@ -7,12 +7,15 @@ import { CardDeckApiV1 } from '../../../../../../adapter/api/model/deck/CardDeck
 import { CardDeckFindQuery } from '../../../../../../domain/query/deck/CardDeckFindQuery';
 import { GetCardDeckByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/deck/GetCardDeckByIdV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
-import { cardDeckApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/fixtures';
-import { cardDeckFixtureFactory } from '../../../../../fixtures/domain/model/fixtures';
+import { cardDeckApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/deck';
+import { cardDeckFixtureFactory } from '../../../../../fixtures/domain/model/deck';
 import { commonTest } from '../../../../../../../../common/test';
 
 describe(GetCardDeckByIdV1RequestHandler.name, () => {
-  let findCardDeckInteractor: Interactor<CardDeckFindQuery, Promise<CardDeck | null>>;
+  let findCardDeckInteractor: Interactor<
+    CardDeckFindQuery,
+    Promise<CardDeck | null>
+  >;
   let cardDeckToCardDeckApiV1Port: Converter<CardDeck, CardDeckApiV1>;
   let getCardDeckByIdV1RequestHandler: GetCardDeckByIdV1RequestHandler;
 
@@ -48,7 +51,10 @@ describe(GetCardDeckByIdV1RequestHandler.name, () => {
           cardDeckApiV1FixtureFactory.get(),
         );
 
-        await getCardDeckByIdV1RequestHandler.handle(requestFixture, replyFixture);
+        await getCardDeckByIdV1RequestHandler.handle(
+          requestFixture,
+          replyFixture,
+        );
       });
 
       it('must call findCardDeckInteractor.interact()', () => {
@@ -83,9 +89,14 @@ describe(GetCardDeckByIdV1RequestHandler.name, () => {
         } as Partial<FastifyRequest>) as FastifyRequest;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        (findCardDeckInteractor.interact as jest.Mock).mockResolvedValueOnce(null);
+        (findCardDeckInteractor.interact as jest.Mock).mockResolvedValueOnce(
+          null,
+        );
 
-        await getCardDeckByIdV1RequestHandler.handle(requestFixture, replyFixture);
+        await getCardDeckByIdV1RequestHandler.handle(
+          requestFixture,
+          replyFixture,
+        );
       });
 
       it('must call reply.code with not found code', () => {

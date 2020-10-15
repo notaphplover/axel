@@ -10,8 +10,8 @@ import { GameDbInsertRepository } from '../../../../adapter/db/repository/GameDb
 import { InsertRepository } from '../../../../../../layer-modules/db/domain';
 import { configAdapter } from '../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../layer-modules/db/test';
-import { gameCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
-import { gameFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+import { gameCreationQueryFixtureFactory } from '../../../fixtures/domain/query/card';
+import { gameFixtureFactory } from '../../../fixtures/domain/model';
 
 const container: Container = configAdapter.container;
 

@@ -8,9 +8,9 @@ import { Container } from 'inversify';
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
-import { artifactCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
+import { artifactCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 import { artifactDbSchema } from '../../../../../adapter/db/model/card/ArtifactDb';
-import { artifactFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+import { artifactFixtureFactory } from '../../../../fixtures/domain/model/card';
 import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 

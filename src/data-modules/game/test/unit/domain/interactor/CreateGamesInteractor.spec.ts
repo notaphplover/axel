@@ -4,8 +4,8 @@ import { CreateGamesInteractor } from '../../../../domain/interactor/CreateGames
 import { Game } from '../../../../domain/model/Game';
 import { GameCreationQuery } from '../../../../domain/query/GameCreationQuery';
 import { InsertRepository } from '../../../../../../layer-modules/db/domain';
-import { gameCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
-import { gameFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+import { gameCreationQueryFixtureFactory } from '../../../fixtures/domain/query/card';
+import { gameFixtureFactory } from '../../../fixtures/domain/model';
 
 describe(CreateGamesInteractor.name, () => {
   let gameInsertRepository: InsertRepository<Game, GameCreationQuery>;

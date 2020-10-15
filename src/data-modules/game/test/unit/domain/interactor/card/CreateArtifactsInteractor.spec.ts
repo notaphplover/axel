@@ -4,8 +4,8 @@ import { Artifact } from '../../../../../domain/model/card/Artifact';
 import { ArtifactCreationQuery } from '../../../../../domain/query/card/ArtifactCreationQuery';
 import { CreateArtifactsInteractor } from '../../../../../domain/interactor/card/CreateArtifactsInteractor';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
-import { artifactCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
-import { artifactFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+import { artifactCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { artifactFixtureFactory } from '../../../../fixtures/domain/model/card';
 
 describe(CreateArtifactsInteractor.name, () => {
   let artifactInsertRepository: InsertRepository<

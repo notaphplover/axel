@@ -4,8 +4,8 @@ import { CreateLandsInteractor } from '../../../../../domain/interactor/card/Cre
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { Land } from '../../../../../domain/model/card/Land';
 import { LandCreationQuery } from '../../../../../domain/query/card/LandCreationQuery';
-import { landCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
-import { landFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+import { landCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { landFixtureFactory } from '../../../../fixtures/domain/model/card';
 
 describe(CreateLandsInteractor.name, () => {
   let landInsertRepository: InsertRepository<Land, LandCreationQuery>;

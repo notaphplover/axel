@@ -5,13 +5,13 @@ import {
   creatureCreationQueryFixtureFactory,
   enchantmentCreationQueryFixtureFactory,
   landCreationQueryFixtureFactory,
-} from '../../../../fixtures/domain/query/fixtures';
+} from '../../../../fixtures/domain/query/card';
 import {
   artifactFixtureFactory,
   creatureFixtureFactory,
   enchantmentFixtureFactory,
   landFixtureFactory,
-} from '../../../../fixtures/domain/model/fixtures';
+} from '../../../../fixtures/domain/model/card';
 import { Artifact } from '../../../../../domain/model/card/Artifact';
 import { ArtifactCreationQuery } from '../../../../../domain/query/card/ArtifactCreationQuery';
 import { CardCreationQuery } from '../../../../../domain/query/card/CardCreationQuery';

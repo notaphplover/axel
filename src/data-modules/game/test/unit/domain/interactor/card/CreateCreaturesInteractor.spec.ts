@@ -4,8 +4,8 @@ import { CreateCreaturesInteractor } from '../../../../../domain/interactor/card
 import { Creature } from '../../../../../domain/model/card/Creature';
 import { CreatureCreationQuery } from '../../../../../domain/query/card/CreatureCreationQuery';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
-import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
-import { creatureFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { creatureFixtureFactory } from '../../../../fixtures/domain/model/card';
 
 describe(CreateCreaturesInteractor.name, () => {
   let creatureInsertRepository: InsertRepository<

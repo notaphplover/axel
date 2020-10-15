@@ -4,8 +4,8 @@ import { CreateEnchantmentsInteractor } from '../../../../../domain/interactor/c
 import { Enchantment } from '../../../../../domain/model/card/Enchantment';
 import { EnchantmentCreationQuery } from '../../../../../domain/query/card/EnchantmentCreationQuery';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
-import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/fixtures';
-import { enchantmentFixtureFactory } from '../../../../fixtures/domain/model/fixtures';
+import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { enchantmentFixtureFactory } from '../../../../fixtures/domain/model/card';
 
 describe(CreateEnchantmentsInteractor.name, () => {
   let enchantmentInsertRepository: InsertRepository<
