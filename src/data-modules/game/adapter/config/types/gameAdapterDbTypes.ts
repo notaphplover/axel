@@ -47,6 +47,11 @@ export const GAME_ADAPTER_DB_TYPES = {
         'CardDeckFindQueryToCardDeckDbFilterQueryConverter ',
       ),
     },
+    setup: {
+      GAME_SETUP_DB_TO_GAME_SETUP_CONVERTER: Symbol.for(
+        'GameSetupDbToGameSetupConverter',
+      ),
+    },
   },
   model: {
     GAME_DB_MODEL: Symbol.for('gameDbModel'),
