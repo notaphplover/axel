@@ -33,6 +33,8 @@ const gameSetupDbSchemaDefinition: SchemaDefinition = {
 
 const gameSetupDbSchema: Schema = new Schema(gameSetupDbSchemaDefinition);
 
+gameSetupDbSchema.index({ 'playerSetups.userId': 1 });
+
 export const gameSetupDbModel: Model<GameSetupDb> = mongoose.model<GameSetupDb>(
   'GameSetup',
   gameSetupDbSchema,
