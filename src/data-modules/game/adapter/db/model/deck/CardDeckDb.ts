@@ -37,5 +37,5 @@ export const cardDeckDbSchema: Schema = new Schema(cardDeckDbSchemaDefinition);
 export const cardDeckDbModel: Model<CardDeckDb> = mongoose.model<CardDeckDb>(
   'CardDeck',
   cardDeckDbSchema,
-  'CardDeck',
+  'cardDeck',
 );
