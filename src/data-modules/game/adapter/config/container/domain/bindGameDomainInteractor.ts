@@ -3,6 +3,7 @@ import { CreateCardDecksInteractor } from '../../../../domain/interactor/deck/Cr
 import { CreateCardsInteractor } from '../../../../domain/interactor/card/CreateCardsInteractor';
 import { CreateCreaturesInteractor } from '../../../../domain/interactor/card/CreateCreaturesInteractor';
 import { CreateEnchantmentsInteractor } from '../../../../domain/interactor/card/CreateEnchantmentsInteractor';
+import { CreateGameSetupsInteractor } from '../../../../domain/interactor/setup/CreateGameSetupsInteractor';
 import { CreateGamesInteractor } from '../../../../domain/interactor/CreateGamesInteractor';
 import { CreateLandsInteractor } from '../../../../domain/interactor/card/CreateLandsInteractor';
 import { FindCardDeckInteractor } from '../../../../domain/interactor/deck/FindCardDeckInteractor';
@@ -46,5 +47,9 @@ export function bindGameDomainInteractor(bind: interfaces.Bind): void {
   );
   bind(GAME_DOMAIN_TYPES.interactor.deck.FIND_CARD_DECKS_INTERACTOR).to(
     FindCardDecksInteractor,
+  );
+
+  bind(GAME_DOMAIN_TYPES.interactor.setup.CREATE_GAME_SETUPS_INTERACTOR).to(
+    CreateGameSetupsInteractor,
   );
 }

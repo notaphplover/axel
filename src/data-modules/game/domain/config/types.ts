@@ -18,6 +18,9 @@ export const GAME_DOMAIN_TYPES = {
       FIND_CARD_DECK_INTERACTOR: Symbol.for('FindCardDeckInteractor'),
       FIND_CARD_DECKS_INTERACTOR: Symbol.for('FindCardDecksInteractor'),
     },
+    setup: {
+      CREATE_GAME_SETUPS_INTERACTOR: Symbol.for('CreateGameSetupsInteractor'),
+    },
   },
   repository: {
     GAME_INSERT_REPOSITORY: Symbol.for('GameInsertRepository'),
