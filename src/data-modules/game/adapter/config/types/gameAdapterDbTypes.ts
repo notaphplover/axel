@@ -48,6 +48,9 @@ export const GAME_ADAPTER_DB_TYPES = {
       ),
     },
     setup: {
+      GAME_SETUP_CREATION_QUERY_TO_GAME_SETUP_DBS_CONVERTER: Symbol.for(
+        'GameSetupCreationQueryToGameSetupDbsConverter',
+      ),
       GAME_SETUP_DB_TO_GAME_SETUP_CONVERTER: Symbol.for(
         'GameSetupDbToGameSetupConverter',
       ),
