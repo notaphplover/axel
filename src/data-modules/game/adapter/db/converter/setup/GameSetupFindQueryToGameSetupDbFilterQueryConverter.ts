@@ -33,7 +33,7 @@ export class GameSetupFindQueryToGameSetupDbFilterQueryConverter
         GameSetupDb
       >[] = input.playerSetups.map(
         (playerSetup: GameSetupFindQueryPlayerSetup) => {
-          return { 'playerSetup.userId': playerSetup.userId };
+          return { 'playerSetups.userId': playerSetup.userId };
         },
       );
 
