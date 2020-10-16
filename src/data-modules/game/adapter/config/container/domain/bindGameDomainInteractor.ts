@@ -10,6 +10,7 @@ import { FindCardDeckInteractor } from '../../../../domain/interactor/deck/FindC
 import { FindCardDecksInteractor } from '../../../../domain/interactor/deck/FindCardDecksInteractor';
 import { FindCardsInteractor } from '../../../../domain/interactor/card/FindCardsInteractor';
 import { FindGameInteractor } from '../../../../domain/interactor/FindGameInteractor';
+import { FindGameSetupsInteractor } from '../../../../domain/interactor/setup/FindGameSetupsInteractor';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { interfaces } from 'inversify';
 
@@ -51,5 +52,8 @@ export function bindGameDomainInteractor(bind: interfaces.Bind): void {
 
   bind(GAME_DOMAIN_TYPES.interactor.setup.CREATE_GAME_SETUPS_INTERACTOR).to(
     CreateGameSetupsInteractor,
+  );
+  bind(GAME_DOMAIN_TYPES.interactor.setup.FIND_GAME_SETUPS_INTERACTOR).to(
+    FindGameSetupsInteractor,
   );
 }

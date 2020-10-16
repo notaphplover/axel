@@ -20,6 +20,7 @@ export const GAME_DOMAIN_TYPES = {
     },
     setup: {
       CREATE_GAME_SETUPS_INTERACTOR: Symbol.for('CreateGameSetupsInteractor'),
+      FIND_GAME_SETUPS_INTERACTOR: Symbol.for('FindGameSetupsInteractor'),
     },
   },
   repository: {
