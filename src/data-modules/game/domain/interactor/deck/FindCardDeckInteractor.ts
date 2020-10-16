@@ -10,13 +10,13 @@ export class FindCardDeckInteractor
   implements Interactor<CardDeckFindQuery, Promise<CardDeck | null>> {
   constructor(
     @inject(GAME_DOMAIN_TYPES.repository.deck.CARD_DECK_SEARCH_REPOSITORY)
-    private readonly carddeckSearchRepository: SearchRepository<
+    private readonly cardDeckSearchRepository: SearchRepository<
       CardDeck,
       CardDeckFindQuery
     >,
   ) {}
 
   public async interact(input: CardDeckFindQuery): Promise<CardDeck | null> {
-    return this.carddeckSearchRepository.findOne(input);
+    return this.cardDeckSearchRepository.findOne(input);
   }
 }
