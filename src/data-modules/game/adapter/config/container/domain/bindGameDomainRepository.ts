@@ -7,6 +7,7 @@ import { EnchantmentDbInsertRepository } from '../../../db/repository/card/Encha
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameDbInsertRepository } from '../../../db/repository/GameDbInsertRepository';
 import { GameDbSearchRepository } from '../../../db/repository/GameDbSearchRepository';
+import { GameSetupDbInsertRepository } from '../../../db/repository/setup/GameSetupDbInsertRepository';
 import { LandDbInsertRepository } from '../../../db/repository/card/LandDbInsertRepository';
 import { interfaces } from 'inversify';
 
@@ -38,5 +39,9 @@ export function bindGameDomainRepository(bind: interfaces.Bind): void {
   );
   bind(GAME_DOMAIN_TYPES.repository.deck.CARD_DECK_SEARCH_REPOSITORY).to(
     CardDeckDbSearchRepository,
+  );
+
+  bind(GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_INSERT_REPOSITORY).to(
+    GameSetupDbInsertRepository,
   );
 }

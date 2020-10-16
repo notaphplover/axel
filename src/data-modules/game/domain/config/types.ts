@@ -33,5 +33,8 @@ export const GAME_DOMAIN_TYPES = {
       CARD_DECK_INSERT_REPOSITORY: Symbol.for('CardDeckInsertRepository'),
       CARD_DECK_SEARCH_REPOSITORY: Symbol.for('CardDeckSearchRepository'),
     },
+    setup: {
+      GAME_SETUP_INSERT_REPOSITORY: Symbol.for('GameSetupInsertRepository'),
+    },
   },
 };
