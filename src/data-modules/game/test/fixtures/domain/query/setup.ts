@@ -7,6 +7,7 @@ import { gameSetup } from '../model/setup';
 
 export const gameSetupCreationQuery: GameSetupCreationQuery = {
   format: gameSetup.format,
+  ownerUserId: gameSetup.ownerUserId,
   playerSetups: gameSetup.playerSetups,
   playerSlots: gameSetup.playerSlots,
 };

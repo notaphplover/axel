@@ -11,6 +11,7 @@ export class GameSetupDbToGameSetupConverter
     return {
       format: input.format,
       id: input._id.toHexString(),
+      ownerUserId: input.ownerUserId,
       playerSetups: _.cloneDeep(input.playerSetups),
       playerSlots: input.playerSlots,
     };

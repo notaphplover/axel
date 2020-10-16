@@ -18,6 +18,7 @@ export class GameSetupCreationQueryToGameSetupDbsConverter
     return [
       new this.gameSetupDbModel({
         format: input.format,
+        ownerUserId: input.ownerUserId,
         playerSetups: _.cloneDeep(input.playerSetups),
         playerSlots: input.playerSlots,
       }),

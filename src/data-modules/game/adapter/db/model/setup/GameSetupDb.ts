@@ -12,6 +12,7 @@ import { cardDeckDbSchemaDefinition } from '../deck/CardDeckDb';
 export interface GameSetupDb extends Document {
   _id: Types.ObjectId;
   format: GameFormat;
+  ownerUserId: string;
   playerSetups: PlayerSetup[];
   playerSlots: number;
 }
@@ -23,6 +24,7 @@ const playerSetupDbSchemaDefinition: SchemaDefinition = {
 
 const gameSetupDbSchemaDefinition: SchemaDefinition = {
   format: { type: String, required: true },
+  ownerUserId: { type: Schema.Types.ObjectId, required: true, index: true },
   playerSetups: {
     type: Array,
     of: playerSetupDbSchemaDefinition,
