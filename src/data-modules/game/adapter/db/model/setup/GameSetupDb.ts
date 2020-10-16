@@ -31,7 +31,9 @@ const gameSetupDbSchemaDefinition: SchemaDefinition = {
   playerSlots: { type: Number },
 };
 
-const gameSetupDbSchema: Schema = new Schema(gameSetupDbSchemaDefinition);
+export const gameSetupDbSchema: Schema = new Schema(
+  gameSetupDbSchemaDefinition,
+);
 
 gameSetupDbSchema.index({ 'playerSetups.userId': 1 });
 

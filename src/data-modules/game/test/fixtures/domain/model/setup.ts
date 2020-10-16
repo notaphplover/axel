@@ -19,6 +19,7 @@ export const playerSetupFixtureFactory: FixtureFactory<PlayerSetup> = new DeepCl
 
 export const gameSetup: GameSetup = {
   format: GameFormat.UNRESTRICTED,
+  id: '5f5cf46243fda130685e00dc',
   playerSetups: [playerSetup],
   playerSlots: 1,
 };
