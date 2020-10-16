@@ -19,12 +19,12 @@ export interface GameSetupDb extends Document {
 
 const playerSetupDbSchemaDefinition: SchemaDefinition = {
   deck: { type: cardDeckDbSchemaDefinition, required: true },
-  userId: { type: Schema.Types.ObjectId, required: true },
+  userId: { type: String, required: true },
 };
 
 const gameSetupDbSchemaDefinition: SchemaDefinition = {
   format: { type: String, required: true },
-  ownerUserId: { type: Schema.Types.ObjectId, required: true, index: true },
+  ownerUserId: { type: String, required: true, index: true },
   playerSetups: {
     type: Array,
     of: playerSetupDbSchemaDefinition,
