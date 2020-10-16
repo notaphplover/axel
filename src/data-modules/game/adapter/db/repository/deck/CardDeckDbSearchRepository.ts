@@ -15,7 +15,7 @@ export class CardDeckDbSearchRepository extends MongooseSearchRepository<
 > {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
-    @inject(GAME_ADAPTER_TYPES.db.model.card.CARD_DECK_DB_MODEL)
+    @inject(GAME_ADAPTER_TYPES.db.model.deck.CARD_DECK_DB_MODEL)
     model: Model<CardDeckDb>,
     @inject(
       GAME_ADAPTER_TYPES.db.converter.deck.CARD_DECK_DB_TO_CARD_DECK_CONVERTER,

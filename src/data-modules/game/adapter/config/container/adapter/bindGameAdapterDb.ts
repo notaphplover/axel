@@ -22,6 +22,7 @@ import { cardDeckDbModel } from '../../../db/model/deck/CardDeckDb';
 import { creatureDbModel } from '../../../db/model/card/CreatureDb';
 import { enchantmentDbModel } from '../../../db/model/card/EnchantmentDb';
 import { gameDbModel } from '../../../db/model/GameDb';
+import { gameSetupDbModel } from '../../../db/model/setup/GameSetupDb';
 import { interfaces } from 'inversify';
 import { landDbModel } from '../../../db/model/card/LandDb';
 
@@ -96,17 +97,21 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   bind(GAME_ADAPTER_TYPES.db.model.card.CARD_DB_MODEL).toConstantValue(
     cardDbModel,
   );
-  bind(GAME_ADAPTER_TYPES.db.model.card.CARD_DECK_DB_MODEL).toConstantValue(
-    cardDeckDbModel,
-  );
   bind(GAME_ADAPTER_TYPES.db.model.card.CREATURE_DB_MODEL).toConstantValue(
     creatureDbModel,
   );
   bind(GAME_ADAPTER_TYPES.db.model.card.ENCHANTMENT_DB_MODEL).toConstantValue(
     enchantmentDbModel,
   );
-
   bind(GAME_ADAPTER_TYPES.db.model.card.LAND_DB_MODEL).toConstantValue(
     landDbModel,
+  );
+
+  bind(GAME_ADAPTER_TYPES.db.model.deck.CARD_DECK_DB_MODEL).toConstantValue(
+    cardDeckDbModel,
+  );
+
+  bind(GAME_ADAPTER_TYPES.db.model.setup.GAME_SETUP_DB_MODEL).toConstantValue(
+    gameSetupDbModel,
   );
 }

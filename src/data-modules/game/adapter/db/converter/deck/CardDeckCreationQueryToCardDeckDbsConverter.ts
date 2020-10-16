@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 export class CardDeckCreationQueryToCardDeckDbsConverter
   implements Converter<CardDeckCreationQuery, CardDeckDb[]> {
   constructor(
-    @inject(GAME_ADAPTER_TYPES.db.model.card.CARD_DECK_DB_MODEL)
+    @inject(GAME_ADAPTER_TYPES.db.model.deck.CARD_DECK_DB_MODEL)
     private readonly cardDeckDbModel: Model<CardDeckDb>,
   ) {}
 

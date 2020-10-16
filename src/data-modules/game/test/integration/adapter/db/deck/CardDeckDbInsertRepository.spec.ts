@@ -36,7 +36,7 @@ function injectCardDeckMongooseModelMock(
   model: Model<CardDeckDb>,
 ): void {
   container
-    .bind(GAME_ADAPTER_TYPES.db.model.card.CARD_DECK_DB_MODEL)
+    .bind(GAME_ADAPTER_TYPES.db.model.deck.CARD_DECK_DB_MODEL)
     .toConstantValue(model);
 }
 
