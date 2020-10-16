@@ -2,20 +2,20 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../common/test';
-import { GameSetupCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
+import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { gameSetup } from '../model/setup';
 
-export const gameSetupCreationQuery: GameSetupCreationQuery = {
+export const gameSetupsCreationQuery: GameSetupsCreationQuery = {
   format: gameSetup.format,
   ownerUserId: gameSetup.ownerUserId,
   playerSetups: gameSetup.playerSetups,
   playerSlots: gameSetup.playerSlots,
 };
 
-export const gameSetupCreationQueryFixtureFactory: FixtureFactory<GameSetupCreationQuery> = new DeepCloneFixtureFactory(
-  gameSetupCreationQuery,
+export const gameSetupsCreationQueryFixtureFactory: FixtureFactory<GameSetupsCreationQuery> = new DeepCloneFixtureFactory(
+  gameSetupsCreationQuery,
 );
 
 export const gameSetupFindQuery: GameSetupFindQuery = {

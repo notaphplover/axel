@@ -2,15 +2,15 @@ import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
-import { GameSetupCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { GameSetupDb } from '../../model/setup/GameSetupDb';
+import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { Model } from 'mongoose';
 import { MongooseInsertRepository } from '../../../../../../layer-modules/db/adapter';
 
 @injectable()
 export class GameSetupDbInsertRepository extends MongooseInsertRepository<
   GameSetup,
-  GameSetupCreationQuery,
+  GameSetupsCreationQuery,
   GameSetupDb
 > {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
@@ -27,7 +27,7 @@ export class GameSetupDbInsertRepository extends MongooseInsertRepository<
         .GAME_SETUP_CREATION_QUERY_TO_GAME_SETUP_DBS_CONVERTER,
     )
     gameSetupCreationQueryToGameSetupDbsConverter: Converter<
-      GameSetupCreationQuery,
+      GameSetupsCreationQuery,
       GameSetupDb[]
     >,
   ) {

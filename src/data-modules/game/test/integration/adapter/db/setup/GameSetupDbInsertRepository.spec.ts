@@ -8,13 +8,13 @@ import { Container } from 'inversify';
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { GameSetup } from '../../../../../domain/model/setup/GameSetup';
-import { GameSetupCreationQuery } from '../../../../../domain/query/setup/GameSetupCreationQuery';
 import { GameSetupDbInsertRepository } from '../../../../../adapter/db/repository/setup/GameSetupDbInsertRepository';
+import { GameSetupsCreationQuery } from '../../../../../domain/query/setup/GameSetupCreationQuery';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
-import { gameSetupCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 import { gameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
+import { gameSetupsCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 
 const container: Container = configAdapter.container;
 
@@ -59,13 +59,13 @@ mongooseIntegrationDescribe(GameSetupDbInsertRepository.name, () => {
 
         const gameSetupDbInsertRepository: InsertRepository<
           GameSetup,
-          GameSetupCreationQuery
+          GameSetupsCreationQuery
         > = childContainer.get(
           GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_INSERT_REPOSITORY,
         );
 
         result = await gameSetupDbInsertRepository.insert(
-          gameSetupCreationQueryFixtureFactory.get(),
+          gameSetupsCreationQueryFixtureFactory.get(),
         );
       });
 
