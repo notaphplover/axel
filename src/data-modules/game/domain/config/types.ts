@@ -35,6 +35,7 @@ export const GAME_DOMAIN_TYPES = {
     },
     setup: {
       GAME_SETUP_INSERT_REPOSITORY: Symbol.for('GameSetupInsertRepository'),
+      GAME_SETUP_SEARCH_REPOSITORY: Symbol.for('GameSetupSearchRepository'),
     },
   },
 };
