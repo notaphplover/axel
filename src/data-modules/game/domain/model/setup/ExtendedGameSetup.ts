@@ -1,10 +1,4 @@
-import { GameFormat } from '../GameFormat';
+import { GameSetup } from './GameSetup';
 import { PlayerSetup } from './PlayerSetup';
 
-export interface ExtendedGameSetup {
-  format: GameFormat;
-  id: string;
-  ownerUserId: string;
-  playerSetups: PlayerSetup[];
-  playerSlots: number;
-}
+export type ExtendedGameSetup = GameSetup<PlayerSetup>;
