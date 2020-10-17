@@ -2,6 +2,7 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../common/test';
+import { BasicGameSetup } from '../../../../domain/model/setup/BasicGameSetup';
 import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSetup';
 import { GameFormat } from '../../../../domain/model/GameFormat';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
@@ -27,4 +28,20 @@ export const extendedGameSetup: ExtendedGameSetup = {
 
 export const extendedGameSetupFixtureFactory: FixtureFactory<ExtendedGameSetup> = new DeepCloneFixtureFactory(
   extendedGameSetup,
+);
+
+export const basicGameSetup: BasicGameSetup = {
+  format: extendedGameSetup.format,
+  id: extendedGameSetup.id,
+  ownerUserId: extendedGameSetup.ownerUserId,
+  playerSetups: extendedGameSetup.playerSetups.map(
+    (playerSetup: PlayerSetup) => {
+      return { userId: playerSetup.userId };
+    },
+  ),
+  playerSlots: extendedGameSetup.playerSlots,
+};
+
+export const basicGameSetupFixtureFactory: FixtureFactory<BasicGameSetup> = new DeepCloneFixtureFactory(
+  basicGameSetup,
 );
