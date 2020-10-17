@@ -1,21 +1,9 @@
-import mongoose, {
-  Document,
-  Model,
-  Schema,
-  SchemaDefinition,
-  Types,
-} from 'mongoose';
-import { GameFormat } from '../../../../domain/model/GameFormat';
+import mongoose, { Model, Schema, SchemaDefinition } from 'mongoose';
+import { GameSetupDb } from './GameSetupDb';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { cardDeckDbSchemaDefinition } from '../deck/CardDeckDb';
 
-export interface ExtendedGameSetupDb extends Document {
-  _id: Types.ObjectId;
-  format: GameFormat;
-  ownerUserId: string;
-  playerSetups: PlayerSetup[];
-  playerSlots: number;
-}
+export type ExtendedGameSetupDb = GameSetupDb<PlayerSetup>;
 
 const playerSetupDbSchemaDefinition: SchemaDefinition = {
   deck: { type: cardDeckDbSchemaDefinition, required: true },
