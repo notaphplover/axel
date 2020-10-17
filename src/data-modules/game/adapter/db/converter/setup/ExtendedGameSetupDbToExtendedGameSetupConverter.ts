@@ -1,13 +1,13 @@
 import { Converter } from '../../../../../../common/domain';
-import { GameSetup } from '../../../../domain/model/setup/GameSetup';
-import { GameSetupDb } from '../../model/setup/GameSetupDb';
+import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSetup';
+import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import _ from 'lodash';
 import { injectable } from 'inversify';
 
 @injectable()
-export class GameSetupDbToGameSetupConverter
-  implements Converter<GameSetupDb, GameSetup> {
-  public transform(input: GameSetupDb): GameSetup {
+export class ExtendedGameSetupDbToExtendedGameSetupConverter
+  implements Converter<ExtendedGameSetupDb, ExtendedGameSetup> {
+  public transform(input: ExtendedGameSetupDb): ExtendedGameSetup {
     return {
       format: input.format,
       id: input._id.toHexString(),

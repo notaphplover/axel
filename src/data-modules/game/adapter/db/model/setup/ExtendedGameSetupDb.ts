@@ -9,7 +9,7 @@ import { GameFormat } from '../../../../domain/model/GameFormat';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { cardDeckDbSchemaDefinition } from '../deck/CardDeckDb';
 
-export interface GameSetupDb extends Document {
+export interface ExtendedGameSetupDb extends Document {
   _id: Types.ObjectId;
   format: GameFormat;
   ownerUserId: string;
@@ -22,7 +22,7 @@ const playerSetupDbSchemaDefinition: SchemaDefinition = {
   userId: { type: String, required: true },
 };
 
-const gameSetupDbSchemaDefinition: SchemaDefinition = {
+const extendedGameSetupDbSchemaDefinition: SchemaDefinition = {
   format: { type: String, required: true },
   ownerUserId: { type: String, required: true, index: true },
   playerSetups: {
@@ -33,14 +33,12 @@ const gameSetupDbSchemaDefinition: SchemaDefinition = {
   playerSlots: { type: Number },
 };
 
-export const gameSetupDbSchema: Schema = new Schema(
-  gameSetupDbSchemaDefinition,
+export const extendedGameSetupDbSchema: Schema = new Schema(
+  extendedGameSetupDbSchemaDefinition,
 );
 
-gameSetupDbSchema.index({ 'playerSetups.userId': 1 });
+extendedGameSetupDbSchema.index({ 'playerSetups.userId': 1 });
 
-export const gameSetupDbModel: Model<GameSetupDb> = mongoose.model<GameSetupDb>(
-  'GameSetup',
-  gameSetupDbSchema,
-  'gameSetup',
-);
+export const extendedGameSetupDbModel: Model<ExtendedGameSetupDb> = mongoose.model<
+  ExtendedGameSetupDb
+>('ExtendedGameSetup', extendedGameSetupDbSchema, 'extendedGameSetup');

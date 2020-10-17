@@ -1,18 +1,21 @@
 import { FilterQuery, MongooseFilterQuery, Types } from 'mongoose';
 import { Converter } from '../../../../../../common/domain';
-import { GameSetupDb } from '../../model/setup/GameSetupDb';
-import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
-import { GameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/GameSetupFindQueryPlayerSetup';
+import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
+import { ExtendedGameSetupFindQuery } from '../../../../domain/query/setup/ExtendedGameSetupFindQuery';
+import { ExtendedGameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/ExtendedGameSetupFindQueryPlayerSetup';
 import { FilterQuery as MongoDbFilterQuery } from 'mongodb';
 import { hasValue } from '../../../../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
 
 @injectable()
-export class GameSetupFindQueryToGameSetupDbFilterQueryConverter
-  implements Converter<GameSetupFindQuery, FilterQuery<GameSetupDb>> {
-  public transform(input: GameSetupFindQuery): FilterQuery<GameSetupDb> {
-    const andFilterQuery: MongoDbFilterQuery<GameSetupDb>[] = [];
-    const filterQuery: MongooseFilterQuery<GameSetupDb> = {
+export class ExtendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
+  implements
+    Converter<ExtendedGameSetupFindQuery, FilterQuery<ExtendedGameSetupDb>> {
+  public transform(
+    input: ExtendedGameSetupFindQuery,
+  ): FilterQuery<ExtendedGameSetupDb> {
+    const andFilterQuery: MongoDbFilterQuery<ExtendedGameSetupDb>[] = [];
+    const filterQuery: MongooseFilterQuery<ExtendedGameSetupDb> = {
       $and: andFilterQuery,
     };
 
@@ -30,9 +33,9 @@ export class GameSetupFindQueryToGameSetupDbFilterQueryConverter
 
     if (hasValue(input.playerSetups) && input.playerSetups.length > 0) {
       const playerSetupsFilterQuery: MongoDbFilterQuery<
-        GameSetupDb
+        ExtendedGameSetupDb
       >[] = input.playerSetups.map(
-        (playerSetup: GameSetupFindQueryPlayerSetup) => {
+        (playerSetup: ExtendedGameSetupFindQueryPlayerSetup) => {
           return { 'playerSetups.userId': playerSetup.userId };
         },
       );

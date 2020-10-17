@@ -48,14 +48,14 @@ export const GAME_ADAPTER_DB_TYPES = {
       ),
     },
     setup: {
-      GAME_SETUP_CREATION_QUERY_TO_GAME_SETUP_DBS_CONVERTER: Symbol.for(
-        'GameSetupCreationQueryToGameSetupDbsConverter',
+      EXTENDED_GAME_SETUP_CREATION_QUERY_TO_EXTENDED_GAME_SETUP_DBS_CONVERTER: Symbol.for(
+        'ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter',
       ),
-      GAME_SETUP_FIND_QUERY_TO_GAME_SETUP_DB_FILTER_QUERY_CONVERTER: Symbol.for(
-        'GameSetupFindQueryToGameSetupDbFilterQueryConverter',
+      EXTENDED_GAME_SETUP_FIND_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER: Symbol.for(
+        'ExtendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter',
       ),
-      GAME_SETUP_DB_TO_GAME_SETUP_CONVERTER: Symbol.for(
-        'GameSetupDbToGameSetupConverter',
+      EXTENDED_GAME_SETUP_DB_TO_EXTENDED_GAME_SETUP_CONVERTER: Symbol.for(
+        'ExtendedGameSetupDbToExtendedGameSetupConverter',
       ),
     },
   },
@@ -72,7 +72,7 @@ export const GAME_ADAPTER_DB_TYPES = {
       CARD_DECK_DB_MODEL: Symbol.for('CardDeckDbModel'),
     },
     setup: {
-      GAME_SETUP_DB_MODEL: Symbol.for('GameSetupDbModel'),
+      EXTENDED_GAME_SETUP_DB_MODEL: Symbol.for('ExtendedGameSetupDbModel'),
     },
   },
 };

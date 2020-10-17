@@ -2,8 +2,8 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../common/test';
+import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSetup';
 import { GameFormat } from '../../../../domain/model/GameFormat';
-import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { cardDeck } from './deck';
 import { user } from '../../../../../user/test/fixtures/domain/model/fixtures';
@@ -17,7 +17,7 @@ export const playerSetupFixtureFactory: FixtureFactory<PlayerSetup> = new DeepCl
   playerSetup,
 );
 
-export const gameSetup: GameSetup = {
+export const extendedGameSetup: ExtendedGameSetup = {
   format: GameFormat.UNRESTRICTED,
   id: '5f5cf46243fda130685e00dc',
   ownerUserId: user.id,
@@ -25,6 +25,6 @@ export const gameSetup: GameSetup = {
   playerSlots: 1,
 };
 
-export const gameSetupFixtureFactory: FixtureFactory<GameSetup> = new DeepCloneFixtureFactory(
-  gameSetup,
+export const extendedGameSetupFixtureFactory: FixtureFactory<ExtendedGameSetup> = new DeepCloneFixtureFactory(
+  extendedGameSetup,
 );

@@ -9,13 +9,13 @@ import { CreatureCreationQueryToCreatureDbsConverter } from '../../../db/convert
 import { CreatureDbToCreatureConverter } from '../../../db/converter/card/CreatureDbToCreatureConverter';
 import { EnchantmentCreationQueryToEnchantmentDbsConverter } from '../../../db/converter/card/EnchantmentCreationQueryToEnchantmentDbsConverter';
 import { EnchantmentDbToEnchantmentConverter } from '../../../db/converter/card/EnchantmentDbToEnchantmentConverter';
+import { ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter } from '../../../db/converter/setup/ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter';
+import { ExtendedGameSetupDbToExtendedGameSetupConverter } from '../../../db/converter/setup/ExtendedGameSetupDbToExtendedGameSetupConverter';
+import { ExtendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/ExtendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter';
 import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameCreationQueryToGameDbsConverter } from '../../../db/converter/GameCreationQueryToGameDbsConverter';
 import { GameDbToGameConverter } from '../../../db/converter/GameDbToGameConverter';
 import { GameFindQueryToGameDbFilterQueryConverter } from '../../../db/converter/GameFindQueryToGameDbFilterQueryConverter';
-import { GameSetupCreationQueryToGameSetupDbsConverter } from '../../../db/converter/setup/GameSetupCreationQueryToGameSetupDbsConverter';
-import { GameSetupDbToGameSetupConverter } from '../../../db/converter/setup/GameSetupDbToGameSetupConverter';
-import { GameSetupFindQueryToGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupFindQueryToGameSetupDbFilterQueryConverter';
 import { LandCreationQueryToLandDbsConverter } from '../../../db/converter/card/LandCreationQueryToLandDbsConverter';
 import { LandDbToLandConverter } from '../../../db/converter/card/LandDbToLandConverter';
 import { artifactDbModel } from '../../../db/model/card/ArtifactDb';
@@ -23,8 +23,8 @@ import { cardDbModel } from '../../../db/model/card/CardDb';
 import { cardDeckDbModel } from '../../../db/model/deck/CardDeckDb';
 import { creatureDbModel } from '../../../db/model/card/CreatureDb';
 import { enchantmentDbModel } from '../../../db/model/card/EnchantmentDb';
+import { extendedGameSetupDbModel } from '../../../db/model/setup/ExtendedGameSetupDb';
 import { gameDbModel } from '../../../db/model/GameDb';
-import { gameSetupDbModel } from '../../../db/model/setup/GameSetupDb';
 import { interfaces } from 'inversify';
 import { landDbModel } from '../../../db/model/card/LandDb';
 
@@ -90,15 +90,16 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
 
   bind(
     GAME_ADAPTER_TYPES.db.converter.setup
-      .GAME_SETUP_CREATION_QUERY_TO_GAME_SETUP_DBS_CONVERTER,
-  ).to(GameSetupCreationQueryToGameSetupDbsConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.setup.GAME_SETUP_DB_TO_GAME_SETUP_CONVERTER,
-  ).to(GameSetupDbToGameSetupConverter);
+      .EXTENDED_GAME_SETUP_CREATION_QUERY_TO_EXTENDED_GAME_SETUP_DBS_CONVERTER,
+  ).to(ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.setup
-      .GAME_SETUP_FIND_QUERY_TO_GAME_SETUP_DB_FILTER_QUERY_CONVERTER,
-  ).to(GameSetupFindQueryToGameSetupDbFilterQueryConverter);
+      .EXTENDED_GAME_SETUP_DB_TO_EXTENDED_GAME_SETUP_CONVERTER,
+  ).to(ExtendedGameSetupDbToExtendedGameSetupConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.setup
+      .EXTENDED_GAME_SETUP_FIND_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER,
+  ).to(ExtendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter);
 
   bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
   bind(GAME_ADAPTER_TYPES.db.model.card.ARTIFACT_DB_MODEL).toConstantValue(
@@ -121,7 +122,7 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
     cardDeckDbModel,
   );
 
-  bind(GAME_ADAPTER_TYPES.db.model.setup.GAME_SETUP_DB_MODEL).toConstantValue(
-    gameSetupDbModel,
-  );
+  bind(
+    GAME_ADAPTER_TYPES.db.model.setup.EXTENDED_GAME_SETUP_DB_MODEL,
+  ).toConstantValue(extendedGameSetupDbModel);
 }

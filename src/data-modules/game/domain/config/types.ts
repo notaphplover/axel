@@ -19,8 +19,12 @@ export const GAME_DOMAIN_TYPES = {
       FIND_CARD_DECKS_INTERACTOR: Symbol.for('FindCardDecksInteractor'),
     },
     setup: {
-      CREATE_GAME_SETUPS_INTERACTOR: Symbol.for('CreateGameSetupsInteractor'),
-      FIND_GAME_SETUPS_INTERACTOR: Symbol.for('FindGameSetupsInteractor'),
+      CREATE_EXTENDED_GAME_SETUPS_INTERACTOR: Symbol.for(
+        'CreateExtendedGameSetupsInteractor',
+      ),
+      FIND_EXTENDED_GAME_SETUPS_INTERACTOR: Symbol.for(
+        'FindExtendedGameSetupsInteractor',
+      ),
     },
   },
   repository: {
@@ -38,8 +42,12 @@ export const GAME_DOMAIN_TYPES = {
       CARD_DECK_SEARCH_REPOSITORY: Symbol.for('CardDeckSearchRepository'),
     },
     setup: {
-      GAME_SETUP_INSERT_REPOSITORY: Symbol.for('GameSetupInsertRepository'),
-      GAME_SETUP_SEARCH_REPOSITORY: Symbol.for('GameSetupSearchRepository'),
+      EXTENDED_GAME_SETUP_INSERT_REPOSITORY: Symbol.for(
+        'ExtendedGameSetupInsertRepository',
+      ),
+      EXTENDED_GAME_SETUP_SEARCH_REPOSITORY: Symbol.for(
+        'ExtendedGameSetupSearchRepository',
+      ),
     },
   },
 };
