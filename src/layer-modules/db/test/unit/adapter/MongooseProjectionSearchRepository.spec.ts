@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import { Converter, Filter } from '../../../../../common/domain';
 import { Document, FilterQuery, Model } from 'mongoose';
-import { MongooseSearchRepository } from '../../../adapter/MongooseSearchRepository';
+import { MongooseProjectionSearchRepository } from '../../../adapter/MongooseProjectionSearchRepository';
 
 class ModelMock {
   constructor(public foo: string) {}
@@ -14,8 +14,9 @@ class QueryMock {
 
 type ModelMockDb = ModelMock & Document;
 
-class MongooseSearchRepositoryMock extends MongooseSearchRepository<
+class MongooseProjectionSearchRepositoryMock extends MongooseProjectionSearchRepository<
   ModelMock,
+  ModelMockDb,
   ModelMockDb,
   QueryMock
 > {}
@@ -27,7 +28,7 @@ const modelMockDbFixture: ModelMockDb = { foo: FOO_VALUE } as ModelMockDb;
 const queryMockFixture: QueryMock = { foo: FOO_VALUE };
 const queryMockDbFixture: FilterQuery<ModelMockDb> = { foo: FOO_VALUE };
 
-describe(MongooseSearchRepository.name, () => {
+describe(MongooseProjectionSearchRepository.name, () => {
   let model: Model<ModelMockDb>;
   let modelDbToModelConverter: Converter<
     ModelMock,
@@ -40,14 +41,16 @@ describe(MongooseSearchRepository.name, () => {
   let nullPostSearchFilter: null;
   let nonNullPostSearchFilter: Filter<ModelMockDb, QueryMock>;
 
-  let noPostSearchMongooseSearchRepository: MongooseSearchRepository<
+  let noPostSearchMongooseProjectionSearchRepository: MongooseProjectionSearchRepository<
     ModelMock,
+    ModelMockDb,
     ModelMockDb,
     QueryMock
   >;
 
-  let postSearchMongooseSearchRepository: MongooseSearchRepository<
+  let postSearchMongooseProjectionSearchRepository: MongooseProjectionSearchRepository<
     ModelMock,
+    ModelMockDb,
     ModelMockDb,
     QueryMock
   >;
@@ -67,14 +70,14 @@ describe(MongooseSearchRepository.name, () => {
       filterOne: jest.fn(),
     };
 
-    noPostSearchMongooseSearchRepository = new MongooseSearchRepositoryMock(
+    noPostSearchMongooseProjectionSearchRepository = new MongooseProjectionSearchRepositoryMock(
       model,
       modelDbToModelConverter,
       queryToFilterQueryConverter,
       nullPostSearchFilter,
     );
 
-    postSearchMongooseSearchRepository = new MongooseSearchRepositoryMock(
+    postSearchMongooseProjectionSearchRepository = new MongooseProjectionSearchRepositoryMock(
       model,
       modelDbToModelConverter,
       queryToFilterQueryConverter,
@@ -82,7 +85,7 @@ describe(MongooseSearchRepository.name, () => {
     );
   });
 
-  describe(`.${MongooseSearchRepository.prototype.find.name}`, () => {
+  describe(`.${MongooseProjectionSearchRepository.prototype.find.name}`, () => {
     describe('when called, and no post search filter is established', () => {
       let result: unknown;
 
@@ -95,7 +98,7 @@ describe(MongooseSearchRepository.name, () => {
           queryMockDbFixture,
         );
 
-        result = await noPostSearchMongooseSearchRepository.find(
+        result = await noPostSearchMongooseProjectionSearchRepository.find(
           queryMockFixture,
         );
       });
@@ -145,7 +148,7 @@ describe(MongooseSearchRepository.name, () => {
           modelMockDbFixture,
         ]);
 
-        result = await postSearchMongooseSearchRepository.find(
+        result = await postSearchMongooseProjectionSearchRepository.find(
           queryMockFixture,
         );
       });
@@ -171,7 +174,7 @@ describe(MongooseSearchRepository.name, () => {
     });
   });
 
-  describe(`.${MongooseSearchRepository.prototype.findOne.name}`, () => {
+  describe(`.${MongooseProjectionSearchRepository.prototype.findOne.name}`, () => {
     describe('when called, and no post search filter is established', () => {
       let result: unknown;
 
@@ -184,7 +187,7 @@ describe(MongooseSearchRepository.name, () => {
           queryMockDbFixture,
         );
 
-        result = await noPostSearchMongooseSearchRepository.findOne(
+        result = await noPostSearchMongooseProjectionSearchRepository.findOne(
           queryMockFixture,
         );
       });
@@ -234,7 +237,7 @@ describe(MongooseSearchRepository.name, () => {
           modelMockDbFixture,
         );
 
-        result = await postSearchMongooseSearchRepository.findOne(
+        result = await postSearchMongooseProjectionSearchRepository.findOne(
           queryMockFixture,
         );
       });
