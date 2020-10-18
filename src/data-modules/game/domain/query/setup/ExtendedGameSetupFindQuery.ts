@@ -1,10 +1,3 @@
-import { ExtendedGameSetupFindQueryPlayerSetup } from './ExtendedGameSetupFindQueryPlayerSetup';
-import { GameFormat } from '../../model/GameFormat';
+import { GameSetupFindQuery } from './GameSetupFindQuery';
 
-export interface ExtendedGameSetupFindQuery {
-  format?: GameFormat;
-  id?: string;
-  ownerUserId?: string;
-  playerSetups?: ExtendedGameSetupFindQueryPlayerSetup[];
-  playerSlots?: number;
-}
+export type ExtendedGameSetupFindQuery = GameSetupFindQuery;

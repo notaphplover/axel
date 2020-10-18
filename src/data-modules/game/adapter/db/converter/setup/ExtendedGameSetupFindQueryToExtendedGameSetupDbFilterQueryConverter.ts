@@ -2,7 +2,7 @@ import { FilterQuery, MongooseFilterQuery, Types } from 'mongoose';
 import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { ExtendedGameSetupFindQuery } from '../../../../domain/query/setup/ExtendedGameSetupFindQuery';
-import { ExtendedGameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/ExtendedGameSetupFindQueryPlayerSetup';
+import { GameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/GameSetupFindQueryPlayerSetup';
 import { FilterQuery as MongoDbFilterQuery } from 'mongodb';
 import { hasValue } from '../../../../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
@@ -35,7 +35,7 @@ export class ExtendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
       const playerSetupsFilterQuery: MongoDbFilterQuery<
         ExtendedGameSetupDb
       >[] = input.playerSetups.map(
-        (playerSetup: ExtendedGameSetupFindQueryPlayerSetup) => {
+        (playerSetup: GameSetupFindQueryPlayerSetup) => {
           return { 'playerSetups.userId': playerSetup.userId };
         },
       );
