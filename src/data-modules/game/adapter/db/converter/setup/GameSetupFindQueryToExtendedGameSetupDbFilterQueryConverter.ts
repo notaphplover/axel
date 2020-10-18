@@ -1,18 +1,17 @@
 import { FilterQuery, MongooseFilterQuery, Types } from 'mongoose';
 import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
-import { ExtendedGameSetupFindQuery } from '../../../../domain/query/setup/ExtendedGameSetupFindQuery';
+import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { GameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/GameSetupFindQueryPlayerSetup';
 import { FilterQuery as MongoDbFilterQuery } from 'mongodb';
 import { hasValue } from '../../../../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
 
 @injectable()
-export class ExtendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
-  implements
-    Converter<ExtendedGameSetupFindQuery, FilterQuery<ExtendedGameSetupDb>> {
+export class GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
+  implements Converter<GameSetupFindQuery, FilterQuery<ExtendedGameSetupDb>> {
   public transform(
-    input: ExtendedGameSetupFindQuery,
+    input: GameSetupFindQuery,
   ): FilterQuery<ExtendedGameSetupDb> {
     const andFilterQuery: MongoDbFilterQuery<ExtendedGameSetupDb>[] = [];
     const filterQuery: MongooseFilterQuery<ExtendedGameSetupDb> = {

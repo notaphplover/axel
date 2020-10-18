@@ -27,7 +27,7 @@ export class ExtendedGameSetupDbSearchRepository extends MongooseSearchRepositor
     >,
     @inject(
       GAME_ADAPTER_TYPES.db.converter.setup
-        .EXTENDED_GAME_SETUP_FIND_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER,
+        .GAME_SETUP_FIND_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER,
     )
     extendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter: Converter<
       ExtendedGameSetupFindQuery,
