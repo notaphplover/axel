@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { Converter, Filter } from '../../../../../common/domain';
-import { Document, FilterQuery, Model } from 'mongoose';
+import { Document, DocumentQuery, FilterQuery, Model } from 'mongoose';
 import { MongooseProjectionSearchRepository } from '../../../adapter/MongooseProjectionSearchRepository';
 
 class ModelMock {
@@ -29,7 +29,9 @@ const queryMockFixture: QueryMock = { foo: FOO_VALUE };
 const queryMockDbFixture: FilterQuery<ModelMockDb> = { foo: FOO_VALUE };
 
 describe(MongooseProjectionSearchRepository.name, () => {
-  let model: Model<ModelMockDb>;
+  let findDocumentQueryMock: DocumentQuery<ModelMockDb[], ModelMockDb>;
+  let findOneDocumentQueryMock: DocumentQuery<ModelMockDb | null, ModelMockDb>;
+  let modelMock: Model<ModelMockDb>;
   let modelDbToModelConverter: Converter<
     ModelMock,
     ModelMockDb | Promise<ModelMockDb>
@@ -40,6 +42,9 @@ describe(MongooseProjectionSearchRepository.name, () => {
   >;
   let nullPostSearchFilter: null;
   let nonNullPostSearchFilter: Filter<ModelMockDb, QueryMock>;
+
+  let nullProjectionFixture: null;
+  let nonNullProjectionFixture: unknown;
 
   let noPostSearchMongooseProjectionSearchRepository: MongooseProjectionSearchRepository<
     ModelMock,
@@ -55,10 +60,30 @@ describe(MongooseProjectionSearchRepository.name, () => {
     QueryMock
   >;
 
+  let projectionMongooseProjectionSearchRepository: MongooseProjectionSearchRepository<
+    ModelMock,
+    ModelMockDb,
+    ModelMockDb,
+    QueryMock
+  >;
+
   beforeAll(() => {
-    model = ({
-      find: jest.fn(),
-      findOne: jest.fn(),
+    findDocumentQueryMock = ({
+      select: jest.fn().mockReturnThis(),
+      then: jest.fn(),
+    } as Partial<DocumentQuery<ModelMockDb[], ModelMockDb>>) as DocumentQuery<
+      ModelMockDb[],
+      ModelMockDb
+    >;
+    findOneDocumentQueryMock = ({
+      select: jest.fn().mockReturnThis(),
+      then: jest.fn(),
+    } as Partial<
+      DocumentQuery<ModelMockDb | null, ModelMockDb>
+    >) as DocumentQuery<ModelMockDb | null, ModelMockDb>;
+    modelMock = ({
+      find: jest.fn().mockImplementation(() => findDocumentQueryMock),
+      findOne: jest.fn().mockImplementation(() => findOneDocumentQueryMock),
     } as Partial<Model<ModelMockDb>>) as Model<ModelMockDb>;
     modelDbToModelConverter = {
       transform: jest.fn(),
@@ -70,18 +95,31 @@ describe(MongooseProjectionSearchRepository.name, () => {
       filterOne: jest.fn(),
     };
 
+    nullProjectionFixture = null;
+    nonNullProjectionFixture = 'test-mongoose-projection-fixture';
+
     noPostSearchMongooseProjectionSearchRepository = new MongooseProjectionSearchRepositoryMock(
-      model,
+      modelMock,
       modelDbToModelConverter,
       queryToFilterQueryConverter,
+      nullProjectionFixture,
       nullPostSearchFilter,
     );
 
     postSearchMongooseProjectionSearchRepository = new MongooseProjectionSearchRepositoryMock(
-      model,
+      modelMock,
       modelDbToModelConverter,
       queryToFilterQueryConverter,
+      nullProjectionFixture,
       nonNullPostSearchFilter,
+    );
+
+    projectionMongooseProjectionSearchRepository = new MongooseProjectionSearchRepositoryMock(
+      modelMock,
+      modelDbToModelConverter,
+      queryToFilterQueryConverter,
+      nonNullProjectionFixture,
+      nullPostSearchFilter,
     );
   });
 
@@ -90,7 +128,11 @@ describe(MongooseProjectionSearchRepository.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        (model.find as jest.Mock).mockResolvedValueOnce([modelMockDbFixture]);
+        (findDocumentQueryMock.then as jest.Mock).mockImplementationOnce(
+          (onFullfiled: (value: ModelMockDb[]) => void) => {
+            onFullfiled([modelMockDbFixture]);
+          },
+        );
         (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
           modelMockFixture,
         );
@@ -104,7 +146,7 @@ describe(MongooseProjectionSearchRepository.name, () => {
       });
 
       afterAll(() => {
-        (model.find as jest.Mock).mockClear();
+        (findDocumentQueryMock.then as jest.Mock).mockClear();
         (modelDbToModelConverter.transform as jest.Mock).mockClear();
         (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
       });
@@ -117,8 +159,8 @@ describe(MongooseProjectionSearchRepository.name, () => {
       });
 
       it(`must call model.${Model.find.name}()`, () => {
-        expect(model.find).toHaveBeenCalledTimes(1);
-        expect(model.find).toHaveBeenCalledWith(queryMockDbFixture);
+        expect(modelMock.find).toHaveBeenCalledTimes(1);
+        expect(modelMock.find).toHaveBeenCalledWith(queryMockDbFixture);
       });
 
       it('must call modelDbToModelPort.transform()', () => {
@@ -137,7 +179,11 @@ describe(MongooseProjectionSearchRepository.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        (model.find as jest.Mock).mockResolvedValueOnce([modelMockDbFixture]);
+        (findDocumentQueryMock.then as jest.Mock).mockImplementationOnce(
+          (onFullfiled: (value: ModelMockDb[]) => void) => {
+            onFullfiled([modelMockDbFixture]);
+          },
+        );
         (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
           modelMockFixture,
         );
@@ -154,7 +200,7 @@ describe(MongooseProjectionSearchRepository.name, () => {
       });
 
       afterAll(() => {
-        (model.find as jest.Mock).mockClear();
+        (findDocumentQueryMock.then as jest.Mock).mockClear();
         (modelDbToModelConverter.transform as jest.Mock).mockClear();
         (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
         (nonNullPostSearchFilter.filter as jest.Mock).mockClear();
@@ -172,6 +218,49 @@ describe(MongooseProjectionSearchRepository.name, () => {
         expect(result).toStrictEqual([modelMockFixture]);
       });
     });
+
+    describe('when called, and a projection is established', () => {
+      let result: unknown;
+
+      beforeAll(async () => {
+        (findDocumentQueryMock.then as jest.Mock).mockImplementationOnce(
+          (onFullfiled: (value: ModelMockDb[]) => void) => {
+            onFullfiled([modelMockDbFixture]);
+          },
+        );
+        (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
+          modelMockFixture,
+        );
+        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+          queryMockDbFixture,
+        );
+        (nonNullPostSearchFilter.filter as jest.Mock).mockResolvedValueOnce([
+          modelMockDbFixture,
+        ]);
+
+        result = await projectionMongooseProjectionSearchRepository.find(
+          queryMockFixture,
+        );
+      });
+
+      afterAll(() => {
+        (findDocumentQueryMock.then as jest.Mock).mockClear();
+        (modelDbToModelConverter.transform as jest.Mock).mockClear();
+        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+        (nonNullPostSearchFilter.filter as jest.Mock).mockClear();
+      });
+
+      it('must call query.select() with the projection', () => {
+        expect(findDocumentQueryMock.select).toHaveBeenCalledTimes(1);
+        expect(findDocumentQueryMock.select).toHaveBeenCalledWith(
+          nonNullProjectionFixture,
+        );
+      });
+
+      it('must return a model', () => {
+        expect(result).toStrictEqual([modelMockFixture]);
+      });
+    });
   });
 
   describe(`.${MongooseProjectionSearchRepository.prototype.findOne.name}`, () => {
@@ -179,7 +268,11 @@ describe(MongooseProjectionSearchRepository.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        (model.findOne as jest.Mock).mockResolvedValueOnce(modelMockDbFixture);
+        (findOneDocumentQueryMock.then as jest.Mock).mockImplementationOnce(
+          (onFullfiled: (value: ModelMockDb | null) => void) => {
+            onFullfiled(modelMockDbFixture);
+          },
+        );
         (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
           modelMockFixture,
         );
@@ -193,7 +286,7 @@ describe(MongooseProjectionSearchRepository.name, () => {
       });
 
       afterAll(() => {
-        (model.findOne as jest.Mock).mockClear();
+        (findOneDocumentQueryMock.then as jest.Mock).mockClear();
         (modelDbToModelConverter.transform as jest.Mock).mockClear();
         (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
       });
@@ -206,8 +299,8 @@ describe(MongooseProjectionSearchRepository.name, () => {
       });
 
       it(`must call model.${Model.findOne.name}()`, () => {
-        expect(model.findOne).toHaveBeenCalledTimes(1);
-        expect(model.findOne).toHaveBeenCalledWith(queryMockDbFixture);
+        expect(modelMock.findOne).toHaveBeenCalledTimes(1);
+        expect(modelMock.findOne).toHaveBeenCalledWith(queryMockDbFixture);
       });
 
       it('must call modelDbToModelPort.transform()', () => {
@@ -226,7 +319,11 @@ describe(MongooseProjectionSearchRepository.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        (model.findOne as jest.Mock).mockResolvedValueOnce(modelMockDbFixture);
+        (findOneDocumentQueryMock.then as jest.Mock).mockImplementationOnce(
+          (onFullfiled: (value: ModelMockDb | null) => void) => {
+            onFullfiled(modelMockDbFixture);
+          },
+        );
         (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
           modelMockFixture,
         );
@@ -243,7 +340,7 @@ describe(MongooseProjectionSearchRepository.name, () => {
       });
 
       afterAll(() => {
-        (model.findOne as jest.Mock).mockClear();
+        (findOneDocumentQueryMock.then as jest.Mock).mockClear();
         (modelDbToModelConverter.transform as jest.Mock).mockClear();
         (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
         (nonNullPostSearchFilter.filterOne as jest.Mock).mockClear();
@@ -254,6 +351,49 @@ describe(MongooseProjectionSearchRepository.name, () => {
         expect(nonNullPostSearchFilter.filterOne).toHaveBeenCalledWith(
           modelMockDbFixture,
           queryMockFixture,
+        );
+      });
+
+      it('must return a model', () => {
+        expect(result).toStrictEqual(modelMockFixture);
+      });
+    });
+
+    describe('when called, and a projection is established', () => {
+      let result: unknown;
+
+      beforeAll(async () => {
+        (findOneDocumentQueryMock.then as jest.Mock).mockImplementationOnce(
+          (onFullfiled: (value: ModelMockDb | null) => void) => {
+            onFullfiled(modelMockDbFixture);
+          },
+        );
+        (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
+          modelMockFixture,
+        );
+        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+          queryMockDbFixture,
+        );
+        (nonNullPostSearchFilter.filter as jest.Mock).mockResolvedValueOnce([
+          modelMockDbFixture,
+        ]);
+
+        result = await projectionMongooseProjectionSearchRepository.findOne(
+          queryMockFixture,
+        );
+      });
+
+      afterAll(() => {
+        (findOneDocumentQueryMock.then as jest.Mock).mockClear();
+        (modelDbToModelConverter.transform as jest.Mock).mockClear();
+        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+        (nonNullPostSearchFilter.filter as jest.Mock).mockClear();
+      });
+
+      it('must call query.select() with the projection', () => {
+        expect(findOneDocumentQueryMock.select).toHaveBeenCalledTimes(1);
+        expect(findOneDocumentQueryMock.select).toHaveBeenCalledWith(
+          nonNullProjectionFixture,
         );
       });
 
