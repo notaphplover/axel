@@ -54,6 +54,9 @@ export const GAME_ADAPTER_DB_TYPES = {
       GAME_SETUP_FIND_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER: Symbol.for(
         'ExtendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter',
       ),
+      EXTENDED_GAME_SETUP_DB_TO_BASIC_GAME_SETUP_CONVERTER: Symbol.for(
+        'ExtendedGameSetupDbToBasicGameSetupConverter',
+      ),
       EXTENDED_GAME_SETUP_DB_TO_EXTENDED_GAME_SETUP_CONVERTER: Symbol.for(
         'ExtendedGameSetupDbToExtendedGameSetupConverter',
       ),
