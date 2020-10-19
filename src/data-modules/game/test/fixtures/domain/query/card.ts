@@ -23,8 +23,10 @@ export const artifactCreationQueryFixtureFactory: FixtureFactory<ArtifactCreatio
   artifactCreationQuery,
 );
 
-export const artifactFindQuery: CardFindQuery = {
+export const artifactFindQuery: Required<CardFindQuery> = {
   id: artifact.id,
+  limit: 1,
+  offset: 0,
   types: CardType.Artifact,
 };
 
@@ -44,8 +46,10 @@ export const creatureCreationQueryFixtureFactory: FixtureFactory<CreatureCreatio
   creatureCreationQuery,
 );
 
-export const creatureFindQuery: CardFindQuery = {
+export const creatureFindQuery: Required<CardFindQuery> = {
   id: creature.id,
+  limit: 1,
+  offset: 0,
   types: CardType.Creature,
 };
 
@@ -63,8 +67,10 @@ export const enchantmentCreationQueryFixtureFactory: FixtureFactory<EnchantmentC
   enchantmentCreationQuery,
 );
 
-export const enchantmentFindQuery: CardFindQuery = {
+export const enchantmentFindQuery: Required<CardFindQuery> = {
   id: enchantment.id,
+  limit: 1,
+  offset: 0,
   types: CardType.Enchantment,
 };
 
@@ -99,8 +105,10 @@ export const landCreationQueryFixtureFactory: FixtureFactory<LandCreationQuery> 
   landCreationQuery,
 );
 
-export const landFindQuery: CardFindQuery = {
+export const landFindQuery: Required<CardFindQuery> = {
   id: land.id,
+  limit: 1,
+  offset: 0,
   types: CardType.Land,
 };
 
