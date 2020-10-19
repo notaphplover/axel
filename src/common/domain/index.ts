@@ -7,6 +7,7 @@ import { Capsule } from './model/Capsule';
 import { Converter } from './converter/Converter';
 import { Filter } from './filter/Filter';
 import { Interactor } from './interactor/Interactor';
+import { PaginationQuery } from './query/PaginationQuery';
 import { Validator } from './validator/Validator';
 import { ValidatorFunctionBasedFilter } from './filter/ValidatorFunctionBasedFilter';
 import { floatToInt } from './parse/floatToInt';
@@ -23,6 +24,7 @@ export {
   Converter,
   Filter,
   Interactor,
+  PaginationQuery,
   ValidationFail,
   ValidationResult,
   ValidationSuccess,
