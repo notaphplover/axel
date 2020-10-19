@@ -1,4 +1,4 @@
-import { Converter, Filter } from '../../../common/domain';
+import { Capsule, Converter, Filter } from '../../../common/domain';
 import { Document, DocumentQuery, FilterQuery, Model } from 'mongoose';
 import { SearchRepository } from '../domain/SearchRepository';
 import { hasValue } from '../../../common/domain/utils/hasValue';
@@ -29,12 +29,12 @@ export abstract class MongooseProjectionSearchRepository<
   ) {}
 
   public async find(query: TQuery): Promise<TModel[]> {
-    const documentQuery: Promise<TModelDb[]> = this.buildQuery(
-      query,
-      this.model.find.bind(this.model),
-    );
+    const documentQueryCapsule: Capsule<DocumentQuery<
+      TModelDb[],
+      TModelDb
+    >> = await this.buildDocumentQuery(query, this.model.find.bind(this.model));
 
-    let entitiesDbFound: TOutputModelDb[] = ((await documentQuery) as Document[]) as TOutputModelDb[];
+    let entitiesDbFound: TOutputModelDb[] = ((await documentQueryCapsule.elem) as Document[]) as TOutputModelDb[];
 
     if (this.postSearchFilter !== null) {
       entitiesDbFound = await this.postSearchFilter.filter(
@@ -53,12 +53,15 @@ export abstract class MongooseProjectionSearchRepository<
   }
 
   public async findOne(query: TQuery): Promise<TModel | null> {
-    const documentQuery: Promise<TModelDb | null> = this.buildQuery(
+    const documentQueryCapsule: Capsule<DocumentQuery<
+      TModelDb | null,
+      TModelDb
+    >> = await this.buildDocumentQuery(
       query,
       this.model.findOne.bind(this.model),
     );
 
-    let entityDbFound: TOutputModelDb | null = ((await documentQuery) as Document | null) as TOutputModelDb | null;
+    let entityDbFound: TOutputModelDb | null = ((await documentQueryCapsule.elem) as Document | null) as TOutputModelDb | null;
 
     if (entityDbFound !== null && this.postSearchFilter !== null) {
       entityDbFound = await this.postSearchFilter.filterOne(
@@ -75,12 +78,12 @@ export abstract class MongooseProjectionSearchRepository<
     return entity;
   }
 
-  private async buildQuery<TMongooseQueryOutput>(
+  protected async buildDocumentQuery<TMongooseQueryOutput>(
     query: TQuery,
     documentQueryGenerator: (
       filterQuery: FilterQuery<TModelDb>,
     ) => DocumentQuery<TMongooseQueryOutput, TModelDb>,
-  ): Promise<TMongooseQueryOutput> {
+  ): Promise<Capsule<DocumentQuery<TMongooseQueryOutput, TModelDb>>> {
     const mongooseQuery: FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
       query,
     );
@@ -94,6 +97,8 @@ export abstract class MongooseProjectionSearchRepository<
       documentQuery = documentQuery.select(this.mongooseProjection);
     }
 
-    return documentQuery;
+    return {
+      elem: documentQuery,
+    };
   }
 }
