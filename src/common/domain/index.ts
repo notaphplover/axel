@@ -3,6 +3,7 @@ import {
   ValidationResult,
   ValidationSuccess,
 } from './validator/ValidationResult';
+import { Capsule } from './model/Capsule';
 import { Converter } from './converter/Converter';
 import { Filter } from './filter/Filter';
 import { Interactor } from './interactor/Interactor';
@@ -18,6 +19,7 @@ import { mergeReadables } from './io/stream/mergeReadables';
 import { rootDir } from './io/rootDir';
 
 export {
+  Capsule,
   Converter,
   Filter,
   Interactor,
