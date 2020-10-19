@@ -5,10 +5,10 @@ import { CardDb } from '../../model/card/CardDb';
 import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { Converter } from '../../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { MongooseSearchRepository } from '../../../../../../layer-modules/db/adapter';
+import { MongoosePaginatedSearchRepository } from '../../../../../../layer-modules/db/adapter/MongoosePaginatedSearchRepository';
 
 @injectable()
-export class CardDbSearchRepository extends MongooseSearchRepository<
+export class CardDbSearchRepository extends MongoosePaginatedSearchRepository<
   Card,
   CardDb,
   CardFindQuery
