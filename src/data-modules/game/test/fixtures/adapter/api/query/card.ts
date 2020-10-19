@@ -31,6 +31,8 @@ export const artifactCreationQueryApiV1FixtureFactory: FixtureFactory<ArtifactCr
 
 export const artifactFindQueryApiV1: CardFindQueryApiV1 = {
   id: artifactFindQuery.id,
+  limit: artifactFindQuery.limit,
+  offset: artifactFindQuery.offset,
   types: CardTypeApiV1.Artifact,
 };
 
@@ -52,6 +54,8 @@ export const creatureCreationQueryApiV1FixtureFactory: FixtureFactory<CreatureCr
 
 export const creatureFindQueryApiV1: CardFindQueryApiV1 = {
   id: creatureFindQuery.id,
+  limit: creatureFindQuery.limit,
+  offset: creatureFindQuery.offset,
   types: CardTypeApiV1.Creature,
 };
 
@@ -71,6 +75,8 @@ export const enchantmentCreationQueryApiV1FixtureFactory: FixtureFactory<Enchant
 
 export const enchantmentFindQueryApiV1: CardFindQueryApiV1 = {
   id: enchantmentFindQuery.id,
+  limit: enchantmentFindQuery.limit,
+  offset: enchantmentFindQuery.offset,
   types: CardTypeApiV1.Enchantment,
 };
 
@@ -98,6 +104,8 @@ export const landCreationQueryApiV1FixtureFactory: FixtureFactory<LandCreationQu
 
 export const landFindQueryApiV1: CardFindQueryApiV1 = {
   id: landFindQuery.id,
+  limit: landFindQuery.limit,
+  offset: landFindQuery.offset,
   types: CardTypeApiV1.Land,
 };
 

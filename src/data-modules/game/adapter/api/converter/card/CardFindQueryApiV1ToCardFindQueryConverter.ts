@@ -37,6 +37,8 @@ export class CardFindQueryApiV1ToCardFindQueryConverter
 
     return {
       id: input.id,
+      limit: input.limit,
+      offset: input.offset,
       types: cardTypes,
     };
   }
