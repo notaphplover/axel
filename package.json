@@ -43,7 +43,7 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@types/jest": "^26.0.14",
+    "@types/jest": "^26.0.15",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/lodash": "^4.14.162",
     "@types/mongoose": "^5.7.36",
@@ -57,7 +57,7 @@
     "eslint-plugin-jest": "^24.1.0",
     "husky": "^4.3.0",
     "jest": "^26.6.0",
-    "light-my-request": "^4.2.0",
+    "light-my-request": "^4.2.1",
     "lint-staged": "^10.4.2",
     "ncp": "^2.0.0",
     "prettier": "^2.1.2",
