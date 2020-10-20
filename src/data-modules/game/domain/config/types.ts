@@ -22,6 +22,9 @@ export const GAME_DOMAIN_TYPES = {
       CREATE_EXTENDED_GAME_SETUPS_INTERACTOR: Symbol.for(
         'CreateExtendedGameSetupsInteractor',
       ),
+      FIND_BASIC_GAME_SETUPS_INTERACTOR: Symbol.for(
+        'FindBasicGameSetupsInteractor',
+      ),
       FIND_EXTENDED_GAME_SETUPS_INTERACTOR: Symbol.for(
         'FindExtendedGameSetupsInteractor',
       ),
