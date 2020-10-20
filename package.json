@@ -70,7 +70,6 @@
   "dependencies": {
     "ajv": "^6.12.6",
     "argon2": "^0.27.0",
-    "class-validator": "^0.12.2",
     "dotenv": "^8.2.0",
     "fastify": "^3.7.0",
     "http-status-codes": "^2.1.4",
