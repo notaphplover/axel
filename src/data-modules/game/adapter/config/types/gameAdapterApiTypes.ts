@@ -73,5 +73,14 @@ export const GAME_ADAPTER_API_TYPES = {
         'CardDeckCreationQueryApiV1Validator',
       ),
     },
+    schema: {
+      query: {
+        card: {
+          CARD_FIND_QUERY_API_V1_JOI_VALIDATOR_SCHEMA: Symbol.for(
+            'cardFindQueryApiV1JoyValidatorSchema',
+          ),
+        },
+      },
+    },
   },
 };
