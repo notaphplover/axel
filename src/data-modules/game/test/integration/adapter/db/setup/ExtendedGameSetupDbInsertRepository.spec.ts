@@ -7,9 +7,9 @@ import mongoose, { Document, Model } from 'mongoose';
 import { Container } from 'inversify';
 import { ExtendedGameSetup } from '../../../../../domain/model/setup/ExtendedGameSetup';
 import { ExtendedGameSetupDbInsertRepository } from '../../../../../adapter/db/repository/setup/ExtendedGameSetupDbInsertRepository';
-import { ExtendedGameSetupsCreationQuery } from '../../../../../domain/query/setup/ExtendedGameSetupCreationQuery';
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
+import { GameSetupsCreationQuery } from '../../../../../domain/query/setup/GameSetupCreationQuery';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
@@ -71,7 +71,7 @@ mongooseIntegrationDescribe(ExtendedGameSetupDbInsertRepository.name, () => {
 
         const extendedGameSetupDbInsertRepository: InsertRepository<
           ExtendedGameSetup,
-          ExtendedGameSetupsCreationQuery
+          GameSetupsCreationQuery
         > = childContainer.get(
           GAME_DOMAIN_TYPES.repository.setup
             .EXTENDED_GAME_SETUP_INSERT_REPOSITORY,

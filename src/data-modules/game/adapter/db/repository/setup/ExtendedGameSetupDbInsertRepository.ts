@@ -2,15 +2,15 @@ import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSetup';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
-import { ExtendedGameSetupsCreationQuery } from '../../../../domain/query/setup/ExtendedGameSetupCreationQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { Model } from 'mongoose';
 import { MongooseInsertRepository } from '../../../../../../layer-modules/db/adapter';
 
 @injectable()
 export class ExtendedGameSetupDbInsertRepository extends MongooseInsertRepository<
   ExtendedGameSetup,
-  ExtendedGameSetupsCreationQuery,
+  GameSetupsCreationQuery,
   ExtendedGameSetupDb
 > {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
@@ -27,17 +27,17 @@ export class ExtendedGameSetupDbInsertRepository extends MongooseInsertRepositor
     >,
     @inject(
       GAME_ADAPTER_TYPES.db.converter.setup
-        .EXTENDED_GAME_SETUP_CREATION_QUERY_TO_EXTENDED_GAME_SETUP_DBS_CONVERTER,
+        .GAME_SETUP_CREATION_QUERY_TO_EXTENDED_GAME_SETUP_DBS_CONVERTER,
     )
-    extendedGameSetupCreationQueryToExtendedGameSetupDbsConverter: Converter<
-      ExtendedGameSetupsCreationQuery,
+    gameSetupCreationQueryToExtendedGameSetupDbsConverter: Converter<
+      GameSetupsCreationQuery,
       ExtendedGameSetupDb[]
     >,
   ) {
     super(
       model,
       extendedGameSetupDbToExtendedGameSetupConverter,
-      extendedGameSetupCreationQueryToExtendedGameSetupDbsConverter,
+      gameSetupCreationQueryToExtendedGameSetupDbsConverter,
     );
   }
 }

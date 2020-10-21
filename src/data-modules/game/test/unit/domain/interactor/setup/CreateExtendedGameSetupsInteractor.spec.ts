@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import { CreateExtendedGameSetupsInteractor } from '../../../../../domain/interactor/setup/CreateExtendedGameSetupsInteractor';
 import { ExtendedGameSetup } from '../../../../../domain/model/setup/ExtendedGameSetup';
-import { ExtendedGameSetupsCreationQuery } from '../../../../../domain/query/setup/ExtendedGameSetupCreationQuery';
+import { GameSetupsCreationQuery } from '../../../../../domain/query/setup/GameSetupCreationQuery';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { extendedGameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
 import { extendedGameSetupsCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
@@ -10,7 +10,7 @@ import { extendedGameSetupsCreationQueryFixtureFactory } from '../../../../fixtu
 describe(CreateExtendedGameSetupsInteractor.name, () => {
   let extendedGameSetupInsertRepository: InsertRepository<
     ExtendedGameSetup,
-    ExtendedGameSetupsCreationQuery
+    GameSetupsCreationQuery
   >;
 
   let createExtendedGameSetupsInteractor: CreateExtendedGameSetupsInteractor;
@@ -20,7 +20,7 @@ describe(CreateExtendedGameSetupsInteractor.name, () => {
       insert: jest.fn(),
     } as Partial<
       InsertRepository<ExtendedGameSetup, ExtendedGameSetup>
-    >) as InsertRepository<ExtendedGameSetup, ExtendedGameSetupsCreationQuery>;
+    >) as InsertRepository<ExtendedGameSetup, GameSetupsCreationQuery>;
 
     createExtendedGameSetupsInteractor = new CreateExtendedGameSetupsInteractor(
       extendedGameSetupInsertRepository,

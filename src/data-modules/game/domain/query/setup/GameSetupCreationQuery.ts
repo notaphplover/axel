@@ -1,7 +1,7 @@
 import { GameFormat } from '../../model/GameFormat';
 import { PlayerSetup } from '../../model/setup/PlayerSetup';
 
-export interface ExtendedGameSetupsCreationQuery {
+export interface GameSetupsCreationQuery {
   format: GameFormat;
   ownerUserId: string;
   playerSetups: PlayerSetup[];

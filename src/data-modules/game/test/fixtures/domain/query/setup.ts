@@ -4,19 +4,19 @@ import {
 } from '../../../../../../common/test';
 import { BasicGameSetupFindQuery } from '../../../../domain/query/setup/BasicGameSetupFindQuery';
 import { ExtendedGameSetupFindQuery } from '../../../../domain/query/setup/ExtendedGameSetupFindQuery';
-import { ExtendedGameSetupsCreationQuery } from '../../../../domain/query/setup/ExtendedGameSetupCreationQuery';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
+import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { extendedGameSetup } from '../model/setup';
 
-export const extendedGameSetupsCreationQuery: ExtendedGameSetupsCreationQuery = {
+export const extendedGameSetupsCreationQuery: GameSetupsCreationQuery = {
   format: extendedGameSetup.format,
   ownerUserId: extendedGameSetup.ownerUserId,
   playerSetups: extendedGameSetup.playerSetups,
   playerSlots: extendedGameSetup.playerSlots,
 };
 
-export const extendedGameSetupsCreationQueryFixtureFactory: FixtureFactory<ExtendedGameSetupsCreationQuery> = new DeepCloneFixtureFactory(
+export const extendedGameSetupsCreationQueryFixtureFactory: FixtureFactory<GameSetupsCreationQuery> = new DeepCloneFixtureFactory(
   extendedGameSetupsCreationQuery,
 );
 
