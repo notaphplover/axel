@@ -1,7 +1,8 @@
-import { FilterQuery, Types } from 'mongoose';
+import { FilterQuery, MongooseFilterQuery, Types } from 'mongoose';
 import { CardDeckDb } from '../../model/deck/CardDeckDb';
 import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
 import { Converter } from '../../../../../../common/domain';
+import { FilterQuery as MongoDbFilterQuery } from 'mongodb';
 import { hasValue } from '../../../../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
 
@@ -9,10 +10,23 @@ import { injectable } from 'inversify';
 export class CardDeckFindQueryToCardDeckDbFilterQueryConverter
   implements Converter<CardDeckFindQuery, FilterQuery<CardDeckDb>> {
   public transform(input: CardDeckFindQuery): FilterQuery<CardDeckDb> {
-    const filterQuery: FilterQuery<CardDeckDb> = {};
+    const andFilterQuery: MongoDbFilterQuery<CardDeckDb>[] = [];
+    const filterQuery: MongooseFilterQuery<CardDeckDb> = {
+      $and: andFilterQuery,
+    };
 
     if (hasValue(input.id)) {
-      filterQuery._id = Types.ObjectId(input.id);
+      andFilterQuery.push({
+        _id: Types.ObjectId(input.id),
+      });
+    }
+
+    if (hasValue(input.ids) && input.ids.length > 0) {
+      andFilterQuery.push({
+        _id: {
+          $in: input.ids.map((id: string) => Types.ObjectId(id)),
+        },
+      });
     }
 
     return filterQuery;

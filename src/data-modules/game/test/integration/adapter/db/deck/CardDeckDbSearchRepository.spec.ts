@@ -77,7 +77,11 @@ mongooseIntegrationDescribe(CardDeckDbSearchRepository.name, () => {
         );
 
         cardDeckFindQueryFixture = cardDeckFindQueryFixtureFactory.get();
-        cardDeckFindQueryFixture.id = cardDeckDbInserted._id.toHexString();
+
+        const cardDeckDbInsertedId: string = cardDeckDbInserted._id.toHexString();
+
+        cardDeckFindQueryFixture.id = cardDeckDbInsertedId;
+        cardDeckFindQueryFixture.ids = [cardDeckDbInsertedId];
 
         result = await cardDeckDbSearchRepository.find(
           cardDeckFindQueryFixture,

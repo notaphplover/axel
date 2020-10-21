@@ -19,6 +19,7 @@ export const cardDeckCreationQueryFixtureFactory: FixtureFactory<CardDeckCreatio
 
 export const cardDeckFindQuery: CardDeckFindQuery = {
   id: cardDeck.id,
+  ids: [cardDeck.id],
 };
 
 export const cardDeckFindQueryFixtureFactory: FixtureFactory<CardDeckFindQuery> = new DeepCloneFixtureFactory(
