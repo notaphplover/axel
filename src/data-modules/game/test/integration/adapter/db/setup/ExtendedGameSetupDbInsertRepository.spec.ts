@@ -14,7 +14,7 @@ import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { extendedGameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
-import { extendedGameSetupsCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
+import { gameSetupsCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 
 const container: Container = configAdapter.container;
 
@@ -78,7 +78,7 @@ mongooseIntegrationDescribe(ExtendedGameSetupDbInsertRepository.name, () => {
         );
 
         result = await extendedGameSetupDbInsertRepository.insert(
-          extendedGameSetupsCreationQueryFixtureFactory.get(),
+          gameSetupsCreationQueryFixtureFactory.get(),
         );
       });
 

@@ -9,15 +9,15 @@ import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetu
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { extendedGameSetup } from '../model/setup';
 
-export const extendedGameSetupsCreationQuery: GameSetupsCreationQuery = {
+export const gameSetupsCreationQuery: GameSetupsCreationQuery = {
   format: extendedGameSetup.format,
   ownerUserId: extendedGameSetup.ownerUserId,
   playerSetups: extendedGameSetup.playerSetups,
   playerSlots: extendedGameSetup.playerSlots,
 };
 
-export const extendedGameSetupsCreationQueryFixtureFactory: FixtureFactory<GameSetupsCreationQuery> = new DeepCloneFixtureFactory(
-  extendedGameSetupsCreationQuery,
+export const gameSetupsCreationQueryFixtureFactory: FixtureFactory<GameSetupsCreationQuery> = new DeepCloneFixtureFactory(
+  gameSetupsCreationQuery,
 );
 
 export const gameSetupFindQuery: GameSetupFindQuery = {

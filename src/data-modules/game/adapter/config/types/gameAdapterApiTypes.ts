@@ -55,6 +55,11 @@ export const GAME_ADAPTER_API_TYPES = {
         'CardSetReferencesToCardSetReferencesApiV1Converter',
       ),
     },
+    setup: {
+      GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER: Symbol.for(
+        'GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter',
+      ),
+    },
   },
   validator: {
     GAME_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(

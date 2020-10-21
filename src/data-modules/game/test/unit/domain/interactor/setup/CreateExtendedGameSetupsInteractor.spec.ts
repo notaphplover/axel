@@ -5,7 +5,7 @@ import { ExtendedGameSetup } from '../../../../../domain/model/setup/ExtendedGam
 import { GameSetupsCreationQuery } from '../../../../../domain/query/setup/GameSetupCreationQuery';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { extendedGameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
-import { extendedGameSetupsCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
+import { gameSetupsCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 
 describe(CreateExtendedGameSetupsInteractor.name, () => {
   let extendedGameSetupInsertRepository: InsertRepository<
@@ -37,7 +37,7 @@ describe(CreateExtendedGameSetupsInteractor.name, () => {
         );
 
         result = await createExtendedGameSetupsInteractor.interact(
-          extendedGameSetupsCreationQueryFixtureFactory.get(),
+          gameSetupsCreationQueryFixtureFactory.get(),
         );
       });
 
@@ -46,7 +46,7 @@ describe(CreateExtendedGameSetupsInteractor.name, () => {
           1,
         );
         expect(extendedGameSetupInsertRepository.insert).toHaveBeenCalledWith(
-          extendedGameSetupsCreationQueryFixtureFactory.get(),
+          gameSetupsCreationQueryFixtureFactory.get(),
         );
       });
 
