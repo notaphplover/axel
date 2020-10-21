@@ -18,6 +18,7 @@ import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameCreationQueryApiV1Validator } from '../../../api/validator/GameCreationQueryApiV1Validator';
 import { GameFormatApiV1ToGameFormatConverter } from '../../../api/converter/GameFormatApiV1ToGameFormatConverter';
 import { GameFormatToGameFormatApiV1Converter } from '../../../api/converter/GameFormatToGameFormatApiV1Converter';
+import { GameSetupCreationQueryApiV1Validator } from '../../../api/validator/setup/GameSetupCreationQueryApiV1Validator';
 import { GameToGameApiV1Converter } from '../../../api/converter/GameToGameApiV1Converter';
 import { ResourceApiV1ToResourceConverter } from '../../../api/converter/card/ResourceApiV1ToResourceConverter';
 import { ResourceToResourceApiV1Converter } from '../../../api/converter/card/ResourceToResourceApiV1Converter';
@@ -123,4 +124,9 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.validator.schema.query.setup
       .GAME_SETUP_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
   ).toConstantValue(gameSetupCreationQueryApiV1JoyValidatorSchema);
+
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.setup
+      .GAME_SETUP_CREATION_QUERY_API_V1_VALIDATOR,
+  ).to(GameSetupCreationQueryApiV1Validator);
 }

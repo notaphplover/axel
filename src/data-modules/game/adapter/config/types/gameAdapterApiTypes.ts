@@ -87,5 +87,10 @@ export const GAME_ADAPTER_API_TYPES = {
         },
       },
     },
+    setup: {
+      GAME_SETUP_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
+        'GameSetupCreationQueryApiV1Validator',
+      ),
+    },
   },
 };
