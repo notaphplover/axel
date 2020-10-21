@@ -1,6 +1,9 @@
 # Typescript compiled files
 dist/
 
+# Typescript incremental build info
+tsconfig.incremental.tsbuildinfo
+
 # npm installed packages
 node_modules/
 
