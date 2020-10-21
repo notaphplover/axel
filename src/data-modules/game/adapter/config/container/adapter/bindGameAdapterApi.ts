@@ -22,6 +22,7 @@ import { GameToGameApiV1Converter } from '../../../api/converter/GameToGameApiV1
 import { ResourceApiV1ToResourceConverter } from '../../../api/converter/card/ResourceApiV1ToResourceConverter';
 import { ResourceToResourceApiV1Converter } from '../../../api/converter/card/ResourceToResourceApiV1Converter';
 import { cardFindQueryApiV1JoyValidatorSchema } from '../../../api/validator/schema/query/card/cardFindQueryApiV1JoiValidatorSchema';
+import { gameSetupCreationQueryApiV1JoyValidatorSchema } from '../../../api/validator/schema/query/setup/gameSetupCreationQueryApiV1ValidatorSchema';
 import { interfaces } from 'inversify';
 
 export function bindGameAdapterApi(bind: interfaces.Bind): void {
@@ -118,4 +119,8 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.validator.schema.query.card
       .CARD_FIND_QUERY_API_V1_JOI_VALIDATOR_SCHEMA,
   ).toConstantValue(cardFindQueryApiV1JoyValidatorSchema);
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.schema.query.setup
+      .GAME_SETUP_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
+  ).toConstantValue(gameSetupCreationQueryApiV1JoyValidatorSchema);
 }

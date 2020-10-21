@@ -80,6 +80,11 @@ export const GAME_ADAPTER_API_TYPES = {
             'cardFindQueryApiV1JoyValidatorSchema',
           ),
         },
+        setup: {
+          GAME_SETUP_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol.for(
+            'gameSetupCreationQueryApiV1JoyValidatorSchema',
+          ),
+        },
       },
     },
   },
