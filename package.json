@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "build:incremental": "tsc --build tsconfig.incremental.json",
     "delete:prod": "pm2 delete \"axel-backend\"",
     "docker:rebuild:app": "docker-compose -f docker-compose.yml -f docker-compose.test.yml rm -fv app && docker-compose -f docker-compose.yml -f docker-compose.test.yml build app",
     "docker:down:ci": "docker-compose -f docker-compose.yml -f docker-compose.test.yml down",
