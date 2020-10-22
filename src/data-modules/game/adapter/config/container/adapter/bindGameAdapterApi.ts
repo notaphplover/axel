@@ -14,6 +14,7 @@ import { CardSetReferencesToCardSetReferencesApiV1Converter } from '../../../api
 import { CardToCardApiV1Converter } from '../../../api/converter/card/CardToCardApiV1Converter';
 import { CardTypeApiV1ToCardTypeConverter } from '../../../api/converter/card/CardTypeApiV1ToCardTypeConverter';
 import { CardTypeToCardTypeApiV1Converter } from '../../../api/converter/card/CardTypeToCardTypeApiV1Converter';
+import { ExtendedGameSetupToExtendedGameSetupApiV1Converter } from '../../../api/converter/setup/ExtendedGameSetupToExtendedGameSetupApiV1Converter';
 import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameCreationQueryApiV1Validator } from '../../../api/validator/GameCreationQueryApiV1Validator';
 import { GameFormatApiV1ToGameFormatConverter } from '../../../api/converter/GameFormatApiV1ToGameFormatConverter';
@@ -97,6 +98,11 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.converter.deck
       .CARD_SET_REFERENCES_TO_CARD_SET_REFERENCES_API_V1_CONVERTER,
   ).to(CardSetReferencesToCardSetReferencesApiV1Converter);
+
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.setup
+      .EXTENDED_GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER,
+  ).to(ExtendedGameSetupToExtendedGameSetupApiV1Converter);
   bind(
     GAME_ADAPTER_TYPES.api.converter.setup
       .GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER,

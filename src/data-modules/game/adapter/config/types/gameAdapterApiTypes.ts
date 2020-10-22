@@ -56,6 +56,9 @@ export const GAME_ADAPTER_API_TYPES = {
       ),
     },
     setup: {
+      EXTENDED_GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER: Symbol.for(
+        'ExtendedGameSetupToExtendedGameSetupApiV1Converter',
+      ),
       GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER: Symbol.for(
         'GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter',
       ),
