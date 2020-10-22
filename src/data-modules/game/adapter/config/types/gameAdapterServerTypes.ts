@@ -17,6 +17,11 @@ export const GAME_ADAPTER_SERVER_TYPES = {
         'PostCardDeckV1RequestHandler',
       ),
     },
+    setup: {
+      POST_GAME_SETUP_V1_REQUEST_HANDLER: Symbol.for(
+        'PostGameSetupV1RequestHandler',
+      ),
+    },
   },
   router: {
     GAME_ROUTER: Symbol.for('GameRouter'),
