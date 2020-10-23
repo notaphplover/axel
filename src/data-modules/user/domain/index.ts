@@ -1,3 +1,4 @@
 import { User } from './model/User';
+import { UserContainer } from './model/UserContaner';
 
-export { User };
+export { User, UserContainer };
