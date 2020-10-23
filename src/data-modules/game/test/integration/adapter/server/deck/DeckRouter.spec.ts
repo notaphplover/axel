@@ -11,7 +11,7 @@ import {
   serverTest,
 } from '../../../../../../../layer-modules/server/test';
 import { DeckRouter } from '../../../../../adapter/server/router/deck/DeckRouter';
-import { FastifyUserAuthenticator } from '../../../../../../user/adapter/auth/FastifyUserAuthenticator';
+import { FastifyUserAuthenticator } from '../../../../../../user/adapter';
 import { Response as LightMyRequestResponse } from 'light-my-request';
 import { StatusCodes } from 'http-status-codes';
 import { UserRole } from '../../../../../../user/domain/model/UserRole';
