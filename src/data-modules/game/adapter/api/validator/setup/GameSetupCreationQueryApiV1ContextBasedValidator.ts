@@ -6,15 +6,15 @@ import {
 import { inject, injectable } from 'inversify';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameSetupCreationQueryApiV1 } from '../../query/setup/GameSetupCreationQueryApiV1';
+import { GameSetupCreationQueryApiV1ValidationContext } from './GameSetupCreationQueryApiV1ValidationContext';
 import { GameSetupCreationQueryPlayerSetupApiV1 } from '../../query/setup/GameSetupCreationQueryPlayerSetupApiV1';
-import { GameSetupCreationQueryValidationContext } from './GameSetupCreationQueryApiV1ValidationContext';
 
 @injectable()
 export class GameSetupCreationQueryApiV1ContextBasedValidator
   implements
     ContextBasedValidator<
       GameSetupCreationQueryApiV1,
-      GameSetupCreationQueryValidationContext
+      GameSetupCreationQueryApiV1ValidationContext
     > {
   constructor(
     @inject(
@@ -28,7 +28,7 @@ export class GameSetupCreationQueryApiV1ContextBasedValidator
 
   public validate(
     value: unknown,
-    context: GameSetupCreationQueryValidationContext,
+    context: GameSetupCreationQueryApiV1ValidationContext,
   ): ValidationResult<GameSetupCreationQueryApiV1> {
     const gameSetupCreationQueryApiV1ValidatorValidationResult: ValidationResult<GameSetupCreationQueryApiV1> = this.gameSetupCreationQueryApiV1Validator.validate(
       value,
@@ -46,7 +46,7 @@ export class GameSetupCreationQueryApiV1ContextBasedValidator
 
   private validateGameSetupCreationQueryApiV1(
     gameSetupCreationQuery: GameSetupCreationQueryApiV1,
-    context: GameSetupCreationQueryValidationContext,
+    context: GameSetupCreationQueryApiV1ValidationContext,
   ): ValidationResult<GameSetupCreationQueryApiV1> {
     const userId: string = context.user.id;
 

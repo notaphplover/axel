@@ -1,5 +1,5 @@
 import { User } from '../../../../../user/domain';
 
-export interface GameSetupCreationQueryValidationContext {
+export interface GameSetupCreationQueryApiV1ValidationContext {
   user: User;
 }
