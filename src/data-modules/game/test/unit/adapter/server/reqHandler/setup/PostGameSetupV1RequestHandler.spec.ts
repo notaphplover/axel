@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import {
+  ContextBasedValidator,
   Converter,
   Interactor,
   ValidationFail,
   ValidationSuccess,
-  Validator,
 } from '../../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { ExtendedGameSetup } from '../../../../../../domain/model/setup/ExtendedGameSetup';
 import { ExtendedGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/ExtendedGameSetupApiV1';
 import { GameSetupCreationQueryApiV1 } from '../../../../../../adapter/api/query/setup/GameSetupCreationQueryApiV1';
+import { GameSetupCreationQueryApiV1ValidationContext } from '../../../../../../adapter/api/validator/setup/GameSetupCreationQueryApiV1ValidationContext';
 import { GameSetupsCreationQuery } from '../../../../../../domain/query/setup/GameSetupCreationQuery';
 import { PostGameSetupV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PostGameSetupV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
@@ -28,7 +29,10 @@ describe(PostGameSetupV1RequestHandler.name, () => {
     GameSetupsCreationQuery
   >;
 
-  let gameSetupCreationQueryApiV1Validator: Validator<GameSetupCreationQueryApiV1>;
+  let gameSetupCreationQueryApiV1ContextBasedValidator: ContextBasedValidator<
+    GameSetupCreationQueryApiV1,
+    GameSetupCreationQueryApiV1ValidationContext
+  >;
 
   let extendedGameSetupToExtendedGameSetupApiV1Converter: Converter<
     ExtendedGameSetup,
@@ -47,7 +51,7 @@ describe(PostGameSetupV1RequestHandler.name, () => {
       transform: jest.fn(),
     };
 
-    gameSetupCreationQueryApiV1Validator = {
+    gameSetupCreationQueryApiV1ContextBasedValidator = {
       validate: jest.fn(),
     };
 
@@ -61,7 +65,7 @@ describe(PostGameSetupV1RequestHandler.name, () => {
 
     postGameSetupV1RequestHandler = new PostGameSetupV1RequestHandler(
       gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter,
-      gameSetupCreationQueryApiV1Validator,
+      gameSetupCreationQueryApiV1ContextBasedValidator,
       extendedGameSetupToExtendedGameSetupApiV1Converter,
       createExtendedGameSetupsInteractor,
     );
@@ -84,7 +88,7 @@ describe(PostGameSetupV1RequestHandler.name, () => {
           model: gameSetupCreationQueryApiV1FixtureFactory.get(),
           result: true,
         };
-        (gameSetupCreationQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
+        (gameSetupCreationQueryApiV1ContextBasedValidator.validate as jest.Mock).mockReturnValueOnce(
           expectedValidationResult,
         );
 
@@ -106,13 +110,16 @@ describe(PostGameSetupV1RequestHandler.name, () => {
         );
       });
 
-      it('must call gameSetupCreationQueryApiV1Validator.validate with the request body', () => {
+      it('must call gameSetupCreationQueryApiV1ContextBasedValidator.validate with the request body and the validation context', () => {
         expect(
-          gameSetupCreationQueryApiV1Validator.validate,
+          gameSetupCreationQueryApiV1ContextBasedValidator.validate,
         ).toHaveBeenCalledTimes(1);
         expect(
-          gameSetupCreationQueryApiV1Validator.validate,
-        ).toHaveBeenCalledWith(gameSetupCreationQueryApiV1FixtureFactory.get());
+          gameSetupCreationQueryApiV1ContextBasedValidator.validate,
+        ).toHaveBeenCalledWith(
+          gameSetupCreationQueryApiV1FixtureFactory.get(),
+          { user: userFixtureFactory.get() },
+        );
       });
 
       it('must call gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform with the model obtained', () => {
@@ -168,7 +175,7 @@ describe(PostGameSetupV1RequestHandler.name, () => {
           result: false,
           errorMessage: 'test error message',
         };
-        (gameSetupCreationQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
+        (gameSetupCreationQueryApiV1ContextBasedValidator.validate as jest.Mock).mockReturnValueOnce(
           gameSetupCreationQueryApiV1ValidatorValidationResult,
         );
 
