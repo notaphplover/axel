@@ -161,7 +161,7 @@ describe(PostGameSetupV1RequestHandler.name, () => {
       let requestFixture: FastifyRequest & UserContainer;
       let replyFixture: FastifyReply;
 
-      let gameSetupCreationQueryApiV1ValidatorValidationResult: ValidationFail;
+      let gameSetupCreationQueryApiV1ContextBasedValidatorValidationResult: ValidationFail;
 
       beforeAll(async () => {
         requestFixture = ({
@@ -171,12 +171,12 @@ describe(PostGameSetupV1RequestHandler.name, () => {
           UserContainer;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        gameSetupCreationQueryApiV1ValidatorValidationResult = {
+        gameSetupCreationQueryApiV1ContextBasedValidatorValidationResult = {
           result: false,
           errorMessage: 'test error message',
         };
         (gameSetupCreationQueryApiV1ContextBasedValidator.validate as jest.Mock).mockReturnValueOnce(
-          gameSetupCreationQueryApiV1ValidatorValidationResult,
+          gameSetupCreationQueryApiV1ContextBasedValidatorValidationResult,
         );
 
         await postGameSetupV1RequestHandler.handle(
@@ -194,7 +194,7 @@ describe(PostGameSetupV1RequestHandler.name, () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
         expect(replyFixture.send).toHaveBeenCalledWith({
           message:
-            gameSetupCreationQueryApiV1ValidatorValidationResult.errorMessage,
+            gameSetupCreationQueryApiV1ContextBasedValidatorValidationResult.errorMessage,
         });
       });
     });
