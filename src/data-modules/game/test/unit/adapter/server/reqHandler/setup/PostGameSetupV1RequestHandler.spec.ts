@@ -10,16 +10,17 @@ import {
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { ExtendedGameSetup } from '../../../../../../domain/model/setup/ExtendedGameSetup';
 import { ExtendedGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/ExtendedGameSetupApiV1';
-import { FastifyRequestHandler } from '../../../../../../../../layer-modules/server/adapter';
 import { GameSetupCreationQueryApiV1 } from '../../../../../../adapter/api/query/setup/GameSetupCreationQueryApiV1';
 import { GameSetupsCreationQuery } from '../../../../../../domain/query/setup/GameSetupCreationQuery';
 import { PostGameSetupV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PostGameSetupV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
+import { UserContainer } from '../../../../../../../user/domain';
 import { commonTest } from '../../../../../../../../common/test';
 import { extendedGameSetupApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/setup';
 import { extendedGameSetupFixtureFactory } from '../../../../../fixtures/domain/model/setup';
 import { gameSetupCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/setup';
 import { gameSetupsCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/setup';
+import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';
 
 describe(PostGameSetupV1RequestHandler.name, () => {
   let gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter: Converter<
@@ -39,7 +40,7 @@ describe(PostGameSetupV1RequestHandler.name, () => {
     Promise<ExtendedGameSetup[]>
   >;
 
-  let postGameSetupV1RequestHandler: FastifyRequestHandler;
+  let postGameSetupV1RequestHandler: PostGameSetupV1RequestHandler;
 
   beforeAll(() => {
     gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter = {
@@ -68,13 +69,15 @@ describe(PostGameSetupV1RequestHandler.name, () => {
 
   describe('.handle()', () => {
     describe('when called, and the request is valid', () => {
-      let requestFixture: FastifyRequest;
+      let requestFixture: FastifyRequest & UserContainer;
       let replyFixture: FastifyReply;
 
       beforeAll(async () => {
         requestFixture = ({
           body: gameSetupCreationQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
+          user: userFixtureFactory.get(),
+        } as Partial<FastifyRequest & UserContainer>) as FastifyRequest &
+          UserContainer;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         const expectedValidationResult: ValidationSuccess<GameSetupCreationQueryApiV1> = {
@@ -148,7 +151,7 @@ describe(PostGameSetupV1RequestHandler.name, () => {
     });
 
     describe('when called and the request is not valid', () => {
-      let requestFixture: FastifyRequest;
+      let requestFixture: FastifyRequest & UserContainer;
       let replyFixture: FastifyReply;
 
       let gameSetupCreationQueryApiV1ValidatorValidationResult: ValidationFail;
@@ -156,7 +159,9 @@ describe(PostGameSetupV1RequestHandler.name, () => {
       beforeAll(async () => {
         requestFixture = ({
           body: gameSetupCreationQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
+          user: userFixtureFactory.get(),
+        } as Partial<FastifyRequest & UserContainer>) as FastifyRequest &
+          UserContainer;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         gameSetupCreationQueryApiV1ValidatorValidationResult = {
@@ -180,9 +185,10 @@ describe(PostGameSetupV1RequestHandler.name, () => {
 
       it('must call reply.send() with the validation errror message', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
-        expect(replyFixture.send).toHaveBeenCalledWith(
-          gameSetupCreationQueryApiV1ValidatorValidationResult.errorMessage,
-        );
+        expect(replyFixture.send).toHaveBeenCalledWith({
+          message:
+            gameSetupCreationQueryApiV1ValidatorValidationResult.errorMessage,
+        });
       });
     });
   });

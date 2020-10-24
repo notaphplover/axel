@@ -63,7 +63,9 @@ export class PostAuthTokenV1RequestHandler implements FastifyRequestHandler {
       );
 
       if (userFound === null) {
-        await reply.code(StatusCodes.UNAUTHORIZED).send('Invalid credentials');
+        await reply
+          .code(StatusCodes.UNAUTHORIZED)
+          .send({ message: 'Invalid credentials' });
         return;
       }
 
@@ -79,7 +81,7 @@ export class PostAuthTokenV1RequestHandler implements FastifyRequestHandler {
     } else {
       await reply
         .code(StatusCodes.BAD_REQUEST)
-        .send(validationResult.errorMessage);
+        .send({ message: validationResult.errorMessage });
     }
   }
 }

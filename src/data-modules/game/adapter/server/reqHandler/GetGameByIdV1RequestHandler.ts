@@ -35,9 +35,11 @@ export class GetGameByIdV1RequestHandler implements FastifyRequestHandler {
     );
 
     if (findResult === null) {
-      await reply
-        .code(StatusCodes.NOT_FOUND)
-        .send(`The game with id "${findGameQuery.id as string}" was not found`);
+      await reply.code(StatusCodes.NOT_FOUND).send({
+        message: `The game with id "${
+          findGameQuery.id as string
+        }" was not found`,
+      });
     } else {
       await reply.send(this.gameToGameApiV1Port.transform(findResult));
     }

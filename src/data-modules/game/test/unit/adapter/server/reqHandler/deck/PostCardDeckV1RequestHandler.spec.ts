@@ -147,9 +147,10 @@ describe(PostCardDeckV1RequestHandler.name, () => {
 
       it('must call reply.send() with the validation errror message', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
-        expect(replyFixture.send).toHaveBeenCalledWith(
-          cardDeckCreationQueryApiV1ValidatorValidationResult.errorMessage,
-        );
+        expect(replyFixture.send).toHaveBeenCalledWith({
+          message:
+            cardDeckCreationQueryApiV1ValidatorValidationResult.errorMessage,
+        });
       });
     });
   });

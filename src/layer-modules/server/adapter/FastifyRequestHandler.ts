@@ -1,5 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-export interface FastifyRequestHandler {
-  handle(request: FastifyRequest, reply: FastifyReply): Promise<void>;
+export interface FastifyRequestHandler<
+  TRequest extends FastifyRequest = FastifyRequest
+> {
+  handle(request: TRequest, reply: FastifyReply): Promise<void>;
 }

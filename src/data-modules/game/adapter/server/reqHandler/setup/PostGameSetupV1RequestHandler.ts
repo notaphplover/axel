@@ -5,6 +5,7 @@ import {
   Validator,
 } from '../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { User, UserContainer } from '../../../../../user/domain';
 import { inject, injectable } from 'inversify';
 import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSetup';
 import { ExtendedGameSetupApiV1 } from '../../../api/model/setup/ExtendedGameSetupApiV1';
@@ -12,11 +13,13 @@ import { FastifyRequestHandler } from '../../../../../../layer-modules/server/ad
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameSetupCreationQueryApiV1 } from '../../../api/query/setup/GameSetupCreationQueryApiV1';
+import { GameSetupCreationQueryPlayerSetupApiV1 } from '../../../api/query/setup/GameSetupCreationQueryPlayerSetupApiV1';
 import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()
-export class PostGameSetupV1RequestHandler implements FastifyRequestHandler {
+export class PostGameSetupV1RequestHandler
+  implements FastifyRequestHandler<FastifyRequest & UserContainer> {
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.setup
@@ -51,7 +54,7 @@ export class PostGameSetupV1RequestHandler implements FastifyRequestHandler {
   ) {}
 
   public async handle(
-    request: FastifyRequest,
+    request: FastifyRequest & UserContainer,
     reply: FastifyReply,
   ): Promise<void> {
     const validationResult: ValidationResult<GameSetupCreationQueryApiV1> = this.gameSetupCreationQueryApiV1Validator.validate(
@@ -59,8 +62,22 @@ export class PostGameSetupV1RequestHandler implements FastifyRequestHandler {
     );
 
     if (validationResult.result) {
+      const gameSetupCreationQueryApiV1: GameSetupCreationQueryApiV1 =
+        validationResult.model;
+
+      if (
+        !this.isValidGameSetupCreationQueryApiV1FromUser(
+          gameSetupCreationQueryApiV1,
+          request.user,
+        )
+      ) {
+        await reply
+          .code(StatusCodes.BAD_REQUEST)
+          .send({ message: 'Invalid game setup.' });
+      }
+
       const gameSetupCreationQuery: GameSetupsCreationQuery = this.gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform(
-        validationResult.model,
+        gameSetupCreationQueryApiV1,
       );
 
       const [
@@ -77,7 +94,24 @@ export class PostGameSetupV1RequestHandler implements FastifyRequestHandler {
     } else {
       await reply
         .code(StatusCodes.BAD_REQUEST)
-        .send(validationResult.errorMessage);
+        .send({ message: validationResult.errorMessage });
     }
+  }
+
+  private isValidGameSetupCreationQueryApiV1FromUser(
+    gameSetupCreationQuery: GameSetupCreationQueryApiV1,
+    user: User,
+  ): boolean {
+    const userId: string = user.id;
+
+    const isSetupOwned: boolean =
+      gameSetupCreationQuery.ownerUserId === user.id;
+
+    const isEverySetupOwned: boolean = gameSetupCreationQuery.playerSetups.every(
+      (playerSetup: GameSetupCreationQueryPlayerSetupApiV1) =>
+        playerSetup.userId === userId,
+    );
+
+    return isSetupOwned && isEverySetupOwned;
   }
 }

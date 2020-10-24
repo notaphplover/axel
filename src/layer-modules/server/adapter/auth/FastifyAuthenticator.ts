@@ -33,7 +33,7 @@ export class FastifyAuthenticator<TToken> {
     if (!authorizationHeader.startsWith(AUTH_HEADER_PREFIX)) {
       await reply
         .code(StatusCodes.BAD_REQUEST)
-        .send(NO_BEARER_TOKEN_ERR_MESSAGE);
+        .send({ message: NO_BEARER_TOKEN_ERR_MESSAGE });
 
       return null;
     }
@@ -48,7 +48,7 @@ export class FastifyAuthenticator<TToken> {
     } catch (err) {
       await reply
         .code(StatusCodes.BAD_REQUEST)
-        .send(UNABLE_TO_PARSE_JWT_TOKEN_ERR_MESSAGE);
+        .send({ message: UNABLE_TO_PARSE_JWT_TOKEN_ERR_MESSAGE });
 
       return null;
     }

@@ -56,7 +56,7 @@ export class PostGameV1RequestHandler implements FastifyRequestHandler {
     } else {
       await reply
         .code(StatusCodes.BAD_REQUEST)
-        .send(validationResult.errorMessage);
+        .send({ message: validationResult.errorMessage });
     }
   }
 }

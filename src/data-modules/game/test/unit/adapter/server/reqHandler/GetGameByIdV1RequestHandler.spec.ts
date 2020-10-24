@@ -92,11 +92,11 @@ describe(GetGameByIdV1RequestHandler.name, () => {
         expect(replyFixture.code).toHaveBeenCalledTimes(1);
         expect(replyFixture.code).toHaveBeenCalledWith(StatusCodes.NOT_FOUND);
       });
-      it('must call reply.send with a text mesage', () => {
+      it('must call reply.send with a text message', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
-        expect(replyFixture.send).toHaveBeenCalledWith(
-          expect.stringContaining('not found'),
-        );
+        expect(replyFixture.send).toHaveBeenCalledWith({
+          message: expect.stringContaining('not found') as string,
+        });
       });
     });
   });

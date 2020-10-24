@@ -181,9 +181,9 @@ describe(PostAuthTokenV1RequestHandler.name, () => {
 
       it('must call reply.send with an error message', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
-        expect(replyFixture.send).toHaveBeenCalledWith(
-          expect.stringContaining('nvalid credentials'),
-        );
+        expect(replyFixture.send).toHaveBeenCalledWith({
+          message: expect.stringContaining('nvalid credentials') as string,
+        });
       });
     });
 
@@ -225,9 +225,9 @@ describe(PostAuthTokenV1RequestHandler.name, () => {
 
       it('must call reply.send with an error message', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
-        expect(replyFixture.send).toHaveBeenCalledWith(
-          authCreationQueryApiV1ValidatorValidationResult.errorMessage,
-        );
+        expect(replyFixture.send).toHaveBeenCalledWith({
+          message: authCreationQueryApiV1ValidatorValidationResult.errorMessage,
+        });
       });
     });
   });
