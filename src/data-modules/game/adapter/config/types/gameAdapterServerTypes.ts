@@ -31,5 +31,8 @@ export const GAME_ADAPTER_SERVER_TYPES = {
     deck: {
       DECK_ROUTER: Symbol.for('DeckRouter'),
     },
+    setup: {
+      GAME_SETUP_ROUTER: Symbol.for('GameSetupRouter'),
+    },
   },
 };
