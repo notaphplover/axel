@@ -1,7 +1,7 @@
 import { GameSetupCreationQueryApiV1 } from '../../../../query/setup/GameSetupCreationQueryApiV1';
 import Joi from 'joi';
 import { gameFormatApiV1JoyValidatorSchema } from '../../model/gameFormatApiV1JoiValidatorSchema';
-import { gameSetupCreationQueryPlayerSetupApiV1 } from '../../model/setup/gameSetupCreationQueryPlayerSetupApiV1';
+import { gameSetupCreationQueryPlayerSetupApiV1 } from './gameSetupCreationQueryPlayerSetupApiV1';
 
 const GAME_SETUP_CREATION_QUERY_PLAYER_SETUPS_LENGTH: number = 1;
 
@@ -11,7 +11,7 @@ const GAME_SETUP_CREATION_QUERY_PLAYER_SLOTS_MIN: number = 2;
 export const gameSetupCreationQueryApiV1JoyValidatorSchema: Joi.ObjectSchema<GameSetupCreationQueryApiV1> = Joi.object<
   GameSetupCreationQueryApiV1
 >({
-  format: gameFormatApiV1JoyValidatorSchema,
+  format: gameFormatApiV1JoyValidatorSchema.required(),
   ownerUserId: Joi.string().required(),
   playerSetups: Joi.array()
     .items(gameSetupCreationQueryPlayerSetupApiV1)
@@ -21,5 +21,6 @@ export const gameSetupCreationQueryApiV1JoyValidatorSchema: Joi.ObjectSchema<Gam
     .integer()
     .positive()
     .min(GAME_SETUP_CREATION_QUERY_PLAYER_SLOTS_MIN)
-    .max(GAME_SETUP_CREATION_QUERY_PLAYER_SLOTS_MAX),
+    .max(GAME_SETUP_CREATION_QUERY_PLAYER_SLOTS_MAX)
+    .required(),
 });
