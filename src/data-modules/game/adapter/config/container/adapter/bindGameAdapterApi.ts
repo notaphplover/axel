@@ -1,3 +1,4 @@
+import { BasicGameSetupToBasicGameSetupApiV1Converter } from '../../../api/converter/setup/BasicGameSetupToBasicGameSetupApiV1Converter';
 import { CardCreationQueryApiV1ToCardCreationQueryConverter } from '../../../api/converter/card/CardCreationQueryApiV1ToCardCreationQueryConverter';
 import { CardCreationQueryApiV1Validator } from '../../../api/validator/card/CardCreationQueryApiV1Validator';
 import { CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter } from '../../../api/converter/deck/CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter';
@@ -104,6 +105,10 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
       .CARD_SET_REFERENCES_TO_CARD_SET_REFERENCES_API_V1_CONVERTER,
   ).to(CardSetReferencesToCardSetReferencesApiV1Converter);
 
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.setup
+      .BASIC_GAME_SETUP_TO_BASIC_GAME_SETUP_API_V1_CONVERTER,
+  ).to(BasicGameSetupToBasicGameSetupApiV1Converter);
   bind(
     GAME_ADAPTER_TYPES.api.converter.setup
       .EXTENDED_GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER,
