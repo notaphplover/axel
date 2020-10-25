@@ -20,6 +20,10 @@ export const GAME_ADAPTER_PUBLIC_TYPES = {
       deck: {
         DECK_ROUTER: GAME_ADAPTER_TYPES.server.router.deck.DECK_ROUTER,
       },
+      setup: {
+        GAME_SETUP_ROUTER:
+          GAME_ADAPTER_TYPES.server.router.setup.GAME_SETUP_ROUTER,
+      },
     },
   },
 };
