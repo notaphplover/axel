@@ -7,10 +7,10 @@ import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { ExtendedGameSetupFindQuery } from '../../../../domain/query/setup/ExtendedGameSetupFindQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { MongooseProjectionSearchRepository } from '../../../../../../layer-modules/db/adapter/MongooseProjectionSearchRepository';
+import { MongooseProjectionPaginatedSearchRepository } from '../../../../../../layer-modules/db/adapter';
 
 @injectable()
-export class BasicGameSetupDbSearchRepository extends MongooseProjectionSearchRepository<
+export class BasicGameSetupDbSearchRepository extends MongooseProjectionPaginatedSearchRepository<
   BasicGameSetup,
   ExtendedGameSetupDb,
   BasicGameSetupDb,
