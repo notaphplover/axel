@@ -62,6 +62,12 @@ export const GAME_ADAPTER_API_TYPES = {
       GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER: Symbol.for(
         'GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter',
       ),
+      GAME_SETUP_FIND_QUERY_API_V1_TO_GAME_SETUP_FIND_QUERY_CONVERTER: Symbol.for(
+        'GameSetupFindQueryApiV1ToGameSetupFindQueryConverter',
+      ),
+      GAME_SETUP_FIND_QUERY_PLAYER_SETUP_API_V1_TO_GAME_SETUP_FIND_QUERY_PLAYER_SETUP_CONVERTER: Symbol.for(
+        'GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter',
+      ),
     },
   },
   validator: {

@@ -22,6 +22,8 @@ import { GameFormatToGameFormatApiV1Converter } from '../../../api/converter/Gam
 import { GameSetupCreationQueryApiV1ContextBasedValidator } from '../../../api/validator/setup/GameSetupCreationQueryApiV1ContextBasedValidator';
 import { GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter } from '../../../api/converter/setup/GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter';
 import { GameSetupCreationQueryApiV1Validator } from '../../../api/validator/setup/GameSetupCreationQueryApiV1Validator';
+import { GameSetupFindQueryApiV1ToGameSetupFindQueryConverter } from '../../../api/converter/setup/GameSetupFindQueryApiV1ToGameSetupFindQueryConverter';
+import { GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter } from '../../../api/converter/setup/GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter';
 import { GameToGameApiV1Converter } from '../../../api/converter/GameToGameApiV1Converter';
 import { ResourceApiV1ToResourceConverter } from '../../../api/converter/card/ResourceApiV1ToResourceConverter';
 import { ResourceToResourceApiV1Converter } from '../../../api/converter/card/ResourceToResourceApiV1Converter';
@@ -108,6 +110,16 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.converter.setup
       .GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER,
   ).to(GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter);
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.setup
+      .GAME_SETUP_FIND_QUERY_API_V1_TO_GAME_SETUP_FIND_QUERY_CONVERTER,
+  ).to(GameSetupFindQueryApiV1ToGameSetupFindQueryConverter);
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.setup
+      .GAME_SETUP_FIND_QUERY_PLAYER_SETUP_API_V1_TO_GAME_SETUP_FIND_QUERY_PLAYER_SETUP_CONVERTER,
+  ).to(
+    GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter,
+  );
 
   bind(GAME_ADAPTER_TYPES.api.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR)
     .to(GameCreationQueryApiV1Validator)
