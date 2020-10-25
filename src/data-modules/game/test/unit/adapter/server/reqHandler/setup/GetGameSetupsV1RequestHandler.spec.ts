@@ -127,7 +127,7 @@ describe(GetGameSetupsV1RequestHandler.name, () => {
       it('must call findGameSetupsInteractor.interact()', () => {
         expect(findBasicGameSetupsInteractor.interact).toHaveBeenCalledTimes(1);
         expect(findBasicGameSetupsInteractor.interact).toHaveBeenCalledWith(
-          gameSetupFindQueryApiV1FixtureFactory.get(),
+          basicGameSetupFindQueryFixtureFactory.get(),
         );
       });
 
