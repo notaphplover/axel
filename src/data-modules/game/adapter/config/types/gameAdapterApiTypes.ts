@@ -98,6 +98,9 @@ export const GAME_ADAPTER_API_TYPES = {
           GAME_SETUP_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol.for(
             'gameSetupCreationQueryApiV1JoyValidatorSchema',
           ),
+          GAME_SETUP_FIND_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol.for(
+            'gameSetupFindQueryApiV1JoyValidatorSchema',
+          ),
         },
       },
     },
