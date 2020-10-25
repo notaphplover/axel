@@ -23,6 +23,7 @@ import { GameSetupCreationQueryApiV1ContextBasedValidator } from '../../../api/v
 import { GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter } from '../../../api/converter/setup/GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter';
 import { GameSetupCreationQueryApiV1Validator } from '../../../api/validator/setup/GameSetupCreationQueryApiV1Validator';
 import { GameSetupFindQueryApiV1ToGameSetupFindQueryConverter } from '../../../api/converter/setup/GameSetupFindQueryApiV1ToGameSetupFindQueryConverter';
+import { GameSetupFindQueryApiV1Validator } from '../../../api/validator/setup/GameSetupFindQueryApiV1Validator';
 import { GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter } from '../../../api/converter/setup/GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter';
 import { GameToGameApiV1Converter } from '../../../api/converter/GameToGameApiV1Converter';
 import { ResourceApiV1ToResourceConverter } from '../../../api/converter/card/ResourceApiV1ToResourceConverter';
@@ -162,4 +163,8 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.validator.setup
       .GAME_SETUP_CREATION_QUERY_API_V1_VALIDATOR,
   ).to(GameSetupCreationQueryApiV1Validator);
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.setup
+      .GAME_SETUP_FIND_QUERY_API_V1_VALIDATOR,
+  ).to(GameSetupFindQueryApiV1Validator);
 }
