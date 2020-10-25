@@ -20,9 +20,11 @@ export const gameSetupsCreationQueryFixtureFactory: FixtureFactory<GameSetupsCre
   gameSetupsCreationQuery,
 );
 
-export const gameSetupFindQuery: GameSetupFindQuery = {
+export const gameSetupFindQuery: Required<GameSetupFindQuery> = {
   format: extendedGameSetup.format,
   id: extendedGameSetup.id,
+  limit: 1,
+  offset: 0,
   ownerUserId: extendedGameSetup.ownerUserId,
   playerSetups: extendedGameSetup.playerSetups.map(
     (playerSetup: PlayerSetup) => {
