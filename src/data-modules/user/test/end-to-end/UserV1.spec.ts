@@ -32,7 +32,7 @@ const APP_URL_PROTOCOL: string = 'http://';
 const APP_URL_HOST: string = '127.0.0.1';
 const APP_URL_PORT: number = dockerAppEnvLoader.index.APP_SERVER_PORT;
 
-const TEST_FIXTURES_DISCRIMINATOR: string = 'PostUserV1';
+const TEST_FIXTURES_DISCRIMINATOR: string = 'End2EndUserV1';
 
 function getAuthCreationQueryApiV1(): AuthCreationQueryApiV1 {
   const authCreationQueryApiV1: AuthCreationQueryApiV1 = authCreationQueryApiV1FixtureFactory.get();
