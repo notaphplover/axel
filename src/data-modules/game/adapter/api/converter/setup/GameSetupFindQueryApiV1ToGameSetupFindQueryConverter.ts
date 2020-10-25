@@ -37,6 +37,8 @@ export class GameSetupFindQueryApiV1ToGameSetupFindQueryConverter
         ? this.gameFormatApiV1ToGameFormatConverter.transform(input.format)
         : undefined,
       id: input.id,
+      limit: input.limit,
+      offset: input.limit,
       ownerUserId: input.ownerUserId,
       playerSetups: input.playerSetups?.map(
         (playerSetupApiV1: GameSetupFindQueryPlayerSetupApiV1) => {

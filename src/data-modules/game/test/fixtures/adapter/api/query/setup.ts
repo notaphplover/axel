@@ -8,6 +8,7 @@ import { GameSetupFindQueryApiV1 } from '../../../../../adapter/api/query/setup/
 import { GameSetupFindQueryPlayerSetupApiV1 } from '../../../../../adapter/api/query/setup/GameSetupFindQueryPlayerSetupApiV1';
 import { cardDeck } from '../../../domain/model/deck';
 import { extendedGameSetup } from '../../../domain/model/setup';
+import { gameSetupFindQuery } from '../../../domain/query/setup';
 
 export const gameSetupCreationQueryApiV1: GameSetupCreationQueryApiV1 = {
   format: GameFormatApiV1.UNRESTRICTED,
@@ -26,15 +27,17 @@ export const gameSetupCreationQueryApiV1FixtureFactory: FixtureFactory<GameSetup
 );
 
 export const gameSetupFindQueryPlayerSetupApiV1: GameSetupFindQueryPlayerSetupApiV1 = {
-  userId: extendedGameSetup.ownerUserId,
+  userId: gameSetupFindQuery.ownerUserId,
 };
 
-export const gameSetupFindQueryApiV1: GameSetupFindQueryApiV1 = {
+export const gameSetupFindQueryApiV1: Required<GameSetupFindQueryApiV1> = {
   format: GameFormatApiV1.UNRESTRICTED,
-  id: extendedGameSetup.id,
-  ownerUserId: extendedGameSetup.ownerUserId,
+  id: gameSetupFindQuery.id,
+  limit: gameSetupFindQuery.limit,
+  offset: gameSetupFindQuery.offset,
+  ownerUserId: gameSetupFindQuery.ownerUserId,
   playerSetups: [gameSetupFindQueryPlayerSetupApiV1],
-  playerSlots: extendedGameSetup.playerSlots,
+  playerSlots: gameSetupFindQuery.playerSlots,
 };
 
 export const gameSetupFindQueryApiV1FixtureFactory: FixtureFactory<GameSetupFindQueryApiV1> = new DeepCloneFixtureFactory(
