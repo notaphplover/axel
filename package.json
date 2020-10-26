@@ -19,6 +19,7 @@
     "start:prod": "pm2 start ./dist/index.js --watch --name \"axel-backend\"",
     "stop:prod": "pm2 stop \"axel-backend\"",
     "test": "jest",
+    "test:js": "jest --config=jest.dist.config.js",
     "test:end2end": "jest --selectProjects End2End",
     "test:integration": "jest --selectProjects Integration",
     "test:unit": "jest --selectProjects Unit"
