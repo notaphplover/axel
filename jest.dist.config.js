@@ -1,10 +1,8 @@
 /** https://jestjs.io/docs/en/configuration */
-const collectCoverageFrom = ['**/*.ts'];
+const collectCoverageFrom = ['<rootDir>/**/*.js'];
 const coveragePathIgnorePatterns = [
   '/node_modules/',
-  '<rootDir>/*/test/',
-  '<rootDir>/data-modules/*/test/',
-  '<rootDir>/layer-modules/*/test/',
+  '/test/',
 ];
 const coverageThreshold = {
   global: {

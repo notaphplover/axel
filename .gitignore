@@ -1,3 +1,6 @@
+# Jest coverage report
+coverage/
+
 # Typescript compiled files
 dist/
 
