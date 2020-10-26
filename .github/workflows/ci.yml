@@ -48,9 +48,9 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
 
       - name: Launch Tests (Docker friendly OS)
-        run: npm t
+        run: npm run test:js
         if: ${{ matrix.os == 'ubuntu-latest' }}
 
       - name: Launch Unit Tests (Non Docker friendly OS)
-        run: npm run test:unit
+        run: npm run test:unit:js
         if: ${{ matrix.os == 'macos-latest' || matrix.os == 'windows-latest' }}
