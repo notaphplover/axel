@@ -39,9 +39,13 @@ jobs:
       - name: Setup local files
         run: npm run setup:local
 
-      - name: Launch docker images (Docker friendly OS)
-        run: npm run docker:up:ci
+      - name: Launch docker images (Linux)
+        run: npm run docker:up:ci:linux
         if: ${{ matrix.os == 'ubuntu-latest' }}
+
+      - name: Launch docker images (Non Linux Docker friendly OS)
+        run: npm run docker:up:ci
+        if: ${{ false }}
 
       - name: Wait test server (Docker friendly OS)
         run: node ./dist/scripts/waitForApiServer.js
