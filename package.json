@@ -21,8 +21,11 @@
     "test": "jest",
     "test:js": "jest --config=jest.dist.config.js",
     "test:end2end": "jest --selectProjects End2End",
+    "test:end2end:js": "jest --config=jest.dist.config.js --selectProjects End2End",
     "test:integration": "jest --selectProjects Integration",
-    "test:unit": "jest --selectProjects Unit"
+    "test:integration:js": "jest --config=jest.dist.config.js --selectProjects Integration",
+    "test:unit": "jest --selectProjects Unit",
+    "test:unit:js": "jest --config=jest.dist.config.js --selectProjects Unit"
   },
   "keywords": [
     "axel",
