@@ -22,17 +22,28 @@ const distFolder: string = join(rootDir, 'dist');
 
 const distDataModulesFolder: string = join(distFolder, 'data-modules');
 
+const distIntegrationModulesFolder: string = join(
+  distFolder,
+  'integration-modules',
+);
+
 const distLayerModulesFolder: string = join(distFolder, 'layer-modules');
 
 const srcFolder: string = join(rootDir, 'src');
 
 const srcDataModulesFolder: string = join(srcFolder, 'data-modules');
 
+const srcIntegrationModulesFolder: string = join(
+  srcFolder,
+  'integration-modules',
+);
+
 const srcLayerModulesFolder: string = join(srcFolder, 'layer-modules');
 
 const modulesBlackList: Set<string> = new Set([
   'json-schema',
   'data-modules',
+  'integration-modules',
   'layer-modules',
   'scripts',
 ]);
@@ -103,6 +114,7 @@ async function copyEnvToDist(): Promise<void> {
   const distModulePaths: string[] = detectModulesAtFolders([
     distFolder,
     distDataModulesFolder,
+    distIntegrationModulesFolder,
     distLayerModulesFolder,
   ]);
 
@@ -115,6 +127,7 @@ async function copyEnvToDist(): Promise<void> {
   const srcModulePaths: string[] = detectModulesAtFolders([
     srcFolder,
     srcDataModulesFolder,
+    srcIntegrationModulesFolder,
     srcLayerModulesFolder,
   ]);
 
@@ -221,6 +234,7 @@ void (async () => {
   const srcModulePaths: string[] = detectModulesAtFolders([
     srcFolder,
     srcDataModulesFolder,
+    srcIntegrationModulesFolder,
     srcLayerModulesFolder,
   ]);
 

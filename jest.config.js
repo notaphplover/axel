@@ -19,6 +19,7 @@ const testEnvironment = 'node';
 const testMatchGenerator = (dirName) =>  [
   `<rootDir>/*/test/${dirName}/**/*.spec.ts`,
   `<rootDir>/data-modules/*/test/${dirName}/**/*.spec.ts`,
+  `<rootDir>/integration-modules/*/test/${dirName}/**/*.spec.ts`,
   `<rootDir>/layer-modules/*/test/${dirName}/**/*.spec.ts`,
 ];
 
