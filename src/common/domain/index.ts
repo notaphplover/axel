@@ -11,6 +11,7 @@ import { Interactor } from './interactor/Interactor';
 import { PaginationQuery } from './query/PaginationQuery';
 import { Validator } from './validator/Validator';
 import { ValidatorFunctionBasedFilter } from './filter/ValidatorFunctionBasedFilter';
+import { Writable } from './model/Writable';
 import { floatToInt } from './parse/floatToInt';
 import { getDirectories } from './io/directory/getDirectories';
 import { getFiles } from './io/file/getFiles';
@@ -32,6 +33,7 @@ export {
   ValidationSuccess,
   Validator,
   ValidatorFunctionBasedFilter,
+  Writable,
 };
 
 // eslint-disable-next-line @typescript-eslint/typedef
