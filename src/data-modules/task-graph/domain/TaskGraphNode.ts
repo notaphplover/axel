@@ -10,7 +10,8 @@ export enum TaskGraphNodeStatus {
 export interface TaskGraphNode<TId, TOutput> {
   readonly dependsOn: Iterable<TId>;
   readonly id: TId;
+  readonly status: TaskGraphNodeStatus;
+
   getOutput(): Capsule<TOutput> | null;
-  getStatus(): TaskGraphNodeStatus;
   perform(): Promise<void>;
 }

@@ -16,7 +16,7 @@ describe(QueueBasedTaskGraph.name, () => {
           getOutput: () => {
             return { elem: 3 };
           },
-          getStatus: () => TaskGraphNodeStatus.Ended,
+          status: TaskGraphNodeStatus.NotStarted,
           id: 2,
           perform: async () => undefined,
         };
@@ -82,7 +82,7 @@ describe(QueueBasedTaskGraph.name, () => {
         taskGraphNode = {
           dependsOn: taskGraphNodeDependencies,
           getOutput: jest.fn(),
-          getStatus: jest.fn(),
+          status: TaskGraphNodeStatus.NotStarted,
           id: 2,
           perform: jest.fn(),
         };
@@ -164,7 +164,7 @@ describe(QueueBasedTaskGraph.name, () => {
         taskGraphNode = {
           dependsOn: [],
           getOutput: jest.fn(),
-          getStatus: jest.fn(),
+          status: TaskGraphNodeStatus.NotStarted,
           id: 2,
           perform: jest.fn(),
         };
@@ -172,7 +172,7 @@ describe(QueueBasedTaskGraph.name, () => {
         taskGraphNodeDependent = {
           dependsOn: [taskGraphNode.id],
           getOutput: jest.fn(),
-          getStatus: jest.fn(),
+          status: TaskGraphNodeStatus.NotStarted,
           id: 3,
           perform: jest.fn(),
         };
