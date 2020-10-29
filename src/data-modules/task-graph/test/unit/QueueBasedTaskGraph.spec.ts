@@ -109,9 +109,12 @@ describe(QueueBasedTaskGraph.name, () => {
           expect(taskGraphNode.perform).toHaveBeenCalledTimes(0);
         });
 
-        it('must throw an error', () => {
-          expect(result).toBeInstanceOf(Error);
-          expect((result as Error).message).toMatch('circular dependencies');
+        it('must return a failure', () => {
+          const expectedResult: PerformTasksResult = {
+            error: expect.stringContaining('circular dependencies') as string,
+            success: false,
+          };
+          expect(result).toStrictEqual(expectedResult);
         });
 
         afterAll(() => {
@@ -124,32 +127,136 @@ describe(QueueBasedTaskGraph.name, () => {
       });
 
       describe('when the task has no dependencies', () => {
-        let result: unknown;
+        describe('when the task ends sucessfully', () => {
+          describe.each([
+            [TaskGraphNodeStatus.NotStarted],
+            [TaskGraphNodeStatus.InProgress],
+            [TaskGraphNodeStatus.Ended],
+          ])('when the task is %s', (status: TaskGraphNodeStatus) => {
+            let result: unknown;
 
-        beforeAll(async () => {
-          (taskGraphNode as Writable<
-            TaskGraphNode<number, number>
-          >).dependsOn = [];
+            beforeAll(async () => {
+              (taskGraphNode as Writable<
+                TaskGraphNode<number, number>
+              >).dependsOn = [];
+              (taskGraphNode as Writable<
+                TaskGraphNode<number, number>
+              >).status = status;
+              (taskGraphNode.perform as jest.Mock).mockImplementationOnce(
+                async () => {
+                  (taskGraphNode as Writable<
+                    TaskGraphNode<number, number>
+                  >).status = TaskGraphNodeStatus.Ended;
+                },
+              );
 
-          result = await queueBasedTaskGraph.performTasks();
+              result = await queueBasedTaskGraph.performTasks();
+            });
+
+            afterAll(() => {
+              (taskGraphNode as Writable<
+                TaskGraphNode<number, number>
+              >).dependsOn = [];
+              (taskGraphNode as Writable<
+                TaskGraphNode<number, number>
+              >).status = TaskGraphNodeStatus.NotStarted;
+
+              (taskGraphNode.perform as jest.Mock).mockClear();
+            });
+
+            it('must call taskGraphNode.perform()', () => {
+              expect(taskGraphNode.perform).toHaveBeenCalledTimes(1);
+            });
+
+            it('must return a success', () => {
+              const expectedResult: PerformTasksResult = { success: true };
+
+              expect(result).toStrictEqual(expectedResult);
+            });
+          });
         });
 
-        it('must call taskGraphNode.perform()', () => {
-          expect(taskGraphNode.perform).toHaveBeenCalledTimes(1);
+        describe('when the task ends on error', () => {
+          describe.each([
+            [TaskGraphNodeStatus.NotStarted],
+            [TaskGraphNodeStatus.InProgress],
+            [TaskGraphNodeStatus.Error],
+          ])('when the task is %s', (status: TaskGraphNodeStatus) => {
+            let result: unknown;
+
+            beforeAll(async () => {
+              (taskGraphNode as Writable<
+                TaskGraphNode<number, number>
+              >).dependsOn = [];
+              (taskGraphNode as Writable<
+                TaskGraphNode<number, number>
+              >).status = status;
+              (taskGraphNode.perform as jest.Mock).mockImplementationOnce(
+                async () => {
+                  (taskGraphNode as Writable<
+                    TaskGraphNode<number, number>
+                  >).status = TaskGraphNodeStatus.Error;
+                },
+              );
+
+              result = await queueBasedTaskGraph.performTasks();
+            });
+
+            afterAll(() => {
+              (taskGraphNode as Writable<
+                TaskGraphNode<number, number>
+              >).dependsOn = [];
+              (taskGraphNode as Writable<
+                TaskGraphNode<number, number>
+              >).status = TaskGraphNodeStatus.NotStarted;
+
+              (taskGraphNode.perform as jest.Mock).mockClear();
+            });
+
+            it('must return a failure', () => {
+              const expectedResult: PerformTasksResult = {
+                error: expect.any(String) as string,
+                success: false,
+              };
+
+              expect(result).toStrictEqual(expectedResult);
+            });
+          });
         });
 
-        it('must return a success', () => {
-          const expectedResult: PerformTasksResult = { success: true };
+        describe('when the task is on error', () => {
+          let result: unknown;
 
-          expect(result).toStrictEqual(expectedResult);
-        });
+          beforeAll(async () => {
+            (taskGraphNode as Writable<
+              TaskGraphNode<number, number>
+            >).dependsOn = [];
+            (taskGraphNode as Writable<TaskGraphNode<number, number>>).status =
+              TaskGraphNodeStatus.Error;
 
-        afterAll(() => {
-          (taskGraphNode as Writable<
-            TaskGraphNode<number, number>
-          >).dependsOn = [];
+            result = await queueBasedTaskGraph.performTasks();
+          });
 
-          (taskGraphNode.perform as jest.Mock).mockClear();
+          afterAll(() => {
+            (taskGraphNode as Writable<
+              TaskGraphNode<number, number>
+            >).dependsOn = [];
+            (taskGraphNode as Writable<TaskGraphNode<number, number>>).status =
+              TaskGraphNodeStatus.NotStarted;
+
+            (taskGraphNode.perform as jest.Mock).mockClear();
+          });
+
+          it('must return a failure', () => {
+            const expectedResult: PerformTasksResult = {
+              success: false,
+              error: expect.stringContaining(
+                'task is initially in an error state',
+              ) as string,
+            };
+
+            expect(result).toStrictEqual(expectedResult);
+          });
         });
       });
     });
@@ -169,6 +276,13 @@ describe(QueueBasedTaskGraph.name, () => {
           perform: jest.fn(),
         };
 
+        (taskGraphNode.perform as jest.Mock).mockImplementationOnce(
+          async () => {
+            (taskGraphNode as Writable<TaskGraphNode<number, number>>).status =
+              TaskGraphNodeStatus.Ended;
+          },
+        );
+
         taskGraphNodeDependent = {
           dependsOn: [taskGraphNode.id],
           getOutput: jest.fn(),
@@ -177,12 +291,39 @@ describe(QueueBasedTaskGraph.name, () => {
           perform: jest.fn(),
         };
 
+        (taskGraphNodeDependent.perform as jest.Mock).mockImplementationOnce(
+          async () => {
+            (taskGraphNodeDependent as Writable<
+              TaskGraphNode<number, number>
+            >).status = TaskGraphNodeStatus.Ended;
+          },
+        );
+
         queueBasedTaskGraph = new QueueBasedTaskGraph([
           taskGraphNode,
           taskGraphNodeDependent,
         ]);
 
         result = await queueBasedTaskGraph.performTasks();
+      });
+
+      afterAll(() => {
+        (taskGraphNode as Writable<
+          TaskGraphNode<number, number>
+        >).dependsOn = [];
+        (taskGraphNode as Writable<TaskGraphNode<number, number>>).status =
+          TaskGraphNodeStatus.NotStarted;
+
+        (taskGraphNode.perform as jest.Mock).mockClear();
+
+        (taskGraphNodeDependent as Writable<
+          TaskGraphNode<number, number>
+        >).dependsOn = [];
+        (taskGraphNodeDependent as Writable<
+          TaskGraphNode<number, number>
+        >).status = TaskGraphNodeStatus.NotStarted;
+
+        (taskGraphNodeDependent.perform as jest.Mock).mockClear();
       });
 
       it('must call taskGraphNode.perform', () => {

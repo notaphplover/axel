@@ -1,10 +1,10 @@
-import { PerformTasksResult, TaskGraph } from "./TaskGraph";
-import { TaskGraphNode } from "./TaskGraphNode";
+import { PerformTasksResult, TaskGraph } from './TaskGraph';
+import { TaskGraphNode, TaskGraphNodeStatus } from './TaskGraphNode';
 
 interface TaskGraphNodeWithDependencies<TId> {
   node: TaskGraphNode<TId, unknown>;
   dependencies: Set<TId>;
-};
+}
 
 interface TaskGraphNodeSchedulingState<TId> {
   nodesByDependentNodeMap: Map<TId, TaskGraphNodeWithDependencies<TId>[]>;
@@ -23,26 +23,38 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
   }
 
   public getNode<TOutput>(id: TId): TaskGraphNode<TId, TOutput> | undefined {
-    return this.taskGraphNodesMap.get(id) as TaskGraphNode<TId, TOutput> | undefined;
+    return this.taskGraphNodesMap.get(id) as
+      | TaskGraphNode<TId, TOutput>
+      | undefined;
   }
 
   public async performTasks(): Promise<PerformTasksResult> {
-    const tasksSchedule: TaskGraphNode<TId, unknown>[][] = this.buildTasksSchedule();
-
     try {
+      const tasksSchedule: TaskGraphNode<
+        TId,
+        unknown
+      >[][] = this.buildTasksSchedule();
+
       await this.processTaskSchedule(tasksSchedule);
+
       return {
         success: true,
-      }
+      };
     } catch (err) {
       return {
+        error: (err as Error).message,
         success: false,
-      }
+      };
     }
   }
 
-  private buildInitialTaskGraphNodeSchedulingState(): TaskGraphNodeSchedulingState<TId> {
-    const nodesByDependentNodeMap: Map<TId, TaskGraphNodeWithDependencies<TId>[]> = new Map<TId, TaskGraphNodeWithDependencies<TId>[]>();
+  private buildInitialTaskGraphNodeSchedulingState(): TaskGraphNodeSchedulingState<
+    TId
+  > {
+    const nodesByDependentNodeMap: Map<
+      TId,
+      TaskGraphNodeWithDependencies<TId>[]
+    > = new Map<TId, TaskGraphNodeWithDependencies<TId>[]>();
     const nodesWithNoDependency: TaskGraphNodeWithDependencies<TId>[] = [];
 
     for (const taskGraphNode of this.taskGraphNodesMap.values()) {
@@ -51,19 +63,38 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
         dependencies: new Set(taskGraphNode.dependsOn),
       };
 
-      if (taskGraphNodeWithDependencies.dependencies.size === 0) {
-        nodesWithNoDependency.push(taskGraphNodeWithDependencies);
-      } else {
-        for (const taskGraphNodeDependency of taskGraphNodeWithDependencies.dependencies) {
-          let nodesByDependentNode: TaskGraphNodeWithDependencies<TId>[] | undefined = nodesByDependentNodeMap.get(taskGraphNodeDependency);
+      switch (taskGraphNode.status) {
+        case TaskGraphNodeStatus.NotStarted:
+          if (taskGraphNodeWithDependencies.dependencies.size === 0) {
+            nodesWithNoDependency.push(taskGraphNodeWithDependencies);
+          } else {
+            for (const taskGraphNodeDependency of taskGraphNodeWithDependencies.dependencies) {
+              let nodesByDependentNode:
+                | TaskGraphNodeWithDependencies<TId>[]
+                | undefined = nodesByDependentNodeMap.get(
+                taskGraphNodeDependency,
+              );
 
-          if (nodesByDependentNode === undefined) {
-            nodesByDependentNode = [];
-            nodesByDependentNodeMap.set(taskGraphNodeDependency, nodesByDependentNode);
+              if (nodesByDependentNode === undefined) {
+                nodesByDependentNode = [];
+                nodesByDependentNodeMap.set(
+                  taskGraphNodeDependency,
+                  nodesByDependentNode,
+                );
+              }
+
+              nodesByDependentNode.push(taskGraphNodeWithDependencies);
+            }
           }
-
-          nodesByDependentNode.push(taskGraphNodeWithDependencies);
-        }
+          break;
+        case TaskGraphNodeStatus.InProgress:
+        case TaskGraphNodeStatus.Ended:
+          nodesWithNoDependency.push(taskGraphNodeWithDependencies);
+          break;
+        case TaskGraphNodeStatus.Error:
+          throw new Error(
+            'A task is initially in an error state, no tasks will be accomplished',
+          );
       }
     }
 
@@ -73,42 +104,71 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
     };
   }
 
-  private async processTaskSchedule(tasksSchedule: TaskGraphNode<TId, unknown>[][]): Promise<void> {
+  private async processTaskSchedule(
+    tasksSchedule: TaskGraphNode<TId, unknown>[][],
+  ): Promise<void> {
     if (tasksSchedule.length === 0) {
       return;
     }
 
-    const tasksPerformPromiseMap: Map<TId, Promise<void>> = new Map<TId, Promise<void>>();
+    const tasksPerformPromiseMap: Map<TId, Promise<void>> = new Map<
+      TId,
+      Promise<void>
+    >();
 
     for (const tasks of tasksSchedule) {
       for (const task of tasks) {
         const taskDependencies: Promise<void>[] = [];
         for (const dependentTaskId of task.dependsOn) {
-          taskDependencies.push(tasksPerformPromiseMap.get(dependentTaskId) as Promise<void>);
+          taskDependencies.push(
+            tasksPerformPromiseMap.get(dependentTaskId) as Promise<void>,
+          );
         }
 
-        const performTaskPromise: Promise<void> = (async(): Promise<void> => {
+        const performTaskPromise: Promise<void> = (async (): Promise<void> => {
           await Promise.all(taskDependencies);
           await task.perform();
+
+          switch (task.status) {
+            case TaskGraphNodeStatus.Ended:
+              return;
+            case TaskGraphNodeStatus.Error:
+              throw new Error('Task failed');
+            case TaskGraphNodeStatus.NotStarted:
+            case TaskGraphNodeStatus.InProgress:
+              throw new Error(
+                'Unexpected status: expected task to be ended or in error',
+              );
+          }
         })();
 
         tasksPerformPromiseMap.set(task.id, performTaskPromise);
       }
     }
 
-    const lastTaskBatch: TaskGraphNode<TId, unknown>[] = tasksSchedule[tasksSchedule.length - 1];
-    const lastTaskBatchCompletedPromise: Promise<void[]> = Promise.all(lastTaskBatch.map(
-      async (task: TaskGraphNode<TId, unknown>): Promise<void> => tasksPerformPromiseMap.get(task.id) as Promise<void>),
+    const lastTaskBatch: TaskGraphNode<TId, unknown>[] =
+      tasksSchedule[tasksSchedule.length - 1];
+    const lastTaskBatchCompletedPromise: Promise<void[]> = Promise.all(
+      lastTaskBatch.map(
+        async (task: TaskGraphNode<TId, unknown>): Promise<void> =>
+          tasksPerformPromiseMap.get(task.id) as Promise<void>,
+      ),
     );
 
     await lastTaskBatchCompletedPromise;
   }
 
-  private transformTaskGraphNodeSchedulingState(taskGraphNodeSchedulingState: TaskGraphNodeSchedulingState<TId>): void {
+  private transformTaskGraphNodeSchedulingState(
+    taskGraphNodeSchedulingState: TaskGraphNodeSchedulingState<TId>,
+  ): void {
     const newNodesWithNoDependency: TaskGraphNodeWithDependencies<TId>[] = [];
 
     for (const nodeWithDependencies of taskGraphNodeSchedulingState.nodesWithNoDependency) {
-      const dependentNodes: TaskGraphNodeWithDependencies<TId>[] | undefined = taskGraphNodeSchedulingState.nodesByDependentNodeMap.get(nodeWithDependencies.node.id);
+      const dependentNodes:
+        | TaskGraphNodeWithDependencies<TId>[]
+        | undefined = taskGraphNodeSchedulingState.nodesByDependentNodeMap.get(
+        nodeWithDependencies.node.id,
+      );
 
       if (dependentNodes !== undefined) {
         for (const dependentNode of dependentNodes) {
@@ -118,7 +178,9 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
           }
         }
 
-        taskGraphNodeSchedulingState.nodesByDependentNodeMap.delete(nodeWithDependencies.node.id);
+        taskGraphNodeSchedulingState.nodesByDependentNodeMap.delete(
+          nodeWithDependencies.node.id,
+        );
       }
     }
 
@@ -134,10 +196,18 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
 
     while (scheduledTasks < this.taskGraphNodesMap.size) {
       if (taskGraphNodeSchedulingState.nodesWithNoDependency.length === 0) {
-        throw new Error('The task graph provided has circular dependencies, no task will be performed.');
+        throw new Error(
+          'The task graph provided has circular dependencies, no task will be performed.',
+        );
       }
 
-      const nodesWithNoDependency: TaskGraphNode<TId, unknown>[] = taskGraphNodeSchedulingState.nodesWithNoDependency.map((nodeWithDependency: TaskGraphNodeWithDependencies<TId>) => nodeWithDependency.node);
+      const nodesWithNoDependency: TaskGraphNode<
+        TId,
+        unknown
+      >[] = taskGraphNodeSchedulingState.nodesWithNoDependency.map(
+        (nodeWithDependency: TaskGraphNodeWithDependencies<TId>) =>
+          nodeWithDependency.node,
+      );
 
       tasksSchedule.push(nodesWithNoDependency);
 
