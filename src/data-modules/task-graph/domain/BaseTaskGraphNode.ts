@@ -17,7 +17,7 @@ export abstract class BaseTaskGraphNode<TId, TOutput>
   }
 
   public getOutput(): Capsule<TOutput> | null {
-    return this.innerOutput !== null ? { elem: this.innerOutput.elem } : null;
+    return this.innerOutput === null ? null : { elem: this.innerOutput.elem };
   }
 
   public async perform(): Promise<void> {
