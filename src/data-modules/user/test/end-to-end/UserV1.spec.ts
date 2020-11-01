@@ -5,6 +5,11 @@ import {
   dbAdapter,
 } from '../../../../layer-modules/db/adapter';
 import {
+  QueueBasedTaskGraph,
+  TaskGraph,
+  TaskGraphNode,
+} from '../../../task-graph/domain';
+import {
   authCreationQueryApiV1FixtureFactory,
   userCreationQueryApiV1FixtureFactory,
 } from '../fixtures/adapter/api/query/fixtures';
@@ -12,6 +17,7 @@ import { AppEnvLoader } from '../../../../app/adapter/env/AppEnvLoader';
 import { AppEnvVariables } from '../../../../app/adapter';
 import { AuthCreationQueryApiV1 } from '../../adapter/api/query/AuthCreationQueryApiV1';
 import { Container } from 'inversify';
+import { DeleteEntityByIdsTaskGraphNode } from '../../../../layer-modules/db/test';
 import { EnvLoader } from '../../../../layer-modules/env/domain';
 import { Model } from 'mongoose';
 import { StatusCodes } from 'http-status-codes';
@@ -50,16 +56,28 @@ function getUserCreationQueryApiV1(): UserCreationQueryApiV1 {
   return userCreationQueryApiV1Fixture;
 }
 
-async function resetData(userDbModel: Model<UserDb>) {
-  await userDbModel.deleteMany({
-    email: getUserCreationQueryApiV1().email,
-    username: getUserCreationQueryApiV1().username,
-  });
+async function resetData(userDbModel: Model<UserDb>, userIdsCreated: string[]) {
+  const deleteUsersGraphNode: TaskGraphNode<
+    string,
+    void
+  > = new DeleteEntityByIdsTaskGraphNode(
+    'delete-users-node',
+    userDbModel,
+    userIdsCreated,
+  );
+
+  const deleteUsersGraph: TaskGraph<string> = new QueueBasedTaskGraph([
+    deleteUsersGraphNode,
+  ]);
+
+  await deleteUsersGraph.performTasks();
 }
 
 describe('User V1', () => {
   let mongooseConnector: MongooseConector;
   let userDbModel: Model<UserDb>;
+
+  let userIdsCreated: string[];
 
   const client: axios.AxiosStatic = axios.default;
 
@@ -69,13 +87,13 @@ describe('User V1', () => {
     );
     userDbModel = container.get(USER_ADAPTER_TYPES.db.model.USER_DB_MODEL);
 
-    await mongooseConnector.connect();
+    userIdsCreated = [];
 
-    await resetData(userDbModel);
+    await mongooseConnector.connect();
   });
 
   afterAll(async () => {
-    await resetData(userDbModel);
+    await resetData(userDbModel, userIdsCreated);
 
     await mongooseConnector.close();
   });
@@ -88,6 +106,8 @@ describe('User V1', () => {
         `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/users`,
         getUserCreationQueryApiV1(),
       );
+
+      userIdsCreated.push((postUsersV1Response.data as UserApiV1).id);
     });
 
     it('must return a response with the user created', () => {
@@ -108,6 +128,8 @@ describe('User V1', () => {
           `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/auth/tokens`,
           getAuthCreationQueryApiV1(),
         );
+
+        userIdsCreated.push((postUsersV1Response.data as UserApiV1).id);
       });
 
       it('must return an HTTP OK response', () => {
