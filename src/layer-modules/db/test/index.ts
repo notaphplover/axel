@@ -1,3 +1,4 @@
+import { CreateEntityTaskGraphNode } from './task-graph/CreateEntityTaskGraphNode';
 import { DeleteEntityByIdsTaskGraphNode } from './task-graph/DeleteEntityByIdsTaskGraphNode';
 import { mongooseIntegrationDescribe } from './integration/utils/mongooseIntegrationDescribe';
 
@@ -6,4 +7,4 @@ export const dbTest = {
   integration: { utils: { mongooseIntegrationDescribe } },
 };
 
-export { DeleteEntityByIdsTaskGraphNode };
+export { CreateEntityTaskGraphNode, DeleteEntityByIdsTaskGraphNode };
