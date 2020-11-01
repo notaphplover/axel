@@ -128,8 +128,6 @@ describe('User V1', () => {
           `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/auth/tokens`,
           getAuthCreationQueryApiV1(),
         );
-
-        userIdsCreated.push((postUsersV1Response.data as UserApiV1).id);
       });
 
       it('must return an HTTP OK response', () => {
