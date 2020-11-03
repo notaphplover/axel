@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { PerformTasksResult, TaskGraph } from '../../domain/TaskGraph';
 import { Capsule } from '../../../../common/domain';
 import { TaskGraphTaskGraphNode } from '../../domain/TaskGraphTaskGraphNode';
