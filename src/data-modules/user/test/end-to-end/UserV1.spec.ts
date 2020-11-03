@@ -17,7 +17,7 @@ import { AppEnvLoader } from '../../../../app/adapter/env/AppEnvLoader';
 import { AppEnvVariables } from '../../../../app/adapter';
 import { AuthCreationQueryApiV1 } from '../../adapter/api/query/AuthCreationQueryApiV1';
 import { Container } from 'inversify';
-import { DeleteEntityByIdsTaskGraphNode } from '../../../../layer-modules/db/test';
+import { DeleteEntityByIdsTaskGraphNode } from '../../../task-graph/adapter';
 import { EnvLoader } from '../../../../layer-modules/env/domain';
 import { Model } from 'mongoose';
 import { StatusCodes } from 'http-status-codes';
