@@ -1,6 +1,8 @@
 import { TaskGraphNode, TaskGraphNodeStatus } from './TaskGraphNode';
+import { injectable, unmanaged } from 'inversify';
 import { Capsule } from '../../../common/domain';
 
+@injectable()
 export abstract class BaseTaskGraphNode<TId, TOutput>
   implements TaskGraphNode<TId, TOutput> {
   private innerOutput: Capsule<TOutput> | null;
@@ -8,7 +10,9 @@ export abstract class BaseTaskGraphNode<TId, TOutput>
   private innerStatus: TaskGraphNodeStatus;
 
   constructor(
+    @unmanaged()
     public readonly dependsOn: Iterable<TId>,
+    @unmanaged()
     public readonly id: TId,
   ) {
     this.innerOutput = null;
