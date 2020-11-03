@@ -1,3 +1,4 @@
+import { COMMON_E2E_TYPES } from './config/types/e2ETypes';
 import { DeepCloneFixtureFactory } from './fixtures/domain/fixture/DeepCloneFixtureFactory';
 import { FixtureFactory } from './fixtures/domain/fixture/FixtureFactory';
 import { PrototypeBasedFixtureFactory } from './fixtures/domain/fixture/PrototypeBasedFixtureFactory';
@@ -13,7 +14,7 @@ export {
 
 // eslint-disable-next-line @typescript-eslint/typedef
 export const commonTest = {
-  config: { container: commonTestE2eContainer },
+  config: { container: commonTestE2eContainer, types: COMMON_E2E_TYPES },
   fixtures: { adapter: { server: { fastifyReplyFixtureFactory } } },
   integration: { utils: { customDescribe } },
 };
