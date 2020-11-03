@@ -1,5 +1,6 @@
-import { TaskGraphNode, TaskGraphNodeExtractor } from '../../domain';
 import { Container } from 'inversify';
+import { TaskGraphNode } from '../../domain/TaskGraphNode';
+import { TaskGraphNodeExtractor } from '../../domain/TaskGraphNodeExtractor';
 
 export class InversifyContainerTaskGraphNodeExtractor extends TaskGraphNodeExtractor<
   symbol,
