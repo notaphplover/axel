@@ -1,19 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
     "lib": ["es2018"],
     "module": "CommonJS",
+    "moduleResolution": "Node",
     "outDir": "./dist",
+    "resolveJsonModule": true,
+    "rootDir": "src",
+    "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "moduleResolution": "Node",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "rootDir": "src"
+    "target": "ES2018"
   },
   "include": [
     "src"
