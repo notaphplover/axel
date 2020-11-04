@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
 import { CreateEntityTaskGraphNode } from '../../../task-graph/adapter';
 import { Model } from 'mongoose';
-import { USER_ADAPTER_E2E_TYPES } from '../config/types/e2eTypes';
 import { USER_ADAPTER_TYPES } from '../../adapter/config/types';
+import { USER_E2E_TYPES } from '../config/types/e2eTypes';
 import { UserDb } from '../../adapter/db/model/UserDb';
 import { commonTest } from '../../../../common/test';
 import { user } from '../fixtures/domain/model/fixtures';
@@ -18,11 +18,7 @@ export class CreateUserDbTaskGraphNode extends CreateEntityTaskGraphNode<
     @inject(USER_ADAPTER_TYPES.db.model.USER_DB_MODEL)
     userDbModel: Model<UserDb>,
   ) {
-    super(
-      [],
-      USER_ADAPTER_E2E_TYPES.CREATE_USER_DB_TASK_GRAPH_NODE,
-      userDbModel,
-    );
+    super([], USER_E2E_TYPES.CREATE_USER_DB_TASK_GRAPH_NODE, userDbModel);
   }
 
   protected buildDocumentBody(): unknown {
