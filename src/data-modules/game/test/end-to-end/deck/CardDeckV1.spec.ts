@@ -21,10 +21,10 @@ import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
 import { InversifyContainerTaskGraphNodeExtractor } from '../../../../task-graph/adapter';
 import { Land } from '../../../domain/model/card/Land';
 import { PerformTasksResult } from '../../../../task-graph/domain/TaskGraph';
-import { USER_E2E_TYPES } from '../../../../user/test/config/types/e2eTypes';
 import { UserToken } from '../../../../user/domain';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { configTest } from '../../../../../layer-modules/config/test';
+import { userTest } from '../../../../user/test';
 
 const container: Container = configAdapter.container;
 
@@ -71,7 +71,7 @@ async function prepareData(): Promise<E2EComponents> {
   const createUserTokenTaskGraphNode: TaskGraphNode<
     symbol,
     UserToken
-  > = e2eContainer.get(USER_E2E_TYPES.CREATE_USER_TOKEN_TASK_GRAPH_NODE);
+  > = e2eContainer.get(userTest.config.types.CREATE_USER_TOKEN_TASK_GRAPH_NODE);
 
   const createVoidLandTaskGraphNode: TaskGraphNode<
     symbol,
