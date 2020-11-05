@@ -1,10 +1,15 @@
-import { BaseTaskGraphNode, TaskGraphNode } from '../../../task-graph/domain';
+import {
+  BaseTaskGraphNode,
+  TaskGraph,
+  TaskGraphNode,
+} from '../../../task-graph/domain';
 import { Capsule, Interactor } from '../../../../common/domain';
 import { inject, injectable } from 'inversify';
 import { USER_DOMAIN_TYPES } from '../../domain/config/types';
 import { USER_E2E_TYPES } from '../config/types/e2eTypes';
 import { User } from '../../domain';
 import { UserToken } from '../../domain/model/UserToken';
+import { commonTest } from '../../../../common/test';
 
 @injectable()
 export class CreateUserTokenTaskGraphNode extends BaseTaskGraphNode<
@@ -12,8 +17,8 @@ export class CreateUserTokenTaskGraphNode extends BaseTaskGraphNode<
   UserToken
 > {
   constructor(
-    @inject(USER_E2E_TYPES.CREATE_USER_TASK_GRAPH_NODE)
-    private readonly createUserTaskGraphNode: TaskGraphNode<symbol, User>,
+    @inject(commonTest.config.types.taskGraph.CURRENT_TASK_GRAPH)
+    private readonly currentTaskGraph: TaskGraph<symbol>,
     @inject(USER_DOMAIN_TYPES.interactor.CREATE_USER_TOKEN_INTERACTOR)
     private readonly createUserTokenInteractor: Interactor<
       User,
@@ -27,7 +32,13 @@ export class CreateUserTokenTaskGraphNode extends BaseTaskGraphNode<
   }
 
   protected async innerPerform(): Promise<UserToken> {
-    const userFromTaskGraphNode: User = (this.createUserTaskGraphNode.getOutput() as Capsule<
+    const createUserTaskGraphNode: TaskGraphNode<
+      symbol,
+      User
+    > = this.currentTaskGraph.getNode(
+      USER_E2E_TYPES.CREATE_USER_TASK_GRAPH_NODE,
+    ) as TaskGraphNode<symbol, User>;
+    const userFromTaskGraphNode: User = (createUserTaskGraphNode.getOutput() as Capsule<
       User
     >).elem;
 
