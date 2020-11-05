@@ -5,11 +5,6 @@ import {
   dbAdapter,
 } from '../../../../layer-modules/db/adapter';
 import {
-  QueueBasedTaskGraph,
-  TaskGraph,
-  TaskGraphNode,
-} from '../../../task-graph/domain';
-import {
   authCreationQueryApiV1FixtureFactory,
   userCreationQueryApiV1FixtureFactory,
 } from '../fixtures/adapter/api/query/fixtures';
@@ -17,14 +12,10 @@ import { AppEnvLoader } from '../../../../app/adapter/env/AppEnvLoader';
 import { AppEnvVariables } from '../../../../app/adapter';
 import { AuthCreationQueryApiV1 } from '../../adapter/api/query/AuthCreationQueryApiV1';
 import { Container } from 'inversify';
-import { DeleteEntityByIdsTaskGraphNode } from '../../../task-graph/adapter';
 import { EnvLoader } from '../../../../layer-modules/env/domain';
-import { Model } from 'mongoose';
 import { StatusCodes } from 'http-status-codes';
-import { USER_ADAPTER_TYPES } from '../../adapter/config/types';
 import { UserApiV1 } from '../../adapter/api/model/UserApiV1';
 import { UserCreationQueryApiV1 } from '../../adapter/api/query/UserCreationQueryApiV1';
-import { UserDb } from '../../adapter/db/model/UserDb';
 import { configAdapter } from '../../../../layer-modules/config/adapter';
 
 const container: Container = configAdapter.container;
@@ -56,26 +47,8 @@ function getUserCreationQueryApiV1(): UserCreationQueryApiV1 {
   return userCreationQueryApiV1Fixture;
 }
 
-async function resetData(userDbModel: Model<UserDb>, userIdsCreated: string[]) {
-  const deleteUsersGraphNode: TaskGraphNode<
-    string,
-    void
-  > = new DeleteEntityByIdsTaskGraphNode(
-    'delete-users-node',
-    userDbModel,
-    userIdsCreated,
-  );
-
-  const deleteUsersGraph: TaskGraph<string> = new QueueBasedTaskGraph([
-    deleteUsersGraphNode,
-  ]);
-
-  await deleteUsersGraph.performTasks();
-}
-
 describe('User V1', () => {
   let mongooseConnector: MongooseConector;
-  let userDbModel: Model<UserDb>;
 
   let userIdsCreated: string[];
 
@@ -85,7 +58,6 @@ describe('User V1', () => {
     mongooseConnector = container.get(
       dbAdapter.config.types.db.MONGOOSE_CONNECTOR,
     );
-    userDbModel = container.get(USER_ADAPTER_TYPES.db.model.USER_DB_MODEL);
 
     userIdsCreated = [];
 
@@ -93,8 +65,6 @@ describe('User V1', () => {
   });
 
   afterAll(async () => {
-    await resetData(userDbModel, userIdsCreated);
-
     await mongooseConnector.close();
   });
 
