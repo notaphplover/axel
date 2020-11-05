@@ -22,7 +22,7 @@ import { InversifyContainerTaskGraphNodeExtractor } from '../../../../task-graph
 import { Land } from '../../../domain/model/card/Land';
 import { PerformTasksResult } from '../../../../task-graph/domain/TaskGraph';
 import { USER_E2E_TYPES } from '../../../../user/test/config/types/e2eTypes';
-import { UserToken } from '../../../../user/domain/model/UserToken';
+import { UserToken } from '../../../../user/domain';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { configTest } from '../../../../../layer-modules/config/test';
 
