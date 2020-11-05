@@ -14,11 +14,13 @@ interface TaskGraphNodeSchedulingState<TId> {
 export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
   protected readonly taskGraphNodesMap: Map<TId, TaskGraphNode<TId, unknown>>;
 
-  constructor(taskGraphNodes: Iterable<TaskGraphNode<TId, unknown>>) {
+  constructor(
+    taskGraphNodes?: Iterable<TaskGraphNode<TId, unknown>> | undefined,
+  ) {
     this.taskGraphNodesMap = new Map<TId, TaskGraphNode<TId, unknown>>();
 
-    for (const taskGraphNode of taskGraphNodes) {
-      this.taskGraphNodesMap.set(taskGraphNode.id, taskGraphNode);
+    if (taskGraphNodes !== undefined) {
+      this.addTasks(taskGraphNodes);
     }
   }
 
@@ -45,6 +47,12 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
         error: (err as Error).message,
         success: false,
       };
+    }
+  }
+
+  public addTasks(taskGraphNodes: Iterable<TaskGraphNode<TId, unknown>>): void {
+    for (const taskGraphNode of taskGraphNodes) {
+      this.taskGraphNodesMap.set(taskGraphNode.id, taskGraphNode);
     }
   }
 
