@@ -5,12 +5,12 @@ import {
   dbAdapter,
 } from '../../../../../layer-modules/db/adapter';
 import {
+  PerformTasksResult,
   QueueBasedTaskGraph,
   TaskGraphNode,
 } from '../../../../task-graph/domain';
 import { AppEnvLoader } from '../../../../../app/adapter/env/AppEnvLoader';
 import { AppEnvVariables } from '../../../../../app/adapter';
-import { COMMON_E2E_TYPES } from '../../../../../common/test/config/types/e2ETypes';
 import { Capsule } from '../../../../../common/domain';
 import { CardDeckApiV1 } from '../../../adapter/api/model/deck/CardDeckApiV1';
 import { CardDeckCreationQueryApiV1 } from '../../../adapter/api/query/deck/CardDeckCreationQueryApiV1';
@@ -20,8 +20,8 @@ import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
 import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
 import { InversifyContainerTaskGraphNodeExtractor } from '../../../../task-graph/adapter';
 import { Land } from '../../../domain/model/card/Land';
-import { PerformTasksResult } from '../../../../task-graph/domain/TaskGraph';
 import { UserToken } from '../../../../user/domain';
+import { commonTest } from '../../../../../common/test';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { configTest } from '../../../../../layer-modules/config/test';
 import { userTest } from '../../../../user/test';
@@ -65,7 +65,7 @@ async function prepareData(): Promise<E2EComponents> {
   const e2eContainer: Container = configTest.e2eContainer.createChild();
 
   e2eContainer
-    .bind(COMMON_E2E_TYPES.taskGraph.CURRENT_TASK_GRAPH)
+    .bind(commonTest.config.types.taskGraph.CURRENT_TASK_GRAPH)
     .toConstantValue(taskGraph);
 
   const createUserTokenTaskGraphNode: TaskGraphNode<
