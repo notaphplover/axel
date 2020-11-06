@@ -19,10 +19,17 @@ export abstract class JoiObjectValidator<TObject>
         result: false,
       };
     } else {
-      return {
-        model: value as TObject,
-        result: true,
-      };
+      if (hasValue(joiValidationResult.error)) {
+        return {
+          errorMessage: joiValidationResult.error.message,
+          result: false,
+        };
+      } else {
+        return {
+          model: value as TObject,
+          result: true,
+        };
+      }
     }
   }
 }
