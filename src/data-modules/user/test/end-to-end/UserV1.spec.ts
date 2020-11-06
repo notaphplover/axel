@@ -17,6 +17,7 @@ import { StatusCodes } from 'http-status-codes';
 import { UserApiV1 } from '../../adapter/api/model/UserApiV1';
 import { UserCreationQueryApiV1 } from '../../adapter/api/query/UserCreationQueryApiV1';
 import { configAdapter } from '../../../../layer-modules/config/adapter';
+import { v4 as uuidv4 } from 'uuid';
 
 const container: Container = configAdapter.container;
 
@@ -28,7 +29,7 @@ const APP_URL_PROTOCOL: string = 'http://';
 const APP_URL_HOST: string = '127.0.0.1';
 const APP_URL_PORT: number = dockerAppEnvLoader.index.APP_SERVER_PORT;
 
-const TEST_FIXTURES_DISCRIMINATOR: string = 'End2EndUserV1';
+const TEST_FIXTURES_DISCRIMINATOR: string = uuidv4();
 
 function getAuthCreationQueryApiV1(): AuthCreationQueryApiV1 {
   const authCreationQueryApiV1: AuthCreationQueryApiV1 = authCreationQueryApiV1FixtureFactory.get();
@@ -41,7 +42,8 @@ function getAuthCreationQueryApiV1(): AuthCreationQueryApiV1 {
 function getUserCreationQueryApiV1(): UserCreationQueryApiV1 {
   const userCreationQueryApiV1Fixture: UserCreationQueryApiV1 = userCreationQueryApiV1FixtureFactory.get();
 
-  userCreationQueryApiV1Fixture.email += TEST_FIXTURES_DISCRIMINATOR;
+  userCreationQueryApiV1Fixture.email =
+    TEST_FIXTURES_DISCRIMINATOR + userCreationQueryApiV1Fixture.email;
   userCreationQueryApiV1Fixture.username += TEST_FIXTURES_DISCRIMINATOR;
 
   return userCreationQueryApiV1Fixture;
