@@ -6,7 +6,7 @@ export interface LandDb extends CardDb {
   type: CardType.Land;
 }
 
-export const landDbAdditionalPropertiesSchemaDefinition: SchemaDefinition = {};
+const landDbAdditionalPropertiesSchemaDefinition: SchemaDefinition = {};
 
 export const landDbSchema: Schema = new Schema(
   landDbAdditionalPropertiesSchemaDefinition,

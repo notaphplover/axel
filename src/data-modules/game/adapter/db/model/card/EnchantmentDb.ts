@@ -6,7 +6,7 @@ export interface EnchantmentDb extends CardDb {
   type: CardType.Enchantment;
 }
 
-export const enchantmentDbAdditionalPropertiesSchemaDefinition: SchemaDefinition = {};
+const enchantmentDbAdditionalPropertiesSchemaDefinition: SchemaDefinition = {};
 
 export const enchantmentDbSchema: Schema = new Schema(
   enchantmentDbAdditionalPropertiesSchemaDefinition,

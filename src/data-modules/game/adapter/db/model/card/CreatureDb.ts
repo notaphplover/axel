@@ -8,7 +8,7 @@ export interface CreatureDb extends CardDb {
   toughness: number;
 }
 
-export const creatureDbAdditionalPropertiesSchemaDefinition: SchemaDefinition = {
+const creatureDbAdditionalPropertiesSchemaDefinition: SchemaDefinition = {
   power: { type: Number, required: true },
   toughness: { type: Number, required: true },
 };

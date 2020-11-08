@@ -6,7 +6,7 @@ export interface ArtifactDb extends CardDb {
   type: CardType.Artifact;
 }
 
-export const artifactDbAdditionalPropertiesSchemaDefinition: SchemaDefinition = {};
+const artifactDbAdditionalPropertiesSchemaDefinition: SchemaDefinition = {};
 
 export const artifactDbSchema: Schema = new Schema(
   artifactDbAdditionalPropertiesSchemaDefinition,
