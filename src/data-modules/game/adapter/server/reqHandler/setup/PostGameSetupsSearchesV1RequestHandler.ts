@@ -17,7 +17,8 @@ import { GameSetupFindQueryApiV1 } from '../../../api/query/setup/GameSetupFindQ
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()
-export class GetGameSetupsV1RequestHandler implements FastifyRequestHandler {
+export class PostGameSetupsSearchesV1RequestHandler
+  implements FastifyRequestHandler {
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.setup
@@ -56,7 +57,7 @@ export class GetGameSetupsV1RequestHandler implements FastifyRequestHandler {
     reply: FastifyReply,
   ): Promise<void> {
     const validationResult: ValidationResult<GameSetupFindQueryApiV1> = this.gameSetupFindQueryApiV1Validator.validate(
-      request.params,
+      request.body,
     );
 
     if (validationResult.result) {

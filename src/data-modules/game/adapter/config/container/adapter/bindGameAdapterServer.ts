@@ -5,11 +5,11 @@ import { GameRouter } from '../../../server/router/GameRouter';
 import { GameSetupRouter } from '../../../server/router/setup/GameSetupRouter';
 import { GetCardDeckByIdV1RequestHandler } from '../../../server/reqHandler/deck/GetCardDeckByIdV1RequestHandler';
 import { GetGameByIdV1RequestHandler } from '../../../server/reqHandler/GetGameByIdV1RequestHandler';
-import { GetGameSetupsV1RequestHandler } from '../../../server/reqHandler/setup/GetGameSetupsV1RequestHandler';
 import { PostCardDeckV1RequestHandler } from '../../../server/reqHandler/deck/PostCardDeckV1RequestHandler';
 import { PostCardV1RequestHandler } from '../../../server/reqHandler/card/PostCardV1RequestHandler';
 import { PostCardsSearchesV1RequestHandler } from '../../../server/reqHandler/card/PostCardsSearchesV1RequestHandler';
 import { PostGameSetupV1RequestHandler } from '../../../server/reqHandler/setup/PostGameSetupV1RequestHandler';
+import { PostGameSetupsSearchesV1RequestHandler } from '../../../server/reqHandler/setup/PostGameSetupsSearchesV1RequestHandler';
 import { PostGameV1RequestHandler } from '../../../server/reqHandler/PostGameV1RequestHandler';
 import { interfaces } from 'inversify';
 
@@ -38,12 +38,12 @@ export function bindGameAdapterServer(bind: interfaces.Bind): void {
 
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.setup
-      .GET_GAME_SETUPS_V1_REQUEST_HANDLER,
-  ).to(GetGameSetupsV1RequestHandler);
-  bind(
-    GAME_ADAPTER_TYPES.server.reqHandler.setup
       .POST_GAME_SETUP_V1_REQUEST_HANDLER,
   ).to(PostGameSetupV1RequestHandler);
+  bind(
+    GAME_ADAPTER_TYPES.server.reqHandler.setup
+      .POST_GAME_SETUPS_SEARCHES_V1_REQUEST_HANDLER,
+  ).to(PostGameSetupsSearchesV1RequestHandler);
 
   bind(GAME_ADAPTER_TYPES.server.router.GAME_ROUTER).to(GameRouter);
   bind(GAME_ADAPTER_TYPES.server.router.card.CARD_ROUTER).to(CardRouter);

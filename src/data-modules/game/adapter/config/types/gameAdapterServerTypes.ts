@@ -20,11 +20,11 @@ export const GAME_ADAPTER_SERVER_TYPES = {
       ),
     },
     setup: {
-      GET_GAME_SETUPS_V1_REQUEST_HANDLER: Symbol.for(
-        'GetGameSetupsV1RequestHandler',
-      ),
       POST_GAME_SETUP_V1_REQUEST_HANDLER: Symbol.for(
         'PostGameSetupV1RequestHandler',
+      ),
+      POST_GAME_SETUPS_SEARCHES_V1_REQUEST_HANDLER: Symbol.for(
+        'PostGameSetupsSearchesV1RequestHandler',
       ),
     },
   },

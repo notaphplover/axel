@@ -27,9 +27,9 @@ export class GameSetupRouter implements FastifyRouter {
     private readonly fastifyUserAuthenticator: FastifyUserAuthenticator,
     @inject(
       GAME_ADAPTER_TYPES.server.reqHandler.setup
-        .GET_GAME_SETUPS_V1_REQUEST_HANDLER,
+        .POST_GAME_SETUPS_SEARCHES_V1_REQUEST_HANDLER,
     )
-    private readonly getGameSetupsV1RequestHandler: FastifyRequestHandler,
+    private readonly postGameSetupsSearchesV1RequestHandler: FastifyRequestHandler,
     @inject(
       GAME_ADAPTER_TYPES.server.reqHandler.setup
         .POST_GAME_SETUP_V1_REQUEST_HANDLER,
@@ -53,17 +53,6 @@ export class GameSetupRouter implements FastifyRouter {
   }
 
   private async injectRoutesV1(server: FastifyInstance): Promise<void> {
-    server.get(`/${GAME_SETUP_ROUTER_PATH_PREFIX}`, {
-      onRequest: async (request: FastifyRequest, reply: FastifyReply) => {
-        await this.fastifyUserAuthenticator.authenticate(request, reply, [
-          UserRole.CLIENT,
-        ]);
-      },
-      handler: this.getGameSetupsV1RequestHandler.handle.bind(
-        this.getGameSetupsV1RequestHandler,
-      ),
-    });
-
     server.post(`/${GAME_SETUP_ROUTER_PATH_PREFIX}`, {
       onRequest: async (request: FastifyRequest, reply: FastifyReply) => {
         const user: User | null = await this.fastifyUserAuthenticator.authenticate(
@@ -80,6 +69,17 @@ export class GameSetupRouter implements FastifyRouter {
           request as FastifyRequest & UserContainer,
           reply,
         ),
+    });
+
+    server.post(`/${GAME_SETUP_ROUTER_PATH_PREFIX}/searches`, {
+      onRequest: async (request: FastifyRequest, reply: FastifyReply) => {
+        await this.fastifyUserAuthenticator.authenticate(request, reply, [
+          UserRole.CLIENT,
+        ]);
+      },
+      handler: this.postGameSetupsSearchesV1RequestHandler.handle.bind(
+        this.postGameSetupsSearchesV1RequestHandler,
+      ),
     });
   }
 }

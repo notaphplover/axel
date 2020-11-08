@@ -12,7 +12,7 @@ import { BasicGameSetup } from '../../../../../../domain/model/setup/BasicGameSe
 import { BasicGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/BasicGameSetupApiV1';
 import { GameSetupFindQuery } from '../../../../../../domain/query/setup/GameSetupFindQuery';
 import { GameSetupFindQueryApiV1 } from '../../../../../../adapter/api/query/setup/GameSetupFindQueryApiV1';
-import { GetGameSetupsV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/GetGameSetupsV1RequestHandler';
+import { PostGameSetupsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PostGameSetupsSearchesV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
 import { basicGameSetupApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/setup';
 import { basicGameSetupFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/setup';
@@ -20,7 +20,7 @@ import { basicGameSetupFixtureFactory } from '../../../../../fixtures/domain/mod
 import { commonTest } from '../../../../../../../../common/test';
 import { gameSetupFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/setup';
 
-describe(GetGameSetupsV1RequestHandler.name, () => {
+describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
   let basicGameSetupToBasicGameSetupApiV1Converter: Converter<
     BasicGameSetup,
     BasicGameSetupApiV1
@@ -35,7 +35,7 @@ describe(GetGameSetupsV1RequestHandler.name, () => {
   >;
   let gameSetupFindQueryApiV1Validator: Validator<GameSetupFindQueryApiV1>;
 
-  let getGameSetupByIdV1RequestHandler: GetGameSetupsV1RequestHandler;
+  let getGameSetupByIdV1RequestHandler: PostGameSetupsSearchesV1RequestHandler;
 
   beforeAll(() => {
     basicGameSetupToBasicGameSetupApiV1Converter = {
@@ -51,7 +51,7 @@ describe(GetGameSetupsV1RequestHandler.name, () => {
       validate: jest.fn(),
     };
 
-    getGameSetupByIdV1RequestHandler = new GetGameSetupsV1RequestHandler(
+    getGameSetupByIdV1RequestHandler = new PostGameSetupsSearchesV1RequestHandler(
       basicGameSetupToBasicGameSetupApiV1Converter,
       findBasicGameSetupsInteractor,
       gameSetupFindQueryApiV1ToGameSetupFindQueryConverter,
@@ -68,7 +68,7 @@ describe(GetGameSetupsV1RequestHandler.name, () => {
 
       beforeAll(async () => {
         requestFixture = ({
-          params: gameSetupFindQueryApiV1FixtureFactory.get(),
+          body: gameSetupFindQueryApiV1FixtureFactory.get(),
         } as Partial<FastifyRequest>) as FastifyRequest;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
@@ -111,7 +111,7 @@ describe(GetGameSetupsV1RequestHandler.name, () => {
           1,
         );
         expect(gameSetupFindQueryApiV1Validator.validate).toHaveBeenCalledWith(
-          requestFixture.params,
+          requestFixture.body,
         );
       });
 
@@ -156,7 +156,7 @@ describe(GetGameSetupsV1RequestHandler.name, () => {
 
       beforeAll(async () => {
         requestFixture = ({
-          params: gameSetupFindQueryApiV1FixtureFactory.get(),
+          body: gameSetupFindQueryApiV1FixtureFactory.get(),
         } as Partial<FastifyRequest>) as FastifyRequest;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
