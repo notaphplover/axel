@@ -9,10 +9,12 @@ export const cardFindQueryApiV1JoyValidatorSchema: Joi.ObjectSchema<CardFindQuer
 >({
   id: Joi.string().optional(),
   limit: Joi.number()
+    .strict()
     .integer()
     .positive()
-    .max(CARD_FIND_QUERY_API_V1_LIMIT_MAX_VALUE),
-  offset: Joi.number().integer().min(0),
+    .max(CARD_FIND_QUERY_API_V1_LIMIT_MAX_VALUE)
+    .required(),
+  offset: Joi.number().strict().integer().min(0).required(),
   types: Joi.alternatives(
     cardTypeApiV1JoyValidatorSchema,
     Joi.array().items(cardTypeApiV1JoyValidatorSchema),

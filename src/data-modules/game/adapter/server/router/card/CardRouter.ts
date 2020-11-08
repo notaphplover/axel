@@ -23,7 +23,8 @@ export class CardRouter implements FastifyRouter {
     @inject(userAdapter.config.types.auth.FASTIFY_USER_AUTHENTICATOR)
     private readonly fastifyUserAuthenticator: FastifyUserAuthenticator,
     @inject(
-      GAME_ADAPTER_TYPES.server.reqHandler.card.GET_CARDS_V1_REQUEST_HANDLER,
+      GAME_ADAPTER_TYPES.server.reqHandler.card
+        .POST_CARDS_SEARCHES_V1_REQUEST_HANDLER,
     )
     private readonly getCardsV1RequestHandler: FastifyRequestHandler,
     @inject(
@@ -46,7 +47,7 @@ export class CardRouter implements FastifyRouter {
   }
 
   private async injectRoutesV1(server: FastifyInstance): Promise<void> {
-    server.get(`/${CARD_ROUTER_PATH_PREFIX}`, {
+    server.post(`/${CARD_ROUTER_PATH_PREFIX}/searches`, {
       handler: this.getCardsV1RequestHandler.handle.bind(
         this.getCardsV1RequestHandler,
       ),

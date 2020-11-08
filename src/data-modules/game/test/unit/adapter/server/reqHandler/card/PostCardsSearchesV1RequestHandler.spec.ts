@@ -11,14 +11,14 @@ import { Card } from '../../../../../../domain/model/card/Card';
 import { CardApiV1 } from '../../../../../../adapter/api/model/card/CardApiV1';
 import { CardFindQuery } from '../../../../../../domain/query/card/CardFindQuery';
 import { CardFindQueryApiV1 } from '../../../../../../adapter/api/query/card/CardFindQueryApiV1';
-import { GetCardsV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/GetCardsV1RequestHandler';
+import { PostCardsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/PostCardsSearchesV1RequestHandler';
 import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
 import { artifactFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
 import { artifactFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
 import { artifactFixtureFactory } from '../../../../../fixtures/domain/model/card';
 import { fastifyReplyFixtureFactory } from '../../../../../../../../layer-modules/server/test/fixtures/fastify.fixture';
 
-describe(GetCardsV1RequestHandler.name, () => {
+describe(PostCardsSearchesV1RequestHandler.name, () => {
   let cardFindQueryApiV1ToCardFindQueryConverter: Converter<
     CardFindQueryApiV1,
     CardFindQuery
@@ -27,7 +27,7 @@ describe(GetCardsV1RequestHandler.name, () => {
   let cardToCardApiV1Converter: Converter<Card, CardApiV1>;
   let findCardsInteractor: Interactor<CardFindQuery, Promise<Card[]>>;
 
-  let getCardsV1RequestHandler: GetCardsV1RequestHandler;
+  let getCardsV1RequestHandler: PostCardsSearchesV1RequestHandler;
 
   beforeAll(async () => {
     cardFindQueryApiV1ToCardFindQueryConverter = {
@@ -43,7 +43,7 @@ describe(GetCardsV1RequestHandler.name, () => {
       interact: jest.fn(),
     };
 
-    getCardsV1RequestHandler = new GetCardsV1RequestHandler(
+    getCardsV1RequestHandler = new PostCardsSearchesV1RequestHandler(
       cardFindQueryApiV1ToCardFindQueryConverter,
       cardFindQueryApiV1Validator,
       cardToCardApiV1Converter,
@@ -60,7 +60,7 @@ describe(GetCardsV1RequestHandler.name, () => {
 
       beforeAll(async () => {
         requestFixture = ({
-          params: artifactFindQueryApiV1FixtureFactory.get(),
+          body: artifactFindQueryApiV1FixtureFactory.get(),
         } as Partial<FastifyRequest>) as FastifyRequest;
 
         replyFixture = fastifyReplyFixtureFactory.get();

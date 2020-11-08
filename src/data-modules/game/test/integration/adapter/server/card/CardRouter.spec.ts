@@ -54,47 +54,6 @@ fastifyIntegrationDescribeGenerator(cardRouter, fastifyServerTestOutputParam)(
           .fastify as FastifyInstance;
       });
 
-      describe('GET Cards', () => {
-        describe('when called', () => {
-          let responseBodyFixture: Record<string, unknown>;
-          let response: LightMyRequestResponse;
-
-          beforeAll(async () => {
-            responseBodyFixture = {
-              foo: 'bar',
-            };
-
-            (getCardsV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
-              async (
-                request: FastifyRequest,
-                reply: FastifyReply,
-              ): Promise<void> => {
-                await reply.send(responseBodyFixture);
-              },
-            );
-
-            response = await fastifyInstance.inject({
-              method: 'GET',
-              url: '/v1/cards',
-            });
-          });
-
-          afterAll(async () => {
-            (fastifyUserAuthenticator.authenticate as jest.Mock).mockClear();
-            (getCardsV1RequestHandlerMock.handle as jest.Mock).mockClear();
-          });
-
-          it('must call getCardsV1RequestHandlerMock.handle to handle the request', () => {
-            expect(getCardsV1RequestHandlerMock.handle).toHaveBeenCalledTimes(
-              1,
-            );
-            expect(JSON.parse(response.body)).toStrictEqual(
-              responseBodyFixture,
-            );
-          });
-        });
-      });
-
       describe('POST Cards', () => {
         describe('when called, with valid auth', () => {
           let responseBodyFixture: Record<string, unknown>;
@@ -190,6 +149,47 @@ fastifyIntegrationDescribeGenerator(cardRouter, fastifyServerTestOutputParam)(
             expect(response.statusCode).toBe(fastifyUserAuthenticatorCodeSent);
             expect(JSON.parse(response.body)).toStrictEqual(
               fastifyUserAuthenticatorBodySent,
+            );
+          });
+        });
+      });
+
+      describe('POST Cards searches', () => {
+        describe('when called', () => {
+          let responseBodyFixture: Record<string, unknown>;
+          let response: LightMyRequestResponse;
+
+          beforeAll(async () => {
+            responseBodyFixture = {
+              foo: 'bar',
+            };
+
+            (getCardsV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
+              async (
+                request: FastifyRequest,
+                reply: FastifyReply,
+              ): Promise<void> => {
+                await reply.send(responseBodyFixture);
+              },
+            );
+
+            response = await fastifyInstance.inject({
+              method: 'POST',
+              url: '/v1/cards/searches',
+            });
+          });
+
+          afterAll(async () => {
+            (fastifyUserAuthenticator.authenticate as jest.Mock).mockClear();
+            (getCardsV1RequestHandlerMock.handle as jest.Mock).mockClear();
+          });
+
+          it('must call getCardsV1RequestHandlerMock.handle to handle the request', () => {
+            expect(getCardsV1RequestHandlerMock.handle).toHaveBeenCalledTimes(
+              1,
+            );
+            expect(JSON.parse(response.body)).toStrictEqual(
+              responseBodyFixture,
             );
           });
         });

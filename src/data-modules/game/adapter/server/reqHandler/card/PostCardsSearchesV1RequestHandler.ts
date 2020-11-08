@@ -16,7 +16,8 @@ import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()
-export class GetCardsV1RequestHandler implements FastifyRequestHandler {
+export class PostCardsSearchesV1RequestHandler
+  implements FastifyRequestHandler {
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.card
@@ -44,7 +45,7 @@ export class GetCardsV1RequestHandler implements FastifyRequestHandler {
     reply: FastifyReply,
   ): Promise<void> {
     const validationResult: ValidationResult<CardFindQueryApiV1> = this.cardFindQueryApiV1Validator.validate(
-      request.params,
+      request.body,
     );
 
     if (validationResult.result) {
