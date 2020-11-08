@@ -23,14 +23,14 @@ export class CardRouter implements FastifyRouter {
     @inject(userAdapter.config.types.auth.FASTIFY_USER_AUTHENTICATOR)
     private readonly fastifyUserAuthenticator: FastifyUserAuthenticator,
     @inject(
-      GAME_ADAPTER_TYPES.server.reqHandler.card
-        .POST_CARDS_SEARCHES_V1_REQUEST_HANDLER,
-    )
-    private readonly getCardsV1RequestHandler: FastifyRequestHandler,
-    @inject(
       GAME_ADAPTER_TYPES.server.reqHandler.card.POST_CARD_V1_REQUEST_HANDLER,
     )
     private readonly postCardV1RequestHandler: FastifyRequestHandler,
+    @inject(
+      GAME_ADAPTER_TYPES.server.reqHandler.card
+        .POST_CARDS_SEARCHES_V1_REQUEST_HANDLER,
+    )
+    private readonly postCardsSearchesV1RequestHandler: FastifyRequestHandler,
   ) {}
 
   public async injectRoutes(
@@ -47,11 +47,6 @@ export class CardRouter implements FastifyRouter {
   }
 
   private async injectRoutesV1(server: FastifyInstance): Promise<void> {
-    server.post(`/${CARD_ROUTER_PATH_PREFIX}/searches`, {
-      handler: this.getCardsV1RequestHandler.handle.bind(
-        this.getCardsV1RequestHandler,
-      ),
-    });
     server.post(`/${CARD_ROUTER_PATH_PREFIX}`, {
       onRequest: async (request: FastifyRequest, reply: FastifyReply) => {
         await this.fastifyUserAuthenticator.authenticate(request, reply, [
@@ -60,6 +55,11 @@ export class CardRouter implements FastifyRouter {
       },
       handler: this.postCardV1RequestHandler.handle.bind(
         this.postCardV1RequestHandler,
+      ),
+    });
+    server.post(`/${CARD_ROUTER_PATH_PREFIX}/searches`, {
+      handler: this.postCardsSearchesV1RequestHandler.handle.bind(
+        this.postCardsSearchesV1RequestHandler,
       ),
     });
   }

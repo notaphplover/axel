@@ -25,10 +25,6 @@ const fastifyIntegrationDescribeGenerator: (
 
 const fastifyServerTestOutputParam: FastifyServerTestOutputParam = {};
 
-const getCardsV1RequestHandlerMock: FastifyRequestHandler = {
-  handle: jest.fn(),
-};
-
 const fastifyUserAuthenticator: FastifyUserAuthenticator = ({
   authenticate: jest.fn(),
 } as Partial<FastifyUserAuthenticator>) as FastifyUserAuthenticator;
@@ -37,10 +33,14 @@ const postCardV1RequestHandlerMock: FastifyRequestHandler = {
   handle: jest.fn(),
 };
 
+const postCardsSearchesV1RequestHandlerMock: FastifyRequestHandler = {
+  handle: jest.fn(),
+};
+
 const cardRouter: FastifyRouter = new CardRouter(
   fastifyUserAuthenticator,
-  getCardsV1RequestHandlerMock,
   postCardV1RequestHandlerMock,
+  postCardsSearchesV1RequestHandlerMock,
 );
 
 fastifyIntegrationDescribeGenerator(cardRouter, fastifyServerTestOutputParam)(
@@ -164,7 +164,7 @@ fastifyIntegrationDescribeGenerator(cardRouter, fastifyServerTestOutputParam)(
               foo: 'bar',
             };
 
-            (getCardsV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
+            (postCardsSearchesV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
               async (
                 request: FastifyRequest,
                 reply: FastifyReply,
@@ -181,13 +181,13 @@ fastifyIntegrationDescribeGenerator(cardRouter, fastifyServerTestOutputParam)(
 
           afterAll(async () => {
             (fastifyUserAuthenticator.authenticate as jest.Mock).mockClear();
-            (getCardsV1RequestHandlerMock.handle as jest.Mock).mockClear();
+            (postCardsSearchesV1RequestHandlerMock.handle as jest.Mock).mockClear();
           });
 
           it('must call getCardsV1RequestHandlerMock.handle to handle the request', () => {
-            expect(getCardsV1RequestHandlerMock.handle).toHaveBeenCalledTimes(
-              1,
-            );
+            expect(
+              postCardsSearchesV1RequestHandlerMock.handle,
+            ).toHaveBeenCalledTimes(1);
             expect(JSON.parse(response.body)).toStrictEqual(
               responseBodyFixture,
             );
