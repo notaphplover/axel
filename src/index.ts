@@ -5,7 +5,10 @@ import {
   FastifyPortListeningServer,
   FastifyRouter,
 } from './layer-modules/server/adapter';
-import { MongooseConector, dbAdapter } from './layer-modules/db/adapter';
+import {
+  MongooseConector,
+  mongooseAdapter,
+} from './integration-modules/mongoose/adapter';
 import { Container } from 'inversify';
 import { EnvLoader } from './layer-modules/env/domain';
 import { configAdapter } from './layer-modules/config/adapter';
@@ -36,7 +39,7 @@ void (async () => {
   );
 
   const mongooseConnector: MongooseConector = container.get(
-    dbAdapter.config.types.db.MONGOOSE_CONNECTOR,
+    mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
   );
 
   const statusRouter: FastifyRouter = container.get(

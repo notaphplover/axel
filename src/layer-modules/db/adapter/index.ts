@@ -1,8 +1,8 @@
 import { DB_ADAPTER_PUBLIC_TYPES } from './config/types';
-import { MongooseConector } from './MongooseConnector';
+import { DbDotEnvVariables } from './env/DbDotEnvVariables';
 import { dbContainer } from './config/container';
 
-export { MongooseConector };
+export { DbDotEnvVariables };
 
 // eslint-disable-next-line @typescript-eslint/typedef
 export const dbAdapter = {

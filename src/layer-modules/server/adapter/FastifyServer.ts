@@ -1,7 +1,7 @@
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import { ApiVersion } from '../../api/adapter';
 import { FastifyRouter } from './FastifyRouter';
-import { MongooseConector } from '../../db/adapter';
+import { MongooseConector } from '../../../integration-modules/mongoose/adapter';
 import { Server } from '../domain/Server';
 import { injectable } from 'inversify';
 

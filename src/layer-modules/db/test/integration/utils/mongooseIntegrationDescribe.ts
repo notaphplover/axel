@@ -1,4 +1,7 @@
-import { MongooseConector, dbAdapter } from '../../../adapter';
+import {
+  MongooseConector,
+  mongooseAdapter,
+} from '../../../../../integration-modules/mongoose/adapter';
 import { Container } from 'inversify';
 import { commonTest } from '../../../../../common/test';
 import { configAdapter } from '../../../../config/adapter';
@@ -13,7 +16,7 @@ export const mongooseIntegrationDescribe: jest.Describe = commonTest.integration
     beforeAll(
       async (): Promise<void> => {
         mongooseConnector = container.get(
-          dbAdapter.config.types.db.MONGOOSE_CONNECTOR,
+          mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
         );
         await mongooseConnector.connect();
       },

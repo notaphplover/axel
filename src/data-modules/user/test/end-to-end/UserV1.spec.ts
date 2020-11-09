@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import * as axios from 'axios';
 import {
   MongooseConector,
-  dbAdapter,
-} from '../../../../layer-modules/db/adapter';
+  mongooseAdapter,
+} from '../../../../integration-modules/mongoose/adapter';
 import {
   authCreationQueryApiV1FixtureFactory,
   userCreationQueryApiV1FixtureFactory,
@@ -58,7 +58,7 @@ describe('User V1', () => {
 
   beforeAll(async () => {
     mongooseConnector = container.get(
-      dbAdapter.config.types.db.MONGOOSE_CONNECTOR,
+      mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
     );
 
     userIdsCreated = [];

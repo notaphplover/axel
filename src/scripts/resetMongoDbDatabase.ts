@@ -1,10 +1,13 @@
 import 'reflect-metadata';
-import { MongooseConector, dbAdapter } from '../layer-modules/db/adapter';
+import {
+  MongooseConector,
+  mongooseAdapter,
+} from '../integration-modules/mongoose/adapter';
 import { container } from '../layer-modules/config/adapter/container';
 import mongoose from 'mongoose';
 
 const mongooseConnector: MongooseConector = container.get(
-  dbAdapter.config.types.db.MONGOOSE_CONNECTOR,
+  mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
 );
 
 const mongoDbConnectionIsOpenedPromise: Promise<void> = new Promise(

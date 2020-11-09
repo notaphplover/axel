@@ -1,4 +1,7 @@
-import { MongooseConector, dbAdapter } from '../../../../db/adapter';
+import {
+  MongooseConector,
+  mongooseAdapter,
+} from '../../../../../integration-modules/mongoose/adapter';
 import { Container } from 'inversify';
 import { FastifyRouter } from '../../../adapter/FastifyRouter';
 import { FastifyServerTest } from '../FastifyServerTest';
@@ -25,7 +28,7 @@ export const fastifyIntegrationDescribeGenerator: (
 
     beforeAll(async () => {
       mongooseConnector = container.get(
-        dbAdapter.config.types.db.MONGOOSE_CONNECTOR,
+        mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
       );
       fastifyServerTest = new FastifyServerTest(mongooseConnector, [router]);
 
