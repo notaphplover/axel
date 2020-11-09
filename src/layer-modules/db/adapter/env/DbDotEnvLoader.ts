@@ -2,7 +2,7 @@ import { AppEnvVariables, appAdapter } from '../../../../app/adapter';
 import { EnvLoader, Index } from '../../../env/domain';
 import { inject, injectable } from 'inversify';
 import { DbDotEnvVariables } from './DbDotEnvVariables';
-import { DotEnvLoader } from '../../../env/adapter';
+import { DotEnvLoader } from '../../../../integration-modules/dotenv/adapter';
 import { env } from 'process';
 import { join } from 'path';
 

@@ -1,7 +1,7 @@
 import { AppEnvVariables, appAdapter } from '../../../app/adapter';
 import { EnvLoader, Index } from '../../../layer-modules/env/domain';
 import { inject, injectable } from 'inversify';
-import { DotEnvLoader } from '../../../layer-modules/env/adapter';
+import { DotEnvLoader } from '../../../integration-modules/dotenv/adapter';
 import { JwtDotEnvVariables } from './JwtDotEnvVariables';
 import { env } from 'process';
 import { join } from 'path';

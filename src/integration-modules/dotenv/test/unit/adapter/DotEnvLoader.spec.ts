@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { DotEnvLoader } from '../../../adapter/DotEnvLoader';
-import { Index } from '../../../domain';
+import { Index } from '../../../../../layer-modules/env/domain';
 
 jest.mock('dotenv');
 import dotenv from 'dotenv';

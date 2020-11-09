@@ -1,4 +1,4 @@
-import { EnvLoader, Index } from '../domain';
+import { EnvLoader, Index } from '../../../layer-modules/env/domain';
 import { injectable, unmanaged } from 'inversify';
 import dotenv from 'dotenv';
 
