@@ -5,14 +5,12 @@ import {
   FastifyPortListeningServer,
   FastifyRouter,
 } from './layer-modules/server/adapter';
-import {
-  MongooseConector,
-  mongooseAdapter,
-} from './integration-modules/mongoose/adapter';
 import { Container } from 'inversify';
+import { DbConnector } from './layer-modules/db/domain';
 import { EnvLoader } from './layer-modules/env/domain';
 import { configAdapter } from './layer-modules/config/adapter';
 import { gameAdapter } from './data-modules/game/adapter';
+import { mongooseAdapter } from './integration-modules/mongoose/adapter';
 import { userAdapter } from './data-modules/user/adapter';
 
 const container: Container = configAdapter.container;
@@ -38,7 +36,7 @@ void (async () => {
     gameAdapter.config.types.server.router.setup.GAME_SETUP_ROUTER,
   );
 
-  const mongooseConnector: MongooseConector = container.get(
+  const mongooseConnector: DbConnector = container.get(
     mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
   );
 

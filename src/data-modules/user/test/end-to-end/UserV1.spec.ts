@@ -1,10 +1,6 @@
 import 'reflect-metadata';
 import * as axios from 'axios';
 import {
-  MongooseConector,
-  mongooseAdapter,
-} from '../../../../integration-modules/mongoose/adapter';
-import {
   authCreationQueryApiV1FixtureFactory,
   userCreationQueryApiV1FixtureFactory,
 } from '../fixtures/adapter/api/query/fixtures';
@@ -12,11 +8,13 @@ import { AppEnvLoader } from '../../../../app/adapter/env/AppEnvLoader';
 import { AppEnvVariables } from '../../../../app/adapter';
 import { AuthCreationQueryApiV1 } from '../../adapter/api/query/AuthCreationQueryApiV1';
 import { Container } from 'inversify';
+import { DbConnector } from '../../../../layer-modules/db/domain';
 import { EnvLoader } from '../../../../layer-modules/env/domain';
 import { StatusCodes } from 'http-status-codes';
 import { UserApiV1 } from '../../adapter/api/model/UserApiV1';
 import { UserCreationQueryApiV1 } from '../../adapter/api/query/UserCreationQueryApiV1';
 import { configAdapter } from '../../../../layer-modules/config/adapter';
+import { mongooseAdapter } from '../../../../integration-modules/mongoose/adapter';
 import { v4 as uuidv4 } from 'uuid';
 
 const container: Container = configAdapter.container;
@@ -50,7 +48,7 @@ function getUserCreationQueryApiV1(): UserCreationQueryApiV1 {
 }
 
 describe('User V1', () => {
-  let mongooseConnector: MongooseConector;
+  let mongooseConnector: DbConnector;
 
   let userIdsCreated: string[];
 

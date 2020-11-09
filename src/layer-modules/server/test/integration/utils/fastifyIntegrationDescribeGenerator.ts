@@ -1,12 +1,10 @@
-import {
-  MongooseConector,
-  mongooseAdapter,
-} from '../../../../../integration-modules/mongoose/adapter';
 import { Container } from 'inversify';
+import { DbConnector } from '../../../../db/domain';
 import { FastifyRouter } from '../../../adapter/FastifyRouter';
 import { FastifyServerTest } from '../FastifyServerTest';
 import { configAdapter } from '../../../../config/adapter';
 import { customDescribe } from '../../../../../common/test/integration/utills/customDescribe';
+import { mongooseAdapter } from '../../../../../integration-modules/mongoose/adapter';
 
 const container: Container = configAdapter.container;
 
@@ -22,7 +20,7 @@ export const fastifyIntegrationDescribeGenerator: (
   output: FastifyServerTestOutputParam,
 ) =>
   customDescribe(describe, () => {
-    let mongooseConnector: MongooseConector;
+    let mongooseConnector: DbConnector;
 
     let fastifyServerTest: FastifyServerTest;
 

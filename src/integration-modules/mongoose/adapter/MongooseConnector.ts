@@ -3,11 +3,12 @@ import {
   dbAdapter,
 } from '../../../layer-modules/db/adapter';
 import { inject, injectable } from 'inversify';
+import { DbConnector } from '../../../layer-modules/db/domain';
 import { EnvLoader } from '../../../layer-modules/env/domain';
 import mongoose from 'mongoose';
 
 @injectable()
-export class MongooseConector {
+export class MongooseConnector implements DbConnector {
   constructor(
     @inject(dbAdapter.config.types.env.DB_ENV_LOADER)
     private readonly dbEnvLoader: EnvLoader<DbDotEnvVariables>,

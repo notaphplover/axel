@@ -1,10 +1,6 @@
 import 'reflect-metadata';
 import * as axios from 'axios';
 import {
-  MongooseConector,
-  mongooseAdapter,
-} from '../../../../../integration-modules/mongoose/adapter';
-import {
   PerformTasksResult,
   QueueBasedTaskGraph,
   TaskGraphNode,
@@ -15,6 +11,7 @@ import { Capsule } from '../../../../../common/domain';
 import { CardDeckApiV1 } from '../../../adapter/api/model/deck/CardDeckApiV1';
 import { CardDeckCreationQueryApiV1 } from '../../../adapter/api/query/deck/CardDeckCreationQueryApiV1';
 import { Container } from 'inversify';
+import { DbConnector } from '../../../../../layer-modules/db/domain';
 import { EnvLoader } from '../../../../../layer-modules/env/domain';
 import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
 import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
@@ -24,6 +21,7 @@ import { UserToken } from '../../../../user/domain';
 import { commonTest } from '../../../../../common/test';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { configTest } from '../../../../../layer-modules/config/test';
+import { mongooseAdapter } from '../../../../../integration-modules/mongoose/adapter';
 import { userTest } from '../../../../user/test';
 
 const container: Container = configAdapter.container;
@@ -106,7 +104,7 @@ async function prepareData(): Promise<E2EComponents> {
 describe('CardDeck V1', () => {
   let e2eComponents: E2EComponents;
 
-  let mongooseConnector: MongooseConector;
+  let mongooseConnector: DbConnector;
 
   const client: axios.AxiosStatic = axios.default;
 

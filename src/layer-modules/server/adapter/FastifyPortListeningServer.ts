@@ -1,7 +1,7 @@
+import { DbConnector } from '../../db/domain';
 import { FastifyInstance } from 'fastify';
 import { FastifyRouter } from './FastifyRouter';
 import { FastifyServer } from './FastifyServer';
-import { MongooseConector } from '../../../integration-modules/mongoose/adapter';
 import { injectable } from 'inversify';
 
 @injectable()
@@ -9,7 +9,7 @@ export class FastifyPortListeningServer extends FastifyServer {
   protected fastifyInstance: FastifyInstance | undefined;
 
   constructor(
-    mongooseConnector: MongooseConector,
+    mongooseConnector: DbConnector,
     routers: FastifyRouter[],
     private readonly port: number,
   ) {

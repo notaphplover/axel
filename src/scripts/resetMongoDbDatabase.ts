@@ -1,12 +1,10 @@
 import 'reflect-metadata';
-import {
-  MongooseConector,
-  mongooseAdapter,
-} from '../integration-modules/mongoose/adapter';
+import { DbConnector } from '../layer-modules/db/domain';
 import { container } from '../layer-modules/config/adapter/container';
 import mongoose from 'mongoose';
+import { mongooseAdapter } from '../integration-modules/mongoose/adapter';
 
-const mongooseConnector: MongooseConector = container.get(
+const mongooseConnector: DbConnector = container.get(
   mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
 );
 

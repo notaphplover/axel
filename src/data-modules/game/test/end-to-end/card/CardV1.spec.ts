@@ -1,10 +1,6 @@
 import 'reflect-metadata';
 import * as axios from 'axios';
 import {
-  MongooseConector,
-  mongooseAdapter,
-} from '../../../../../integration-modules/mongoose/adapter';
-import {
   QueueBasedTaskGraph,
   TaskGraphNode,
 } from '../../../../task-graph/domain';
@@ -24,6 +20,7 @@ import { CardFindQueryApiV1 } from '../../../adapter/api/query/card/CardFindQuer
 import { Container } from 'inversify';
 import { CreatureApiV1 } from '../../../adapter/api/model/card/CreatureApiV1';
 import { CreatureCreationQueryApiV1 } from '../../../adapter/api/query/card/CreatureCreationQueryApiV1';
+import { DbConnector } from '../../../../../layer-modules/db/domain';
 import { EnchantmentApiV1 } from '../../../adapter/api/model/card/EnchantmentApiV1';
 import { EnchantmentCreationQueryApiV1 } from '../../../adapter/api/query/card/EnchantmentCreationQueryApiV1';
 import { EnvLoader } from '../../../../../layer-modules/env/domain';
@@ -35,6 +32,7 @@ import { UserToken } from '../../../../user/domain';
 import { commonTest } from '../../../../../common/test';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { configTest } from '../../../../../layer-modules/config/test';
+import { mongooseAdapter } from '../../../../../integration-modules/mongoose/adapter';
 import { userTest } from '../../../../user/test';
 
 const container: Container = configAdapter.container;
@@ -92,7 +90,7 @@ async function prepareData(): Promise<E2EComponents> {
 describe('Card V1', () => {
   let e2eComponents: E2EComponents;
 
-  let mongooseConnector: MongooseConector;
+  let mongooseConnector: DbConnector;
 
   const client: axios.AxiosStatic = axios.default;
 

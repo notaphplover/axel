@@ -1,7 +1,7 @@
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import { ApiVersion } from '../../api/adapter';
+import { DbConnector } from '../../db/domain';
 import { FastifyRouter } from './FastifyRouter';
-import { MongooseConector } from '../../../integration-modules/mongoose/adapter';
 import { Server } from '../domain/Server';
 import { injectable } from 'inversify';
 
@@ -10,7 +10,7 @@ export class FastifyServer implements Server {
   protected fastifyInstance: FastifyInstance | undefined;
 
   constructor(
-    private readonly mongooseConnector: MongooseConector,
+    private readonly mongooseConnector: DbConnector,
     private readonly routers: FastifyRouter[],
   ) {
     this.fastifyInstance = undefined;
