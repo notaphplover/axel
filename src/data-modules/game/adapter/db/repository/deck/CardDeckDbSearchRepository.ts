@@ -5,7 +5,7 @@ import { CardDeckDb } from '../../model/deck/CardDeckDb';
 import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
 import { Converter } from '../../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { MongooseSearchRepository } from '../../../../../../layer-modules/db/adapter';
+import { MongooseSearchRepository } from '../../../../../../integration-modules/mongoose/adapter';
 
 @injectable()
 export class CardDeckDbSearchRepository extends MongooseSearchRepository<

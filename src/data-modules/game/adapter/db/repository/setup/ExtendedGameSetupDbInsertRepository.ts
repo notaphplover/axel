@@ -5,7 +5,7 @@ import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { Model } from 'mongoose';
-import { MongooseInsertRepository } from '../../../../../../layer-modules/db/adapter';
+import { MongooseInsertRepository } from '../../../../../../integration-modules/mongoose/adapter';
 
 @injectable()
 export class ExtendedGameSetupDbInsertRepository extends MongooseInsertRepository<

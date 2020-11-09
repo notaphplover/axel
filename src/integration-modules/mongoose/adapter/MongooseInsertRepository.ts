@@ -1,7 +1,7 @@
 import { Document, Model } from 'mongoose';
 import { Converter } from '../../../common/domain';
-import { EntitiesNotCreatedError } from '../domain/exception/EntitiesNotCreatedError';
-import { InsertRepository } from '../domain/InsertRepository';
+import { EntitiesNotCreatedError } from '../../../layer-modules/db/domain/exception/EntitiesNotCreatedError';
+import { InsertRepository } from '../../../layer-modules/db/domain/InsertRepository';
 import { MongoError } from 'mongodb';
 import { injectable } from 'inversify';
 

@@ -1,7 +1,7 @@
 import { Capsule, PaginationQuery } from '../../../common/domain';
 import { Document, DocumentQuery } from 'mongoose';
 import { MongooseProjectionSearchRepository } from './MongooseProjectionSearchRepository';
-import { SearchRepository } from '../domain/SearchRepository';
+import { SearchRepository } from '../../../layer-modules/db/domain';
 import { hasValue } from '../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
 

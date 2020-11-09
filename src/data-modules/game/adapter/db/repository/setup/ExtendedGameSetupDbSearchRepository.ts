@@ -5,7 +5,7 @@ import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSe
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { ExtendedGameSetupFindQuery } from '../../../../domain/query/setup/ExtendedGameSetupFindQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { MongoosePaginatedSearchRepository } from '../../../../../../layer-modules/db/adapter';
+import { MongoosePaginatedSearchRepository } from '../../../../../../integration-modules/mongoose/adapter';
 
 @injectable()
 export class ExtendedGameSetupDbSearchRepository extends MongoosePaginatedSearchRepository<

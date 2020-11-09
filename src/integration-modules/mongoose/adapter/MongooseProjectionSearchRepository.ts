@@ -1,6 +1,6 @@
 import { Capsule, Converter, Filter } from '../../../common/domain';
 import { Document, DocumentQuery, FilterQuery, Model } from 'mongoose';
-import { SearchRepository } from '../domain/SearchRepository';
+import { SearchRepository } from '../../../layer-modules/db/domain';
 import { hasValue } from '../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
 

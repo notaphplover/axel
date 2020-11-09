@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import { Converter, Filter } from '../../../../../common/domain';
 import { Document, DocumentQuery, FilterQuery, Model } from 'mongoose';
-import { MongooseProjectionSearchRepository } from '../../../adapter/MongooseProjectionSearchRepository';
+import { MongooseProjectionSearchRepository } from '../../../../../integration-modules/mongoose/adapter/MongooseProjectionSearchRepository';
 
 class ModelMock {
   constructor(public foo: string) {}

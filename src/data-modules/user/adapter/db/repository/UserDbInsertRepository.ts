@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../../common/domain';
 import { Model } from 'mongoose';
-import { MongooseInsertRepository } from '../../../../../layer-modules/db/adapter';
+import { MongooseInsertRepository } from '../../../../../integration-modules/mongoose/adapter';
 import { USER_ADAPTER_TYPES } from '../../config/types';
 import { User } from '../../../domain/model/User';
 import { UserCreationQuery } from '../../../domain/query/UserCreationQuery';

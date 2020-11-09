@@ -1,7 +1,7 @@
 import { Converter, Filter } from '../../../../../common/domain';
 import { FilterQuery, Model } from 'mongoose';
 import { inject, injectable } from 'inversify';
-import { MongooseSearchRepository } from '../../../../../layer-modules/db/adapter';
+import { MongooseSearchRepository } from '../../../../../integration-modules/mongoose/adapter';
 import { USER_ADAPTER_TYPES } from '../../config/types';
 import { User } from '../../../domain/model/User';
 import { UserDb } from '../model/UserDb';

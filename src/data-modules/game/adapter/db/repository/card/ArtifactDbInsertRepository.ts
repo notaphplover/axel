@@ -5,7 +5,7 @@ import { ArtifactDb } from '../../model/card/ArtifactDb';
 import { Converter } from '../../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { Model } from 'mongoose';
-import { MongooseInsertRepository } from '../../../../../../layer-modules/db/adapter';
+import { MongooseInsertRepository } from '../../../../../../integration-modules/mongoose/adapter';
 
 @injectable()
 export class ArtifactDbInsertRepository extends MongooseInsertRepository<

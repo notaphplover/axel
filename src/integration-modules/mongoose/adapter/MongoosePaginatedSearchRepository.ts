@@ -1,16 +1,21 @@
 import { Converter, Filter } from '../../../common/domain';
 import { Document, FilterQuery, Model } from 'mongoose';
-import { MongooseProjectionSearchRepository } from './MongooseProjectionSearchRepository';
-import { SearchRepository } from '../domain/SearchRepository';
+import { MongooseProjectionPaginatedSearchRepository } from './MongooseProjectionPaginatedSearchRepository';
+import { SearchRepository } from '../../../layer-modules/db/domain';
 import { injectable } from 'inversify';
 
 @injectable()
-export abstract class MongooseSearchRepository<
+export abstract class MongoosePaginatedSearchRepository<
     TModel,
     TModelDb extends Document,
     TQuery
   >
-  extends MongooseProjectionSearchRepository<TModel, TModelDb, TModelDb, TQuery>
+  extends MongooseProjectionPaginatedSearchRepository<
+    TModel,
+    TModelDb,
+    TModelDb,
+    TQuery
+  >
   implements SearchRepository<TModel, TQuery> {
   constructor(
     protected readonly model: Model<TModelDb>,

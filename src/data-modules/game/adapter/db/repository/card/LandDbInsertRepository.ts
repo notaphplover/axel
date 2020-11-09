@@ -5,7 +5,7 @@ import { Land } from '../../../../domain/model/card/Land';
 import { LandCreationQuery } from '../../../../domain/query/card/LandCreationQuery';
 import { LandDb } from '../../model/card/LandDb';
 import { Model } from 'mongoose';
-import { MongooseInsertRepository } from '../../../../../../layer-modules/db/adapter';
+import { MongooseInsertRepository } from '../../../../../../integration-modules/mongoose/adapter';
 
 @injectable()
 export class LandDbInsertRepository extends MongooseInsertRepository<

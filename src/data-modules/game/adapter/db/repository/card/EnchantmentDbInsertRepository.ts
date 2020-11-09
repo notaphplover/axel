@@ -5,7 +5,7 @@ import { EnchantmentCreationQuery } from '../../../../domain/query/card/Enchantm
 import { EnchantmentDb } from '../../model/card/EnchantmentDb';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { Model } from 'mongoose';
-import { MongooseInsertRepository } from '../../../../../../layer-modules/db/adapter';
+import { MongooseInsertRepository } from '../../../../../../integration-modules/mongoose/adapter';
 
 @injectable()
 export class EnchantmentDbInsertRepository extends MongooseInsertRepository<

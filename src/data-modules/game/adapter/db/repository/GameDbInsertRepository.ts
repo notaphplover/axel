@@ -5,7 +5,7 @@ import { Game } from '../../../domain/model/Game';
 import { GameCreationQuery } from '../../../domain/query/GameCreationQuery';
 import { GameDb } from '../model/GameDb';
 import { Model } from 'mongoose';
-import { MongooseInsertRepository } from '../../../../../layer-modules/db/adapter';
+import { MongooseInsertRepository } from '../../../../../integration-modules/mongoose/adapter';
 
 @injectable()
 export class GameDbInsertRepository extends MongooseInsertRepository<

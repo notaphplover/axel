@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import { Converter, PaginationQuery } from '../../../../../common/domain';
 import { Document, DocumentQuery, FilterQuery, Model } from 'mongoose';
-import { MongooseProjectionPaginatedSearchRepository } from '../../../adapter/MongooseProjectionPaginatedSearchRepository';
+import { MongooseProjectionPaginatedSearchRepository } from '../../../../../integration-modules/mongoose/adapter/MongooseProjectionPaginatedSearchRepository';
 
 class ModelMock {
   constructor(public foo: string) {}
