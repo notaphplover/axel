@@ -9,7 +9,7 @@ import {
   FastifyServerTest,
   FastifyServerTestOutputParam,
   serverTest,
-} from '../../../../../../../layer-modules/server/test';
+} from '../../../../../../../integration-modules/fastify/test';
 import { FastifyUserAuthenticator } from '../../../../../../user/adapter';
 import { GameSetupRouter } from '../../../../../adapter/server/router/setup/GameSetupRouter';
 import { Response as LightMyRequestResponse } from 'light-my-request';

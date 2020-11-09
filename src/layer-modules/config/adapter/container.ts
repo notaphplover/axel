@@ -6,7 +6,6 @@ import { jsonSchemaAdapter } from '../../../json-schema/adapter';
 import { jsonwebtokenAdapter } from '../../../integration-modules/jsonwebtoken/adapter';
 import { jwtAdapter } from '../../../jwt/adapter';
 import { mongooseAdapter } from '../../../integration-modules/mongoose/adapter';
-import { serverAdapter } from '../../server/adapter';
 import { userAdapter } from '../../../data-modules/user/adapter';
 
 export const container: Container = new Container();
@@ -18,5 +17,4 @@ container.load(jsonSchemaAdapter.config.container);
 container.load(jsonwebtokenAdapter.config.container);
 container.load(jwtAdapter.config.container);
 container.load(mongooseAdapter.config.container);
-container.load(serverAdapter.config.container);
 container.load(userAdapter.config.container);

@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { FastifyAuthenticator } from '../../../../layer-modules/server/adapter';
+import { FastifyAuthenticator } from '../../../../integration-modules/fastify/adapter';
 import { StatusCodes } from 'http-status-codes';
 import { User } from '../../domain';
 import { UserRole } from '../../domain/model/UserRole';

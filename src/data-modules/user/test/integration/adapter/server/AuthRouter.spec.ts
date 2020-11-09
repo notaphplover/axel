@@ -8,9 +8,9 @@ import {
 import {
   FastifyServerTestOutputParam,
   serverTest,
-} from '../../../../../../layer-modules/server/test';
+} from '../../../../../../integration-modules/fastify/test';
 import { AuthRouter } from '../../../../adapter/server/router/AuthRouter';
-import { FastifyServerTest } from '../../../../../../layer-modules/server/test';
+import { FastifyServerTest } from '../../../../../../integration-modules/fastify/test';
 import { Response as LightMyRequestResponse } from 'light-my-request';
 
 const fastifyIntegrationDescribeGenerator: (

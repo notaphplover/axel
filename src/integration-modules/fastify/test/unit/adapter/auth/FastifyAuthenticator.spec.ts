@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { FastifyAuthenticator } from '../../../../adapter';
+import { FastifyAuthenticator } from '../../../../adapter/auth/FastifyAuthenticator';
 import { JwtManager } from '../../../../../../jwt/domain';
 import { StatusCodes } from 'http-status-codes';
-import { fastifyReplyFixtureFactory } from '../../../../../../integration-modules/fastify/test/fixtures/fastify.fixture';
+import { fastifyReplyFixtureFactory } from '../../../fixtures/fastify.fixture';
 
 interface TTokenTypeMock {
   foo: 'bar';
