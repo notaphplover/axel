@@ -1,9 +1,8 @@
+import { JwtDotEnvVariables, jwtAdapter } from '../../../jwt/adapter';
 import { inject, injectable } from 'inversify';
 import jwt, { VerifyErrors } from 'jsonwebtoken';
-import { EnvLoader } from '../../layer-modules/env/domain';
-import { JWT_ADAPTER_TYPES } from './config/types';
-import { JwtDotEnvVariables } from './env/JwtDotEnvVariables';
-import { JwtManager } from '../domain';
+import { EnvLoader } from '../../../layer-modules/env/domain';
+import { JwtManager } from '../../../jwt/domain';
 
 @injectable()
 export class JsonWebTokenManager<TToken extends Record<string, unknown>>
@@ -15,7 +14,7 @@ export class JsonWebTokenManager<TToken extends Record<string, unknown>>
   private readonly verifyOptions: jwt.VerifyOptions;
 
   constructor(
-    @inject(JWT_ADAPTER_TYPES.env.JWT_ENV_LOADER)
+    @inject(jwtAdapter.config.types.env.JWT_ENV_LOADER)
     jwtEnvLoader: EnvLoader<JwtDotEnvVariables>,
   ) {
     this.privateKey = jwtEnvLoader.index.JWT_RSA_PRIVATE_KEY;
