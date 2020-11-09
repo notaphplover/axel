@@ -4,12 +4,12 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import {
   FastifyRequestHandler,
   FastifyRouter,
-} from '../../../../../../integration-modules/fastify/adapter';
+} from '../../../../../../../integration-modules/fastify/adapter';
 import {
   FastifyServerTest,
   FastifyServerTestOutputParam,
   serverTest,
-} from '../../../../../../integration-modules/fastify/test';
+} from '../../../../../../../integration-modules/fastify/test';
 import { Response as LightMyRequestResponse } from 'light-my-request';
 import { StatusRouter } from '../../../../../adapter/server/router/StatusRouter';
 

@@ -2,10 +2,10 @@ import { FastifyInstance, FastifyServerOptions } from 'fastify';
 import {
   FastifyRequestHandler,
   FastifyRouter,
-} from '../../../../integration-modules/fastify/adapter';
+} from '../../../../../integration-modules/fastify/adapter';
 import { inject, injectable } from 'inversify';
 import { APP_ADAPTER_TYPES } from '../../config/types';
-import { ApiVersion } from '../../../../layer-modules/api/adapter';
+import { ApiVersion } from '../../../../../layer-modules/api/adapter';
 
 const STATUS_ROUTER_PATH_PREFIX: string = 'status';
 

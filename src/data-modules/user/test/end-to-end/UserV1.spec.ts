@@ -4,8 +4,8 @@ import {
   authCreationQueryApiV1FixtureFactory,
   userCreationQueryApiV1FixtureFactory,
 } from '../fixtures/adapter/api/query/fixtures';
-import { AppEnvLoader } from '../../../../app/adapter/env/AppEnvLoader';
-import { AppEnvVariables } from '../../../../app/adapter';
+import { AppEnvLoader } from '../../../app/adapter/env/AppEnvLoader';
+import { AppEnvVariables } from '../../../app/adapter';
 import { AuthCreationQueryApiV1 } from '../../adapter/api/query/AuthCreationQueryApiV1';
 import { Container } from 'inversify';
 import { DbConnector } from '../../../../layer-modules/db/domain';

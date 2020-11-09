@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { appAdapter } from '../../../app/adapter';
+import { appAdapter } from '../../../data-modules/app/adapter';
 import { dbAdapter } from '../../db/adapter';
 import { gameAdapter } from '../../../data-modules/game/adapter';
 import { jsonSchemaAdapter } from '../../../json-schema/adapter';

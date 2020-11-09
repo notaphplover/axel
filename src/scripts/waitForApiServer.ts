@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import * as axios from 'axios';
-import { AppEnvVariables, appAdapter } from '../app/adapter';
+import { AppEnvVariables, appAdapter } from '../data-modules/app/adapter';
 import { Container } from 'inversify';
 import { EnvLoader } from '../layer-modules/env/domain';
 import { StatusCodes } from 'http-status-codes';

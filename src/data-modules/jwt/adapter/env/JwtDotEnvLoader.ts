@@ -1,4 +1,4 @@
-import { AppEnvVariables, appAdapter } from '../../../../app/adapter';
+import { AppEnvVariables, appAdapter } from '../../../app/adapter';
 import { EnvLoader, Index } from '../../../../layer-modules/env/domain';
 import { inject, injectable } from 'inversify';
 import { DotEnvLoader } from '../../../../integration-modules/dotenv/adapter';

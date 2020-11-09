@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import 'reflect-metadata';
-import { AppEnvVariables, appAdapter } from './app/adapter';
+import { AppEnvVariables, appAdapter } from './data-modules/app/adapter';
 import {
   FastifyPortListeningServer,
   FastifyRouter,

@@ -10,8 +10,8 @@ import {
   enchantmentCreationQueryApiV1FixtureFactory,
   landCreationQueryApiV1FixtureFactory,
 } from '../../fixtures/adapter/api/query/card';
-import { AppEnvLoader } from '../../../../../app/adapter/env/AppEnvLoader';
-import { AppEnvVariables } from '../../../../../app/adapter';
+import { AppEnvLoader } from '../../../../app/adapter/env/AppEnvLoader';
+import { AppEnvVariables } from '../../../../app/adapter';
 import { ArtifactApiV1 } from '../../../adapter/api/model/card/ArtifactApiV1';
 import { ArtifactCreationQueryApiV1 } from '../../../adapter/api/query/card/ArtifactCreationQueryApiV1';
 import { Capsule } from '../../../../../common/domain';

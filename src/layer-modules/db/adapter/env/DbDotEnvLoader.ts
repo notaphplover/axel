@@ -1,4 +1,7 @@
-import { AppEnvVariables, appAdapter } from '../../../../app/adapter';
+import {
+  AppEnvVariables,
+  appAdapter,
+} from '../../../../data-modules/app/adapter';
 import { EnvLoader, Index } from '../../../env/domain';
 import { inject, injectable } from 'inversify';
 import { DbDotEnvVariables } from './DbDotEnvVariables';

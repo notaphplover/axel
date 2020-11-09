@@ -1,6 +1,6 @@
 import { AppEnvVariables } from './AppEnvVariables';
-import { DotEnvLoader } from '../../../integration-modules/dotenv/adapter';
-import { Index } from '../../../layer-modules/env/domain';
+import { DotEnvLoader } from '../../../../integration-modules/dotenv/adapter';
+import { Index } from '../../../../layer-modules/env/domain';
 import { env } from 'process';
 import { injectable } from 'inversify';
 import { join } from 'path';

@@ -5,8 +5,8 @@ import {
   QueueBasedTaskGraph,
   TaskGraphNode,
 } from '../../../../task-graph/domain';
-import { AppEnvLoader } from '../../../../../app/adapter/env/AppEnvLoader';
-import { AppEnvVariables } from '../../../../../app/adapter';
+import { AppEnvLoader } from '../../../../app/adapter/env/AppEnvLoader';
+import { AppEnvVariables } from '../../../../app/adapter';
 import { Capsule } from '../../../../../common/domain';
 import { CardDeckApiV1 } from '../../../adapter/api/model/deck/CardDeckApiV1';
 import { CardDeckCreationQueryApiV1 } from '../../../adapter/api/query/deck/CardDeckCreationQueryApiV1';
