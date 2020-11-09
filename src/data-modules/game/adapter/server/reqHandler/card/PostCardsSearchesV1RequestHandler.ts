@@ -10,7 +10,7 @@ import { Card } from '../../../../domain/model/card/Card';
 import { CardApiV1 } from '../../../api/model/card/CardApiV1';
 import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { CardFindQueryApiV1 } from '../../../api/query/card/CardFindQueryApiV1';
-import { FastifyRequestHandler } from '../../../../../../layer-modules/server/adapter';
+import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { StatusCodes } from 'http-status-codes';

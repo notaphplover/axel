@@ -5,7 +5,7 @@ import {
   FastifyLoggerInstance,
   FastifyServerOptions,
 } from 'fastify';
-import { DbConnector } from '../../../../db/domain';
+import { DbConnector } from '../../../../../layer-modules/db/domain';
 import { FastifyPortListeningServer } from '../../../adapter/FastifyPortListeningServer';
 import { FastifyRouter } from '../../../adapter/FastifyRouter';
 

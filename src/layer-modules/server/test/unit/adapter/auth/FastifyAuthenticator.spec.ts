@@ -4,7 +4,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { FastifyAuthenticator } from '../../../../adapter';
 import { JwtManager } from '../../../../../../jwt/domain';
 import { StatusCodes } from 'http-status-codes';
-import { fastifyReplyFixtureFactory } from '../../../fixtures/fastify.fixture';
+import { fastifyReplyFixtureFactory } from '../../../../../../integration-modules/fastify/test/fixtures/fastify.fixture';
 
 interface TTokenTypeMock {
   foo: 'bar';

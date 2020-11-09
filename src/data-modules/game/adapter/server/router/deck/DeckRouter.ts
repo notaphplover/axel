@@ -7,7 +7,7 @@ import {
 import {
   FastifyRequestHandler,
   FastifyRouter,
-} from '../../../../../../layer-modules/server/adapter';
+} from '../../../../../../integration-modules/fastify/adapter';
 import { inject, injectable } from 'inversify';
 import { ApiVersion } from '../../../../../../layer-modules/api/adapter';
 import { FastifyUserAuthenticator } from '../../../../../user/adapter';

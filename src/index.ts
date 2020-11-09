@@ -4,7 +4,7 @@ import { AppEnvVariables, appAdapter } from './app/adapter';
 import {
   FastifyPortListeningServer,
   FastifyRouter,
-} from './layer-modules/server/adapter';
+} from './integration-modules/fastify/adapter';
 import { Container } from 'inversify';
 import { DbConnector } from './layer-modules/db/domain';
 import { EnvLoader } from './layer-modules/env/domain';

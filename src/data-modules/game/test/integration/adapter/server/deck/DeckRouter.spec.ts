@@ -4,7 +4,7 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import {
   FastifyRequestHandler,
   FastifyRouter,
-} from '../../../../../../../layer-modules/server/adapter';
+} from '../../../../../../../integration-modules/fastify/adapter';
 import {
   FastifyServerTest,
   FastifyServerTestOutputParam,

@@ -1,4 +1,4 @@
-import { DbConnector } from '../../db/domain';
+import { DbConnector } from '../../../layer-modules/db/domain';
 import { FastifyInstance } from 'fastify';
 import { FastifyRouter } from './FastifyRouter';
 import { FastifyServer } from './FastifyServer';

@@ -7,7 +7,7 @@ import {
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
 import { EntitiesNotCreatedError } from '../../../../../layer-modules/db/domain';
-import { FastifyRequestHandler } from '../../../../../layer-modules/server/adapter';
+import { FastifyRequestHandler } from '../../../../../integration-modules/fastify/adapter';
 import { StatusCodes } from 'http-status-codes';
 import { USER_ADAPTER_TYPES } from '../../config/types';
 import { USER_DOMAIN_TYPES } from '../../../domain/config/types';

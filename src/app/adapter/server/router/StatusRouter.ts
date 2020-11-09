@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyServerOptions } from 'fastify';
 import {
   FastifyRequestHandler,
   FastifyRouter,
-} from '../../../../layer-modules/server/adapter';
+} from '../../../../integration-modules/fastify/adapter';
 import { inject, injectable } from 'inversify';
 import { APP_ADAPTER_TYPES } from '../../config/types';
 import { ApiVersion } from '../../../../layer-modules/api/adapter';

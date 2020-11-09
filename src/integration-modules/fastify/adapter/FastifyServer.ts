@@ -1,8 +1,8 @@
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
-import { ApiVersion } from '../../api/adapter';
-import { DbConnector } from '../../db/domain';
+import { ApiVersion } from '../../../layer-modules/api/adapter';
+import { DbConnector } from '../../../layer-modules/db/domain';
 import { FastifyRouter } from './FastifyRouter';
-import { Server } from '../domain/Server';
+import { Server } from '../../../layer-modules/server/domain/Server';
 import { injectable } from 'inversify';
 
 @injectable()

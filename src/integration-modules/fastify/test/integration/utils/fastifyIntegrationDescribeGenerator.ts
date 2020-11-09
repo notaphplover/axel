@@ -1,10 +1,10 @@
 import { Container } from 'inversify';
-import { DbConnector } from '../../../../db/domain';
-import { FastifyRouter } from '../../../adapter/FastifyRouter';
+import { DbConnector } from '../../../../../layer-modules/db/domain';
+import { FastifyRouter } from '../../../adapter';
 import { FastifyServerTest } from '../FastifyServerTest';
-import { configAdapter } from '../../../../config/adapter';
+import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { customDescribe } from '../../../../../common/test/integration/utills/customDescribe';
-import { mongooseAdapter } from '../../../../../integration-modules/mongoose/adapter';
+import { mongooseAdapter } from '../../../../mongoose/adapter';
 
 const container: Container = configAdapter.container;
 

@@ -7,7 +7,7 @@ import {
 import {
   FastifyRequestHandler,
   FastifyRouter,
-} from '../../../../../../layer-modules/server/adapter';
+} from '../../../../../../integration-modules/fastify/adapter';
 import {
   FastifyUserAuthenticator,
   userAdapter,

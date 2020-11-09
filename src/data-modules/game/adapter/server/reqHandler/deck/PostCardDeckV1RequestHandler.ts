@@ -10,7 +10,7 @@ import { CardDeck } from '../../../../domain/model/deck/CardDeck';
 import { CardDeckApiV1 } from '../../../api/model/deck/CardDeckApiV1';
 import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
 import { CardDeckCreationQueryApiV1 } from '../../../api/query/deck/CardDeckCreationQueryApiV1';
-import { FastifyRequestHandler } from '../../../../../../layer-modules/server/adapter';
+import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { StatusCodes } from 'http-status-codes';

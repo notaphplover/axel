@@ -9,7 +9,7 @@ import { inject, injectable } from 'inversify';
 import { BasicGameSetup } from '../../../../domain/model/setup/BasicGameSetup';
 import { BasicGameSetupApiV1 } from '../../../api/model/setup/BasicGameSetupApiV1';
 import { BasicGameSetupFindQuery } from '../../../../domain/query/setup/BasicGameSetupFindQuery';
-import { FastifyRequestHandler } from '../../../../../../layer-modules/server/adapter';
+import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';

@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { FastifyRequestHandler } from '../../../../layer-modules/server/adapter';
+import { FastifyRequestHandler } from '../../../../integration-modules/fastify/adapter';
 import { injectable } from 'inversify';
 
 @injectable()

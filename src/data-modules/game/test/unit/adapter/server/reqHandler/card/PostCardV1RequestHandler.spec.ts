@@ -16,7 +16,7 @@ import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api
 import { artifactCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
 import { artifactCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
 import { artifactFixtureFactory } from '../../../../../fixtures/domain/model/card';
-import { fastifyReplyFixtureFactory } from '../../../../../../../../layer-modules/server/test/fixtures/fastify.fixture';
+import { fastifyReplyFixtureFactory } from '../../../../../../../../integration-modules/fastify/test/fixtures/fastify.fixture';
 
 describe(PostCardV1RequestHandler.name, () => {
   let cardCreationQueryApiV1ToCardCreationQueryConverter: Converter<

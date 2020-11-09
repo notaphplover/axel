@@ -4,7 +4,7 @@ import { inject, injectable } from 'inversify';
 import { CardDeck } from '../../../../domain/model/deck/CardDeck';
 import { CardDeckApiV1 } from '../../../api/model/deck/CardDeckApiV1';
 import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
-import { FastifyRequestHandler } from '../../../../../../layer-modules/server/adapter';
+import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { StatusCodes } from 'http-status-codes';
