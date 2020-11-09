@@ -4,7 +4,7 @@ import { dbAdapter } from '../../db/adapter';
 import { gameAdapter } from '../../../data-modules/game/adapter';
 import { jsonSchemaAdapter } from '../../../json-schema/adapter';
 import { jsonwebtokenAdapter } from '../../../integration-modules/jsonwebtoken/adapter';
-import { jwtAdapter } from '../../../jwt/adapter';
+import { jwtAdapter } from '../../../data-modules/jwt/adapter';
 import { mongooseAdapter } from '../../../integration-modules/mongoose/adapter';
 import { userAdapter } from '../../../data-modules/user/adapter';
 

@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { FastifyAuthenticator } from '../../../../adapter/auth/FastifyAuthenticator';
-import { JwtManager } from '../../../../../../jwt/domain';
+import { JwtManager } from '../../../../../../data-modules/jwt/domain';
 import { StatusCodes } from 'http-status-codes';
 import { fastifyReplyFixtureFactory } from '../../../fixtures/fastify.fixture';
 

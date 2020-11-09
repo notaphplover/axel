@@ -1,6 +1,6 @@
 import { ContainerModule, interfaces } from 'inversify';
 import { JsonWebTokenManager } from '../JsonWebTokenManager';
-import { jwtDomain } from '../../../../jwt/domain';
+import { jwtDomain } from '../../../../data-modules/jwt/domain';
 
 function bindDomain(bind: interfaces.Bind): void {
   bind(jwtDomain.types.JWT_MANAGER).to(JsonWebTokenManager).inSingletonScope();
