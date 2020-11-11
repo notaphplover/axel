@@ -26,7 +26,7 @@ import { userFixtureFactory } from '../../../../../../../user/test/fixtures/doma
 describe(PostGameSetupV1RequestHandler.name, () => {
   let gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter: Converter<
     GameSetupCreationQueryApiV1,
-    GameSetupsCreationQuery
+    Promise<GameSetupsCreationQuery>
   >;
 
   let gameSetupCreationQueryApiV1ContextBasedValidator: ContextBasedValidator<
@@ -92,7 +92,7 @@ describe(PostGameSetupV1RequestHandler.name, () => {
           expectedValidationResult,
         );
 
-        (gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+        (gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
           gameSetupsCreationQueryFixtureFactory.get(),
         );
 

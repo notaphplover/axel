@@ -27,7 +27,7 @@ export class PostGameSetupV1RequestHandler
     )
     private readonly gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter: Converter<
       GameSetupCreationQueryApiV1,
-      GameSetupsCreationQuery
+      Promise<GameSetupsCreationQuery>
     >,
     @inject(
       GAME_ADAPTER_TYPES.api.validator.setup
@@ -67,7 +67,7 @@ export class PostGameSetupV1RequestHandler
       const gameSetupCreationQueryApiV1: GameSetupCreationQueryApiV1 =
         validationResult.model;
 
-      const gameSetupCreationQuery: GameSetupsCreationQuery = this.gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform(
+      const gameSetupCreationQuery: GameSetupsCreationQuery = await this.gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform(
         gameSetupCreationQueryApiV1,
       );
 
