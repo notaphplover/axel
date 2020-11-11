@@ -38,7 +38,7 @@ export class GameSetupFindQueryApiV1ToGameSetupFindQueryConverter
         : undefined,
       id: input.id,
       limit: input.limit,
-      offset: input.limit,
+      offset: input.offset,
       ownerUserId: input.ownerUserId,
       playerSetups: input.playerSetups?.map(
         (playerSetupApiV1: GameSetupFindQueryPlayerSetupApiV1) => {
