@@ -15,17 +15,25 @@ let mongooseMock: typeof mongoose;
 let mongooseStartSessionMock: ClientSession;
 
 jest.mock('mongoose', () => {
-  mongooseStartSessionMock = ({
+  const localMongooseStartSessionMock: ClientSession = ({
     commitTransaction: jest.fn().mockResolvedValue(undefined),
     endSession: jest.fn(),
     startTransaction: jest.fn(),
   } as Partial<ClientSession>) as ClientSession;
 
-  mongooseMock = ({
-    startSession: jest.fn().mockResolvedValue(mongooseStartSessionMock),
+  const localMongooseMock: typeof mongoose = ({
+    startSession: jest.fn().mockResolvedValue(localMongooseStartSessionMock),
   } as Partial<typeof mongoose>) as typeof mongoose;
 
-  return mongooseMock;
+  /*
+   * https://github.com/facebook/jest/issues/2567
+   *
+   * The argument is not good enough, a general rule to solve an specific use case... disgusting.
+   */
+  mongooseStartSessionMock = localMongooseStartSessionMock;
+  mongooseMock = localMongooseMock;
+
+  return localMongooseMock;
 });
 
 import { Converter } from '../../../../../common/domain';
