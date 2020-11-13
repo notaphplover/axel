@@ -147,6 +147,26 @@ describe(MongooseUpdateRepository.name, () => {
         result = await mongooseUpdateRepository.update(queryMockFixture);
       });
 
+      afterAll(() => {
+        (mongooseMock.startSession as jest.Mock).mockClear();
+
+        (mongooseStartSessionMock.commitTransaction as jest.Mock).mockClear();
+        (mongooseStartSessionMock.startTransaction as jest.Mock).mockClear();
+        (mongooseStartSessionMock.endSession as jest.Mock).mockClear();
+
+        (findDocumentQueryMock.select as jest.Mock).mockClear();
+        (findDocumentQueryMock.session as jest.Mock).mockClear();
+
+        (modelMock.find as jest.Mock).mockClear();
+        (modelMock.updateMany as jest.Mock).mockClear();
+
+        (modelDbToModelConverter.transform as jest.Mock).mockClear();
+
+        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+
+        (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
+      });
+
       it('must start a session', () => {
         expect(mongooseMock.startSession).toHaveBeenCalledTimes(1);
       });
@@ -193,6 +213,102 @@ describe(MongooseUpdateRepository.name, () => {
 
       it('must return the model transformed', () => {
         expect(result).toStrictEqual([modelMockFixture]);
+      });
+    });
+  });
+
+  describe(`.updateOne()`, () => {
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(async () => {
+        (mongooseMock.startSession as jest.Mock).mockClear();
+
+        (mongooseStartSessionMock.commitTransaction as jest.Mock).mockClear();
+        (mongooseStartSessionMock.startTransaction as jest.Mock).mockClear();
+        (mongooseStartSessionMock.endSession as jest.Mock).mockClear();
+
+        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+          queryMockDbFixture,
+        );
+
+        (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+          queryMockDbFixture,
+        );
+
+        (findOneDocumentQueryMock.then as jest.Mock).mockImplementationOnce(
+          (onFullfiled: (value: ModelMockDb) => void) => {
+            onFullfiled(modelMockDbFixture);
+          },
+        );
+
+        (modelDbToModelConverter.transform as jest.Mock).mockResolvedValueOnce(
+          modelMockFixture,
+        );
+
+        result = await mongooseUpdateRepository.updateOne(queryMockFixture);
+      });
+
+      afterAll(() => {
+        (findOneDocumentQueryMock.select as jest.Mock).mockClear();
+        (findOneDocumentQueryMock.session as jest.Mock).mockClear();
+
+        (modelMock.findOne as jest.Mock).mockClear();
+        (modelMock.updateOne as jest.Mock).mockClear();
+
+        (modelDbToModelConverter.transform as jest.Mock).mockClear();
+
+        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+
+        (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
+      });
+
+      it('must start a session', () => {
+        expect(mongooseMock.startSession).toHaveBeenCalledTimes(1);
+      });
+
+      it('must call queryToFilterQueryConverter.transform with the query provided', () => {
+        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
+        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
+          queryMockFixture,
+        );
+      });
+
+      it('must call queryToUpdateQueryConverter.transform with the query provided', () => {
+        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledTimes(1);
+        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledWith(
+          queryMockFixture,
+        );
+      });
+
+      it('it must call model.updateOne with the queries obtained', () => {
+        expect(modelMock.updateOne).toHaveBeenCalledTimes(1);
+        expect(modelMock.updateOne).toHaveBeenCalledWith(
+          queryMockDbFixture,
+          queryMockDbFixture,
+          { session: mongooseStartSessionMock },
+        );
+      });
+
+      it('must commit the transaction', () => {
+        expect(
+          mongooseStartSessionMock.commitTransaction,
+        ).toHaveBeenCalledTimes(1);
+      });
+
+      it('must end the session started', () => {
+        expect(mongooseStartSessionMock.endSession).toHaveBeenCalledTimes(1);
+      });
+
+      it('must call modelDbToModelConverter.transform with the entities updated', () => {
+        expect(modelDbToModelConverter.transform).toHaveBeenCalledTimes(1);
+        expect(modelDbToModelConverter.transform).toHaveBeenCalledWith(
+          modelMockDbFixture,
+        );
+      });
+
+      it('must return the model transformed', () => {
+        expect(result).toStrictEqual(modelMockFixture);
       });
     });
   });
