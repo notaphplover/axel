@@ -3,6 +3,7 @@ import { MongooseInsertRepository } from './MongooseInsertRepository';
 import { MongoosePaginatedSearchRepository } from './MongoosePaginatedSearchRepository';
 import { MongooseProjectionPaginatedSearchRepository } from './MongooseProjectionPaginatedSearchRepository';
 import { MongooseSearchRepository } from './MongooseSearchRepository';
+import { MongooseUpdateRepository } from './MongooseUpdateRepository';
 import { mongooseContainer } from './config/container';
 
 export {
@@ -10,6 +11,7 @@ export {
   MongoosePaginatedSearchRepository,
   MongooseProjectionPaginatedSearchRepository,
   MongooseSearchRepository,
+  MongooseUpdateRepository,
 };
 
 // eslint-disable-next-line @typescript-eslint/typedef
