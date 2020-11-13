@@ -5,9 +5,6 @@ import {
   FastifyLoggerInstance,
   FastifyServerOptions,
 } from 'fastify';
-import { DbConnector } from '../../../../../layer-modules/db/domain';
-import { FastifyPortListeningServer } from '../../../adapter/FastifyPortListeningServer';
-import { FastifyRouter } from '../../../adapter/FastifyRouter';
 
 jest.mock('fastify', () =>
   jest.fn().mockImplementation(() => {
@@ -33,6 +30,10 @@ jest.mock('fastify', () =>
     return fastifyInstanceMock;
   }),
 );
+
+import { DbConnector } from '../../../../../layer-modules/db/domain';
+import { FastifyPortListeningServer } from '../../../adapter/FastifyPortListeningServer';
+import { FastifyRouter } from '../../../adapter/FastifyRouter';
 
 function buildRouterMock(): FastifyRouter {
   return {
