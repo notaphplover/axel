@@ -82,8 +82,8 @@ describe(MongooseProjectionSearchRepository.name, () => {
       DocumentQuery<ModelMockDb | null, ModelMockDb>
     >) as DocumentQuery<ModelMockDb | null, ModelMockDb>;
     modelMock = ({
-      find: jest.fn().mockImplementation(() => findDocumentQueryMock),
-      findOne: jest.fn().mockImplementation(() => findOneDocumentQueryMock),
+      find: jest.fn().mockReturnValue(findDocumentQueryMock),
+      findOne: jest.fn().mockReturnValue(findOneDocumentQueryMock),
     } as Partial<Model<ModelMockDb>>) as Model<ModelMockDb>;
     modelDbToModelConverter = {
       transform: jest.fn(),
