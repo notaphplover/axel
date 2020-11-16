@@ -10,6 +10,7 @@ import { ExtendedGameSetupDbUpdateRepository } from '../../../../../adapter/db/r
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { GameSetupUpdateQuery } from '../../../../../domain/query/setup/GameSetupUpdateQuery';
+import { PlayerSetup } from '../../../../../domain/model/setup/PlayerSetup';
 import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { extendedGameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
@@ -114,7 +115,7 @@ mongooseIntegrationDescribe(ExtendedGameSetupDbUpdateRepository.name, () => {
 
         expect((innerResult as ExtendedGameSetup).playerSetups).toEqual([
           ...extendedGameSetupDbInserted.playerSetups,
-          ...gameSetupUpdateQueryFixture.additionalPlayerSetups,
+          ...(gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[]),
         ]);
       });
     });
