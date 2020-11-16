@@ -13,6 +13,7 @@ import { FindCardsInteractor } from '../../../../domain/interactor/card/FindCard
 import { FindExtendedGameSetupsInteractor } from '../../../../domain/interactor/setup/FindExtendedGameSetupsInteractor';
 import { FindGameInteractor } from '../../../../domain/interactor/FindGameInteractor';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { UpdateGameSetupInteractor } from '../../../../domain/interactor/setup/UpdateGameSetupInteractor';
 import { interfaces } from 'inversify';
 
 export function bindGameDomainInteractor(bind: interfaces.Bind): void {
@@ -60,4 +61,7 @@ export function bindGameDomainInteractor(bind: interfaces.Bind): void {
   bind(
     GAME_DOMAIN_TYPES.interactor.setup.FIND_EXTENDED_GAME_SETUPS_INTERACTOR,
   ).to(FindExtendedGameSetupsInteractor);
+  bind(GAME_DOMAIN_TYPES.interactor.setup.UPDATE_GAME_SETUP_INTERACTOR).to(
+    UpdateGameSetupInteractor,
+  );
 }
