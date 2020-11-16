@@ -7,6 +7,7 @@ import { CreatureDbInsertRepository } from '../../../db/repository/card/Creature
 import { EnchantmentDbInsertRepository } from '../../../db/repository/card/EnchantmentDbInsertRepository';
 import { ExtendedGameSetupDbInsertRepository } from '../../../db/repository/setup/ExtendedGameSetupDbInsertRepository';
 import { ExtendedGameSetupDbSearchRepository } from '../../../db/repository/setup/ExtendedGameSetupDbSearchRepository';
+import { ExtendedGameSetupDbUpdateRepository } from '../../../db/repository/setup/ExtendedGameSetupDbUpdateRepository';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameDbInsertRepository } from '../../../db/repository/GameDbInsertRepository';
 import { GameDbSearchRepository } from '../../../db/repository/GameDbSearchRepository';
@@ -52,4 +53,7 @@ export function bindGameDomainRepository(bind: interfaces.Bind): void {
   bind(
     GAME_DOMAIN_TYPES.repository.setup.EXTENDED_GAME_SETUP_SEARCH_REPOSITORY,
   ).to(ExtendedGameSetupDbSearchRepository);
+  bind(
+    GAME_DOMAIN_TYPES.repository.setup.EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
+  ).to(ExtendedGameSetupDbUpdateRepository);
 }

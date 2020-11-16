@@ -54,6 +54,9 @@ export const GAME_DOMAIN_TYPES = {
       EXTENDED_GAME_SETUP_SEARCH_REPOSITORY: Symbol.for(
         'ExtendedGameSetupSearchRepository',
       ),
+      EXTENDED_GAME_SETUP_UPDATE_REPOSITORY: Symbol.for(
+        'ExtendedGameSetupUpdateRepository',
+      ),
     },
   },
 };

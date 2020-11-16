@@ -5,6 +5,7 @@ import {
 import { BasicGameSetupFindQuery } from '../../../../domain/query/setup/BasicGameSetupFindQuery';
 import { ExtendedGameSetupFindQuery } from '../../../../domain/query/setup/ExtendedGameSetupFindQuery';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
+import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
 import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { extendedGameSetup } from '../model/setup';
@@ -18,6 +19,15 @@ export const gameSetupsCreationQuery: GameSetupsCreationQuery = {
 
 export const gameSetupsCreationQueryFixtureFactory: FixtureFactory<GameSetupsCreationQuery> = new DeepCloneFixtureFactory(
   gameSetupsCreationQuery,
+);
+
+export const gameSetupUpdateQuery: GameSetupUpdateQuery = {
+  additionalPlayerSetups: extendedGameSetup.playerSetups,
+  id: extendedGameSetup.id,
+};
+
+export const gameSetupUpdateQueryFixtureFactory: FixtureFactory<GameSetupUpdateQuery> = new DeepCloneFixtureFactory(
+  gameSetupUpdateQuery,
 );
 
 export const gameSetupFindQuery: Required<GameSetupFindQuery> = {
