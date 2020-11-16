@@ -1,7 +1,7 @@
 import { GameSetupCreationQueryApiV1 } from '../../../../query/setup/GameSetupCreationQueryApiV1';
 import Joi from 'joi';
 import { gameFormatApiV1JoyValidatorSchema } from '../../model/gameFormatApiV1JoiValidatorSchema';
-import { gameSetupCreationQueryPlayerSetupApiV1ValidatorSchema } from './gameSetupCreationQueryPlayerSetupApiV1';
+import { gameSetupCreationQueryPlayerSetupApiV1ValidatorSchema } from './gameSetupCreationQueryPlayerSetupApiV1ValidatorSchema';
 
 const GAME_SETUP_CREATION_QUERY_PLAYER_SETUPS_LENGTH: number = 1;
 
