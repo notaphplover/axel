@@ -107,6 +107,9 @@ export const GAME_ADAPTER_API_TYPES = {
           GAME_SETUP_FIND_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol.for(
             'gameSetupFindQueryApiV1JoyValidatorSchema',
           ),
+          GAME_SETUP_UPDATE_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol.for(
+            'gameSetupUpdateQueryApiV1JoyValidatorSchema',
+          ),
         },
       },
     },
@@ -119,6 +122,9 @@ export const GAME_ADAPTER_API_TYPES = {
       ),
       GAME_SETUP_FIND_QUERY_API_V1_VALIDATOR: Symbol.for(
         'GameSetupFindQueryApiV1Validator',
+      ),
+      GAME_SETUP_UPDATE_QUERY_API_V1_VALIDATOR: Symbol.for(
+        'GameSetupUpdateQueryApiV1Validator',
       ),
     },
   },
