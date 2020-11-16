@@ -24,42 +24,55 @@ export class GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter
   public async transform(
     input: GameSetupUpdateQueryApiV1,
   ): Promise<GameSetupUpdateQuery> {
-    const gameSetupPlayerSetupsDeckIds: string[] = input.additionalPlayerSetups.map(
-      (playerSetup: GameSetupUpdateQueryPlayerSetupApiV1) => playerSetup.deckId,
-    );
-
-    const gameSetupPlayerSetupsDecksFindQuery: CardDeckFindQuery = {
-      ids: gameSetupPlayerSetupsDeckIds,
-    };
-
-    const gameSetupPlayerSetupsDecks: CardDeck[] = await this.findCardDecksInteractor.interact(
-      gameSetupPlayerSetupsDecksFindQuery,
-    );
-
-    const additionalPlayerSetups: PlayerSetup[] = input.additionalPlayerSetups.map(
-      (playerSetup: GameSetupUpdateQueryPlayerSetupApiV1) => {
-        const playerSetupDeck:
-          | CardDeck
-          | undefined = gameSetupPlayerSetupsDecks.find(
-          (cardDeck: CardDeck) => cardDeck.id === playerSetup.deckId,
-        );
-
-        if (playerSetupDeck === undefined) {
-          throw new EntitiesNotFoundError(
-            `playerSetup for id ${playerSetup.deckId} not found`,
-          );
-        }
-
-        return {
-          deck: playerSetupDeck,
-          userId: playerSetup.userId,
-        };
-      },
-    );
-
     return {
-      additionalPlayerSetups: additionalPlayerSetups,
+      additionalPlayerSetups: await this.adaptAdditionalPlayerSetups(input),
       id: input.id,
     };
+  }
+
+  private async adaptAdditionalPlayerSetups(
+    input: GameSetupUpdateQueryApiV1,
+  ): Promise<PlayerSetup[] | undefined> {
+    let additionalPlayerSetups: PlayerSetup[] | undefined;
+
+    if (input.additionalPlayerSetups === undefined) {
+      additionalPlayerSetups = undefined;
+    } else {
+      const gameSetupPlayerSetupsDeckIds: string[] = input.additionalPlayerSetups.map(
+        (playerSetup: GameSetupUpdateQueryPlayerSetupApiV1) =>
+          playerSetup.deckId,
+      );
+
+      const gameSetupPlayerSetupsDecksFindQuery: CardDeckFindQuery = {
+        ids: gameSetupPlayerSetupsDeckIds,
+      };
+
+      const gameSetupPlayerSetupsDecks: CardDeck[] = await this.findCardDecksInteractor.interact(
+        gameSetupPlayerSetupsDecksFindQuery,
+      );
+
+      additionalPlayerSetups = input.additionalPlayerSetups.map(
+        (playerSetup: GameSetupUpdateQueryPlayerSetupApiV1) => {
+          const playerSetupDeck:
+            | CardDeck
+            | undefined = gameSetupPlayerSetupsDecks.find(
+            (cardDeck: CardDeck) => cardDeck.id === playerSetup.deckId,
+          );
+
+          if (playerSetupDeck === undefined) {
+            throw new EntitiesNotFoundError(
+              `playerSetup for id ${playerSetup.deckId} not found`,
+            );
+          }
+
+          return {
+            deck: playerSetupDeck,
+            userId: playerSetup.userId,
+          };
+        },
+      );
+    }
+
+    return additionalPlayerSetups;
   }
 }

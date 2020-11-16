@@ -3,5 +3,5 @@ import { GameSetupUpdateQueryPlayerSetupApiV1 } from './GameSetupUpdateQueryPlay
 export interface GameSetupUpdateQueryApiV1 {
   id: string;
 
-  additionalPlayerSetups: GameSetupUpdateQueryPlayerSetupApiV1[];
+  additionalPlayerSetups?: GameSetupUpdateQueryPlayerSetupApiV1[];
 }
