@@ -62,7 +62,6 @@ describe(MongooseUpdateRepository.name, () => {
   beforeAll(() => {
     findDocumentQueryMock = ({
       select: jest.fn().mockReturnThis(),
-      session: jest.fn().mockReturnThis(),
       then: jest.fn(),
     } as Partial<DocumentQuery<ModelMockDb[], ModelMockDb>>) as DocumentQuery<
       ModelMockDb[],
@@ -70,7 +69,6 @@ describe(MongooseUpdateRepository.name, () => {
     >;
     findOneDocumentQueryMock = ({
       select: jest.fn().mockReturnThis(),
-      session: jest.fn().mockReturnThis(),
       then: jest.fn(),
     } as Partial<
       DocumentQuery<ModelMockDb | null, ModelMockDb>
@@ -79,6 +77,7 @@ describe(MongooseUpdateRepository.name, () => {
     modelMock = ({
       find: jest.fn().mockReturnValue(findDocumentQueryMock),
       findOneAndUpdate: jest.fn().mockReturnValue(findOneDocumentQueryMock),
+      updateOne: jest.fn().mockResolvedValue(undefined),
       updateMany: jest.fn().mockResolvedValue(undefined),
     } as Partial<Model<ModelMockDb>>) as Model<ModelMockDb>;
 
@@ -96,7 +95,68 @@ describe(MongooseUpdateRepository.name, () => {
     );
   });
 
-  describe(`.updateAndSelect()`, () => {
+  describe('.update()', () => {
+    describe('when called', () => {
+      beforeAll(async () => {
+        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+          queryMockDbFixture,
+        );
+
+        (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+          queryMockDbFixture,
+        );
+
+        (findDocumentQueryMock.then as jest.Mock).mockImplementation(
+          (onFullfiled: (value: ModelMockDb[]) => void) => {
+            onFullfiled([modelMockDbFixture]);
+          },
+        );
+
+        (modelDbToModelConverter.transform as jest.Mock).mockResolvedValueOnce(
+          modelMockFixture,
+        );
+
+        await mongooseUpdateRepository.update(queryMockFixture);
+      });
+
+      afterAll(() => {
+        (findOneDocumentQueryMock.select as jest.Mock).mockClear();
+
+        (modelMock.updateMany as jest.Mock).mockClear();
+
+        (modelDbToModelConverter.transform as jest.Mock).mockClear();
+
+        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+
+        (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
+      });
+
+      it('must call queryToFilterQueryConverter.transform with the query provided', () => {
+        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
+        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
+          queryMockFixture,
+        );
+      });
+
+      it('must call queryToUpdateQueryConverter.transform with the query provided', () => {
+        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledTimes(1);
+        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledWith(
+          queryMockFixture,
+        );
+      });
+
+      it('it must call model.updateMany with the queries obtained', () => {
+        expect(modelMock.updateMany).toHaveBeenCalledTimes(1);
+        expect(modelMock.updateMany).toHaveBeenCalledWith(
+          queryMockDbFixture,
+          queryMockDbFixture,
+          {},
+        );
+      });
+    });
+  });
+
+  describe('.updateAndSelect()', () => {
     describe('when called', () => {
       let result: unknown;
 
@@ -126,7 +186,6 @@ describe(MongooseUpdateRepository.name, () => {
 
       afterAll(() => {
         (findDocumentQueryMock.select as jest.Mock).mockClear();
-        (findDocumentQueryMock.session as jest.Mock).mockClear();
 
         (modelMock.find as jest.Mock).mockClear();
         (modelMock.updateMany as jest.Mock).mockClear();
@@ -193,7 +252,68 @@ describe(MongooseUpdateRepository.name, () => {
     });
   });
 
-  describe(`.updateOneAndSelect()`, () => {
+  describe('.updateOne()', () => {
+    describe('when called', () => {
+      beforeAll(async () => {
+        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+          queryMockDbFixture,
+        );
+
+        (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+          queryMockDbFixture,
+        );
+
+        (findDocumentQueryMock.then as jest.Mock).mockImplementation(
+          (onFullfiled: (value: ModelMockDb[]) => void) => {
+            onFullfiled([modelMockDbFixture]);
+          },
+        );
+
+        (modelDbToModelConverter.transform as jest.Mock).mockResolvedValueOnce(
+          modelMockFixture,
+        );
+
+        await mongooseUpdateRepository.updateOne(queryMockFixture);
+      });
+
+      afterAll(() => {
+        (findOneDocumentQueryMock.select as jest.Mock).mockClear();
+
+        (modelMock.updateOne as jest.Mock).mockClear();
+
+        (modelDbToModelConverter.transform as jest.Mock).mockClear();
+
+        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+
+        (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
+      });
+
+      it('must call queryToFilterQueryConverter.transform with the query provided', () => {
+        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
+        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
+          queryMockFixture,
+        );
+      });
+
+      it('must call queryToUpdateQueryConverter.transform with the query provided', () => {
+        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledTimes(1);
+        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledWith(
+          queryMockFixture,
+        );
+      });
+
+      it('it must call model.updateOne with the queries obtained', () => {
+        expect(modelMock.updateOne).toHaveBeenCalledTimes(1);
+        expect(modelMock.updateOne).toHaveBeenCalledWith(
+          queryMockDbFixture,
+          queryMockDbFixture,
+          {},
+        );
+      });
+    });
+  });
+
+  describe('.updateOneAndSelect()', () => {
     describe('when called', () => {
       let result: unknown;
 
@@ -223,7 +343,6 @@ describe(MongooseUpdateRepository.name, () => {
 
       afterAll(() => {
         (findOneDocumentQueryMock.select as jest.Mock).mockClear();
-        (findOneDocumentQueryMock.session as jest.Mock).mockClear();
 
         (modelMock.findOneAndUpdate as jest.Mock).mockClear();
 
