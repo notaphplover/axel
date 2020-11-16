@@ -1,5 +1,9 @@
 export interface UpdateRepository<TModel, TQuery> {
-  update(query: TQuery): Promise<TModel[]>;
+  update(query: TQuery): Promise<void>;
 
-  updateOne(query: TQuery): Promise<TModel | null>;
+  updateAndSelect(query: TQuery): Promise<TModel[]>;
+
+  updateOne(query: TQuery): Promise<void>;
+
+  updateOneAndSelect(query: TQuery): Promise<TModel | null>;
 }

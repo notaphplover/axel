@@ -1,16 +1,16 @@
-import mongoose, {
-  ClientSession,
+import {
   Document,
-  DocumentQuery,
   FilterQuery,
   Model,
   ModelUpdateOptions,
+  MongooseFilterQuery,
   Query,
   UpdateQuery,
 } from 'mongoose';
 import { Converter } from '../../../common/domain';
 import { UpdateRepository } from '../../../layer-modules/db/domain/UpdateRepository';
 import { injectable } from 'inversify';
+import mongodb from 'mongodb';
 
 @injectable()
 export abstract class MongooseUpdateRepository<
@@ -34,26 +34,80 @@ export abstract class MongooseUpdateRepository<
     >,
   ) {}
 
-  public async update(query: TQuery): Promise<TModel[]> {
-    const entitiesDbUpdated: TModelDb[] = await this.innerUpdate(
-      this.model.find.bind(this.model),
+  public async update(query: TQuery): Promise<void> {
+    await this.innerUpdate(query, this.model.updateMany.bind(this.model));
+  }
+
+  public async updateAndSelect(query: TQuery): Promise<TModel[]> {
+    /*
+     * Mongo DB won't allow us to perform an atomic multiple update operation.
+     *
+     * Transactions comes with a performance cost, needs a replica set and doesn't seem to be mature enough.
+     *
+     * So, the following algorithm is performed:
+     *
+     * 1. Filter entities to be updated.
+     * 2. Get ids of the entities to be updated.
+     * 3. Perform the update.
+     * 4. Find entities by ids.
+     * 5. Return entities updated.
+     */
+
+    const filterQuery: FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
       query,
-      this.model.updateMany.bind(this.model),
+    );
+    const updateQuery: UpdateQuery<TModelDb> = await this.queryToUpdateQueryConverter.transform(
+      query,
+    );
+
+    const entitiesDbToBeUpdated: TModelDb[] = await this.model.find(
+      filterQuery,
+    );
+
+    const entitiesDbToBeUpdatedIds: unknown[] = entitiesDbToBeUpdated.map(
+      (entityToBeUpdated: TModelDb) => entityToBeUpdated._id as unknown,
+    );
+
+    const filterEntitiesByIdsQuery: mongodb.FilterQuery<TModelDb> = {
+      _id: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        $in: entitiesDbToBeUpdatedIds as any[],
+      },
+    };
+
+    await this.model.updateMany(
+      filterEntitiesByIdsQuery as MongooseFilterQuery<TModelDb>,
+      updateQuery,
+    );
+
+    const entitiesDbUpdated: TModelDb[] = await this.model.find(
+      filterEntitiesByIdsQuery as MongooseFilterQuery<TModelDb>,
     );
 
     const entitiesUpdated: TModel[] = await Promise.all(
-      entitiesDbUpdated.map((entityDb: TModelDb) =>
-        this.modelDbToModelConverter.transform(entityDb),
+      entitiesDbUpdated.map((entityDbUpdated: TModelDb) =>
+        this.modelDbToModelConverter.transform(entityDbUpdated),
       ),
     );
 
     return entitiesUpdated;
   }
-  public async updateOne(query: TQuery): Promise<TModel | null> {
-    const entityDbUpdated: TModelDb | null = await this.innerUpdate(
-      this.model.findOne.bind(this.model),
+
+  public async updateOne(query: TQuery): Promise<void> {
+    await this.innerUpdate(query, this.model.updateOne.bind(this.model));
+  }
+
+  public async updateOneAndSelect(query: TQuery): Promise<TModel | null> {
+    const filterQuery: FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
       query,
-      this.model.updateOne.bind(this.model),
+    );
+    const updateQuery: UpdateQuery<TModelDb> = await this.queryToUpdateQueryConverter.transform(
+      query,
+    );
+
+    const entityDbUpdated: TModelDb | null = await this.model.findOneAndUpdate(
+      filterQuery,
+      updateQuery,
     );
 
     const entityUpdated: TModel | null =
@@ -64,21 +118,14 @@ export abstract class MongooseUpdateRepository<
     return entityUpdated;
   }
 
-  private async innerUpdate<TMongooseQueryOutput>(
-    documentFindQueryGenerator: (
-      filterQuery: FilterQuery<TModelDb>,
-    ) => DocumentQuery<TMongooseQueryOutput, TModelDb>,
+  private async innerUpdate(
     query: TQuery,
     updateFn: (
       conditions: FilterQuery<TModelDb>,
       doc: UpdateQuery<TModelDb>,
       options: ModelUpdateOptions,
     ) => Query<unknown>,
-  ): Promise<TMongooseQueryOutput> {
-    const session: ClientSession = await mongoose.startSession();
-
-    session.startTransaction();
-
+  ): Promise<void> {
     const filterQuery: FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
       query,
     );
@@ -86,19 +133,6 @@ export abstract class MongooseUpdateRepository<
       query,
     );
 
-    await updateFn(filterQuery, updateQuery, { session: session });
-
-    const entityDbDocumentQuery: DocumentQuery<
-      TMongooseQueryOutput,
-      TModelDb
-    > = documentFindQueryGenerator(filterQuery).session(session);
-
-    const outputDb: TMongooseQueryOutput = await entityDbDocumentQuery;
-
-    await session.commitTransaction();
-
-    session.endSession();
-
-    return outputDb;
+    await updateFn(filterQuery, updateQuery, {});
   }
 }
