@@ -123,6 +123,9 @@ export const GAME_ADAPTER_API_TYPES = {
       GAME_SETUP_FIND_QUERY_API_V1_VALIDATOR: Symbol.for(
         'GameSetupFindQueryApiV1Validator',
       ),
+      GAME_SETUP_UPDATE_QUERY_API_V1_CONTEXT_BASED_VALIDATOR: Symbol.for(
+        'GameSetupUpdateQueryApiV1ContextBasedValidator',
+      ),
       GAME_SETUP_UPDATE_QUERY_API_V1_VALIDATOR: Symbol.for(
         'GameSetupUpdateQueryApiV1Validator',
       ),
