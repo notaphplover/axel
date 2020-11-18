@@ -1,10 +1,9 @@
-import { Converter, Writable } from '../../../../../../common/domain';
+import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
-import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
+import { PlayerReference } from '../../../../domain/model/setup/PlayerReference';
 import { UpdateQuery } from 'mongoose';
 import { injectable } from 'inversify';
-import mongodb from 'mongodb';
 
 @injectable()
 export class GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter
@@ -12,18 +11,40 @@ export class GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter
   public transform(
     input: GameSetupUpdateQuery,
   ): UpdateQuery<ExtendedGameSetupDb> {
-    const updateQuery: UpdateQuery<ExtendedGameSetupDb> = {};
+    const updateQuery: unknown[] = [];
 
     if (input.additionalPlayerSetups !== undefined) {
-      if (updateQuery.$push === undefined) {
-        updateQuery.$push = {};
-      }
+      updateQuery.push({
+        $addFields: {
+          playerSetups: {
+            $concatArrays: ['$playerSetups', input.additionalPlayerSetups],
+          },
+        },
+      });
+    }
 
-      (updateQuery.$push.playerSetups as Writable<
-        mongodb.ArrayOperator<PlayerSetup[]>
-      >) = {
-        $each: input.additionalPlayerSetups,
-      };
+    if (input.removePlayerSetups !== undefined) {
+      updateQuery.push({
+        $project: {
+          playerSetups: {
+            $filter: {
+              input: '$playerSetups',
+              as: 'out',
+              cond: {
+                $not: {
+                  $in: [
+                    '$$out.userId',
+                    input.removePlayerSetups.map(
+                      (playerReference: PlayerReference) =>
+                        playerReference.userId,
+                    ),
+                  ],
+                },
+              },
+            },
+          },
+        },
+      });
     }
 
     return updateQuery;

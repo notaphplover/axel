@@ -24,6 +24,11 @@ export const gameSetupsCreationQueryFixtureFactory: FixtureFactory<GameSetupsCre
 export const gameSetupUpdateQuery: GameSetupUpdateQuery = {
   additionalPlayerSetups: extendedGameSetup.playerSetups,
   id: extendedGameSetup.id,
+  removePlayerSetups: extendedGameSetup.playerSetups.map(
+    (playerSetup: PlayerSetup) => {
+      return { userId: playerSetup.userId };
+    },
+  ),
 };
 
 export const gameSetupUpdateQueryFixtureFactory: FixtureFactory<GameSetupUpdateQuery> = new DeepCloneFixtureFactory(
