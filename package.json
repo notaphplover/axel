@@ -11,7 +11,7 @@
     "delete:prod": "pm2 delete \"axel-backend\"",
     "docker:rebuild:app": "docker-compose -f docker-compose.yml -f docker-compose.test.yml rm -fv app && docker-compose -f docker-compose.yml -f docker-compose.test.yml build app",
     "docker:down:ci": "docker-compose -f docker-compose.yml -f docker-compose.test.yml down",
-    "docker:up:ci": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d",
+    "docker:up:ci": "docker-compose -f docker-compose.yml -f docker-compose.test.ci.yml up -d",
     "docker:up:ci:linux": "docker-compose -f docker-compose.yml -f docker-compose.test.ci.linux.yml up -d",
     "docker:up:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up",
     "lint": "eslint src",
@@ -24,13 +24,15 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:js": "jest --config=jest.dist.config.js",
-    "test:js:coverage": "jest --config=jest.dist.config.js --coverage",
+    "test:js:ci": "npm run test:js -- --ci",
+    "test:js:coverage": "npm run test:js -- --coverage",
     "test:end2end": "jest --selectProjects End2End",
-    "test:end2end:js": "jest --config=jest.dist.config.js --selectProjects End2End",
+    "test:end2end:js": "npm run test:js -- --selectProjects End2End",
     "test:integration": "jest --selectProjects Integration",
-    "test:integration:js": "jest --config=jest.dist.config.js --selectProjects Integration",
+    "test:integration:js": "npm run test:js -- --selectProjects Integration",
     "test:unit": "jest --selectProjects Unit",
-    "test:unit:js": "jest --config=jest.dist.config.js --selectProjects Unit"
+    "test:unit:js": "npm run test:js -- --selectProjects Unit",
+    "test:unit:js:ci": "npm run test:unit:js -- --ci"
   },
   "keywords": [
     "axel",
