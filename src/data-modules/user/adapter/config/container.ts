@@ -21,8 +21,8 @@ import { UserRoleToUserRoleApiV1Converter } from '../api/converter/UserRoleToUse
 import { UserRouter } from '../server/router/UserRouter';
 import { UserToUserApiV1Converter } from '../api/converter/UserToUserApiV1Converter';
 import { UserTokenToUserTokenApiV1Converter } from '../api/converter/UserTokenToUserTokenApiV1Converter';
-import { authCreationQueryApiV1JoiValidator } from '../api/validator/schema/query/AuthCreationQueryApiV1JoiValidator';
-import { userCreationQueryApiV1JoiValidator } from '../api/validator/schema/query/UserCreationQueryApiV1JoiValidator';
+import { authCreationQueryApiV1JoiValidatorSchema } from '../api/validator/schema/query/authCreationQueryApiV1JoiValidatorSchema';
+import { userCreationQueryApiV1JoiValidatorSchema } from '../api/validator/schema/query/userCreationQueryApiV1JoiValidatorSchema';
 import { userDbModel } from '../db/model/UserDb';
 
 function bindAdapters(bind: interfaces.Bind) {
@@ -39,11 +39,11 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(
     USER_ADAPTER_TYPES.api.validator.schema
       .AUTH_CREATION_QUERY_API_V1_JOI_VALIDATOR,
-  ).toConstantValue(authCreationQueryApiV1JoiValidator);
+  ).toConstantValue(authCreationQueryApiV1JoiValidatorSchema);
   bind(
     USER_ADAPTER_TYPES.api.validator.schema
       .USER_CREATION_QUERY_API_V1_JOI_VALIDATOR,
-  ).toConstantValue(userCreationQueryApiV1JoiValidator);
+  ).toConstantValue(userCreationQueryApiV1JoiValidatorSchema);
   bind(
     USER_ADAPTER_TYPES.api.validator.AUTH_CREATION_QUERY_API_V1_VALIDATOR,
   ).to(AuthCreationQueryApiV1Validator);
