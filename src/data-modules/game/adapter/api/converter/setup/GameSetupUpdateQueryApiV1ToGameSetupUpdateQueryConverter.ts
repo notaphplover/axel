@@ -1,12 +1,11 @@
-import { Converter, Interactor } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
-import { CardDeck } from '../../../../domain/model/deck/CardDeck';
-import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
-import { EntitiesNotFoundError } from '../../../../../../layer-modules/db/domain';
-import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { Converter } from '../../../../../../common/domain';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
+import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1 } from '../../query/setup/GameSetupUpdateQueryPlayerSetupApiV1';
 import { GameSetupUpdateQueryApiV1 } from '../../query/setup/GameSetupUpdateQueryApiV1';
-import { GameSetupUpdateQueryPlayerSetupApiV1 } from '../../query/setup/GameSetupUpdateQueryPlayerSetupApiV1';
+import { PlayerReference } from '../../../../domain/model/setup/PlayerReference';
+import { PlayerReferenceApiV1 } from '../../model/setup/PlayerReferenceApiV1';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 
 @injectable()
@@ -14,10 +13,21 @@ export class GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter
   implements
     Converter<GameSetupUpdateQueryApiV1, Promise<GameSetupUpdateQuery>> {
   constructor(
-    @inject(GAME_DOMAIN_TYPES.interactor.deck.FIND_CARD_DECKS_INTERACTOR)
-    private readonly findCardDecksInteractor: Interactor<
-      CardDeckFindQuery,
-      Promise<CardDeck[]>
+    @inject(
+      GAME_ADAPTER_TYPES.api.converter.setup
+        .GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER,
+    )
+    private readonly gameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter: Converter<
+      GameSetupUpdateQueryAdditionalPlayerSetupApiV1[],
+      Promise<PlayerSetup[]>
+    >,
+    @inject(
+      GAME_ADAPTER_TYPES.api.converter.setup
+        .PLAYER_REFERENCE_API_V1_TO_PLAYER_REFERENCE_CONVERTER,
+    )
+    private readonly playerReferenceApiV1ToPlayerReferenceConverter: Converter<
+      PlayerReferenceApiV1,
+      PlayerReference
     >,
   ) {}
 
@@ -27,6 +37,7 @@ export class GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter
     return {
       additionalPlayerSetups: await this.adaptAdditionalPlayerSetups(input),
       id: input.id,
+      removePlayerSetups: this.adaptRemovePlayerSetups(input),
     };
   }
 
@@ -38,41 +49,30 @@ export class GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter
     if (input.additionalPlayerSetups === undefined) {
       additionalPlayerSetups = undefined;
     } else {
-      const gameSetupPlayerSetupsDeckIds: string[] = input.additionalPlayerSetups.map(
-        (playerSetup: GameSetupUpdateQueryPlayerSetupApiV1) =>
-          playerSetup.deckId,
-      );
-
-      const gameSetupPlayerSetupsDecksFindQuery: CardDeckFindQuery = {
-        ids: gameSetupPlayerSetupsDeckIds,
-      };
-
-      const gameSetupPlayerSetupsDecks: CardDeck[] = await this.findCardDecksInteractor.interact(
-        gameSetupPlayerSetupsDecksFindQuery,
-      );
-
-      additionalPlayerSetups = input.additionalPlayerSetups.map(
-        (playerSetup: GameSetupUpdateQueryPlayerSetupApiV1) => {
-          const playerSetupDeck:
-            | CardDeck
-            | undefined = gameSetupPlayerSetupsDecks.find(
-            (cardDeck: CardDeck) => cardDeck.id === playerSetup.deckId,
-          );
-
-          if (playerSetupDeck === undefined) {
-            throw new EntitiesNotFoundError(
-              `playerSetup for id ${playerSetup.deckId} not found`,
-            );
-          }
-
-          return {
-            deck: playerSetupDeck,
-            userId: playerSetup.userId,
-          };
-        },
+      additionalPlayerSetups = await this.gameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter.transform(
+        input.additionalPlayerSetups,
       );
     }
 
     return additionalPlayerSetups;
+  }
+
+  private adaptRemovePlayerSetups(
+    input: GameSetupUpdateQueryApiV1,
+  ): PlayerReference[] | undefined {
+    let removePlayerSetups: PlayerReferenceApiV1[] | undefined;
+
+    if (input.removePlayerSetups === undefined) {
+      removePlayerSetups = undefined;
+    } else {
+      removePlayerSetups = input.removePlayerSetups.map(
+        (removePlayerSetup: PlayerReference) =>
+          this.playerReferenceApiV1ToPlayerReferenceConverter.transform(
+            removePlayerSetup,
+          ),
+      );
+    }
+
+    return removePlayerSetups;
   }
 }

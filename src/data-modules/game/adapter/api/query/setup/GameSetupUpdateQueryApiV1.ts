@@ -1,7 +1,10 @@
-import { GameSetupUpdateQueryPlayerSetupApiV1 } from './GameSetupUpdateQueryPlayerSetupApiV1';
+import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1 } from './GameSetupUpdateQueryPlayerSetupApiV1';
+import { PlayerReferenceApiV1 } from '../../model/setup/PlayerReferenceApiV1';
 
 export interface GameSetupUpdateQueryApiV1 {
   id: string;
 
-  additionalPlayerSetups?: GameSetupUpdateQueryPlayerSetupApiV1[];
+  additionalPlayerSetups?: GameSetupUpdateQueryAdditionalPlayerSetupApiV1[];
+
+  removePlayerSetups?: PlayerReferenceApiV1[];
 }
