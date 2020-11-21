@@ -19,31 +19,31 @@ This project is now a WIP with no roadmap, so ***don't put your faith in it*** (
 npm ci
 ```
 
-3. Build the source code:
+3. Run the setup script
+
+```
+npm run setup:local:ts
+```
+
+4. Build the source code:
 
 ```
 npm run build
 ```
 
-3. Run the setup script
-
-```
-npm run setup:local
-```
-
-4. Launch docker images:
+5. Launch docker images:
 
 ```
 docker-compose up
 ```
 
-5. Start local server
+6. Start local server
 
 ```
 npm run start
 ```
 
-6. Enjoy!
+7. Enjoy!
 
 ### Tests
 

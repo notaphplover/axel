@@ -41,10 +41,13 @@ jobs:
         run: npm ci
 
       - name: Compile source files
-        run: npm run build
+        run: npm run build:incremental
 
       - name: Setup local files
         run: npm run setup:local
+
+      - name: Compile source files (schemas)
+        run: npm run build:incremental
 
       - name: Launch docker images (Linux)
         run: npm run docker:up:ci:linux
@@ -65,3 +68,14 @@ jobs:
       - name: Launch Unit Tests (Non Docker friendly OS)
         run: npm run test:unit:js:ci
         if: ${{ matrix.os == 'macos-latest' || matrix.os == 'windows-latest' }}
+
+      - name: Start SSH session on failure
+        if: ${{ failure() }}
+        uses: luchihoratiu/debug-via-ssh@main
+        with:
+          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+          SSH_PASS: ${{ secrets.SSH_PASS }}
+
+      - name: Don't kill instace on failure
+        if: ${{ failure() }}
+        run: sleep 1h
