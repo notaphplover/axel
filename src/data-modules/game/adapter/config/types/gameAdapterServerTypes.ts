@@ -20,6 +20,9 @@ export const GAME_ADAPTER_SERVER_TYPES = {
       ),
     },
     setup: {
+      PATCH_GAME_SETUP_BY_ID_V1_REQUEST_HANDLER: Symbol.for(
+        'PatchGameSetupByIdV1RequestHandler',
+      ),
       POST_GAME_SETUP_V1_REQUEST_HANDLER: Symbol.for(
         'PostGameSetupV1RequestHandler',
       ),

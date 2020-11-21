@@ -5,6 +5,7 @@ import { GameRouter } from '../../../server/router/GameRouter';
 import { GameSetupRouter } from '../../../server/router/setup/GameSetupRouter';
 import { GetCardDeckByIdV1RequestHandler } from '../../../server/reqHandler/deck/GetCardDeckByIdV1RequestHandler';
 import { GetGameByIdV1RequestHandler } from '../../../server/reqHandler/GetGameByIdV1RequestHandler';
+import { PatchGameSetupByIdV1RequestHandler } from '../../../server/reqHandler/setup/PatchGameSetupByIdV1RequestHandler';
 import { PostCardDeckV1RequestHandler } from '../../../server/reqHandler/deck/PostCardDeckV1RequestHandler';
 import { PostCardV1RequestHandler } from '../../../server/reqHandler/card/PostCardV1RequestHandler';
 import { PostCardsSearchesV1RequestHandler } from '../../../server/reqHandler/card/PostCardsSearchesV1RequestHandler';
@@ -36,6 +37,10 @@ export function bindGameAdapterServer(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.server.reqHandler.deck.POST_CARD_DECK_V1_REQUEST_HANDLER,
   ).to(PostCardDeckV1RequestHandler);
 
+  bind(
+    GAME_ADAPTER_TYPES.server.reqHandler.setup
+      .PATCH_GAME_SETUP_BY_ID_V1_REQUEST_HANDLER,
+  ).to(PatchGameSetupByIdV1RequestHandler);
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.setup
       .POST_GAME_SETUP_V1_REQUEST_HANDLER,
