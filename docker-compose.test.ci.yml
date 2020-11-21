@@ -2,7 +2,7 @@ version: '3'
 services:
   app:
     build: .
-    command: npm run start:prod
+    command: npm run start:ci
     environment:
       APP_ENV: docker
     ports:
