@@ -103,18 +103,18 @@ export const GAME_ADAPTER_API_TYPES = {
       query: {
         card: {
           CARD_FIND_QUERY_API_V1_JOI_VALIDATOR_SCHEMA: Symbol.for(
-            'cardFindQueryApiV1JoyValidatorSchema',
+            'cardFindQueryApiV1JoiValidatorSchema',
           ),
         },
         setup: {
           GAME_SETUP_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol.for(
-            'gameSetupCreationQueryApiV1JoyValidatorSchema',
+            'gameSetupCreationQueryApiV1JoiValidatorSchema',
           ),
           GAME_SETUP_FIND_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol.for(
-            'gameSetupFindQueryApiV1JoyValidatorSchema',
+            'gameSetupFindQueryApiV1JoiValidatorSchema',
           ),
           GAME_SETUP_UPDATE_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol.for(
-            'gameSetupUpdateQueryApiV1JoyValidatorSchema',
+            'gameSetupUpdateQueryApiV1JoiValidatorSchema',
           ),
         },
       },

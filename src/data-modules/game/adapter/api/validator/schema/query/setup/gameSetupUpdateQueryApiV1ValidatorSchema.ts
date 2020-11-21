@@ -4,12 +4,12 @@ import { gameSetupUpdateQueryAdditionalPlayerSetupApiV1ValidatorSchema } from '.
 
 const GAME_SETUP_CREATION_QUERY_PLAYER_SETUPS_LENGTH: number = 1;
 
-export const gameSetupUpdateQueryApiV1JoyValidatorSchema: Joi.ObjectSchema<GameSetupUpdateQueryApiV1> = Joi.object<
-  GameSetupUpdateQueryApiV1
->({
-  additionalPlayerSetups: Joi.array()
-    .items(gameSetupUpdateQueryAdditionalPlayerSetupApiV1ValidatorSchema)
-    .length(GAME_SETUP_CREATION_QUERY_PLAYER_SETUPS_LENGTH)
-    .optional(),
-  id: Joi.number().strict().required(),
-});
+export const gameSetupUpdateQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameSetupUpdateQueryApiV1> = Joi.object<GameSetupUpdateQueryApiV1>(
+  {
+    additionalPlayerSetups: Joi.array()
+      .items(gameSetupUpdateQueryAdditionalPlayerSetupApiV1ValidatorSchema)
+      .length(GAME_SETUP_CREATION_QUERY_PLAYER_SETUPS_LENGTH)
+      .optional(),
+    id: Joi.number().strict().required(),
+  },
+);

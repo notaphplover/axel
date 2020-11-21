@@ -5,19 +5,15 @@ import Joi from 'joi';
 import { JoiObjectValidator } from '../../../../../../integration-modules/joi/adapter';
 
 @injectable()
-export class GameSetupUpdateQueryApiV1Validator extends JoiObjectValidator<
-  GameSetupUpdateQueryApiV1
-> {
+export class GameSetupUpdateQueryApiV1Validator extends JoiObjectValidator<GameSetupUpdateQueryApiV1> {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.validator.schema.query.setup
         .GAME_SETUP_UPDATE_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
     )
-    gameSetupUpdateQueryApiV1JoyValidatorSchema: Joi.ObjectSchema<
-      GameSetupUpdateQueryApiV1
-    >,
+    gameSetupUpdateQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameSetupUpdateQueryApiV1>,
   ) {
-    super(gameSetupUpdateQueryApiV1JoyValidatorSchema);
+    super(gameSetupUpdateQueryApiV1JoiValidatorSchema);
   }
 }
