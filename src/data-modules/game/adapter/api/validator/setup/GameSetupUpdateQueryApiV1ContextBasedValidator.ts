@@ -55,6 +55,12 @@ export class GameSetupUpdateQueryApiV1ContextBasedValidator
       errorMessages,
     );
 
+    this.validateRemovePlayerSetups(
+      gameSetupUpdateQuery,
+      context,
+      errorMessages,
+    );
+
     if (errorMessages.length === 0) {
       return {
         model: gameSetupUpdateQuery,
@@ -83,6 +89,23 @@ export class GameSetupUpdateQueryApiV1ContextBasedValidator
       ) {
         errorMessages.push(
           'Invalid additionalPlayerSetups: expected one player setup of the user who send the request.',
+        );
+      }
+    }
+  }
+
+  private validateRemovePlayerSetups(
+    gameSetupUpdateQuery: GameSetupUpdateQueryApiV1,
+    context: GameSetupUpdateQueryApiV1ValidationContext,
+    errorMessages: string[],
+  ): void {
+    if (gameSetupUpdateQuery.removePlayerSetups !== undefined) {
+      if (
+        gameSetupUpdateQuery.removePlayerSetups.length === 1 &&
+        gameSetupUpdateQuery.removePlayerSetups[0].userId === context.user.id
+      ) {
+        errorMessages.push(
+          'Invalid removePlayerSetups: expected one player setup of the user who send the request.',
         );
       }
     }
