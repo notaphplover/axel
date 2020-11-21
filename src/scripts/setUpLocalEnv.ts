@@ -76,39 +76,6 @@ function detectModulesAtFolder(baseFolder: string): string[] {
     .map((folderName: string) => join(baseFolder, folderName));
 }
 
-const modulePathToModulePathAndFolderMapper: (
-  modulePath: string,
-) => [string, string] = (modulePath: string) => [
-  basename(modulePath),
-  modulePath,
-];
-
-const distModulePaths: string[] = detectModulesAtFolders([
-  distFolder,
-  distDataModulesFolder,
-  distIntegrationModulesFolder,
-  distLayerModulesFolder,
-]);
-
-const distModulePathsByFolder: Map<string, string> = new Map(
-  distModulePaths.map((modulePath: string) =>
-    modulePathToModulePathAndFolderMapper(modulePath),
-  ),
-);
-
-const srcModulePaths: string[] = detectModulesAtFolders([
-  srcFolder,
-  srcDataModulesFolder,
-  srcIntegrationModulesFolder,
-  srcLayerModulesFolder,
-]);
-
-const srcModulePathsByFolder: Map<string, string> = new Map(
-  srcModulePaths.map((modulePath: string) =>
-    modulePathToModulePathAndFolderMapper(modulePath),
-  ),
-);
-
 function getEnvDirectory(modulePath: string): string {
   return join(modulePath, 'env');
 }
@@ -136,6 +103,39 @@ async function copyEnvToDist(): Promise<void> {
   if (!existsSync(distFolder)) {
     return;
   }
+
+  const modulePathToModulePathAndFolderMapper: (
+    modulePath: string,
+  ) => [string, string] = (modulePath: string) => [
+    basename(modulePath),
+    modulePath,
+  ];
+
+  const distModulePaths: string[] = detectModulesAtFolders([
+    distFolder,
+    distDataModulesFolder,
+    distIntegrationModulesFolder,
+    distLayerModulesFolder,
+  ]);
+
+  const distModulePathsByFolder: Map<string, string> = new Map(
+    distModulePaths.map((modulePath: string) =>
+      modulePathToModulePathAndFolderMapper(modulePath),
+    ),
+  );
+
+  const srcModulePaths: string[] = detectModulesAtFolders([
+    srcFolder,
+    srcDataModulesFolder,
+    srcIntegrationModulesFolder,
+    srcLayerModulesFolder,
+  ]);
+
+  const srcModulePathsByFolder: Map<string, string> = new Map(
+    srcModulePaths.map((modulePath: string) =>
+      modulePathToModulePathAndFolderMapper(modulePath),
+    ),
+  );
 
   const copyPromises: Promise<void>[] = [];
 
@@ -234,6 +234,13 @@ function mergeEnvFiles(
 void (async () => {
   console.log('Scanning for modules...');
 
+  const srcModulePaths: string[] = detectModulesAtFolders([
+    srcFolder,
+    srcDataModulesFolder,
+    srcIntegrationModulesFolder,
+    srcLayerModulesFolder,
+  ]);
+
   console.log(`Found ${srcModulePaths.length} modules.`);
 
   srcModulePaths.forEach((modulePath: string) => {
@@ -254,27 +261,8 @@ void (async () => {
 
   console.log('Generating JSON validation schemas...');
 
-  const jsonSchemaGenerationParams: [string, string[]][] = [];
-
-  for (const [folder, srcModulePath] of srcModulePathsByFolder) {
-    const distModulePath: string | undefined = distModulePathsByFolder.get(
-      folder,
-    );
-
-    const destinationModules: string[] = [srcModulePath];
-
-    if (distModulePath !== undefined) {
-      destinationModules.push(distModulePath);
-    }
-
-    jsonSchemaGenerationParams.push([srcModulePath, destinationModules]);
-  }
-
   await Promise.all(
-    jsonSchemaGenerationParams.map(
-      async ([origin, destinations]: [string, string[]]) =>
-        jsonSchemaGenerator.generate(origin, destinations),
-    ),
+    srcModulePaths.map(jsonSchemaGenerator.generate.bind(jsonSchemaGenerator)),
   );
 
   console.log('Done');
