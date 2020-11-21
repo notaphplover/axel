@@ -10,7 +10,7 @@ export class AuthCreationQueryApiV1Validator extends JoiObjectValidator<AuthCrea
   constructor(
     @inject(
       USER_ADAPTER_TYPES.api.validator.schema
-        .AUTH_CREATION_QUERY_API_V1_JOI_VALIDATOR,
+        .AUTH_CREATION_QUERY_API_V1_JOI_VALIDATOR_SCHEMA,
     )
     authCreationQueryApiV1JoiValidator: Joi.ObjectSchema<AuthCreationQueryApiV1>,
   ) {

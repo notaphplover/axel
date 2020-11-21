@@ -38,11 +38,11 @@ function bindAdapters(bind: interfaces.Bind) {
 
   bind(
     USER_ADAPTER_TYPES.api.validator.schema
-      .AUTH_CREATION_QUERY_API_V1_JOI_VALIDATOR,
+      .AUTH_CREATION_QUERY_API_V1_JOI_VALIDATOR_SCHEMA,
   ).toConstantValue(authCreationQueryApiV1JoiValidatorSchema);
   bind(
     USER_ADAPTER_TYPES.api.validator.schema
-      .USER_CREATION_QUERY_API_V1_JOI_VALIDATOR,
+      .USER_CREATION_QUERY_API_V1_JOI_VALIDATOR_SCHEMA,
   ).toConstantValue(userCreationQueryApiV1JoiValidatorSchema);
   bind(
     USER_ADAPTER_TYPES.api.validator.AUTH_CREATION_QUERY_API_V1_VALIDATOR,
