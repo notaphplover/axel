@@ -35,7 +35,7 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
   >;
   let gameSetupFindQueryApiV1Validator: Validator<GameSetupFindQueryApiV1>;
 
-  let getGameSetupByIdV1RequestHandler: PostGameSetupsSearchesV1RequestHandler;
+  let postGameSetupsSearchesV1RequestHandler: PostGameSetupsSearchesV1RequestHandler;
 
   beforeAll(() => {
     basicGameSetupToBasicGameSetupApiV1Converter = {
@@ -51,7 +51,7 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
       validate: jest.fn(),
     };
 
-    getGameSetupByIdV1RequestHandler = new PostGameSetupsSearchesV1RequestHandler(
+    postGameSetupsSearchesV1RequestHandler = new PostGameSetupsSearchesV1RequestHandler(
       basicGameSetupToBasicGameSetupApiV1Converter,
       findBasicGameSetupsInteractor,
       gameSetupFindQueryApiV1ToGameSetupFindQueryConverter,
@@ -93,7 +93,7 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
           validationResultFixture,
         );
 
-        await getGameSetupByIdV1RequestHandler.handle(
+        await postGameSetupsSearchesV1RequestHandler.handle(
           requestFixture,
           replyFixture,
         );
@@ -169,7 +169,7 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
           validationResultFixture,
         );
 
-        await getGameSetupByIdV1RequestHandler.handle(
+        await postGameSetupsSearchesV1RequestHandler.handle(
           requestFixture,
           replyFixture,
         );
