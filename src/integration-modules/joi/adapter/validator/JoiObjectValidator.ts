@@ -6,7 +6,7 @@ import { injectable } from 'inversify';
 @injectable()
 export abstract class JoiObjectValidator<TObject>
   implements Validator<TObject> {
-  constructor(private readonly joiValidatorSchema: Joi.ObjectSchema<TObject>) {}
+  constructor(private readonly joiValidatorSchema: Joi.AnySchema) {}
 
   public validate(value: unknown): ValidationResult<TObject> {
     const joiValidationResult: Joi.ValidationResult = this.joiValidatorSchema.validate(
