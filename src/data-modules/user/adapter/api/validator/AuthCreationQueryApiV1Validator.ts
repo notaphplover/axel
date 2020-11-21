@@ -1,26 +1,19 @@
 import { inject, injectable } from 'inversify';
-import Ajv from 'ajv';
 import { AuthCreationQueryApiV1 } from '../query/AuthCreationQueryApiV1';
-import { JsonSchemaFileValidator } from '../../../../../json-schema/adapter';
-import { join } from 'path';
-import { jsonSchemaAdapter } from '../../../../../json-schema/adapter';
+import Joi from 'joi';
+import { JoiObjectValidator } from '../../../../../integration-modules/joi/adapter';
+import { USER_ADAPTER_TYPES } from '../../config/types';
 
 @injectable()
-export class AuthCreationQueryApiV1Validator extends JsonSchemaFileValidator<
-  AuthCreationQueryApiV1
-> {
+export class AuthCreationQueryApiV1Validator extends JoiObjectValidator<AuthCreationQueryApiV1> {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
-    @inject(jsonSchemaAdapter.config.types.validator.AJV) ajv: Ajv.Ajv,
+    @inject(
+      USER_ADAPTER_TYPES.api.validator.schema
+        .AUTH_CREATION_QUERY_API_V1_JOI_VALIDATOR,
+    )
+    authCreationQueryApiV1JoiValidator: Joi.ObjectSchema<AuthCreationQueryApiV1>,
   ) {
-    super(
-      ajv,
-      join(
-        __dirname,
-        '..',
-        '..',
-        'json-schema',
-        'AuthCreationQueryApiV1.schema',
-      ),
-    );
+    super(authCreationQueryApiV1JoiValidator);
   }
 }
