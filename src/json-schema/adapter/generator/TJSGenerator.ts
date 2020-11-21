@@ -1,6 +1,7 @@
 import * as TJS from 'typescript-json-schema';
 import * as fs from 'fs';
 import * as path from 'path';
+import { JsonSchemaGenerator } from '../../domain';
 import { getDirectories } from '../../../common/domain/io/directory/getDirectories';
 import { getFiles } from '../../../common/domain/io/file/getFiles';
 import { injectable } from 'inversify';
@@ -12,12 +13,19 @@ const FILE_BATCH_SIZE: number = 20;
 const JSON_SPACES: number = 2;
 
 @injectable()
-export class TJSGenerator {
-  public async generate(modulePath: string): Promise<void> {
-    const files: string[] = this.getFilesToProcess(modulePath);
+export class TJSGenerator implements JsonSchemaGenerator {
+  public async generate(
+    originModulePath: string,
+    destinationModulePaths: string[],
+  ): Promise<void> {
+    const files: string[] = this.getFilesToProcess(originModulePath);
     const symbolsSet: Set<string> = this.getSymbolSetFromFiles(files);
 
-    await this.saveSchemas(modulePath, this.generateSchemas(files), symbolsSet);
+    await this.saveSchemas(
+      destinationModulePaths,
+      this.generateSchemas(files),
+      symbolsSet,
+    );
   }
 
   private generateSchemas(files: string[]): TJS.JsonSchemaGenerator {
@@ -77,7 +85,7 @@ export class TJSGenerator {
   }
 
   private async saveSchemas(
-    modulePath: string,
+    modulePaths: string[],
     generator: TJS.JsonSchemaGenerator,
     symbolsSet: Set<string>,
   ): Promise<void> {
@@ -85,13 +93,17 @@ export class TJSGenerator {
       .getUserSymbols()
       .filter(symbolsSet.has.bind(symbolsSet));
 
-    const schemaDir: string = path.join(modulePath, 'adapter', 'json-schema');
+    const schemaDirs: string[] = modulePaths.map((modulePath: string) =>
+      path.join(modulePath, 'adapter', 'json-schema'),
+    );
 
-    if (!fs.existsSync(schemaDir)) {
-      fs.mkdirSync(schemaDir, {
-        mode: '0754',
-        recursive: true,
-      });
+    for (const schemaDir of schemaDirs) {
+      if (!fs.existsSync(schemaDir)) {
+        fs.mkdirSync(schemaDir, {
+          mode: '0754',
+          recursive: true,
+        });
+      }
     }
 
     for (let i: number = 0; i < symbols.length; i += FILE_BATCH_SIZE) {
@@ -101,21 +113,28 @@ export class TJSGenerator {
         symbolsBatch.map(async (symbol: string) => {
           const schema: TJS.Definition = generator.getSchemaForSymbol(symbol);
           const prefix: string = `export default `;
-          const filePath: string = `${path.join(
-            schemaDir,
-            `${symbol}.schema.ts`,
-          )}`;
+
           const fileContents: string = `${prefix}${JSON.stringify(
             schema,
             null,
             JSON_SPACES,
           )}
 `;
-          return new Promise((resolve: (value: void) => void) => {
-            fs.writeFile(filePath, fileContents, () => {
-              resolve();
-            });
-          });
+
+          return Promise.all(
+            schemaDirs.map(async (schemaDir: string) => {
+              const filePath: string = `${path.join(
+                schemaDir,
+                `${symbol}.schema.ts`,
+              )}`;
+
+              return new Promise((resolve: (value: void) => void) => {
+                fs.writeFile(filePath, fileContents, () => {
+                  resolve();
+                });
+              });
+            }),
+          );
         }),
       );
     }

@@ -1,3 +1,6 @@
 export interface JsonSchemaGenerator {
-  generate(modulePath: string): Promise<void>;
+  generate(
+    originModulePath: string,
+    destinationModulePaths: string[],
+  ): Promise<void>;
 }
