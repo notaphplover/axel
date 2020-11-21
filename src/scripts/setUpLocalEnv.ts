@@ -164,7 +164,10 @@ async function copyEnvToDist(): Promise<void> {
 
         copyPromises.push(
           new Promise<void>(
-            (resolve: () => void, reject: (reason: unknown) => void) => {
+            (
+              resolve: (value: void) => void,
+              reject: (reason: unknown) => void,
+            ) => {
               ncp(
                 srcGeneratedJsonSchemaAdapterFolder,
                 distGeneratedJsonSchemaAdapterFolder,
