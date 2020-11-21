@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    build: .
+    command: npm run start:prod
+    environment:
+      APP_ENV: docker
+    ports:
+      - "${APP_SERVER_PORT}:${APP_SERVER_PORT}"
+    volumes:
+      - .:/app
+      - /app/node_modules/
+    depends_on:
+      - db
