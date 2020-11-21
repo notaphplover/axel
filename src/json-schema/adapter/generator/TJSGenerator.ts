@@ -111,7 +111,7 @@ export class TJSGenerator {
             JSON_SPACES,
           )}
 `;
-          return new Promise((resolve: () => void) => {
+          return new Promise((resolve: (value: void) => void) => {
             fs.writeFile(filePath, fileContents, () => {
               resolve();
             });
