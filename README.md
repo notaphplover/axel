@@ -19,31 +19,37 @@ This project is now a WIP with no roadmap, so ***don't put your faith in it*** (
 npm ci
 ```
 
-3. Run the setup script
+3. Build the source code:
 
 ```
-npm run setup:local:ts
+npm run build:incremental
 ```
 
-4. Build the source code:
+4. Run the setup script
 
 ```
-npm run build
+npm run setup
 ```
 
-5. Launch docker images:
+5. Recompile schema scripts (this sucks, we have plans to remove this step):
+
+```
+npm run build:incremental
+```
+
+6. Launch docker images:
 
 ```
 docker-compose up
 ```
 
-6. Start local server
+7. Start local server
 
 ```
 npm run start
 ```
 
-7. Enjoy!
+8. Enjoy!
 
 ### Tests
 
