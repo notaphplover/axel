@@ -12,6 +12,9 @@ export const USER_ADAPTER_TYPES = {
     },
     validator: {
       schema: {
+        AUTH_CREATION_QUERY_API_V1_JOI_VALIDATOR: Symbol.for(
+          'authCreationQueryApiV1JoiValidator',
+        ),
         USER_CREATION_QUERY_API_V1_JOI_VALIDATOR: Symbol.for(
           'userCreationQueryApiV1JoiValidator',
         ),

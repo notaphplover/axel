@@ -21,6 +21,7 @@ import { UserRoleToUserRoleApiV1Converter } from '../api/converter/UserRoleToUse
 import { UserRouter } from '../server/router/UserRouter';
 import { UserToUserApiV1Converter } from '../api/converter/UserToUserApiV1Converter';
 import { UserTokenToUserTokenApiV1Converter } from '../api/converter/UserTokenToUserTokenApiV1Converter';
+import { authCreationQueryApiV1JoiValidator } from '../api/validator/schema/query/AuthCreationQueryApiV1JoiValidator';
 import { userCreationQueryApiV1JoiValidator } from '../api/validator/schema/query/UserCreationQueryApiV1JoiValidator';
 import { userDbModel } from '../db/model/UserDb';
 
@@ -35,6 +36,10 @@ function bindAdapters(bind: interfaces.Bind) {
     USER_ADAPTER_TYPES.api.converter.USER_TOKEN_TO_USER_TOKEN_API_V1_CONVERTER,
   ).to(UserTokenToUserTokenApiV1Converter);
 
+  bind(
+    USER_ADAPTER_TYPES.api.validator.schema
+      .AUTH_CREATION_QUERY_API_V1_JOI_VALIDATOR,
+  ).toConstantValue(authCreationQueryApiV1JoiValidator);
   bind(
     USER_ADAPTER_TYPES.api.validator.schema
       .USER_CREATION_QUERY_API_V1_JOI_VALIDATOR,
