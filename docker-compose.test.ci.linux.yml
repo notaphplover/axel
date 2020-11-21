@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-Linux
+    command: npm run start:prod
     environment:
       APP_ENV: docker
     ports:
