@@ -71,8 +71,14 @@ export const GAME_ADAPTER_API_TYPES = {
       GAME_SETUP_FIND_QUERY_PLAYER_SETUP_API_V1_TO_GAME_SETUP_FIND_QUERY_PLAYER_SETUP_CONVERTER: Symbol.for(
         'GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter',
       ),
+      GAME_SETUP_UPDATE_QUERY_ADDITIONAL_PLAYER_SETUP_API_V1_ARRAY_TO_PLAYER_SETUP_ARRAY_CONVERTER: Symbol.for(
+        'GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter',
+      ),
       GAME_SETUP_UPDATE_QUERY_API_V1_TO_GAME_SETUP_UPDATE_QUERY_CONVERTER: Symbol.for(
         'GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter',
+      ),
+      PLAYER_REFERENCE_API_V1_TO_PLAYER_REFERENCE_CONVERTER: Symbol.for(
+        'PlayerReferenceApiV1ToPlayerReferenceConverter',
       ),
     },
   },
