@@ -1,27 +1,19 @@
 import { inject, injectable } from 'inversify';
-import Ajv from 'ajv';
 import { CardCreationQueryApiV1 } from '../../query/card/CardCreationQueryApiV1';
-import { JsonSchemaFileValidator } from '../../../../../../json-schema/adapter';
-import { join } from 'path';
-import { jsonSchemaAdapter } from '../../../../../../json-schema/adapter';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import Joi from 'joi';
+import { JoiObjectValidator } from '../../../../../../integration-modules/joi/adapter';
 
 @injectable()
-export class CardCreationQueryApiV1Validator extends JsonSchemaFileValidator<
-  CardCreationQueryApiV1
-> {
+export class CardCreationQueryApiV1Validator extends JoiObjectValidator<CardCreationQueryApiV1> {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
-    @inject(jsonSchemaAdapter.config.types.validator.AJV) ajv: Ajv.Ajv,
+    @inject(
+      GAME_ADAPTER_TYPES.api.validator.schema.query.card
+        .CARD_CREATION_QUERY_API_V1_JOI_VALIDATOR_SCHEMA,
+    )
+    cardCreationQueryApiV1JoiValidatorSchema: Joi.AlternativesSchema,
   ) {
-    super(
-      ajv,
-      join(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        'json-schema',
-        'CardCreationQueryApiV1.schema',
-      ),
-    );
+    super(cardCreationQueryApiV1JoiValidatorSchema);
   }
 }
