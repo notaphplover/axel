@@ -19,6 +19,7 @@
     "setup:local": "node ./dist/scripts/setUpLocalEnv.js",
     "setup:local:ts": "TS_NODE_FILES=true ts-node ./src/scripts/setUpLocalEnv.ts",
     "start": "TS_NODE_FILES=true ts-node ./src/index.ts",
+    "start:ci": "pm2-runtime start ./dist/index.js --watch --name \"axel-backend\"",
     "start:prod": "pm2 start ./dist/index.js --watch --name \"axel-backend\"",
     "stop:prod": "pm2 stop \"axel-backend\"",
     "test": "jest",
