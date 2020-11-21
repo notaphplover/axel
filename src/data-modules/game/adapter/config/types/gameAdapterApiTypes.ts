@@ -102,6 +102,9 @@ export const GAME_ADAPTER_API_TYPES = {
     schema: {
       query: {
         card: {
+          CARD_CREATION_QUERY_API_V1_JOI_VALIDATOR_SCHEMA: Symbol.for(
+            'cardCreationQueryApiV1JoiValidatorSchema',
+          ),
           CARD_FIND_QUERY_API_V1_JOI_VALIDATOR_SCHEMA: Symbol.for(
             'cardFindQueryApiV1JoiValidatorSchema',
           ),
