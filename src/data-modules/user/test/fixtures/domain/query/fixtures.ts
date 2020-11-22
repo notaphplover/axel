@@ -21,6 +21,7 @@ export const userFindQuery: UserFindQuery = {
   email: user.email,
   id: user.id,
   username: user.username,
+  password: 'sample-password',
 };
 
 export const userFindQueryFixtureFactory: FixtureFactory<UserFindQuery> = new DeepCloneFixtureFactory(

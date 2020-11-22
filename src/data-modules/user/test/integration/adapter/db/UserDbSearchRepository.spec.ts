@@ -72,6 +72,7 @@ mongooseIntegrationDescribe(UserDbSearchReporitory.name, () => {
 
         const userFindQueryFixture: UserFindQuery = userFindQueryFixtureFactory.get();
         userFindQueryFixture.id = userDbInserted._id.toHexString();
+        userFindQueryFixture.password = undefined;
 
         result = await userDbSearchRepository.find(userFindQueryFixture);
       });
