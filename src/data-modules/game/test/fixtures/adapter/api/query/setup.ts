@@ -56,6 +56,11 @@ export const gameSetupUpdateQueryApiV1: GameSetupUpdateQueryApiV1 = {
       userId: extendedGameSetup.ownerUserId,
     },
   ],
+  removePlayerSetups: [
+    {
+      userId: extendedGameSetup.ownerUserId,
+    },
+  ],
 };
 
 export const gameSetupUpdateQueryApiV1FixtureFactory: FixtureFactory<GameSetupUpdateQueryApiV1> = new DeepCloneFixtureFactory(
