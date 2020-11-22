@@ -105,5 +105,32 @@ describe('User V1', () => {
         expect(postAuthV1Response.data).toHaveProperty('token');
       });
     });
+
+    describe('when called POST auth with a request with the user credentials without password', () => {
+      let postAuthV1Response: axios.AxiosResponse | undefined;
+      let error: unknown;
+
+      beforeAll(async () => {
+        try {
+          const authCreationQueryApiV1: AuthCreationQueryApiV1 = getAuthCreationQueryApiV1();
+
+          authCreationQueryApiV1.password = (undefined as unknown) as string;
+
+          postAuthV1Response = await client.post(
+            `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/auth/tokens`,
+            authCreationQueryApiV1,
+          );
+        } catch (err) {
+          error = err;
+        }
+      });
+
+      it('must return an HTTP BAD_REQUEST STATUS', () => {
+        expect(postAuthV1Response).toBeUndefined();
+        expect((error as axios.AxiosError).response?.status).toBe(
+          StatusCodes.BAD_REQUEST,
+        );
+      });
+    });
   });
 });
