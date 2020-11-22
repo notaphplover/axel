@@ -26,9 +26,3 @@ src/layer-modules/*/env/docker.env
 
 ### auto generated .env file
 .env
-
-### auto-generated json schemas
-src/*/adapter/json-schema/
-src/data-modules/*/adapter/json-schema/
-src/integration-modules/*/adapter/json-schema/
-src/layer-modules/*/adapter/json-schema/
