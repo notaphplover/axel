@@ -22,34 +22,28 @@ npm ci
 3. Build the source code:
 
 ```
-npm run build:incremental
+npm run build
 ```
 
 4. Run the setup script
 
 ```
-npm run setup
+npm run setup:local
 ```
 
-5. Recompile schema scripts (this sucks, we have plans to remove this step):
-
-```
-npm run build:incremental
-```
-
-6. Launch docker images:
+5. Launch docker images:
 
 ```
 docker-compose up
 ```
 
-7. Start local server
+6. Start local server
 
 ```
 npm run start
 ```
 
-8. Enjoy!
+7. Enjoy!
 
 ### Tests
 
