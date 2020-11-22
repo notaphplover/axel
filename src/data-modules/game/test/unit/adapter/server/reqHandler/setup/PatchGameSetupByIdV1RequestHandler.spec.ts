@@ -71,8 +71,15 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
       let replyFixture: FastifyReply;
 
       beforeAll(async () => {
+        const requestFixtureBody: Partial<GameSetupUpdateQueryApiV1> = gameSetupUpdateQueryApiV1FixtureFactory.get();
+
+        delete requestFixtureBody.id;
+
         requestFixture = ({
-          body: gameSetupUpdateQueryApiV1FixtureFactory.get(),
+          body: requestFixtureBody,
+          params: {
+            gameSetupId: gameSetupUpdateQueryApiV1FixtureFactory.get().id,
+          },
           user: userFixtureFactory.get(),
         } as Partial<FastifyRequest & UserContainer>) as FastifyRequest &
           UserContainer;
@@ -112,13 +119,13 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
         (extendedGameSetupToExtendedGameSetupApiV1Converter.transform as jest.Mock).mockClear();
       });
 
-      it('must call gameSetupUpdateQueryApiV1ContextBasedValidator.validate with the model request body and the user', () => {
+      it('must call gameSetupUpdateQueryApiV1ContextBasedValidator.validate with the query from the request and the user', () => {
         expect(
           gameSetupUpdateQueryApiV1ContextBasedValidator.validate,
         ).toHaveBeenCalledTimes(1);
         expect(
           gameSetupUpdateQueryApiV1ContextBasedValidator.validate,
-        ).toHaveBeenCalledWith(requestFixture.body, {
+        ).toHaveBeenCalledWith(gameSetupUpdateQueryApiV1FixtureFactory.get(), {
           user: requestFixture.user,
         });
       });
@@ -163,8 +170,15 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
       let replyFixture: FastifyReply;
 
       beforeAll(async () => {
+        const requestFixtureBody: Partial<GameSetupUpdateQueryApiV1> = gameSetupUpdateQueryApiV1FixtureFactory.get();
+
+        delete requestFixtureBody.id;
+
         requestFixture = ({
-          body: gameSetupUpdateQueryApiV1FixtureFactory.get(),
+          body: requestFixtureBody,
+          params: {
+            gameSetupId: gameSetupUpdateQueryApiV1FixtureFactory.get().id,
+          },
           user: userFixtureFactory.get(),
         } as Partial<FastifyRequest & UserContainer>) as FastifyRequest &
           UserContainer;
@@ -224,8 +238,15 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
       let expectedValidationResult: ValidationFail;
 
       beforeAll(async () => {
+        const requestFixtureBody: Partial<GameSetupUpdateQueryApiV1> = gameSetupUpdateQueryApiV1FixtureFactory.get();
+
+        delete requestFixtureBody.id;
+
         requestFixture = ({
-          body: gameSetupUpdateQueryApiV1FixtureFactory.get(),
+          body: requestFixtureBody,
+          params: {
+            gameSetupId: gameSetupUpdateQueryApiV1FixtureFactory.get().id,
+          },
           user: userFixtureFactory.get(),
         } as Partial<FastifyRequest & UserContainer>) as FastifyRequest &
           UserContainer;

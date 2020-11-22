@@ -58,8 +58,12 @@ export class PatchGameSetupByIdV1RequestHandler
     request: FastifyRequest & UserContainer,
     reply: FastifyReply,
   ): Promise<void> {
+    const gameSetupUpdateQueryApiV1ToValidate: unknown = {
+      ...(request.body as Record<string, unknown>),
+      id: (request.params as { gameSetupId: string }).gameSetupId,
+    };
     const validationResult: ValidationResult<GameSetupUpdateQueryApiV1> = this.gameSetupUpdateQueryApiV1ContextBasedValidator.validate(
-      request.body,
+      gameSetupUpdateQueryApiV1ToValidate,
       { user: request.user },
     );
 
