@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import { JsonSchemaGenerator, jsonSchemaDomain } from '../json-schema/domain';
 import { PassThrough, Readable } from 'stream';
 import { basename, join } from 'path';
 import {
@@ -9,12 +8,8 @@ import {
   existsSync,
   mkdirSync,
 } from 'fs';
-import { Container } from 'inversify';
 import { common } from '../common/domain';
-import { configAdapter } from '../layer-modules/config/adapter';
 import { ncp } from 'ncp';
-
-const container: Container = configAdapter.container;
 
 const rootDir: string = common.io.rootDir;
 
@@ -55,10 +50,6 @@ const getDirectories: (source: string) => string[] =
   common.io.directory.getDirectories;
 
 const getFiles: (source: string) => string[] = common.io.file.getFiles;
-
-const jsonSchemaGenerator: JsonSchemaGenerator = container.get(
-  jsonSchemaDomain.config.types.generator.JSON_SCHEMA_GENERATOR,
-);
 
 function detectModulesAtFolders(baseFolders: string[]): string[] {
   const modules: string[] = [];
@@ -258,12 +249,6 @@ void (async () => {
   console.log('Copying env files to the build ...');
 
   await copyEnvToDist();
-
-  console.log('Generating JSON validation schemas...');
-
-  await Promise.all(
-    srcModulePaths.map(jsonSchemaGenerator.generate.bind(jsonSchemaGenerator)),
-  );
 
   console.log('Done');
 })();
