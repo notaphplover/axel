@@ -7,4 +7,7 @@ export const USER_E2E_TYPES = {
   CREATE_SECOND_USER_TASK_GRAPH_NODE: Symbol.for(
     'CreateSecondUserTaskGraphNode',
   ),
+  CREATE_SECOND_USER_TOKEN_TASK_GRAPH_NODE: Symbol.for(
+    'CreateSecondUserTokenTaskGraphNode',
+  ),
 };
