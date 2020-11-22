@@ -125,6 +125,9 @@ export const GAME_ADAPTER_API_TYPES = {
             'gameSetupUpdateQueryApiV1JoiValidatorSchema',
           ),
         },
+        GAME_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol.for(
+          'gameCreationQueryApiV1JoiValidatorSchema',
+        ),
       },
     },
     setup: {

@@ -37,6 +37,7 @@ import { ResourceToResourceApiV1Converter } from '../../../api/converter/card/Re
 import { cardCreationQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/card/cardCreationQueryApiV1JoiValidatorSchema';
 import { cardDeckCreationQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/deck/cardDeckCreationQueryApiV1JoiValidatorSchema';
 import { cardFindQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/card/cardFindQueryApiV1JoiValidatorSchema';
+import { gameCreationQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/gameCreationQueryApiV1JoiValidatorSchema';
 import { gameSetupCreationQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/setup/gameSetupCreationQueryApiV1ValidatorSchema';
 import { gameSetupFindQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/setup/gameSetupFindQueryApiV1ValidatorSchema';
 import { gameSetupUpdateQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/setup/gameSetupUpdateQueryApiV1ValidatorSchema';
@@ -214,4 +215,9 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.validator.setup
       .GAME_SETUP_UPDATE_QUERY_API_V1_VALIDATOR,
   ).to(GameSetupUpdateQueryApiV1Validator);
+
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.schema.query
+      .GAME_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
+  ).toConstantValue(gameCreationQueryApiV1JoiValidatorSchema);
 }
