@@ -12,7 +12,7 @@ import { UserToken } from '../../domain/model/UserToken';
 import { commonTest } from '../../../../common/test';
 
 @injectable()
-export class CreateUserTokenTaskGraphNode extends BaseTaskGraphNode<
+export class CreateFirstUserTokenTaskGraphNode extends BaseTaskGraphNode<
   symbol,
   UserToken
 > {
@@ -26,8 +26,8 @@ export class CreateUserTokenTaskGraphNode extends BaseTaskGraphNode<
     >,
   ) {
     super(
-      [USER_E2E_TYPES.CREATE_USER_TASK_GRAPH_NODE],
-      USER_E2E_TYPES.CREATE_USER_TOKEN_TASK_GRAPH_NODE,
+      [USER_E2E_TYPES.CREATE_FIRST_USER_TASK_GRAPH_NODE],
+      USER_E2E_TYPES.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
     );
   }
 
@@ -36,11 +36,10 @@ export class CreateUserTokenTaskGraphNode extends BaseTaskGraphNode<
       symbol,
       User
     > = this.currentTaskGraph.getNode(
-      USER_E2E_TYPES.CREATE_USER_TASK_GRAPH_NODE,
+      USER_E2E_TYPES.CREATE_FIRST_USER_TASK_GRAPH_NODE,
     ) as TaskGraphNode<symbol, User>;
-    const userFromTaskGraphNode: User = (createUserTaskGraphNode.getOutput() as Capsule<
-      User
-    >).elem;
+    const userFromTaskGraphNode: User = (createUserTaskGraphNode.getOutput() as Capsule<User>)
+      .elem;
 
     return this.createUserTokenInteractor.interact(userFromTaskGraphNode);
   }

@@ -9,7 +9,10 @@ import { userCreationQuery } from '../fixtures/domain/query/fixtures';
 import { v4 as uuidv4 } from 'uuid';
 
 @injectable()
-export class CreateUserTaskGraphNode extends BaseTaskGraphNode<symbol, User> {
+export class CreateFirstUserTaskGraphNode extends BaseTaskGraphNode<
+  symbol,
+  User
+> {
   constructor(
     @inject(USER_DOMAIN_TYPES.interactor.CREATE_USERS_INTERACTOR)
     private readonly createUsersInteractor: Interactor<
@@ -17,7 +20,7 @@ export class CreateUserTaskGraphNode extends BaseTaskGraphNode<symbol, User> {
       Promise<User[]>
     >,
   ) {
-    super([], USER_E2E_TYPES.CREATE_USER_TASK_GRAPH_NODE);
+    super([], USER_E2E_TYPES.CREATE_FIRST_USER_TASK_GRAPH_NODE);
   }
 
   protected async innerPerform(): Promise<User> {

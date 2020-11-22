@@ -39,7 +39,7 @@ const APP_URL_PORT: number = dockerAppEnvLoader.index.APP_SERVER_PORT;
 
 interface E2EComponents {
   cardDeck: CardDeck;
-  user: User;
+  firstUser: User;
   userToken: UserToken;
 }
 
@@ -48,11 +48,11 @@ function getGameSetupCreationQueryApiV1(
 ): GameSetupCreationQueryApiV1 {
   return {
     format: GameFormatApiV1.UNRESTRICTED,
-    ownerUserId: components.user.id,
+    ownerUserId: components.firstUser.id,
     playerSetups: [
       {
         deckId: components.cardDeck.id,
-        userId: components.user.id,
+        userId: components.firstUser.id,
       },
     ],
     playerSlots: 2,
@@ -68,14 +68,17 @@ async function prepareData(): Promise<E2EComponents> {
     .bind(commonTest.config.types.taskGraph.CURRENT_TASK_GRAPH)
     .toConstantValue(taskGraph);
 
-  const createUserTaskGraphNode: TaskGraphNode<symbol, User> = e2eContainer.get(
-    userTest.config.types.CREATE_USER_TASK_GRAPH_NODE,
-  );
+  const createFirstUserTaskGraphNode: TaskGraphNode<
+    symbol,
+    User
+  > = e2eContainer.get(userTest.config.types.CREATE_FIRST_USER_TASK_GRAPH_NODE);
 
   const createUserTokenTaskGraphNode: TaskGraphNode<
     symbol,
     UserToken
-  > = e2eContainer.get(userTest.config.types.CREATE_USER_TOKEN_TASK_GRAPH_NODE);
+  > = e2eContainer.get(
+    userTest.config.types.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
+  );
 
   const createCardDeckOfVoidLandTaskGraphNode: TaskGraphNode<
     symbol,
@@ -87,16 +90,15 @@ async function prepareData(): Promise<E2EComponents> {
   const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor = new InversifyContainerTaskGraphNodeExtractor(
     e2eContainer,
     [
-      createUserTaskGraphNode,
+      createFirstUserTaskGraphNode,
       createUserTokenTaskGraphNode,
       createCardDeckOfVoidLandTaskGraphNode,
     ],
   );
 
-  const extractedNodes: Iterable<TaskGraphNode<
-    symbol,
-    unknown
-  >> = inversifyContainerTaskGraphNodeExtractor.extract();
+  const extractedNodes: Iterable<
+    TaskGraphNode<symbol, unknown>
+  > = inversifyContainerTaskGraphNodeExtractor.extract();
 
   taskGraph.addTasks(extractedNodes);
 
@@ -107,10 +109,9 @@ async function prepareData(): Promise<E2EComponents> {
   }
 
   return {
-    cardDeck: (createCardDeckOfVoidLandTaskGraphNode.getOutput() as Capsule<
-      CardDeck
-    >).elem,
-    user: (createUserTaskGraphNode.getOutput() as Capsule<User>).elem,
+    cardDeck: (createCardDeckOfVoidLandTaskGraphNode.getOutput() as Capsule<CardDeck>)
+      .elem,
+    firstUser: (createFirstUserTaskGraphNode.getOutput() as Capsule<User>).elem,
     userToken: (createUserTokenTaskGraphNode.getOutput() as Capsule<UserToken>)
       .elem,
   };
