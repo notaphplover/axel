@@ -1,8 +1,8 @@
+import { injectable, unmanaged } from 'inversify';
 import { BaseTaskGraphNode } from '../../../task-graph/domain';
 import { Interactor } from '../../../../common/domain';
 import { User } from '../../domain/model/User';
 import { UserCreationQuery } from '../../domain/query/UserCreationQuery';
-import { injectable } from 'inversify';
 import { userCreationQuery } from '../fixtures/domain/query/fixtures';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,8 +12,11 @@ export abstract class CreateUserTaskGraphNode<TId> extends BaseTaskGraphNode<
   User
 > {
   constructor(
+    @unmanaged()
     dependsOn: Iterable<TId>,
+    @unmanaged()
     id: TId,
+    @unmanaged()
     private readonly createUsersInteractor: Interactor<
       UserCreationQuery,
       Promise<User[]>

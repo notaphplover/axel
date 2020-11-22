@@ -4,19 +4,24 @@ import {
   TaskGraphNode,
 } from '../../../task-graph/domain';
 import { Capsule, Interactor } from '../../../../common/domain';
+import { injectable, unmanaged } from 'inversify';
 import { User } from '../../domain';
 import { UserToken } from '../../domain/model/UserToken';
-import { injectable } from 'inversify';
 
 @injectable()
 export abstract class CreateUserTokenTaskGraphNode<
   TId
 > extends BaseTaskGraphNode<TId, UserToken> {
   constructor(
+    @unmanaged()
     dependsOn: Iterable<TId>,
+    @unmanaged()
     id: TId,
+    @unmanaged()
     private readonly createUserTaskGraphNodeId: TId,
+    @unmanaged()
     private readonly currentTaskGraph: TaskGraph<TId>,
+    @unmanaged()
     private readonly createUserTokenInteractor: Interactor<
       User,
       Promise<UserToken>
