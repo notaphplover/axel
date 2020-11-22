@@ -1,26 +1,19 @@
 import { inject, injectable } from 'inversify';
-import Ajv from 'ajv';
+import { GAME_ADAPTER_TYPES } from '../../config/types';
 import { GameCreationQueryApiV1 } from '../query/GameCreationQueryApiV1';
-import { JsonSchemaFileValidator } from '../../../../../json-schema/adapter';
-import { join } from 'path';
-import { jsonSchemaAdapter } from '../../../../../json-schema/adapter';
+import Joi from 'joi';
+import { JoiObjectValidator } from '../../../../../integration-modules/joi/adapter';
 
 @injectable()
-export class GameCreationQueryApiV1Validator extends JsonSchemaFileValidator<
-  GameCreationQueryApiV1
-> {
+export class GameCreationQueryApiV1Validator extends JoiObjectValidator<GameCreationQueryApiV1> {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
-    @inject(jsonSchemaAdapter.config.types.validator.AJV) ajv: Ajv.Ajv,
+    @inject(
+      GAME_ADAPTER_TYPES.api.validator.schema.query
+        .GAME_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
+    )
+    gameCreationQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameCreationQueryApiV1>,
   ) {
-    super(
-      ajv,
-      join(
-        __dirname,
-        '..',
-        '..',
-        'json-schema',
-        'GameCreationQueryApiV1.schema',
-      ),
-    );
+    super(gameCreationQueryApiV1JoiValidatorSchema);
   }
 }
