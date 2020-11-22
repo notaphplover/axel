@@ -41,13 +41,10 @@ jobs:
         run: npm ci
 
       - name: Compile source files
-        run: npm run build:incremental
+        run: npm run build
 
       - name: Setup local files
         run: npm run setup:local
-
-      - name: Compile source files (schemas)
-        run: npm run build:incremental
 
       - name: Launch docker images (Linux)
         run: npm run docker:up:ci:linux
