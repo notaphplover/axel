@@ -15,6 +15,10 @@ export class GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter
   public transform(
     input: GameSetupUpdateQuery,
   ): FilterQuery<ExtendedGameSetupDb> {
+    const filterQuery: MongooseFilterQuery<ExtendedGameSetupDb> = {
+      _id: Types.ObjectId(input.id),
+    };
+
     let playerSetupUserIdFilter:
       | mongodb.Condition<string[]>
       | undefined = undefined;
@@ -29,10 +33,9 @@ export class GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter
       playerSetupUserIdFilter,
     );
 
-    const filterQuery: MongooseFilterQuery<ExtendedGameSetupDb> = {
-      _id: Types.ObjectId(input.id),
-      'playerSetups.userId': playerSetupUserIdFilter,
-    };
+    if (playerSetupUserIdFilter !== undefined) {
+      filterQuery['playerSetups.userId'] = playerSetupUserIdFilter;
+    }
 
     return filterQuery;
   }
