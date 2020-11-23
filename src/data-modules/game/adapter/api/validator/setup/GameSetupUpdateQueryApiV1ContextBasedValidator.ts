@@ -20,9 +20,7 @@ export class GameSetupUpdateQueryApiV1ContextBasedValidator
       GAME_ADAPTER_TYPES.api.validator.setup
         .GAME_SETUP_UPDATE_QUERY_API_V1_VALIDATOR,
     )
-    private readonly gameSetupCreationQueryApiV1Validator: Validator<
-      GameSetupUpdateQueryApiV1
-    >,
+    private readonly gameSetupCreationQueryApiV1Validator: Validator<GameSetupUpdateQueryApiV1>,
   ) {}
 
   public validate(
@@ -83,8 +81,8 @@ export class GameSetupUpdateQueryApiV1ContextBasedValidator
   ): void {
     if (gameSetupUpdateQuery.additionalPlayerSetups !== undefined) {
       if (
-        gameSetupUpdateQuery.additionalPlayerSetups.length === 1 &&
-        gameSetupUpdateQuery.additionalPlayerSetups[0].userId ===
+        gameSetupUpdateQuery.additionalPlayerSetups.length !== 1 ||
+        gameSetupUpdateQuery.additionalPlayerSetups[0].userId !==
           context.user.id
       ) {
         errorMessages.push(
@@ -101,8 +99,8 @@ export class GameSetupUpdateQueryApiV1ContextBasedValidator
   ): void {
     if (gameSetupUpdateQuery.removePlayerSetups !== undefined) {
       if (
-        gameSetupUpdateQuery.removePlayerSetups.length === 1 &&
-        gameSetupUpdateQuery.removePlayerSetups[0].userId === context.user.id
+        gameSetupUpdateQuery.removePlayerSetups.length !== 1 &&
+        gameSetupUpdateQuery.removePlayerSetups[0].userId !== context.user.id
       ) {
         errorMessages.push(
           'Invalid removePlayerSetups: expected one player setup of the user who send the request.',
