@@ -10,6 +10,6 @@ export const gameSetupUpdateQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameS
       .items(gameSetupUpdateQueryAdditionalPlayerSetupApiV1ValidatorSchema)
       .length(GAME_SETUP_CREATION_QUERY_PLAYER_SETUPS_LENGTH)
       .optional(),
-    id: Joi.number().strict().required(),
+    id: Joi.string().required(),
   },
 );
