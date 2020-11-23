@@ -45,9 +45,7 @@ export class PatchGameSetupByIdV1RequestHandler
       GameSetupUpdateQueryApiV1,
       Promise<GameSetupUpdateQuery>
     >,
-    @inject(
-      GAME_DOMAIN_TYPES.interactor.setup.CREATE_EXTENDED_GAME_SETUPS_INTERACTOR,
-    )
+    @inject(GAME_DOMAIN_TYPES.interactor.setup.UPDATE_GAME_SETUP_INTERACTOR)
     private readonly updateExtendedGameSetupInteractor: Interactor<
       GameSetupUpdateQuery,
       Promise<ExtendedGameSetup | null>
