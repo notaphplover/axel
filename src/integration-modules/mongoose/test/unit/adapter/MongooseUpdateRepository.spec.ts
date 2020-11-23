@@ -76,7 +76,7 @@ describe(MongooseUpdateRepository.name, () => {
 
     modelMock = ({
       find: jest.fn().mockReturnValue(findDocumentQueryMock),
-      findOneAndUpdate: jest.fn().mockReturnValue(findOneDocumentQueryMock),
+      findOne: jest.fn().mockReturnValue(findOneDocumentQueryMock),
       updateOne: jest.fn().mockResolvedValue(undefined),
       updateMany: jest.fn().mockResolvedValue(undefined),
     } as Partial<Model<ModelMockDb>>) as Model<ModelMockDb>;
@@ -326,7 +326,7 @@ describe(MongooseUpdateRepository.name, () => {
           queryMockDbFixture,
         );
 
-        (findOneDocumentQueryMock.then as jest.Mock).mockImplementationOnce(
+        (findOneDocumentQueryMock.then as jest.Mock).mockImplementation(
           (onFullfiled: (value: ModelMockDb) => void) => {
             onFullfiled(modelMockDbFixture);
           },
@@ -344,7 +344,7 @@ describe(MongooseUpdateRepository.name, () => {
       afterAll(() => {
         (findOneDocumentQueryMock.select as jest.Mock).mockClear();
 
-        (modelMock.findOneAndUpdate as jest.Mock).mockClear();
+        (modelMock.findOne as jest.Mock).mockClear();
 
         (modelDbToModelConverter.transform as jest.Mock).mockClear();
 
@@ -367,12 +367,15 @@ describe(MongooseUpdateRepository.name, () => {
         );
       });
 
-      it('it must call model.findOneAndUpdate with the queries obtained', () => {
-        expect(modelMock.findOneAndUpdate).toHaveBeenCalledTimes(1);
-        expect(modelMock.findOneAndUpdate).toHaveBeenCalledWith(
-          queryMockDbFixture,
+      it('it must call model.findOne with the queries obtained', () => {
+        expect(modelMock.findOne).toHaveBeenCalledTimes(2);
+        expect(modelMock.findOne).toHaveBeenNthCalledWith(
+          1,
           queryMockDbFixture,
         );
+        expect(modelMock.findOne).toHaveBeenNthCalledWith(2, {
+          _id: modelMockDbFixture._id as unknown,
+        });
       });
 
       it('must call modelDbToModelConverter.transform with the entities updated', () => {
