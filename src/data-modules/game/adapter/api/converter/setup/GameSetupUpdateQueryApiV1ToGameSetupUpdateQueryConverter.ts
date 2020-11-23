@@ -15,7 +15,7 @@ export class GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.setup
-        .GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER,
+        .GAME_SETUP_UPDATE_QUERY_ADDITIONAL_PLAYER_SETUP_API_V1_ARRAY_TO_PLAYER_SETUP_ARRAY_CONVERTER,
     )
     private readonly gameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter: Converter<
       GameSetupUpdateQueryAdditionalPlayerSetupApiV1[],
