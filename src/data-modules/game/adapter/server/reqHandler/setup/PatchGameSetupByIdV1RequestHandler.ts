@@ -6,8 +6,9 @@ import {
 } from '../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
+import { BasicGameSetup } from '../../../../domain/model/setup/BasicGameSetup';
+import { BasicGameSetupApiV1 } from '../../../api/model/setup/BasicGameSetupApiV1';
 import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSetup';
-import { ExtendedGameSetupApiV1 } from '../../../api/model/setup/ExtendedGameSetupApiV1';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
@@ -23,11 +24,19 @@ export class PatchGameSetupByIdV1RequestHandler
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.setup
-        .EXTENDED_GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER,
+        .BASIC_GAME_SETUP_TO_BASIC_GAME_SETUP_API_V1_CONVERTER,
     )
-    private readonly extendedGameSetupToExtendedGameSetupApiV1Converter: Converter<
+    private readonly basicGameSetupToBasicGameSetupApiV1Converter: Converter<
+      BasicGameSetup,
+      BasicGameSetupApiV1
+    >,
+    @inject(
+      GAME_DOMAIN_TYPES.converter.setup
+        .EXTENDED_GAME_SETUP_TO_BASIC_GAME_SETUP_CONVERTER,
+    )
+    private readonly extendedGameSetupToBasicGameSetupConverter: Converter<
       ExtendedGameSetup,
-      ExtendedGameSetupApiV1
+      BasicGameSetup
     >,
     @inject(
       GAME_ADAPTER_TYPES.api.validator.setup
@@ -82,11 +91,14 @@ export class PatchGameSetupByIdV1RequestHandler
           .code(StatusCodes.NOT_FOUND)
           .send({ message: 'No game setup was found to be updated' });
       } else {
-        const extendedGameSetupApiV1Updated: ExtendedGameSetupApiV1 = this.extendedGameSetupToExtendedGameSetupApiV1Converter.transform(
+        const basicGameSetupUpdated: BasicGameSetup = this.extendedGameSetupToBasicGameSetupConverter.transform(
           extendedGameSetupUpdated,
         );
+        const basicGameSetupApiV1Updated: BasicGameSetupApiV1 = this.basicGameSetupToBasicGameSetupApiV1Converter.transform(
+          basicGameSetupUpdated,
+        );
 
-        await reply.send(extendedGameSetupApiV1Updated);
+        await reply.send(basicGameSetupApiV1Updated);
       }
     } else {
       await reply
