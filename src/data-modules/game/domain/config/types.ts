@@ -1,5 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_DOMAIN_TYPES = {
+  converter: {
+    setup: {
+      PLAYER_SETUP_TO_PLAYER_REFERENCE_CONVERTER: Symbol.for(
+        'PlayerSetupToPlayerReferenceConverter',
+      ),
+    },
+  },
   interactor: {
     CREATE_GAMES_INTERACTOR: Symbol.for('CreateGamesInteractor'),
     FIND_GAME_INTERACTOR: Symbol.for('FindGameInteractor'),
