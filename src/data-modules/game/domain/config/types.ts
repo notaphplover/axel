@@ -2,6 +2,9 @@
 export const GAME_DOMAIN_TYPES = {
   converter: {
     setup: {
+      EXTENDED_GAME_SETUP_TO_BASIC_GAME_SETUP_CONVERTER: Symbol.for(
+        'ExtendedGameSetupToBasicGameSetupConverter',
+      ),
       PLAYER_SETUP_TO_PLAYER_REFERENCE_CONVERTER: Symbol.for(
         'PlayerSetupToPlayerReferenceConverter',
       ),
