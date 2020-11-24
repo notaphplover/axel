@@ -19,6 +19,7 @@ import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
 import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
 import { GameSetupCreationQueryApiV1 } from '../../../adapter/api/query/setup/GameSetupCreationQueryApiV1';
 import { GameSetupFindQueryApiV1 } from '../../../adapter/api/query/setup/GameSetupFindQueryApiV1';
+import { GameSetupUpdateQueryApiV1 } from '../../../adapter/api/query/setup/GameSetupUpdateQueryApiV1';
 import { InversifyContainerTaskGraphNodeExtractor } from '../../../../task-graph/adapter';
 import { PlayerSetupApiV1 } from '../../../adapter/api/model/setup/PlayerSetupApiV1';
 import { commonTest } from '../../../../../common/test';
@@ -40,7 +41,9 @@ const APP_URL_PORT: number = dockerAppEnvLoader.index.APP_SERVER_PORT;
 interface E2EComponents {
   cardDeck: CardDeck;
   firstUser: User;
-  userToken: UserToken;
+  firstUserToken: UserToken;
+  secondUser: User;
+  secondUserToken: UserToken;
 }
 
 function getGameSetupCreationQueryApiV1(
@@ -73,7 +76,7 @@ async function prepareData(): Promise<E2EComponents> {
     User
   > = e2eContainer.get(userTest.config.types.CREATE_FIRST_USER_TASK_GRAPH_NODE);
 
-  const createUserTokenTaskGraphNode: TaskGraphNode<
+  const createFirstUserTokenTaskGraphNode: TaskGraphNode<
     symbol,
     UserToken
   > = e2eContainer.get(
@@ -87,12 +90,28 @@ async function prepareData(): Promise<E2EComponents> {
     GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_VOID_LAND_TASK_GRAPH_NODE,
   );
 
+  const createSecondUserTaskGraphNode: TaskGraphNode<
+    symbol,
+    User
+  > = e2eContainer.get(
+    userTest.config.types.CREATE_SECOND_USER_TASK_GRAPH_NODE,
+  );
+
+  const createSecondUserTokenTaskGraphNode: TaskGraphNode<
+    symbol,
+    UserToken
+  > = e2eContainer.get(
+    userTest.config.types.CREATE_SECOND_USER_TOKEN_TASK_GRAPH_NODE,
+  );
+
   const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor = new InversifyContainerTaskGraphNodeExtractor(
     e2eContainer,
     [
       createFirstUserTaskGraphNode,
-      createUserTokenTaskGraphNode,
+      createFirstUserTokenTaskGraphNode,
       createCardDeckOfVoidLandTaskGraphNode,
+      createSecondUserTaskGraphNode,
+      createSecondUserTokenTaskGraphNode,
     ],
   );
 
@@ -112,7 +131,11 @@ async function prepareData(): Promise<E2EComponents> {
     cardDeck: (createCardDeckOfVoidLandTaskGraphNode.getOutput() as Capsule<CardDeck>)
       .elem,
     firstUser: (createFirstUserTaskGraphNode.getOutput() as Capsule<User>).elem,
-    userToken: (createUserTokenTaskGraphNode.getOutput() as Capsule<UserToken>)
+    firstUserToken: (createFirstUserTokenTaskGraphNode.getOutput() as Capsule<UserToken>)
+      .elem,
+    secondUser: (createSecondUserTaskGraphNode.getOutput() as Capsule<User>)
+      .elem,
+    secondUserToken: (createSecondUserTokenTaskGraphNode.getOutput() as Capsule<UserToken>)
       .elem,
   };
 }
@@ -152,7 +175,7 @@ describe('GameSetup V1', () => {
         gameSetupCreationQueryApiV1,
         {
           headers: {
-            Authorization: `Bearer ${e2eComponents.userToken.token}`,
+            Authorization: `Bearer ${e2eComponents.firstUserToken.token}`,
           },
         },
       );
@@ -202,7 +225,7 @@ describe('GameSetup V1', () => {
           gameSetupFindQueryApiV1,
           {
             headers: {
-              Authorization: `Bearer ${e2eComponents.userToken.token}`,
+              Authorization: `Bearer ${e2eComponents.firstUserToken.token}`,
             },
           },
         );
@@ -213,7 +236,7 @@ describe('GameSetup V1', () => {
         ] = getGameSetupsByIdV1Response.data as unknown[];
       });
 
-      it('must return a response with the cardDeck created', () => {
+      it('must return a response with the gameSetup created', () => {
         expect(
           (getGameSetupsByIdV1ResponseFirstElement as BasicGameSetupApiV1).id,
         ).toBe(gameSetupId);
@@ -242,6 +265,76 @@ describe('GameSetup V1', () => {
         ).toBe(
           (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).playerSlots,
         );
+      });
+
+      describe('when called PATCH game setup, with the game setup created', () => {
+        let gameSetupId: string;
+        let patchGameSetupsByIdV1Response: axios.AxiosResponse;
+
+        beforeAll(async () => {
+          gameSetupId = (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
+            .id;
+
+          const gameSetupUpdateQueryApiV1: Partial<GameSetupUpdateQueryApiV1> = {
+            additionalPlayerSetups: [
+              {
+                deckId: e2eComponents.cardDeck.id,
+                userId: e2eComponents.secondUser.id,
+              },
+            ],
+          };
+
+          patchGameSetupsByIdV1Response = await client.patch(
+            `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/game-setups/${gameSetupId}`,
+            gameSetupUpdateQueryApiV1,
+            {
+              headers: {
+                Authorization: `Bearer ${e2eComponents.secondUserToken.token}`,
+              },
+            },
+          );
+        });
+
+        it('must return a response with the gameSetup updated', () => {
+          expect(
+            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1).id,
+          ).toBe(gameSetupId);
+          expect(
+            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1).format,
+          ).toBe(
+            (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).format,
+          );
+          expect(
+            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
+              .ownerUserId,
+          ).toBe(
+            (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
+              .ownerUserId,
+          );
+          expect(
+            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
+              .playerSetups.length,
+          ).toBe(2);
+          expect(
+            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
+              .playerSetups,
+          ).toContainEqual({
+            userId: e2eComponents.firstUser.id,
+          });
+          expect(
+            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
+              .playerSetups,
+          ).toContainEqual({
+            userId: e2eComponents.secondUser.id,
+          });
+          expect(
+            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
+              .playerSlots,
+          ).toBe(
+            (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
+              .playerSlots,
+          );
+        });
       });
     });
   });
