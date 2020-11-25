@@ -105,40 +105,18 @@ export abstract class MongooseUpdateRepository<
       query,
     );
 
-    /*
-     * This call won't return the entity updated! We must investigate this. Mongoose is staring to suck too much
-     *
-     * const entityDbUpdated: TModelDb | null = await this.model.findOneAndUpdate(
-     *   filterQuery,
-     *   updateQuery,
-     * );
-     */
-
-    const entityToUpdate: TModelDb | null = await this.model.findOne(
+    const entityDbUpdated: TModelDb | null = await this.model.findOneAndUpdate(
       filterQuery,
+      updateQuery,
+      { new: true },
     );
 
-    if (entityToUpdate === null) {
-      return null;
-    } else {
-      const findByIdQuery: FilterQuery<TModelDb> = {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        _id: entityToUpdate._id,
-      };
+    const entityUpdated: TModel | null =
+      entityDbUpdated === null
+        ? null
+        : await this.modelDbToModelConverter.transform(entityDbUpdated);
 
-      await this.model.updateOne(findByIdQuery, updateQuery);
-
-      const entityDbUpdated: TModelDb | null = await this.model.findOne(
-        findByIdQuery,
-      );
-
-      const entityUpdated: TModel | null =
-        entityDbUpdated === null
-          ? null
-          : await this.modelDbToModelConverter.transform(entityDbUpdated);
-
-      return entityUpdated;
-    }
+    return entityUpdated;
   }
 
   private async innerUpdate(
