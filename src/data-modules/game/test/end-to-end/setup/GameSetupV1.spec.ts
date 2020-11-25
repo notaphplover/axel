@@ -267,14 +267,10 @@ describe('GameSetup V1', () => {
         );
       });
 
-      describe('when called PATCH game setup, with the game setup created', () => {
-        let gameSetupId: string;
+      describe('when called PATCH game setup, with the game setup created and additional player setup', () => {
         let patchGameSetupsByIdV1Response: axios.AxiosResponse;
 
         beforeAll(async () => {
-          gameSetupId = (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
-            .id;
-
           const gameSetupUpdateQueryApiV1: Partial<GameSetupUpdateQueryApiV1> = {
             additionalPlayerSetups: [
               {
