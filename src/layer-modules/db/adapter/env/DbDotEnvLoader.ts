@@ -24,6 +24,7 @@ export class DbDotEnvLoader extends DotEnvLoader<DbDotEnvVariables> {
     return {
       MONGO_CONNECTION_AUTH_SOURCE: env.MONGO_CONNECTION_AUTH_SOURCE as string,
       MONGO_CONNECTION_PASSWORD: env.MONGO_CONNECTION_PASSWORD as string,
+      MONGO_CONNECTION_PROTOCOL: env.MONGO_CONNECTION_PROTOCOL as string,
       MONGO_CONNECTION_URL: env.MONGO_CONNECTION_URL as string,
       MONGO_CONNECTION_USER: env.MONGO_CONNECTION_USER as string,
     };
