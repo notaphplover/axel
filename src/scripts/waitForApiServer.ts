@@ -17,6 +17,9 @@ const client: axios.AxiosStatic = axios.default;
 const appUrl: string = `http://127.0.0.1:${appEnvLoader.index.APP_SERVER_PORT}/v1/status`;
 
 const retryMs: number = 1000;
+const maxConnectionAttempts: number = 45;
+
+let connectionAttempts: number = 0;
 
 const callStatusInterval: NodeJS.Timeout = setInterval(() => {
   void (async () => {
@@ -45,6 +48,14 @@ const callStatusInterval: NodeJS.Timeout = setInterval(() => {
       }
     } catch (err) {
       console.log(`Error connecting to app server. Retrying in ${retryMs} ms`);
+    }
+
+    if (connectionAttempts < maxConnectionAttempts) {
+      ++connectionAttempts;
+    } else {
+      throw new Error(
+        `Unexpected error: Exceded ${maxConnectionAttempts} connection attempts`,
+      );
     }
   })();
 }, retryMs);
