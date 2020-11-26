@@ -6,12 +6,14 @@ let mongoClient: MongoClient;
 
 jest.mock('mongodb', () => {
   const mongoClientMock: MongoClient = ((): MongoClient => {
-    mongoClientDb = ({} as Partial<Db>) as Db;
+    const mongoClientDbMock: Db = ({} as Partial<Db>) as Db;
     const mongoClient: MongoClient = {} as MongoClient;
 
     mongoClient.close = jest.fn().mockResolvedValue(undefined);
     mongoClient.connect = jest.fn().mockResolvedValue(mongoClient);
-    mongoClient.db = jest.fn().mockReturnValue(mongoClientDb);
+    mongoClient.db = jest.fn().mockReturnValue(mongoClientDbMock);
+
+    mongoClientDb = mongoClientDbMock;
 
     return mongoClient;
   })();
