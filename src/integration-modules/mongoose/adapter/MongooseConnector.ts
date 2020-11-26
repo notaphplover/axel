@@ -27,6 +27,7 @@ export class MongooseConnector implements DbConnector {
           user: this.dbEnvLoader.index.MONGO_CONNECTION_USER,
           password: this.dbEnvLoader.index.MONGO_CONNECTION_PASSWORD,
         },
+        db: this.dbEnvLoader.index.MONGO_CONNECTION_DB,
       },
     );
   }

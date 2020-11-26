@@ -6,6 +6,7 @@ import { DbDotEnvVariables } from '../../../../adapter/env/DbDotEnvVariables';
 
 const dbDotEnvVariables: DbDotEnvVariables = {
   MONGO_CONNECTION_AUTH_SOURCE: 'source',
+  MONGO_CONNECTION_DB: 'db',
   MONGO_CONNECTION_PASSWORD: 'password',
   MONGO_CONNECTION_PROTOCOL: 'protocol',
   MONGO_CONNECTION_URL: 'url',
