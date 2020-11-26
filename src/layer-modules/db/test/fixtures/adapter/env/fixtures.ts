@@ -4,7 +4,7 @@ import {
 } from '../../../../../../common/test';
 import { DbDotEnvVariables } from '../../../../adapter/env/DbDotEnvVariables';
 
-const commonDotEnvVariables: DbDotEnvVariables = {
+const dbDotEnvVariables: DbDotEnvVariables = {
   MONGO_CONNECTION_AUTH_SOURCE: 'source',
   MONGO_CONNECTION_PASSWORD: 'password',
   MONGO_CONNECTION_PROTOCOL: 'protocol',
@@ -12,6 +12,6 @@ const commonDotEnvVariables: DbDotEnvVariables = {
   MONGO_CONNECTION_USER: 'user',
 };
 
-export const commonDotEnvVariablesFixtureFactory: FixtureFactory<DbDotEnvVariables> = new DeepCloneFixtureFactory(
-  commonDotEnvVariables,
+export const dbDotEnvVariablesFixtureFactory: FixtureFactory<DbDotEnvVariables> = new DeepCloneFixtureFactory(
+  dbDotEnvVariables,
 );
