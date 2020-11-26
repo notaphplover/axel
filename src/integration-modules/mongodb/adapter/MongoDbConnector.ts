@@ -1,3 +1,4 @@
+import { Db, MongoClient } from 'mongodb';
 import {
   DbDotEnvVariables,
   dbAdapter,
@@ -5,7 +6,6 @@ import {
 import { inject, injectable } from 'inversify';
 import { DbConnector } from '../../../layer-modules/db/domain';
 import { EnvLoader } from '../../../layer-modules/env/domain';
-import { MongoClient } from 'mongodb';
 
 @injectable()
 export class MongoDbConnector implements DbConnector {
@@ -23,6 +23,16 @@ export class MongoDbConnector implements DbConnector {
       );
     } else {
       return this.mongoClient;
+    }
+  }
+
+  public get db(): Db {
+    if (this.mongoClient === undefined) {
+      throw new Error(
+        'Expected client to be initialized. Ensure a connection request was accomplished before.',
+      );
+    } else {
+      return this.mongoClient.db(this.dbEnvLoader.index.MONGO_CONNECTION_DB);
     }
   }
 
