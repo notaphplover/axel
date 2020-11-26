@@ -9,11 +9,12 @@ export class FastifyPortListeningServer extends FastifyServer {
   protected fastifyInstance: FastifyInstance | undefined;
 
   constructor(
+    mongoDbConnector: DbConnector,
     mongooseConnector: DbConnector,
     routers: FastifyRouter[],
     private readonly port: number,
   ) {
-    super(mongooseConnector, routers);
+    super(mongoDbConnector, mongooseConnector, routers);
   }
 
   public async bootstrap(): Promise<void> {

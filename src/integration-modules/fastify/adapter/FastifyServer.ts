@@ -10,6 +10,7 @@ export class FastifyServer implements Server {
   protected fastifyInstance: FastifyInstance | undefined;
 
   constructor(
+    private readonly mongoDbConnector: DbConnector,
     private readonly mongooseConnector: DbConnector,
     private readonly routers: FastifyRouter[],
   ) {
@@ -25,6 +26,7 @@ export class FastifyServer implements Server {
     this.fastifyInstance = fastifyInstance;
 
     const promises: Promise<unknown>[] = [
+      this.mongoDbConnector.connect(),
       this.mongooseConnector.connect(),
       ...this.registerRouters(fastifyInstance),
     ];
@@ -42,6 +44,7 @@ export class FastifyServer implements Server {
     this.fastifyInstance = undefined;
 
     await Promise.all([
+      this.mongoDbConnector.close(),
       this.mongooseConnector.close(),
       fastifyInstance.close(),
     ]);

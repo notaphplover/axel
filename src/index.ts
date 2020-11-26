@@ -10,6 +10,7 @@ import { DbConnector } from './layer-modules/db/domain';
 import { EnvLoader } from './layer-modules/env/domain';
 import { configAdapter } from './layer-modules/config/adapter';
 import { gameAdapter } from './data-modules/game/adapter';
+import { mongodbAdapter } from './integration-modules/mongodb/adapter';
 import { mongooseAdapter } from './integration-modules/mongoose/adapter';
 import { userAdapter } from './data-modules/user/adapter';
 
@@ -36,6 +37,10 @@ void (async () => {
     gameAdapter.config.types.server.router.setup.GAME_SETUP_ROUTER,
   );
 
+  const mongoDbConnector: DbConnector = container.get(
+    mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
+  );
+
   const mongooseConnector: DbConnector = container.get(
     mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
   );
@@ -53,6 +58,7 @@ void (async () => {
   );
 
   const httpServer: FastifyPortListeningServer = new FastifyPortListeningServer(
+    mongoDbConnector,
     mongooseConnector,
     [
       authRouter,

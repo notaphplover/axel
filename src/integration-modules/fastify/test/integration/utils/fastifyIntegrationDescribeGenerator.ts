@@ -4,6 +4,7 @@ import { FastifyRouter } from '../../../adapter';
 import { FastifyServerTest } from '../FastifyServerTest';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { customDescribe } from '../../../../../common/test/integration/utills/customDescribe';
+import { mongodbAdapter } from '../../../../mongodb/adapter';
 import { mongooseAdapter } from '../../../../mongoose/adapter';
 
 const container: Container = configAdapter.container;
@@ -20,15 +21,23 @@ export const fastifyIntegrationDescribeGenerator: (
   output: FastifyServerTestOutputParam,
 ) =>
   customDescribe(describe, () => {
+    let mongoDbConnector: DbConnector;
     let mongooseConnector: DbConnector;
 
     let fastifyServerTest: FastifyServerTest;
 
     beforeAll(async () => {
+      mongoDbConnector = container.get(
+        mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
+      );
       mongooseConnector = container.get(
         mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
       );
-      fastifyServerTest = new FastifyServerTest(mongooseConnector, [router]);
+      fastifyServerTest = new FastifyServerTest(
+        mongoDbConnector,
+        mongooseConnector,
+        [router],
+      );
 
       await fastifyServerTest.bootstrap();
 
