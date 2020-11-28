@@ -22,9 +22,7 @@ export class PostAuthTokenV1RequestHandler implements FastifyRequestHandler {
     @inject(
       USER_ADAPTER_TYPES.api.validator.AUTH_CREATION_QUERY_API_V1_VALIDATOR,
     )
-    private readonly authCreationQueryApiV1Validator: Validator<
-      AuthCreationQueryApiV1
-    >,
+    private readonly authCreationQueryApiV1Validator: Validator<AuthCreationQueryApiV1>,
     @inject(USER_DOMAIN_TYPES.interactor.FIND_USER_INTERACTOR)
     private readonly findUserInteractor: Interactor<
       UserFindQuery,

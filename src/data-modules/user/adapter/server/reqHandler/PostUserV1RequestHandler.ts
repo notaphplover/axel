@@ -28,9 +28,7 @@ export class PostUserV1RequestHandler implements FastifyRequestHandler {
     @inject(
       USER_ADAPTER_TYPES.api.validator.USER_CREATION_QUERY_API_V1_VALIDATOR,
     )
-    private readonly userCreationQueryApiV1Validator: Validator<
-      UserCreationQueryApiV1
-    >,
+    private readonly userCreationQueryApiV1Validator: Validator<UserCreationQueryApiV1>,
     @inject(USER_ADAPTER_TYPES.api.converter.USER_TO_USER_API_V1_CONVERTER)
     private readonly userToUserApiV1Converter: Converter<User, UserApiV1>,
   ) {}

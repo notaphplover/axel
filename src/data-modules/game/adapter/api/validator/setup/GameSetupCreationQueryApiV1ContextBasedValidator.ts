@@ -21,9 +21,7 @@ export class GameSetupCreationQueryApiV1ContextBasedValidator
       GAME_ADAPTER_TYPES.api.validator.setup
         .GAME_SETUP_CREATION_QUERY_API_V1_VALIDATOR,
     )
-    private readonly gameSetupCreationQueryApiV1Validator: Validator<
-      GameSetupCreationQueryApiV1
-    >,
+    private readonly gameSetupCreationQueryApiV1Validator: Validator<GameSetupCreationQueryApiV1>,
   ) {}
 
   public validate(

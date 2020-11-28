@@ -12,6 +12,8 @@ export const enchantmentDbSchema: Schema = new Schema(
   enchantmentDbAdditionalPropertiesSchemaDefinition,
 );
 
-export const enchantmentDbModel: Model<EnchantmentDb> = cardDbModel.discriminator<
-  EnchantmentDb
->('Enchantment', enchantmentDbSchema, CardType.Enchantment);
+export const enchantmentDbModel: Model<EnchantmentDb> = cardDbModel.discriminator<EnchantmentDb>(
+  'Enchantment',
+  enchantmentDbSchema,
+  CardType.Enchantment,
+);

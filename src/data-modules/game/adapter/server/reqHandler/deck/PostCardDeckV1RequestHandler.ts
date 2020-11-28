@@ -30,9 +30,7 @@ export class PostCardDeckV1RequestHandler implements FastifyRequestHandler {
       GAME_ADAPTER_TYPES.api.validator.deck
         .CARD_DECK_CREATION_QUERY_API_V1_VALIDATOR,
     )
-    private readonly cardDeckCreationQueryApiV1Validator: Validator<
-      CardDeckCreationQueryApiV1
-    >,
+    private readonly cardDeckCreationQueryApiV1Validator: Validator<CardDeckCreationQueryApiV1>,
     @inject(
       GAME_ADAPTER_TYPES.api.converter.deck
         .CARD_DECK_TO_CARD_DECK_API_V1_CONVERTER,

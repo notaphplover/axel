@@ -29,10 +29,9 @@ export abstract class MongooseProjectionSearchRepository<
   ) {}
 
   public async find(query: TQuery): Promise<TModel[]> {
-    const documentQueryCapsule: Capsule<DocumentQuery<
-      TModelDb[],
-      TModelDb
-    >> = await this.buildFindDocumentQuery(query);
+    const documentQueryCapsule: Capsule<
+      DocumentQuery<TModelDb[], TModelDb>
+    > = await this.buildFindDocumentQuery(query);
 
     let entitiesDbFound: TOutputModelDb[] = ((await documentQueryCapsule.elem) as Document[]) as TOutputModelDb[];
 
@@ -53,10 +52,9 @@ export abstract class MongooseProjectionSearchRepository<
   }
 
   public async findOne(query: TQuery): Promise<TModel | null> {
-    const documentQueryCapsule: Capsule<DocumentQuery<
-      TModelDb | null,
-      TModelDb
-    >> = await this.buildFindOneDocumentQuery(query);
+    const documentQueryCapsule: Capsule<
+      DocumentQuery<TModelDb | null, TModelDb>
+    > = await this.buildFindOneDocumentQuery(query);
 
     let entityDbFound: TOutputModelDb | null = ((await documentQueryCapsule.elem) as Document | null) as TOutputModelDb | null;
 

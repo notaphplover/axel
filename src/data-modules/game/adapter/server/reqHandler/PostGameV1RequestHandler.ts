@@ -26,9 +26,7 @@ export class PostGameV1RequestHandler implements FastifyRequestHandler {
     @inject(
       GAME_ADAPTER_TYPES.api.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR,
     )
-    private readonly gameCreationQueryApiV1Validator: Validator<
-      GameCreationQueryApiV1
-    >,
+    private readonly gameCreationQueryApiV1Validator: Validator<GameCreationQueryApiV1>,
     @inject(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER)
     private readonly gameToGameApiV1Converter: Converter<Game, GameApiV1>,
   ) {}

@@ -4,9 +4,7 @@ import _ from 'lodash';
 import { injectable } from 'inversify';
 
 @injectable()
-export class ExtendedGameSetupDbToExtendedGameSetupConverter extends ExtendedGameSetupDbToGameSetupConverter<
-  PlayerSetup
-> {
+export class ExtendedGameSetupDbToExtendedGameSetupConverter extends ExtendedGameSetupDbToGameSetupConverter<PlayerSetup> {
   protected transformPlayerSetups(input: PlayerSetup[]): PlayerSetup[] {
     return _.cloneDeep(input);
   }

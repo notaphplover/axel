@@ -27,6 +27,8 @@ export const extendedGameSetupDbSchema: Schema = new Schema(
 
 extendedGameSetupDbSchema.index({ 'playerSetups.userId': 1 });
 
-export const extendedGameSetupDbModel: Model<ExtendedGameSetupDb> = mongoose.model<
-  ExtendedGameSetupDb
->('ExtendedGameSetup', extendedGameSetupDbSchema, 'extendedGameSetup');
+export const extendedGameSetupDbModel: Model<ExtendedGameSetupDb> = mongoose.model<ExtendedGameSetupDb>(
+  'ExtendedGameSetup',
+  extendedGameSetupDbSchema,
+  'extendedGameSetup',
+);

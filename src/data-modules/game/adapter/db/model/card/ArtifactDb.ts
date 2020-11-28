@@ -12,6 +12,8 @@ export const artifactDbSchema: Schema = new Schema(
   artifactDbAdditionalPropertiesSchemaDefinition,
 );
 
-export const artifactDbModel: Model<ArtifactDb> = cardDbModel.discriminator<
-  ArtifactDb
->('Artifact', artifactDbSchema, CardType.Artifact);
+export const artifactDbModel: Model<ArtifactDb> = cardDbModel.discriminator<ArtifactDb>(
+  'Artifact',
+  artifactDbSchema,
+  CardType.Artifact,
+);

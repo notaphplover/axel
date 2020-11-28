@@ -56,9 +56,7 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
     }
   }
 
-  private buildInitialTaskGraphNodeSchedulingState(): TaskGraphNodeSchedulingState<
-    TId
-  > {
+  private buildInitialTaskGraphNodeSchedulingState(): TaskGraphNodeSchedulingState<TId> {
     const nodesByDependentNodeMap: Map<
       TId,
       TaskGraphNodeWithDependencies<TId>[]

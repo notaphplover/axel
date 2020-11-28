@@ -31,9 +31,7 @@ export class GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
     }
 
     if (hasValue(input.playerSetups) && input.playerSetups.length > 0) {
-      const playerSetupsFilterQuery: MongoDbFilterQuery<
-        ExtendedGameSetupDb
-      >[] = input.playerSetups.map(
+      const playerSetupsFilterQuery: MongoDbFilterQuery<ExtendedGameSetupDb>[] = input.playerSetups.map(
         (playerSetup: GameSetupFindQueryPlayerSetup) => {
           return { 'playerSetups.userId': playerSetup.userId };
         },

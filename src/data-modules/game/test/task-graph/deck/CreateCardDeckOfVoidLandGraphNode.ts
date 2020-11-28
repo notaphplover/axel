@@ -41,9 +41,8 @@ export class CreateCardDeckOfVoidLandGraphNode extends BaseTaskGraphNode<
       GAME_E2E_TYPES.card.CREATE_VOID_LAND_TASK_GRAPH_NODE,
     ) as TaskGraphNode<symbol, Land>;
 
-    const voidLand: Land = (createVoidLandTaskGraphNode.getOutput() as Capsule<
-      Land
-    >).elem;
+    const voidLand: Land = (createVoidLandTaskGraphNode.getOutput() as Capsule<Land>)
+      .elem;
 
     const cardDeckCreationQuery: CardDeckCreationQuery = {
       description: 'sample-description',

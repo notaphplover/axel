@@ -17,6 +17,8 @@ export const creatureDbSchema: Schema = new Schema(
   creatureDbAdditionalPropertiesSchemaDefinition,
 );
 
-export const creatureDbModel: Model<CreatureDb> = cardDbModel.discriminator<
-  CreatureDb
->('Creature', creatureDbSchema, CardType.Creature);
+export const creatureDbModel: Model<CreatureDb> = cardDbModel.discriminator<CreatureDb>(
+  'Creature',
+  creatureDbSchema,
+  CardType.Creature,
+);

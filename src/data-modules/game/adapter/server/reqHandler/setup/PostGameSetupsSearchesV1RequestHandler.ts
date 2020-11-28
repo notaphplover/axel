@@ -47,9 +47,7 @@ export class PostGameSetupsSearchesV1RequestHandler
       GAME_ADAPTER_TYPES.api.validator.setup
         .GAME_SETUP_FIND_QUERY_API_V1_VALIDATOR,
     )
-    private readonly gameSetupFindQueryApiV1Validator: Validator<
-      GameSetupFindQueryApiV1
-    >,
+    private readonly gameSetupFindQueryApiV1Validator: Validator<GameSetupFindQueryApiV1>,
   ) {}
 
   public async handle(

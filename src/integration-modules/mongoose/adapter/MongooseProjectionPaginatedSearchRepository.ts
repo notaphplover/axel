@@ -22,10 +22,9 @@ export abstract class MongooseProjectionPaginatedSearchRepository<
   protected async buildFindDocumentQuery(
     query: TQuery,
   ): Promise<Capsule<DocumentQuery<TModelDb[], TModelDb>>> {
-    const documentQueryCapsule: Capsule<DocumentQuery<
-      TModelDb[],
-      TModelDb
-    >> = await super.buildFindDocumentQuery(query);
+    const documentQueryCapsule: Capsule<
+      DocumentQuery<TModelDb[], TModelDb>
+    > = await super.buildFindDocumentQuery(query);
 
     if (hasValue(query.limit)) {
       documentQueryCapsule.elem = documentQueryCapsule.elem.limit(query.limit);
