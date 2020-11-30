@@ -25,6 +25,7 @@ import { PlayerSetupApiV1 } from '../../../adapter/api/model/setup/PlayerSetupAp
 import { commonTest } from '../../../../../common/test';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { configTest } from '../../../../../layer-modules/config/test';
+import { mongodbAdapter } from '../../../../../integration-modules/mongodb/adapter';
 import { mongooseAdapter } from '../../../../../integration-modules/mongoose/adapter';
 import { userTest } from '../../../../user/test';
 
@@ -143,21 +144,27 @@ async function prepareData(): Promise<E2EComponents> {
 describe('GameSetup V1', () => {
   let e2eComponents: E2EComponents;
 
+  let mongodbConnector: DbConnector;
   let mongooseConnector: DbConnector;
 
   const client: axios.AxiosStatic = axios.default;
 
   beforeAll(async () => {
+    mongodbConnector = container.get(
+      mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
+    );
     mongooseConnector = container.get(
       mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
     );
 
+    await mongodbConnector.connect();
     await mongooseConnector.connect();
 
     e2eComponents = await prepareData();
   });
 
   afterAll(async () => {
+    await mongodbConnector.close();
     await mongooseConnector.close();
   });
 
@@ -330,6 +337,66 @@ describe('GameSetup V1', () => {
             (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
               .playerSlots,
           );
+        });
+
+        describe('when called PATCH game setup, with the game setup created and player setup to remove', () => {
+          let patchGameSetupsByIdV1Response: axios.AxiosResponse;
+
+          beforeAll(async () => {
+            const gameSetupUpdateQueryApiV1: Partial<GameSetupUpdateQueryApiV1> = {
+              removePlayerSetups: [
+                {
+                  userId: e2eComponents.secondUser.id,
+                },
+              ],
+            };
+
+            patchGameSetupsByIdV1Response = await client.patch(
+              `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/game-setups/${gameSetupId}`,
+              gameSetupUpdateQueryApiV1,
+              {
+                headers: {
+                  Authorization: `Bearer ${e2eComponents.firstUserToken.token}`,
+                },
+              },
+            );
+          });
+
+          it('must return a response with the gameSetup updated', () => {
+            expect(
+              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1).id,
+            ).toBe(gameSetupId);
+            expect(
+              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
+                .format,
+            ).toBe(
+              (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).format,
+            );
+            expect(
+              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
+                .ownerUserId,
+            ).toBe(
+              (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
+                .ownerUserId,
+            );
+            expect(
+              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
+                .playerSetups.length,
+            ).toBe(1);
+            expect(
+              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
+                .playerSetups,
+            ).toContainEqual({
+              userId: e2eComponents.firstUser.id,
+            });
+            expect(
+              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
+                .playerSlots,
+            ).toBe(
+              (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
+                .playerSlots,
+            );
+          });
         });
       });
     });
