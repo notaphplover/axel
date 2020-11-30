@@ -1,4 +1,3 @@
-import { FilterQuery, MongooseFilterQuery, Types } from 'mongoose';
 import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
@@ -11,12 +10,13 @@ import mongodb from 'mongodb';
 
 @injectable()
 export class GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter
-  implements Converter<GameSetupUpdateQuery, FilterQuery<ExtendedGameSetupDb>> {
+  implements
+    Converter<GameSetupUpdateQuery, mongodb.FilterQuery<ExtendedGameSetupDb>> {
   public transform(
     input: GameSetupUpdateQuery,
-  ): FilterQuery<ExtendedGameSetupDb> {
-    const filterQuery: MongooseFilterQuery<ExtendedGameSetupDb> = {
-      _id: Types.ObjectId(input.id),
+  ): mongodb.FilterQuery<ExtendedGameSetupDb> {
+    const filterQuery: mongodb.FilterQuery<ExtendedGameSetupDb> = {
+      _id: new mongodb.ObjectID(input.id),
     };
 
     let playerSetupUserIdFilter:

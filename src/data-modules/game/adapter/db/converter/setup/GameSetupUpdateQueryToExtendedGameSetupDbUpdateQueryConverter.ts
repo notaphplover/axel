@@ -2,15 +2,16 @@ import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
 import { PlayerReference } from '../../../../domain/model/setup/PlayerReference';
-import { UpdateQuery } from 'mongoose';
 import { injectable } from 'inversify';
+import mongodb from 'mongodb';
 
 @injectable()
 export class GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter
-  implements Converter<GameSetupUpdateQuery, UpdateQuery<ExtendedGameSetupDb>> {
+  implements
+    Converter<GameSetupUpdateQuery, mongodb.UpdateQuery<ExtendedGameSetupDb>> {
   public transform(
     input: GameSetupUpdateQuery,
-  ): UpdateQuery<ExtendedGameSetupDb> {
+  ): mongodb.UpdateQuery<ExtendedGameSetupDb> {
     const updateQuery: unknown[] = [];
 
     if (input.additionalPlayerSetups !== undefined) {
@@ -26,6 +27,8 @@ export class GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter
     if (input.removePlayerSetups !== undefined) {
       updateQuery.push({
         $project: {
+          format: true,
+          ownerUserId: true,
           playerSetups: {
             $filter: {
               input: '$playerSetups',
@@ -43,10 +46,11 @@ export class GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter
               },
             },
           },
+          playerSlots: true,
         },
       });
     }
 
-    return updateQuery;
+    return (updateQuery as unknown) as mongodb.UpdateQuery<ExtendedGameSetupDb>;
   }
 }

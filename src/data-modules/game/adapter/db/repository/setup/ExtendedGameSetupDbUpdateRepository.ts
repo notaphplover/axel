@@ -1,14 +1,17 @@
-import { FilterQuery, Model, UpdateQuery } from 'mongoose';
 import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSetup';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
-import { MongooseUpdateRepository } from '../../../../../../integration-modules/mongoose/adapter';
+import { MONGODB_ADAPTER_TYPES } from '../../../../../../integration-modules/mongodb/adapter/config/types';
+import { Model } from 'mongoose';
+import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
+import { MongoDbUpdateRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbUpdateRepository';
+import mongodb from 'mongodb';
 
 @injectable()
-export class ExtendedGameSetupDbUpdateRepository extends MongooseUpdateRepository<
+export class ExtendedGameSetupDbUpdateRepository extends MongoDbUpdateRepository<
   ExtendedGameSetup,
   GameSetupUpdateQuery,
   ExtendedGameSetupDb
@@ -31,7 +34,7 @@ export class ExtendedGameSetupDbUpdateRepository extends MongooseUpdateRepositor
     )
     gameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter: Converter<
       GameSetupUpdateQuery,
-      FilterQuery<ExtendedGameSetupDb>
+      mongodb.FilterQuery<ExtendedGameSetupDb>
     >,
     @inject(
       GAME_ADAPTER_TYPES.db.converter.setup
@@ -39,12 +42,15 @@ export class ExtendedGameSetupDbUpdateRepository extends MongooseUpdateRepositor
     )
     gameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter: Converter<
       GameSetupUpdateQuery,
-      UpdateQuery<ExtendedGameSetupDb>
+      mongodb.UpdateQuery<ExtendedGameSetupDb>
     >,
+    @inject(MONGODB_ADAPTER_TYPES.db.MONGODB_CONNECTOR)
+    protected readonly mongoDbConnector: MongoDbConnector,
   ) {
     super(
-      extendedGameSetupDbModel,
+      extendedGameSetupDbModel.collection.collectionName,
       extendedGameSetupDbToExtendedGameSetupConverter,
+      mongoDbConnector,
       gameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter,
       gameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter,
     );

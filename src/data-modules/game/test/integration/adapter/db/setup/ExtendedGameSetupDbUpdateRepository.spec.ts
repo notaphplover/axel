@@ -18,8 +18,8 @@ import { gameSetupUpdateQueryFixtureFactory } from '../../../../fixtures/domain/
 
 const container: Container = configAdapter.container;
 
-const mongooseIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongooseIntegrationDescribe;
+const mongodbIntegrationDescribe: jest.Describe =
+  dbTest.integration.utils.mongodbIntegrationDescribe;
 
 async function clearCollection<T extends Document>(
   model: Model<T>,
@@ -46,7 +46,7 @@ function injectExtendedGameSetupMongooseModelMock(
     .toConstantValue(model);
 }
 
-mongooseIntegrationDescribe(ExtendedGameSetupDbUpdateRepository.name, () => {
+mongodbIntegrationDescribe(ExtendedGameSetupDbUpdateRepository.name, () => {
   describe('.updateAndSelect()', () => {
     describe('when called', () => {
       let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
@@ -58,7 +58,7 @@ mongooseIntegrationDescribe(ExtendedGameSetupDbUpdateRepository.name, () => {
 
       beforeAll(async () => {
         const collectionName: string =
-          'ExtendedGameSetupDbUpdateRepositoryModel';
+          'ExtendedGameSetupDbUpdateRepositoryModelTestUpdateAndSelect';
 
         extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
           collectionName,
@@ -267,7 +267,7 @@ mongooseIntegrationDescribe(ExtendedGameSetupDbUpdateRepository.name, () => {
 
       beforeAll(async () => {
         const collectionName: string =
-          'ExtendedGameSetupDbUpdateOneRepositoryModel';
+          'ExtendedGameSetupDbUpdateRepositoryModelTestUpdateOneAndSelect';
 
         extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
           collectionName,
