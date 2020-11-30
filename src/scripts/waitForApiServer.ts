@@ -53,6 +53,12 @@ const callStatusInterval: NodeJS.Timeout = setInterval(() => {
     if (connectionAttempts < maxConnectionAttempts) {
       ++connectionAttempts;
     } else {
+      clearInterval(callStatusInterval);
+
+      setImmediate(() => {
+        process.exit(-1);
+      });
+
       throw new Error(
         `Unexpected error: Exceded ${maxConnectionAttempts} connection attempts`,
       );
