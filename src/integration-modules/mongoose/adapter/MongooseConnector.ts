@@ -20,14 +20,13 @@ export class MongooseConnector implements DbConnector {
 
   public async connect(): Promise<void> {
     await mongoose.connect(
-      `${this.dbEnvLoader.index.MONGO_CONNECTION_PROTOCOL}${this.dbEnvLoader.index.MONGO_CONNECTION_URL}`,
+      `${this.dbEnvLoader.index.MONGO_CONNECTION_PROTOCOL}${this.dbEnvLoader.index.MONGO_CONNECTION_URL}/${this.dbEnvLoader.index.MONGO_CONNECTION_DB}`,
       {
         authSource: this.dbEnvLoader.index.MONGO_CONNECTION_AUTH_SOURCE,
         auth: {
           user: this.dbEnvLoader.index.MONGO_CONNECTION_USER,
           password: this.dbEnvLoader.index.MONGO_CONNECTION_PASSWORD,
         },
-        db: this.dbEnvLoader.index.MONGO_CONNECTION_DB,
       },
     );
   }
