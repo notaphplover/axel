@@ -14,6 +14,7 @@ import { ExtendedGameSetupDbToBasicGameSetupConverter } from '../../../db/conver
 import { ExtendedGameSetupDbToExtendedGameSetupConverter } from '../../../db/converter/setup/ExtendedGameSetupDbToExtendedGameSetupConverter';
 import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameCreationQueryToGameDbsConverter } from '../../../db/converter/GameCreationQueryToGameDbsConverter';
+import { GameDbCollectionName } from '../../../db/GameDbCollection';
 import { GameDbToGameConverter } from '../../../db/converter/GameDbToGameConverter';
 import { GameFindQueryToGameDbFilterQueryConverter } from '../../../db/converter/GameFindQueryToGameDbFilterQueryConverter';
 import { GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter';
@@ -32,6 +33,10 @@ import { interfaces } from 'inversify';
 import { landDbModel } from '../../../db/model/card/LandDb';
 
 export function bindGameAdapterDb(bind: interfaces.Bind): void {
+  bind(
+    GAME_ADAPTER_TYPES.db.collection.setup.EXTENDED_GAME_SETUP_COLLECTION_NAME,
+  ).toConstantValue(GameDbCollectionName.ExtendedGameSetup);
+
   bind(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER).to(
     GameDbToGameConverter,
   );

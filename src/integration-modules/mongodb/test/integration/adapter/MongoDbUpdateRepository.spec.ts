@@ -96,11 +96,11 @@ describe(MongoDbUpdateRepository.name, () => {
           collectionName,
         );
 
-        const inertionResult: mongodb.InsertOneWriteOpResult<
+        const insertionResult: mongodb.InsertOneWriteOpResult<
           mongodb.WithId<ModelMockDb>
         > = await collection.insertOne({ ...creationQueryMockDbFixture });
 
-        modelDbInserted = { ...inertionResult.ops[0] };
+        modelDbInserted = { ...insertionResult.ops[0] };
 
         expectedModelDbUpdated = {
           _id: modelDbInserted._id,

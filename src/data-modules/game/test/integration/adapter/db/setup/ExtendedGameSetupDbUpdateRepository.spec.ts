@@ -1,460 +1,401 @@
 import 'reflect-metadata';
-import {
-  ExtendedGameSetupDb,
-  extendedGameSetupDbSchema,
-} from '../../../../../adapter/db/model/setup/ExtendedGameSetupDb';
-import mongoose, { Document, Model } from 'mongoose';
+import { Capsule } from '../../../../../../../common/domain';
 import { Container } from 'inversify';
 import { ExtendedGameSetup } from '../../../../../domain/model/setup/ExtendedGameSetup';
+import { ExtendedGameSetupDb } from '../../../../../adapter/db/model/setup/ExtendedGameSetupDb';
 import { ExtendedGameSetupDbUpdateRepository } from '../../../../../adapter/db/repository/setup/ExtendedGameSetupDbUpdateRepository';
 import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { GameSetupUpdateQuery } from '../../../../../domain/query/setup/GameSetupUpdateQuery';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { PlayerSetup } from '../../../../../domain/model/setup/PlayerSetup';
 import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { extendedGameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
 import { gameSetupUpdateQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
+import mongodb from 'mongodb';
 
 const container: Container = configAdapter.container;
 
-const mongodbIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongodbIntegrationDescribe;
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-async function clearCollection<T extends Document>(
-  model: Model<T>,
-): Promise<void> {
-  await model.deleteMany({});
-}
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-function createExtendedGameSetupMongooseModelMock(
-  alias: string,
-): Model<ExtendedGameSetupDb> {
-  return mongoose.model<ExtendedGameSetupDb>(
-    alias,
-    extendedGameSetupDbSchema,
-    alias,
-  );
-}
+mongodbIntegrationDescribeGenerator(outputParam)(
+  ExtendedGameSetupDbUpdateRepository.name,
+  () => {
+    describe('.updateAndSelect()', () => {
+      let collection: mongodb.Collection<ExtendedGameSetupDb>;
+      let extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository;
 
-function injectExtendedGameSetupMongooseModelMock(
-  container: Container,
-  model: Model<ExtendedGameSetupDb>,
-): void {
-  container
-    .bind(GAME_ADAPTER_TYPES.db.model.setup.EXTENDED_GAME_SETUP_DB_MODEL)
-    .toConstantValue(model);
-}
-
-mongodbIntegrationDescribe(ExtendedGameSetupDbUpdateRepository.name, () => {
-  describe('.updateAndSelect()', () => {
-    describe('when called', () => {
-      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
-
-      let extendedGameSetupDbInserted: ExtendedGameSetupDb;
-      let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
-
-      let result: unknown;
-
-      beforeAll(async () => {
+      beforeAll(() => {
         const collectionName: string =
-          'ExtendedGameSetupDbUpdateRepositoryModelTestUpdateAndSelect';
+          'extendedGameSetupIntegrationUpdateAndSelect';
 
-        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
+        collection = (outputParam.elem as MongoDbConnector).db.collection(
           collectionName,
         );
 
-        await clearCollection(extendedGameSetupModelMock);
-
-        // eslint-disable-next-line @typescript-eslint/typedef
-        [
-          extendedGameSetupDbInserted,
-        ] = await extendedGameSetupModelMock.insertMany([
-          new extendedGameSetupModelMock({
-            format: extendedGameSetupFixtureFactory.get().format,
-            ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
-            playerSetups: extendedGameSetupFixtureFactory.get().playerSetups,
-            playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-          }),
-        ]);
-
         const childContainer: Container = container.createChild();
 
-        injectExtendedGameSetupMongooseModelMock(
-          childContainer,
-          extendedGameSetupModelMock,
-        );
+        childContainer
+          .bind(
+            GAME_ADAPTER_TYPES.db.collection.setup
+              .EXTENDED_GAME_SETUP_COLLECTION_NAME,
+          )
+          .toConstantValue(collectionName);
 
-        const extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository = childContainer.get(
+        extendedGameSetupDbUpdateRepository = childContainer.get(
           GAME_DOMAIN_TYPES.repository.setup
             .EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
         );
-
-        gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
-
-        gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
-
-        const additionalPlayerSetupUserId: string = (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[])[0]
-          .userId;
-
-        (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[])[0].userId = (
-          parseInt(additionalPlayerSetupUserId, 16) + 1
-        ).toString(16);
-
-        result = await extendedGameSetupDbUpdateRepository.updateAndSelect(
-          gameSetupUpdateQueryFixture,
-        );
       });
 
-      afterAll(async () => {
-        await clearCollection(extendedGameSetupModelMock);
+      describe('when called', () => {
+        let extendedGameSetupDbInserted: ExtendedGameSetupDb;
+        let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
+
+        let result: unknown;
+
+        beforeAll(async () => {
+          await collection.deleteMany({});
+
+          // eslint-disable-next-line @typescript-eslint/typedef
+          [extendedGameSetupDbInserted] = (
+            await collection.insertMany([
+              ({
+                format: extendedGameSetupFixtureFactory.get().format,
+                ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
+                playerSetups: extendedGameSetupFixtureFactory.get()
+                  .playerSetups,
+                playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
+              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+            ])
+          ).ops;
+
+          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
+
+          gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
+
+          const additionalPlayerSetupUserId: string = (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[])[0]
+            .userId;
+
+          (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[])[0].userId = (
+            parseInt(additionalPlayerSetupUserId, 16) + 1
+          ).toString(16);
+
+          result = await extendedGameSetupDbUpdateRepository.updateAndSelect(
+            gameSetupUpdateQueryFixture,
+          );
+        });
+
+        afterAll(async () => {
+          await collection.deleteMany({});
+        });
+
+        it('must return the game setup updated', () => {
+          expect(result).toHaveProperty('length');
+          expect((result as unknown[]).length).toBe(1);
+
+          const [innerResult]: unknown[] = result as unknown[];
+
+          expect((innerResult as ExtendedGameSetup).id).toBe(
+            extendedGameSetupDbInserted._id.toHexString(),
+          );
+
+          expect((innerResult as ExtendedGameSetup).playerSetups).toEqual(
+            gameSetupUpdateQueryFixture.additionalPlayerSetups,
+          );
+        });
       });
 
-      it('must return the game setup updated', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as unknown[]).length).toBe(1);
+      describe('when called, with a query with additionalPlayerSetups with an existing player setup', () => {
+        let extendedGameSetupDbInserted: ExtendedGameSetupDb;
+        let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
 
-        const [innerResult]: unknown[] = result as unknown[];
+        let result: unknown;
 
-        expect((innerResult as ExtendedGameSetup).id).toBe(
-          extendedGameSetupDbInserted.id,
-        );
+        beforeAll(async () => {
+          await collection.deleteMany({});
 
-        expect((innerResult as ExtendedGameSetup).playerSetups).toEqual(
-          gameSetupUpdateQueryFixture.additionalPlayerSetups,
-        );
+          // eslint-disable-next-line @typescript-eslint/typedef
+          [extendedGameSetupDbInserted] = (
+            await collection.insertMany([
+              ({
+                format: extendedGameSetupFixtureFactory.get().format,
+                ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
+                playerSetups: extendedGameSetupFixtureFactory.get()
+                  .playerSetups,
+                playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
+              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+            ])
+          ).ops;
+
+          const childContainer: Container = container.createChild();
+
+          const extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository = childContainer.get(
+            GAME_DOMAIN_TYPES.repository.setup
+              .EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
+          );
+
+          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
+
+          gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
+
+          result = await extendedGameSetupDbUpdateRepository.updateAndSelect(
+            gameSetupUpdateQueryFixture,
+          );
+        });
+
+        afterAll(async () => {
+          await collection.deleteMany({});
+        });
+
+        it('must return no games', () => {
+          expect(result).toHaveProperty('length');
+          expect((result as unknown[]).length).toBe(0);
+        });
+      });
+
+      describe('when called, with a query with removePlayerSetups with a non existing player setup', () => {
+        let extendedGameSetupDbInserted: ExtendedGameSetupDb;
+        let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
+
+        let result: unknown;
+
+        beforeAll(async () => {
+          await collection.deleteMany({});
+
+          // eslint-disable-next-line @typescript-eslint/typedef
+          [extendedGameSetupDbInserted] = (
+            await collection.insertMany([
+              ({
+                format: extendedGameSetupFixtureFactory.get().format,
+                ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
+                playerSetups: extendedGameSetupFixtureFactory.get()
+                  .playerSetups,
+                playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
+              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+            ])
+          ).ops;
+
+          const childContainer: Container = container.createChild();
+
+          const extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository = childContainer.get(
+            GAME_DOMAIN_TYPES.repository.setup
+              .EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
+          );
+
+          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
+
+          gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
+
+          const removePlayerSetupUserId: string = (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[])[0]
+            .userId;
+
+          (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[])[0].userId = (
+            parseInt(removePlayerSetupUserId, 16) + 1
+          ).toString(16);
+
+          result = await extendedGameSetupDbUpdateRepository.updateAndSelect(
+            gameSetupUpdateQueryFixture,
+          );
+        });
+
+        afterAll(async () => {
+          await collection.deleteMany({});
+        });
+
+        it('must return no games', () => {
+          expect(result).toHaveProperty('length');
+          expect((result as unknown[]).length).toBe(0);
+        });
       });
     });
 
-    describe('when called, with a query with additionalPlayerSetups with an existing player setup', () => {
-      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
+    describe('.updateOneAndSelect()', () => {
+      let collection: mongodb.Collection<ExtendedGameSetupDb>;
+      let extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository;
 
-      let extendedGameSetupDbInserted: ExtendedGameSetupDb;
-      let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
-
-      let result: unknown;
-
-      beforeAll(async () => {
+      beforeAll(() => {
         const collectionName: string =
-          'ExtendedGameSetupDbUpdateRepositoryModel';
+          'extendedGameSetupIntegrationUpdateAndSelect';
 
-        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
+        collection = (outputParam.elem as MongoDbConnector).db.collection(
           collectionName,
         );
 
-        await clearCollection(extendedGameSetupModelMock);
-
-        // eslint-disable-next-line @typescript-eslint/typedef
-        [
-          extendedGameSetupDbInserted,
-        ] = await extendedGameSetupModelMock.insertMany([
-          new extendedGameSetupModelMock({
-            format: extendedGameSetupFixtureFactory.get().format,
-            ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
-            playerSetups: extendedGameSetupFixtureFactory.get().playerSetups,
-            playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-          }),
-        ]);
-
         const childContainer: Container = container.createChild();
 
-        injectExtendedGameSetupMongooseModelMock(
-          childContainer,
-          extendedGameSetupModelMock,
-        );
+        childContainer
+          .bind(
+            GAME_ADAPTER_TYPES.db.collection.setup
+              .EXTENDED_GAME_SETUP_COLLECTION_NAME,
+          )
+          .toConstantValue(collectionName);
 
-        const extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository = childContainer.get(
+        extendedGameSetupDbUpdateRepository = childContainer.get(
           GAME_DOMAIN_TYPES.repository.setup
             .EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
         );
-
-        gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
-
-        gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
-
-        result = await extendedGameSetupDbUpdateRepository.updateAndSelect(
-          gameSetupUpdateQueryFixture,
-        );
       });
 
-      afterAll(async () => {
-        await clearCollection(extendedGameSetupModelMock);
+      describe('when called', () => {
+        let extendedGameSetupDbInserted: ExtendedGameSetupDb;
+        let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
+
+        let result: unknown;
+
+        beforeAll(async () => {
+          await collection.deleteMany({});
+
+          // eslint-disable-next-line @typescript-eslint/typedef
+          [extendedGameSetupDbInserted] = (
+            await collection.insertMany([
+              ({
+                format: extendedGameSetupFixtureFactory.get().format,
+                ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
+                playerSetups: extendedGameSetupFixtureFactory.get()
+                  .playerSetups,
+                playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
+              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+            ])
+          ).ops;
+
+          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
+
+          gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
+
+          const additionalPlayerSetupUserId: string = (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[])[0]
+            .userId;
+
+          (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[])[0].userId = (
+            parseInt(additionalPlayerSetupUserId, 16) + 1
+          ).toString(16);
+
+          result = await extendedGameSetupDbUpdateRepository.updateOneAndSelect(
+            gameSetupUpdateQueryFixture,
+          );
+        });
+
+        afterAll(async () => {
+          await collection.deleteMany({});
+        });
+
+        it('must return the game setup updated', () => {
+          expect((result as ExtendedGameSetup).id).toBe(
+            extendedGameSetupDbInserted._id.toHexString(),
+          );
+
+          expect((result as ExtendedGameSetup).playerSetups).toEqual(
+            gameSetupUpdateQueryFixture.additionalPlayerSetups,
+          );
+        });
       });
 
-      it('must return no games', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as unknown[]).length).toBe(0);
-      });
-    });
+      describe('when called, with a query with additionalPlayerSetups with an existing player setup', () => {
+        let extendedGameSetupDbInserted: ExtendedGameSetupDb;
+        let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
 
-    describe('when called, with a query with removePlayerSetups with a non existing player setup', () => {
-      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
+        let result: unknown;
 
-      let extendedGameSetupDbInserted: ExtendedGameSetupDb;
-      let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
+        beforeAll(async () => {
+          await collection.deleteMany({});
 
-      let result: unknown;
+          // eslint-disable-next-line @typescript-eslint/typedef
+          [extendedGameSetupDbInserted] = (
+            await collection.insertMany([
+              ({
+                format: extendedGameSetupFixtureFactory.get().format,
+                ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
+                playerSetups: extendedGameSetupFixtureFactory.get()
+                  .playerSetups,
+                playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
+              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+            ])
+          ).ops;
 
-      beforeAll(async () => {
-        const collectionName: string =
-          'ExtendedGameSetupDbUpdateRepositoryModel';
+          const childContainer: Container = container.createChild();
 
-        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
-          collectionName,
-        );
+          const extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository = childContainer.get(
+            GAME_DOMAIN_TYPES.repository.setup
+              .EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
+          );
 
-        await clearCollection(extendedGameSetupModelMock);
+          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
 
-        // eslint-disable-next-line @typescript-eslint/typedef
-        [
-          extendedGameSetupDbInserted,
-        ] = await extendedGameSetupModelMock.insertMany([
-          new extendedGameSetupModelMock({
-            format: extendedGameSetupFixtureFactory.get().format,
-            ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
-            playerSetups: extendedGameSetupFixtureFactory.get().playerSetups,
-            playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-          }),
-        ]);
+          gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
 
-        const childContainer: Container = container.createChild();
+          result = await extendedGameSetupDbUpdateRepository.updateOneAndSelect(
+            gameSetupUpdateQueryFixture,
+          );
+        });
 
-        injectExtendedGameSetupMongooseModelMock(
-          childContainer,
-          extendedGameSetupModelMock,
-        );
+        afterAll(async () => {
+          await collection.deleteMany({});
+        });
 
-        const extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.setup
-            .EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
-        );
-
-        gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
-
-        gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
-
-        const removePlayerSetupUserId: string = (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[])[0]
-          .userId;
-
-        (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[])[0].userId = (
-          parseInt(removePlayerSetupUserId, 16) + 1
-        ).toString(16);
-
-        result = await extendedGameSetupDbUpdateRepository.updateAndSelect(
-          gameSetupUpdateQueryFixture,
-        );
+        it('must return no games', () => {
+          expect(result).toBeNull();
+        });
       });
 
-      afterAll(async () => {
-        await clearCollection(extendedGameSetupModelMock);
-      });
+      describe('when called, with a query with removePlayerSetups with a non existing player setup', () => {
+        let extendedGameSetupDbInserted: ExtendedGameSetupDb;
+        let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
 
-      it('must return no games', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as unknown[]).length).toBe(0);
-      });
-    });
-  });
+        let result: unknown;
 
-  describe('.updateOneAndSelect()', () => {
-    describe('when called', () => {
-      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
+        beforeAll(async () => {
+          await collection.deleteMany({});
 
-      let extendedGameSetupDbInserted: ExtendedGameSetupDb;
-      let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
+          // eslint-disable-next-line @typescript-eslint/typedef
+          [extendedGameSetupDbInserted] = (
+            await collection.insertMany([
+              ({
+                format: extendedGameSetupFixtureFactory.get().format,
+                ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
+                playerSetups: extendedGameSetupFixtureFactory.get()
+                  .playerSetups,
+                playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
+              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+            ])
+          ).ops;
 
-      let result: unknown;
+          const childContainer: Container = container.createChild();
 
-      beforeAll(async () => {
-        const collectionName: string =
-          'ExtendedGameSetupDbUpdateRepositoryModelTestUpdateOneAndSelect';
+          const extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository = childContainer.get(
+            GAME_DOMAIN_TYPES.repository.setup
+              .EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
+          );
 
-        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
-          collectionName,
-        );
+          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
 
-        await clearCollection(extendedGameSetupModelMock);
+          gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
 
-        // eslint-disable-next-line @typescript-eslint/typedef
-        [
-          extendedGameSetupDbInserted,
-        ] = await extendedGameSetupModelMock.insertMany([
-          new extendedGameSetupModelMock({
-            format: extendedGameSetupFixtureFactory.get().format,
-            ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
-            playerSetups: extendedGameSetupFixtureFactory.get().playerSetups,
-            playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-          }),
-        ]);
+          const removePlayerSetupUserId: string = (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[])[0]
+            .userId;
 
-        const childContainer: Container = container.createChild();
+          (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[])[0].userId = (
+            parseInt(removePlayerSetupUserId, 16) + 1
+          ).toString(16);
 
-        injectExtendedGameSetupMongooseModelMock(
-          childContainer,
-          extendedGameSetupModelMock,
-        );
+          result = await extendedGameSetupDbUpdateRepository.updateOneAndSelect(
+            gameSetupUpdateQueryFixture,
+          );
+        });
 
-        const extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.setup
-            .EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
-        );
+        afterAll(async () => {
+          await collection.deleteMany({});
+        });
 
-        gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
-
-        gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
-
-        const additionalPlayerSetupUserId: string = (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[])[0]
-          .userId;
-
-        (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[])[0].userId = (
-          parseInt(additionalPlayerSetupUserId, 16) + 1
-        ).toString(16);
-
-        result = await extendedGameSetupDbUpdateRepository.updateOneAndSelect(
-          gameSetupUpdateQueryFixture,
-        );
-      });
-
-      afterAll(async () => {
-        await clearCollection(extendedGameSetupModelMock);
-      });
-
-      it('must return the game setup updated', () => {
-        expect((result as ExtendedGameSetup).id).toBe(
-          extendedGameSetupDbInserted.id,
-        );
-
-        expect((result as ExtendedGameSetup).playerSetups).toEqual(
-          gameSetupUpdateQueryFixture.additionalPlayerSetups,
-        );
+        it('must return no games', () => {
+          expect(result).toBeNull();
+        });
       });
     });
-
-    describe('when called, with a query with additionalPlayerSetups with an existing player setup', () => {
-      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
-
-      let extendedGameSetupDbInserted: ExtendedGameSetupDb;
-      let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
-
-      let result: unknown;
-
-      beforeAll(async () => {
-        const collectionName: string =
-          'ExtendedGameSetupDbUpdateRepositoryModel';
-
-        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
-          collectionName,
-        );
-
-        await clearCollection(extendedGameSetupModelMock);
-
-        // eslint-disable-next-line @typescript-eslint/typedef
-        [
-          extendedGameSetupDbInserted,
-        ] = await extendedGameSetupModelMock.insertMany([
-          new extendedGameSetupModelMock({
-            format: extendedGameSetupFixtureFactory.get().format,
-            ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
-            playerSetups: extendedGameSetupFixtureFactory.get().playerSetups,
-            playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-          }),
-        ]);
-
-        const childContainer: Container = container.createChild();
-
-        injectExtendedGameSetupMongooseModelMock(
-          childContainer,
-          extendedGameSetupModelMock,
-        );
-
-        const extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.setup
-            .EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
-        );
-
-        gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
-
-        gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
-
-        result = await extendedGameSetupDbUpdateRepository.updateOneAndSelect(
-          gameSetupUpdateQueryFixture,
-        );
-      });
-
-      afterAll(async () => {
-        await clearCollection(extendedGameSetupModelMock);
-      });
-
-      it('must return no games', () => {
-        expect(result).toBeNull();
-      });
-    });
-
-    describe('when called, with a query with removePlayerSetups with a non existing player setup', () => {
-      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
-
-      let extendedGameSetupDbInserted: ExtendedGameSetupDb;
-      let gameSetupUpdateQueryFixture: GameSetupUpdateQuery;
-
-      let result: unknown;
-
-      beforeAll(async () => {
-        const collectionName: string =
-          'ExtendedGameSetupDbUpdateRepositoryModel';
-
-        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
-          collectionName,
-        );
-
-        await clearCollection(extendedGameSetupModelMock);
-
-        // eslint-disable-next-line @typescript-eslint/typedef
-        [
-          extendedGameSetupDbInserted,
-        ] = await extendedGameSetupModelMock.insertMany([
-          new extendedGameSetupModelMock({
-            format: extendedGameSetupFixtureFactory.get().format,
-            ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
-            playerSetups: extendedGameSetupFixtureFactory.get().playerSetups,
-            playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-          }),
-        ]);
-
-        const childContainer: Container = container.createChild();
-
-        injectExtendedGameSetupMongooseModelMock(
-          childContainer,
-          extendedGameSetupModelMock,
-        );
-
-        const extendedGameSetupDbUpdateRepository: ExtendedGameSetupDbUpdateRepository = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.setup
-            .EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
-        );
-
-        gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
-
-        gameSetupUpdateQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
-
-        const removePlayerSetupUserId: string = (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[])[0]
-          .userId;
-
-        (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[])[0].userId = (
-          parseInt(removePlayerSetupUserId, 16) + 1
-        ).toString(16);
-
-        result = await extendedGameSetupDbUpdateRepository.updateOneAndSelect(
-          gameSetupUpdateQueryFixture,
-        );
-      });
-
-      afterAll(async () => {
-        await clearCollection(extendedGameSetupModelMock);
-      });
-
-      it('must return no games', () => {
-        expect(result).toBeNull();
-      });
-    });
-  });
-});
+  },
+);

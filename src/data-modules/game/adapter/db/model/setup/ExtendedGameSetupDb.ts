@@ -1,4 +1,5 @@
 import mongoose, { Model, Schema, SchemaDefinition } from 'mongoose';
+import { GameDbCollectionName } from '../../GameDbCollection';
 import { GameSetupDb } from './GameSetupDb';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { cardDeckDbSchemaDefinition } from '../deck/CardDeckDb';
@@ -30,5 +31,5 @@ extendedGameSetupDbSchema.index({ 'playerSetups.userId': 1 });
 export const extendedGameSetupDbModel: Model<ExtendedGameSetupDb> = mongoose.model<ExtendedGameSetupDb>(
   'ExtendedGameSetup',
   extendedGameSetupDbSchema,
-  'extendedGameSetup',
+  GameDbCollectionName.ExtendedGameSetup,
 );

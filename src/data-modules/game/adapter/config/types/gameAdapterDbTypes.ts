@@ -1,5 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_ADAPTER_DB_TYPES = {
+  collection: {
+    setup: {
+      EXTENDED_GAME_SETUP_COLLECTION_NAME: Symbol.for(
+        'ExtendedGameSetupCollectionName',
+      ),
+    },
+  },
   converter: {
     GAME_CREATION_QUERY_TO_GAME_DBS_CONVERTER: Symbol.for(
       'GameCreationQueryToGameDbsConverter',

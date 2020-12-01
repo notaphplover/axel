@@ -5,7 +5,6 @@ import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
 import { MONGODB_ADAPTER_TYPES } from '../../../../../../integration-modules/mongodb/adapter/config/types';
-import { Model } from 'mongoose';
 import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
 import { MongoDbUpdateRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbUpdateRepository';
 import mongodb from 'mongodb';
@@ -18,8 +17,11 @@ export class ExtendedGameSetupDbUpdateRepository extends MongoDbUpdateRepository
 > {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
-    @inject(GAME_ADAPTER_TYPES.db.model.setup.EXTENDED_GAME_SETUP_DB_MODEL)
-    extendedGameSetupDbModel: Model<ExtendedGameSetupDb>,
+    @inject(
+      GAME_ADAPTER_TYPES.db.collection.setup
+        .EXTENDED_GAME_SETUP_COLLECTION_NAME,
+    )
+    extendedGameSetupCollectionName: string,
     @inject(
       GAME_ADAPTER_TYPES.db.converter.setup
         .EXTENDED_GAME_SETUP_DB_TO_EXTENDED_GAME_SETUP_CONVERTER,
@@ -48,7 +50,7 @@ export class ExtendedGameSetupDbUpdateRepository extends MongoDbUpdateRepository
     protected readonly mongoDbConnector: MongoDbConnector,
   ) {
     super(
-      extendedGameSetupDbModel.collection.collectionName,
+      extendedGameSetupCollectionName,
       extendedGameSetupDbToExtendedGameSetupConverter,
       mongoDbConnector,
       gameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter,

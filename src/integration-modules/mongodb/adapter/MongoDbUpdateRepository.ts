@@ -1,8 +1,8 @@
 import { Converter, common } from '../../../common/domain';
+import { injectable, unmanaged } from 'inversify';
 import { Document } from '../domain/model/Document';
 import { MongoDbConnector } from '.';
 import { UpdateRepository } from '../../../layer-modules/db/domain/UpdateRepository';
-import { injectable } from 'inversify';
 import mongodb from 'mongodb';
 
 const hasValue: <TType>(
@@ -18,16 +18,21 @@ export abstract class MongoDbUpdateRepository<
   private innerCollection: mongodb.Collection<TModelDb> | undefined;
 
   constructor(
+    @unmanaged()
     protected readonly collectionName: string,
+    @unmanaged()
     protected readonly modelDbToModelConverter: Converter<
       TModelDb,
       TModel | Promise<TModel>
     >,
+    @unmanaged()
     protected readonly mongoDbConnector: MongoDbConnector,
+    @unmanaged()
     protected readonly queryToFilterQueryConverter: Converter<
       TQuery,
       mongodb.FilterQuery<TModelDb> | Promise<mongodb.FilterQuery<TModelDb>>
     >,
+    @unmanaged()
     protected readonly queryToUpdateQueryConverter: Converter<
       TQuery,
       mongodb.UpdateQuery<TModelDb> | Promise<mongodb.UpdateQuery<TModelDb>>
