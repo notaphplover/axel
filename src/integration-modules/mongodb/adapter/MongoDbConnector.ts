@@ -7,6 +7,8 @@ import { inject, injectable } from 'inversify';
 import { DbConnector } from '../../../layer-modules/db/domain';
 import { EnvLoader } from '../../../layer-modules/env/domain';
 
+const MAX_ATTEMPTS: number = 5;
+
 @injectable()
 export class MongoDbConnector implements DbConnector {
   private mongoClient: MongoClient | undefined;
@@ -43,7 +45,19 @@ export class MongoDbConnector implements DbConnector {
   public async connect(): Promise<void> {
     const mongoDbConnectionUri: string = this.buildMongoDbConnectionUri();
 
-    this.mongoClient = await MongoClient.connect(mongoDbConnectionUri);
+    let attempt: number = 0;
+
+    while (this.mongoClient === undefined) {
+      try {
+        this.mongoClient = await MongoClient.connect(mongoDbConnectionUri);
+      } catch (err) {
+        ++attempt;
+
+        if (attempt >= MAX_ATTEMPTS) {
+          throw err;
+        }
+      }
+    }
   }
 
   private buildMongoDbConnectionUri(): string {
