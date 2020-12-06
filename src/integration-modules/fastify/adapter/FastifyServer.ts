@@ -1,6 +1,5 @@
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import { ApiVersion } from '../../../layer-modules/api/adapter';
-import { DbConnector } from '../../../layer-modules/db/domain';
 import { FastifyRouter } from './FastifyRouter';
 import { Server } from '../../../layer-modules/server/domain/Server';
 import { injectable } from 'inversify';
@@ -9,11 +8,7 @@ import { injectable } from 'inversify';
 export class FastifyServer implements Server {
   protected fastifyInstance: FastifyInstance | undefined;
 
-  constructor(
-    private readonly mongoDbConnector: DbConnector,
-    private readonly mongooseConnector: DbConnector,
-    private readonly routers: FastifyRouter[],
-  ) {
+  constructor(private readonly routers: FastifyRouter[]) {
     this.fastifyInstance = undefined;
   }
 
@@ -25,11 +20,7 @@ export class FastifyServer implements Server {
 
     this.fastifyInstance = fastifyInstance;
 
-    const promises: Promise<unknown>[] = [
-      this.mongoDbConnector.connect(),
-      this.mongooseConnector.connect(),
-      ...this.registerRouters(fastifyInstance),
-    ];
+    const promises: Promise<unknown>[] = this.registerRouters(fastifyInstance);
 
     await Promise.all(promises);
   }
@@ -43,11 +34,7 @@ export class FastifyServer implements Server {
 
     this.fastifyInstance = undefined;
 
-    await Promise.all([
-      this.mongoDbConnector.close(),
-      this.mongooseConnector.close(),
-      fastifyInstance.close(),
-    ]);
+    await fastifyInstance.close();
   }
 
   private registerRouters(

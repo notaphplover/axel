@@ -1,4 +1,3 @@
-import { DbConnector } from '../../../layer-modules/db/domain';
 import { FastifyInstance } from 'fastify';
 import { FastifyRouter } from './FastifyRouter';
 import { FastifyServer } from './FastifyServer';
@@ -8,13 +7,8 @@ import { injectable } from 'inversify';
 export class FastifyPortListeningServer extends FastifyServer {
   protected fastifyInstance: FastifyInstance | undefined;
 
-  constructor(
-    mongoDbConnector: DbConnector,
-    mongooseConnector: DbConnector,
-    routers: FastifyRouter[],
-    private readonly port: number,
-  ) {
-    super(mongoDbConnector, mongooseConnector, routers);
+  constructor(routers: FastifyRouter[], private readonly port: number) {
+    super(routers);
   }
 
   public async bootstrap(): Promise<void> {

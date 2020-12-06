@@ -33,18 +33,22 @@ export const fastifyIntegrationDescribeGenerator: (
       mongooseConnector = container.get(
         mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
       );
-      fastifyServerTest = new FastifyServerTest(
-        mongoDbConnector,
-        mongooseConnector,
-        [router],
-      );
+      fastifyServerTest = new FastifyServerTest([router]);
 
-      await fastifyServerTest.bootstrap();
+      await Promise.all([
+        mongoDbConnector.connect(),
+        mongooseConnector.connect(),
+        fastifyServerTest.bootstrap(),
+      ]);
 
       output.value = fastifyServerTest;
     });
 
     afterAll(async () => {
-      await fastifyServerTest.close();
+      await Promise.all([
+        mongoDbConnector.close(),
+        mongooseConnector.close(),
+        fastifyServerTest.close(),
+      ]);
     });
   });

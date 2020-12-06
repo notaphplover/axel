@@ -58,8 +58,6 @@ void (async () => {
   );
 
   const httpServer: FastifyPortListeningServer = new FastifyPortListeningServer(
-    mongoDbConnector,
-    mongooseConnector,
     [
       authRouter,
       cardRouter,
@@ -72,5 +70,9 @@ void (async () => {
     appEnvLoader.index.APP_SERVER_PORT,
   );
 
-  await httpServer.bootstrap();
+  await Promise.all([
+    mongoDbConnector.connect(),
+    mongooseConnector.connect(),
+    httpServer.bootstrap(),
+  ]);
 })();
