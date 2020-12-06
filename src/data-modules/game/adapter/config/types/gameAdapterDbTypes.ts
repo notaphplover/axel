@@ -75,6 +75,13 @@ export const GAME_ADAPTER_DB_TYPES = {
       ),
     },
   },
+  initializer: {
+    setup: {
+      EXTENDED_GAME_SETUP_DB_COLLECTION_INITIALIZER: Symbol.for(
+        'ExtendedGameSetupDbCollectionInitializer',
+      ),
+    },
+  },
   model: {
     GAME_DB_MODEL: Symbol.for('gameDbModel'),
     card: {

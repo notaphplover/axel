@@ -10,6 +10,7 @@ import { CreatureDbToCreatureConverter } from '../../../db/converter/card/Creatu
 import { EnchantmentCreationQueryToEnchantmentDbsConverter } from '../../../db/converter/card/EnchantmentCreationQueryToEnchantmentDbsConverter';
 import { EnchantmentDbToEnchantmentConverter } from '../../../db/converter/card/EnchantmentDbToEnchantmentConverter';
 import { ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter } from '../../../db/converter/setup/GameSetupCreationQueryToExtendedGameSetupDbsConverter';
+import { ExtendedGameSetupDbCollectionInitializer } from '../../../db/initializer/setup/ExtendedGameSetupDbCollectionInitializer';
 import { ExtendedGameSetupDbToBasicGameSetupConverter } from '../../../db/converter/setup/ExtendedGameSetupDbToBasicGameSetupConverter';
 import { ExtendedGameSetupDbToExtendedGameSetupConverter } from '../../../db/converter/setup/ExtendedGameSetupDbToExtendedGameSetupConverter';
 import { GAME_ADAPTER_TYPES } from '../../types';
@@ -120,6 +121,11 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.db.converter.setup
       .GAME_SETUP_UPDATE_QUERY_TO_EXTENDED_GAME_SETUP_DB_UPDATE_QUERY_CONVERTER,
   ).to(GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter);
+
+  bind(
+    GAME_ADAPTER_TYPES.db.initializer.setup
+      .EXTENDED_GAME_SETUP_DB_COLLECTION_INITIALIZER,
+  ).to(ExtendedGameSetupDbCollectionInitializer);
 
   bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
   bind(GAME_ADAPTER_TYPES.db.model.card.ARTIFACT_DB_MODEL).toConstantValue(
