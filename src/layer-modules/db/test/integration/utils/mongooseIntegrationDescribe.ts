@@ -8,6 +8,7 @@ const container: Container = configAdapter.container;
 
 export const mongooseIntegrationDescribe: jest.Describe = commonTest.integration.utils.customDescribe(
   describe,
+  'when mongodb connection is established',
   (): void => {
     let mongooseConnector: DbConnector;
 

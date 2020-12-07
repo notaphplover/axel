@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function innerDescribeWrapper(
   describeFn: jest.Describe,
-  name: string,
+  describeName: string,
   describeCallback: () => void,
+  setupName: string,
   setupCallback: () => void,
 ): void {
-  describeFn(name, () => {
+  describeFn(setupName, () => {
     setupCallback();
 
-    describeCallback();
+    describeFn(describeName, describeCallback);
   });
 }
 
 function innerEachWrapper(
   describeFn: jest.Describe,
+  setupName: string,
   setupCallback: () => void,
 ): jest.Each {
   return (
@@ -33,6 +35,7 @@ function innerEachWrapper(
           )(name, fn, timeout);
         }
       },
+      setupName,
       setupCallback,
     );
   };
@@ -40,9 +43,11 @@ function innerEachWrapper(
 
 export const customDescribe: (
   describeFn: jest.Describe,
+  setupName: string,
   setupCallback: () => void,
 ) => jest.Describe = (
   describeFn: jest.Describe,
+  setupName: string,
   setupCallback: () => void,
 ): jest.Describe =>
   new Proxy(describeFn, {
@@ -51,8 +56,14 @@ export const customDescribe: (
       thisArg: jest.Describe,
       argArray: [string, () => void],
     ): void => {
-      const [name, describeCallback]: [string, () => void] = argArray;
-      innerDescribeWrapper(target, name, describeCallback, setupCallback);
+      const [describeName, describeCallback]: [string, () => void] = argArray;
+      innerDescribeWrapper(
+        target,
+        describeName,
+        describeCallback,
+        setupName,
+        setupCallback,
+      );
     },
     get: (
       target: jest.Describe,
@@ -60,11 +71,11 @@ export const customDescribe: (
     ): jest.Describe | jest.Each => {
       switch (handler) {
         case 'each':
-          return innerEachWrapper(target, setupCallback);
+          return innerEachWrapper(target, setupName, setupCallback);
         case 'only':
-          return customDescribe(target.only, setupCallback);
+          return customDescribe(target.only, setupName, setupCallback);
         case 'skip':
-          return customDescribe(target.skip, setupCallback);
+          return customDescribe(target.skip, setupName, setupCallback);
         default:
           return ((target as unknown) as Record<
             string,

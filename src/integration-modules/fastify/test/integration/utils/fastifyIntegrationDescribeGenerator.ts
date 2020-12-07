@@ -20,7 +20,7 @@ export const fastifyIntegrationDescribeGenerator: (
   router: FastifyRouter,
   output: FastifyServerTestOutputParam,
 ) =>
-  customDescribe(describe, () => {
+  customDescribe(describe, 'when fastify server is ready', () => {
     let mongoDbConnector: DbConnector;
     let mongooseConnector: DbConnector;
 
