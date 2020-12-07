@@ -25,9 +25,9 @@ function innerEachWrapper(
       name,
       () => {
         if (placeholders.length === 0) {
-          return describeFn.each(casesOrStrings)(name, fn, timeout);
+          describeFn.each(casesOrStrings)(name, fn, timeout);
         } else {
-          return describeFn.each(
+          describeFn.each(
             casesOrStrings as TemplateStringsArray,
             ...placeholders,
           )(name, fn, timeout);
