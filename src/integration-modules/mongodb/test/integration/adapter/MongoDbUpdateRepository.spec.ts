@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { MongoDbConnector, mongodbAdapter } from '../../../adapter';
-import { Converter } from '../../../../../common/domain';
+import { Capsule, Converter } from '../../../../../common/domain';
 import { Document } from '../../../domain/model/Document';
+import { MongoDbConnector } from '../../../adapter';
 import { MongoDbUpdateRepository } from '../../../adapter/MongoDbUpdateRepository';
-import { container } from '../../../../../layer-modules/config/adapter/container';
+import { dbTest } from '../../../../../layer-modules/db/test';
 import mongodb from 'mongodb';
 
 class ModelMock {
@@ -37,353 +37,373 @@ const updateQueryMockDbFixture: mongodb.UpdateQuery<ModelMockDb> = {
   $set: { foo: NEW_FOO_VALUE },
 };
 
-describe(MongoDbUpdateRepository.name, () => {
-  let mongoDbConnector: MongoDbConnector;
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-  let modelDbToModelConverter: Converter<
-    ModelMock,
-    ModelMockDb | Promise<ModelMockDb>
-  >;
-  let queryToFilterQueryConverter: Converter<
-    UpdateQueryMock,
-    mongodb.FilterQuery<ModelMockDb> | Promise<mongodb.FilterQuery<ModelMockDb>>
-  >;
-  let queryToUpdateQueryConverter: Converter<
-    UpdateQueryMock,
-    mongodb.UpdateQuery<ModelMockDb> | Promise<mongodb.UpdateQuery<ModelMockDb>>
-  >;
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-  let mongoDbUpdateRepository: MongoDbUpdateRepositoryMock;
+mongodbIntegrationDescribeGenerator(outputParam)(
+  MongoDbUpdateRepository.name,
+  () => {
+    let mongoDbConnector: MongoDbConnector;
 
-  beforeAll(async () => {
-    mongoDbConnector = container.get(
-      mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
-    );
+    let modelDbToModelConverter: Converter<
+      ModelMock,
+      ModelMockDb | Promise<ModelMockDb>
+    >;
+    let queryToFilterQueryConverter: Converter<
+      UpdateQueryMock,
+      | mongodb.FilterQuery<ModelMockDb>
+      | Promise<mongodb.FilterQuery<ModelMockDb>>
+    >;
+    let queryToUpdateQueryConverter: Converter<
+      UpdateQueryMock,
+      | mongodb.UpdateQuery<ModelMockDb>
+      | Promise<mongodb.UpdateQuery<ModelMockDb>>
+    >;
 
-    await mongoDbConnector.connect();
+    let mongoDbUpdateRepository: MongoDbUpdateRepositoryMock;
 
-    modelDbToModelConverter = {
-      transform: jest.fn(),
-    };
-    queryToFilterQueryConverter = { transform: jest.fn() };
-    queryToUpdateQueryConverter = { transform: jest.fn() };
+    beforeAll(async () => {
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
 
-    mongoDbUpdateRepository = new MongoDbUpdateRepositoryMock(
-      collectionName,
-      modelDbToModelConverter,
-      mongoDbConnector,
-      queryToFilterQueryConverter,
-      queryToUpdateQueryConverter,
-    );
-  });
+      modelDbToModelConverter = {
+        transform: jest.fn(),
+      };
+      queryToFilterQueryConverter = { transform: jest.fn() };
+      queryToUpdateQueryConverter = { transform: jest.fn() };
 
-  afterAll(async () => {
-    await mongoDbConnector.close();
-  });
+      mongoDbUpdateRepository = new MongoDbUpdateRepositoryMock(
+        collectionName,
+        modelDbToModelConverter,
+        mongoDbConnector,
+        queryToFilterQueryConverter,
+        queryToUpdateQueryConverter,
+      );
+    });
 
-  describe('.update()', () => {
-    describe('when called', () => {
-      let result: unknown;
+    describe('.update()', () => {
+      describe('when called', () => {
+        let result: unknown;
 
-      let expectedModelDbUpdated: ModelMockDb;
-      let findQueryMockDbFixture: mongodb.FilterQuery<ModelMockDb>;
+        let expectedModelDbUpdated: ModelMockDb;
+        let findQueryMockDbFixture: mongodb.FilterQuery<ModelMockDb>;
 
-      let modelDbInserted: ModelMockDb;
-      let modelDbUpdated: ModelMockDb;
+        let modelDbInserted: ModelMockDb;
+        let modelDbUpdated: ModelMockDb;
 
-      beforeAll(async () => {
-        const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
-          collectionName,
-        );
+        beforeAll(async () => {
+          const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
+            collectionName,
+          );
 
-        const insertionResult: mongodb.InsertOneWriteOpResult<
-          mongodb.WithId<ModelMockDb>
-        > = await collection.insertOne({ ...creationQueryMockDbFixture });
+          const insertionResult: mongodb.InsertOneWriteOpResult<
+            mongodb.WithId<ModelMockDb>
+          > = await collection.insertOne({ ...creationQueryMockDbFixture });
 
-        modelDbInserted = { ...insertionResult.ops[0] };
+          modelDbInserted = { ...insertionResult.ops[0] };
 
-        expectedModelDbUpdated = {
-          _id: modelDbInserted._id,
-          foo: updateQueryMockFixture.foo,
-        };
+          expectedModelDbUpdated = {
+            _id: modelDbInserted._id,
+            foo: updateQueryMockFixture.foo,
+          };
 
-        findQueryMockDbFixture = { _id: modelDbInserted._id };
+          findQueryMockDbFixture = { _id: modelDbInserted._id };
 
-        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          findQueryMockDbFixture,
-        );
+          (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            findQueryMockDbFixture,
+          );
 
-        (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          updateQueryMockDbFixture,
-        );
+          (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            updateQueryMockDbFixture,
+          );
 
-        result = await mongoDbUpdateRepository.update(updateQueryMockFixture);
+          result = await mongoDbUpdateRepository.update(updateQueryMockFixture);
 
-        modelDbUpdated = (await collection.findOne({
-          _id: modelDbInserted._id,
-        })) as ModelMockDb;
-      });
+          modelDbUpdated = (await collection.findOne({
+            _id: modelDbInserted._id,
+          })) as ModelMockDb;
+        });
 
-      afterAll(() => {
-        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+        afterAll(() => {
+          (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
 
-        (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
-      });
+          (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
+        });
 
-      it('must call queryToFilterQueryConverter.transform with the query provided', () => {
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
-          updateQueryMockFixture,
-        );
-      });
+        it('must call queryToFilterQueryConverter.transform with the query provided', () => {
+          expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
+            updateQueryMockFixture,
+          );
+        });
 
-      it('must call queryToUpdateQueryConverter.transform with the query provided', () => {
-        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledWith(
-          updateQueryMockFixture,
-        );
-      });
+        it('must call queryToUpdateQueryConverter.transform with the query provided', () => {
+          expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledWith(
+            updateQueryMockFixture,
+          );
+        });
 
-      it('must return undefined', () => {
-        expect(result).toBeUndefined();
-      });
+        it('must return undefined', () => {
+          expect(result).toBeUndefined();
+        });
 
-      it('must have updated the entity', () => {
-        expect(modelDbUpdated).toStrictEqual(expectedModelDbUpdated);
+        it('must have updated the entity', () => {
+          expect(modelDbUpdated).toStrictEqual(expectedModelDbUpdated);
+        });
       });
     });
-  });
 
-  describe('.updateAndSelect()', () => {
-    describe('when called', () => {
-      let result: unknown;
+    describe('.updateAndSelect()', () => {
+      describe('when called', () => {
+        let result: unknown;
 
-      let findQueryMockDbFixture: mongodb.FilterQuery<ModelMockDb>;
+        let findQueryMockDbFixture: mongodb.FilterQuery<ModelMockDb>;
 
-      let modelDbInserted: ModelMockDb;
-      let expectedModelUpdated: ModelMock;
-      let expectedModelDbUpdated: ModelMockDb;
+        let modelDbInserted: ModelMockDb;
+        let expectedModelUpdated: ModelMock;
+        let expectedModelDbUpdated: ModelMockDb;
 
-      beforeAll(async () => {
-        const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
-          collectionName,
-        );
+        beforeAll(async () => {
+          const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
+            collectionName,
+          );
 
-        const inertionResult: mongodb.InsertOneWriteOpResult<
-          mongodb.WithId<ModelMockDb>
-        > = await collection.insertOne({ ...creationQueryMockDbFixture });
+          const inertionResult: mongodb.InsertOneWriteOpResult<
+            mongodb.WithId<ModelMockDb>
+          > = await collection.insertOne({ ...creationQueryMockDbFixture });
 
-        modelDbInserted = { ...inertionResult.ops[0] };
-        findQueryMockDbFixture = { _id: modelDbInserted._id };
-        expectedModelDbUpdated = {
-          _id: modelDbInserted._id,
-          foo: updateQueryMockFixture.foo,
-        };
-        expectedModelUpdated = { ...expectedModelDbUpdated };
+          modelDbInserted = { ...inertionResult.ops[0] };
+          findQueryMockDbFixture = { _id: modelDbInserted._id };
+          expectedModelDbUpdated = {
+            _id: modelDbInserted._id,
+            foo: updateQueryMockFixture.foo,
+          };
+          expectedModelUpdated = { ...expectedModelDbUpdated };
 
-        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          findQueryMockDbFixture,
-        );
+          (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            findQueryMockDbFixture,
+          );
 
-        (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          updateQueryMockDbFixture,
-        );
+          (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            updateQueryMockDbFixture,
+          );
 
-        (modelDbToModelConverter.transform as jest.Mock).mockResolvedValueOnce(
-          expectedModelUpdated,
-        );
+          (modelDbToModelConverter.transform as jest.Mock).mockResolvedValueOnce(
+            expectedModelUpdated,
+          );
 
-        result = await mongoDbUpdateRepository.updateAndSelect(
-          updateQueryMockFixture,
-        );
-      });
+          result = await mongoDbUpdateRepository.updateAndSelect(
+            updateQueryMockFixture,
+          );
+        });
 
-      afterAll(() => {
-        (modelDbToModelConverter.transform as jest.Mock).mockClear();
+        afterAll(() => {
+          (modelDbToModelConverter.transform as jest.Mock).mockClear();
 
-        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+          (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
 
-        (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
-      });
+          (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
+        });
 
-      it('must call queryToFilterQueryConverter.transform with the query provided', () => {
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
-          updateQueryMockFixture,
-        );
-      });
+        it('must call queryToFilterQueryConverter.transform with the query provided', () => {
+          expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
+            updateQueryMockFixture,
+          );
+        });
 
-      it('must call queryToUpdateQueryConverter.transform with the query provided', () => {
-        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledWith(
-          updateQueryMockFixture,
-        );
-      });
+        it('must call queryToUpdateQueryConverter.transform with the query provided', () => {
+          expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledWith(
+            updateQueryMockFixture,
+          );
+        });
 
-      it('must call modelDbToModelConverter.transform with the model obtained', () => {
-        expect(modelDbToModelConverter.transform).toHaveBeenCalledTimes(1);
-        expect(modelDbToModelConverter.transform).toHaveBeenCalledWith(
-          expectedModelDbUpdated,
-        );
-      });
+        it('must call modelDbToModelConverter.transform with the model obtained', () => {
+          expect(modelDbToModelConverter.transform).toHaveBeenCalledTimes(1);
+          expect(modelDbToModelConverter.transform).toHaveBeenCalledWith(
+            expectedModelDbUpdated,
+          );
+        });
 
-      it('must return the expected model', () => {
-        expect(result).toStrictEqual([expectedModelUpdated]);
-      });
-    });
-  });
-
-  describe('.updateOneAndSelect()', () => {
-    describe('when called', () => {
-      let result: unknown;
-
-      let findQueryMockDbFixture: mongodb.FilterQuery<ModelMockDb>;
-
-      let modelDbInserted: ModelMockDb;
-      let expectedModelUpdated: ModelMock;
-      let expectedModelDbUpdated: ModelMockDb;
-
-      beforeAll(async () => {
-        const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
-          collectionName,
-        );
-
-        const inertionResult: mongodb.InsertOneWriteOpResult<
-          mongodb.WithId<ModelMockDb>
-        > = await collection.insertOne({ ...creationQueryMockDbFixture });
-
-        modelDbInserted = { ...inertionResult.ops[0] };
-        findQueryMockDbFixture = { _id: modelDbInserted._id };
-        expectedModelDbUpdated = {
-          _id: modelDbInserted._id,
-          foo: updateQueryMockFixture.foo,
-        };
-        expectedModelUpdated = { ...expectedModelDbUpdated };
-
-        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          findQueryMockDbFixture,
-        );
-
-        (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          updateQueryMockDbFixture,
-        );
-
-        (modelDbToModelConverter.transform as jest.Mock).mockResolvedValueOnce(
-          expectedModelUpdated,
-        );
-
-        result = await mongoDbUpdateRepository.updateOneAndSelect(
-          updateQueryMockFixture,
-        );
-      });
-
-      afterAll(() => {
-        (modelDbToModelConverter.transform as jest.Mock).mockClear();
-
-        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
-
-        (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
-      });
-
-      it('must call queryToFilterQueryConverter.transform with the query provided', () => {
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
-          updateQueryMockFixture,
-        );
-      });
-
-      it('must call queryToUpdateQueryConverter.transform with the query provided', () => {
-        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledWith(
-          updateQueryMockFixture,
-        );
-      });
-
-      it('must call modelDbToModelConverter.transform with the model obtained', () => {
-        expect(modelDbToModelConverter.transform).toHaveBeenCalledTimes(1);
-        expect(modelDbToModelConverter.transform).toHaveBeenCalledWith(
-          expectedModelDbUpdated,
-        );
-      });
-
-      it('must return the expected model', () => {
-        expect(result).toStrictEqual(expectedModelUpdated);
+        it('must return the expected model', () => {
+          expect(result).toStrictEqual([expectedModelUpdated]);
+        });
       });
     });
-  });
 
-  describe('.updateOne()', () => {
-    describe('when called', () => {
-      let result: unknown;
+    describe('.updateOneAndSelect()', () => {
+      describe('when called', () => {
+        let result: unknown;
 
-      let expectedModelDbUpdated: ModelMockDb;
-      let findQueryMockDbFixture: mongodb.FilterQuery<ModelMockDb>;
+        let findQueryMockDbFixture: mongodb.FilterQuery<ModelMockDb>;
 
-      let modelDbInserted: ModelMockDb;
-      let modelDbUpdated: ModelMockDb;
+        let modelDbInserted: ModelMockDb;
+        let expectedModelUpdated: ModelMock;
+        let expectedModelDbUpdated: ModelMockDb;
 
-      beforeAll(async () => {
-        const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
-          collectionName,
-        );
+        beforeAll(async () => {
+          const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
+            collectionName,
+          );
 
-        const inertionResult: mongodb.InsertOneWriteOpResult<
-          mongodb.WithId<ModelMockDb>
-        > = await collection.insertOne({ ...creationQueryMockDbFixture });
+          const inertionResult: mongodb.InsertOneWriteOpResult<
+            mongodb.WithId<ModelMockDb>
+          > = await collection.insertOne({ ...creationQueryMockDbFixture });
 
-        modelDbInserted = { ...inertionResult.ops[0] };
+          modelDbInserted = { ...inertionResult.ops[0] };
+          findQueryMockDbFixture = { _id: modelDbInserted._id };
+          expectedModelDbUpdated = {
+            _id: modelDbInserted._id,
+            foo: updateQueryMockFixture.foo,
+          };
+          expectedModelUpdated = { ...expectedModelDbUpdated };
 
-        expectedModelDbUpdated = {
-          _id: modelDbInserted._id,
-          foo: updateQueryMockFixture.foo,
-        };
+          (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            findQueryMockDbFixture,
+          );
 
-        findQueryMockDbFixture = { _id: modelDbInserted._id };
+          (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            updateQueryMockDbFixture,
+          );
 
-        (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          findQueryMockDbFixture,
-        );
+          (modelDbToModelConverter.transform as jest.Mock).mockResolvedValueOnce(
+            expectedModelUpdated,
+          );
 
-        (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          updateQueryMockDbFixture,
-        );
+          result = await mongoDbUpdateRepository.updateOneAndSelect(
+            updateQueryMockFixture,
+          );
+        });
 
-        result = await mongoDbUpdateRepository.updateOne(
-          updateQueryMockFixture,
-        );
+        afterAll(() => {
+          (modelDbToModelConverter.transform as jest.Mock).mockClear();
 
-        modelDbUpdated = (await collection.findOne({
-          _id: modelDbInserted._id,
-        })) as ModelMockDb;
-      });
+          (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
 
-      afterAll(() => {
-        (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+          (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
+        });
 
-        (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
-      });
+        it('must call queryToFilterQueryConverter.transform with the query provided', () => {
+          expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
+            updateQueryMockFixture,
+          );
+        });
 
-      it('must call queryToFilterQueryConverter.transform with the query provided', () => {
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
-          updateQueryMockFixture,
-        );
-      });
+        it('must call queryToUpdateQueryConverter.transform with the query provided', () => {
+          expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledWith(
+            updateQueryMockFixture,
+          );
+        });
 
-      it('must call queryToUpdateQueryConverter.transform with the query provided', () => {
-        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledWith(
-          updateQueryMockFixture,
-        );
-      });
+        it('must call modelDbToModelConverter.transform with the model obtained', () => {
+          expect(modelDbToModelConverter.transform).toHaveBeenCalledTimes(1);
+          expect(modelDbToModelConverter.transform).toHaveBeenCalledWith(
+            expectedModelDbUpdated,
+          );
+        });
 
-      it('must return undefined', () => {
-        expect(result).toBeUndefined();
-      });
-
-      it('must have updated the entity', () => {
-        expect(modelDbUpdated).toStrictEqual(expectedModelDbUpdated);
+        it('must return the expected model', () => {
+          expect(result).toStrictEqual(expectedModelUpdated);
+        });
       });
     });
-  });
-});
+
+    describe('.updateOne()', () => {
+      describe('when called', () => {
+        let result: unknown;
+
+        let expectedModelDbUpdated: ModelMockDb;
+        let findQueryMockDbFixture: mongodb.FilterQuery<ModelMockDb>;
+
+        let modelDbInserted: ModelMockDb;
+        let modelDbUpdated: ModelMockDb;
+
+        beforeAll(async () => {
+          const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
+            collectionName,
+          );
+
+          const inertionResult: mongodb.InsertOneWriteOpResult<
+            mongodb.WithId<ModelMockDb>
+          > = await collection.insertOne({ ...creationQueryMockDbFixture });
+
+          modelDbInserted = { ...inertionResult.ops[0] };
+
+          expectedModelDbUpdated = {
+            _id: modelDbInserted._id,
+            foo: updateQueryMockFixture.foo,
+          };
+
+          findQueryMockDbFixture = { _id: modelDbInserted._id };
+
+          (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            findQueryMockDbFixture,
+          );
+
+          (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            updateQueryMockDbFixture,
+          );
+
+          result = await mongoDbUpdateRepository.updateOne(
+            updateQueryMockFixture,
+          );
+
+          modelDbUpdated = (await collection.findOne({
+            _id: modelDbInserted._id,
+          })) as ModelMockDb;
+        });
+
+        afterAll(() => {
+          (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
+
+          (queryToUpdateQueryConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must call queryToFilterQueryConverter.transform with the query provided', () => {
+          expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
+            updateQueryMockFixture,
+          );
+        });
+
+        it('must call queryToUpdateQueryConverter.transform with the query provided', () => {
+          expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(queryToUpdateQueryConverter.transform).toHaveBeenCalledWith(
+            updateQueryMockFixture,
+          );
+        });
+
+        it('must return undefined', () => {
+          expect(result).toBeUndefined();
+        });
+
+        it('must have updated the entity', () => {
+          expect(modelDbUpdated).toStrictEqual(expectedModelDbUpdated);
+        });
+      });
+    });
+  },
+);
