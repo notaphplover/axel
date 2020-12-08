@@ -3,9 +3,12 @@ import {
   ExtendedGameSetupDb,
   extendedGameSetupDbSchema,
 } from '../../../../../adapter/db/model/setup/ExtendedGameSetupDb';
+import {
+  basicGameSetupFixtureFactory,
+  extendedGameSetupFixtureFactory,
+} from '../../../../fixtures/domain/model/setup';
 import mongoose, { Document, Model } from 'mongoose';
 import { BasicGameSetup } from '../../../../../domain/model/setup/BasicGameSetup';
-import { BasicGameSetupDb } from '../../../../../adapter/db/model/setup/BasicGameSetupDb';
 import { BasicGameSetupDbSearchRepository } from '../../../../../adapter/db/repository/setup/BasicGameSetupDbSearchRepository';
 import { BasicGameSetupFindQuery } from '../../../../../domain/query/setup/BasicGameSetupFindQuery';
 import { Container } from 'inversify';
@@ -13,7 +16,6 @@ import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
 import { basicGameSetupFindQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
-import { basicGameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
 import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 
@@ -66,13 +68,13 @@ mongooseIntegrationDescribe(BasicGameSetupDbSearchRepository.name, () => {
         await clearCollection(extendedGameSetupModelMock);
 
         const [
-          basicGameSetupDbInserted,
-        ]: BasicGameSetupDb[] = await extendedGameSetupModelMock.insertMany([
+          extendedGameSetupDbInserted,
+        ]: ExtendedGameSetupDb[] = await extendedGameSetupModelMock.insertMany([
           new extendedGameSetupModelMock({
-            format: basicGameSetupFixtureFactory.get().format,
-            ownerUserId: basicGameSetupFixtureFactory.get().ownerUserId,
-            playerSetups: basicGameSetupFixtureFactory.get().playerSetups,
-            playerSlots: basicGameSetupFixtureFactory.get().playerSlots,
+            format: extendedGameSetupFixtureFactory.get().format,
+            ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
+            playerSetups: extendedGameSetupFixtureFactory.get().playerSetups,
+            playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
           }),
         ]);
 
@@ -87,7 +89,7 @@ mongooseIntegrationDescribe(BasicGameSetupDbSearchRepository.name, () => {
         );
 
         basicGameSetupFindQueryFixture = basicGameSetupFindQueryFixtureFactory.get();
-        basicGameSetupFindQueryFixture.id = basicGameSetupDbInserted._id.toHexString();
+        basicGameSetupFindQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
 
         result = await basicGameSetupDbSearchRepository.find(
           basicGameSetupFindQueryFixture,

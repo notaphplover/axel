@@ -1,5 +1,6 @@
 import { ArtifactCreationQueryToArtifactDbsConverter } from '../../../db/converter/card/ArtifactCreationQueryToArtifactDbsConverter';
 import { ArtifactDbToArtifactConverter } from '../../../db/converter/card/ArtifactDbToArtifactConverter';
+import { BasicGameSetupDbToBasicGameSetupConverter } from '../../../db/converter/setup/BasicGameSetupDbToBasicGameSetupConverter';
 import { CardDbToCardConverter } from '../../../db/converter/card/CardDbToCardConverter';
 import { CardDeckCreationQueryToCardDeckDbsConverter } from '../../../db/converter/deck/CardDeckCreationQueryToCardDeckDbsConverter';
 import { CardDeckDbToCardDeckConverter } from '../../../db/converter/deck/CardDeckDbToCardDeckConverter';
@@ -11,7 +12,6 @@ import { EnchantmentCreationQueryToEnchantmentDbsConverter } from '../../../db/c
 import { EnchantmentDbToEnchantmentConverter } from '../../../db/converter/card/EnchantmentDbToEnchantmentConverter';
 import { ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter } from '../../../db/converter/setup/GameSetupCreationQueryToExtendedGameSetupDbsConverter';
 import { ExtendedGameSetupDbCollectionInitializer } from '../../../db/initializer/setup/ExtendedGameSetupDbCollectionInitializer';
-import { ExtendedGameSetupDbToBasicGameSetupConverter } from '../../../db/converter/setup/ExtendedGameSetupDbToBasicGameSetupConverter';
 import { ExtendedGameSetupDbToExtendedGameSetupConverter } from '../../../db/converter/setup/ExtendedGameSetupDbToExtendedGameSetupConverter';
 import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameCreationQueryToGameDbsConverter } from '../../../db/converter/GameCreationQueryToGameDbsConverter';
@@ -103,8 +103,8 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   ).to(ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.setup
-      .EXTENDED_GAME_SETUP_DB_TO_BASIC_GAME_SETUP_CONVERTER,
-  ).to(ExtendedGameSetupDbToBasicGameSetupConverter);
+      .BASIC_GAME_SETUP_DB_TO_BASIC_GAME_SETUP_CONVERTER,
+  ).to(BasicGameSetupDbToBasicGameSetupConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.setup
       .EXTENDED_GAME_SETUP_DB_TO_EXTENDED_GAME_SETUP_CONVERTER,

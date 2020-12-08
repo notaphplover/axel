@@ -1,13 +1,12 @@
 import { Converter } from '../../../../../../common/domain';
-import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
-import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
 import { injectable } from 'inversify';
 
 @injectable()
-export abstract class ExtendedGameSetupDbToGameSetupConverter<TPlayerSetup>
-  implements Converter<ExtendedGameSetupDb, GameSetup<TPlayerSetup>> {
-  public transform(input: ExtendedGameSetupDb): GameSetup<TPlayerSetup> {
+export abstract class GameSetupDbToGameSetupConverter<TPlayerSetup>
+  implements Converter<GameSetupDb<TPlayerSetup>, GameSetup<TPlayerSetup>> {
+  public transform(input: GameSetupDb<TPlayerSetup>): GameSetup<TPlayerSetup> {
     return {
       format: input.format,
       id: input._id.toHexString(),
@@ -18,6 +17,6 @@ export abstract class ExtendedGameSetupDbToGameSetupConverter<TPlayerSetup>
   }
 
   protected abstract transformPlayerSetups(
-    input: PlayerSetup[],
+    input: TPlayerSetup[],
   ): TPlayerSetup[];
 }
