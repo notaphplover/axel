@@ -22,10 +22,10 @@ export class BasicGameSetupDbSearchRepository extends MongooseProjectionPaginate
     model: Model<ExtendedGameSetupDb>,
     @inject(
       GAME_ADAPTER_TYPES.db.converter.setup
-        .EXTENDED_GAME_SETUP_DB_TO_BASIC_GAME_SETUP_CONVERTER,
+        .BASIC_GAME_SETUP_DB_TO_BASIC_GAME_SETUP_CONVERTER,
     )
-    extendedGameSetupDbToBasicGameSetupConverter: Converter<
-      ExtendedGameSetupDb,
+    basicGameSetupDbToBasicGameSetupConverter: Converter<
+      BasicGameSetupDb,
       BasicGameSetup
     >,
     @inject(
@@ -39,7 +39,7 @@ export class BasicGameSetupDbSearchRepository extends MongooseProjectionPaginate
   ) {
     super(
       model,
-      extendedGameSetupDbToBasicGameSetupConverter,
+      basicGameSetupDbToBasicGameSetupConverter,
       gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter,
       { 'playerSetups.deck': 0 },
     );
