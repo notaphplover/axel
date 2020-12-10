@@ -56,10 +56,10 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@types/jest": "^26.0.16",
+    "@types/jest": "^26.0.18",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/lodash": "^4.14.165",
-    "@types/mongodb": "^3.6.1",
+    "@types/mongodb": "^3.6.3",
     "@types/mongoose": "^5.10.2",
     "@types/ncp": "^2.0.4",
     "@types/node": "^12.19.3",
