@@ -51,6 +51,7 @@ export abstract class MongoDbSearchRepository<
     );
 
     let entitiesDbFound: TOutputModelDb[] = await this.buildFindCursor(
+      query,
       mongoDbQuery,
     ).toArray();
 
@@ -95,6 +96,7 @@ export abstract class MongoDbSearchRepository<
   }
 
   protected buildFindCursor(
+    query: TQuery,
     mongoDbQuery: mongodb.FilterQuery<TModelDb>,
   ): mongodb.Cursor<TOutputModelDb> {
     return this.collection.find<TOutputModelDb>(
