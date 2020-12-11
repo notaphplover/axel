@@ -1,5 +1,6 @@
 import { BaseCard } from '../../../../domain/model/card/BaseCard';
 import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
+import { CardDb } from '../../model/card/CardDb';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { Converter } from '../../../../../../common/domain';
 import { Creature } from '../../../../domain/model/card/Creature';
@@ -8,10 +9,10 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class CreatureDbToCreatureConverter
-  extends BaseCardDbToCardConverter
+  extends BaseCardDbToCardConverter<CreatureDb, Creature>
   implements Converter<CreatureDb, Creature> {
   public transform(input: CreatureDb): Creature {
-    const baseCard: BaseCard = super.transform(input);
+    const baseCard: BaseCard = this.innerTransform(input as CardDb);
 
     return {
       cost: baseCard.cost,

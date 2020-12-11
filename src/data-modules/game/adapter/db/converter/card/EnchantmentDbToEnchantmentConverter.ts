@@ -1,5 +1,6 @@
 import { BaseCard } from '../../../../domain/model/card/BaseCard';
 import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
+import { CardDb } from '../../model/card/CardDb';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { Converter } from '../../../../../../common/domain';
 import { Enchantment } from '../../../../domain/model/card/Enchantment';
@@ -8,10 +9,10 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class EnchantmentDbToEnchantmentConverter
-  extends BaseCardDbToCardConverter
+  extends BaseCardDbToCardConverter<EnchantmentDb, Enchantment>
   implements Converter<EnchantmentDb, Enchantment> {
   public transform(input: EnchantmentDb): Enchantment {
-    const baseCard: BaseCard = super.transform(input);
+    const baseCard: BaseCard = this.innerTransform(input as CardDb);
 
     return {
       cost: baseCard.cost,

@@ -1,13 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 
-import {
-  Document,
-  DocumentQuery,
-  FilterQuery,
-  Model,
-  UpdateQuery,
-} from 'mongoose';
+import { Document, FilterQuery, Model, Query, UpdateQuery } from 'mongoose';
 
 import { Converter } from '../../../../../common/domain';
 import { MongooseUpdateRepository } from '../../../adapter/MongooseUpdateRepository';
@@ -39,8 +33,8 @@ const queryMockFixture: QueryMock = { foo: FOO_VALUE + '3' };
 const queryMockDbFixture: FilterQuery<ModelMockDb> = { foo: FOO_VALUE + '4' };
 
 describe(MongooseUpdateRepository.name, () => {
-  let findDocumentQueryMock: DocumentQuery<ModelMockDb[], ModelMockDb>;
-  let findOneDocumentQueryMock: DocumentQuery<ModelMockDb | null, ModelMockDb>;
+  let findDocumentQueryMock: Query<ModelMockDb[], ModelMockDb>;
+  let findOneDocumentQueryMock: Query<ModelMockDb | null, ModelMockDb>;
 
   let modelMock: Model<ModelMockDb>;
 
@@ -63,16 +57,17 @@ describe(MongooseUpdateRepository.name, () => {
     findDocumentQueryMock = ({
       select: jest.fn().mockReturnThis(),
       then: jest.fn(),
-    } as Partial<DocumentQuery<ModelMockDb[], ModelMockDb>>) as DocumentQuery<
+    } as Partial<Query<ModelMockDb[], ModelMockDb>>) as Query<
       ModelMockDb[],
       ModelMockDb
     >;
     findOneDocumentQueryMock = ({
       select: jest.fn().mockReturnThis(),
       then: jest.fn(),
-    } as Partial<
-      DocumentQuery<ModelMockDb | null, ModelMockDb>
-    >) as DocumentQuery<ModelMockDb | null, ModelMockDb>;
+    } as Partial<Query<ModelMockDb | null, ModelMockDb>>) as Query<
+      ModelMockDb | null,
+      ModelMockDb
+    >;
 
     modelMock = ({
       find: jest.fn().mockReturnValue(findDocumentQueryMock),

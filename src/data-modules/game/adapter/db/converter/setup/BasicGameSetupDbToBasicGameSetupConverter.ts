@@ -6,10 +6,14 @@ import { injectable } from 'inversify';
 @injectable()
 export class BasicGameSetupDbToBasicGameSetupConverter extends GameSetupDbToGameSetupConverter<PlayerReference> {
   protected transformPlayerSetups(input: PlayerSetup[]): PlayerReference[] {
-    return input.map((playerSetup: PlayerSetup) => {
-      return {
+    const playerReferences: PlayerReference[] = [];
+
+    for (const playerSetup of input) {
+      playerReferences.push({
         userId: playerSetup.userId,
-      };
-    });
+      });
+    }
+
+    return playerReferences;
   }
 }
