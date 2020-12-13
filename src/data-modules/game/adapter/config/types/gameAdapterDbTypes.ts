@@ -1,6 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_ADAPTER_DB_TYPES = {
   collection: {
+    card: {
+      CARD_COLLECTION_NAME: Symbol.for('CardSetupCollectionName'),
+    },
     setup: {
       EXTENDED_GAME_SETUP_COLLECTION_NAME: Symbol.for(
         'ExtendedGameSetupCollectionName',

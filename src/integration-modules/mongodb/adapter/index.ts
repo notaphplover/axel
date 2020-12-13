@@ -1,8 +1,10 @@
 import { MONGODB_ADAPTER_PUBLIC_TYPES } from './config/types';
+import { MongoDbCollectionInitializer } from './MongoDbCollectionInitializer';
 import { MongoDbConnector } from './MongoDbConnector';
+import { MongoDbIndex } from './MongoDbIndex';
 import { mongoDbContainer } from './config/container';
 
-export { MongoDbConnector };
+export { MongoDbCollectionInitializer, MongoDbConnector, MongoDbIndex };
 
 // eslint-disable-next-line @typescript-eslint/typedef
 export const mongodbAdapter = {

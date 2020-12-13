@@ -30,7 +30,7 @@ const creationQueryMockDbFixture: Pick<ModelMockDb, 'foo'> = {
   foo: FOO_VALUE,
 };
 
-const collectionName: string = 'MongoDbUpdateRepositoryTest';
+const collectionName: string = 'MongoDbSearchRepositoryIntegrationTest';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
