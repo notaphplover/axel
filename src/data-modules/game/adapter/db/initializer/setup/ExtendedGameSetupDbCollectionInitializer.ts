@@ -1,10 +1,12 @@
+import {
+  MongoDbCollectionInitializer,
+  MongoDbIndex,
+} from '../../../../../../integration-modules/mongodb/adapter';
 import { inject, injectable } from 'inversify';
-import { DB_ADAPTER_PUBLIC_TYPES } from '../../../../../../layer-modules/db/adapter/config/types';
 import { DbDotEnvVariables } from '../../../../../../layer-modules/db/adapter';
 import { EnvLoader } from '../../../../../../layer-modules/env/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { MongoDbCollectionInitializer } from '../../../../../../integration-modules/mongodb/adapter/MongoDbCollectionInitializer';
-import { MongoDbIndex } from '../../../../../../integration-modules/mongodb/adapter/MongoDbIndex';
+import { dbAdapter } from '../../../../../../layer-modules/db/adapter';
 import mongodb from 'mongodb';
 
 @injectable()
@@ -16,7 +18,7 @@ export class ExtendedGameSetupDbCollectionInitializer extends MongoDbCollectionI
         .EXTENDED_GAME_SETUP_COLLECTION_NAME,
     )
     collectionName: string,
-    @inject(DB_ADAPTER_PUBLIC_TYPES.env.DB_ENV_LOADER)
+    @inject(dbAdapter.config.types.env.DB_ENV_LOADER)
     dbEnvLoader: EnvLoader<DbDotEnvVariables>,
   ) {
     super(collectionName, dbEnvLoader);
