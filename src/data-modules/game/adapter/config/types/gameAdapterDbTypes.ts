@@ -79,6 +79,7 @@ export const GAME_ADAPTER_DB_TYPES = {
     },
   },
   initializer: {
+    GAME_DB_INITIALIZER: Symbol.for('GameDbInitializer'),
     card: {
       CARD_DB_COLLECTION_INITIALIZER: Symbol.for('CardDbCollectionInitializer'),
     },

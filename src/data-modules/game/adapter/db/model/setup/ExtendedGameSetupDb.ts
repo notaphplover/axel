@@ -13,7 +13,7 @@ const playerSetupDbSchemaDefinition: SchemaDefinition = {
 
 const extendedGameSetupDbSchemaDefinition: SchemaDefinition = {
   format: { type: String, required: true },
-  ownerUserId: { type: String, required: true, index: true },
+  ownerUserId: { type: String, required: true },
   playerSetups: {
     type: Array,
     of: playerSetupDbSchemaDefinition,
@@ -25,8 +25,6 @@ const extendedGameSetupDbSchemaDefinition: SchemaDefinition = {
 export const extendedGameSetupDbSchema: Schema = new Schema(
   extendedGameSetupDbSchemaDefinition,
 );
-
-extendedGameSetupDbSchema.index({ 'playerSetups.userId': 1 });
 
 export const extendedGameSetupDbModel: Model<ExtendedGameSetupDb> = mongoose.model<ExtendedGameSetupDb>(
   'ExtendedGameSetup',

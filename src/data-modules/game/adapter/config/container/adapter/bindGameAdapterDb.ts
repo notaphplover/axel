@@ -17,6 +17,7 @@ import { ExtendedGameSetupDbToExtendedGameSetupConverter } from '../../../db/con
 import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameCreationQueryToGameDbsConverter } from '../../../db/converter/GameCreationQueryToGameDbsConverter';
 import { GameDbCollectionName } from '../../../db/GameDbCollection';
+import { GameDbInitializer } from '../../../db/initializer/GameDbInitializer';
 import { GameDbToGameConverter } from '../../../db/converter/GameDbToGameConverter';
 import { GameFindQueryToGameDbFilterQueryConverter } from '../../../db/converter/GameFindQueryToGameDbFilterQueryConverter';
 import { GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter';
@@ -127,6 +128,9 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
       .GAME_SETUP_UPDATE_QUERY_TO_EXTENDED_GAME_SETUP_DB_UPDATE_QUERY_CONVERTER,
   ).to(GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter);
 
+  bind(GAME_ADAPTER_TYPES.db.initializer.GAME_DB_INITIALIZER).to(
+    GameDbInitializer,
+  );
   bind(
     GAME_ADAPTER_TYPES.db.initializer.card.CARD_DB_COLLECTION_INITIALIZER,
   ).to(CardDbCollectionInitializer);
