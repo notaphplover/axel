@@ -16,7 +16,7 @@ export class ArtifactCreationQueryToArtifactDbsConverter
         cost: input.cost,
         detail: input.detail,
         type: input.type,
-      } as mongodb.OptionalId<ArtifactDb>,
+      },
     ];
   }
 }

@@ -25,15 +25,10 @@ import { GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter } from '.
 import { GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter';
 import { LandCreationQueryToLandDbsConverter } from '../../../db/converter/card/LandCreationQueryToLandDbsConverter';
 import { LandDbToLandConverter } from '../../../db/converter/card/LandDbToLandConverter';
-import { artifactDbModel } from '../../../db/model/card/ArtifactDb';
-import { cardDbModel } from '../../../db/model/card/CardDb';
 import { cardDeckDbModel } from '../../../db/model/deck/CardDeckDb';
-import { creatureDbModel } from '../../../db/model/card/CreatureDb';
-import { enchantmentDbModel } from '../../../db/model/card/EnchantmentDb';
 import { extendedGameSetupDbModel } from '../../../db/model/setup/ExtendedGameSetupDb';
 import { gameDbModel } from '../../../db/model/GameDb';
 import { interfaces } from 'inversify';
-import { landDbModel } from '../../../db/model/card/LandDb';
 
 export function bindGameAdapterDb(bind: interfaces.Bind): void {
   bind(
@@ -140,21 +135,6 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   ).to(ExtendedGameSetupDbCollectionInitializer);
 
   bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
-  bind(GAME_ADAPTER_TYPES.db.model.card.ARTIFACT_DB_MODEL).toConstantValue(
-    artifactDbModel,
-  );
-  bind(GAME_ADAPTER_TYPES.db.model.card.CARD_DB_MODEL).toConstantValue(
-    cardDbModel,
-  );
-  bind(GAME_ADAPTER_TYPES.db.model.card.CREATURE_DB_MODEL).toConstantValue(
-    creatureDbModel,
-  );
-  bind(GAME_ADAPTER_TYPES.db.model.card.ENCHANTMENT_DB_MODEL).toConstantValue(
-    enchantmentDbModel,
-  );
-  bind(GAME_ADAPTER_TYPES.db.model.card.LAND_DB_MODEL).toConstantValue(
-    landDbModel,
-  );
 
   bind(GAME_ADAPTER_TYPES.db.model.deck.CARD_DECK_DB_MODEL).toConstantValue(
     cardDeckDbModel,
