@@ -34,39 +34,39 @@ const mongodbIntegrationDescribeGenerator: (
 mongodbIntegrationDescribeGenerator(outputParam)(
   CardDbSearchRepository.name,
   () => {
+    let collectionName: string;
+    let cardDbToCardConverter: Converter<CardDb, Card>;
+    let mongoDbConnector: MongoDbConnector;
+    let cardFindQueryToCardDbFilterQueryConverter: Converter<
+      CardFindQuery,
+      mongodb.FilterQuery<CardDb>
+    >;
+
+    let cardDbSearchRepository: SearchRepository<Card, CardFindQuery>;
+
+    beforeAll(() => {
+      collectionName = 'CardDbSearchRepositoryIntegrationTests';
+
+      cardDbToCardConverter = {
+        transform: jest.fn(),
+      };
+
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
+
+      cardFindQueryToCardDbFilterQueryConverter = {
+        transform: jest.fn(),
+      };
+
+      cardDbSearchRepository = new CardDbSearchRepository(
+        collectionName,
+        cardDbToCardConverter,
+        mongoDbConnector,
+        cardFindQueryToCardDbFilterQueryConverter,
+      );
+    });
+
     describe('.find()', () => {
       describe('when called and some cards satisfies the query', () => {
-        let collectionName: string;
-        let cardDbToCardConverter: Converter<CardDb, Card>;
-        let mongoDbConnector: MongoDbConnector;
-        let cardFindQueryToCardDbFilterQueryConverter: Converter<
-          CardFindQuery,
-          mongodb.FilterQuery<CardDb>
-        >;
-
-        let cardDbSearchRepository: SearchRepository<Card, CardFindQuery>;
-
-        beforeAll(async () => {
-          collectionName = 'CardDbSearchRepositoryIntegrationTests';
-
-          cardDbToCardConverter = {
-            transform: jest.fn(),
-          };
-
-          mongoDbConnector = outputParam.elem as MongoDbConnector;
-
-          cardFindQueryToCardDbFilterQueryConverter = {
-            transform: jest.fn(),
-          };
-
-          cardDbSearchRepository = new CardDbSearchRepository(
-            collectionName,
-            cardDbToCardConverter,
-            mongoDbConnector,
-            cardFindQueryToCardDbFilterQueryConverter,
-          );
-        });
-
         describe('when the cards are artifacts', () => {
           let artifactDbInserted: ArtifactDb;
 
