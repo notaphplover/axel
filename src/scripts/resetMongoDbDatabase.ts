@@ -1,24 +1,16 @@
 import 'reflect-metadata';
-import { DbConnector } from '../layer-modules/db/domain';
+import {
+  MongoDbConnector,
+  mongodbAdapter,
+} from '../integration-modules/mongodb/adapter';
 import { container } from '../layer-modules/config/adapter/container';
-import mongoose from 'mongoose';
-import { mongooseAdapter } from '../integration-modules/mongoose/adapter';
 
-const mongooseConnector: DbConnector = container.get(
-  mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
-);
-
-const mongoDbConnectionIsOpenedPromise: Promise<void> = new Promise(
-  (resolve: () => void) => {
-    mongoose.connection.once('open', () => {
-      resolve();
-    });
-  },
+const mongoDbConnector: MongoDbConnector = container.get(
+  mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
 );
 
 void (async () => {
-  await mongooseConnector.connect();
-  await mongoDbConnectionIsOpenedPromise;
-  await mongoose.connection.db.dropDatabase();
-  await mongooseConnector.close();
+  await mongoDbConnector.connect();
+  await mongoDbConnector.db.dropDatabase();
+  await mongoDbConnector.close();
 })();
