@@ -1,99 +1,113 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import mongoose, { Document, Model } from 'mongoose';
-import { Container } from 'inversify';
+import { Capsule, Converter } from '../../../../../../../common/domain';
 import { Enchantment } from '../../../../../domain/model/card/Enchantment';
 import { EnchantmentCreationQuery } from '../../../../../domain/query/card/EnchantmentCreationQuery';
 import { EnchantmentDb } from '../../../../../adapter/db/model/card/EnchantmentDb';
 import { EnchantmentDbInsertRepository } from '../../../../../adapter/db/repository/card/EnchantmentDbInsertRepository';
-import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
-import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
-import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
-import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
-import { enchantmentDbSchema } from '../../../../../adapter/db/model/card/EnchantmentDb';
 import { enchantmentFixtureFactory } from '../../../../fixtures/domain/model/card';
+import mongodb from 'mongodb';
 
-const container: Container = configAdapter.container;
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-const mongooseIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongooseIntegrationDescribe;
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-async function clearCollection<T extends Document>(
-  model: Model<T>,
-): Promise<void> {
-  await model.deleteMany({});
-}
+mongodbIntegrationDescribeGenerator(outputParam)(
+  EnchantmentDbInsertRepository.name,
+  () => {
+    let collectionName: string;
+    let enchantmentDbToEnchantmentConverter: Converter<
+      EnchantmentDb,
+      Enchantment
+    >;
+    let mongoDbConnector: MongoDbConnector;
+    let enchantmentCreationQueryToEnchantmentDbsConverter: Converter<
+      EnchantmentCreationQuery,
+      mongodb.OptionalId<EnchantmentDb>[]
+    >;
 
-function createEnchantmentMongooseModelMock(
-  alias: string,
-): Model<EnchantmentDb> {
-  return mongoose.model<EnchantmentDb>(alias, enchantmentDbSchema, alias);
-}
+    let enchantmentDbInsertRepository: EnchantmentDbInsertRepository;
 
-function injectEnchantmentMongooseModelMock(
-  container: Container,
-  model: Model<EnchantmentDb>,
-): void {
-  container
-    .bind(GAME_ADAPTER_TYPES.db.model.card.ENCHANTMENT_DB_MODEL)
-    .toConstantValue(model);
-}
+    beforeAll(() => {
+      collectionName = 'EnchantmentDbInsertRepositoryIntegrationTests';
 
-mongooseIntegrationDescribe(EnchantmentDbInsertRepository.name, () => {
-  describe('.insert()', () => {
-    describe('when called', () => {
-      let enchantmentModelMock: Model<EnchantmentDb>;
+      enchantmentDbToEnchantmentConverter = {
+        transform: jest.fn(),
+      };
 
-      let result: unknown;
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
 
-      beforeAll(async () => {
-        const collectionName: string = 'EnchantmentDbInsertRepositoryModel';
+      enchantmentCreationQueryToEnchantmentDbsConverter = {
+        transform: jest.fn(),
+      };
 
-        enchantmentModelMock = createEnchantmentMongooseModelMock(
-          collectionName,
-        );
+      enchantmentDbInsertRepository = new EnchantmentDbInsertRepository(
+        collectionName,
+        enchantmentDbToEnchantmentConverter,
+        mongoDbConnector,
+        enchantmentCreationQueryToEnchantmentDbsConverter,
+      );
+    });
 
-        await clearCollection(enchantmentModelMock);
+    describe('.insert()', () => {
+      describe('when called', () => {
+        let enchantmentFixture: Enchantment;
 
-        const childContainer: Container = container.createChild();
-        injectEnchantmentMongooseModelMock(
-          childContainer,
-          enchantmentModelMock,
-        );
+        let result: unknown;
 
-        const enchantmentDbInsertRepository: InsertRepository<
-          Enchantment,
-          EnchantmentCreationQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.card.ENCHANTMENT_INSERT_REPOSITORY,
-        );
+        beforeAll(async () => {
+          enchantmentFixture = enchantmentFixtureFactory.get();
 
-        result = await enchantmentDbInsertRepository.insert(
-          enchantmentCreationQueryFixtureFactory.get(),
-        );
-      });
+          (enchantmentDbToEnchantmentConverter.transform as jest.Mock).mockReturnValueOnce(
+            enchantmentFixture,
+          );
 
-      afterAll(async () => {
-        await clearCollection(enchantmentModelMock);
-      });
+          const enchantmentDbFixture: mongodb.OptionalId<EnchantmentDb> = {
+            cost: enchantmentFixture.cost,
+            detail: enchantmentFixture.detail,
+            type: enchantmentFixture.type,
+          } as mongodb.OptionalId<EnchantmentDb>;
 
-      it('must return the enchantment created', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as unknown[]).length).toBe(1);
+          (enchantmentCreationQueryToEnchantmentDbsConverter.transform as jest.Mock).mockReturnValueOnce(
+            [enchantmentDbFixture],
+          );
 
-        const [innerResult]: unknown[] = result as unknown[];
+          result = await enchantmentDbInsertRepository.insert(
+            enchantmentCreationQueryFixtureFactory.get(),
+          );
+        });
 
-        expect((innerResult as Enchantment).cost).toStrictEqual(
-          enchantmentFixtureFactory.get().cost,
-        );
-        expect((innerResult as Enchantment).detail).toStrictEqual(
-          enchantmentFixtureFactory.get().detail,
-        );
-        expect((innerResult as Enchantment).type).toStrictEqual(
-          enchantmentFixtureFactory.get().type,
-        );
+        afterAll(() => {
+          (enchantmentDbToEnchantmentConverter.transform as jest.Mock).mockClear();
+          (enchantmentCreationQueryToEnchantmentDbsConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must call enchantmentDbToEnchantmentConverter.transform with the db entities found', () => {
+          const expectedEnchantmentDb: EnchantmentDb = {
+            _id: expect.any(mongodb.ObjectID) as mongodb.ObjectID,
+            cost: enchantmentFixture.cost,
+            detail: enchantmentFixture.detail,
+            type: enchantmentFixture.type,
+          } as EnchantmentDb;
+
+          expect(enchantmentDbToEnchantmentConverter.transform).toBeCalledTimes(
+            1,
+          );
+          expect(enchantmentDbToEnchantmentConverter.transform).toBeCalledWith(
+            expectedEnchantmentDb,
+          );
+        });
+
+        it('must return the enchantment created', () => {
+          expect(result).toStrictEqual([enchantmentFixture]);
+        });
       });
     });
-  });
-});
+  },
+);

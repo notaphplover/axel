@@ -1,98 +1,114 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import mongoose, { Document, Model } from 'mongoose';
-import { Container } from 'inversify';
+import { Capsule, Converter } from '../../../../../../../common/domain';
 import { Creature } from '../../../../../domain/model/card/Creature';
 import { CreatureCreationQuery } from '../../../../../domain/query/card/CreatureCreationQuery';
 import { CreatureDb } from '../../../../../adapter/db/model/card/CreatureDb';
 import { CreatureDbInsertRepository } from '../../../../../adapter/db/repository/card/CreatureDbInsertRepository';
-import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
-import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
-import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
-import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
-import { creatureDbSchema } from '../../../../../adapter/db/model/card/CreatureDb';
 import { creatureFixtureFactory } from '../../../../fixtures/domain/model/card';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
+import mongodb from 'mongodb';
 
-const container: Container = configAdapter.container;
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-const mongooseIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongooseIntegrationDescribe;
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-async function clearCollection<T extends Document>(
-  model: Model<T>,
-): Promise<void> {
-  await model.deleteMany({});
-}
+mongodbIntegrationDescribeGenerator(outputParam)(
+  CreatureDbInsertRepository.name,
+  () => {
+    let collectionName: string;
+    let creatureDbToCreatureConverter: Converter<CreatureDb, Creature>;
+    let mongoDbConnector: MongoDbConnector;
+    let creatureCreationQueryToCreatureDbsConverter: Converter<
+      CreatureCreationQuery,
+      mongodb.OptionalId<CreatureDb>[]
+    >;
 
-function createCreatureMongooseModelMock(alias: string): Model<CreatureDb> {
-  return mongoose.model<CreatureDb>(alias, creatureDbSchema, alias);
-}
+    let creatureDbInsertRepository: CreatureDbInsertRepository;
 
-function injectCreatureMongooseModelMock(
-  container: Container,
-  model: Model<CreatureDb>,
-): void {
-  container
-    .bind(GAME_ADAPTER_TYPES.db.model.card.CREATURE_DB_MODEL)
-    .toConstantValue(model);
-}
+    beforeAll(() => {
+      collectionName = 'CreatureDbInsertRepositoryIntegrationTests';
 
-mongooseIntegrationDescribe(CreatureDbInsertRepository.name, () => {
-  describe('.insert()', () => {
-    describe('when called', () => {
-      let creatureModelMock: Model<CreatureDb>;
+      creatureDbToCreatureConverter = {
+        transform: jest.fn(),
+      };
 
-      let result: unknown;
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
 
-      beforeAll(async () => {
-        const collectionName: string = 'CreatureDbInsertRepositoryModel';
+      creatureCreationQueryToCreatureDbsConverter = {
+        transform: jest.fn(),
+      };
 
-        creatureModelMock = createCreatureMongooseModelMock(collectionName);
+      creatureDbInsertRepository = new CreatureDbInsertRepository(
+        collectionName,
+        creatureDbToCreatureConverter,
+        mongoDbConnector,
+        creatureCreationQueryToCreatureDbsConverter,
+      );
+    });
 
-        await clearCollection(creatureModelMock);
+    describe('.insert()', () => {
+      describe('when called', () => {
+        let creatureFixture: Creature;
 
-        const childContainer: Container = container.createChild();
-        injectCreatureMongooseModelMock(childContainer, creatureModelMock);
+        let result: unknown;
 
-        const creatureDbInsertRepository: InsertRepository<
-          Creature,
-          CreatureCreationQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.card.CREATURE_INSERT_REPOSITORY,
-        );
+        beforeAll(async () => {
+          creatureFixture = creatureFixtureFactory.get();
 
-        result = await creatureDbInsertRepository.insert(
-          creatureCreationQueryFixtureFactory.get(),
-        );
-      });
+          (creatureDbToCreatureConverter.transform as jest.Mock).mockReturnValueOnce(
+            creatureFixture,
+          );
 
-      afterAll(async () => {
-        await clearCollection(creatureModelMock);
-      });
+          const creatureDbFixture: mongodb.OptionalId<CreatureDb> = {
+            cost: creatureFixture.cost,
+            detail: creatureFixture.detail,
+            power: creatureFixture.power,
+            toughness: creatureFixture.toughness,
+            type: creatureFixture.type,
+          } as mongodb.OptionalId<CreatureDb>;
 
-      it('must return the creature created', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as unknown[]).length).toBe(1);
+          (creatureCreationQueryToCreatureDbsConverter.transform as jest.Mock).mockReturnValueOnce(
+            [creatureDbFixture],
+          );
 
-        const [innerResult]: unknown[] = result as unknown[];
+          result = await creatureDbInsertRepository.insert(
+            creatureCreationQueryFixtureFactory.get(),
+          );
+        });
 
-        expect((innerResult as Creature).cost).toStrictEqual(
-          creatureFixtureFactory.get().cost,
-        );
-        expect((innerResult as Creature).detail).toStrictEqual(
-          creatureFixtureFactory.get().detail,
-        );
-        expect((innerResult as Creature).type).toStrictEqual(
-          creatureFixtureFactory.get().type,
-        );
-        expect((innerResult as Creature).power).toStrictEqual(
-          creatureFixtureFactory.get().power,
-        );
-        expect((innerResult as Creature).toughness).toStrictEqual(
-          creatureFixtureFactory.get().toughness,
-        );
+        afterAll(() => {
+          (creatureDbToCreatureConverter.transform as jest.Mock).mockClear();
+          (creatureCreationQueryToCreatureDbsConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must call creatureDbToCreatureConverter.transform with the db entities found', () => {
+          const expectedCreatureDb: CreatureDb = {
+            _id: expect.any(mongodb.ObjectID) as mongodb.ObjectID,
+            cost: creatureFixture.cost,
+            detail: creatureFixture.detail,
+            power: creatureFixture.power,
+            toughness: creatureFixture.toughness,
+            type: creatureFixture.type,
+          } as CreatureDb;
+
+          expect(creatureDbToCreatureConverter.transform).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(creatureDbToCreatureConverter.transform).toHaveBeenCalledWith(
+            expectedCreatureDb,
+          );
+        });
+
+        it('must return the creature created', () => {
+          expect(result).toStrictEqual([creatureFixture]);
+        });
       });
     });
-  });
-});
+  },
+);

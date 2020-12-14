@@ -11,6 +11,12 @@ export const GAME_ADAPTER_TYPES = {
 
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_ADAPTER_PUBLIC_TYPES = {
+  db: {
+    initializer: {
+      GAME_DB_INITIALIZER:
+        GAME_ADAPTER_TYPES.db.initializer.GAME_DB_INITIALIZER,
+    },
+  },
   server: {
     router: {
       GAME_ROUTER: GAME_ADAPTER_TYPES.server.router.GAME_ROUTER,

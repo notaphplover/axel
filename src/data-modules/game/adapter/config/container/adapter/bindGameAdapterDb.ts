@@ -1,6 +1,7 @@
 import { ArtifactCreationQueryToArtifactDbsConverter } from '../../../db/converter/card/ArtifactCreationQueryToArtifactDbsConverter';
 import { ArtifactDbToArtifactConverter } from '../../../db/converter/card/ArtifactDbToArtifactConverter';
 import { BasicGameSetupDbToBasicGameSetupConverter } from '../../../db/converter/setup/BasicGameSetupDbToBasicGameSetupConverter';
+import { CardDbCollectionInitializer } from '../../../db/initializer/card/CardDbCollectionInitializer';
 import { CardDbToCardConverter } from '../../../db/converter/card/CardDbToCardConverter';
 import { CardDeckCreationQueryToCardDeckDbsConverter } from '../../../db/converter/deck/CardDeckCreationQueryToCardDeckDbsConverter';
 import { CardDeckDbToCardDeckConverter } from '../../../db/converter/deck/CardDeckDbToCardDeckConverter';
@@ -16,6 +17,7 @@ import { ExtendedGameSetupDbToExtendedGameSetupConverter } from '../../../db/con
 import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameCreationQueryToGameDbsConverter } from '../../../db/converter/GameCreationQueryToGameDbsConverter';
 import { GameDbCollectionName } from '../../../db/GameDbCollection';
+import { GameDbInitializer } from '../../../db/initializer/GameDbInitializer';
 import { GameDbToGameConverter } from '../../../db/converter/GameDbToGameConverter';
 import { GameFindQueryToGameDbFilterQueryConverter } from '../../../db/converter/GameFindQueryToGameDbFilterQueryConverter';
 import { GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter';
@@ -23,15 +25,10 @@ import { GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter } from '.
 import { GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter';
 import { LandCreationQueryToLandDbsConverter } from '../../../db/converter/card/LandCreationQueryToLandDbsConverter';
 import { LandDbToLandConverter } from '../../../db/converter/card/LandDbToLandConverter';
-import { artifactDbModel } from '../../../db/model/card/ArtifactDb';
-import { cardDbModel } from '../../../db/model/card/CardDb';
 import { cardDeckDbModel } from '../../../db/model/deck/CardDeckDb';
-import { creatureDbModel } from '../../../db/model/card/CreatureDb';
-import { enchantmentDbModel } from '../../../db/model/card/EnchantmentDb';
 import { extendedGameSetupDbModel } from '../../../db/model/setup/ExtendedGameSetupDb';
 import { gameDbModel } from '../../../db/model/GameDb';
 import { interfaces } from 'inversify';
-import { landDbModel } from '../../../db/model/card/LandDb';
 
 export function bindGameAdapterDb(bind: interfaces.Bind): void {
   bind(
@@ -126,27 +123,18 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
       .GAME_SETUP_UPDATE_QUERY_TO_EXTENDED_GAME_SETUP_DB_UPDATE_QUERY_CONVERTER,
   ).to(GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter);
 
+  bind(GAME_ADAPTER_TYPES.db.initializer.GAME_DB_INITIALIZER).to(
+    GameDbInitializer,
+  );
+  bind(
+    GAME_ADAPTER_TYPES.db.initializer.card.CARD_DB_COLLECTION_INITIALIZER,
+  ).to(CardDbCollectionInitializer);
   bind(
     GAME_ADAPTER_TYPES.db.initializer.setup
       .EXTENDED_GAME_SETUP_DB_COLLECTION_INITIALIZER,
   ).to(ExtendedGameSetupDbCollectionInitializer);
 
   bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
-  bind(GAME_ADAPTER_TYPES.db.model.card.ARTIFACT_DB_MODEL).toConstantValue(
-    artifactDbModel,
-  );
-  bind(GAME_ADAPTER_TYPES.db.model.card.CARD_DB_MODEL).toConstantValue(
-    cardDbModel,
-  );
-  bind(GAME_ADAPTER_TYPES.db.model.card.CREATURE_DB_MODEL).toConstantValue(
-    creatureDbModel,
-  );
-  bind(GAME_ADAPTER_TYPES.db.model.card.ENCHANTMENT_DB_MODEL).toConstantValue(
-    enchantmentDbModel,
-  );
-  bind(GAME_ADAPTER_TYPES.db.model.card.LAND_DB_MODEL).toConstantValue(
-    landDbModel,
-  );
 
   bind(GAME_ADAPTER_TYPES.db.model.deck.CARD_DECK_DB_MODEL).toConstantValue(
     cardDeckDbModel,

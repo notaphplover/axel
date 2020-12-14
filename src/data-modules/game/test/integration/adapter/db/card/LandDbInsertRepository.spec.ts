@@ -1,92 +1,108 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import mongoose, { Document, Model } from 'mongoose';
-import { Container } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
-import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
-import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
+import { Capsule, Converter } from '../../../../../../../common/domain';
 import { Land } from '../../../../../domain/model/card/Land';
 import { LandCreationQuery } from '../../../../../domain/query/card/LandCreationQuery';
 import { LandDb } from '../../../../../adapter/db/model/card/LandDb';
 import { LandDbInsertRepository } from '../../../../../adapter/db/repository/card/LandDbInsertRepository';
-import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { landCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
-import { landDbSchema } from '../../../../../adapter/db/model/card/LandDb';
 import { landFixtureFactory } from '../../../../fixtures/domain/model/card';
+import mongodb from 'mongodb';
 
-const container: Container = configAdapter.container;
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-const mongooseIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongooseIntegrationDescribe;
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-async function clearCollection<T extends Document>(
-  model: Model<T>,
-): Promise<void> {
-  await model.deleteMany({});
-}
+mongodbIntegrationDescribeGenerator(outputParam)(
+  LandDbInsertRepository.name,
+  () => {
+    let collectionName: string;
+    let landDbToLandConverter: Converter<LandDb, Land>;
+    let mongoDbConnector: MongoDbConnector;
+    let landCreationQueryToLandDbsConverter: Converter<
+      LandCreationQuery,
+      mongodb.OptionalId<LandDb>[]
+    >;
 
-function createLandMongooseModelMock(alias: string): Model<LandDb> {
-  return mongoose.model<LandDb>(alias, landDbSchema, alias);
-}
+    let landDbInsertRepository: LandDbInsertRepository;
 
-function injectLandMongooseModelMock(
-  container: Container,
-  model: Model<LandDb>,
-): void {
-  container
-    .bind(GAME_ADAPTER_TYPES.db.model.card.LAND_DB_MODEL)
-    .toConstantValue(model);
-}
+    beforeAll(() => {
+      collectionName = 'LandDbInsertRepositoryIntegrationTests';
 
-mongooseIntegrationDescribe(LandDbInsertRepository.name, () => {
-  describe('.insert()', () => {
-    describe('when called', () => {
-      let landModelMock: Model<LandDb>;
+      landDbToLandConverter = {
+        transform: jest.fn(),
+      };
 
-      let result: unknown;
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
 
-      beforeAll(async () => {
-        const collectionName: string = 'LandDbInsertRepositoryModel';
+      landCreationQueryToLandDbsConverter = {
+        transform: jest.fn(),
+      };
 
-        landModelMock = createLandMongooseModelMock(collectionName);
+      landDbInsertRepository = new LandDbInsertRepository(
+        collectionName,
+        landDbToLandConverter,
+        mongoDbConnector,
+        landCreationQueryToLandDbsConverter,
+      );
+    });
 
-        await clearCollection(landModelMock);
+    describe('.insert()', () => {
+      describe('when called', () => {
+        let landFixture: Land;
 
-        const childContainer: Container = container.createChild();
-        injectLandMongooseModelMock(childContainer, landModelMock);
+        let result: unknown;
 
-        const landDbInsertRepository: InsertRepository<
-          Land,
-          LandCreationQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.card.LAND_INSERT_REPOSITORY,
-        );
+        beforeAll(async () => {
+          landFixture = landFixtureFactory.get();
 
-        result = await landDbInsertRepository.insert(
-          landCreationQueryFixtureFactory.get(),
-        );
-      });
+          (landDbToLandConverter.transform as jest.Mock).mockReturnValueOnce(
+            landFixture,
+          );
 
-      afterAll(async () => {
-        await clearCollection(landModelMock);
-      });
+          const landDbFixture: mongodb.OptionalId<LandDb> = {
+            cost: landFixture.cost,
+            detail: landFixture.detail,
+            type: landFixture.type,
+          } as mongodb.OptionalId<LandDb>;
 
-      it('must return the land created', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as unknown[]).length).toBe(1);
+          (landCreationQueryToLandDbsConverter.transform as jest.Mock).mockReturnValueOnce(
+            [landDbFixture],
+          );
 
-        const [innerResult]: unknown[] = result as unknown[];
+          result = await landDbInsertRepository.insert(
+            landCreationQueryFixtureFactory.get(),
+          );
+        });
 
-        expect((innerResult as Land).cost).toStrictEqual(
-          landFixtureFactory.get().cost,
-        );
-        expect((innerResult as Land).detail).toStrictEqual(
-          landFixtureFactory.get().detail,
-        );
-        expect((innerResult as Land).type).toStrictEqual(
-          landFixtureFactory.get().type,
-        );
+        afterAll(() => {
+          (landDbToLandConverter.transform as jest.Mock).mockClear();
+          (landCreationQueryToLandDbsConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must call landDbToLandConverter.transform with the db entities found', () => {
+          const expectedLandDb: LandDb = {
+            _id: expect.any(mongodb.ObjectID) as mongodb.ObjectID,
+            cost: landFixture.cost,
+            detail: landFixture.detail,
+            type: landFixture.type,
+          } as LandDb;
+
+          expect(landDbToLandConverter.transform).toBeCalledTimes(1);
+          expect(landDbToLandConverter.transform).toBeCalledWith(
+            expectedLandDb,
+          );
+        });
+
+        it('must return the land created', () => {
+          expect(result).toStrictEqual([landFixture]);
+        });
       });
     });
-  });
-});
+  },
+);

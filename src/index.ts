@@ -5,6 +5,10 @@ import {
   FastifyPortListeningServer,
   FastifyRouter,
 } from './integration-modules/fastify/adapter';
+import {
+  MongoDbConnector,
+  MongoDbInitializer,
+} from './integration-modules/mongodb/adapter';
 import { Container } from 'inversify';
 import { DbConnector } from './layer-modules/db/domain';
 import { EnvLoader } from './layer-modules/env/domain';
@@ -15,6 +19,20 @@ import { mongooseAdapter } from './integration-modules/mongoose/adapter';
 import { userAdapter } from './data-modules/user/adapter';
 
 const container: Container = configAdapter.container;
+
+async function initializeDb(): Promise<void> {
+  const mongoDbConnector: MongoDbConnector = container.get(
+    mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
+  );
+
+  const gameDbInitializer: MongoDbInitializer = container.get(
+    gameAdapter.config.types.db.initializer.GAME_DB_INITIALIZER,
+  );
+
+  await mongoDbConnector.connect();
+
+  await gameDbInitializer.initialize(mongoDbConnector.client);
+}
 
 void (async () => {
   const authRouter: FastifyRouter = container.get(
@@ -35,10 +53,6 @@ void (async () => {
 
   const gameSetupRouter: FastifyRouter = container.get(
     gameAdapter.config.types.server.router.setup.GAME_SETUP_ROUTER,
-  );
-
-  const mongoDbConnector: DbConnector = container.get(
-    mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
   );
 
   const mongooseConnector: DbConnector = container.get(
@@ -71,7 +85,7 @@ void (async () => {
   );
 
   await Promise.all([
-    mongoDbConnector.connect(),
+    initializeDb(),
     mongooseConnector.connect(),
     httpServer.bootstrap(),
   ]);
