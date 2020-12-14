@@ -153,5 +153,49 @@ mongooseIntegrationDescribe(ExtendedGameSetupDbSearchRepository.name, () => {
         expect((result as Array<unknown>).length).toBe(0);
       });
     });
+
+    describe('when called, with limit and offset', () => {
+      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
+      let extendedGameSetupFindQueryFixture: ExtendedGameSetupFindQuery;
+
+      let result: unknown;
+
+      beforeAll(async () => {
+        const collectionName: string =
+          'ExtendedGameSetupDbSearchRepositoryModelByLimitAndOffset';
+
+        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
+          collectionName,
+        );
+
+        const childContainer: Container = container.createChild();
+        injectGameMongooseModelMock(childContainer, extendedGameSetupModelMock);
+
+        const extendedGameSetupDbSearchRepository: SearchRepository<
+          ExtendedGameSetup,
+          ExtendedGameSetupFindQuery
+        > = childContainer.get(
+          GAME_DOMAIN_TYPES.repository.setup
+            .EXTENDED_GAME_SETUP_SEARCH_REPOSITORY,
+        );
+
+        extendedGameSetupFindQueryFixture = {
+          limit: 1,
+          offset: 0,
+        };
+
+        result = await extendedGameSetupDbSearchRepository.find(
+          extendedGameSetupFindQueryFixture,
+        );
+      });
+
+      it('must return any array of game setups', () => {
+        expect(result).toStrictEqual(expect.any(Array));
+      });
+
+      afterAll(async () => {
+        await clearCollection(extendedGameSetupModelMock);
+      });
+    });
   });
 });

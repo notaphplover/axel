@@ -14,9 +14,6 @@ export class GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
     input: GameSetupFindQuery,
   ): FilterQuery<ExtendedGameSetupDb> {
     const andFilterQuery: MongoDbFilterQuery<ExtendedGameSetupDb>[] = [];
-    const filterQuery: MongooseFilterQuery<ExtendedGameSetupDb> = {
-      $and: andFilterQuery,
-    };
 
     if (hasValue(input.format)) {
       andFilterQuery.push({ format: input.format });
@@ -42,6 +39,12 @@ export class GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
 
     if (hasValue(input.playerSlots)) {
       andFilterQuery.push({ playerSlots: input.playerSlots });
+    }
+
+    const filterQuery: MongooseFilterQuery<ExtendedGameSetupDb> = {};
+
+    if (andFilterQuery.length > 0) {
+      filterQuery.$and = andFilterQuery;
     }
 
     return filterQuery;
