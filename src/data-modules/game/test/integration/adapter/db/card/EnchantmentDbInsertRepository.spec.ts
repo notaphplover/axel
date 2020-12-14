@@ -5,8 +5,6 @@ import { Enchantment } from '../../../../../domain/model/card/Enchantment';
 import { EnchantmentCreationQuery } from '../../../../../domain/query/card/EnchantmentCreationQuery';
 import { EnchantmentDb } from '../../../../../adapter/db/model/card/EnchantmentDb';
 import { EnchantmentDbInsertRepository } from '../../../../../adapter/db/repository/card/EnchantmentDbInsertRepository';
-import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
-import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
