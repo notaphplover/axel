@@ -1,92 +1,110 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import mongoose, { Document, Model } from 'mongoose';
+import { Capsule, Converter } from '../../../../../../../common/domain';
 import { Artifact } from '../../../../../domain/model/card/Artifact';
 import { ArtifactCreationQuery } from '../../../../../domain/query/card/ArtifactCreationQuery';
 import { ArtifactDb } from '../../../../../adapter/db/model/card/ArtifactDb';
 import { ArtifactDbInsertRepository } from '../../../../../adapter/db/repository/card/ArtifactDbInsertRepository';
-import { Container } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
-import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
-import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { artifactCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
-import { artifactDbSchema } from '../../../../../adapter/db/model/card/ArtifactDb';
 import { artifactFixtureFactory } from '../../../../fixtures/domain/model/card';
-import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
+import mongodb from 'mongodb';
 
-const container: Container = configAdapter.container;
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-const mongooseIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongooseIntegrationDescribe;
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-async function clearCollection<T extends Document>(
-  model: Model<T>,
-): Promise<void> {
-  await model.deleteMany({});
-}
+mongodbIntegrationDescribeGenerator(outputParam)(
+  ArtifactDbInsertRepository.name,
+  () => {
+    let collectionName: string;
+    let artifactDbToArtifactConverter: Converter<ArtifactDb, Artifact>;
+    let mongoDbConnector: MongoDbConnector;
+    let artifactCreationQueryToArtifactDbsConverter: Converter<
+      ArtifactCreationQuery,
+      mongodb.OptionalId<ArtifactDb>[]
+    >;
 
-function createArtifactMongooseModelMock(alias: string): Model<ArtifactDb> {
-  return mongoose.model<ArtifactDb>(alias, artifactDbSchema, alias);
-}
+    let artifactDbInsertRepository: ArtifactDbInsertRepository;
 
-function injectArtifactMongooseModelMock(
-  container: Container,
-  model: Model<ArtifactDb>,
-): void {
-  container
-    .bind(GAME_ADAPTER_TYPES.db.model.card.ARTIFACT_DB_MODEL)
-    .toConstantValue(model);
-}
+    beforeAll(() => {
+      collectionName = 'ArtifactDbInsertRepositoryIntegrationTests';
 
-mongooseIntegrationDescribe(ArtifactDbInsertRepository.name, () => {
-  describe('.insert()', () => {
-    describe('when called', () => {
-      let artifactModelMock: Model<ArtifactDb>;
+      artifactDbToArtifactConverter = {
+        transform: jest.fn(),
+      };
 
-      let result: unknown;
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
 
-      beforeAll(async () => {
-        const collectionName: string = 'ArtifactDbInsertRepositoryModel';
+      artifactCreationQueryToArtifactDbsConverter = {
+        transform: jest.fn(),
+      };
 
-        artifactModelMock = createArtifactMongooseModelMock(collectionName);
+      artifactDbInsertRepository = new ArtifactDbInsertRepository(
+        collectionName,
+        artifactDbToArtifactConverter,
+        mongoDbConnector,
+        artifactCreationQueryToArtifactDbsConverter,
+      );
+    });
 
-        await clearCollection(artifactModelMock);
+    describe('.insert()', () => {
+      describe('when called', () => {
+        let artifactFixture: Artifact;
 
-        const childContainer: Container = container.createChild();
-        injectArtifactMongooseModelMock(childContainer, artifactModelMock);
+        let result: unknown;
 
-        const artifactDbInsertRepository: InsertRepository<
-          Artifact,
-          ArtifactCreationQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.card.ARTIFACT_INSERT_REPOSITORY,
-        );
+        beforeAll(async () => {
+          artifactFixture = artifactFixtureFactory.get();
 
-        result = await artifactDbInsertRepository.insert(
-          artifactCreationQueryFixtureFactory.get(),
-        );
-      });
+          (artifactDbToArtifactConverter.transform as jest.Mock).mockReturnValueOnce(
+            artifactFixture,
+          );
 
-      afterAll(async () => {
-        await clearCollection(artifactModelMock);
-      });
+          const artifactDbFixture: mongodb.OptionalId<ArtifactDb> = {
+            cost: artifactFixture.cost,
+            detail: artifactFixture.detail,
+            type: artifactFixture.type,
+          } as mongodb.OptionalId<ArtifactDb>;
 
-      it('must return the artifact created', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as unknown[]).length).toBe(1);
+          (artifactCreationQueryToArtifactDbsConverter.transform as jest.Mock).mockReturnValueOnce(
+            [artifactDbFixture],
+          );
 
-        const [innerResult]: unknown[] = result as unknown[];
+          result = await artifactDbInsertRepository.insert(
+            artifactCreationQueryFixtureFactory.get(),
+          );
+        });
 
-        expect((innerResult as Artifact).cost).toStrictEqual(
-          artifactFixtureFactory.get().cost,
-        );
-        expect((innerResult as Artifact).detail).toStrictEqual(
-          artifactFixtureFactory.get().detail,
-        );
-        expect((innerResult as Artifact).type).toStrictEqual(
-          artifactFixtureFactory.get().type,
-        );
+        afterAll(() => {
+          (artifactDbToArtifactConverter.transform as jest.Mock).mockClear();
+          (artifactCreationQueryToArtifactDbsConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must call artifactDbToArtifactConverter.transform with the db entity obtained', () => {
+          const expectedArtifactDb: ArtifactDb = {
+            _id: expect.any(mongodb.ObjectID) as mongodb.ObjectID,
+            cost: artifactFixture.cost,
+            detail: artifactFixture.detail,
+            type: artifactFixture.type,
+          } as ArtifactDb;
+
+          expect(artifactDbToArtifactConverter.transform).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(artifactDbToArtifactConverter.transform).toHaveBeenCalledWith(
+            expectedArtifactDb,
+          );
+        });
+
+        it('must return the artifact created', () => {
+          expect(result).toStrictEqual([artifactFixture]);
+        });
       });
     });
-  });
-});
+  },
+);
