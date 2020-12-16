@@ -1,5 +1,5 @@
 import { Capsule, PaginationQuery } from '../../../common/domain';
-import { Document, DocumentQuery } from 'mongoose';
+import { Document, Query } from 'mongoose';
 import { MongooseProjectionSearchRepository } from './MongooseProjectionSearchRepository';
 import { SearchRepository } from '../../../layer-modules/db/domain';
 import { hasValue } from '../../../common/domain/utils/hasValue';
@@ -21,9 +21,9 @@ export abstract class MongooseProjectionPaginatedSearchRepository<
   implements SearchRepository<TModel, TQuery> {
   protected async buildFindDocumentQuery(
     query: TQuery,
-  ): Promise<Capsule<DocumentQuery<TModelDb[], TModelDb>>> {
+  ): Promise<Capsule<Query<TModelDb[], TModelDb>>> {
     const documentQueryCapsule: Capsule<
-      DocumentQuery<TModelDb[], TModelDb>
+      Query<TModelDb[], TModelDb>
     > = await super.buildFindDocumentQuery(query);
 
     if (hasValue(query.limit)) {

@@ -8,10 +8,10 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class EnchantmentDbToEnchantmentConverter
-  extends BaseCardDbToCardConverter
+  extends BaseCardDbToCardConverter<EnchantmentDb, Enchantment>
   implements Converter<EnchantmentDb, Enchantment> {
   public transform(input: EnchantmentDb): Enchantment {
-    const baseCard: BaseCard = super.transform(input);
+    const baseCard: BaseCard = this.innerTransform(input);
 
     return {
       cost: baseCard.cost,

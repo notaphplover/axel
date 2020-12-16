@@ -4,25 +4,31 @@ import { Converter } from '../../../../../../common/domain';
 import { injectable } from 'inversify';
 
 @injectable()
-export abstract class BaseCardDbToCardConverter
-  implements Converter<CardDb, BaseCard> {
-  public transform(input: CardDb): BaseCard {
+export abstract class BaseCardDbToCardConverter<
+  TCardDb extends CardDb,
+  TCard extends BaseCard
+> implements Converter<TCardDb, TCard> {
+  public transform(input: TCardDb): TCard {
+    return this.innerTransform(input) as TCard;
+  }
+
+  protected innerTransform(cardDb: CardDb): BaseCard {
     return {
       cost: {
-        black: input.cost.black,
-        blue: input.cost.blue,
-        green: input.cost.green,
-        red: input.cost.red,
-        uncolored: input.cost.uncolored,
-        white: input.cost.white,
+        black: cardDb.cost.black,
+        blue: cardDb.cost.blue,
+        green: cardDb.cost.green,
+        red: cardDb.cost.red,
+        uncolored: cardDb.cost.uncolored,
+        white: cardDb.cost.white,
       },
       detail: {
-        description: input.detail.description,
-        image: input.detail.image,
-        title: input.detail.title,
+        description: cardDb.detail.description,
+        image: cardDb.detail.image,
+        title: cardDb.detail.title,
       },
-      id: input._id.toHexString(),
-      type: input.type,
+      id: cardDb._id.toHexString(),
+      type: cardDb.type,
     };
   }
 }

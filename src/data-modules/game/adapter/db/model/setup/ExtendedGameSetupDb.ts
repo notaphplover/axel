@@ -15,6 +15,7 @@ const extendedGameSetupDbSchemaDefinition: SchemaDefinition = {
   format: { type: String, required: true },
   ownerUserId: { type: String, required: true },
   playerSetups: {
+    _id: false,
     type: Array,
     of: playerSetupDbSchemaDefinition,
     required: true,

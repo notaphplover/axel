@@ -1,4 +1,4 @@
-import { FilterQuery, MongooseFilterQuery, Types } from 'mongoose';
+import { FilterQuery, Types } from 'mongoose';
 import { CardDeckDb } from '../../model/deck/CardDeckDb';
 import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
 import { Converter } from '../../../../../../common/domain';
@@ -11,7 +11,7 @@ export class CardDeckFindQueryToCardDeckDbFilterQueryConverter
   implements Converter<CardDeckFindQuery, FilterQuery<CardDeckDb>> {
   public transform(input: CardDeckFindQuery): FilterQuery<CardDeckDb> {
     const andFilterQuery: MongoDbFilterQuery<CardDeckDb>[] = [];
-    const filterQuery: MongooseFilterQuery<CardDeckDb> = {
+    const filterQuery: FilterQuery<CardDeckDb> = {
       $and: andFilterQuery,
     };
 

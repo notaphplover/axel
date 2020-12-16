@@ -1,5 +1,5 @@
 import { Capsule, Converter, Filter } from '../../../common/domain';
-import { Document, DocumentQuery, FilterQuery, Model } from 'mongoose';
+import { Document, FilterQuery, Model, Query } from 'mongoose';
 import { SearchRepository } from '../../../layer-modules/db/domain';
 import { hasValue } from '../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
@@ -30,7 +30,7 @@ export abstract class MongooseProjectionSearchRepository<
 
   public async find(query: TQuery): Promise<TModel[]> {
     const documentQueryCapsule: Capsule<
-      DocumentQuery<TModelDb[], TModelDb>
+      Query<TModelDb[], TModelDb>
     > = await this.buildFindDocumentQuery(query);
 
     let entitiesDbFound: TOutputModelDb[] = ((await documentQueryCapsule.elem) as Document[]) as TOutputModelDb[];
@@ -53,7 +53,7 @@ export abstract class MongooseProjectionSearchRepository<
 
   public async findOne(query: TQuery): Promise<TModel | null> {
     const documentQueryCapsule: Capsule<
-      DocumentQuery<TModelDb | null, TModelDb>
+      Query<TModelDb | null, TModelDb>
     > = await this.buildFindOneDocumentQuery(query);
 
     let entityDbFound: TOutputModelDb | null = ((await documentQueryCapsule.elem) as Document | null) as TOutputModelDb | null;
@@ -77,13 +77,13 @@ export abstract class MongooseProjectionSearchRepository<
     query: TQuery,
     documentQueryGenerator: (
       filterQuery: FilterQuery<TModelDb>,
-    ) => DocumentQuery<TMongooseQueryOutput, TModelDb>,
-  ): Promise<Capsule<DocumentQuery<TMongooseQueryOutput, TModelDb>>> {
+    ) => Query<TMongooseQueryOutput, TModelDb>,
+  ): Promise<Capsule<Query<TMongooseQueryOutput, TModelDb>>> {
     const mongooseQuery: FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
       query,
     );
 
-    let documentQuery: DocumentQuery<
+    let documentQuery: Query<
       TMongooseQueryOutput,
       TModelDb
     > = documentQueryGenerator(mongooseQuery);
@@ -99,13 +99,13 @@ export abstract class MongooseProjectionSearchRepository<
 
   protected async buildFindDocumentQuery(
     query: TQuery,
-  ): Promise<Capsule<DocumentQuery<TModelDb[], TModelDb>>> {
+  ): Promise<Capsule<Query<TModelDb[], TModelDb>>> {
     return this.buildDocumentQuery(query, this.model.find.bind(this.model));
   }
 
   protected async buildFindOneDocumentQuery(
     query: TQuery,
-  ): Promise<Capsule<DocumentQuery<TModelDb | null, TModelDb>>> {
+  ): Promise<Capsule<Query<TModelDb | null, TModelDb>>> {
     return this.buildDocumentQuery(query, this.model.findOne.bind(this.model));
   }
 }

@@ -1,4 +1,4 @@
-import { FilterQuery, MongooseFilterQuery, Types } from 'mongoose';
+import { FilterQuery, Types } from 'mongoose';
 import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
@@ -41,7 +41,7 @@ export class GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
       andFilterQuery.push({ playerSlots: input.playerSlots });
     }
 
-    const filterQuery: MongooseFilterQuery<ExtendedGameSetupDb> = {};
+    const filterQuery: FilterQuery<ExtendedGameSetupDb> = {};
 
     if (andFilterQuery.length > 0) {
       filterQuery.$and = andFilterQuery;

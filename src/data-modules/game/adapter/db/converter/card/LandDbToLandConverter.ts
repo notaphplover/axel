@@ -8,10 +8,10 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class LandDbToLandConverter
-  extends BaseCardDbToCardConverter
+  extends BaseCardDbToCardConverter<LandDb, Land>
   implements Converter<LandDb, Land> {
   public transform(input: LandDb): Land {
-    const baseCard: BaseCard = super.transform(input);
+    const baseCard: BaseCard = this.innerTransform(input);
 
     return {
       cost: baseCard.cost,

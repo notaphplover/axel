@@ -8,10 +8,10 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class ArtifactDbToArtifactConverter
-  extends BaseCardDbToCardConverter
+  extends BaseCardDbToCardConverter<ArtifactDb, Artifact>
   implements Converter<ArtifactDb, Artifact> {
   public transform(input: ArtifactDb): Artifact {
-    const baseCard: BaseCard = super.transform(input);
+    const baseCard: BaseCard = this.innerTransform(input);
 
     return {
       cost: baseCard.cost,

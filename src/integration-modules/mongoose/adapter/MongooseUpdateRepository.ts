@@ -3,7 +3,6 @@ import {
   FilterQuery,
   Model,
   ModelUpdateOptions,
-  MongooseFilterQuery,
   Query,
   UpdateQuery,
 } from 'mongoose';
@@ -76,12 +75,12 @@ export abstract class MongooseUpdateRepository<
     };
 
     await this.model.updateMany(
-      filterEntitiesByIdsQuery as MongooseFilterQuery<TModelDb>,
+      filterEntitiesByIdsQuery as FilterQuery<TModelDb>,
       updateQuery,
     );
 
     const entitiesDbUpdated: TModelDb[] = await this.model.find(
-      filterEntitiesByIdsQuery as MongooseFilterQuery<TModelDb>,
+      filterEntitiesByIdsQuery as FilterQuery<TModelDb>,
     );
 
     const entitiesUpdated: TModel[] = await Promise.all(
@@ -125,7 +124,7 @@ export abstract class MongooseUpdateRepository<
       conditions: FilterQuery<TModelDb>,
       doc: UpdateQuery<TModelDb>,
       options: ModelUpdateOptions,
-    ) => Query<unknown>,
+    ) => Query<unknown, TModelDb>,
   ): Promise<void> {
     const filterQuery: FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
       query,

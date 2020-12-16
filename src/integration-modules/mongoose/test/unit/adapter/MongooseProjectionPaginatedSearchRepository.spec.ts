@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { Converter, PaginationQuery } from '../../../../../common/domain';
-import { Document, DocumentQuery, FilterQuery, Model } from 'mongoose';
+import { Document, FilterQuery, Model, Query } from 'mongoose';
 import { MongooseProjectionPaginatedSearchRepository } from '../../../../../integration-modules/mongoose/adapter/MongooseProjectionPaginatedSearchRepository';
 
 class ModelMock {
@@ -69,7 +69,7 @@ describe(MongooseProjectionPaginatedSearchRepository.name, () => {
   });
 
   describe('.find()', () => {
-    let findDocumentQueryMock: DocumentQuery<ModelMockDb[], ModelMockDb>;
+    let findDocumentQueryMock: Query<ModelMockDb[], ModelMockDb>;
 
     beforeAll(() => {
       findDocumentQueryMock = ({
@@ -77,7 +77,7 @@ describe(MongooseProjectionPaginatedSearchRepository.name, () => {
         select: jest.fn().mockReturnThis(),
         skip: jest.fn().mockReturnThis(),
         then: jest.fn(),
-      } as Partial<DocumentQuery<ModelMockDb[], ModelMockDb>>) as DocumentQuery<
+      } as Partial<Query<ModelMockDb[], ModelMockDb>>) as Query<
         ModelMockDb[],
         ModelMockDb
       >;
