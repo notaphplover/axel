@@ -154,5 +154,36 @@ mongooseIntegrationDescribe(BasicGameSetupDbSearchRepository.name, () => {
         expect((result as Array<unknown>).length).toBe(0);
       });
     });
+
+    describe('when called with limit and offset', () => {
+      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
+
+      let result: unknown;
+
+      beforeAll(async () => {
+        const collectionName: string =
+          'BasicGameSetupDbSearchRepositoryModelByLimitAndOffset';
+
+        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
+          collectionName,
+        );
+
+        const childContainer: Container = container.createChild();
+        injectGameMongooseModelMock(childContainer, extendedGameSetupModelMock);
+
+        const basicGameSetupDbSearchRepository: SearchRepository<
+          BasicGameSetup,
+          BasicGameSetupFindQuery
+        > = childContainer.get(
+          GAME_DOMAIN_TYPES.repository.setup.BASIC_GAME_SETUP_SEARCH_REPOSITORY,
+        );
+
+        result = await basicGameSetupDbSearchRepository.find({});
+      });
+
+      it('must return any array of game setups', () => {
+        expect(result).toStrictEqual(expect.any(Array));
+      });
+    });
   });
 });

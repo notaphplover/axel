@@ -319,6 +319,92 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           });
         });
       });
+
+      describe('when caled, and no card satisfies the query', () => {
+        let result: unknown;
+
+        beforeAll(async () => {
+          const cardDbFilterQuery: mongodb.FilterQuery<CardDb> = {
+            _id: new mongodb.ObjectID(),
+          };
+
+          const cardFindQueryFixture: CardFindQuery = {
+            id: (cardDbFilterQuery._id as mongodb.ObjectID).toHexString(),
+          };
+
+          (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            cardDbFilterQuery,
+          );
+
+          result = await cardDbSearchRepository.find(cardFindQueryFixture);
+        });
+
+        afterAll(() => {
+          (cardDbToCardConverter.transform as jest.Mock).mockClear();
+          (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must call cardDbToCardConverter.transform with the db entities found', () => {
+          expect(cardDbToCardConverter.transform).toHaveBeenCalledTimes(0);
+        });
+
+        it('must return no cards', () => {
+          expect(result).toStrictEqual([]);
+        });
+      });
+
+      describe('when caled, by limit and offset', () => {
+        let result: unknown;
+
+        beforeAll(async () => {
+          const artifactFixture: Artifact = artifactFixtureFactory.get();
+
+          const cardDbCollection: mongodb.Collection<ArtifactDb> = mongoDbConnector.db.collection(
+            collectionName,
+          );
+
+          await cardDbCollection.insertMany([
+            {
+              cost: artifactFixture.cost,
+              detail: artifactFixture.detail,
+              type: artifactFixture.type,
+            } as ArtifactDb,
+          ]);
+
+          const cardFindQueryFixture: CardFindQuery = {
+            limit: 1,
+            offset: 0,
+          };
+
+          (cardDbToCardConverter.transform as jest.Mock).mockReturnValueOnce(
+            artifactFixtureFactory.get(),
+          );
+
+          const cardDbFilterQuery: mongodb.FilterQuery<CardDb> = {};
+
+          (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            cardDbFilterQuery,
+          );
+
+          result = await cardDbSearchRepository.find(cardFindQueryFixture);
+        });
+
+        afterAll(() => {
+          (cardDbToCardConverter.transform as jest.Mock).mockClear();
+          (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must call cardDbToCardConverter.transform with the db entities found', () => {
+          expect(cardDbToCardConverter.transform).toHaveBeenCalledTimes(1);
+          expect(cardDbToCardConverter.transform).toHaveBeenCalledWith(
+            expect.any(Object),
+          );
+        });
+
+        it('must return the artifact cards', () => {
+          expect(result).toStrictEqual([artifactFixtureFactory.get()]);
+        });
+      });
     });
   },
 );

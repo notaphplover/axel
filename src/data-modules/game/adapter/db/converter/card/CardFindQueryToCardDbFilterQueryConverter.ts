@@ -11,7 +11,6 @@ export class CardFindQueryToCardDbFilterQueryConverter
   implements Converter<CardFindQuery, mongodb.FilterQuery<CardDb>> {
   public transform(input: CardFindQuery): mongodb.FilterQuery<CardDb> {
     const andFilterQuery: mongodb.FilterQuery<CardDb>[] = [];
-    const filterQuery: mongodb.FilterQuery<CardDb> = { $and: andFilterQuery };
 
     if (hasValue(input.id)) {
       andFilterQuery.push({ _id: new mongodb.ObjectID(input.id) });
@@ -19,14 +18,22 @@ export class CardFindQueryToCardDbFilterQueryConverter
 
     if (hasValue(input.types)) {
       if (Array.isArray(input.types)) {
-        andFilterQuery.push({
-          $or: input.types.map((type: CardType) => {
-            return { type };
-          }),
-        });
+        if (input.types.length > 0) {
+          andFilterQuery.push({
+            $or: input.types.map((type: CardType) => {
+              return { type };
+            }),
+          });
+        }
       } else {
         andFilterQuery.push({ type: input.types });
       }
+    }
+
+    const filterQuery: mongodb.FilterQuery<CardDb> = {};
+
+    if (andFilterQuery.length > 0) {
+      filterQuery.$and = andFilterQuery;
     }
 
     return filterQuery;
