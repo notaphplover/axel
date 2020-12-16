@@ -1,6 +1,5 @@
 import { BaseCard } from '../../../../domain/model/card/BaseCard';
 import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
-import { CardDb } from '../../model/card/CardDb';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { Converter } from '../../../../../../common/domain';
 import { Enchantment } from '../../../../domain/model/card/Enchantment';
@@ -12,7 +11,7 @@ export class EnchantmentDbToEnchantmentConverter
   extends BaseCardDbToCardConverter<EnchantmentDb, Enchantment>
   implements Converter<EnchantmentDb, Enchantment> {
   public transform(input: EnchantmentDb): Enchantment {
-    const baseCard: BaseCard = this.innerTransform(input as CardDb);
+    const baseCard: BaseCard = this.innerTransform(input);
 
     return {
       cost: baseCard.cost,

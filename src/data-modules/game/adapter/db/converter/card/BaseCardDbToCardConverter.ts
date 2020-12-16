@@ -4,10 +4,12 @@ import { Converter } from '../../../../../../common/domain';
 import { injectable } from 'inversify';
 
 @injectable()
-export abstract class BaseCardDbToCardConverter<TCardDb, TCard extends BaseCard>
-  implements Converter<TCardDb, TCard> {
+export abstract class BaseCardDbToCardConverter<
+  TCardDb extends CardDb,
+  TCard extends BaseCard
+> implements Converter<TCardDb, TCard> {
   public transform(input: TCardDb): TCard {
-    return this.innerTransform((input as unknown) as CardDb) as TCard;
+    return this.innerTransform(input) as TCard;
   }
 
   protected innerTransform(cardDb: CardDb): BaseCard {

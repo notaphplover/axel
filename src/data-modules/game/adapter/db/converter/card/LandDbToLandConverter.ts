@@ -1,6 +1,5 @@
 import { BaseCard } from '../../../../domain/model/card/BaseCard';
 import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
-import { CardDb } from '../../model/card/CardDb';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { Converter } from '../../../../../../common/domain';
 import { Land } from '../../../../domain/model/card/Land';
@@ -12,7 +11,7 @@ export class LandDbToLandConverter
   extends BaseCardDbToCardConverter<LandDb, Land>
   implements Converter<LandDb, Land> {
   public transform(input: LandDb): Land {
-    const baseCard: BaseCard = this.innerTransform(input as CardDb);
+    const baseCard: BaseCard = this.innerTransform(input);
 
     return {
       cost: baseCard.cost,
