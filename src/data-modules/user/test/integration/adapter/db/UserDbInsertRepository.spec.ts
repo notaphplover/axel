@@ -1,91 +1,100 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { UserDb, userDbSchema } from '../../../../adapter/db/model/UserDb';
-import mongoose, { Document, Model } from 'mongoose';
-import { Container } from 'inversify';
-import { InsertRepository } from '../../../../../../layer-modules/db/domain';
-import { USER_ADAPTER_TYPES } from '../../../../adapter/config/types';
-import { USER_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { Capsule, Converter } from '../../../../../../common/domain';
+import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
 import { User } from '../../../../domain/model/User';
 import { UserCreationQuery } from '../../../../domain/query/UserCreationQuery';
+import { UserDb } from '../../../../adapter/db/model/UserDb';
 import { UserDbInsertRepository } from '../../../../adapter/db/repository/UserDbInsertRepository';
-import { configAdapter } from '../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../layer-modules/db/test';
+import mongodb from 'mongodb';
 import { userCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
 
-const container: Container = configAdapter.container;
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-const mongooseIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongooseIntegrationDescribe;
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-async function clearCollection<T extends Document>(
-  model: Model<T>,
-): Promise<void> {
-  await model.deleteMany({});
-}
+mongodbIntegrationDescribeGenerator(outputParam)(
+  UserDbInsertRepository.name,
+  () => {
+    let collectionName: string;
+    let userDbToUserConverter: Converter<UserDb, User>;
+    let mongoDbConnector: MongoDbConnector;
+    let userCreationQueryToUserDbsConverter: Converter<
+      UserCreationQuery,
+      Promise<mongodb.OptionalId<UserDb>[]>
+    >;
 
-function createUserMongooseModelMock(alias: string): Model<UserDb> {
-  return mongoose.model<UserDb>(alias, userDbSchema, alias);
-}
+    let userDbInsertRepository: UserDbInsertRepository;
 
-function injectUserMongooseModelMock(
-  container: Container,
-  model: Model<UserDb>,
-): void {
-  container
-    .bind(USER_ADAPTER_TYPES.db.model.USER_DB_MODEL)
-    .toConstantValue(model);
-}
+    beforeAll(() => {
+      collectionName = 'UserDbInsertRepositoryIntegrationTest';
+      userDbToUserConverter = {
+        transform: jest.fn(),
+      };
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
+      userCreationQueryToUserDbsConverter = {
+        transform: jest.fn(),
+      };
 
-mongooseIntegrationDescribe(UserDbInsertRepository.name, () => {
-  describe('.insert()', () => {
-    describe('when called', () => {
-      let userModelMock: Model<UserDb>;
+      userDbInsertRepository = new UserDbInsertRepository(
+        collectionName,
+        userDbToUserConverter,
+        mongoDbConnector,
+        userCreationQueryToUserDbsConverter,
+      );
+    });
 
-      let result: unknown;
+    describe('.insert()', () => {
+      describe('when called', () => {
+        let userFixture: User;
+        let userDbFixture: mongodb.OptionalId<UserDb>;
 
-      beforeAll(async () => {
-        const collectionName: string = 'UserDbInsertRepositoryModel';
+        let result: unknown;
 
-        userModelMock = createUserMongooseModelMock(collectionName);
+        beforeAll(async () => {
+          userFixture = userFixtureFactory.get();
 
-        await clearCollection(userModelMock);
+          (userDbToUserConverter.transform as jest.Mock).mockReturnValueOnce(
+            userFixture,
+          );
 
-        const childContainer: Container = container.createChild();
-        injectUserMongooseModelMock(childContainer, userModelMock);
+          userDbFixture = {
+            email: userFixture.email,
+            hash: 'test-hash',
+            roles: [...userFixture.roles],
+            username: userFixture.username,
+          } as mongodb.OptionalId<UserDb>;
 
-        const userDbInsertRepository: InsertRepository<
-          User,
-          UserCreationQuery
-        > = childContainer.get(
-          USER_DOMAIN_TYPES.repository.USER_INSERT_REPOSITORY,
-        );
+          (userCreationQueryToUserDbsConverter.transform as jest.Mock).mockResolvedValueOnce(
+            [userDbFixture],
+          );
 
-        result = await userDbInsertRepository.insert(
-          userCreationQueryFixtureFactory.get(),
-        );
-      });
+          result = await userDbInsertRepository.insert(
+            userCreationQueryFixtureFactory.get(),
+          );
+        });
 
-      afterAll(async () => {
-        await clearCollection(userModelMock);
-      });
+        it('must call userDbToUserConverter.transform with the db entities found', () => {
+          const expectedUserDb: UserDb = {
+            ...userDbFixture,
+            _id: expect.any(mongodb.ObjectID) as mongodb.ObjectID,
+          };
 
-      it('must return the user created', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as unknown[]).length).toBe(1);
+          expect(userDbToUserConverter.transform).toHaveBeenCalledTimes(1);
+          expect(userDbToUserConverter.transform).toHaveBeenCalledWith(
+            expectedUserDb,
+          );
+        });
 
-        const [innerResult]: unknown[] = result as unknown[];
-
-        expect((innerResult as User).email).toStrictEqual(
-          userFixtureFactory.get().email,
-        );
-        expect((innerResult as User).roles).toStrictEqual(
-          userFixtureFactory.get().roles,
-        );
-        expect((innerResult as User).username).toStrictEqual(
-          userFixtureFactory.get().username,
-        );
+        it('must return the user created', () => {
+          expect(result).toStrictEqual([userFixture]);
+        });
       });
     });
-  });
-});
+  },
+);
