@@ -68,7 +68,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             hash: 'test-hash',
             roles: [...userFixture.roles],
             username: userFixture.username,
-          } as mongodb.OptionalId<UserDb>;
+          };
 
           (userCreationQueryToUserDbsConverter.transform as jest.Mock).mockResolvedValueOnce(
             [userDbFixture],

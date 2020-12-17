@@ -46,9 +46,6 @@ export const USER_ADAPTER_TYPES = {
     filter: {
       POST_USER_DB_SEARCH_FILTER: Symbol.for('PostUserDbSearchFilter'),
     },
-    model: {
-      USER_DB_MODEL: Symbol.for('UserDbModel'),
-    },
   },
   security: {
     PASSWORD_HASHER: Symbol.for('PasswordHasher'),

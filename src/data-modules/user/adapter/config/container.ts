@@ -24,7 +24,6 @@ import { UserToUserApiV1Converter } from '../api/converter/UserToUserApiV1Conver
 import { UserTokenToUserTokenApiV1Converter } from '../api/converter/UserTokenToUserTokenApiV1Converter';
 import { authCreationQueryApiV1JoiValidatorSchema } from '../api/validator/schema/query/authCreationQueryApiV1JoiValidatorSchema';
 import { userCreationQueryApiV1JoiValidatorSchema } from '../api/validator/schema/query/userCreationQueryApiV1JoiValidatorSchema';
-import { userDbModel } from '../db/model/UserDb';
 
 function bindAdapters(bind: interfaces.Bind) {
   bind(
@@ -71,7 +70,6 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(USER_ADAPTER_TYPES.db.filter.POST_USER_DB_SEARCH_FILTER).to(
     PostUserDbSearchFilter,
   );
-  bind(USER_ADAPTER_TYPES.db.model.USER_DB_MODEL).toConstantValue(userDbModel);
   bind(
     USER_ADAPTER_TYPES.server.reqHandler
       .POST_AUTH_USER_TOKEN_V1_REQUEST_HANDLER,

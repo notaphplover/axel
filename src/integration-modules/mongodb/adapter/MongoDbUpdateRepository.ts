@@ -1,6 +1,6 @@
 import { Converter, common } from '../../../common/domain';
 import { injectable, unmanaged } from 'inversify';
-import { Document } from '../domain/model/Document';
+import { Document } from './model/Document';
 import { MongoDbConnector } from '.';
 import { UpdateRepository } from '../../../layer-modules/db/domain/UpdateRepository';
 import mongodb from 'mongodb';

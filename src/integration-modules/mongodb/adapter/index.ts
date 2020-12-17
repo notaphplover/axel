@@ -1,3 +1,4 @@
+import { Document } from './model/Document';
 import { MONGODB_ADAPTER_PUBLIC_TYPES } from './config/types';
 import { MongoDbCollectionInitializer } from './MongoDbCollectionInitializer';
 import { MongoDbConnector } from './MongoDbConnector';
@@ -6,6 +7,7 @@ import { MongoDbInitializer } from './MongoDbInitializer';
 import { mongoDbContainer } from './config/container';
 
 export {
+  Document,
   MongoDbCollectionInitializer,
   MongoDbConnector,
   MongoDbIndex,

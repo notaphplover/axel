@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { Capsule, Converter } from '../../../../../common/domain';
-import { Document } from '../../../domain/model/Document';
+import { Document } from '../../../adapter/model/Document';
 import { MongoDbConnector } from '../../../adapter/MongoDbConnector';
 import { MongoDbInsertRepository } from '../../../adapter/MongoDbInsertRepository';
 import { dbTest } from '../../../../../layer-modules/db/test';

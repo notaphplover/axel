@@ -1,6 +1,6 @@
 import { injectable, unmanaged } from 'inversify';
 import { Converter } from '../../../common/domain';
-import { Document } from '../domain/model/Document';
+import { Document } from './model/Document';
 import { EntitiesNotCreatedError } from '../../../layer-modules/db/domain';
 import { MongoDbConnector } from './MongoDbConnector';
 import mongodb from 'mongodb';

@@ -73,7 +73,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                 roles: userFixtureFactory.get().roles,
                 username: userFixtureFactory.get().username,
                 hash: 'test-hash',
-              } as mongodb.OptionalId<UserDb>,
+              },
             ])
           ).ops;
 

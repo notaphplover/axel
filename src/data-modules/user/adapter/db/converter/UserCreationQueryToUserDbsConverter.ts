@@ -23,7 +23,7 @@ export class UserCreationQueryToUserDbsConverter
       hash: await this.passwordHasher.hashPassword(input.password),
       roles: input.roles,
       username: input.username,
-    } as mongodb.OptionalId<UserDb>;
+    };
 
     return [userDb];
   }
