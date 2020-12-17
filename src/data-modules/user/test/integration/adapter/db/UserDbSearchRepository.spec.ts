@@ -1,135 +1,167 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { UserDb, userDbSchema } from '../../../../adapter/db/model/UserDb';
-import mongoose, { Document, Model } from 'mongoose';
-import { Container } from 'inversify';
-import { SearchRepository } from '../../../../../../layer-modules/db/domain';
-import { USER_ADAPTER_TYPES } from '../../../../adapter/config/types';
-import { USER_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { Capsule, Converter, Filter } from '../../../../../../common/domain';
+import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
 import { User } from '../../../../domain/model/User';
-import { UserDbSearchReporitory } from '../../../../adapter/db/repository/UserDbSearchRepository';
+import { UserDb } from '../../../../adapter/db/model/UserDb';
+import { UserDbSearchRepository } from '../../../../adapter/db/repository/UserDbSearchRepository';
 import { UserFindQuery } from '../../../../domain/query/UserFindQuery';
-import { configAdapter } from '../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../layer-modules/db/test';
-import { userFindQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
+import mongodb from 'mongodb';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
 
-const container: Container = configAdapter.container;
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-const mongooseIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongooseIntegrationDescribe;
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-async function clearCollection<T extends Document>(
-  model: Model<T>,
-): Promise<void> {
-  await model.deleteMany({});
-}
+mongodbIntegrationDescribeGenerator(outputParam)(
+  UserDbSearchRepository.name,
+  () => {
+    let collectionName: string;
+    let userDbToUserConverter: Converter<UserDb, User>;
+    let mongoDbConnector: MongoDbConnector;
+    let userFindQueryToUserDbFilterQueryConverter: Converter<
+      UserFindQuery,
+      mongodb.FilterQuery<UserDb>
+    >;
+    let postUserDbSearchFilter: Filter<UserDb, UserFindQuery>;
 
-function createUserMongooseModelMock(alias: string): Model<UserDb> {
-  return mongoose.model<UserDb>(alias, userDbSchema, alias);
-}
+    let userDbSearchRepository: UserDbSearchRepository;
 
-function injectUserMongooseModelMock(
-  container: Container,
-  model: Model<UserDb>,
-): void {
-  container
-    .bind(USER_ADAPTER_TYPES.db.model.USER_DB_MODEL)
-    .toConstantValue(model);
-}
+    beforeAll(() => {
+      collectionName = 'UserDbSearchRepositoryIntegrationTests';
+      userDbToUserConverter = {
+        transform: jest.fn(),
+      };
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
+      userFindQueryToUserDbFilterQueryConverter = {
+        transform: jest.fn(),
+      };
+      postUserDbSearchFilter = {
+        filter: jest.fn(),
+        filterOne: jest.fn(),
+      };
 
-mongooseIntegrationDescribe(UserDbSearchReporitory.name, () => {
-  describe('.find()', () => {
-    describe('when called and some users satisfies the query', () => {
-      let userModelMock: Model<UserDb>;
-
-      let result: unknown;
-
-      beforeAll(async () => {
-        const collectionName: string = 'UserDbSearchRepositoryModel';
-
-        userModelMock = createUserMongooseModelMock(collectionName);
-
-        await clearCollection(userModelMock);
-
-        const [userDbInserted]: UserDb[] = await userModelMock.insertMany([
-          new userModelMock({
-            email: userFixtureFactory.get().email,
-            roles: userFixtureFactory.get().roles,
-            username: userFixtureFactory.get().username,
-            hash: 'test-hash',
-          }),
-        ]);
-
-        const childContainer: Container = container.createChild();
-        injectUserMongooseModelMock(childContainer, userModelMock);
-
-        const userDbSearchRepository: SearchRepository<
-          User,
-          UserFindQuery
-        > = childContainer.get(
-          USER_DOMAIN_TYPES.repository.USER_SEARCH_REPOSITORY,
-        );
-
-        const userFindQueryFixture: UserFindQuery = userFindQueryFixtureFactory.get();
-        userFindQueryFixture.id = userDbInserted._id.toHexString();
-        userFindQueryFixture.password = undefined;
-
-        result = await userDbSearchRepository.find(userFindQueryFixture);
-      });
-
-      afterAll(async () => {
-        await clearCollection(userModelMock);
-      });
-
-      it('must return the users', () => {
-        const expectedUserResult: User = userFixtureFactory.get();
-
-        expect(result).toHaveProperty('length');
-        expect((result as Array<unknown>).length).toBe(1);
-
-        const [userResult]: unknown[] = result as unknown[];
-
-        expect((userResult as User).email).toBe(expectedUserResult.email);
-        expect((userResult as User).roles).toEqual(expectedUserResult.roles);
-        expect((userResult as User).username).toBe(expectedUserResult.username);
-      });
+      userDbSearchRepository = new UserDbSearchRepository(
+        collectionName,
+        userDbToUserConverter,
+        mongoDbConnector,
+        userFindQueryToUserDbFilterQueryConverter,
+        postUserDbSearchFilter,
+      );
     });
 
-    describe('when called and no user satisfies the query', () => {
-      let userModelMock: Model<UserDb>;
+    describe('.find()', () => {
+      describe('when called and some users satisfies the query', () => {
+        let userDbInserted: UserDb;
 
-      let result: unknown;
+        let result: unknown;
 
-      beforeAll(async () => {
-        const collectionName: string = 'TestUserUsernameFailFindQuery';
+        beforeAll(async () => {
+          const userDbCollection: mongodb.Collection<UserDb> = mongoDbConnector.db.collection(
+            collectionName,
+          );
 
-        userModelMock = createUserMongooseModelMock(collectionName);
+          // eslint-disable-next-line @typescript-eslint/typedef
+          [userDbInserted] = (
+            await userDbCollection.insertMany([
+              {
+                email: userFixtureFactory.get().email,
+                roles: userFixtureFactory.get().roles,
+                username: userFixtureFactory.get().username,
+                hash: 'test-hash',
+              } as mongodb.OptionalId<UserDb>,
+            ])
+          ).ops;
 
-        await clearCollection(userModelMock);
+          const userDbFilterQuery: mongodb.FilterQuery<UserDb> = {
+            _id: userDbInserted._id,
+          };
 
-        const childContainer: Container = container.createChild();
-        injectUserMongooseModelMock(childContainer, userModelMock);
+          (userDbToUserConverter.transform as jest.Mock).mockReturnValueOnce(
+            userFixtureFactory.get(),
+          );
 
-        const userDbSearchRepository: SearchRepository<
-          User,
-          UserFindQuery
-        > = childContainer.get(
-          USER_DOMAIN_TYPES.repository.USER_SEARCH_REPOSITORY,
-        );
+          (userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            userDbFilterQuery,
+          );
 
-        result = await userDbSearchRepository.find(
-          userFindQueryFixtureFactory.get(),
-        );
+          (postUserDbSearchFilter.filter as jest.Mock).mockResolvedValueOnce([
+            userDbInserted,
+          ]);
+
+          const userFindQuery: UserFindQuery = {
+            id: userDbInserted._id.toHexString(),
+          };
+
+          result = await userDbSearchRepository.find(userFindQuery);
+        });
+
+        afterAll(() => {
+          (userDbToUserConverter.transform as jest.Mock).mockClear();
+          (userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (postUserDbSearchFilter.filter as jest.Mock).mockClear();
+        });
+
+        it('must call userDbToUserConverter.transform with the db entities found', () => {
+          expect(userDbToUserConverter.transform).toHaveBeenCalledTimes(1);
+          expect(userDbToUserConverter.transform).toHaveBeenCalledWith(
+            userDbInserted,
+          );
+        });
+
+        it('must return users', () => {
+          expect(result).toStrictEqual([userFixtureFactory.get()]);
+        });
       });
 
-      afterAll(async () => {
-        await clearCollection(userModelMock);
-      });
+      describe('when called and no user satisfies the query', () => {
+        let result: unknown;
 
-      it('must return no user', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as Array<unknown>).length).toBe(0);
+        beforeAll(async () => {
+          const userDbId: mongodb.ObjectID = new mongodb.ObjectID();
+
+          const userDbFilterQuery: mongodb.FilterQuery<UserDb> = {
+            _id: userDbId,
+          };
+
+          (userDbToUserConverter.transform as jest.Mock).mockReturnValueOnce(
+            userFixtureFactory.get(),
+          );
+
+          (userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            userDbFilterQuery,
+          );
+
+          (postUserDbSearchFilter.filter as jest.Mock).mockResolvedValueOnce(
+            [],
+          );
+
+          const userFindQuery: UserFindQuery = {
+            id: userDbId.toHexString(),
+          };
+
+          result = await userDbSearchRepository.find(userFindQuery);
+        });
+
+        afterAll(() => {
+          (userDbToUserConverter.transform as jest.Mock).mockClear();
+          (userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (postUserDbSearchFilter.filter as jest.Mock).mockClear();
+        });
+
+        it('must not call userDbToUserConverter.transform', () => {
+          expect(userDbToUserConverter.transform).toHaveBeenCalledTimes(0);
+        });
+
+        it('must return no user', () => {
+          expect(result).toHaveProperty('length');
+          expect((result as Array<unknown>).length).toBe(0);
+        });
       });
     });
-  });
-});
+  },
+);

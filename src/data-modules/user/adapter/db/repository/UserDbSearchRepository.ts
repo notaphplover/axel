@@ -1,38 +1,46 @@
 import { Converter, Filter } from '../../../../../common/domain';
-import { FilterQuery, Model } from 'mongoose';
+import {
+  MongoDbConnector,
+  mongodbAdapter,
+} from '../../../../../integration-modules/mongodb/adapter';
 import { inject, injectable } from 'inversify';
-import { MongooseSearchRepository } from '../../../../../integration-modules/mongoose/adapter';
+import { MongoDbSearchRepository } from '../../../../../integration-modules/mongodb/adapter/MongoDbSearchRepository';
 import { USER_ADAPTER_TYPES } from '../../config/types';
 import { User } from '../../../domain/model/User';
 import { UserDb } from '../model/UserDb';
 import { UserFindQuery } from '../../../domain/query/UserFindQuery';
+import mongodb from 'mongodb';
 
 @injectable()
-export class UserDbSearchReporitory extends MongooseSearchRepository<
+export class UserDbSearchRepository extends MongoDbSearchRepository<
   User,
+  UserDb,
   UserDb,
   UserFindQuery
 > {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
-    @inject(USER_ADAPTER_TYPES.db.model.USER_DB_MODEL)
-    model: Model<UserDb>,
+    @inject(USER_ADAPTER_TYPES.db.collection.USER_COLLECTION_NAME)
+    collectionName: string,
     @inject(USER_ADAPTER_TYPES.db.converter.USER_DB_TO_USER_CONVERTER)
     userDbToUserConverter: Converter<UserDb, User>,
+    @inject(mongodbAdapter.config.types.db.MONGODB_CONNECTOR)
+    mongoDbConnector: MongoDbConnector,
     @inject(
       USER_ADAPTER_TYPES.db.converter
         .USER_FIND_QUERY_TO_USER_DB_FILTER_QUERY_CONVERTER,
     )
     userFindQueryToUserDbFilterQueryConverter: Converter<
       UserFindQuery,
-      FilterQuery<UserDb>
+      mongodb.FilterQuery<UserDb>
     >,
     @inject(USER_ADAPTER_TYPES.db.filter.POST_USER_DB_SEARCH_FILTER)
     postUserDbSearchFilter: Filter<UserDb, UserFindQuery>,
   ) {
     super(
-      model,
+      collectionName,
       userDbToUserConverter,
+      mongoDbConnector,
       userFindQueryToUserDbFilterQueryConverter,
       postUserDbSearchFilter,
     );

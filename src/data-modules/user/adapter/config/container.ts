@@ -13,8 +13,9 @@ import { USER_ADAPTER_TYPES } from './types';
 import { USER_DOMAIN_TYPES } from '../../domain/config/types';
 import { UserCreationQueryApiV1Validator } from '../api/validator/UserCreationQueryApiV1Validator';
 import { UserCreationQueryToUserDbsConverter } from '../db/converter/UserCreationQueryToUserDbsConverter';
+import { UserDbCollectionName } from '../db/UserDbCollectionName';
 import { UserDbInsertRepository } from '../db/repository/UserDbInsertRepository';
-import { UserDbSearchReporitory } from '../db/repository/UserDbSearchRepository';
+import { UserDbSearchRepository } from '../db/repository/UserDbSearchRepository';
 import { UserDbToUserConverter } from '../db/converter/UserDbToUserConverter';
 import { UserFindQueryToUserDbFilterQueryConverter } from '../db/converter/UserFindQueryToUserDbFilterQueryConverter';
 import { UserRoleToUserRoleApiV1Converter } from '../api/converter/UserRoleToUserRoleApiV1Converter';
@@ -52,6 +53,10 @@ function bindAdapters(bind: interfaces.Bind) {
   ).to(UserCreationQueryApiV1Validator);
   bind(USER_ADAPTER_TYPES.auth.FASTIFY_USER_AUTHENTICATOR).to(
     FastifyUserAuthenticator,
+  );
+
+  bind(USER_ADAPTER_TYPES.db.collection.USER_COLLECTION_NAME).toConstantValue(
+    UserDbCollectionName.User,
   );
   bind(
     USER_ADAPTER_TYPES.db.converter.USER_CREATION_QUERY_TO_USER_DBS_CONVERTER,
@@ -93,7 +98,7 @@ function bindDomain(bind: interfaces.Bind) {
     UserDbInsertRepository,
   );
   bind(USER_DOMAIN_TYPES.repository.USER_SEARCH_REPOSITORY).to(
-    UserDbSearchReporitory,
+    UserDbSearchRepository,
   );
 }
 

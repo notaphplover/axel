@@ -31,6 +31,9 @@ export const USER_ADAPTER_TYPES = {
     FASTIFY_USER_AUTHENTICATOR: Symbol.for('FastifyUserAuthenticator'),
   },
   db: {
+    collection: {
+      USER_COLLECTION_NAME: Symbol.for('UserCollectionName'),
+    },
     converter: {
       USER_CREATION_QUERY_TO_USER_DBS_CONVERTER: Symbol.for(
         'UserCreationQueryToUserDbsConverter',
