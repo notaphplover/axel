@@ -69,7 +69,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             cost: landFixture.cost,
             detail: landFixture.detail,
             type: landFixture.type,
-          } as mongodb.OptionalId<LandDb>;
+          };
 
           (landCreationQueryToLandDbsConverter.transform as jest.Mock).mockReturnValueOnce(
             [landDbFixture],
@@ -91,7 +91,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             cost: landFixture.cost,
             detail: landFixture.detail,
             type: landFixture.type,
-          } as LandDb;
+          };
 
           expect(landDbToLandConverter.transform).toBeCalledTimes(1);
           expect(landDbToLandConverter.transform).toBeCalledWith(

@@ -86,9 +86,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                   cost: artifactFixture.cost,
                   detail: artifactFixture.detail,
                   type: artifactFixture.type,
-                } as ArtifactDb,
+                },
               ])
-            ).ops as [ArtifactDb];
+            ).ops;
 
             const artifactCardFindQueryFixture: CardFindQuery = {
               id: artifactDbInserted._id.toHexString(),
@@ -151,9 +151,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                   power: creatureFixture.power,
                   toughness: creatureFixture.toughness,
                   type: creatureFixture.type,
-                } as CreatureDb,
+                },
               ])
-            ).ops as [CreatureDb];
+            ).ops;
 
             const creatureCardFindQueryFixture: CardFindQuery = {
               id: creatureDbInserted._id.toHexString(),
@@ -214,9 +214,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                   cost: enchantmentFixture.cost,
                   detail: enchantmentFixture.detail,
                   type: enchantmentFixture.type,
-                } as EnchantmentDb,
+                },
               ])
-            ).ops as [EnchantmentDb];
+            ).ops;
 
             const enchantmentCardFindQueryFixture: CardFindQuery = {
               id: enchantmentDbInserted._id.toHexString(),
@@ -277,9 +277,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                   cost: landFixture.cost,
                   detail: landFixture.detail,
                   type: landFixture.type,
-                } as LandDb,
+                },
               ])
-            ).ops as [LandDb];
+            ).ops;
 
             const landCardFindQueryFixture: CardFindQuery = {
               id: landDbInserted._id.toHexString(),
@@ -353,7 +353,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         });
       });
 
-      describe('when caled, by limit and offset', () => {
+      describe('when called, by limit and offset', () => {
         let result: unknown;
 
         beforeAll(async () => {
@@ -368,7 +368,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
               cost: artifactFixture.cost,
               detail: artifactFixture.detail,
               type: artifactFixture.type,
-            } as ArtifactDb,
+            },
           ]);
 
           const cardFindQueryFixture: CardFindQuery = {

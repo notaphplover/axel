@@ -69,7 +69,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             cost: artifactFixture.cost,
             detail: artifactFixture.detail,
             type: artifactFixture.type,
-          } as mongodb.OptionalId<ArtifactDb>;
+          };
 
           (artifactCreationQueryToArtifactDbsConverter.transform as jest.Mock).mockReturnValueOnce(
             [artifactDbFixture],
@@ -91,7 +91,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             cost: artifactFixture.cost,
             detail: artifactFixture.detail,
             type: artifactFixture.type,
-          } as ArtifactDb;
+          };
 
           expect(artifactDbToArtifactConverter.transform).toHaveBeenCalledTimes(
             1,

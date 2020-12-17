@@ -72,7 +72,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             cost: enchantmentFixture.cost,
             detail: enchantmentFixture.detail,
             type: enchantmentFixture.type,
-          } as mongodb.OptionalId<EnchantmentDb>;
+          };
 
           (enchantmentCreationQueryToEnchantmentDbsConverter.transform as jest.Mock).mockReturnValueOnce(
             [enchantmentDbFixture],
@@ -94,7 +94,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             cost: enchantmentFixture.cost,
             detail: enchantmentFixture.detail,
             type: enchantmentFixture.type,
-          } as EnchantmentDb;
+          };
 
           expect(enchantmentDbToEnchantmentConverter.transform).toBeCalledTimes(
             1,
