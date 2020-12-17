@@ -25,7 +25,6 @@ import { GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter } from '.
 import { GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter';
 import { LandCreationQueryToLandDbsConverter } from '../../../db/converter/card/LandCreationQueryToLandDbsConverter';
 import { LandDbToLandConverter } from '../../../db/converter/card/LandDbToLandConverter';
-import { cardDeckDbModel } from '../../../db/model/deck/CardDeckDb';
 import { extendedGameSetupDbModel } from '../../../db/model/setup/ExtendedGameSetupDb';
 import { gameDbModel } from '../../../db/model/GameDb';
 import { interfaces } from 'inversify';
@@ -138,10 +137,6 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   ).to(ExtendedGameSetupDbCollectionInitializer);
 
   bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
-
-  bind(GAME_ADAPTER_TYPES.db.model.deck.CARD_DECK_DB_MODEL).toConstantValue(
-    cardDeckDbModel,
-  );
 
   bind(
     GAME_ADAPTER_TYPES.db.model.setup.EXTENDED_GAME_SETUP_DB_MODEL,

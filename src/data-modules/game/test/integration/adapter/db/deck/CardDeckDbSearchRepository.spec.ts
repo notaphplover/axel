@@ -70,7 +70,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                 format: cardDeckFixture.format,
                 name: cardDeckFixture.name,
                 sections: cardDeckFixture.sections,
-              } as mongodb.OptionalId<CardDeckDb>,
+              },
             ])
           ).ops;
 

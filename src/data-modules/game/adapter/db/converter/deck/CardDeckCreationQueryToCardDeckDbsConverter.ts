@@ -24,7 +24,7 @@ export class CardDeckCreationQueryToCardDeckDbsConverter
             references: [...input.sections.sideboard.references],
           },
         },
-      } as mongodb.OptionalId<CardDeckDb>,
+      },
     ];
   }
 }

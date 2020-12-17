@@ -1,15 +1,9 @@
-import mongoose, {
-  Document,
-  Model,
-  Schema,
-  SchemaDefinition,
-  Types,
-} from 'mongoose';
+import { Schema, SchemaDefinition } from 'mongoose';
 import { CardDeckSections } from '../../../../domain/model/deck/CardDeckSections';
+import { Document } from '../../../../../../integration-modules/mongodb/adapter';
 import { GameFormat } from '../../../../domain/model/GameFormat';
 
 export interface CardDeckDb extends Document {
-  _id: Types.ObjectId;
   description: string;
   format: GameFormat;
   name: string;
@@ -31,11 +25,3 @@ export const cardDeckDbSchemaDefinition: SchemaDefinition = {
   format: { type: String, required: true },
   name: { type: String, required: true },
 };
-
-export const cardDeckDbSchema: Schema = new Schema(cardDeckDbSchemaDefinition);
-
-export const cardDeckDbModel: Model<CardDeckDb> = mongoose.model<CardDeckDb>(
-  'CardDeck',
-  cardDeckDbSchema,
-  'cardDeck',
-);
