@@ -1,21 +1,18 @@
-import { inject, injectable } from 'inversify';
 import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
 import { CardDeckDb } from '../../model/deck/CardDeckDb';
 import { Converter } from '../../../../../../common/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { Model } from 'mongoose';
+import { injectable } from 'inversify';
+import mongodb from 'mongodb';
 
 @injectable()
 export class CardDeckCreationQueryToCardDeckDbsConverter
-  implements Converter<CardDeckCreationQuery, CardDeckDb[]> {
-  constructor(
-    @inject(GAME_ADAPTER_TYPES.db.model.deck.CARD_DECK_DB_MODEL)
-    private readonly cardDeckDbModel: Model<CardDeckDb>,
-  ) {}
-
-  public transform(input: CardDeckCreationQuery): CardDeckDb[] {
+  implements
+    Converter<CardDeckCreationQuery, mongodb.OptionalId<CardDeckDb>[]> {
+  public transform(
+    input: CardDeckCreationQuery,
+  ): mongodb.OptionalId<CardDeckDb>[] {
     return [
-      new this.cardDeckDbModel({
+      {
         description: input.description,
         format: input.format,
         name: input.name,
@@ -27,7 +24,7 @@ export class CardDeckCreationQueryToCardDeckDbsConverter
             references: [...input.sections.sideboard.references],
           },
         },
-      }),
+      } as mongodb.OptionalId<CardDeckDb>,
     ];
   }
 }
