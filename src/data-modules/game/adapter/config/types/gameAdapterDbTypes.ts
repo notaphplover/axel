@@ -2,7 +2,10 @@
 export const GAME_ADAPTER_DB_TYPES = {
   collection: {
     card: {
-      CARD_COLLECTION_NAME: Symbol.for('CardSetupCollectionName'),
+      CARD_COLLECTION_NAME: Symbol.for('CardCollectionName'),
+    },
+    deck: {
+      DECK_COLLECTION_NAME: Symbol.for('DeckCollectionName'),
     },
     setup: {
       EXTENDED_GAME_SETUP_COLLECTION_NAME: Symbol.for(

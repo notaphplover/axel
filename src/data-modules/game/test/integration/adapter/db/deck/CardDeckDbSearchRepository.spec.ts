@@ -1,145 +1,158 @@
+/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable @typescript-eslint/typedef */
 import 'reflect-metadata';
-import {
-  CardDeckDb,
-  cardDeckDbSchema,
-} from '../../../../../adapter/db/model/deck/CardDeckDb';
-import mongoose, { Document, Model } from 'mongoose';
+import { Capsule, Converter } from '../../../../../../../common/domain';
 import { CardDeck } from '../../../../../domain/model/deck/CardDeck';
+import { CardDeckDb } from '../../../../../adapter/db/model/deck/CardDeckDb';
 import { CardDeckDbSearchRepository } from '../../../../../adapter/db/repository/deck/CardDeckDbSearchRepository';
 import { CardDeckFindQuery } from '../../../../../domain/query/deck/CardDeckFindQuery';
-import { Container } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
-import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
-import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { cardDeckFindQueryFixtureFactory } from '../../../../fixtures/domain/query/deck';
 import { cardDeckFixtureFactory } from '../../../../fixtures/domain/model/deck';
-import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
+import mongodb from 'mongodb';
 
-const container: Container = configAdapter.container;
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-const mongooseIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongooseIntegrationDescribe;
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-async function clearCollection<T extends Document>(
-  model: Model<T>,
-): Promise<void> {
-  await model.deleteMany({});
-}
+mongodbIntegrationDescribeGenerator(outputParam)(
+  CardDeckDbSearchRepository.name,
+  () => {
+    let collectionName: string;
+    let cardDeckDbToCardDeckConverter: Converter<CardDeckDb, CardDeck>;
+    let mongoDbConnector: MongoDbConnector;
+    let cardDeckFindQueryToCardDeckDbFilterQueryConverter: Converter<
+      CardDeckFindQuery,
+      mongodb.FilterQuery<CardDeckDb>
+    >;
 
-function createCardDeckMongooseModelMock(alias: string): Model<CardDeckDb> {
-  return mongoose.model<CardDeckDb>(alias, cardDeckDbSchema, alias);
-}
+    let cardDeckDbSearchRepository: CardDeckDbSearchRepository;
 
-function injectGameMongooseModelMock(
-  container: Container,
-  model: Model<CardDeckDb>,
-): void {
-  container
-    .bind(GAME_ADAPTER_TYPES.db.model.deck.CARD_DECK_DB_MODEL)
-    .toConstantValue(model);
-}
+    beforeAll(() => {
+      collectionName = 'CardDeckDbSearchRepositoryIntegrationTest';
+      cardDeckDbToCardDeckConverter = {
+        transform: jest.fn(),
+      };
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
+      cardDeckFindQueryToCardDeckDbFilterQueryConverter = {
+        transform: jest.fn(),
+      };
 
-mongooseIntegrationDescribe(CardDeckDbSearchRepository.name, () => {
-  describe('.find()', () => {
-    describe('when called and some card decks satisfies the query', () => {
-      let cardDeckModelMock: Model<CardDeckDb>;
-      let cardDeckFindQueryFixture: CardDeckFindQuery;
-
-      let result: unknown;
-
-      beforeAll(async () => {
-        const collectionName: string = 'CardDeckDbSearchRepositoryModelSuccess';
-
-        cardDeckModelMock = createCardDeckMongooseModelMock(collectionName);
-
-        await clearCollection(cardDeckModelMock);
-
-        const [
-          cardDeckDbInserted,
-        ]: CardDeckDb[] = await cardDeckModelMock.insertMany([
-          new cardDeckModelMock({
-            description: cardDeckFixtureFactory.get().description,
-            format: cardDeckFixtureFactory.get().format,
-            name: cardDeckFixtureFactory.get().name,
-            sections: cardDeckFixtureFactory.get().sections,
-          }),
-        ]);
-
-        const childContainer: Container = container.createChild();
-        injectGameMongooseModelMock(childContainer, cardDeckModelMock);
-
-        const cardDeckDbSearchRepository: SearchRepository<
-          CardDeck,
-          CardDeckFindQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.deck.CARD_DECK_SEARCH_REPOSITORY,
-        );
-
-        cardDeckFindQueryFixture = cardDeckFindQueryFixtureFactory.get();
-
-        const cardDeckDbInsertedId: string = cardDeckDbInserted._id.toHexString();
-
-        cardDeckFindQueryFixture.id = cardDeckDbInsertedId;
-        cardDeckFindQueryFixture.ids = [cardDeckDbInsertedId];
-
-        result = await cardDeckDbSearchRepository.find(
-          cardDeckFindQueryFixture,
-        );
-      });
-
-      afterAll(async () => {
-        await clearCollection(cardDeckModelMock);
-      });
-
-      it('must return the card decks', () => {
-        const expectedCardDeckResult: CardDeck = cardDeckFixtureFactory.get();
-        expectedCardDeckResult.id = cardDeckFindQueryFixture.id as string;
-
-        expect(result).toHaveProperty('length');
-        expect((result as Array<unknown>).length).toBe(1);
-
-        const [gameResult]: unknown[] = result as unknown[];
-
-        expect(gameResult as CardDeck).toStrictEqual(expectedCardDeckResult);
-      });
+      cardDeckDbSearchRepository = new CardDeckDbSearchRepository(
+        collectionName,
+        cardDeckDbToCardDeckConverter,
+        mongoDbConnector,
+        cardDeckFindQueryToCardDeckDbFilterQueryConverter,
+      );
     });
 
-    describe('when called and no card deck satisfies the query', () => {
-      let cardDeckModelMock: Model<CardDeckDb>;
+    describe('.find()', () => {
+      describe('when called and some card decks satisfies the query', () => {
+        let cardDeckDbInserted: CardDeckDb;
 
-      let result: unknown;
+        let result: unknown;
 
-      beforeAll(async () => {
-        const collectionName: string = 'CardDeckDbSearchRepositoryModelFail';
+        beforeAll(async () => {
+          const cardDeckFixture: CardDeck = cardDeckFixtureFactory.get();
 
-        cardDeckModelMock = createCardDeckMongooseModelMock(collectionName);
+          const cardDeckDbCollection: mongodb.Collection<CardDeckDb> = mongoDbConnector.db.collection(
+            collectionName,
+          );
 
-        await clearCollection(cardDeckModelMock);
+          [cardDeckDbInserted] = (
+            await cardDeckDbCollection.insertMany([
+              {
+                description: cardDeckFixture.description,
+                format: cardDeckFixture.format,
+                name: cardDeckFixture.name,
+                sections: cardDeckFixture.sections,
+              } as mongodb.OptionalId<CardDeckDb>,
+            ])
+          ).ops;
 
-        const childContainer: Container = container.createChild();
-        injectGameMongooseModelMock(childContainer, cardDeckModelMock);
+          const cardDeckFindQueryFixture: CardDeckFindQuery = cardDeckFindQueryFixtureFactory.get();
 
-        const cardDeckDbSearchRepository: SearchRepository<
-          CardDeck,
-          CardDeckFindQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.deck.CARD_DECK_SEARCH_REPOSITORY,
-        );
+          const cardDeckDbInsertedId: string = cardDeckDbInserted._id.toHexString();
 
-        result = await cardDeckDbSearchRepository.find(
-          cardDeckFindQueryFixtureFactory.get(),
-        );
+          cardDeckFindQueryFixture.id = cardDeckDbInsertedId;
+          cardDeckFindQueryFixture.ids = [cardDeckDbInsertedId];
+
+          (cardDeckDbToCardDeckConverter.transform as jest.Mock).mockReturnValueOnce(
+            cardDeckFixture,
+          );
+
+          const cardDeckDbFilterQuery: mongodb.FilterQuery<CardDeckDb> = {
+            _id: cardDeckDbInserted._id,
+          };
+
+          (cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            cardDeckDbFilterQuery,
+          );
+
+          result = await cardDeckDbSearchRepository.find(
+            cardDeckFindQueryFixture,
+          );
+        });
+
+        afterAll(() => {
+          (cardDeckDbToCardDeckConverter.transform as jest.Mock).mockClear();
+          (cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must call cardDeckDbToCardDeckConverter.transform with the db entities found', () => {
+          expect(cardDeckDbToCardDeckConverter.transform).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(cardDeckDbToCardDeckConverter.transform).toHaveBeenCalledWith(
+            cardDeckDbInserted,
+          );
+        });
+
+        it('must return the card decks', () => {
+          expect(result).toStrictEqual([cardDeckFixtureFactory.get()]);
+        });
       });
 
-      afterAll(async () => {
-        await clearCollection(cardDeckModelMock);
-      });
+      describe('when called and no card deck satisfies the query', () => {
+        let result: unknown;
 
-      it('must return no game', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as Array<unknown>).length).toBe(0);
+        beforeAll(async () => {
+          const cardDeckId: mongodb.ObjectID = new mongodb.ObjectID();
+
+          const cardDeckFindQuery: CardDeckFindQuery = {
+            id: cardDeckId.toHexString(),
+          };
+
+          const cardDeckDbFilterQuery: mongodb.FilterQuery<CardDeckDb> = {
+            _id: cardDeckId,
+          };
+
+          (cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            cardDeckDbFilterQuery,
+          );
+
+          result = await cardDeckDbSearchRepository.find(cardDeckFindQuery);
+        });
+
+        afterAll(() => {
+          (cardDeckDbToCardDeckConverter.transform as jest.Mock).mockClear();
+          (cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must not call cardDeckDbToCardDeckConverter.transform with the db entities found', () => {
+          expect(cardDeckDbToCardDeckConverter.transform).toHaveBeenCalledTimes(
+            0,
+          );
+        });
+
+        it('must return no game', () => {
+          expect(result).toStrictEqual([]);
+        });
       });
     });
-  });
-});
+  },
+);

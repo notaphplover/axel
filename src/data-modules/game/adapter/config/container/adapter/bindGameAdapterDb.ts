@@ -34,6 +34,9 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   bind(
     GAME_ADAPTER_TYPES.db.collection.card.CARD_COLLECTION_NAME,
   ).toConstantValue(GameDbCollectionName.Card);
+  bind(
+    GAME_ADAPTER_TYPES.db.collection.deck.DECK_COLLECTION_NAME,
+  ).toConstantValue(GameDbCollectionName.CardDeck);
 
   bind(
     GAME_ADAPTER_TYPES.db.collection.setup.EXTENDED_GAME_SETUP_COLLECTION_NAME,
