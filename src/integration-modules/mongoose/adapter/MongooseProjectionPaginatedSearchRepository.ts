@@ -1,8 +1,7 @@
-import { Capsule, PaginationQuery } from '../../../common/domain';
+import { Capsule, PaginationQuery, commonDomain } from '../../../common/domain';
 import { Document, Query } from 'mongoose';
 import { MongooseProjectionSearchRepository } from './MongooseProjectionSearchRepository';
 import { SearchRepository } from '../../../layer-modules/db/domain';
-import { hasValue } from '../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
 
 @injectable()
@@ -26,11 +25,11 @@ export abstract class MongooseProjectionPaginatedSearchRepository<
       Query<TModelDb[], TModelDb>
     > = await super.buildFindDocumentQuery(query);
 
-    if (hasValue(query.limit)) {
+    if (commonDomain.utils.hasValue(query.limit)) {
       documentQueryCapsule.elem = documentQueryCapsule.elem.limit(query.limit);
     }
 
-    if (hasValue(query.offset)) {
+    if (commonDomain.utils.hasValue(query.offset)) {
       documentQueryCapsule.elem = documentQueryCapsule.elem.skip(query.offset);
     }
 

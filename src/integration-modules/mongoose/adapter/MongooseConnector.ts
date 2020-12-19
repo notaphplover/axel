@@ -5,8 +5,8 @@ import {
 import { inject, injectable } from 'inversify';
 import { DbConnector } from '../../../layer-modules/db/domain';
 import { EnvLoader } from '../../../layer-modules/env/domain';
+import { commonDomain } from '../../../common/domain';
 import mongoose from 'mongoose';
-import { waitMs } from '../../../common/domain/utils/waitMs';
 
 const MAX_ATTEMPTS: number = 10;
 const ATTEMPT_WAIT_MS: number = 1000;
@@ -46,7 +46,7 @@ export class MongooseConnector implements DbConnector {
         if (attempt >= MAX_ATTEMPTS) {
           throw err;
         } else {
-          await waitMs(ATTEMPT_WAIT_MS);
+          await commonDomain.utils.waitMs(ATTEMPT_WAIT_MS);
         }
       }
     } while (error === true);

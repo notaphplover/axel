@@ -1,6 +1,6 @@
 import { Deck } from './Deck';
 import { InvalidNumberOfCardsError } from '../exception/InvalidNumberOfCardsError';
-import { common } from '../../../../common/domain';
+import { commonDomain } from '../../../../common/domain';
 
 export class ArrayDeck<TCard> implements Deck<TCard> {
   constructor(private readonly cards: TCard[]) {}
@@ -10,7 +10,7 @@ export class ArrayDeck<TCard> implements Deck<TCard> {
       throw new InvalidNumberOfCardsError(number);
     }
 
-    const numberOfCards: number = common.parse.floatToInt(number);
+    const numberOfCards: number = commonDomain.parse.floatToInt(number);
 
     if (number !== numberOfCards) {
       throw new InvalidNumberOfCardsError(number);

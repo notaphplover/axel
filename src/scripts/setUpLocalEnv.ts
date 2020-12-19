@@ -8,10 +8,10 @@ import {
   existsSync,
   mkdirSync,
 } from 'fs';
-import { common } from '../common/domain';
+import { commonDomain } from '../common/domain';
 import { ncp } from 'ncp';
 
-const rootDir: string = common.io.rootDir;
+const rootDir: string = commonDomain.io.rootDir;
 
 const distFolder: string = join(rootDir, 'dist');
 
@@ -47,9 +47,9 @@ const ENV_MERGE: string = 'docker';
 const ENV_MERGE_DESTINATION: string = join(rootDir, '.env');
 
 const getDirectories: (source: string) => string[] =
-  common.io.directory.getDirectories;
+  commonDomain.io.directory.getDirectories;
 
-const getFiles: (source: string) => string[] = common.io.file.getFiles;
+const getFiles: (source: string) => string[] = commonDomain.io.file.getFiles;
 
 function detectModulesAtFolders(baseFolders: string[]): string[] {
   const modules: string[] = [];

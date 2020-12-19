@@ -1,7 +1,11 @@
-import { Capsule, Converter, Filter } from '../../../common/domain';
+import {
+  Capsule,
+  Converter,
+  Filter,
+  commonDomain,
+} from '../../../common/domain';
 import { Document, FilterQuery, Model, Query } from 'mongoose';
 import { SearchRepository } from '../../../layer-modules/db/domain';
-import { hasValue } from '../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
 
 @injectable()
@@ -88,7 +92,7 @@ export abstract class MongooseProjectionSearchRepository<
       TModelDb
     > = documentQueryGenerator(mongooseQuery);
 
-    if (hasValue(this.mongooseProjection)) {
+    if (commonDomain.utils.hasValue(this.mongooseProjection)) {
       documentQuery = documentQuery.select(this.mongooseProjection);
     }
 

@@ -4,7 +4,7 @@ import { USER_ADAPTER_TYPES } from '../../config/types';
 import { UserDb } from '../model/UserDb';
 import { UserFindQuery } from '../../../domain/query/UserFindQuery';
 import { ValidatorFunctionBasedFilter } from '../../../../../common/domain';
-import { common } from '../../../../../common/domain';
+import { commonDomain } from '../../../../../common/domain';
 
 @injectable()
 export class PostUserDbSearchFilter extends ValidatorFunctionBasedFilter<
@@ -22,7 +22,7 @@ export class PostUserDbSearchFilter extends ValidatorFunctionBasedFilter<
     model: UserDb,
     filter: UserFindQuery,
   ): Promise<boolean> {
-    if (common.utils.hasValue(filter.password)) {
+    if (commonDomain.utils.hasValue(filter.password)) {
       if (
         !(await this.passwordHasher.verifyPassword(filter.password, model.hash))
       ) {

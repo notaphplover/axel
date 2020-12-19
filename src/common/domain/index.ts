@@ -20,6 +20,7 @@ import { isDirectory } from './io/directory/isDirectory';
 import { isFile } from './io/file/isFile';
 import { mergeReadables } from './io/stream/mergeReadables';
 import { rootDir } from './io/rootDir';
+import { waitMs } from './utils/waitMs';
 
 export {
   Capsule,
@@ -37,7 +38,7 @@ export {
 };
 
 // eslint-disable-next-line @typescript-eslint/typedef
-export const common = {
+export const commonDomain = {
   io: {
     directory: {
       getDirectories,
@@ -53,5 +54,5 @@ export const common = {
     },
   },
   parse: { floatToInt },
-  utils: { hasValue },
+  utils: { hasValue, waitMs },
 };

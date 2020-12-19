@@ -7,7 +7,7 @@ import {
   UpdateQuery,
 } from 'mongoose';
 import { Converter } from '../../../common/domain';
-import { UpdateRepository } from '../../../layer-modules/db/domain/UpdateRepository';
+import { UpdateRepository } from '../../../layer-modules/db/domain';
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
 

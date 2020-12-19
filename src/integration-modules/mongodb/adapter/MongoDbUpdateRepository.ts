@@ -1,4 +1,4 @@
-import { Converter, common } from '../../../common/domain';
+import { Converter, commonDomain } from '../../../common/domain';
 import { injectable, unmanaged } from 'inversify';
 import { Document } from './model/Document';
 import { MongoDbConnector } from '.';
@@ -7,7 +7,7 @@ import mongodb from 'mongodb';
 
 const hasValue: <TType>(
   value: TType,
-) => value is Exclude<TType, null | undefined> = common.utils.hasValue;
+) => value is Exclude<TType, null | undefined> = commonDomain.utils.hasValue;
 
 @injectable()
 export abstract class MongoDbUpdateRepository<
