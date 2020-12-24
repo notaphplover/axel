@@ -1,107 +1,106 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import {
-  ExtendedGameSetupDb,
-  extendedGameSetupDbSchema,
-} from '../../../../../adapter/db/model/setup/ExtendedGameSetupDb';
-import mongoose, { Document, Model } from 'mongoose';
-import { Container } from 'inversify';
+import { Capsule, Converter } from '../../../../../../../common/domain';
 import { ExtendedGameSetup } from '../../../../../domain/model/setup/ExtendedGameSetup';
+import { ExtendedGameSetupDb } from '../../../../../adapter/db/model/setup/ExtendedGameSetupDb';
 import { ExtendedGameSetupDbInsertRepository } from '../../../../../adapter/db/repository/setup/ExtendedGameSetupDbInsertRepository';
-import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
-import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
 import { GameSetupsCreationQuery } from '../../../../../domain/query/setup/GameSetupCreationQuery';
-import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
-import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { extendedGameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
 import { gameSetupsCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
+import mongodb from 'mongodb';
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-const container: Container = configAdapter.container;
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-const mongooseIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongooseIntegrationDescribe;
+mongodbIntegrationDescribeGenerator(outputParam)(
+  ExtendedGameSetupDbInsertRepository.name,
+  () => {
+    let collectionName: string;
+    let extendedGameSetupDbToExtendedGameSetupConverter: Converter<
+      ExtendedGameSetupDb,
+      ExtendedGameSetup
+    >;
+    let mongoDbConnector: MongoDbConnector;
+    let gameSetupCreationQueryToExtendedGameSetupDbsConverter: Converter<
+      GameSetupsCreationQuery,
+      mongodb.OptionalId<ExtendedGameSetupDb>[]
+    >;
 
-async function clearCollection<T extends Document>(
-  model: Model<T>,
-): Promise<void> {
-  await model.deleteMany({});
-}
+    let extendedGameSetupDbInsertRepository: ExtendedGameSetupDbInsertRepository;
 
-function createExtendedGameSetupMongooseModelMock(
-  alias: string,
-): Model<ExtendedGameSetupDb> {
-  return mongoose.model<ExtendedGameSetupDb>(
-    alias,
-    extendedGameSetupDbSchema,
-    alias,
-  );
-}
+    beforeAll(() => {
+      collectionName = 'ExtendedGameSetupDbInsertRepositoryIntegrationTest';
+      extendedGameSetupDbToExtendedGameSetupConverter = {
+        transform: jest.fn(),
+      };
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
+      gameSetupCreationQueryToExtendedGameSetupDbsConverter = {
+        transform: jest.fn(),
+      };
 
-function injectExtendedGameSetupMongooseModelMock(
-  container: Container,
-  model: Model<ExtendedGameSetupDb>,
-): void {
-  container
-    .bind(GAME_ADAPTER_TYPES.db.model.setup.EXTENDED_GAME_SETUP_DB_MODEL)
-    .toConstantValue(model);
-}
+      extendedGameSetupDbInsertRepository = new ExtendedGameSetupDbInsertRepository(
+        collectionName,
+        extendedGameSetupDbToExtendedGameSetupConverter,
+        mongoDbConnector,
+        gameSetupCreationQueryToExtendedGameSetupDbsConverter,
+      );
+    });
 
-mongooseIntegrationDescribe(ExtendedGameSetupDbInsertRepository.name, () => {
-  describe('.insert()', () => {
-    describe('when called', () => {
-      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
+    describe('.insert()', () => {
+      describe('when called', () => {
+        let extendedGameSetupDb: mongodb.OptionalId<ExtendedGameSetupDb>;
 
-      let result: unknown;
+        let result: unknown;
 
-      beforeAll(async () => {
-        const collectionName: string =
-          'ExtendedGameSetupDbInsertRepositoryModel';
+        beforeAll(async () => {
+          (extendedGameSetupDbToExtendedGameSetupConverter.transform as jest.Mock).mockReturnValueOnce(
+            extendedGameSetupFixtureFactory.get(),
+          );
 
-        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
-          collectionName,
-        );
+          extendedGameSetupDb = {
+            format: extendedGameSetupFixtureFactory.get().format,
+            ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
+            playerSetups: extendedGameSetupFixtureFactory.get().playerSetups,
+            playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
+          } as mongodb.OptionalId<ExtendedGameSetupDb>;
 
-        await clearCollection(extendedGameSetupModelMock);
+          (gameSetupCreationQueryToExtendedGameSetupDbsConverter.transform as jest.Mock).mockReturnValueOnce(
+            [extendedGameSetupDb],
+          );
 
-        const childContainer: Container = container.createChild();
-        injectExtendedGameSetupMongooseModelMock(
-          childContainer,
-          extendedGameSetupModelMock,
-        );
+          result = await extendedGameSetupDbInsertRepository.insert(
+            gameSetupsCreationQueryFixtureFactory.get(),
+          );
+        });
 
-        const extendedGameSetupDbInsertRepository: InsertRepository<
-          ExtendedGameSetup,
-          GameSetupsCreationQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.setup
-            .EXTENDED_GAME_SETUP_INSERT_REPOSITORY,
-        );
+        afterAll(() => {
+          (extendedGameSetupDbToExtendedGameSetupConverter.transform as jest.Mock).mockClear();
+          (gameSetupCreationQueryToExtendedGameSetupDbsConverter.transform as jest.Mock).mockClear();
+        });
 
-        result = await extendedGameSetupDbInsertRepository.insert(
-          gameSetupsCreationQueryFixtureFactory.get(),
-        );
-      });
+        it('must call extendedGameSetupDbToExtendedGameSetupConverter.transform with the db entities created', () => {
+          const expectedExtendedGameSetupDb: ExtendedGameSetupDb = {
+            ...extendedGameSetupDb,
+            _id: expect.any(mongodb.ObjectID) as mongodb.ObjectID,
+          };
 
-      afterAll(async () => {
-        await clearCollection(extendedGameSetupModelMock);
-      });
+          expect(
+            extendedGameSetupDbToExtendedGameSetupConverter.transform,
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            extendedGameSetupDbToExtendedGameSetupConverter.transform,
+          ).toHaveBeenCalledWith(expectedExtendedGameSetupDb);
+        });
 
-      it('must return the game setup created', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as unknown[]).length).toBe(1);
-
-        const [innerResult]: unknown[] = result as unknown[];
-
-        expect((innerResult as ExtendedGameSetup).format).toStrictEqual(
-          extendedGameSetupFixtureFactory.get().format,
-        );
-        expect((innerResult as ExtendedGameSetup).playerSetups).toEqual(
-          extendedGameSetupFixtureFactory.get().playerSetups,
-        );
-        expect((innerResult as ExtendedGameSetup).playerSlots).toStrictEqual(
-          extendedGameSetupFixtureFactory.get().playerSlots,
-        );
+        it('must return the entities created', () => {
+          expect(result).toStrictEqual([extendedGameSetupFixtureFactory.get()]);
+        });
       });
     });
-  });
-});
+  },
+);
