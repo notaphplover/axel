@@ -1,26 +1,26 @@
-import { FilterQuery, Types } from 'mongoose';
 import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { GameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/GameSetupFindQueryPlayerSetup';
-import { FilterQuery as MongoDbFilterQuery } from 'mongodb';
 import { hasValue } from '../../../../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
+import mongodb from 'mongodb';
 
 @injectable()
 export class GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
-  implements Converter<GameSetupFindQuery, FilterQuery<ExtendedGameSetupDb>> {
+  implements
+    Converter<GameSetupFindQuery, mongodb.FilterQuery<ExtendedGameSetupDb>> {
   public transform(
     input: GameSetupFindQuery,
-  ): FilterQuery<ExtendedGameSetupDb> {
-    const andFilterQuery: MongoDbFilterQuery<ExtendedGameSetupDb>[] = [];
+  ): mongodb.FilterQuery<ExtendedGameSetupDb> {
+    const andFilterQuery: mongodb.FilterQuery<ExtendedGameSetupDb>[] = [];
 
     if (hasValue(input.format)) {
       andFilterQuery.push({ format: input.format });
     }
 
     if (hasValue(input.id)) {
-      andFilterQuery.push({ _id: Types.ObjectId(input.id) });
+      andFilterQuery.push({ _id: new mongodb.ObjectID(input.id) });
     }
 
     if (hasValue(input.ownerUserId)) {
@@ -28,7 +28,7 @@ export class GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
     }
 
     if (hasValue(input.playerSetups) && input.playerSetups.length > 0) {
-      const playerSetupsFilterQuery: MongoDbFilterQuery<ExtendedGameSetupDb>[] = input.playerSetups.map(
+      const playerSetupsFilterQuery: mongodb.FilterQuery<ExtendedGameSetupDb>[] = input.playerSetups.map(
         (playerSetup: GameSetupFindQueryPlayerSetup) => {
           return { 'playerSetups.userId': playerSetup.userId };
         },
@@ -41,7 +41,7 @@ export class GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
       andFilterQuery.push({ playerSlots: input.playerSlots });
     }
 
-    const filterQuery: FilterQuery<ExtendedGameSetupDb> = {};
+    const filterQuery: mongodb.FilterQuery<ExtendedGameSetupDb> = {};
 
     if (andFilterQuery.length > 0) {
       filterQuery.$and = andFilterQuery;
