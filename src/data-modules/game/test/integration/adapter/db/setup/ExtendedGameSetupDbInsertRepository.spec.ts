@@ -67,7 +67,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
             playerSetups: extendedGameSetupFixtureFactory.get().playerSetups,
             playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-          } as mongodb.OptionalId<ExtendedGameSetupDb>;
+          };
 
           (gameSetupCreationQueryToExtendedGameSetupDbsConverter.transform as jest.Mock).mockReturnValueOnce(
             [extendedGameSetupDb],

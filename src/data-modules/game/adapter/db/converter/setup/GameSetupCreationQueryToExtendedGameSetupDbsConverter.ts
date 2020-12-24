@@ -21,7 +21,7 @@ export class ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter
         ownerUserId: input.ownerUserId,
         playerSetups: _.cloneDeep(input.playerSetups),
         playerSlots: input.playerSlots,
-      } as mongodb.OptionalId<ExtendedGameSetupDb>,
+      },
     ];
   }
 }

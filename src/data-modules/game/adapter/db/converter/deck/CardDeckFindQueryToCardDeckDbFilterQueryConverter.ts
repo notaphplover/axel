@@ -1,7 +1,6 @@
 import { CardDeckDb } from '../../model/deck/CardDeckDb';
 import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
 import { Converter } from '../../../../../../common/domain';
-import { FilterQuery as MongoDbFilterQuery } from 'mongodb';
 import { hasValue } from '../../../../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
@@ -10,7 +9,7 @@ import mongodb from 'mongodb';
 export class CardDeckFindQueryToCardDeckDbFilterQueryConverter
   implements Converter<CardDeckFindQuery, mongodb.FilterQuery<CardDeckDb>> {
   public transform(input: CardDeckFindQuery): mongodb.FilterQuery<CardDeckDb> {
-    const andFilterQuery: MongoDbFilterQuery<CardDeckDb>[] = [];
+    const andFilterQuery: mongodb.FilterQuery<CardDeckDb>[] = [];
     const filterQuery: mongodb.FilterQuery<CardDeckDb> = {
       $and: andFilterQuery,
     };

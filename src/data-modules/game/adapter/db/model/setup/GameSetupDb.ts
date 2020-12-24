@@ -1,8 +1,7 @@
-import { Document, Types } from 'mongoose';
+import { Document } from '../../../../../../integration-modules/mongodb/adapter';
 import { GameFormat } from '../../../../domain/model/GameFormat';
 
 export interface GameSetupDb<TPlayerSetup> extends Document {
-  _id: Types.ObjectId;
   format: GameFormat;
   ownerUserId: string;
   playerSetups: TPlayerSetup[];

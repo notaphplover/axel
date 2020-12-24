@@ -79,7 +79,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                 ownerUserId: extendedGameSetupFixture.ownerUserId,
                 playerSetups: extendedGameSetupFixture.playerSetups,
                 playerSlots: extendedGameSetupFixture.playerSlots,
-              } as mongodb.OptionalId<ExtendedGameSetupDb>,
+              },
             ])
           ).ops;
 
@@ -117,7 +117,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
               (playerSetup: PlayerSetup) => ({ userId: playerSetup.userId }),
             ),
             playerSlots: extendedGameSetupDbInserted.playerSlots,
-          } as BasicGameSetupDb;
+          };
 
           expect(
             basicGameSetupDbToBasicGameSetupConverter.transform,
@@ -128,9 +128,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         });
 
         it('must return the game setups', () => {
-          expect(result as BasicGameSetup).toStrictEqual([
-            basicGameSetupFixtureFactory.get(),
-          ]);
+          expect(result).toStrictEqual([basicGameSetupFixtureFactory.get()]);
         });
       });
 

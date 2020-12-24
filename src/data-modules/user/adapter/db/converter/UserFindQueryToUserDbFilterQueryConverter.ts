@@ -1,18 +1,18 @@
-import { FilterQuery, Types } from 'mongoose';
 import { Converter } from '../../../../../common/domain';
 import { UserDb } from '../model/UserDb';
 import { UserFindQuery } from '../../../domain/query/UserFindQuery';
 import { hasValue } from '../../../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
+import mongodb from 'mongodb';
 
 @injectable()
 export class UserFindQueryToUserDbFilterQueryConverter
-  implements Converter<UserFindQuery, FilterQuery<UserDb>> {
-  public transform(input: UserFindQuery): FilterQuery<UserDb> {
-    const filterQuery: FilterQuery<UserDb> = {};
+  implements Converter<UserFindQuery, mongodb.FilterQuery<UserDb>> {
+  public transform(input: UserFindQuery): mongodb.FilterQuery<UserDb> {
+    const filterQuery: mongodb.FilterQuery<UserDb> = {};
 
     if (hasValue(input.id)) {
-      filterQuery._id = Types.ObjectId(input.id);
+      filterQuery._id = new mongodb.ObjectID(input.id);
     }
 
     if (hasValue(input.email)) {

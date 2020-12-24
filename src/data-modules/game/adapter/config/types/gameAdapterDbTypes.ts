@@ -94,8 +94,5 @@ export const GAME_ADAPTER_DB_TYPES = {
   },
   model: {
     GAME_DB_MODEL: Symbol.for('gameDbModel'),
-    setup: {
-      EXTENDED_GAME_SETUP_DB_MODEL: Symbol.for('ExtendedGameSetupDbModel'),
-    },
   },
 };

@@ -66,13 +66,13 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           // eslint-disable-next-line @typescript-eslint/typedef
           [extendedGameSetupDbInserted] = (
             await collection.insertMany([
-              ({
+              {
                 format: extendedGameSetupFixtureFactory.get().format,
                 ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
                 playerSetups: extendedGameSetupFixtureFactory.get()
                   .playerSetups,
                 playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+              },
             ])
           ).ops;
 
@@ -124,13 +124,13 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           // eslint-disable-next-line @typescript-eslint/typedef
           [extendedGameSetupDbInserted] = (
             await collection.insertMany([
-              ({
+              {
                 format: extendedGameSetupFixtureFactory.get().format,
                 ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
                 playerSetups: extendedGameSetupFixtureFactory.get()
                   .playerSetups,
                 playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+              },
             ])
           ).ops;
 
@@ -172,13 +172,13 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           // eslint-disable-next-line @typescript-eslint/typedef
           [extendedGameSetupDbInserted] = (
             await collection.insertMany([
-              ({
+              {
                 format: extendedGameSetupFixtureFactory.get().format,
                 ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
                 playerSetups: extendedGameSetupFixtureFactory.get()
                   .playerSetups,
                 playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+              },
             ])
           ).ops;
 
@@ -255,13 +255,13 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           // eslint-disable-next-line @typescript-eslint/typedef
           [extendedGameSetupDbInserted] = (
             await collection.insertMany([
-              ({
+              {
                 format: extendedGameSetupFixtureFactory.get().format,
                 ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
                 playerSetups: extendedGameSetupFixtureFactory.get()
                   .playerSetups,
                 playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+              },
             ])
           ).ops;
 
@@ -308,13 +308,13 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           // eslint-disable-next-line @typescript-eslint/typedef
           [extendedGameSetupDbInserted] = (
             await collection.insertMany([
-              ({
+              {
                 format: extendedGameSetupFixtureFactory.get().format,
                 ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
                 playerSetups: extendedGameSetupFixtureFactory.get()
                   .playerSetups,
                 playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+              },
             ])
           ).ops;
 
@@ -355,13 +355,13 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           // eslint-disable-next-line @typescript-eslint/typedef
           [extendedGameSetupDbInserted] = (
             await collection.insertMany([
-              ({
+              {
                 format: extendedGameSetupFixtureFactory.get().format,
                 ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
                 playerSetups: extendedGameSetupFixtureFactory.get()
                   .playerSetups,
                 playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-              } as Partial<ExtendedGameSetupDb>) as ExtendedGameSetupDb,
+              },
             ])
           ).ops;
 

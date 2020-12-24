@@ -22,7 +22,6 @@ import { commonTest } from '../../../../../common/test';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { configTest } from '../../../../../layer-modules/config/test';
 import { mongodbAdapter } from '../../../../../integration-modules/mongodb/adapter';
-import { mongooseAdapter } from '../../../../../integration-modules/mongoose/adapter';
 import { userTest } from '../../../../user/test';
 
 const container: Container = configAdapter.container;
@@ -107,7 +106,6 @@ describe('CardDeck V1', () => {
   let e2eComponents: E2EComponents;
 
   let mongoDbConnector: DbConnector;
-  let mongooseConnector: DbConnector;
 
   const client: axios.AxiosStatic = axios.default;
 
@@ -115,19 +113,14 @@ describe('CardDeck V1', () => {
     mongoDbConnector = container.get(
       mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
     );
-    mongooseConnector = container.get(
-      mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
-    );
 
     await mongoDbConnector.connect();
-    await mongooseConnector.connect();
 
     e2eComponents = await prepareData();
   });
 
   afterAll(async () => {
     await mongoDbConnector.close();
-    await mongooseConnector.close();
   });
 
   describe('when called POST, with a request with a valid CardDeckCreationQueryApiV1', () => {

@@ -73,7 +73,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                 ownerUserId: extendedGameSetupFixture.ownerUserId,
                 playerSetups: extendedGameSetupFixture.playerSetups,
                 playerSlots: extendedGameSetupFixture.playerSlots,
-              } as mongodb.OptionalId<ExtendedGameSetupDb>,
+              },
             ])
           ).ops;
 

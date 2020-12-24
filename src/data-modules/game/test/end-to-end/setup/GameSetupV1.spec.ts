@@ -26,7 +26,6 @@ import { commonTest } from '../../../../../common/test';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { configTest } from '../../../../../layer-modules/config/test';
 import { mongodbAdapter } from '../../../../../integration-modules/mongodb/adapter';
-import { mongooseAdapter } from '../../../../../integration-modules/mongoose/adapter';
 import { userTest } from '../../../../user/test';
 
 const container: Container = configAdapter.container;
@@ -145,7 +144,6 @@ describe('GameSetup V1', () => {
   let e2eComponents: E2EComponents;
 
   let mongodbConnector: DbConnector;
-  let mongooseConnector: DbConnector;
 
   const client: axios.AxiosStatic = axios.default;
 
@@ -153,19 +151,14 @@ describe('GameSetup V1', () => {
     mongodbConnector = container.get(
       mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
     );
-    mongooseConnector = container.get(
-      mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
-    );
 
     await mongodbConnector.connect();
-    await mongooseConnector.connect();
 
     e2eComponents = await prepareData();
   });
 
   afterAll(async () => {
     await mongodbConnector.close();
-    await mongooseConnector.close();
   });
 
   describe('when called POST, with a request with a valid GameSetupCreationQueryApiV1', () => {
