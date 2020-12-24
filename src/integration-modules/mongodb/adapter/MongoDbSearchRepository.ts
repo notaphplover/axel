@@ -78,7 +78,7 @@ export abstract class MongoDbSearchRepository<
 
     let entityDbFound: TOutputModelDb | null = await this.collection.findOne<TOutputModelDb>(
       mongoDbQuery,
-      this.getFindOneOptions(),
+      this.getFindOptions(),
     );
     if (entityDbFound !== null && this.postSearchFilter !== null) {
       entityDbFound = await this.postSearchFilter.filterOne(
@@ -101,15 +101,13 @@ export abstract class MongoDbSearchRepository<
   ): mongodb.Cursor<TOutputModelDb> {
     return this.collection.find<TOutputModelDb>(
       mongoDbQuery,
-      this.getFindOneOptions(),
+      this.getFindOptions(),
     );
   }
 
-  protected getFindOneOptions():
-    | mongodb.FindOneOptions<
-        TOutputModelDb extends TModelDb ? TModelDb : TOutputModelDb
-      >
-    | undefined {
+  protected getFindOptions(): mongodb.FindOneOptions<
+    TOutputModelDb extends TModelDb ? TModelDb : TOutputModelDb
+  > {
     return {};
   }
 }
