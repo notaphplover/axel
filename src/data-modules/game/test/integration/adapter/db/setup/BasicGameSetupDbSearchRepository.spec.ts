@@ -60,7 +60,6 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
     describe('.find()', () => {
       describe('when called and some game setups satisfies the query', () => {
-        let basicGameSetupFindQueryFixture: BasicGameSetupFindQuery;
         let extendedGameSetupDbInserted: ExtendedGameSetupDb;
 
         let result: unknown;
@@ -96,7 +95,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             extendedGameSetupDbFilterQuery,
           );
 
-          basicGameSetupFindQueryFixture = basicGameSetupFindQueryFixtureFactory.get();
+          const basicGameSetupFindQueryFixture: BasicGameSetupFindQuery = basicGameSetupFindQueryFixtureFactory.get();
           basicGameSetupFindQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
 
           result = await basicGameSetupDbSearchRepository.find(
@@ -157,8 +156,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         });
 
         it('must return no game', () => {
-          expect(result).toHaveProperty('length');
-          expect((result as Array<unknown>).length).toBe(0);
+          expect(result).toStrictEqual([]);
         });
       });
     });

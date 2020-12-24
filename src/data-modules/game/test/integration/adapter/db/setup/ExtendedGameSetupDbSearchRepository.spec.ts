@@ -1,201 +1,146 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import {
-  ExtendedGameSetupDb,
-  extendedGameSetupDbSchema,
-} from '../../../../../adapter/db/model/setup/ExtendedGameSetupDb';
-import mongoose, { Document, Model } from 'mongoose';
-import { Container } from 'inversify';
+import { Capsule, Converter } from '../../../../../../../common/domain';
 import { ExtendedGameSetup } from '../../../../../domain/model/setup/ExtendedGameSetup';
+import { ExtendedGameSetupDb } from '../../../../../adapter/db/model/setup/ExtendedGameSetupDb';
 import { ExtendedGameSetupDbSearchRepository } from '../../../../../adapter/db/repository/setup/ExtendedGameSetupDbSearchRepository';
 import { ExtendedGameSetupFindQuery } from '../../../../../domain/query/setup/ExtendedGameSetupFindQuery';
-import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
-import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
-import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
-import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { extendedGameSetupFindQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 import { extendedGameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
+import mongodb from 'mongodb';
 
-const container: Container = configAdapter.container;
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-const mongooseIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongooseIntegrationDescribe;
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-async function clearCollection<T extends Document>(
-  model: Model<T>,
-): Promise<void> {
-  await model.deleteMany({});
-}
+mongodbIntegrationDescribeGenerator(outputParam)(
+  ExtendedGameSetupDbSearchRepository.name,
+  () => {
+    let collectionName: string;
+    let extendedGameSetupDbToExtendedGameSetupConverter: Converter<
+      ExtendedGameSetupDb,
+      ExtendedGameSetup
+    >;
+    let mongoDbConnector: MongoDbConnector;
+    let gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter: Converter<
+      ExtendedGameSetupFindQuery,
+      mongodb.FilterQuery<ExtendedGameSetupDb>
+    >;
 
-function createExtendedGameSetupMongooseModelMock(
-  alias: string,
-): Model<ExtendedGameSetupDb> {
-  return mongoose.model<ExtendedGameSetupDb>(
-    alias,
-    extendedGameSetupDbSchema,
-    alias,
-  );
-}
+    let extendedGameSetupDbSearchRepository: ExtendedGameSetupDbSearchRepository;
 
-function injectGameMongooseModelMock(
-  container: Container,
-  model: Model<ExtendedGameSetupDb>,
-): void {
-  container
-    .bind(GAME_ADAPTER_TYPES.db.model.setup.EXTENDED_GAME_SETUP_DB_MODEL)
-    .toConstantValue(model);
-}
+    beforeAll(() => {
+      collectionName = 'ExtendedGameSetupDbSearchRepository';
+      extendedGameSetupDbToExtendedGameSetupConverter = {
+        transform: jest.fn(),
+      };
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
+      gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter = {
+        transform: jest.fn(),
+      };
 
-mongooseIntegrationDescribe(ExtendedGameSetupDbSearchRepository.name, () => {
-  describe('.find()', () => {
-    describe('when called and some game setups satisfies the query', () => {
-      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
-      let extendedGameSetupFindQueryFixture: ExtendedGameSetupFindQuery;
-
-      let result: unknown;
-
-      beforeAll(async () => {
-        const collectionName: string =
-          'ExtendedGameSetupDbSearchRepositoryModelSuccess';
-
-        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
-          collectionName,
-        );
-
-        await clearCollection(extendedGameSetupModelMock);
-
-        const [
-          extendedGameSetupDbInserted,
-        ]: ExtendedGameSetupDb[] = await extendedGameSetupModelMock.insertMany([
-          new extendedGameSetupModelMock({
-            format: extendedGameSetupFixtureFactory.get().format,
-            ownerUserId: extendedGameSetupFixtureFactory.get().ownerUserId,
-            playerSetups: extendedGameSetupFixtureFactory.get().playerSetups,
-            playerSlots: extendedGameSetupFixtureFactory.get().playerSlots,
-          }),
-        ]);
-
-        const childContainer: Container = container.createChild();
-        injectGameMongooseModelMock(childContainer, extendedGameSetupModelMock);
-
-        const extendedGameSetupDbSearchRepository: SearchRepository<
-          ExtendedGameSetup,
-          ExtendedGameSetupFindQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.setup
-            .EXTENDED_GAME_SETUP_SEARCH_REPOSITORY,
-        );
-
-        extendedGameSetupFindQueryFixture = extendedGameSetupFindQueryFixtureFactory.get();
-        extendedGameSetupFindQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
-
-        result = await extendedGameSetupDbSearchRepository.find(
-          extendedGameSetupFindQueryFixture,
-        );
-      });
-
-      afterAll(async () => {
-        await clearCollection(extendedGameSetupModelMock);
-      });
-
-      it('must return the game setups', () => {
-        const expectedExtendedGameSetupResult: ExtendedGameSetup = extendedGameSetupFixtureFactory.get();
-        expectedExtendedGameSetupResult.id = extendedGameSetupFindQueryFixture.id as string;
-
-        expect(result).toHaveProperty('length');
-        expect((result as Array<unknown>).length).toBe(1);
-
-        const [gameResult]: unknown[] = result as unknown[];
-
-        expect(gameResult as ExtendedGameSetup).toEqual(
-          expectedExtendedGameSetupResult,
-        );
-      });
+      extendedGameSetupDbSearchRepository = new ExtendedGameSetupDbSearchRepository(
+        collectionName,
+        extendedGameSetupDbToExtendedGameSetupConverter,
+        mongoDbConnector,
+        gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter,
+      );
     });
 
-    describe('when called and no game setup satisfies the query', () => {
-      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
+    describe('.find()', () => {
+      describe('when called and some game setups satisfies the query', () => {
+        let extendedGameSetupDbInserted: ExtendedGameSetupDb;
 
-      let result: unknown;
+        let result: unknown;
 
-      beforeAll(async () => {
-        const collectionName: string =
-          'ExtendedGameSetupDbSearchRepositoryModelFail';
+        beforeAll(async () => {
+          const extendedGameSetupFixture: ExtendedGameSetup = extendedGameSetupFixtureFactory.get();
 
-        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
-          collectionName,
-        );
+          const extendedGameDbCollection: mongodb.Collection<ExtendedGameSetupDb> = mongoDbConnector.db.collection(
+            collectionName,
+          );
 
-        await clearCollection(extendedGameSetupModelMock);
+          // eslint-disable-next-line @typescript-eslint/typedef
+          [extendedGameSetupDbInserted] = (
+            await extendedGameDbCollection.insertMany([
+              {
+                format: extendedGameSetupFixture.format,
+                ownerUserId: extendedGameSetupFixture.ownerUserId,
+                playerSetups: extendedGameSetupFixture.playerSetups,
+                playerSlots: extendedGameSetupFixture.playerSlots,
+              } as mongodb.OptionalId<ExtendedGameSetupDb>,
+            ])
+          ).ops;
 
-        const childContainer: Container = container.createChild();
-        injectGameMongooseModelMock(childContainer, extendedGameSetupModelMock);
+          (extendedGameSetupDbToExtendedGameSetupConverter.transform as jest.Mock).mockReturnValueOnce(
+            extendedGameSetupFixture,
+          );
 
-        const extendedGameSetupDbSearchRepository: SearchRepository<
-          ExtendedGameSetup,
-          ExtendedGameSetupFindQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.setup
-            .EXTENDED_GAME_SETUP_SEARCH_REPOSITORY,
-        );
+          const extendedGameSetupDbFilterQuery: mongodb.FilterQuery<ExtendedGameSetupDb> = {
+            _id: extendedGameSetupDbInserted._id,
+          };
 
-        result = await extendedGameSetupDbSearchRepository.find(
-          extendedGameSetupFindQueryFixtureFactory.get(),
-        );
+          (gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            extendedGameSetupDbFilterQuery,
+          );
+
+          const extendedGameSetupFindQueryFixture: ExtendedGameSetupFindQuery = extendedGameSetupFindQueryFixtureFactory.get();
+          extendedGameSetupFindQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
+
+          result = await extendedGameSetupDbSearchRepository.find(
+            extendedGameSetupFindQueryFixture,
+          );
+        });
+
+        afterAll(() => {
+          (extendedGameSetupDbToExtendedGameSetupConverter.transform as jest.Mock).mockClear();
+          (gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must call extendedGameSetupDbToExtendedGameSetupConverter.transform with the db entities found', () => {
+          expect(
+            extendedGameSetupDbToExtendedGameSetupConverter.transform,
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            extendedGameSetupDbToExtendedGameSetupConverter.transform,
+          ).toHaveBeenCalledWith(extendedGameSetupDbInserted);
+        });
+
+        it('must return the game setups', () => {
+          expect(result).toStrictEqual([extendedGameSetupFixtureFactory.get()]);
+        });
       });
 
-      afterAll(async () => {
-        await clearCollection(extendedGameSetupModelMock);
-      });
+      describe('when called and no game setup satisfies the query', () => {
+        let result: unknown;
 
-      it('must return no game', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as Array<unknown>).length).toBe(0);
+        beforeAll(async () => {
+          const extendedGameSetupDbFilterQuery: mongodb.FilterQuery<ExtendedGameSetupDb> = {
+            _id: new mongodb.ObjectID(),
+          };
+
+          (gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            extendedGameSetupDbFilterQuery,
+          );
+
+          result = await extendedGameSetupDbSearchRepository.find(
+            extendedGameSetupFindQueryFixtureFactory.get(),
+          );
+        });
+
+        afterAll(() => {
+          (gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must return no game', () => {
+          expect(result).toStrictEqual([]);
+        });
       });
     });
-
-    describe('when called, with limit and offset', () => {
-      let extendedGameSetupModelMock: Model<ExtendedGameSetupDb>;
-      let extendedGameSetupFindQueryFixture: ExtendedGameSetupFindQuery;
-
-      let result: unknown;
-
-      beforeAll(async () => {
-        const collectionName: string =
-          'ExtendedGameSetupDbSearchRepositoryModelByLimitAndOffset';
-
-        extendedGameSetupModelMock = createExtendedGameSetupMongooseModelMock(
-          collectionName,
-        );
-
-        const childContainer: Container = container.createChild();
-        injectGameMongooseModelMock(childContainer, extendedGameSetupModelMock);
-
-        const extendedGameSetupDbSearchRepository: SearchRepository<
-          ExtendedGameSetup,
-          ExtendedGameSetupFindQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.setup
-            .EXTENDED_GAME_SETUP_SEARCH_REPOSITORY,
-        );
-
-        extendedGameSetupFindQueryFixture = {
-          limit: 1,
-          offset: 0,
-        };
-
-        result = await extendedGameSetupDbSearchRepository.find(
-          extendedGameSetupFindQueryFixture,
-        );
-      });
-
-      it('must return any array of game setups', () => {
-        expect(result).toStrictEqual(expect.any(Array));
-      });
-
-      afterAll(async () => {
-        await clearCollection(extendedGameSetupModelMock);
-      });
-    });
-  });
-});
+  },
+);

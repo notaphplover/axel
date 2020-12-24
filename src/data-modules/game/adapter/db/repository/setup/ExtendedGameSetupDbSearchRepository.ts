@@ -1,22 +1,30 @@
-import { FilterQuery, Model } from 'mongoose';
+import {
+  MongoDbConnector,
+  mongodbAdapter,
+} from '../../../../../../integration-modules/mongodb/adapter';
 import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSetup';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
 import { ExtendedGameSetupFindQuery } from '../../../../domain/query/setup/ExtendedGameSetupFindQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { MongoosePaginatedSearchRepository } from '../../../../../../integration-modules/mongoose/adapter';
+import { MongoDbPaginatedSearchRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbPaginatedSearchRepository';
+import mongodb from 'mongodb';
 
 @injectable()
-export class ExtendedGameSetupDbSearchRepository extends MongoosePaginatedSearchRepository<
+export class ExtendedGameSetupDbSearchRepository extends MongoDbPaginatedSearchRepository<
   ExtendedGameSetup,
+  ExtendedGameSetupDb,
   ExtendedGameSetupDb,
   ExtendedGameSetupFindQuery
 > {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
-    @inject(GAME_ADAPTER_TYPES.db.model.setup.EXTENDED_GAME_SETUP_DB_MODEL)
-    model: Model<ExtendedGameSetupDb>,
+    @inject(
+      GAME_ADAPTER_TYPES.db.collection.setup
+        .EXTENDED_GAME_SETUP_COLLECTION_NAME,
+    )
+    collectionName: string,
     @inject(
       GAME_ADAPTER_TYPES.db.converter.setup
         .EXTENDED_GAME_SETUP_DB_TO_EXTENDED_GAME_SETUP_CONVERTER,
@@ -25,19 +33,22 @@ export class ExtendedGameSetupDbSearchRepository extends MongoosePaginatedSearch
       ExtendedGameSetupDb,
       ExtendedGameSetup
     >,
+    @inject(mongodbAdapter.config.types.db.MONGODB_CONNECTOR)
+    mongoDbConnector: MongoDbConnector,
     @inject(
       GAME_ADAPTER_TYPES.db.converter.setup
         .GAME_SETUP_FIND_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER,
     )
-    extendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter: Converter<
+    gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter: Converter<
       ExtendedGameSetupFindQuery,
-      FilterQuery<ExtendedGameSetupDb>
+      mongodb.FilterQuery<ExtendedGameSetupDb>
     >,
   ) {
     super(
-      model,
+      collectionName,
       extendedGameSetupDbToExtendedGameSetupConverter,
-      extendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter,
+      mongoDbConnector,
+      gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter,
     );
   }
 }
