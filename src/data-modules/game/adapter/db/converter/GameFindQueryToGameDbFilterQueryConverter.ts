@@ -1,18 +1,20 @@
 import { Converter } from '../../../../../common/domain';
-import { FilterQuery } from 'mongoose';
 import { GameDb } from '../model/GameDb';
 import { GameFindQuery } from '../../../domain/query/GameFindQuery';
 import { Types } from 'mongoose';
 import { commonDomain } from '../../../../../common/domain';
 import { injectable } from 'inversify';
+import mongodb from 'mongodb';
 
-const hasValue: (object: unknown) => boolean = commonDomain.utils.hasValue;
+const hasValue: <TType>(
+  value: TType,
+) => value is Exclude<TType, null | undefined> = commonDomain.utils.hasValue;
 
 @injectable()
 export class GameFindQueryToGameDbFilterQueryConverter
-  implements Converter<GameFindQuery, FilterQuery<GameDb>> {
-  public transform(input: GameFindQuery): FilterQuery<GameDb> {
-    const filterQuery: FilterQuery<GameDb> = {};
+  implements Converter<GameFindQuery, mongodb.FilterQuery<GameDb>> {
+  public transform(input: GameFindQuery): mongodb.FilterQuery<GameDb> {
+    const filterQuery: mongodb.FilterQuery<GameDb> = {};
 
     if (hasValue(input.id)) {
       filterQuery._id = Types.ObjectId(input.id);

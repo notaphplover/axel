@@ -1,129 +1,143 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { GameDb, gameDbSchema } from '../../../../adapter/db/model/GameDb';
-import mongoose, { Document, Model } from 'mongoose';
-import { Container } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../../../adapter/config/types';
-import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+
+import { Capsule, Converter } from '../../../../../../common/domain';
 import { Game } from '../../../../domain/model/Game';
+import { GameDb } from '../../../../adapter/db/model/GameDb';
 import { GameDbSearchRepository } from '../../../../adapter/db/repository/GameDbSearchRepository';
 import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
-import { SearchRepository } from '../../../../../../layer-modules/db/domain';
-import { configAdapter } from '../../../../../../layer-modules/config/adapter';
+import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../layer-modules/db/test';
 import { gameFindQueryFixtureFactory } from '../../../fixtures/domain/query/card';
 import { gameFixtureFactory } from '../../../fixtures/domain/model';
+import mongodb from 'mongodb';
 
-const container: Container = configAdapter.container;
+const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
-const mongooseIntegrationDescribe: jest.Describe =
-  dbTest.integration.utils.mongooseIntegrationDescribe;
+const mongodbIntegrationDescribeGenerator: (
+  output: Capsule<MongoDbConnector | undefined>,
+) => jest.Describe =
+  dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
-async function clearCollection<T extends Document>(
-  model: Model<T>,
-): Promise<void> {
-  await model.deleteMany({});
-}
+mongodbIntegrationDescribeGenerator(outputParam)(
+  GameDbSearchRepository.name,
+  () => {
+    let collectionName: string;
+    let gameDbToGameConverter: Converter<GameDb, Game>;
+    let mongoDbConnector: MongoDbConnector;
+    let gameFindQueryToGameDbFilterQueryConverter: Converter<
+      GameFindQuery,
+      mongodb.FilterQuery<GameDb>
+    >;
 
-function createGameMongooseModelMock(alias: string): Model<GameDb> {
-  return mongoose.model<GameDb>(alias, gameDbSchema, alias);
-}
+    let gameDbSearchRepository: GameDbSearchRepository;
 
-function injectGameMongooseModelMock(
-  container: Container,
-  model: Model<GameDb>,
-): void {
-  container
-    .bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL)
-    .toConstantValue(model);
-}
+    beforeAll(() => {
+      collectionName = 'GameDbSearchRepositoryIntegrationTest';
+      gameDbToGameConverter = {
+        transform: jest.fn(),
+      };
+      mongoDbConnector = outputParam.elem as MongoDbConnector;
+      gameFindQueryToGameDbFilterQueryConverter = {
+        transform: jest.fn(),
+      };
 
-mongooseIntegrationDescribe(GameDbSearchRepository.name, () => {
-  describe('.find()', () => {
-    describe('when called and some games satisfies the query', () => {
-      let gameModelMock: Model<GameDb>;
-
-      let result: unknown;
-
-      beforeAll(async () => {
-        const collectionName: string = 'GameDbSearchRepositoryModelSuccess';
-
-        gameModelMock = createGameMongooseModelMock(collectionName);
-
-        await clearCollection(gameModelMock);
-
-        const [gameDbInserted]: GameDb[] = await gameModelMock.insertMany([
-          new gameModelMock({
-            round: gameFixtureFactory.get().round,
-          }),
-        ]);
-
-        const childContainer: Container = container.createChild();
-        injectGameMongooseModelMock(childContainer, gameModelMock);
-
-        const gameDbSearchRepository: SearchRepository<
-          Game,
-          GameFindQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.GAME_SEARCH_REPOSITORY,
-        );
-
-        const gameFindQueryFixture: GameFindQuery = gameFindQueryFixtureFactory.get();
-        gameFindQueryFixture.id = gameDbInserted._id.toHexString();
-
-        result = await gameDbSearchRepository.find(gameFindQueryFixture);
-      });
-
-      afterAll(async () => {
-        await clearCollection(gameModelMock);
-      });
-
-      it('must return the games', () => {
-        const expectedGameResult: Game = gameFixtureFactory.get();
-
-        expect(result).toHaveProperty('length');
-        expect((result as Array<unknown>).length).toBe(1);
-
-        const [gameResult]: unknown[] = result as unknown[];
-
-        expect((gameResult as Game).round).toBe(expectedGameResult.round);
-      });
+      gameDbSearchRepository = new GameDbSearchRepository(
+        collectionName,
+        gameDbToGameConverter,
+        mongoDbConnector,
+        gameFindQueryToGameDbFilterQueryConverter,
+      );
     });
 
-    describe('when called and no game satisfies the query', () => {
-      let gameModelMock: Model<GameDb>;
+    describe('.find()', () => {
+      describe('when called and some games satisfies the query', () => {
+        let gameDbInserted: GameDb;
 
-      let result: unknown;
+        let result: unknown;
 
-      beforeAll(async () => {
-        const collectionName: string = 'GameDbSearchRepositoryModelFail';
+        beforeAll(async () => {
+          const gameFixture: Game = gameFixtureFactory.get();
 
-        gameModelMock = createGameMongooseModelMock(collectionName);
+          const gameDbCollection: mongodb.Collection<GameDb> = mongoDbConnector.db.collection(
+            collectionName,
+          );
 
-        await clearCollection(gameModelMock);
+          // eslint-disable-next-line @typescript-eslint/typedef
+          [gameDbInserted] = (
+            await gameDbCollection.insertMany([
+              {
+                round: gameFixture.round,
+              } as mongodb.OptionalId<GameDb>,
+            ])
+          ).ops;
 
-        const childContainer: Container = container.createChild();
-        injectGameMongooseModelMock(childContainer, gameModelMock);
+          const gameFindQueryFixture: GameFindQuery = {
+            ...gameFindQueryFixtureFactory.get(),
+            id: gameDbInserted._id.toHexString(),
+          };
 
-        const gameDbSearchRepository: SearchRepository<
-          Game,
-          GameFindQuery
-        > = childContainer.get(
-          GAME_DOMAIN_TYPES.repository.GAME_SEARCH_REPOSITORY,
-        );
+          (gameDbToGameConverter.transform as jest.Mock).mockReturnValueOnce(
+            gameFixture,
+          );
 
-        result = await gameDbSearchRepository.find(
-          gameFindQueryFixtureFactory.get(),
-        );
+          const gameDbFilterQuery: mongodb.FilterQuery<GameDb> = {
+            _id: gameDbInserted._id,
+          };
+
+          (gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            gameDbFilterQuery,
+          );
+
+          result = await gameDbSearchRepository.find(gameFindQueryFixture);
+        });
+
+        afterAll(async () => {
+          (gameDbToGameConverter.transform as jest.Mock).mockClear();
+          (gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must call gameDbToGameConverter.transform with the db entities found', () => {
+          expect(gameDbToGameConverter.transform).toHaveBeenCalledTimes(1);
+          expect(gameDbToGameConverter.transform).toHaveBeenCalledWith(
+            gameDbInserted,
+          );
+        });
+
+        it('must return the games', () => {
+          expect(result).toStrictEqual([gameFixtureFactory.get()]);
+        });
       });
 
-      afterAll(async () => {
-        await clearCollection(gameModelMock);
-      });
+      describe('when called and no game satisfies the query', () => {
+        let result: unknown;
 
-      it('must return no game', () => {
-        expect(result).toHaveProperty('length');
-        expect((result as Array<unknown>).length).toBe(0);
+        beforeAll(async () => {
+          const mongoDbId: mongodb.ObjectID = new mongodb.ObjectID();
+
+          const gameDbFilterQuery: mongodb.FilterQuery<GameDb> = {
+            _id: mongoDbId,
+          };
+
+          (gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
+            gameDbFilterQuery,
+          );
+
+          const gameFindQueryFixture: GameFindQuery = {
+            id: mongoDbId.toHexString(),
+          };
+
+          result = await gameDbSearchRepository.find(gameFindQueryFixture);
+        });
+
+        afterAll(async () => {
+          (gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock).mockClear();
+        });
+
+        it('must return no game', () => {
+          expect(result).toStrictEqual([]);
+        });
       });
     });
-  });
-});
+  },
+);
