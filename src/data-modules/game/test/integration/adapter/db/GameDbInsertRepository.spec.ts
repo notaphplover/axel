@@ -60,7 +60,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           gameFixture = gameFixtureFactory.get();
           gameDbFixture = {
             round: gameFixture.round,
-          } as mongodb.OptionalId<GameDb>;
+          };
 
           (gameDbToGameConverter.transform as jest.Mock).mockReturnValueOnce(
             gameFixture,

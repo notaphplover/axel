@@ -11,7 +11,7 @@ export class GameCreationQueryToGameDbsConverter
     return [
       {
         round: query.round,
-      } as mongodb.OptionalId<GameDb>,
+      },
     ];
   }
 }

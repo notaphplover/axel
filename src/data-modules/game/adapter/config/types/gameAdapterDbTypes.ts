@@ -93,7 +93,4 @@ export const GAME_ADAPTER_DB_TYPES = {
       ),
     },
   },
-  model: {
-    GAME_DB_MODEL: Symbol.for('gameDbModel'),
-  },
 };
