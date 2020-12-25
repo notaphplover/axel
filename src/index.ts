@@ -15,7 +15,6 @@ import { EnvLoader } from './layer-modules/env/domain';
 import { configAdapter } from './layer-modules/config/adapter';
 import { gameAdapter } from './data-modules/game/adapter';
 import { mongodbAdapter } from './integration-modules/mongodb/adapter';
-import { mongooseAdapter } from './integration-modules/mongoose/adapter';
 import { userAdapter } from './data-modules/user/adapter';
 
 const container: Container = configAdapter.container;
@@ -55,10 +54,6 @@ void (async () => {
     gameAdapter.config.types.server.router.setup.GAME_SETUP_ROUTER,
   );
 
-  const mongooseConnector: DbConnector = container.get(
-    mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
-  );
-
   const statusRouter: FastifyRouter = container.get(
     appAdapter.config.types.server.router.STATUS_ROUTER,
   );
@@ -84,9 +79,5 @@ void (async () => {
     appEnvLoader.index.APP_SERVER_PORT,
   );
 
-  await Promise.all([
-    initializeDb(),
-    mongooseConnector.connect(),
-    httpServer.bootstrap(),
-  ]);
+  await Promise.all([initializeDb(), httpServer.bootstrap()]);
 })();
