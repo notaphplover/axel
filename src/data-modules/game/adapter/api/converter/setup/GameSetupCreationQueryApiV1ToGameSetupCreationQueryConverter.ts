@@ -10,6 +10,7 @@ import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
 import { GameSetupCreationQueryApiV1 } from '../../query/setup/GameSetupCreationQueryApiV1';
 import { GameSetupCreationQueryPlayerSetupApiV1 } from '../../query/setup/GameSetupCreationQueryPlayerSetupApiV1';
 import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
+import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 
 @injectable()
 export class GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter
@@ -51,23 +52,28 @@ export class GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter
       format: this.gameFormatApiV1ToGameFormatConverter.transform(input.format),
       ownerUserId: input.ownerUserId,
       playerSetups: input.playerSetups.map(
-        (playerSetup: GameSetupCreationQueryPlayerSetupApiV1) => {
+        (
+          gameCreationQueryPlayerSetupApiV1: GameSetupCreationQueryPlayerSetupApiV1,
+        ): PlayerSetup => {
           const playerSetupDeck:
             | CardDeck
             | undefined = gameSetupPlayerSetupsDecks.find(
-            (cardDeck: CardDeck) => cardDeck.id === playerSetup.deckId,
+            (cardDeck: CardDeck) =>
+              cardDeck.id === gameCreationQueryPlayerSetupApiV1.deckId,
           );
 
           if (playerSetupDeck === undefined) {
             throw new EntitiesNotFoundError(
-              `playerSetup for id ${playerSetup.deckId} not found`,
+              `playerSetup for id ${gameCreationQueryPlayerSetupApiV1.deckId} not found`,
             );
           }
 
-          return {
-            deck: playerSetupDeck,
-            userId: playerSetup.userId,
+          const playerSetup: PlayerSetup = {
+            deckId: playerSetupDeck.id,
+            userId: gameCreationQueryPlayerSetupApiV1.userId,
           };
+
+          return playerSetup;
         },
       ),
       playerSlots: input.playerSlots,

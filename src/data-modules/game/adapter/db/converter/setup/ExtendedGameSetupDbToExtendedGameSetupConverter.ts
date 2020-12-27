@@ -9,7 +9,7 @@ export class ExtendedGameSetupDbToExtendedGameSetupConverter extends GameSetupDb
 
     for (const playerSetup of input) {
       playerSetupsClone.push({
-        deck: playerSetup.deck,
+        deckId: playerSetup.deckId,
         userId: playerSetup.userId,
       });
     }

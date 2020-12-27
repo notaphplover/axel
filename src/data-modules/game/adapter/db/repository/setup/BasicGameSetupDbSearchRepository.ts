@@ -57,7 +57,7 @@ export class BasicGameSetupDbSearchRepository extends MongoDbPaginatedSearchRepo
   protected getFindOptions(): mongodb.FindOneOptions<BasicGameSetupDb> {
     const findOneOptions: mongodb.FindOneOptions<BasicGameSetupDb> = super.getFindOptions();
 
-    findOneOptions.projection = { 'playerSetups.deck': 0 };
+    findOneOptions.projection = { 'playerSetups.deckId': 0 };
 
     return findOneOptions;
   }

@@ -10,7 +10,7 @@ import { cardDeck } from './deck';
 import { user } from '../../../../../user/test/fixtures/domain/model/fixtures';
 
 export const playerSetup: PlayerSetup = {
-  deck: cardDeck,
+  deckId: cardDeck.id,
   userId: user.id,
 };
 

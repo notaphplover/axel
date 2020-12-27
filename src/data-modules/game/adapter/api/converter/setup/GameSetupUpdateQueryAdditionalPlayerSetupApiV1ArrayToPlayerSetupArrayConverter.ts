@@ -39,23 +39,29 @@ export class GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArr
     );
 
     return input.map(
-      (playerSetup: GameSetupUpdateQueryAdditionalPlayerSetupApiV1) => {
+      (
+        gameSetupUpdateQueryAdditionalPlayerSetupApiV1: GameSetupUpdateQueryAdditionalPlayerSetupApiV1,
+      ): PlayerSetup => {
         const playerSetupDeck:
           | CardDeck
           | undefined = gameSetupPlayerSetupsDecks.find(
-          (cardDeck: CardDeck) => cardDeck.id === playerSetup.deckId,
+          (cardDeck: CardDeck) =>
+            cardDeck.id ===
+            gameSetupUpdateQueryAdditionalPlayerSetupApiV1.deckId,
         );
 
         if (playerSetupDeck === undefined) {
           throw new EntitiesNotFoundError(
-            `playerSetup for id ${playerSetup.deckId} not found`,
+            `playerSetup for id ${gameSetupUpdateQueryAdditionalPlayerSetupApiV1.deckId} not found`,
           );
         }
 
-        return {
-          deck: playerSetupDeck,
-          userId: playerSetup.userId,
+        const playerSetup: PlayerSetup = {
+          deckId: playerSetupDeck.id,
+          userId: gameSetupUpdateQueryAdditionalPlayerSetupApiV1.userId,
         };
+
+        return playerSetup;
       },
     );
   }

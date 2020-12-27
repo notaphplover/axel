@@ -30,7 +30,7 @@ export class ExtendedGameSetupToExtendedGameSetupApiV1Converter extends GameSetu
     inputPlayerSetup: PlayerSetup,
   ): PlayerSetupApiV1 {
     return {
-      deckId: inputPlayerSetup.deck.id,
+      deckId: inputPlayerSetup.deckId,
       userId: inputPlayerSetup.userId,
     };
   }
