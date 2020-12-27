@@ -25,7 +25,6 @@ import { GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter } from '.
 import { GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter';
 import { LandCreationQueryToLandDbsConverter } from '../../../db/converter/card/LandCreationQueryToLandDbsConverter';
 import { LandDbToLandConverter } from '../../../db/converter/card/LandDbToLandConverter';
-import { gameDbModel } from '../../../db/model/GameDb';
 import { interfaces } from 'inversify';
 
 export function bindGameAdapterDb(bind: interfaces.Bind): void {
@@ -136,6 +135,4 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.db.initializer.setup
       .EXTENDED_GAME_SETUP_DB_COLLECTION_INITIALIZER,
   ).to(ExtendedGameSetupDbCollectionInitializer);
-
-  bind(GAME_ADAPTER_TYPES.db.model.GAME_DB_MODEL).toConstantValue(gameDbModel);
 }

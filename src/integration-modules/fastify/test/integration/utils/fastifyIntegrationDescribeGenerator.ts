@@ -5,7 +5,6 @@ import { FastifyServerTest } from '../FastifyServerTest';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { customDescribe } from '../../../../../common/test/integration/utills/customDescribe';
 import { mongodbAdapter } from '../../../../mongodb/adapter';
-import { mongooseAdapter } from '../../../../mongoose/adapter';
 
 const container: Container = configAdapter.container;
 
@@ -22,7 +21,6 @@ export const fastifyIntegrationDescribeGenerator: (
 ) =>
   customDescribe(describe, 'when fastify server is ready', () => {
     let mongoDbConnector: DbConnector;
-    let mongooseConnector: DbConnector;
 
     let fastifyServerTest: FastifyServerTest;
 
@@ -30,14 +28,10 @@ export const fastifyIntegrationDescribeGenerator: (
       mongoDbConnector = container.get(
         mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
       );
-      mongooseConnector = container.get(
-        mongooseAdapter.config.types.db.MONGOOSE_CONNECTOR,
-      );
       fastifyServerTest = new FastifyServerTest([router]);
 
       await Promise.all([
         mongoDbConnector.connect(),
-        mongooseConnector.connect(),
         fastifyServerTest.bootstrap(),
       ]);
 
@@ -45,10 +39,6 @@ export const fastifyIntegrationDescribeGenerator: (
     });
 
     afterAll(async () => {
-      await Promise.all([
-        mongoDbConnector.close(),
-        mongooseConnector.close(),
-        fastifyServerTest.close(),
-      ]);
+      await Promise.all([mongoDbConnector.close(), fastifyServerTest.close()]);
     });
   });

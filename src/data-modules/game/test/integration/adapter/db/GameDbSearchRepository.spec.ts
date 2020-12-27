@@ -68,7 +68,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             await gameDbCollection.insertMany([
               {
                 round: gameFixture.round,
-              } as mongodb.OptionalId<GameDb>,
+              },
             ])
           ).ops;
 
