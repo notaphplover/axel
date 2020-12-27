@@ -36,7 +36,6 @@ const srcIntegrationModulesFolder: string = join(
 const srcLayerModulesFolder: string = join(srcFolder, 'layer-modules');
 
 const modulesBlackList: Set<string> = new Set([
-  'json-schema',
   'data-modules',
   'integration-modules',
   'layer-modules',
