@@ -11,7 +11,7 @@ import { PlayerSetupApiV1 } from '../../../../../adapter/api/model/setup/PlayerS
 import { cardDeckApiV1 } from './deck';
 
 export const playerSetupApiV1: PlayerSetupApiV1 = {
-  deck: cardDeckApiV1,
+  deckId: cardDeckApiV1.id,
   userId: playerSetup.userId,
 };
 

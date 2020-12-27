@@ -194,7 +194,7 @@ describe('GameSetup V1', () => {
       expect(
         (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).ownerUserId,
       ).toBe(gameSetupCreationQueryApiV1.ownerUserId);
-      expect(postGameSetupsV1ResponsePlayerSetup.deck.id).toBe(
+      expect(postGameSetupsV1ResponsePlayerSetup.deckId).toBe(
         gameSetupCreationQueryApiV1.playerSetups[0].deckId,
       );
       expect(postGameSetupsV1ResponsePlayerSetup.userId).toBe(
