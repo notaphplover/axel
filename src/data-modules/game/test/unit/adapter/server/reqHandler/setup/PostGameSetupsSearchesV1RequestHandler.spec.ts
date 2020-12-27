@@ -8,26 +8,34 @@ import {
   Validator,
 } from '../../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import {
+  basicGameSetupFixtureFactory,
+  extendedGameSetupFixtureFactory,
+} from '../../../../../fixtures/domain/model/setup';
 import { BasicGameSetup } from '../../../../../../domain/model/setup/BasicGameSetup';
 import { BasicGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/BasicGameSetupApiV1';
+import { ExtendedGameSetup } from '../../../../../../domain/model/setup/ExtendedGameSetup';
 import { GameSetupFindQuery } from '../../../../../../domain/query/setup/GameSetupFindQuery';
 import { GameSetupFindQueryApiV1 } from '../../../../../../adapter/api/query/setup/GameSetupFindQueryApiV1';
 import { PostGameSetupsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PostGameSetupsSearchesV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
 import { basicGameSetupApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/setup';
-import { basicGameSetupFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/setup';
-import { basicGameSetupFixtureFactory } from '../../../../../fixtures/domain/model/setup';
 import { commonTest } from '../../../../../../../../common/test';
 import { gameSetupFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/setup';
+import { gameSetupFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/setup';
 
 describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
   let basicGameSetupToBasicGameSetupApiV1Converter: Converter<
     BasicGameSetup,
     BasicGameSetupApiV1
   >;
-  let findBasicGameSetupsInteractor: Interactor<
+  let extendedGameSetupToBasicGameSetupConverter: Converter<
+    ExtendedGameSetup,
+    BasicGameSetup
+  >;
+  let findExtendedGameSetupsInteractor: Interactor<
     GameSetupFindQuery,
-    Promise<BasicGameSetup[]>
+    Promise<ExtendedGameSetup[]>
   >;
   let gameSetupFindQueryApiV1ToGameSetupFindQueryConverter: Converter<
     GameSetupFindQueryApiV1,
@@ -41,7 +49,10 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
     basicGameSetupToBasicGameSetupApiV1Converter = {
       transform: jest.fn(),
     };
-    findBasicGameSetupsInteractor = {
+    extendedGameSetupToBasicGameSetupConverter = {
+      transform: jest.fn(),
+    };
+    findExtendedGameSetupsInteractor = {
       interact: jest.fn(),
     };
     gameSetupFindQueryApiV1ToGameSetupFindQueryConverter = {
@@ -53,7 +64,8 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
 
     postGameSetupsSearchesV1RequestHandler = new PostGameSetupsSearchesV1RequestHandler(
       basicGameSetupToBasicGameSetupApiV1Converter,
-      findBasicGameSetupsInteractor,
+      extendedGameSetupToBasicGameSetupConverter,
+      findExtendedGameSetupsInteractor,
       gameSetupFindQueryApiV1ToGameSetupFindQueryConverter,
       gameSetupFindQueryApiV1Validator,
     );
@@ -81,12 +93,16 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
           basicGameSetupApiV1FixtureFactory.get(),
         );
 
-        (findBasicGameSetupsInteractor.interact as jest.Mock).mockResolvedValueOnce(
-          [basicGameSetupFixtureFactory.get()],
+        (extendedGameSetupToBasicGameSetupConverter.transform as jest.Mock).mockReturnValueOnce(
+          basicGameSetupFixtureFactory.get(),
+        );
+
+        (findExtendedGameSetupsInteractor.interact as jest.Mock).mockResolvedValueOnce(
+          [extendedGameSetupFixtureFactory.get()],
         );
 
         (gameSetupFindQueryApiV1ToGameSetupFindQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          basicGameSetupFindQueryFixtureFactory.get(),
+          gameSetupFindQueryFixtureFactory.get(),
         );
 
         (gameSetupFindQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
@@ -101,7 +117,8 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
 
       afterAll(() => {
         (basicGameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockClear();
-        (findBasicGameSetupsInteractor.interact as jest.Mock).mockClear();
+        (extendedGameSetupToBasicGameSetupConverter.transform as jest.Mock).mockClear();
+        (findExtendedGameSetupsInteractor.interact as jest.Mock).mockClear();
         (gameSetupFindQueryApiV1ToGameSetupFindQueryConverter.transform as jest.Mock).mockClear();
         (gameSetupFindQueryApiV1Validator.validate as jest.Mock).mockClear();
       });
@@ -124,10 +141,21 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
         ).toHaveBeenCalledWith(validationResultFixture.model);
       });
 
+      it('must call extendedGameSetupToBasicGameSetupConverter.transform', () => {
+        expect(
+          extendedGameSetupToBasicGameSetupConverter.transform,
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          extendedGameSetupToBasicGameSetupConverter.transform,
+        ).toHaveBeenCalledWith(extendedGameSetupFixtureFactory.get());
+      });
+
       it('must call findGameSetupsInteractor.interact()', () => {
-        expect(findBasicGameSetupsInteractor.interact).toHaveBeenCalledTimes(1);
-        expect(findBasicGameSetupsInteractor.interact).toHaveBeenCalledWith(
-          basicGameSetupFindQueryFixtureFactory.get(),
+        expect(findExtendedGameSetupsInteractor.interact).toHaveBeenCalledTimes(
+          1,
+        );
+        expect(findExtendedGameSetupsInteractor.interact).toHaveBeenCalledWith(
+          gameSetupFindQueryFixtureFactory.get(),
         );
       });
 

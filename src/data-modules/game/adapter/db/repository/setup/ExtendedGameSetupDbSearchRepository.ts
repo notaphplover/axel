@@ -6,8 +6,8 @@ import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../../../common/domain';
 import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSetup';
 import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
-import { ExtendedGameSetupFindQuery } from '../../../../domain/query/setup/ExtendedGameSetupFindQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { MongoDbPaginatedSearchRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbPaginatedSearchRepository';
 import mongodb from 'mongodb';
 
@@ -16,7 +16,7 @@ export class ExtendedGameSetupDbSearchRepository extends MongoDbPaginatedSearchR
   ExtendedGameSetup,
   ExtendedGameSetupDb,
   ExtendedGameSetupDb,
-  ExtendedGameSetupFindQuery
+  GameSetupFindQuery
 > {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
@@ -40,7 +40,7 @@ export class ExtendedGameSetupDbSearchRepository extends MongoDbPaginatedSearchR
         .GAME_SETUP_FIND_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER,
     )
     gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter: Converter<
-      ExtendedGameSetupFindQuery,
+      GameSetupFindQuery,
       mongodb.FilterQuery<ExtendedGameSetupDb>
     >,
   ) {

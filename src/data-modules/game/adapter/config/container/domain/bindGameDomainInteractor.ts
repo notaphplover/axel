@@ -6,7 +6,6 @@ import { CreateEnchantmentsInteractor } from '../../../../domain/interactor/card
 import { CreateExtendedGameSetupsInteractor } from '../../../../domain/interactor/setup/CreateExtendedGameSetupsInteractor';
 import { CreateGamesInteractor } from '../../../../domain/interactor/CreateGamesInteractor';
 import { CreateLandsInteractor } from '../../../../domain/interactor/card/CreateLandsInteractor';
-import { FindBasicGameSetupsInteractor } from '../../../../domain/interactor/setup/FindBasicGameSetupsInteractor';
 import { FindCardDeckInteractor } from '../../../../domain/interactor/deck/FindCardDeckInteractor';
 import { FindCardDecksInteractor } from '../../../../domain/interactor/deck/FindCardDecksInteractor';
 import { FindCardsInteractor } from '../../../../domain/interactor/card/FindCardsInteractor';
@@ -55,9 +54,6 @@ export function bindGameDomainInteractor(bind: interfaces.Bind): void {
   bind(
     GAME_DOMAIN_TYPES.interactor.setup.CREATE_EXTENDED_GAME_SETUPS_INTERACTOR,
   ).to(CreateExtendedGameSetupsInteractor);
-  bind(GAME_DOMAIN_TYPES.interactor.setup.FIND_BASIC_GAME_SETUPS_INTERACTOR).to(
-    FindBasicGameSetupsInteractor,
-  );
   bind(
     GAME_DOMAIN_TYPES.interactor.setup.FIND_EXTENDED_GAME_SETUPS_INTERACTOR,
   ).to(FindExtendedGameSetupsInteractor);

@@ -62,9 +62,6 @@ export const GAME_ADAPTER_DB_TYPES = {
       ),
     },
     setup: {
-      BASIC_GAME_SETUP_DB_TO_BASIC_GAME_SETUP_CONVERTER: Symbol.for(
-        'BasicGameSetupDbToBasicGameSetupConverter',
-      ),
       EXTENDED_GAME_SETUP_DB_TO_EXTENDED_GAME_SETUP_CONVERTER: Symbol.for(
         'ExtendedGameSetupDbToExtendedGameSetupConverter',
       ),
@@ -72,7 +69,7 @@ export const GAME_ADAPTER_DB_TYPES = {
         'GameSetupCreationQueryToExtendedGameSetupDbsConverter',
       ),
       GAME_SETUP_FIND_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER: Symbol.for(
-        'ExtendedGameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter',
+        'GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter',
       ),
       GAME_SETUP_UPDATE_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER: Symbol.for(
         'GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter',

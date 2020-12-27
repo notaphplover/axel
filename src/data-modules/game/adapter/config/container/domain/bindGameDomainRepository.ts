@@ -1,5 +1,4 @@
 import { ArtifactDbInsertRepository } from '../../../db/repository/card/ArtifactDbInsertRepository';
-import { BasicGameSetupDbSearchRepository } from '../../../db/repository/setup/BasicGameSetupDbSearchRepository';
 import { CardDbSearchRepository } from '../../../db/repository/card/CardDbSearchRepository';
 import { CardDeckDbInsertRepository } from '../../../db/repository/deck/CardDeckDbInsertRepository';
 import { CardDeckDbSearchRepository } from '../../../db/repository/deck/CardDeckDbSearchRepository';
@@ -44,9 +43,6 @@ export function bindGameDomainRepository(bind: interfaces.Bind): void {
     CardDeckDbSearchRepository,
   );
 
-  bind(
-    GAME_DOMAIN_TYPES.repository.setup.BASIC_GAME_SETUP_SEARCH_REPOSITORY,
-  ).to(BasicGameSetupDbSearchRepository);
   bind(
     GAME_DOMAIN_TYPES.repository.setup.EXTENDED_GAME_SETUP_INSERT_REPOSITORY,
   ).to(ExtendedGameSetupDbInsertRepository);

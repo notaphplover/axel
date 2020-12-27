@@ -4,7 +4,7 @@ import { Capsule, Converter } from '../../../../../../../common/domain';
 import { ExtendedGameSetup } from '../../../../../domain/model/setup/ExtendedGameSetup';
 import { ExtendedGameSetupDb } from '../../../../../adapter/db/model/setup/ExtendedGameSetupDb';
 import { ExtendedGameSetupDbSearchRepository } from '../../../../../adapter/db/repository/setup/ExtendedGameSetupDbSearchRepository';
-import { ExtendedGameSetupFindQuery } from '../../../../../domain/query/setup/ExtendedGameSetupFindQuery';
+import { GameSetupFindQuery } from '../../../../../domain/query/setup/GameSetupFindQuery';
 import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { extendedGameSetupFindQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
@@ -28,7 +28,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
     >;
     let mongoDbConnector: MongoDbConnector;
     let gameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter: Converter<
-      ExtendedGameSetupFindQuery,
+      GameSetupFindQuery,
       mongodb.FilterQuery<ExtendedGameSetupDb>
     >;
 
@@ -89,7 +89,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             extendedGameSetupDbFilterQuery,
           );
 
-          const extendedGameSetupFindQueryFixture: ExtendedGameSetupFindQuery = extendedGameSetupFindQueryFixtureFactory.get();
+          const extendedGameSetupFindQueryFixture: GameSetupFindQuery = extendedGameSetupFindQueryFixtureFactory.get();
           extendedGameSetupFindQueryFixture.id = extendedGameSetupDbInserted._id.toHexString();
 
           result = await extendedGameSetupDbSearchRepository.find(

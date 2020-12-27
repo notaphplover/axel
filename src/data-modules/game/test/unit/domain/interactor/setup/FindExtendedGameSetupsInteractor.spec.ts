@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { ExtendedGameSetup } from '../../../../../domain/model/setup/ExtendedGameSetup';
-import { ExtendedGameSetupFindQuery } from '../../../../../domain/query/setup/ExtendedGameSetupFindQuery';
 import { FindExtendedGameSetupsInteractor } from '../../../../../domain/interactor/setup/FindExtendedGameSetupsInteractor';
+import { GameSetupFindQuery } from '../../../../../domain/query/setup/GameSetupFindQuery';
 import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
 import { extendedGameSetupFindQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 import { extendedGameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
@@ -10,7 +10,7 @@ import { extendedGameSetupFixtureFactory } from '../../../../fixtures/domain/mod
 describe(FindExtendedGameSetupsInteractor.name, () => {
   let extendedGameSetupSearchRepository: SearchRepository<
     ExtendedGameSetup,
-    ExtendedGameSetupFindQuery
+    GameSetupFindQuery
   >;
   let findExtendedGameSetupsInteractor: FindExtendedGameSetupsInteractor;
 
@@ -18,8 +18,8 @@ describe(FindExtendedGameSetupsInteractor.name, () => {
     extendedGameSetupSearchRepository = ({
       find: jest.fn(),
     } as Partial<
-      SearchRepository<ExtendedGameSetup, ExtendedGameSetupFindQuery>
-    >) as SearchRepository<ExtendedGameSetup, ExtendedGameSetupFindQuery>;
+      SearchRepository<ExtendedGameSetup, GameSetupFindQuery>
+    >) as SearchRepository<ExtendedGameSetup, GameSetupFindQuery>;
 
     findExtendedGameSetupsInteractor = new FindExtendedGameSetupsInteractor(
       extendedGameSetupSearchRepository,

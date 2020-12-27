@@ -1,6 +1,5 @@
 import { ArtifactCreationQueryToArtifactDbsConverter } from '../../../db/converter/card/ArtifactCreationQueryToArtifactDbsConverter';
 import { ArtifactDbToArtifactConverter } from '../../../db/converter/card/ArtifactDbToArtifactConverter';
-import { BasicGameSetupDbToBasicGameSetupConverter } from '../../../db/converter/setup/BasicGameSetupDbToBasicGameSetupConverter';
 import { CardDbCollectionInitializer } from '../../../db/initializer/card/CardDbCollectionInitializer';
 import { CardDbToCardConverter } from '../../../db/converter/card/CardDbToCardConverter';
 import { CardDeckCreationQueryToCardDeckDbsConverter } from '../../../db/converter/deck/CardDeckCreationQueryToCardDeckDbsConverter';
@@ -104,10 +103,6 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.db.converter.setup
       .GAME_SETUP_CREATION_QUERY_TO_EXTENDED_GAME_SETUP_DBS_CONVERTER,
   ).to(ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.setup
-      .BASIC_GAME_SETUP_DB_TO_BASIC_GAME_SETUP_CONVERTER,
-  ).to(BasicGameSetupDbToBasicGameSetupConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.setup
       .EXTENDED_GAME_SETUP_DB_TO_EXTENDED_GAME_SETUP_CONVERTER,

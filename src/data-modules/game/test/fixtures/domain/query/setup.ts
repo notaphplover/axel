@@ -2,8 +2,6 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../common/test';
-import { BasicGameSetupFindQuery } from '../../../../domain/query/setup/BasicGameSetupFindQuery';
-import { ExtendedGameSetupFindQuery } from '../../../../domain/query/setup/ExtendedGameSetupFindQuery';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
 import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
@@ -49,10 +47,10 @@ export const gameSetupFindQuery: Required<GameSetupFindQuery> = {
   playerSlots: extendedGameSetup.playerSlots,
 };
 
-export const basicGameSetupFindQueryFixtureFactory: FixtureFactory<BasicGameSetupFindQuery> = new DeepCloneFixtureFactory(
+export const gameSetupFindQueryFixtureFactory: FixtureFactory<GameSetupFindQuery> = new DeepCloneFixtureFactory(
   gameSetupFindQuery,
 );
 
-export const extendedGameSetupFindQueryFixtureFactory: FixtureFactory<ExtendedGameSetupFindQuery> = new DeepCloneFixtureFactory(
+export const extendedGameSetupFindQueryFixtureFactory: FixtureFactory<GameSetupFindQuery> = new DeepCloneFixtureFactory(
   gameSetupFindQuery,
 );
