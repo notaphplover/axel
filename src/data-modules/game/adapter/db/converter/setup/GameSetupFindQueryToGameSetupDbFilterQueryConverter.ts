@@ -1,5 +1,5 @@
 import { Converter } from '../../../../../../common/domain';
-import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { GameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/GameSetupFindQueryPlayerSetup';
 import { hasValue } from '../../../../../../common/domain/utils/hasValue';
@@ -7,13 +7,12 @@ import { injectable } from 'inversify';
 import mongodb from 'mongodb';
 
 @injectable()
-export class GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
-  implements
-    Converter<GameSetupFindQuery, mongodb.FilterQuery<ExtendedGameSetupDb>> {
+export class GameSetupFindQueryToGameSetupDbFilterQueryConverter
+  implements Converter<GameSetupFindQuery, mongodb.FilterQuery<GameSetupDb>> {
   public transform(
     input: GameSetupFindQuery,
-  ): mongodb.FilterQuery<ExtendedGameSetupDb> {
-    const andFilterQuery: mongodb.FilterQuery<ExtendedGameSetupDb>[] = [];
+  ): mongodb.FilterQuery<GameSetupDb> {
+    const andFilterQuery: mongodb.FilterQuery<GameSetupDb>[] = [];
 
     if (hasValue(input.format)) {
       andFilterQuery.push({ format: input.format });
@@ -28,7 +27,7 @@ export class GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
     }
 
     if (hasValue(input.playerSetups) && input.playerSetups.length > 0) {
-      const playerSetupsFilterQuery: mongodb.FilterQuery<ExtendedGameSetupDb>[] = input.playerSetups.map(
+      const playerSetupsFilterQuery: mongodb.FilterQuery<GameSetupDb>[] = input.playerSetups.map(
         (playerSetup: GameSetupFindQueryPlayerSetup) => {
           return { 'playerSetups.userId': playerSetup.userId };
         },
@@ -41,7 +40,7 @@ export class GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter
       andFilterQuery.push({ playerSlots: input.playerSlots });
     }
 
-    const filterQuery: mongodb.FilterQuery<ExtendedGameSetupDb> = {};
+    const filterQuery: mongodb.FilterQuery<GameSetupDb> = {};
 
     if (andFilterQuery.length > 0) {
       filterQuery.$and = andFilterQuery;

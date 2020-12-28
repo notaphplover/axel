@@ -10,7 +10,6 @@ import {
   MongoDbInitializer,
 } from './integration-modules/mongodb/adapter';
 import { Container } from 'inversify';
-import { DbConnector } from './layer-modules/db/domain';
 import { EnvLoader } from './layer-modules/env/domain';
 import { configAdapter } from './layer-modules/config/adapter';
 import { gameAdapter } from './data-modules/game/adapter';

@@ -6,12 +6,11 @@ import {
 } from '../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
-import { BasicGameSetup } from '../../../../domain/model/setup/BasicGameSetup';
 import { BasicGameSetupApiV1 } from '../../../api/model/setup/BasicGameSetupApiV1';
-import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSetup';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
 import { GameSetupUpdateQueryApiV1 } from '../../../api/query/setup/GameSetupUpdateQueryApiV1';
 import { GameSetupUpdateQueryApiV1ValidationContext } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1ValidationContext';
@@ -24,19 +23,11 @@ export class PatchGameSetupByIdV1RequestHandler
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.setup
-        .BASIC_GAME_SETUP_TO_BASIC_GAME_SETUP_API_V1_CONVERTER,
+        .GAME_SETUP_TO_BASIC_GAME_SETUP_API_V1_CONVERTER,
     )
-    private readonly basicGameSetupToBasicGameSetupApiV1Converter: Converter<
-      BasicGameSetup,
+    private readonly gameSetupToBasicGameSetupApiV1Converter: Converter<
+      GameSetup,
       BasicGameSetupApiV1
-    >,
-    @inject(
-      GAME_DOMAIN_TYPES.converter.setup
-        .EXTENDED_GAME_SETUP_TO_BASIC_GAME_SETUP_CONVERTER,
-    )
-    private readonly extendedGameSetupToBasicGameSetupConverter: Converter<
-      ExtendedGameSetup,
-      BasicGameSetup
     >,
     @inject(
       GAME_ADAPTER_TYPES.api.validator.setup
@@ -55,9 +46,9 @@ export class PatchGameSetupByIdV1RequestHandler
       Promise<GameSetupUpdateQuery>
     >,
     @inject(GAME_DOMAIN_TYPES.interactor.setup.UPDATE_GAME_SETUP_INTERACTOR)
-    private readonly updateExtendedGameSetupInteractor: Interactor<
+    private readonly updateGameSetupInteractor: Interactor<
       GameSetupUpdateQuery,
-      Promise<ExtendedGameSetup | null>
+      Promise<GameSetup | null>
     >,
   ) {}
 
@@ -82,20 +73,17 @@ export class PatchGameSetupByIdV1RequestHandler
         gameSetupUpdateQueryApiV1,
       );
 
-      const extendedGameSetupUpdated: ExtendedGameSetup | null = await this.updateExtendedGameSetupInteractor.interact(
+      const gameSetupUpdated: GameSetup | null = await this.updateGameSetupInteractor.interact(
         gameSetupUpdateQuery,
       );
 
-      if (extendedGameSetupUpdated === null) {
+      if (gameSetupUpdated === null) {
         await reply
           .code(StatusCodes.NOT_FOUND)
           .send({ message: 'No game setup was found to be updated' });
       } else {
-        const basicGameSetupUpdated: BasicGameSetup = this.extendedGameSetupToBasicGameSetupConverter.transform(
-          extendedGameSetupUpdated,
-        );
-        const basicGameSetupApiV1Updated: BasicGameSetupApiV1 = this.basicGameSetupToBasicGameSetupApiV1Converter.transform(
-          basicGameSetupUpdated,
+        const basicGameSetupApiV1Updated: BasicGameSetupApiV1 = this.gameSetupToBasicGameSetupApiV1Converter.transform(
+          gameSetupUpdated,
         );
 
         await reply.send(basicGameSetupApiV1Updated);

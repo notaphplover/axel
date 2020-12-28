@@ -1,9 +1,10 @@
 import { Document } from '../../../../../../integration-modules/mongodb/adapter';
 import { GameFormat } from '../../../../domain/model/GameFormat';
+import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 
-export interface GameSetupDb<TPlayerSetup> extends Document {
+export interface GameSetupDb extends Document {
   format: GameFormat;
   ownerUserId: string;
-  playerSetups: TPlayerSetup[];
+  playerSetups: PlayerSetup[];
   playerSlots: number;
 }

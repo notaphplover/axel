@@ -10,13 +10,10 @@ import { dbAdapter } from '../../../../../../layer-modules/db/adapter';
 import mongodb from 'mongodb';
 
 @injectable()
-export class ExtendedGameSetupDbCollectionInitializer extends MongoDbCollectionInitializer {
+export class GameSetupDbCollectionInitializer extends MongoDbCollectionInitializer {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
-    @inject(
-      GAME_ADAPTER_TYPES.db.collection.setup
-        .EXTENDED_GAME_SETUP_COLLECTION_NAME,
-    )
+    @inject(GAME_ADAPTER_TYPES.db.collection.setup.GAME_SETUP_COLLECTION_NAME)
     collectionName: string,
     @inject(dbAdapter.config.types.env.DB_ENV_LOADER)
     dbEnvLoader: EnvLoader<DbDotEnvVariables>,
@@ -31,11 +28,11 @@ export class ExtendedGameSetupDbCollectionInitializer extends MongoDbCollectionI
   protected getIndexes(): MongoDbIndex[] {
     return [
       {
-        name: 'extendedGameSetup.ownerUserId',
+        name: 'gameSetup.ownerUserId',
         spec: { ownerUserId: 1 },
       },
       {
-        name: 'extendedGameSetup.playerSetups.userId',
+        name: 'gameSetup.playerSetups.userId',
         spec: { 'playerSetups.userId': 1 },
       },
     ];

@@ -1,9 +1,10 @@
 import { GameFormat } from '../GameFormat';
+import { PlayerSetup } from './PlayerSetup';
 
-export interface GameSetup<TPlayerSetup> {
+export interface GameSetup {
   format: GameFormat;
   id: string;
   ownerUserId: string;
-  playerSetups: TPlayerSetup[];
+  playerSetups: PlayerSetup[];
   playerSlots: number;
 }

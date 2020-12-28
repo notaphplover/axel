@@ -2,9 +2,6 @@
 export const GAME_DOMAIN_TYPES = {
   converter: {
     setup: {
-      EXTENDED_GAME_SETUP_TO_BASIC_GAME_SETUP_CONVERTER: Symbol.for(
-        'ExtendedGameSetupToBasicGameSetupConverter',
-      ),
       PLAYER_SETUP_TO_PLAYER_REFERENCE_CONVERTER: Symbol.for(
         'PlayerSetupToPlayerReferenceConverter',
       ),
@@ -29,12 +26,8 @@ export const GAME_DOMAIN_TYPES = {
       FIND_CARD_DECKS_INTERACTOR: Symbol.for('FindCardDecksInteractor'),
     },
     setup: {
-      CREATE_EXTENDED_GAME_SETUPS_INTERACTOR: Symbol.for(
-        'CreateExtendedGameSetupsInteractor',
-      ),
-      FIND_EXTENDED_GAME_SETUPS_INTERACTOR: Symbol.for(
-        'FindExtendedGameSetupsInteractor',
-      ),
+      CREATE_GAME_SETUPS_INTERACTOR: Symbol.for('CreateGameSetupsInteractor'),
+      FIND_GAME_SETUPS_INTERACTOR: Symbol.for('FindGameSetupsInteractor'),
       UPDATE_GAME_SETUP_INTERACTOR: Symbol.for('UpdateGameSetupInteractor'),
     },
   },
@@ -53,15 +46,9 @@ export const GAME_DOMAIN_TYPES = {
       CARD_DECK_SEARCH_REPOSITORY: Symbol.for('CardDeckSearchRepository'),
     },
     setup: {
-      EXTENDED_GAME_SETUP_INSERT_REPOSITORY: Symbol.for(
-        'ExtendedGameSetupInsertRepository',
-      ),
-      EXTENDED_GAME_SETUP_SEARCH_REPOSITORY: Symbol.for(
-        'ExtendedGameSetupSearchRepository',
-      ),
-      EXTENDED_GAME_SETUP_UPDATE_REPOSITORY: Symbol.for(
-        'ExtendedGameSetupUpdateRepository',
-      ),
+      GAME_SETUP_INSERT_REPOSITORY: Symbol.for('GameSetupInsertRepository'),
+      GAME_SETUP_SEARCH_REPOSITORY: Symbol.for('GameSetupSearchRepository'),
+      GAME_SETUP_UPDATE_REPOSITORY: Symbol.for('GameSetupUpdateRepository'),
     },
   },
 };

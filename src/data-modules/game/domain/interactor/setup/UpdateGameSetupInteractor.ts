@@ -1,27 +1,24 @@
 import { inject, injectable } from 'inversify';
-import { ExtendedGameSetup } from '../../model/setup/ExtendedGameSetup';
 import { GAME_DOMAIN_TYPES } from '../../config/types';
+import { GameSetup } from '../../model/setup/GameSetup';
 import { GameSetupUpdateQuery } from '../../query/setup/GameSetupUpdateQuery';
 import { Interactor } from '../../../../../common/domain';
 import { UpdateRepository } from '../../../../../layer-modules/db/domain';
 
 @injectable()
 export class UpdateGameSetupInteractor
-  implements
-    Interactor<GameSetupUpdateQuery, Promise<ExtendedGameSetup | null>> {
+  implements Interactor<GameSetupUpdateQuery, Promise<GameSetup | null>> {
   constructor(
-    @inject(
-      GAME_DOMAIN_TYPES.repository.setup.EXTENDED_GAME_SETUP_UPDATE_REPOSITORY,
-    )
-    private readonly extendedGameSetupDbUpdateRepository: UpdateRepository<
-      ExtendedGameSetup,
+    @inject(GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_UPDATE_REPOSITORY)
+    private readonly gameSetupDbUpdateRepository: UpdateRepository<
+      GameSetup,
       GameSetupUpdateQuery
     >,
   ) {}
 
   public async interact(
     input: GameSetupUpdateQuery,
-  ): Promise<ExtendedGameSetup | null> {
-    return this.extendedGameSetupDbUpdateRepository.updateOneAndSelect(input);
+  ): Promise<GameSetup | null> {
+    return this.gameSetupDbUpdateRepository.updateOneAndSelect(input);
   }
 }

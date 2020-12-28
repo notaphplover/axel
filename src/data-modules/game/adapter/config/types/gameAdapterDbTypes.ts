@@ -9,9 +9,7 @@ export const GAME_ADAPTER_DB_TYPES = {
       DECK_COLLECTION_NAME: Symbol.for('DeckCollectionName'),
     },
     setup: {
-      EXTENDED_GAME_SETUP_COLLECTION_NAME: Symbol.for(
-        'ExtendedGameSetupCollectionName',
-      ),
+      GAME_SETUP_COLLECTION_NAME: Symbol.for('GameSetupCollectionName'),
     },
   },
   converter: {
@@ -62,20 +60,20 @@ export const GAME_ADAPTER_DB_TYPES = {
       ),
     },
     setup: {
-      EXTENDED_GAME_SETUP_DB_TO_EXTENDED_GAME_SETUP_CONVERTER: Symbol.for(
-        'ExtendedGameSetupDbToExtendedGameSetupConverter',
+      GAME_SETUP_DB_TO_GAME_SETUP_CONVERTER: Symbol.for(
+        'GameSetupDbToGameSetupConverter',
       ),
-      GAME_SETUP_CREATION_QUERY_TO_EXTENDED_GAME_SETUP_DBS_CONVERTER: Symbol.for(
-        'GameSetupCreationQueryToExtendedGameSetupDbsConverter',
+      GAME_SETUP_CREATION_QUERY_TO_GAME_SETUP_DBS_CONVERTER: Symbol.for(
+        'GameSetupCreationQueryToGameSetupDbsConverter',
       ),
-      GAME_SETUP_FIND_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER: Symbol.for(
-        'GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter',
+      GAME_SETUP_FIND_QUERY_TO_GAME_SETUP_DB_FILTER_QUERY_CONVERTER: Symbol.for(
+        'GameSetupFindQueryToGameSetupDbFilterQueryConverter',
       ),
-      GAME_SETUP_UPDATE_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER: Symbol.for(
-        'GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter',
+      GAME_SETUP_UPDATE_QUERY_TO_GAME_SETUP_DB_FILTER_QUERY_CONVERTER: Symbol.for(
+        'GameSetupUpdateQueryToGameSetupDbFilterQueryConverter',
       ),
-      GAME_SETUP_UPDATE_QUERY_TO_EXTENDED_GAME_SETUP_DB_UPDATE_QUERY_CONVERTER: Symbol.for(
-        'GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter',
+      GAME_SETUP_UPDATE_QUERY_TO_GAME_SETUP_DB_UPDATE_QUERY_CONVERTER: Symbol.for(
+        'GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter',
       ),
     },
   },
@@ -85,8 +83,8 @@ export const GAME_ADAPTER_DB_TYPES = {
       CARD_DB_COLLECTION_INITIALIZER: Symbol.for('CardDbCollectionInitializer'),
     },
     setup: {
-      EXTENDED_GAME_SETUP_DB_COLLECTION_INITIALIZER: Symbol.for(
-        'ExtendedGameSetupDbCollectionInitializer',
+      GAME_SETUP_DB_COLLECTION_INITIALIZER: Symbol.for(
+        'GameSetupDbCollectionInitializer',
       ),
     },
   },

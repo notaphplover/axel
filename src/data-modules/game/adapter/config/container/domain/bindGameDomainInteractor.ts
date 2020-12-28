@@ -3,14 +3,14 @@ import { CreateCardDecksInteractor } from '../../../../domain/interactor/deck/Cr
 import { CreateCardsInteractor } from '../../../../domain/interactor/card/CreateCardsInteractor';
 import { CreateCreaturesInteractor } from '../../../../domain/interactor/card/CreateCreaturesInteractor';
 import { CreateEnchantmentsInteractor } from '../../../../domain/interactor/card/CreateEnchantmentsInteractor';
-import { CreateExtendedGameSetupsInteractor } from '../../../../domain/interactor/setup/CreateExtendedGameSetupsInteractor';
+import { CreateGameSetupsInteractor } from '../../../../domain/interactor/setup/CreateGameSetupsInteractor';
 import { CreateGamesInteractor } from '../../../../domain/interactor/CreateGamesInteractor';
 import { CreateLandsInteractor } from '../../../../domain/interactor/card/CreateLandsInteractor';
 import { FindCardDeckInteractor } from '../../../../domain/interactor/deck/FindCardDeckInteractor';
 import { FindCardDecksInteractor } from '../../../../domain/interactor/deck/FindCardDecksInteractor';
 import { FindCardsInteractor } from '../../../../domain/interactor/card/FindCardsInteractor';
-import { FindExtendedGameSetupsInteractor } from '../../../../domain/interactor/setup/FindExtendedGameSetupsInteractor';
 import { FindGameInteractor } from '../../../../domain/interactor/FindGameInteractor';
+import { FindGameSetupsInteractor } from '../../../../domain/interactor/setup/FindGameSetupsInteractor';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { UpdateGameSetupInteractor } from '../../../../domain/interactor/setup/UpdateGameSetupInteractor';
 import { interfaces } from 'inversify';
@@ -51,12 +51,12 @@ export function bindGameDomainInteractor(bind: interfaces.Bind): void {
     FindCardDecksInteractor,
   );
 
-  bind(
-    GAME_DOMAIN_TYPES.interactor.setup.CREATE_EXTENDED_GAME_SETUPS_INTERACTOR,
-  ).to(CreateExtendedGameSetupsInteractor);
-  bind(
-    GAME_DOMAIN_TYPES.interactor.setup.FIND_EXTENDED_GAME_SETUPS_INTERACTOR,
-  ).to(FindExtendedGameSetupsInteractor);
+  bind(GAME_DOMAIN_TYPES.interactor.setup.CREATE_GAME_SETUPS_INTERACTOR).to(
+    CreateGameSetupsInteractor,
+  );
+  bind(GAME_DOMAIN_TYPES.interactor.setup.FIND_GAME_SETUPS_INTERACTOR).to(
+    FindGameSetupsInteractor,
+  );
   bind(GAME_DOMAIN_TYPES.interactor.setup.UPDATE_GAME_SETUP_INTERACTOR).to(
     UpdateGameSetupInteractor,
   );

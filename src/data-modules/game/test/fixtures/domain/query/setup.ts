@@ -6,13 +6,13 @@ import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFind
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
 import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
-import { extendedGameSetup } from '../model/setup';
+import { gameSetup } from '../model/setup';
 
 export const gameSetupsCreationQuery: GameSetupsCreationQuery = {
-  format: extendedGameSetup.format,
-  ownerUserId: extendedGameSetup.ownerUserId,
-  playerSetups: extendedGameSetup.playerSetups,
-  playerSlots: extendedGameSetup.playerSlots,
+  format: gameSetup.format,
+  ownerUserId: gameSetup.ownerUserId,
+  playerSetups: gameSetup.playerSetups,
+  playerSlots: gameSetup.playerSlots,
 };
 
 export const gameSetupsCreationQueryFixtureFactory: FixtureFactory<GameSetupsCreationQuery> = new DeepCloneFixtureFactory(
@@ -20,13 +20,11 @@ export const gameSetupsCreationQueryFixtureFactory: FixtureFactory<GameSetupsCre
 );
 
 export const gameSetupUpdateQuery: GameSetupUpdateQuery = {
-  additionalPlayerSetups: extendedGameSetup.playerSetups,
-  id: extendedGameSetup.id,
-  removePlayerSetups: extendedGameSetup.playerSetups.map(
-    (playerSetup: PlayerSetup) => {
-      return { userId: playerSetup.userId };
-    },
-  ),
+  additionalPlayerSetups: gameSetup.playerSetups,
+  id: gameSetup.id,
+  removePlayerSetups: gameSetup.playerSetups.map((playerSetup: PlayerSetup) => {
+    return { userId: playerSetup.userId };
+  }),
 };
 
 export const gameSetupUpdateQueryFixtureFactory: FixtureFactory<GameSetupUpdateQuery> = new DeepCloneFixtureFactory(
@@ -34,23 +32,17 @@ export const gameSetupUpdateQueryFixtureFactory: FixtureFactory<GameSetupUpdateQ
 );
 
 export const gameSetupFindQuery: Required<GameSetupFindQuery> = {
-  format: extendedGameSetup.format,
-  id: extendedGameSetup.id,
+  format: gameSetup.format,
+  id: gameSetup.id,
   limit: 1,
   offset: 0,
-  ownerUserId: extendedGameSetup.ownerUserId,
-  playerSetups: extendedGameSetup.playerSetups.map(
-    (playerSetup: PlayerSetup) => {
-      return { userId: playerSetup.userId };
-    },
-  ),
-  playerSlots: extendedGameSetup.playerSlots,
+  ownerUserId: gameSetup.ownerUserId,
+  playerSetups: gameSetup.playerSetups.map((playerSetup: PlayerSetup) => {
+    return { userId: playerSetup.userId };
+  }),
+  playerSlots: gameSetup.playerSlots,
 };
 
 export const gameSetupFindQueryFixtureFactory: FixtureFactory<GameSetupFindQuery> = new DeepCloneFixtureFactory(
-  gameSetupFindQuery,
-);
-
-export const extendedGameSetupFindQueryFixtureFactory: FixtureFactory<GameSetupFindQuery> = new DeepCloneFixtureFactory(
   gameSetupFindQuery,
 );

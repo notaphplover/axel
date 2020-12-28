@@ -12,13 +12,8 @@ import {
   basicGameSetupApiV1FixtureFactory,
   extendedGameSetupApiV1FixtureFactory,
 } from '../../../../../fixtures/adapter/api/model/setup';
-import {
-  basicGameSetupFixtureFactory,
-  extendedGameSetupFixtureFactory,
-} from '../../../../../fixtures/domain/model/setup';
-import { BasicGameSetup } from '../../../../../../domain/model/setup/BasicGameSetup';
 import { BasicGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/BasicGameSetupApiV1';
-import { ExtendedGameSetup } from '../../../../../../domain/model/setup/ExtendedGameSetup';
+import { GameSetup } from '../../../../../../domain/model/setup/GameSetup';
 import { GameSetupUpdateQuery } from '../../../../../../domain/query/setup/GameSetupUpdateQuery';
 import { GameSetupUpdateQueryApiV1 } from '../../../../../../adapter/api/query/setup/GameSetupUpdateQueryApiV1';
 import { GameSetupUpdateQueryApiV1ValidationContext } from '../../../../../../adapter/api/validator/setup/GameSetupUpdateQueryApiV1ValidationContext';
@@ -26,18 +21,15 @@ import { PatchGameSetupByIdV1RequestHandler } from '../../../../../../adapter/se
 import { StatusCodes } from 'http-status-codes';
 import { UserContainer } from '../../../../../../../user/domain';
 import { commonTest } from '../../../../../../../../common/test';
+import { gameSetupFixtureFactory } from '../../../../../fixtures/domain/model/setup';
 import { gameSetupUpdateQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/setup';
 import { gameSetupUpdateQueryFixtureFactory } from '../../../../../fixtures/domain/query/setup';
 import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';
 
 describe(PatchGameSetupByIdV1RequestHandler.name, () => {
-  let basicGameSetupToBasicGameSetupApiV1Converter: Converter<
-    BasicGameSetup,
+  let gameSetupToBasicGameSetupApiV1Converter: Converter<
+    GameSetup,
     BasicGameSetupApiV1
-  >;
-  let extendedGameSetupToBasicGameSetupConverter: Converter<
-    ExtendedGameSetup,
-    BasicGameSetup
   >;
   let gameSetupUpdateQueryApiV1ContextBasedValidator: ContextBasedValidator<
     GameSetupUpdateQueryApiV1,
@@ -47,18 +39,15 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
     GameSetupUpdateQueryApiV1,
     Promise<GameSetupUpdateQuery>
   >;
-  let updateExtendedGameSetupInteractor: Interactor<
+  let updateGameSetupInteractor: Interactor<
     GameSetupUpdateQuery,
-    Promise<ExtendedGameSetup | null>
+    Promise<GameSetup | null>
   >;
 
   let patchGameSetupByIdV1RequestHandler: PatchGameSetupByIdV1RequestHandler;
 
   beforeAll(() => {
-    basicGameSetupToBasicGameSetupApiV1Converter = {
-      transform: jest.fn(),
-    };
-    extendedGameSetupToBasicGameSetupConverter = {
+    gameSetupToBasicGameSetupApiV1Converter = {
       transform: jest.fn(),
     };
     gameSetupUpdateQueryApiV1ContextBasedValidator = {
@@ -67,16 +56,15 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
     gameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter = {
       transform: jest.fn(),
     };
-    updateExtendedGameSetupInteractor = {
+    updateGameSetupInteractor = {
       interact: jest.fn(),
     };
 
     patchGameSetupByIdV1RequestHandler = new PatchGameSetupByIdV1RequestHandler(
-      basicGameSetupToBasicGameSetupApiV1Converter,
-      extendedGameSetupToBasicGameSetupConverter,
+      gameSetupToBasicGameSetupApiV1Converter,
       gameSetupUpdateQueryApiV1ContextBasedValidator,
       gameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter,
-      updateExtendedGameSetupInteractor,
+      updateGameSetupInteractor,
     );
   });
 
@@ -113,15 +101,11 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
           gameSetupUpdateQueryFixtureFactory.get(),
         );
 
-        (updateExtendedGameSetupInteractor.interact as jest.Mock).mockResolvedValueOnce(
-          extendedGameSetupFixtureFactory.get(),
+        (updateGameSetupInteractor.interact as jest.Mock).mockResolvedValueOnce(
+          gameSetupFixtureFactory.get(),
         );
 
-        (extendedGameSetupToBasicGameSetupConverter.transform as jest.Mock).mockReturnValueOnce(
-          basicGameSetupFixtureFactory.get(),
-        );
-
-        (basicGameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
+        (gameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
           basicGameSetupApiV1FixtureFactory.get(),
         );
 
@@ -134,9 +118,8 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
       afterAll(() => {
         (gameSetupUpdateQueryApiV1ContextBasedValidator.validate as jest.Mock).mockClear();
         (gameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter.transform as jest.Mock).mockClear();
-        (updateExtendedGameSetupInteractor.interact as jest.Mock).mockClear();
-        (extendedGameSetupToBasicGameSetupConverter.transform as jest.Mock).mockClear();
-        (basicGameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockClear();
+        (updateGameSetupInteractor.interact as jest.Mock).mockClear();
+        (gameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockClear();
       });
 
       it('must call gameSetupUpdateQueryApiV1ContextBasedValidator.validate with the query from the request and the user', () => {
@@ -159,31 +142,20 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
         ).toHaveBeenCalledWith(gameSetupUpdateQueryApiV1FixtureFactory.get());
       });
 
-      it('must call updateExtendedGameSetupInteractor.interact with the domain query parsed', () => {
-        expect(
-          updateExtendedGameSetupInteractor.interact,
-        ).toHaveBeenCalledTimes(1);
-        expect(updateExtendedGameSetupInteractor.interact).toHaveBeenCalledWith(
+      it('must call updateGameSetupInteractor.interact with the domain query parsed', () => {
+        expect(updateGameSetupInteractor.interact).toHaveBeenCalledTimes(1);
+        expect(updateGameSetupInteractor.interact).toHaveBeenCalledWith(
           gameSetupUpdateQueryFixtureFactory.get(),
         );
       });
 
-      it('must call extendedGameSetupToBasicGameSetupConverter.transform with the domain model received', () => {
-        expect(
-          extendedGameSetupToBasicGameSetupConverter.transform,
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          extendedGameSetupToBasicGameSetupConverter.transform,
-        ).toHaveBeenCalledWith(extendedGameSetupFixtureFactory.get());
-      });
-
       it('must call basicGameSetupToBasicGameSetupApiV1Converter.transform with the domain model received', () => {
         expect(
-          basicGameSetupToBasicGameSetupApiV1Converter.transform,
+          gameSetupToBasicGameSetupApiV1Converter.transform,
         ).toHaveBeenCalledTimes(1);
         expect(
-          basicGameSetupToBasicGameSetupApiV1Converter.transform,
-        ).toHaveBeenCalledWith(basicGameSetupFixtureFactory.get());
+          gameSetupToBasicGameSetupApiV1Converter.transform,
+        ).toHaveBeenCalledWith(gameSetupFixtureFactory.get());
       });
 
       it('must call reply.send with the api model converted', () => {
@@ -226,15 +198,11 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
           gameSetupUpdateQueryFixtureFactory.get(),
         );
 
-        (updateExtendedGameSetupInteractor.interact as jest.Mock).mockResolvedValueOnce(
+        (updateGameSetupInteractor.interact as jest.Mock).mockResolvedValueOnce(
           null,
         );
 
-        (extendedGameSetupToBasicGameSetupConverter.transform as jest.Mock).mockReturnValueOnce(
-          basicGameSetupFixtureFactory.get(),
-        );
-
-        (basicGameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
+        (gameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
           basicGameSetupApiV1FixtureFactory.get(),
         );
 
@@ -247,9 +215,8 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
       afterAll(() => {
         (gameSetupUpdateQueryApiV1ContextBasedValidator.validate as jest.Mock).mockClear();
         (gameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter.transform as jest.Mock).mockClear();
-        (updateExtendedGameSetupInteractor.interact as jest.Mock).mockClear();
-        (extendedGameSetupToBasicGameSetupConverter.transform as jest.Mock).mockClear();
-        (basicGameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockClear();
+        (updateGameSetupInteractor.interact as jest.Mock).mockClear();
+        (gameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockClear();
       });
 
       it('must call reply.code with a NOT_FOUND code', () => {
@@ -299,15 +266,11 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
           gameSetupUpdateQueryFixtureFactory.get(),
         );
 
-        (updateExtendedGameSetupInteractor.interact as jest.Mock).mockResolvedValueOnce(
+        (updateGameSetupInteractor.interact as jest.Mock).mockResolvedValueOnce(
           null,
         );
 
-        (extendedGameSetupToBasicGameSetupConverter.transform as jest.Mock).mockReturnValueOnce(
-          basicGameSetupFixtureFactory.get(),
-        );
-
-        (basicGameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
+        (gameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
           basicGameSetupApiV1FixtureFactory.get(),
         );
 
@@ -320,9 +283,8 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
       afterAll(() => {
         (gameSetupUpdateQueryApiV1ContextBasedValidator.validate as jest.Mock).mockClear();
         (gameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter.transform as jest.Mock).mockClear();
-        (updateExtendedGameSetupInteractor.interact as jest.Mock).mockClear();
-        (extendedGameSetupToBasicGameSetupConverter.transform as jest.Mock).mockClear();
-        (basicGameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockClear();
+        (updateGameSetupInteractor.interact as jest.Mock).mockClear();
+        (gameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockClear();
       });
 
       it('must call reply.code with a BAD_REQUEST code', () => {

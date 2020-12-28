@@ -1,17 +1,16 @@
 import { Converter } from '../../../../../../common/domain';
-import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
 import { PlayerReference } from '../../../../domain/model/setup/PlayerReference';
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
 
 @injectable()
-export class GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter
-  implements
-    Converter<GameSetupUpdateQuery, mongodb.UpdateQuery<ExtendedGameSetupDb>> {
+export class GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter
+  implements Converter<GameSetupUpdateQuery, mongodb.UpdateQuery<GameSetupDb>> {
   public transform(
     input: GameSetupUpdateQuery,
-  ): mongodb.UpdateQuery<ExtendedGameSetupDb> {
+  ): mongodb.UpdateQuery<GameSetupDb> {
     const updateQuery: unknown[] = [];
 
     if (input.additionalPlayerSetups !== undefined) {
@@ -51,6 +50,6 @@ export class GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter
       });
     }
 
-    return (updateQuery as unknown) as mongodb.UpdateQuery<ExtendedGameSetupDb>;
+    return (updateQuery as unknown) as mongodb.UpdateQuery<GameSetupDb>;
   }
 }

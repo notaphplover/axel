@@ -56,11 +56,11 @@ export const GAME_ADAPTER_API_TYPES = {
       ),
     },
     setup: {
-      BASIC_GAME_SETUP_TO_BASIC_GAME_SETUP_API_V1_CONVERTER: Symbol.for(
-        'BasicGameSetupToBasicGameSetupApiV1Converter',
+      GAME_SETUP_TO_BASIC_GAME_SETUP_API_V1_CONVERTER: Symbol.for(
+        'GameSetupToBasicGameSetupApiV1Converter',
       ),
-      EXTENDED_GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER: Symbol.for(
-        'ExtendedGameSetupToExtendedGameSetupApiV1Converter',
+      GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER: Symbol.for(
+        'GameSetupToExtendedGameSetupApiV1Converter',
       ),
       GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER: Symbol.for(
         'GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter',

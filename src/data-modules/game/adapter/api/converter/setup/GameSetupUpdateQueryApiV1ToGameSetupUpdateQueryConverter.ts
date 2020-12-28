@@ -66,7 +66,7 @@ export class GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter
       removePlayerSetups = undefined;
     } else {
       removePlayerSetups = input.removePlayerSetups.map(
-        (removePlayerSetup: PlayerReference) =>
+        (removePlayerSetup: PlayerReferenceApiV1): PlayerReference =>
           this.playerReferenceApiV1ToPlayerReferenceConverter.transform(
             removePlayerSetup,
           ),

@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { ExtendedGameSetup } from '../../../../../domain/model/setup/ExtendedGameSetup';
+import { GameSetup } from '../../../../../domain/model/setup/GameSetup';
 import { GameSetupUpdateQuery } from '../../../../../domain/query/setup/GameSetupUpdateQuery';
 import { UpdateGameSetupInteractor } from '../../../../../domain/interactor/setup/UpdateGameSetupInteractor';
 import { UpdateRepository } from '../../../../../../../layer-modules/db/domain';
-import { extendedGameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
+import { gameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
 import { gameSetupUpdateQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 
 describe(UpdateGameSetupInteractor.name, () => {
-  let extendedGameSetupDbUpdateRepository: UpdateRepository<
-    ExtendedGameSetup,
+  let gameSetupDbUpdateRepository: UpdateRepository<
+    GameSetup,
     GameSetupUpdateQuery
   >;
 
   let updateGameSetupInteractor: UpdateGameSetupInteractor;
 
   beforeAll(() => {
-    extendedGameSetupDbUpdateRepository = ({
+    gameSetupDbUpdateRepository = ({
       updateOneAndSelect: jest.fn(),
     } as Partial<
-      UpdateRepository<ExtendedGameSetup, GameSetupUpdateQuery>
-    >) as UpdateRepository<ExtendedGameSetup, GameSetupUpdateQuery>;
+      UpdateRepository<GameSetup, GameSetupUpdateQuery>
+    >) as UpdateRepository<GameSetup, GameSetupUpdateQuery>;
 
     updateGameSetupInteractor = new UpdateGameSetupInteractor(
-      extendedGameSetupDbUpdateRepository,
+      gameSetupDbUpdateRepository,
     );
   });
 
@@ -32,8 +32,8 @@ describe(UpdateGameSetupInteractor.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        (extendedGameSetupDbUpdateRepository.updateOneAndSelect as jest.Mock).mockResolvedValueOnce(
-          extendedGameSetupFixtureFactory.get(),
+        (gameSetupDbUpdateRepository.updateOneAndSelect as jest.Mock).mockResolvedValueOnce(
+          gameSetupFixtureFactory.get(),
         );
 
         result = await updateGameSetupInteractor.interact(
@@ -41,17 +41,17 @@ describe(UpdateGameSetupInteractor.name, () => {
         );
       });
 
-      it('must call extendedGameSetupDbUpdateRepository.updateOneAndSelect() with the query provided', () => {
+      it('must call gameSetupDbUpdateRepository.updateOneAndSelect() with the query provided', () => {
         expect(
-          extendedGameSetupDbUpdateRepository.updateOneAndSelect,
+          gameSetupDbUpdateRepository.updateOneAndSelect,
         ).toHaveBeenCalledTimes(1);
         expect(
-          extendedGameSetupDbUpdateRepository.updateOneAndSelect,
+          gameSetupDbUpdateRepository.updateOneAndSelect,
         ).toHaveBeenCalledWith(gameSetupUpdateQueryFixtureFactory.get());
       });
 
       it('must return the game setup updated', () => {
-        expect(result).toStrictEqual(extendedGameSetupFixtureFactory.get());
+        expect(result).toStrictEqual(gameSetupFixtureFactory.get());
       });
     });
   });

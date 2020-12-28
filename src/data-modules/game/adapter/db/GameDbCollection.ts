@@ -1,6 +1,6 @@
 export enum GameDbCollectionName {
   Card = 'card',
   CardDeck = 'cardDeck',
-  ExtendedGameSetup = 'extendedGameSetup',
+  GameSetup = 'gameSetup',
   Game = 'game',
 }

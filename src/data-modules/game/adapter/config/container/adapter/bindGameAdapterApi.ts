@@ -1,4 +1,3 @@
-import { BasicGameSetupToBasicGameSetupApiV1Converter } from '../../../api/converter/setup/BasicGameSetupToBasicGameSetupApiV1Converter';
 import { CardCreationQueryApiV1ToCardCreationQueryConverter } from '../../../api/converter/card/CardCreationQueryApiV1ToCardCreationQueryConverter';
 import { CardCreationQueryApiV1Validator } from '../../../api/validator/card/CardCreationQueryApiV1Validator';
 import { CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter } from '../../../api/converter/deck/CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter';
@@ -15,7 +14,6 @@ import { CardSetReferencesToCardSetReferencesApiV1Converter } from '../../../api
 import { CardToCardApiV1Converter } from '../../../api/converter/card/CardToCardApiV1Converter';
 import { CardTypeApiV1ToCardTypeConverter } from '../../../api/converter/card/CardTypeApiV1ToCardTypeConverter';
 import { CardTypeToCardTypeApiV1Converter } from '../../../api/converter/card/CardTypeToCardTypeApiV1Converter';
-import { ExtendedGameSetupToExtendedGameSetupApiV1Converter } from '../../../api/converter/setup/ExtendedGameSetupToExtendedGameSetupApiV1Converter';
 import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameCreationQueryApiV1Validator } from '../../../api/validator/GameCreationQueryApiV1Validator';
 import { GameFormatApiV1ToGameFormatConverter } from '../../../api/converter/GameFormatApiV1ToGameFormatConverter';
@@ -26,6 +24,8 @@ import { GameSetupCreationQueryApiV1Validator } from '../../../api/validator/set
 import { GameSetupFindQueryApiV1ToGameSetupFindQueryConverter } from '../../../api/converter/setup/GameSetupFindQueryApiV1ToGameSetupFindQueryConverter';
 import { GameSetupFindQueryApiV1Validator } from '../../../api/validator/setup/GameSetupFindQueryApiV1Validator';
 import { GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter } from '../../../api/converter/setup/GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter';
+import { GameSetupToBasicGameSetupApiV1Converter } from '../../../api/converter/setup/GameSetupToBasicGameSetupApiV1Converter';
+import { GameSetupToExtendedGameSetupApiV1Converter } from '../../../api/converter/setup/GameSetupToExtendedGameSetupApiV1Converter';
 import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter } from '../../../api/converter/setup/GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter';
 import { GameSetupUpdateQueryApiV1ContextBasedValidator } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1ContextBasedValidator';
 import { GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter } from '../../../api/converter/setup/GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter';
@@ -116,12 +116,12 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
 
   bind(
     GAME_ADAPTER_TYPES.api.converter.setup
-      .BASIC_GAME_SETUP_TO_BASIC_GAME_SETUP_API_V1_CONVERTER,
-  ).to(BasicGameSetupToBasicGameSetupApiV1Converter);
+      .GAME_SETUP_TO_BASIC_GAME_SETUP_API_V1_CONVERTER,
+  ).to(GameSetupToBasicGameSetupApiV1Converter);
   bind(
     GAME_ADAPTER_TYPES.api.converter.setup
-      .EXTENDED_GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER,
-  ).to(ExtendedGameSetupToExtendedGameSetupApiV1Converter);
+      .GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER,
+  ).to(GameSetupToExtendedGameSetupApiV1Converter);
   bind(
     GAME_ADAPTER_TYPES.api.converter.setup
       .GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER,

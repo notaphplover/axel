@@ -12,15 +12,15 @@ import { GameSetupFindQueryApiV1 } from '../../../../../adapter/api/query/setup/
 import { GameSetupFindQueryPlayerSetupApiV1 } from '../../../../../adapter/api/query/setup/GameSetupFindQueryPlayerSetupApiV1';
 import { GameSetupUpdateQueryApiV1 } from '../../../../../adapter/api/query/setup/GameSetupUpdateQueryApiV1';
 import { cardDeck } from '../../../domain/model/deck';
-import { extendedGameSetup } from '../../../domain/model/setup';
+import { gameSetup } from '../../../domain/model/setup';
 
 export const gameSetupCreationQueryApiV1: GameSetupCreationQueryApiV1 = {
   format: GameFormatApiV1.UNRESTRICTED,
-  ownerUserId: extendedGameSetup.ownerUserId,
+  ownerUserId: gameSetup.ownerUserId,
   playerSetups: [
     {
       deckId: cardDeck.id,
-      userId: extendedGameSetup.ownerUserId,
+      userId: gameSetup.ownerUserId,
     },
   ],
   playerSlots: 2,
@@ -53,12 +53,12 @@ export const gameSetupUpdateQueryApiV1: GameSetupUpdateQueryApiV1 = {
   additionalPlayerSetups: [
     {
       deckId: cardDeck.id,
-      userId: extendedGameSetup.ownerUserId,
+      userId: gameSetup.ownerUserId,
     },
   ],
   removePlayerSetups: [
     {
-      userId: extendedGameSetup.ownerUserId,
+      userId: gameSetup.ownerUserId,
     },
   ],
 };

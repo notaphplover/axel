@@ -1,12 +1,13 @@
 import { Converter } from '../../../../../../common/domain';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { GameSetupDb } from '../../model/setup/GameSetupDb';
+import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { injectable } from 'inversify';
 
 @injectable()
-export abstract class GameSetupDbToGameSetupConverter<TPlayerSetup>
-  implements Converter<GameSetupDb<TPlayerSetup>, GameSetup<TPlayerSetup>> {
-  public transform(input: GameSetupDb<TPlayerSetup>): GameSetup<TPlayerSetup> {
+export class GameSetupDbToGameSetupConverter
+  implements Converter<GameSetupDb, GameSetup> {
+  public transform(input: GameSetupDb): GameSetup {
     return {
       format: input.format,
       id: input._id.toHexString(),
@@ -16,7 +17,16 @@ export abstract class GameSetupDbToGameSetupConverter<TPlayerSetup>
     };
   }
 
-  protected abstract transformPlayerSetups(
-    input: TPlayerSetup[],
-  ): TPlayerSetup[];
+  protected transformPlayerSetups(input: PlayerSetup[]): PlayerSetup[] {
+    const playerSetupsClone: PlayerSetup[] = [];
+
+    for (const playerSetup of input) {
+      playerSetupsClone.push({
+        deckId: playerSetup.deckId,
+        userId: playerSetup.userId,
+      });
+    }
+
+    return playerSetupsClone;
+  }
 }

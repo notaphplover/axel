@@ -3,15 +3,12 @@ import { Converter } from '../../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameFormat } from '../../../../domain/model/GameFormat';
 import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
-import { GameSetupToGameSetupApiV1Converter } from './GameSetupToGameSetupApiConverter';
+import { GameSetupToGameSetupApiV1Converter } from './GameSetupToGameSetupApiV1Converter';
+import { PlayerReferenceApiV1 } from '../../model/setup/PlayerReferenceApiV1';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
-import { PlayerSetupApiV1 } from '../../model/setup/PlayerSetupApiV1';
 
 @injectable()
-export class ExtendedGameSetupToExtendedGameSetupApiV1Converter extends GameSetupToGameSetupApiV1Converter<
-  PlayerSetup,
-  PlayerSetupApiV1
-> {
+export class GameSetupToBasicGameSetupApiV1Converter extends GameSetupToGameSetupApiV1Converter<PlayerReferenceApiV1> {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
     @inject(
@@ -28,9 +25,8 @@ export class ExtendedGameSetupToExtendedGameSetupApiV1Converter extends GameSetu
 
   protected transformInputPlayerSetupIntoOutputPlayerSetup(
     inputPlayerSetup: PlayerSetup,
-  ): PlayerSetupApiV1 {
+  ): PlayerReferenceApiV1 {
     return {
-      deckId: inputPlayerSetup.deckId,
       userId: inputPlayerSetup.userId,
     };
   }

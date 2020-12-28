@@ -8,8 +8,8 @@ import {
   ValidationSuccess,
 } from '../../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { ExtendedGameSetup } from '../../../../../../domain/model/setup/ExtendedGameSetup';
 import { ExtendedGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/ExtendedGameSetupApiV1';
+import { GameSetup } from '../../../../../../domain/model/setup/GameSetup';
 import { GameSetupCreationQueryApiV1 } from '../../../../../../adapter/api/query/setup/GameSetupCreationQueryApiV1';
 import { GameSetupCreationQueryApiV1ValidationContext } from '../../../../../../adapter/api/validator/setup/GameSetupCreationQueryApiV1ValidationContext';
 import { GameSetupsCreationQuery } from '../../../../../../domain/query/setup/GameSetupCreationQuery';
@@ -18,8 +18,8 @@ import { StatusCodes } from 'http-status-codes';
 import { UserContainer } from '../../../../../../../user/domain';
 import { commonTest } from '../../../../../../../../common/test';
 import { extendedGameSetupApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/setup';
-import { extendedGameSetupFixtureFactory } from '../../../../../fixtures/domain/model/setup';
 import { gameSetupCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/setup';
+import { gameSetupFixtureFactory } from '../../../../../fixtures/domain/model/setup';
 import { gameSetupsCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/setup';
 import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';
 
@@ -34,14 +34,14 @@ describe(PostGameSetupV1RequestHandler.name, () => {
     GameSetupCreationQueryApiV1ValidationContext
   >;
 
-  let extendedGameSetupToExtendedGameSetupApiV1Converter: Converter<
-    ExtendedGameSetup,
+  let gameSetupToExtendedGameSetupApiV1Converter: Converter<
+    GameSetup,
     ExtendedGameSetupApiV1
   >;
 
-  let createExtendedGameSetupsInteractor: Interactor<
+  let createGameSetupsInteractor: Interactor<
     GameSetupsCreationQuery,
-    Promise<ExtendedGameSetup[]>
+    Promise<GameSetup[]>
   >;
 
   let postGameSetupV1RequestHandler: PostGameSetupV1RequestHandler;
@@ -55,19 +55,19 @@ describe(PostGameSetupV1RequestHandler.name, () => {
       validate: jest.fn(),
     };
 
-    extendedGameSetupToExtendedGameSetupApiV1Converter = {
+    gameSetupToExtendedGameSetupApiV1Converter = {
       transform: jest.fn(),
     };
 
-    createExtendedGameSetupsInteractor = {
+    createGameSetupsInteractor = {
       interact: jest.fn(),
     };
 
     postGameSetupV1RequestHandler = new PostGameSetupV1RequestHandler(
       gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter,
       gameSetupCreationQueryApiV1ContextBasedValidator,
-      extendedGameSetupToExtendedGameSetupApiV1Converter,
-      createExtendedGameSetupsInteractor,
+      gameSetupToExtendedGameSetupApiV1Converter,
+      createGameSetupsInteractor,
     );
   });
 
@@ -96,11 +96,11 @@ describe(PostGameSetupV1RequestHandler.name, () => {
           gameSetupsCreationQueryFixtureFactory.get(),
         );
 
-        (createExtendedGameSetupsInteractor.interact as jest.Mock).mockResolvedValueOnce(
-          [extendedGameSetupFixtureFactory.get()],
+        (createGameSetupsInteractor.interact as jest.Mock).mockResolvedValueOnce(
+          [gameSetupFixtureFactory.get()],
         );
 
-        (extendedGameSetupToExtendedGameSetupApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
+        (gameSetupToExtendedGameSetupApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
           extendedGameSetupApiV1FixtureFactory.get(),
         );
 
@@ -131,22 +131,20 @@ describe(PostGameSetupV1RequestHandler.name, () => {
         ).toHaveBeenCalledWith(gameSetupCreationQueryApiV1FixtureFactory.get());
       });
 
-      it('must call createExtendedGameSetupsInteractor.interact with the gameSetupsCreationQuery obtained', () => {
-        expect(
-          createExtendedGameSetupsInteractor.interact,
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          createExtendedGameSetupsInteractor.interact,
-        ).toHaveBeenCalledWith(gameSetupsCreationQueryFixtureFactory.get());
+      it('must call createGameSetupsInteractor.interact with the gameSetupsCreationQuery obtained', () => {
+        expect(createGameSetupsInteractor.interact).toHaveBeenCalledTimes(1);
+        expect(createGameSetupsInteractor.interact).toHaveBeenCalledWith(
+          gameSetupsCreationQueryFixtureFactory.get(),
+        );
       });
 
-      it('must call extendedGameSetupToExtendedGameSetupApiV1Converter.transform with the game setup created', () => {
+      it('must call gameSetupToGameSetupApiV1Converter.transform with the game setup created', () => {
         expect(
-          extendedGameSetupToExtendedGameSetupApiV1Converter.transform,
+          gameSetupToExtendedGameSetupApiV1Converter.transform,
         ).toHaveBeenCalledTimes(1);
         expect(
-          extendedGameSetupToExtendedGameSetupApiV1Converter.transform,
-        ).toHaveBeenCalledWith(extendedGameSetupFixtureFactory.get());
+          gameSetupToExtendedGameSetupApiV1Converter.transform,
+        ).toHaveBeenCalledWith(gameSetupFixtureFactory.get());
       });
 
       it('must call reply.send with the game setup api v1 transformed', () => {

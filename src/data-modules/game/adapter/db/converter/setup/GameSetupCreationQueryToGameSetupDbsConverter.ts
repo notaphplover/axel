@@ -1,20 +1,17 @@
 import { Converter } from '../../../../../../common/domain';
-import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
 import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import _ from 'lodash';
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
 
 @injectable()
-export class ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter
+export class GameSetupCreationQueryToGameSetupDbsConverter
   implements
-    Converter<
-      GameSetupsCreationQuery,
-      mongodb.OptionalId<ExtendedGameSetupDb>[]
-    > {
+    Converter<GameSetupsCreationQuery, mongodb.OptionalId<GameSetupDb>[]> {
   public transform(
     input: GameSetupsCreationQuery,
-  ): mongodb.OptionalId<ExtendedGameSetupDb>[] {
+  ): mongodb.OptionalId<GameSetupDb>[] {
     return [
       {
         format: input.format,

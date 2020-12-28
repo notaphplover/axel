@@ -21,6 +21,7 @@ import { GameSetupCreationQueryApiV1 } from '../../../adapter/api/query/setup/Ga
 import { GameSetupFindQueryApiV1 } from '../../../adapter/api/query/setup/GameSetupFindQueryApiV1';
 import { GameSetupUpdateQueryApiV1 } from '../../../adapter/api/query/setup/GameSetupUpdateQueryApiV1';
 import { InversifyContainerTaskGraphNodeExtractor } from '../../../../task-graph/adapter';
+import { PlayerReferenceApiV1 } from '../../../adapter/api/model/setup/PlayerReferenceApiV1';
 import { PlayerSetupApiV1 } from '../../../adapter/api/model/setup/PlayerSetupApiV1';
 import { commonTest } from '../../../../../common/test';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
@@ -194,11 +195,8 @@ describe('GameSetup V1', () => {
       expect(
         (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).ownerUserId,
       ).toBe(gameSetupCreationQueryApiV1.ownerUserId);
-      expect(postGameSetupsV1ResponsePlayerSetup.deckId).toBe(
-        gameSetupCreationQueryApiV1.playerSetups[0].deckId,
-      );
-      expect(postGameSetupsV1ResponsePlayerSetup.userId).toBe(
-        gameSetupCreationQueryApiV1.playerSetups[0].userId,
+      expect(postGameSetupsV1ResponsePlayerSetup).toStrictEqual(
+        gameSetupCreationQueryApiV1.playerSetups[0],
       );
       expect(
         (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).playerSlots,
@@ -208,7 +206,6 @@ describe('GameSetup V1', () => {
     describe('when called POST searches, with the game setup created', () => {
       let gameSetupId: string;
       let getGameSetupsByIdV1Response: axios.AxiosResponse;
-      let getGameSetupsByIdV1ResponseFirstElement: unknown;
 
       beforeAll(async () => {
         gameSetupId = (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
@@ -229,42 +226,21 @@ describe('GameSetup V1', () => {
             },
           },
         );
-
-        // eslint-disable-next-line @typescript-eslint/typedef
-        [
-          getGameSetupsByIdV1ResponseFirstElement,
-        ] = getGameSetupsByIdV1Response.data as unknown[];
       });
 
       it('must return a response with the gameSetup created', () => {
-        expect(
-          (getGameSetupsByIdV1ResponseFirstElement as BasicGameSetupApiV1).id,
-        ).toBe(gameSetupId);
-        expect(
-          (getGameSetupsByIdV1ResponseFirstElement as BasicGameSetupApiV1)
-            .format,
-        ).toBe(
-          (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).format,
-        );
-        expect(
-          (getGameSetupsByIdV1ResponseFirstElement as BasicGameSetupApiV1)
-            .ownerUserId,
-        ).toBe(
-          (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).ownerUserId,
-        );
-        expect(
-          (getGameSetupsByIdV1ResponseFirstElement as BasicGameSetupApiV1)
-            .playerSetups[0].userId,
-        ).toBe(
-          (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
-            .playerSetups[0].userId,
-        );
-        expect(
-          (getGameSetupsByIdV1ResponseFirstElement as BasicGameSetupApiV1)
-            .playerSlots,
-        ).toBe(
-          (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).playerSlots,
-        );
+        const expectedBasicGameSetupApiV1: BasicGameSetupApiV1 = {
+          ...(postGameSetupsV1Response.data as ExtendedGameSetupApiV1),
+          playerSetups: (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).playerSetups.map(
+            (playerSetupApiV1: PlayerSetupApiV1): PlayerReferenceApiV1 => ({
+              userId: playerSetupApiV1.userId,
+            }),
+          ),
+        };
+
+        expect(getGameSetupsByIdV1Response.data).toStrictEqual([
+          expectedBasicGameSetupApiV1,
+        ]);
       });
 
       describe('when called PATCH game setup, with the game setup created and additional player setup', () => {
@@ -292,43 +268,22 @@ describe('GameSetup V1', () => {
         });
 
         it('must return a response with the gameSetup updated', () => {
-          expect(
-            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1).id,
-          ).toBe(gameSetupId);
-          expect(
-            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1).format,
-          ).toBe(
-            (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).format,
-          );
-          expect(
-            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
-              .ownerUserId,
-          ).toBe(
-            (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
-              .ownerUserId,
-          );
-          expect(
-            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
-              .playerSetups.length,
-          ).toBe(2);
-          expect(
-            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
-              .playerSetups,
-          ).toContainEqual({
-            userId: e2eComponents.firstUser.id,
-          });
-          expect(
-            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
-              .playerSetups,
-          ).toContainEqual({
-            userId: e2eComponents.secondUser.id,
-          });
-          expect(
-            (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
-              .playerSlots,
-          ).toBe(
-            (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
-              .playerSlots,
+          const expectedBasicGameSetupApiV1: BasicGameSetupApiV1 = {
+            ...(postGameSetupsV1Response.data as ExtendedGameSetupApiV1),
+            playerSetups: [
+              ...(postGameSetupsV1Response.data as ExtendedGameSetupApiV1).playerSetups.map(
+                (playerSetupApiV1: PlayerSetupApiV1): PlayerReferenceApiV1 => ({
+                  userId: playerSetupApiV1.userId,
+                }),
+              ),
+              {
+                userId: e2eComponents.secondUser.id,
+              },
+            ],
+          };
+
+          expect(patchGameSetupsByIdV1Response.data).toStrictEqual(
+            expectedBasicGameSetupApiV1,
           );
         });
 
@@ -356,38 +311,17 @@ describe('GameSetup V1', () => {
           });
 
           it('must return a response with the gameSetup updated', () => {
-            expect(
-              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1).id,
-            ).toBe(gameSetupId);
-            expect(
-              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
-                .format,
-            ).toBe(
-              (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).format,
-            );
-            expect(
-              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
-                .ownerUserId,
-            ).toBe(
-              (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
-                .ownerUserId,
-            );
-            expect(
-              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
-                .playerSetups.length,
-            ).toBe(1);
-            expect(
-              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
-                .playerSetups,
-            ).toContainEqual({
-              userId: e2eComponents.firstUser.id,
-            });
-            expect(
-              (patchGameSetupsByIdV1Response.data as BasicGameSetupApiV1)
-                .playerSlots,
-            ).toBe(
-              (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
-                .playerSlots,
+            const expectedBasicGameSetupApiV1: BasicGameSetupApiV1 = {
+              ...(postGameSetupsV1Response.data as ExtendedGameSetupApiV1),
+              playerSetups: (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).playerSetups.map(
+                (playerSetupApiV1: PlayerSetupApiV1): PlayerReferenceApiV1 => ({
+                  userId: playerSetupApiV1.userId,
+                }),
+              ),
+            };
+
+            expect(patchGameSetupsByIdV1Response.data).toStrictEqual(
+              expectedBasicGameSetupApiV1,
             );
           });
         });

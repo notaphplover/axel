@@ -10,18 +10,18 @@ import { CreatureCreationQueryToCreatureDbsConverter } from '../../../db/convert
 import { CreatureDbToCreatureConverter } from '../../../db/converter/card/CreatureDbToCreatureConverter';
 import { EnchantmentCreationQueryToEnchantmentDbsConverter } from '../../../db/converter/card/EnchantmentCreationQueryToEnchantmentDbsConverter';
 import { EnchantmentDbToEnchantmentConverter } from '../../../db/converter/card/EnchantmentDbToEnchantmentConverter';
-import { ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter } from '../../../db/converter/setup/GameSetupCreationQueryToExtendedGameSetupDbsConverter';
-import { ExtendedGameSetupDbCollectionInitializer } from '../../../db/initializer/setup/ExtendedGameSetupDbCollectionInitializer';
-import { ExtendedGameSetupDbToExtendedGameSetupConverter } from '../../../db/converter/setup/ExtendedGameSetupDbToExtendedGameSetupConverter';
 import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameCreationQueryToGameDbsConverter } from '../../../db/converter/GameCreationQueryToGameDbsConverter';
 import { GameDbCollectionName } from '../../../db/GameDbCollection';
 import { GameDbInitializer } from '../../../db/initializer/GameDbInitializer';
 import { GameDbToGameConverter } from '../../../db/converter/GameDbToGameConverter';
 import { GameFindQueryToGameDbFilterQueryConverter } from '../../../db/converter/GameFindQueryToGameDbFilterQueryConverter';
-import { GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter';
-import { GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter';
-import { GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter';
+import { GameSetupCreationQueryToGameSetupDbsConverter } from '../../../db/converter/setup/GameSetupCreationQueryToGameSetupDbsConverter';
+import { GameSetupDbCollectionInitializer } from '../../../db/initializer/setup/GameSetupDbCollectionInitializer';
+import { GameSetupDbToGameSetupConverter } from '../../../db/converter/setup/GameSetupDbToGameSetupConverter';
+import { GameSetupFindQueryToGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupFindQueryToGameSetupDbFilterQueryConverter';
+import { GameSetupUpdateQueryToGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToGameSetupDbFilterQueryConverter';
+import { GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter';
 import { LandCreationQueryToLandDbsConverter } from '../../../db/converter/card/LandCreationQueryToLandDbsConverter';
 import { LandDbToLandConverter } from '../../../db/converter/card/LandDbToLandConverter';
 import { interfaces } from 'inversify';
@@ -37,8 +37,8 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.db.collection.deck.DECK_COLLECTION_NAME,
   ).toConstantValue(GameDbCollectionName.CardDeck);
   bind(
-    GAME_ADAPTER_TYPES.db.collection.setup.EXTENDED_GAME_SETUP_COLLECTION_NAME,
-  ).toConstantValue(GameDbCollectionName.ExtendedGameSetup);
+    GAME_ADAPTER_TYPES.db.collection.setup.GAME_SETUP_COLLECTION_NAME,
+  ).toConstantValue(GameDbCollectionName.GameSetup);
 
   bind(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER).to(
     GameDbToGameConverter,
@@ -101,24 +101,23 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
 
   bind(
     GAME_ADAPTER_TYPES.db.converter.setup
-      .GAME_SETUP_CREATION_QUERY_TO_EXTENDED_GAME_SETUP_DBS_CONVERTER,
-  ).to(ExtendedGameSetupCreationQueryToExtendedGameSetupDbsConverter);
+      .GAME_SETUP_CREATION_QUERY_TO_GAME_SETUP_DBS_CONVERTER,
+  ).to(GameSetupCreationQueryToGameSetupDbsConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.setup.GAME_SETUP_DB_TO_GAME_SETUP_CONVERTER,
+  ).to(GameSetupDbToGameSetupConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.setup
-      .EXTENDED_GAME_SETUP_DB_TO_EXTENDED_GAME_SETUP_CONVERTER,
-  ).to(ExtendedGameSetupDbToExtendedGameSetupConverter);
+      .GAME_SETUP_FIND_QUERY_TO_GAME_SETUP_DB_FILTER_QUERY_CONVERTER,
+  ).to(GameSetupFindQueryToGameSetupDbFilterQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.setup
-      .GAME_SETUP_FIND_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER,
-  ).to(GameSetupFindQueryToExtendedGameSetupDbFilterQueryConverter);
+      .GAME_SETUP_UPDATE_QUERY_TO_GAME_SETUP_DB_FILTER_QUERY_CONVERTER,
+  ).to(GameSetupUpdateQueryToGameSetupDbFilterQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.setup
-      .GAME_SETUP_UPDATE_QUERY_TO_EXTENDED_GAME_SETUP_DB_FILTER_QUERY_CONVERTER,
-  ).to(GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.setup
-      .GAME_SETUP_UPDATE_QUERY_TO_EXTENDED_GAME_SETUP_DB_UPDATE_QUERY_CONVERTER,
-  ).to(GameSetupUpdateQueryToExtendedGameSetupDbUpdateQueryConverter);
+      .GAME_SETUP_UPDATE_QUERY_TO_GAME_SETUP_DB_UPDATE_QUERY_CONVERTER,
+  ).to(GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter);
 
   bind(GAME_ADAPTER_TYPES.db.initializer.GAME_DB_INITIALIZER).to(
     GameDbInitializer,
@@ -128,6 +127,6 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   ).to(CardDbCollectionInitializer);
   bind(
     GAME_ADAPTER_TYPES.db.initializer.setup
-      .EXTENDED_GAME_SETUP_DB_COLLECTION_INITIALIZER,
-  ).to(ExtendedGameSetupDbCollectionInitializer);
+      .GAME_SETUP_DB_COLLECTION_INITIALIZER,
+  ).to(GameSetupDbCollectionInitializer);
 }

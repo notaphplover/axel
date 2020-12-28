@@ -6,11 +6,11 @@ import {
 } from '../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
-import { ExtendedGameSetup } from '../../../../domain/model/setup/ExtendedGameSetup';
 import { ExtendedGameSetupApiV1 } from '../../../api/model/setup/ExtendedGameSetupApiV1';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { GameSetupCreationQueryApiV1 } from '../../../api/query/setup/GameSetupCreationQueryApiV1';
 import { GameSetupCreationQueryApiV1ValidationContext } from '../../../api/validator/setup/GameSetupCreationQueryApiV1ValidationContext';
 import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
@@ -39,18 +39,16 @@ export class PostGameSetupV1RequestHandler
     >,
     @inject(
       GAME_ADAPTER_TYPES.api.converter.setup
-        .EXTENDED_GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER,
+        .GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER,
     )
-    private readonly extendedGameSetupToExtendedGameSetupApiV1Converter: Converter<
-      ExtendedGameSetup,
+    private readonly gameSetupToExtendedGameSetupApiV1Converter: Converter<
+      GameSetup,
       ExtendedGameSetupApiV1
     >,
-    @inject(
-      GAME_DOMAIN_TYPES.interactor.setup.CREATE_EXTENDED_GAME_SETUPS_INTERACTOR,
-    )
-    private readonly createExtendedGameSetupsInteractor: Interactor<
+    @inject(GAME_DOMAIN_TYPES.interactor.setup.CREATE_GAME_SETUPS_INTERACTOR)
+    private readonly createGameSetupsInteractor: Interactor<
       GameSetupsCreationQuery,
-      Promise<ExtendedGameSetup[]>
+      Promise<GameSetup[]>
     >,
   ) {}
 
@@ -72,16 +70,16 @@ export class PostGameSetupV1RequestHandler
       );
 
       const [
-        extendedGameSetupCreated,
-      ]: ExtendedGameSetup[] = await this.createExtendedGameSetupsInteractor.interact(
+        gameSetupCreated,
+      ]: GameSetup[] = await this.createGameSetupsInteractor.interact(
         gameSetupCreationQuery,
       );
 
-      const extendedGameSetupApiV1Created: ExtendedGameSetupApiV1 = this.extendedGameSetupToExtendedGameSetupApiV1Converter.transform(
-        extendedGameSetupCreated,
+      const gameSetupApiV1Created: ExtendedGameSetupApiV1 = this.gameSetupToExtendedGameSetupApiV1Converter.transform(
+        gameSetupCreated,
       );
 
-      await reply.send(extendedGameSetupApiV1Created);
+      await reply.send(gameSetupApiV1Created);
     } else {
       await reply
         .code(StatusCodes.BAD_REQUEST)

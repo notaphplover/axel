@@ -1,5 +1,5 @@
 import { Converter } from '../../../../../../common/domain';
-import { ExtendedGameSetupDb } from '../../model/setup/ExtendedGameSetupDb';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
 import { PlayerReference } from '../../../../domain/model/setup/PlayerReference';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
@@ -9,13 +9,12 @@ import { lodashAdapter } from '../../../../../../integration-modules/lodash/adap
 import mongodb from 'mongodb';
 
 @injectable()
-export class GameSetupUpdateQueryToExtendedGameSetupDbFilterQueryConverter
-  implements
-    Converter<GameSetupUpdateQuery, mongodb.FilterQuery<ExtendedGameSetupDb>> {
+export class GameSetupUpdateQueryToGameSetupDbFilterQueryConverter
+  implements Converter<GameSetupUpdateQuery, mongodb.FilterQuery<GameSetupDb>> {
   public transform(
     input: GameSetupUpdateQuery,
-  ): mongodb.FilterQuery<ExtendedGameSetupDb> {
-    const filterQuery: mongodb.FilterQuery<ExtendedGameSetupDb> = {
+  ): mongodb.FilterQuery<GameSetupDb> {
+    const filterQuery: mongodb.FilterQuery<GameSetupDb> = {
       _id: new mongodb.ObjectID(input.id),
     };
 
