@@ -1,4 +1,4 @@
-export interface Game {
+export interface LiveGame {
   id: string;
   round: number;
 }

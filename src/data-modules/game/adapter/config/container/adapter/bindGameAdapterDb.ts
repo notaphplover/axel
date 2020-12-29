@@ -14,7 +14,7 @@ import { GAME_ADAPTER_TYPES } from '../../types';
 import { GameCreationQueryToGameDbsConverter } from '../../../db/converter/GameCreationQueryToGameDbsConverter';
 import { GameDbCollectionName } from '../../../db/GameDbCollection';
 import { GameDbInitializer } from '../../../db/initializer/GameDbInitializer';
-import { GameDbToGameConverter } from '../../../db/converter/GameDbToGameConverter';
+import { GameDbToLiveGameConverter } from '../../../db/converter/live/GameDbToLiveGameConverter';
 import { GameFindQueryToGameDbFilterQueryConverter } from '../../../db/converter/GameFindQueryToGameDbFilterQueryConverter';
 import { GameSetupCreationQueryToGameSetupDbsConverter } from '../../../db/converter/setup/GameSetupCreationQueryToGameSetupDbsConverter';
 import { GameSetupDbCollectionInitializer } from '../../../db/initializer/setup/GameSetupDbCollectionInitializer';
@@ -40,8 +40,8 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.db.collection.setup.GAME_SETUP_COLLECTION_NAME,
   ).toConstantValue(GameDbCollectionName.GameSetup);
 
-  bind(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER).to(
-    GameDbToGameConverter,
+  bind(GAME_ADAPTER_TYPES.db.converter.live.GAME_DB_TO_LIVE_GAME_CONVERTER).to(
+    GameDbToLiveGameConverter,
   );
   bind(
     GAME_ADAPTER_TYPES.db.converter

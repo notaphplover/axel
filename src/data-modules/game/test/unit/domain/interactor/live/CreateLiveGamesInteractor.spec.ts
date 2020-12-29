@@ -1,25 +1,25 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { CreateGamesInteractor } from '../../../../domain/interactor/CreateGamesInteractor';
-import { Game } from '../../../../domain/model/Game';
-import { GameCreationQuery } from '../../../../domain/query/GameCreationQuery';
-import { InsertRepository } from '../../../../../../layer-modules/db/domain';
-import { gameCreationQueryFixtureFactory } from '../../../fixtures/domain/query/card';
-import { gameFixtureFactory } from '../../../fixtures/domain/model';
+import { CreateLiveGamesInteractor } from '../../../../../domain/interactor/live/CreateLiveGamesInteractor';
+import { GameCreationQuery } from '../../../../../domain/query/GameCreationQuery';
+import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
+import { LiveGame } from '../../../../../domain/model/live/LiveGame';
+import { gameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { gameFixtureFactory } from '../../../../fixtures/domain/model';
 
-describe(CreateGamesInteractor.name, () => {
-  let gameInsertRepository: InsertRepository<Game, GameCreationQuery>;
+describe(CreateLiveGamesInteractor.name, () => {
+  let gameInsertRepository: InsertRepository<LiveGame, GameCreationQuery>;
 
-  let createGamesInteractor: CreateGamesInteractor;
+  let createGamesInteractor: CreateLiveGamesInteractor;
 
   beforeAll(() => {
     gameInsertRepository = ({
       insert: jest.fn(),
     } as Partial<
-      InsertRepository<Game, GameCreationQuery>
-    >) as InsertRepository<Game, GameCreationQuery>;
+      InsertRepository<LiveGame, GameCreationQuery>
+    >) as InsertRepository<LiveGame, GameCreationQuery>;
 
-    createGamesInteractor = new CreateGamesInteractor(gameInsertRepository);
+    createGamesInteractor = new CreateLiveGamesInteractor(gameInsertRepository);
   });
 
   describe('.interact()', () => {

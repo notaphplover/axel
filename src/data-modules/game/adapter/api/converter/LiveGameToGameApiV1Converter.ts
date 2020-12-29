@@ -1,11 +1,12 @@
 import { Converter } from '../../../../../common/domain';
-import { Game } from '../../../domain/model/Game';
 import { GameApiV1 } from '../model/GameApiV1';
+import { LiveGame } from '../../../domain/model/live/LiveGame';
 import { injectable } from 'inversify';
 
 @injectable()
-export class GameToGameApiV1Converter implements Converter<Game, GameApiV1> {
-  public transform(input: Game): GameApiV1 {
+export class LiveGameToGameApiV1Converter
+  implements Converter<LiveGame, GameApiV1> {
+  public transform(input: LiveGame): GameApiV1 {
     return {
       id: input.id,
       round: input.round,

@@ -4,23 +4,23 @@ import { CreateCardsInteractor } from '../../../../domain/interactor/card/Create
 import { CreateCreaturesInteractor } from '../../../../domain/interactor/card/CreateCreaturesInteractor';
 import { CreateEnchantmentsInteractor } from '../../../../domain/interactor/card/CreateEnchantmentsInteractor';
 import { CreateGameSetupsInteractor } from '../../../../domain/interactor/setup/CreateGameSetupsInteractor';
-import { CreateGamesInteractor } from '../../../../domain/interactor/CreateGamesInteractor';
 import { CreateLandsInteractor } from '../../../../domain/interactor/card/CreateLandsInteractor';
+import { CreateLiveGamesInteractor } from '../../../../domain/interactor/live/CreateLiveGamesInteractor';
 import { FindCardDeckInteractor } from '../../../../domain/interactor/deck/FindCardDeckInteractor';
 import { FindCardDecksInteractor } from '../../../../domain/interactor/deck/FindCardDecksInteractor';
 import { FindCardsInteractor } from '../../../../domain/interactor/card/FindCardsInteractor';
-import { FindGameInteractor } from '../../../../domain/interactor/FindGameInteractor';
 import { FindGameSetupsInteractor } from '../../../../domain/interactor/setup/FindGameSetupsInteractor';
+import { FindLiveGameInteractor } from '../../../../domain/interactor/FindLiveGameInteractor';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { UpdateGameSetupInteractor } from '../../../../domain/interactor/setup/UpdateGameSetupInteractor';
 import { interfaces } from 'inversify';
 
 export function bindGameDomainInteractor(bind: interfaces.Bind): void {
-  bind(GAME_DOMAIN_TYPES.interactor.CREATE_GAMES_INTERACTOR).to(
-    CreateGamesInteractor,
+  bind(GAME_DOMAIN_TYPES.interactor.live.CREATE_LIVE_GAMES_INTERACTOR).to(
+    CreateLiveGamesInteractor,
   );
-  bind(GAME_DOMAIN_TYPES.interactor.FIND_GAME_INTERACTOR).to(
-    FindGameInteractor,
+  bind(GAME_DOMAIN_TYPES.interactor.live.FIND_GAME_INTERACTOR).to(
+    FindLiveGameInteractor,
   );
   bind(GAME_DOMAIN_TYPES.interactor.card.CREATE_ARTIFACTS_INTERACTOR).to(
     CreateArtifactsInteractor,

@@ -5,15 +5,15 @@ import {
 import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../config/types';
-import { Game } from '../../../domain/model/Game';
 import { GameCreationQuery } from '../../../domain/query/GameCreationQuery';
 import { GameDb } from '../model/GameDb';
+import { LiveGame } from '../../../domain/model/live/LiveGame';
 import { MongoDbInsertRepository } from '../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
 import mongodb from 'mongodb';
 
 @injectable()
 export class GameDbInsertRepository extends MongoDbInsertRepository<
-  Game,
+  LiveGame,
   GameDb,
   GameCreationQuery
 > {
@@ -21,8 +21,8 @@ export class GameDbInsertRepository extends MongoDbInsertRepository<
   constructor(
     @inject(GAME_ADAPTER_TYPES.db.collection.GAME_COLLECTION_NAME)
     collectionName: string,
-    @inject(GAME_ADAPTER_TYPES.db.converter.GAME_DB_TO_GAME_CONVERTER)
-    gameDbToGameConverter: Converter<GameDb, Game>,
+    @inject(GAME_ADAPTER_TYPES.db.converter.live.GAME_DB_TO_LIVE_GAME_CONVERTER)
+    gameDbToGameConverter: Converter<GameDb, LiveGame>,
     @inject(mongodbAdapter.config.types.db.MONGODB_CONNECTOR)
     mongoDbConnector: MongoDbConnector,
     @inject(

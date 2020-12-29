@@ -8,8 +8,6 @@ export const GAME_DOMAIN_TYPES = {
     },
   },
   interactor: {
-    CREATE_GAMES_INTERACTOR: Symbol.for('CreateGamesInteractor'),
-    FIND_GAME_INTERACTOR: Symbol.for('FindGameInteractor'),
     card: {
       CREATE_ARTIFACTS_INTERACTOR: Symbol.for('CreateArtifactsInteractor'),
       CREATE_CARDS_INTERACTOR: Symbol.for('CreateCardsInteractor'),
@@ -24,6 +22,10 @@ export const GAME_DOMAIN_TYPES = {
       CREATE_CARD_DECKS_INTERACTOR: Symbol.for('CreateCardDecksInteractor'),
       FIND_CARD_DECK_INTERACTOR: Symbol.for('FindCardDeckInteractor'),
       FIND_CARD_DECKS_INTERACTOR: Symbol.for('FindCardDecksInteractor'),
+    },
+    live: {
+      CREATE_LIVE_GAMES_INTERACTOR: Symbol.for('CreateLiveGamesInteractor'),
+      FIND_GAME_INTERACTOR: Symbol.for('FindGameInteractor'),
     },
     setup: {
       CREATE_GAME_SETUPS_INTERACTOR: Symbol.for('CreateGameSetupsInteractor'),

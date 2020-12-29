@@ -2,10 +2,10 @@
 import 'reflect-metadata';
 
 import { Capsule, Converter } from '../../../../../../common/domain';
-import { Game } from '../../../../domain/model/Game';
 import { GameDb } from '../../../../adapter/db/model/GameDb';
 import { GameDbSearchRepository } from '../../../../adapter/db/repository/GameDbSearchRepository';
 import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
+import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../layer-modules/db/test';
 import { gameFindQueryFixtureFactory } from '../../../fixtures/domain/query/card';
@@ -23,7 +23,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
   GameDbSearchRepository.name,
   () => {
     let collectionName: string;
-    let gameDbToGameConverter: Converter<GameDb, Game>;
+    let gameDbToGameConverter: Converter<GameDb, LiveGame>;
     let mongoDbConnector: MongoDbConnector;
     let gameFindQueryToGameDbFilterQueryConverter: Converter<
       GameFindQuery,
@@ -57,7 +57,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let result: unknown;
 
         beforeAll(async () => {
-          const gameFixture: Game = gameFixtureFactory.get();
+          const gameFixture: LiveGame = gameFixtureFactory.get();
 
           const gameDbCollection: mongodb.Collection<GameDb> = mongoDbConnector.db.collection(
             collectionName,

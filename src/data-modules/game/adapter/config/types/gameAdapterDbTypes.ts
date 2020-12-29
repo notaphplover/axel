@@ -16,7 +16,6 @@ export const GAME_ADAPTER_DB_TYPES = {
     GAME_CREATION_QUERY_TO_GAME_DBS_CONVERTER: Symbol.for(
       'GameCreationQueryToGameDbsConverter',
     ),
-    GAME_DB_TO_GAME_CONVERTER: Symbol.for('GameDbToGameConverter'),
     GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER: Symbol.for(
       'GameFindQueryToGameDbFilterQueryConverter',
     ),
@@ -58,6 +57,9 @@ export const GAME_ADAPTER_DB_TYPES = {
       CARD_DECK_FIND_QUERY_TO_CARD_DECK_DB_FILTER_QUERY_CONVERTER: Symbol.for(
         'CardDeckFindQueryToCardDeckDbFilterQueryConverter ',
       ),
+    },
+    live: {
+      GAME_DB_TO_LIVE_GAME_CONVERTER: Symbol.for('GameDbToGameConverter'),
     },
     setup: {
       GAME_SETUP_DB_TO_GAME_SETUP_CONVERTER: Symbol.for(

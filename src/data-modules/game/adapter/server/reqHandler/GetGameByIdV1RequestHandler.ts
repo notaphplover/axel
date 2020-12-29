@@ -4,22 +4,24 @@ import { Converter } from '../../../../../common/domain';
 import { FastifyRequestHandler } from '../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
-import { Game } from '../../../domain/model/Game';
 import { GameApiV1 } from '../../api/model/GameApiV1';
 import { GameFindQuery } from '../../../domain/query/GameFindQuery';
 import { Interactor } from '../../../../../common/domain';
+import { LiveGame } from '../../../domain/model/live/LiveGame';
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()
 export class GetGameByIdV1RequestHandler implements FastifyRequestHandler {
   constructor(
-    @inject(GAME_DOMAIN_TYPES.interactor.FIND_GAME_INTERACTOR)
+    @inject(GAME_DOMAIN_TYPES.interactor.live.FIND_GAME_INTERACTOR)
     private readonly findGameInteractor: Interactor<
       GameFindQuery,
-      Promise<Game | null>
+      Promise<LiveGame | null>
     >,
-    @inject(GAME_ADAPTER_TYPES.api.converter.GAME_TO_GAME_API_V1_CONVERTER)
-    private readonly gameToGameApiV1Port: Converter<Game, GameApiV1>,
+    @inject(
+      GAME_ADAPTER_TYPES.api.converter.live.LIVE_GAME_TO_GAME_API_V1_CONVERTER,
+    )
+    private readonly gameToGameApiV1Port: Converter<LiveGame, GameApiV1>,
   ) {}
 
   public async handle(
@@ -30,7 +32,7 @@ export class GetGameByIdV1RequestHandler implements FastifyRequestHandler {
       id: (request.params as { gameId: string }).gameId,
     };
 
-    const findResult: Game | null = await this.findGameInteractor.interact(
+    const findResult: LiveGame | null = await this.findGameInteractor.interact(
       findGameQuery,
     );
 
