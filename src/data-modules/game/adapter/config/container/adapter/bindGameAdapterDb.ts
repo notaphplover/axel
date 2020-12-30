@@ -11,11 +11,11 @@ import { CreatureDbToCreatureConverter } from '../../../db/converter/card/Creatu
 import { EnchantmentCreationQueryToEnchantmentDbsConverter } from '../../../db/converter/card/EnchantmentCreationQueryToEnchantmentDbsConverter';
 import { EnchantmentDbToEnchantmentConverter } from '../../../db/converter/card/EnchantmentDbToEnchantmentConverter';
 import { GAME_ADAPTER_TYPES } from '../../types';
-import { GameCreationQueryToGameDbsConverter } from '../../../db/converter/GameCreationQueryToGameDbsConverter';
+import { GameCreationQueryToLiveGameDbsConverter } from '../../../db/converter/live/GameCreationQueryToLiveGameDbsConverter';
 import { GameDbCollectionName } from '../../../db/GameDbCollection';
 import { GameDbInitializer } from '../../../db/initializer/GameDbInitializer';
 import { GameDbToLiveGameConverter } from '../../../db/converter/live/GameDbToLiveGameConverter';
-import { GameFindQueryToGameDbFilterQueryConverter } from '../../../db/converter/GameFindQueryToGameDbFilterQueryConverter';
+import { GameFindQueryToLiveGameDbFilterQueryConverter } from '../../../db/converter/GameFindQueryToLiveGameDbFilterQueryConverter';
 import { GameSetupCreationQueryToGameSetupDbsConverter } from '../../../db/converter/setup/GameSetupCreationQueryToGameSetupDbsConverter';
 import { GameSetupDbCollectionInitializer } from '../../../db/initializer/setup/GameSetupDbCollectionInitializer';
 import { GameSetupDbToGameSetupConverter } from '../../../db/converter/setup/GameSetupDbToGameSetupConverter';
@@ -46,10 +46,11 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   bind(
     GAME_ADAPTER_TYPES.db.converter
       .GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER,
-  ).to(GameFindQueryToGameDbFilterQueryConverter);
+  ).to(GameFindQueryToLiveGameDbFilterQueryConverter);
   bind(
-    GAME_ADAPTER_TYPES.db.converter.GAME_CREATION_QUERY_TO_GAME_DBS_CONVERTER,
-  ).to(GameCreationQueryToGameDbsConverter);
+    GAME_ADAPTER_TYPES.db.converter.live
+      .GAME_CREATION_QUERY_TO_LIVE_GAME_DBS_CONVERTER,
+  ).to(GameCreationQueryToLiveGameDbsConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.card
       .ARTIFACT_CREATION_QUERY_TO_ARTIFACT_DBS_CONVERTER,

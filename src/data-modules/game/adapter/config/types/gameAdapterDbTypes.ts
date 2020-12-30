@@ -13,9 +13,6 @@ export const GAME_ADAPTER_DB_TYPES = {
     },
   },
   converter: {
-    GAME_CREATION_QUERY_TO_GAME_DBS_CONVERTER: Symbol.for(
-      'GameCreationQueryToGameDbsConverter',
-    ),
     GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER: Symbol.for(
       'GameFindQueryToGameDbFilterQueryConverter',
     ),
@@ -59,6 +56,9 @@ export const GAME_ADAPTER_DB_TYPES = {
       ),
     },
     live: {
+      GAME_CREATION_QUERY_TO_LIVE_GAME_DBS_CONVERTER: Symbol.for(
+        'GameCreationQueryToLiveGameDbsConverter',
+      ),
       GAME_DB_TO_LIVE_GAME_CONVERTER: Symbol.for('GameDbToGameConverter'),
     },
     setup: {

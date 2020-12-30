@@ -2,10 +2,10 @@
 import 'reflect-metadata';
 
 import { Capsule, Converter } from '../../../../../../common/domain';
-import { GameDb } from '../../../../adapter/db/model/GameDb';
 import { GameDbSearchRepository } from '../../../../adapter/db/repository/GameDbSearchRepository';
 import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
+import { LiveGameDb } from '../../../../adapter/db/model/live/LiveGameDb';
 import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../layer-modules/db/test';
 import { gameFindQueryFixtureFactory } from '../../../fixtures/domain/query/card';
@@ -23,11 +23,11 @@ mongodbIntegrationDescribeGenerator(outputParam)(
   GameDbSearchRepository.name,
   () => {
     let collectionName: string;
-    let gameDbToGameConverter: Converter<GameDb, LiveGame>;
+    let gameDbToGameConverter: Converter<LiveGameDb, LiveGame>;
     let mongoDbConnector: MongoDbConnector;
     let gameFindQueryToGameDbFilterQueryConverter: Converter<
       GameFindQuery,
-      mongodb.FilterQuery<GameDb>
+      mongodb.FilterQuery<LiveGameDb>
     >;
 
     let gameDbSearchRepository: GameDbSearchRepository;
@@ -52,14 +52,14 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
     describe('.find()', () => {
       describe('when called and some games satisfies the query', () => {
-        let gameDbInserted: GameDb;
+        let gameDbInserted: LiveGameDb;
 
         let result: unknown;
 
         beforeAll(async () => {
           const gameFixture: LiveGame = gameFixtureFactory.get();
 
-          const gameDbCollection: mongodb.Collection<GameDb> = mongoDbConnector.db.collection(
+          const gameDbCollection: mongodb.Collection<LiveGameDb> = mongoDbConnector.db.collection(
             collectionName,
           );
 
@@ -81,7 +81,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             gameFixture,
           );
 
-          const gameDbFilterQuery: mongodb.FilterQuery<GameDb> = {
+          const gameDbFilterQuery: mongodb.FilterQuery<LiveGameDb> = {
             _id: gameDbInserted._id,
           };
 
@@ -115,7 +115,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         beforeAll(async () => {
           const mongoDbId: mongodb.ObjectID = new mongodb.ObjectID();
 
-          const gameDbFilterQuery: mongodb.FilterQuery<GameDb> = {
+          const gameDbFilterQuery: mongodb.FilterQuery<LiveGameDb> = {
             _id: mongoDbId,
           };
 
