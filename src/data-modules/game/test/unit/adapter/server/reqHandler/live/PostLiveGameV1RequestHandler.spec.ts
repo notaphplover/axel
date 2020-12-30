@@ -8,10 +8,10 @@ import {
   Validator,
 } from '../../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { GameCreationQuery } from '../../../../../../domain/query/GameCreationQuery';
 import { GameCreationQueryApiV1 } from '../../../../../../adapter/api/query/GameCreationQueryApiV1';
 import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
 import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
+import { LiveGameCreationQuery } from '../../../../../../domain/query/live/LiveGameCreationQuery';
 import { PostLiveGameV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/PostLiveGameV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
 import { commonTest } from '../../../../../../../../common/test';
@@ -21,7 +21,10 @@ import { gameCreationQueryFixtureFactory } from '../../../../../fixtures/domain/
 import { gameFixtureFactory } from '../../../../../fixtures/domain/model';
 
 describe(PostLiveGameV1RequestHandler.name, () => {
-  let createGamesInteractor: Interactor<GameCreationQuery, Promise<LiveGame[]>>;
+  let createGamesInteractor: Interactor<
+    LiveGameCreationQuery,
+    Promise<LiveGame[]>
+  >;
   let gameCreationQueryApiV1Validator: Validator<GameCreationQueryApiV1>;
   let gameToGameApiV1Converter: Converter<LiveGame, LiveGameApiV1>;
 

@@ -9,10 +9,10 @@ import { inject, injectable } from 'inversify';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
-import { GameCreationQuery } from '../../../../domain/query/GameCreationQuery';
 import { GameCreationQueryApiV1 } from '../../../api/query/GameCreationQueryApiV1';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { LiveGameApiV1 } from '../../../api/model/live/LiveGameApiV1';
+import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()
@@ -20,7 +20,7 @@ export class PostLiveGameV1RequestHandler implements FastifyRequestHandler {
   constructor(
     @inject(GAME_DOMAIN_TYPES.interactor.live.CREATE_LIVE_GAMES_INTERACTOR)
     private readonly createGamesInteractor: Interactor<
-      GameCreationQuery,
+      LiveGameCreationQuery,
       Promise<LiveGame[]>
     >,
     @inject(
@@ -45,7 +45,7 @@ export class PostLiveGameV1RequestHandler implements FastifyRequestHandler {
       request.body,
     );
     if (validationResult.result) {
-      const gameCreationQuery: GameCreationQuery = {
+      const gameCreationQuery: LiveGameCreationQuery = {
         round: validationResult.model.round,
       };
       const [

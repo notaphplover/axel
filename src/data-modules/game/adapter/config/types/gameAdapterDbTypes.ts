@@ -13,9 +13,6 @@ export const GAME_ADAPTER_DB_TYPES = {
     },
   },
   converter: {
-    GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER: Symbol.for(
-      'GameFindQueryToGameDbFilterQueryConverter',
-    ),
     card: {
       ARTIFACT_CREATION_QUERY_TO_ARTIFACT_DBS_CONVERTER: Symbol.for(
         'ArtifactCreationQueryToArtifactDbsConverter',
@@ -56,10 +53,15 @@ export const GAME_ADAPTER_DB_TYPES = {
       ),
     },
     live: {
-      GAME_CREATION_QUERY_TO_LIVE_GAME_DBS_CONVERTER: Symbol.for(
-        'GameCreationQueryToLiveGameDbsConverter',
+      LIVE_GAME_CREATION_QUERY_TO_LIVE_GAME_DBS_CONVERTER: Symbol.for(
+        'LiveGameCreationQueryToLiveGameDbsConverter',
       ),
-      GAME_DB_TO_LIVE_GAME_CONVERTER: Symbol.for('GameDbToGameConverter'),
+      LIVE_GAME_DB_TO_LIVE_GAME_CONVERTER: Symbol.for(
+        'LiveGameDbToGameConverter',
+      ),
+      LIVE_GAME_FIND_QUERY_TO_LIVE_GAME_DB_FILTER_QUERY_CONVERTER: Symbol.for(
+        'LiveGameFindQueryToLiveGameDbFilterQueryConverter',
+      ),
     },
     setup: {
       GAME_SETUP_DB_TO_GAME_SETUP_CONVERTER: Symbol.for(

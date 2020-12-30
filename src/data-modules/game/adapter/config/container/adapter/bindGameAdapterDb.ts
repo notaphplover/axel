@@ -11,11 +11,8 @@ import { CreatureDbToCreatureConverter } from '../../../db/converter/card/Creatu
 import { EnchantmentCreationQueryToEnchantmentDbsConverter } from '../../../db/converter/card/EnchantmentCreationQueryToEnchantmentDbsConverter';
 import { EnchantmentDbToEnchantmentConverter } from '../../../db/converter/card/EnchantmentDbToEnchantmentConverter';
 import { GAME_ADAPTER_TYPES } from '../../types';
-import { GameCreationQueryToLiveGameDbsConverter } from '../../../db/converter/live/GameCreationQueryToLiveGameDbsConverter';
 import { GameDbCollectionName } from '../../../db/GameDbCollection';
 import { GameDbInitializer } from '../../../db/initializer/GameDbInitializer';
-import { GameDbToLiveGameConverter } from '../../../db/converter/live/GameDbToLiveGameConverter';
-import { GameFindQueryToLiveGameDbFilterQueryConverter } from '../../../db/converter/GameFindQueryToLiveGameDbFilterQueryConverter';
 import { GameSetupCreationQueryToGameSetupDbsConverter } from '../../../db/converter/setup/GameSetupCreationQueryToGameSetupDbsConverter';
 import { GameSetupDbCollectionInitializer } from '../../../db/initializer/setup/GameSetupDbCollectionInitializer';
 import { GameSetupDbToGameSetupConverter } from '../../../db/converter/setup/GameSetupDbToGameSetupConverter';
@@ -24,6 +21,9 @@ import { GameSetupUpdateQueryToGameSetupDbFilterQueryConverter } from '../../../
 import { GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter';
 import { LandCreationQueryToLandDbsConverter } from '../../../db/converter/card/LandCreationQueryToLandDbsConverter';
 import { LandDbToLandConverter } from '../../../db/converter/card/LandDbToLandConverter';
+import { LiveGameCreationQueryToLiveGameDbsConverter } from '../../../db/converter/live/LiveGameCreationQueryToLiveGameDbsConverter';
+import { LiveGameDbToLiveGameConverter } from '../../../db/converter/live/GameDbToLiveGameConverter';
+import { LiveGameFindQueryToLiveGameDbFilterQueryConverter } from '../../../db/converter/live/LiveGameFindQueryToLiveGameDbFilterQueryConverter';
 import { interfaces } from 'inversify';
 
 export function bindGameAdapterDb(bind: interfaces.Bind): void {
@@ -40,17 +40,17 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.db.collection.setup.GAME_SETUP_COLLECTION_NAME,
   ).toConstantValue(GameDbCollectionName.GameSetup);
 
-  bind(GAME_ADAPTER_TYPES.db.converter.live.GAME_DB_TO_LIVE_GAME_CONVERTER).to(
-    GameDbToLiveGameConverter,
-  );
   bind(
-    GAME_ADAPTER_TYPES.db.converter
-      .GAME_FIND_QUERY_TO_GAME_DB_FILTER_QUERY_CONVERTER,
-  ).to(GameFindQueryToLiveGameDbFilterQueryConverter);
+    GAME_ADAPTER_TYPES.db.converter.live.LIVE_GAME_DB_TO_LIVE_GAME_CONVERTER,
+  ).to(LiveGameDbToLiveGameConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.live
-      .GAME_CREATION_QUERY_TO_LIVE_GAME_DBS_CONVERTER,
-  ).to(GameCreationQueryToLiveGameDbsConverter);
+      .LIVE_GAME_FIND_QUERY_TO_LIVE_GAME_DB_FILTER_QUERY_CONVERTER,
+  ).to(LiveGameFindQueryToLiveGameDbFilterQueryConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.live
+      .LIVE_GAME_CREATION_QUERY_TO_LIVE_GAME_DBS_CONVERTER,
+  ).to(LiveGameCreationQueryToLiveGameDbsConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.card
       .ARTIFACT_CREATION_QUERY_TO_ARTIFACT_DBS_CONVERTER,

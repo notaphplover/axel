@@ -4,7 +4,7 @@ import { LiveGameDb } from '../../model/live/LiveGameDb';
 import { injectable } from 'inversify';
 
 @injectable()
-export class GameDbToLiveGameConverter
+export class LiveGameDbToLiveGameConverter
   implements Converter<LiveGameDb, LiveGame> {
   public transform(input: LiveGameDb): LiveGame {
     return {

@@ -8,9 +8,9 @@ import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
 import { EnchantmentCreationQuery } from '../../../../domain/query/card/EnchantmentCreationQuery';
-import { GameCreationQuery } from '../../../../domain/query/GameCreationQuery';
-import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
 import { LandCreationQuery } from '../../../../domain/query/card/LandCreationQuery';
+import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
+import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
 import { game } from '../model';
 
 export const artifactCreationQuery: ArtifactCreationQuery = {
@@ -78,20 +78,20 @@ export const enchantmentFindQueryFixtureFactory: FixtureFactory<CardFindQuery> =
   enchantmentFindQuery,
 );
 
-export const gameCreationQuery: GameCreationQuery = {
+export const gameCreationQuery: LiveGameCreationQuery = {
   round: game.round,
 };
 
-export const gameCreationQueryFixtureFactory: FixtureFactory<GameCreationQuery> = new DeepCloneFixtureFactory(
+export const gameCreationQueryFixtureFactory: FixtureFactory<LiveGameCreationQuery> = new DeepCloneFixtureFactory(
   gameCreationQuery,
 );
 
-export const gameFindQuery: GameFindQuery = {
+export const gameFindQuery: LiveGameFindQuery = {
   id: game.id,
   round: game.round,
 };
 
-export const gameFindQueryFixtureFactory: FixtureFactory<GameFindQuery> = new DeepCloneFixtureFactory(
+export const gameFindQueryFixtureFactory: FixtureFactory<LiveGameFindQuery> = new DeepCloneFixtureFactory(
   gameFindQuery,
 );
 

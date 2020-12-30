@@ -34,8 +34,6 @@ export const GAME_DOMAIN_TYPES = {
     },
   },
   repository: {
-    GAME_INSERT_REPOSITORY: Symbol.for('GameInsertRepository'),
-    GAME_SEARCH_REPOSITORY: Symbol.for('GameSearchRepository'),
     card: {
       ARTIFACT_INSERT_REPOSITORY: Symbol.for('ArtifactInsertRepository'),
       CARD_SEARCH_REPOSITORY: Symbol.for('CardSearchRepository'),
@@ -46,6 +44,10 @@ export const GAME_DOMAIN_TYPES = {
     deck: {
       CARD_DECK_INSERT_REPOSITORY: Symbol.for('CardDeckInsertRepository'),
       CARD_DECK_SEARCH_REPOSITORY: Symbol.for('CardDeckSearchRepository'),
+    },
+    live: {
+      LIVE_GAME_INSERT_REPOSITORY: Symbol.for('LiveGameInsertRepository'),
+      LIVE_GAME_SEARCH_REPOSITORY: Symbol.for('LiveGameSearchRepository'),
     },
     setup: {
       GAME_SETUP_INSERT_REPOSITORY: Symbol.for('GameSetupInsertRepository'),

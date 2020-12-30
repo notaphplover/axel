@@ -1,23 +1,23 @@
 import { inject, injectable } from 'inversify';
 import { GAME_DOMAIN_TYPES } from '../../config/types';
-import { GameCreationQuery } from '../../query/GameCreationQuery';
 import { InsertRepository } from '../../../../../layer-modules/db/domain';
 import { Interactor } from '../../../../../common/domain';
 import { LiveGame } from '../../model/live/LiveGame';
+import { LiveGameCreationQuery } from '../../query/live/LiveGameCreationQuery';
 
 @injectable()
 export class CreateLiveGamesInteractor
-  implements Interactor<GameCreationQuery, Promise<LiveGame[]>> {
+  implements Interactor<LiveGameCreationQuery, Promise<LiveGame[]>> {
   constructor(
-    @inject(GAME_DOMAIN_TYPES.repository.GAME_INSERT_REPOSITORY)
-    private readonly gameInsertRepository: InsertRepository<
+    @inject(GAME_DOMAIN_TYPES.repository.live.LIVE_GAME_INSERT_REPOSITORY)
+    private readonly liveGameInsertRepository: InsertRepository<
       LiveGame,
-      GameCreationQuery
+      LiveGameCreationQuery
     >,
   ) {}
 
-  public async interact(input: GameCreationQuery): Promise<LiveGame[]> {
-    const gamesCreated: LiveGame[] = await this.gameInsertRepository.insert(
+  public async interact(input: LiveGameCreationQuery): Promise<LiveGame[]> {
+    const gamesCreated: LiveGame[] = await this.liveGameInsertRepository.insert(
       input,
     );
 

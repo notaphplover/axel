@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { Capsule, Converter } from '../../../../../../common/domain';
-import { GameCreationQuery } from '../../../../domain/query/GameCreationQuery';
-import { GameDbInsertRepository } from '../../../../adapter/db/repository/GameDbInsertRepository';
-import { LiveGame } from '../../../../domain/model/live/LiveGame';
-import { LiveGameDb } from '../../../../adapter/db/model/live/LiveGameDb';
-import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
-import { dbTest } from '../../../../../../layer-modules/db/test';
-import { gameCreationQueryFixtureFactory } from '../../../fixtures/domain/query/card';
-import { gameFixtureFactory } from '../../../fixtures/domain/model';
+import { Capsule, Converter } from '../../../../../../../common/domain';
+import { LiveGame } from '../../../../../domain/model/live/LiveGame';
+import { LiveGameCreationQuery } from '../../../../../domain/query/live/LiveGameCreationQuery';
+import { LiveGameDb } from '../../../../../adapter/db/model/live/LiveGameDb';
+import { LiveGameDbInsertRepository } from '../../../../../adapter/db/repository/live/LiveGameDbInsertRepository';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
+import { dbTest } from '../../../../../../../layer-modules/db/test';
+import { gameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { gameFixtureFactory } from '../../../../fixtures/domain/model';
 import mongodb from 'mongodb';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
@@ -19,17 +19,17 @@ const mongodbIntegrationDescribeGenerator: (
   dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
 mongodbIntegrationDescribeGenerator(outputParam)(
-  GameDbInsertRepository.name,
+  LiveGameDbInsertRepository.name,
   () => {
     let collectionName: string;
     let gameDbToGameConverter: Converter<LiveGameDb, LiveGame>;
     let mongoDbConnector: MongoDbConnector;
     let gameCreationQueryToGameDbsConverter: Converter<
-      GameCreationQuery,
+      LiveGameCreationQuery,
       mongodb.OptionalId<LiveGameDb>[]
     >;
 
-    let gameDbInsertRepository: GameDbInsertRepository;
+    let gameDbInsertRepository: LiveGameDbInsertRepository;
 
     beforeAll(() => {
       collectionName = 'GameDbInsertRepositoryIntegrationTest';
@@ -41,7 +41,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         transform: jest.fn(),
       };
 
-      gameDbInsertRepository = new GameDbInsertRepository(
+      gameDbInsertRepository = new LiveGameDbInsertRepository(
         collectionName,
         gameDbToGameConverter,
         mongoDbConnector,

@@ -5,20 +5,20 @@ import { CardDeckDbSearchRepository } from '../../../db/repository/deck/CardDeck
 import { CreatureDbInsertRepository } from '../../../db/repository/card/CreatureDbInsertRepository';
 import { EnchantmentDbInsertRepository } from '../../../db/repository/card/EnchantmentDbInsertRepository';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
-import { GameDbInsertRepository } from '../../../db/repository/GameDbInsertRepository';
-import { GameDbSearchRepository } from '../../../db/repository/GameDbSearchRepository';
 import { GameSetupDbInsertRepository } from '../../../db/repository/setup/GameSetupDbInsertRepository';
 import { GameSetupDbSearchRepository } from '../../../db/repository/setup/GameSetupDbSearchRepository';
 import { GameSetupDbUpdateRepository } from '../../../db/repository/setup/GameSetupDbUpdateRepository';
 import { LandDbInsertRepository } from '../../../db/repository/card/LandDbInsertRepository';
+import { LiveGameDbInsertRepository } from '../../../db/repository/live/LiveGameDbInsertRepository';
+import { LiveGameDbSearchRepository } from '../../../db/repository/live/LiveGameDbSearchRepository';
 import { interfaces } from 'inversify';
 
 export function bindGameDomainRepository(bind: interfaces.Bind): void {
-  bind(GAME_DOMAIN_TYPES.repository.GAME_INSERT_REPOSITORY).to(
-    GameDbInsertRepository,
+  bind(GAME_DOMAIN_TYPES.repository.live.LIVE_GAME_INSERT_REPOSITORY).to(
+    LiveGameDbInsertRepository,
   );
-  bind(GAME_DOMAIN_TYPES.repository.GAME_SEARCH_REPOSITORY).to(
-    GameDbSearchRepository,
+  bind(GAME_DOMAIN_TYPES.repository.live.LIVE_GAME_SEARCH_REPOSITORY).to(
+    LiveGameDbSearchRepository,
   );
   bind(GAME_DOMAIN_TYPES.repository.card.ARTIFACT_INSERT_REPOSITORY).to(
     ArtifactDbInsertRepository,

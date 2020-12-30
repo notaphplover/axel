@@ -10,7 +10,7 @@ import { FindCardDeckInteractor } from '../../../../domain/interactor/deck/FindC
 import { FindCardDecksInteractor } from '../../../../domain/interactor/deck/FindCardDecksInteractor';
 import { FindCardsInteractor } from '../../../../domain/interactor/card/FindCardsInteractor';
 import { FindGameSetupsInteractor } from '../../../../domain/interactor/setup/FindGameSetupsInteractor';
-import { FindLiveGameInteractor } from '../../../../domain/interactor/FindLiveGameInteractor';
+import { FindLiveGameInteractor } from '../../../../domain/interactor/live/FindLiveGameInteractor';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { UpdateGameSetupInteractor } from '../../../../domain/interactor/setup/UpdateGameSetupInteractor';
 import { interfaces } from 'inversify';

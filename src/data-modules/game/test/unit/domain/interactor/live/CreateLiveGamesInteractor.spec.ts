@@ -1,25 +1,30 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { CreateLiveGamesInteractor } from '../../../../../domain/interactor/live/CreateLiveGamesInteractor';
-import { GameCreationQuery } from '../../../../../domain/query/GameCreationQuery';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { LiveGame } from '../../../../../domain/model/live/LiveGame';
+import { LiveGameCreationQuery } from '../../../../../domain/query/live/LiveGameCreationQuery';
 import { gameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 import { gameFixtureFactory } from '../../../../fixtures/domain/model';
 
 describe(CreateLiveGamesInteractor.name, () => {
-  let gameInsertRepository: InsertRepository<LiveGame, GameCreationQuery>;
+  let liveGameInsertRepository: InsertRepository<
+    LiveGame,
+    LiveGameCreationQuery
+  >;
 
-  let createGamesInteractor: CreateLiveGamesInteractor;
+  let createLiveGamesInteractor: CreateLiveGamesInteractor;
 
   beforeAll(() => {
-    gameInsertRepository = ({
+    liveGameInsertRepository = ({
       insert: jest.fn(),
     } as Partial<
-      InsertRepository<LiveGame, GameCreationQuery>
-    >) as InsertRepository<LiveGame, GameCreationQuery>;
+      InsertRepository<LiveGame, LiveGameCreationQuery>
+    >) as InsertRepository<LiveGame, LiveGameCreationQuery>;
 
-    createGamesInteractor = new CreateLiveGamesInteractor(gameInsertRepository);
+    createLiveGamesInteractor = new CreateLiveGamesInteractor(
+      liveGameInsertRepository,
+    );
   });
 
   describe('.interact()', () => {
@@ -27,18 +32,18 @@ describe(CreateLiveGamesInteractor.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        (gameInsertRepository.insert as jest.Mock).mockResolvedValueOnce([
+        (liveGameInsertRepository.insert as jest.Mock).mockResolvedValueOnce([
           gameFixtureFactory.get(),
         ]);
 
-        result = await createGamesInteractor.interact(
+        result = await createLiveGamesInteractor.interact(
           gameCreationQueryFixtureFactory.get(),
         );
       });
 
       it('must call gameInsertRepository.insert() with the games obtained from the converter', () => {
-        expect(gameInsertRepository.insert).toHaveBeenCalledTimes(1);
-        expect(gameInsertRepository.insert).toHaveBeenCalledWith(
+        expect(liveGameInsertRepository.insert).toHaveBeenCalledTimes(1);
+        expect(liveGameInsertRepository.insert).toHaveBeenCalledWith(
           gameCreationQueryFixtureFactory.get(),
         );
       });

@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 
-import { Capsule, Converter } from '../../../../../../common/domain';
-import { GameDbSearchRepository } from '../../../../adapter/db/repository/GameDbSearchRepository';
-import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
-import { LiveGame } from '../../../../domain/model/live/LiveGame';
-import { LiveGameDb } from '../../../../adapter/db/model/live/LiveGameDb';
-import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
-import { dbTest } from '../../../../../../layer-modules/db/test';
-import { gameFindQueryFixtureFactory } from '../../../fixtures/domain/query/card';
-import { gameFixtureFactory } from '../../../fixtures/domain/model';
+import { Capsule, Converter } from '../../../../../../../common/domain';
+import { LiveGame } from '../../../../../domain/model/live/LiveGame';
+import { LiveGameDb } from '../../../../../adapter/db/model/live/LiveGameDb';
+import { LiveGameDbSearchRepository } from '../../../../../adapter/db/repository/live/LiveGameDbSearchRepository';
+import { LiveGameFindQuery } from '../../../../../domain/query/live/LiveGameFindQuery';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
+import { dbTest } from '../../../../../../../layer-modules/db/test';
+import { gameFindQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { gameFixtureFactory } from '../../../../fixtures/domain/model';
 import mongodb from 'mongodb';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
@@ -20,17 +20,17 @@ const mongodbIntegrationDescribeGenerator: (
   dbTest.integration.utils.mongoDbIntegrationDescribeGenerator;
 
 mongodbIntegrationDescribeGenerator(outputParam)(
-  GameDbSearchRepository.name,
+  LiveGameDbSearchRepository.name,
   () => {
     let collectionName: string;
     let gameDbToGameConverter: Converter<LiveGameDb, LiveGame>;
     let mongoDbConnector: MongoDbConnector;
     let gameFindQueryToGameDbFilterQueryConverter: Converter<
-      GameFindQuery,
+      LiveGameFindQuery,
       mongodb.FilterQuery<LiveGameDb>
     >;
 
-    let gameDbSearchRepository: GameDbSearchRepository;
+    let gameDbSearchRepository: LiveGameDbSearchRepository;
 
     beforeAll(() => {
       collectionName = 'GameDbSearchRepositoryIntegrationTest';
@@ -42,7 +42,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         transform: jest.fn(),
       };
 
-      gameDbSearchRepository = new GameDbSearchRepository(
+      gameDbSearchRepository = new LiveGameDbSearchRepository(
         collectionName,
         gameDbToGameConverter,
         mongoDbConnector,
@@ -72,7 +72,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             ])
           ).ops;
 
-          const gameFindQueryFixture: GameFindQuery = {
+          const gameFindQueryFixture: LiveGameFindQuery = {
             ...gameFindQueryFixtureFactory.get(),
             id: gameDbInserted._id.toHexString(),
           };
@@ -123,7 +123,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             gameDbFilterQuery,
           );
 
-          const gameFindQueryFixture: GameFindQuery = {
+          const gameFindQueryFixture: LiveGameFindQuery = {
             id: mongoDbId.toHexString(),
           };
 

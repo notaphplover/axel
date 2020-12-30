@@ -4,10 +4,10 @@ import { Converter } from '../../../../../../common/domain';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
-import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
 import { Interactor } from '../../../../../../common/domain';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { LiveGameApiV1 } from '../../../api/model/live/LiveGameApiV1';
+import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()
@@ -15,7 +15,7 @@ export class GetLiveGameByIdV1RequestHandler implements FastifyRequestHandler {
   constructor(
     @inject(GAME_DOMAIN_TYPES.interactor.live.FIND_GAME_INTERACTOR)
     private readonly findGameInteractor: Interactor<
-      GameFindQuery,
+      LiveGameFindQuery,
       Promise<LiveGame | null>
     >,
     @inject(
@@ -29,7 +29,7 @@ export class GetLiveGameByIdV1RequestHandler implements FastifyRequestHandler {
     request: FastifyRequest,
     reply: FastifyReply,
   ): Promise<void> {
-    const findGameQuery: GameFindQuery = {
+    const findGameQuery: LiveGameFindQuery = {
       id: (request.params as { gameId: string }).gameId,
     };
 

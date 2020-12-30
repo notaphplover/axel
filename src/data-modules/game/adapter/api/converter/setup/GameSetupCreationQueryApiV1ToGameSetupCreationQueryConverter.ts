@@ -53,24 +53,24 @@ export class GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter
       ownerUserId: input.ownerUserId,
       playerSetups: input.playerSetups.map(
         (
-          gameCreationQueryPlayerSetupApiV1: GameSetupCreationQueryPlayerSetupApiV1,
+          gameSetupCreationQueryPlayerSetupApiV1: GameSetupCreationQueryPlayerSetupApiV1,
         ): PlayerSetup => {
           const playerSetupDeck:
             | CardDeck
             | undefined = gameSetupPlayerSetupsDecks.find(
             (cardDeck: CardDeck) =>
-              cardDeck.id === gameCreationQueryPlayerSetupApiV1.deckId,
+              cardDeck.id === gameSetupCreationQueryPlayerSetupApiV1.deckId,
           );
 
           if (playerSetupDeck === undefined) {
             throw new EntitiesNotFoundError(
-              `playerSetup for id ${gameCreationQueryPlayerSetupApiV1.deckId} not found`,
+              `playerSetup for id ${gameSetupCreationQueryPlayerSetupApiV1.deckId} not found`,
             );
           }
 
           const playerSetup: PlayerSetup = {
             deckId: playerSetupDeck.id,
-            userId: gameCreationQueryPlayerSetupApiV1.userId,
+            userId: gameSetupCreationQueryPlayerSetupApiV1.userId,
           };
 
           return playerSetup;

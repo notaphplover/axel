@@ -2,17 +2,20 @@
 import 'reflect-metadata';
 import { Converter, Interactor } from '../../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { GameFindQuery } from '../../../../../../domain/query/GameFindQuery';
 import { GetLiveGameByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/GetLiveGameByIdV1RequestHandler';
 import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
 import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
+import { LiveGameFindQuery } from '../../../../../../domain/query/live/LiveGameFindQuery';
 import { StatusCodes } from 'http-status-codes';
 import { commonTest } from '../../../../../../../../common/test';
 import { gameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
 import { gameFixtureFactory } from '../../../../../fixtures/domain/model';
 
 describe(GetLiveGameByIdV1RequestHandler.name, () => {
-  let findGameInteractor: Interactor<GameFindQuery, Promise<LiveGame | null>>;
+  let findGameInteractor: Interactor<
+    LiveGameFindQuery,
+    Promise<LiveGame | null>
+  >;
   let gameToGameApiV1Port: Converter<LiveGame, LiveGameApiV1>;
   let getGameByIdV1RequestHandler: GetLiveGameByIdV1RequestHandler;
 
