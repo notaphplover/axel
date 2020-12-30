@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../config/types';
-import { GameCreationQueryApiV1 } from '../query/GameCreationQueryApiV1';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { GameCreationQueryApiV1 } from '../../query/live/LiveGameCreationQueryApiV1';
 import Joi from 'joi';
-import { JoiObjectValidator } from '../../../../../integration-modules/joi/adapter';
+import { JoiObjectValidator } from '../../../../../../integration-modules/joi/adapter';
 
 @injectable()
-export class GameCreationQueryApiV1Validator extends JoiObjectValidator<GameCreationQueryApiV1> {
+export class LiveGameCreationQueryApiV1Validator extends JoiObjectValidator<GameCreationQueryApiV1> {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
     @inject(

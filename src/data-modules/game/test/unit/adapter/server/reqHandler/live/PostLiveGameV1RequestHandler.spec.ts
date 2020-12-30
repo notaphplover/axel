@@ -8,7 +8,7 @@ import {
   Validator,
 } from '../../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { GameCreationQueryApiV1 } from '../../../../../../adapter/api/query/GameCreationQueryApiV1';
+import { GameCreationQueryApiV1 } from '../../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
 import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
 import { LiveGameCreationQuery } from '../../../../../../domain/query/live/LiveGameCreationQuery';

@@ -9,7 +9,7 @@ import { inject, injectable } from 'inversify';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
-import { GameCreationQueryApiV1 } from '../../../api/query/GameCreationQueryApiV1';
+import { GameCreationQueryApiV1 } from '../../../api/query/live/LiveGameCreationQueryApiV1';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { LiveGameApiV1 } from '../../../api/model/live/LiveGameApiV1';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';

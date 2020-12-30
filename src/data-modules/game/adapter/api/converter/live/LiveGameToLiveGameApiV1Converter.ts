@@ -1,6 +1,6 @@
-import { Converter } from '../../../../../common/domain';
-import { LiveGame } from '../../../domain/model/live/LiveGame';
-import { LiveGameApiV1 } from '../model/live/LiveGameApiV1';
+import { Converter } from '../../../../../../common/domain';
+import { LiveGame } from '../../../../domain/model/live/LiveGame';
+import { LiveGameApiV1 } from '../../model/live/LiveGameApiV1';
 import { injectable } from 'inversify';
 
 @injectable()

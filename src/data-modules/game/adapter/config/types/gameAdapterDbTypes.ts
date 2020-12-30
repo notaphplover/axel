@@ -57,7 +57,7 @@ export const GAME_ADAPTER_DB_TYPES = {
         'LiveGameCreationQueryToLiveGameDbsConverter',
       ),
       LIVE_GAME_DB_TO_LIVE_GAME_CONVERTER: Symbol.for(
-        'LiveGameDbToGameConverter',
+        'LiveGameDbToLiveGameConverter',
       ),
       LIVE_GAME_FIND_QUERY_TO_LIVE_GAME_DB_FILTER_QUERY_CONVERTER: Symbol.for(
         'LiveGameFindQueryToLiveGameDbFilterQueryConverter',

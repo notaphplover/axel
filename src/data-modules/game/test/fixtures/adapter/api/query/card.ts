@@ -15,7 +15,7 @@ import { CardFindQueryApiV1 } from '../../../../../adapter/api/query/card/CardFi
 import { CardTypeApiV1 } from '../../../../../adapter/api/model/card/CardTypeApiV1';
 import { CreatureCreationQueryApiV1 } from '../../../../../adapter/api/query/card/CreatureCreationQueryApiV1';
 import { EnchantmentCreationQueryApiV1 } from '../../../../../adapter/api/query/card/EnchantmentCreationQueryApiV1';
-import { GameCreationQueryApiV1 } from '../../../../../adapter/api/query/GameCreationQueryApiV1';
+import { GameCreationQueryApiV1 } from '../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import { LandCreationQueryApiV1 } from '../../../../../adapter/api/query/card/LandCreationQueryApiV1';
 import { game } from '../../../domain/model';
 

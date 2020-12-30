@@ -15,7 +15,6 @@ import { CardToCardApiV1Converter } from '../../../api/converter/card/CardToCard
 import { CardTypeApiV1ToCardTypeConverter } from '../../../api/converter/card/CardTypeApiV1ToCardTypeConverter';
 import { CardTypeToCardTypeApiV1Converter } from '../../../api/converter/card/CardTypeToCardTypeApiV1Converter';
 import { GAME_ADAPTER_TYPES } from '../../types';
-import { GameCreationQueryApiV1Validator } from '../../../api/validator/GameCreationQueryApiV1Validator';
 import { GameFormatApiV1ToGameFormatConverter } from '../../../api/converter/GameFormatApiV1ToGameFormatConverter';
 import { GameFormatToGameFormatApiV1Converter } from '../../../api/converter/GameFormatToGameFormatApiV1Converter';
 import { GameSetupCreationQueryApiV1ContextBasedValidator } from '../../../api/validator/setup/GameSetupCreationQueryApiV1ContextBasedValidator';
@@ -30,18 +29,19 @@ import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayCo
 import { GameSetupUpdateQueryApiV1ContextBasedValidator } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1ContextBasedValidator';
 import { GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter } from '../../../api/converter/setup/GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter';
 import { GameSetupUpdateQueryApiV1Validator } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1Validator';
-import { LiveGameToLiveGameApiV1Converter } from '../../../api/converter/LiveGameToGameApiV1Converter';
+import { LiveGameCreationQueryApiV1Validator } from '../../../api/validator/live/LiveGameCreationQueryApiV1Validator';
+import { LiveGameToLiveGameApiV1Converter } from '../../../api/converter/live/LiveGameToLiveGameApiV1Converter';
 import { PlayerReferenceApiV1ToPlayerReferenceConverter } from '../../../api/converter/setup/PlayerReferenceApiV1ToPlayerReferenceConverter';
 import { ResourceApiV1ToResourceConverter } from '../../../api/converter/card/ResourceApiV1ToResourceConverter';
 import { ResourceToResourceApiV1Converter } from '../../../api/converter/card/ResourceToResourceApiV1Converter';
 import { cardCreationQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/card/cardCreationQueryApiV1JoiValidatorSchema';
 import { cardDeckCreationQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/deck/cardDeckCreationQueryApiV1JoiValidatorSchema';
 import { cardFindQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/card/cardFindQueryApiV1JoiValidatorSchema';
-import { gameCreationQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/gameCreationQueryApiV1JoiValidatorSchema';
 import { gameSetupCreationQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/setup/gameSetupCreationQueryApiV1ValidatorSchema';
 import { gameSetupFindQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/setup/gameSetupFindQueryApiV1ValidatorSchema';
 import { gameSetupUpdateQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/setup/gameSetupUpdateQueryApiV1ValidatorSchema';
 import { interfaces } from 'inversify';
+import { liveGameCreationQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/live/liveGameCreationQueryApiV1JoiValidatorSchema';
 
 export function bindGameAdapterApi(bind: interfaces.Bind): void {
   bind(
@@ -153,7 +153,7 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
   ).to(PlayerReferenceApiV1ToPlayerReferenceConverter);
 
   bind(GAME_ADAPTER_TYPES.api.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR)
-    .to(GameCreationQueryApiV1Validator)
+    .to(LiveGameCreationQueryApiV1Validator)
     .inSingletonScope();
   bind(
     GAME_ADAPTER_TYPES.api.validator.card.CARD_CREATION_QUERY_API_V1_VALIDATOR,
@@ -220,5 +220,5 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
   bind(
     GAME_ADAPTER_TYPES.api.validator.schema.query
       .GAME_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
-  ).toConstantValue(gameCreationQueryApiV1JoiValidatorSchema);
+  ).toConstantValue(liveGameCreationQueryApiV1JoiValidatorSchema);
 }
