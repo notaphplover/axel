@@ -55,7 +55,7 @@ export const GAME_ADAPTER_API_TYPES = {
       ),
     },
     live: {
-      LIVE_GAME_TO_GAME_API_V1_CONVERTER: Symbol.for(
+      LIVE_GAME_TO_LIVE_GAME_API_V1_CONVERTER: Symbol.for(
         'LiveGameToGameApiV1Converter',
       ),
     },

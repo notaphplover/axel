@@ -3,20 +3,20 @@ import {
   Interactor,
   ValidationResult,
   Validator,
-} from '../../../../../common/domain';
+} from '../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
-import { FastifyRequestHandler } from '../../../../../integration-modules/fastify/adapter';
-import { GAME_ADAPTER_TYPES } from '../../config/types';
-import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
-import { GameApiV1 } from '../../api/model/GameApiV1';
-import { GameCreationQuery } from '../../../domain/query/GameCreationQuery';
-import { GameCreationQueryApiV1 } from '../../api/query/GameCreationQueryApiV1';
-import { LiveGame } from '../../../domain/model/live/LiveGame';
+import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { GameCreationQuery } from '../../../../domain/query/GameCreationQuery';
+import { GameCreationQueryApiV1 } from '../../../api/query/GameCreationQueryApiV1';
+import { LiveGame } from '../../../../domain/model/live/LiveGame';
+import { LiveGameApiV1 } from '../../../api/model/live/LiveGameApiV1';
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()
-export class PostGameV1RequestHandler implements FastifyRequestHandler {
+export class PostLiveGameV1RequestHandler implements FastifyRequestHandler {
   constructor(
     @inject(GAME_DOMAIN_TYPES.interactor.live.CREATE_LIVE_GAMES_INTERACTOR)
     private readonly createGamesInteractor: Interactor<
@@ -28,9 +28,13 @@ export class PostGameV1RequestHandler implements FastifyRequestHandler {
     )
     private readonly gameCreationQueryApiV1Validator: Validator<GameCreationQueryApiV1>,
     @inject(
-      GAME_ADAPTER_TYPES.api.converter.live.LIVE_GAME_TO_GAME_API_V1_CONVERTER,
+      GAME_ADAPTER_TYPES.api.converter.live
+        .LIVE_GAME_TO_LIVE_GAME_API_V1_CONVERTER,
     )
-    private readonly gameToGameApiV1Converter: Converter<LiveGame, GameApiV1>,
+    private readonly gameToGameApiV1Converter: Converter<
+      LiveGame,
+      LiveGameApiV1
+    >,
   ) {}
 
   public async handle(
@@ -50,7 +54,7 @@ export class PostGameV1RequestHandler implements FastifyRequestHandler {
         gameCreationQuery,
       );
 
-      const gameApiV1Created: GameApiV1 = this.gameToGameApiV1Converter.transform(
+      const gameApiV1Created: LiveGameApiV1 = this.gameToGameApiV1Converter.transform(
         gameCreated,
       );
 

@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { Converter, Interactor } from '../../../../../../../common/domain';
+import { Converter, Interactor } from '../../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { GameApiV1 } from '../../../../../adapter/api/model/GameApiV1';
-import { GameFindQuery } from '../../../../../domain/query/GameFindQuery';
-import { GetGameByIdV1RequestHandler } from '../../../../../adapter/server/reqHandler/GetGameByIdV1RequestHandler';
-import { LiveGame } from '../../../../../domain/model/live/LiveGame';
+import { GameFindQuery } from '../../../../../../domain/query/GameFindQuery';
+import { GetLiveGameByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/GetLiveGameByIdV1RequestHandler';
+import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
+import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
 import { StatusCodes } from 'http-status-codes';
-import { commonTest } from '../../../../../../../common/test';
-import { gameApiV1FixtureFactory } from '../../../../fixtures/adapter/api/model';
-import { gameFixtureFactory } from '../../../../fixtures/domain/model';
+import { commonTest } from '../../../../../../../../common/test';
+import { gameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
+import { gameFixtureFactory } from '../../../../../fixtures/domain/model';
 
-describe(GetGameByIdV1RequestHandler.name, () => {
+describe(GetLiveGameByIdV1RequestHandler.name, () => {
   let findGameInteractor: Interactor<GameFindQuery, Promise<LiveGame | null>>;
-  let gameToGameApiV1Port: Converter<LiveGame, GameApiV1>;
-  let getGameByIdV1RequestHandler: GetGameByIdV1RequestHandler;
+  let gameToGameApiV1Port: Converter<LiveGame, LiveGameApiV1>;
+  let getGameByIdV1RequestHandler: GetLiveGameByIdV1RequestHandler;
 
   beforeAll(() => {
     findGameInteractor = {
@@ -23,7 +23,7 @@ describe(GetGameByIdV1RequestHandler.name, () => {
     gameToGameApiV1Port = {
       transform: jest.fn(),
     };
-    getGameByIdV1RequestHandler = new GetGameByIdV1RequestHandler(
+    getGameByIdV1RequestHandler = new GetLiveGameByIdV1RequestHandler(
       findGameInteractor,
       gameToGameApiV1Port,
     );

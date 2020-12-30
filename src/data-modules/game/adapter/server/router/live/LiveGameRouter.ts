@@ -2,21 +2,25 @@ import { FastifyInstance, FastifyServerOptions } from 'fastify';
 import {
   FastifyRequestHandler,
   FastifyRouter,
-} from '../../../../../integration-modules/fastify/adapter';
+} from '../../../../../../integration-modules/fastify/adapter';
 import { inject, injectable } from 'inversify';
-import { ApiVersion } from '../../../../../layer-modules/api/adapter';
-import { GAME_ADAPTER_TYPES } from '../../config/types';
+import { ApiVersion } from '../../../../../../layer-modules/api/adapter';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
 const GAME_ROUTER_PATH_PREFIX: string = 'games';
 
 @injectable()
-export class GameRouter implements FastifyRouter {
+export class LiveGameRouter implements FastifyRouter {
   constructor(
     @inject(
-      GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
+      GAME_ADAPTER_TYPES.server.reqHandler.live
+        .GET_LIVE_GAME_BY_ID_V1_REQUEST_HANDLER,
     )
     private readonly getGameByIdV1RequestHandler: FastifyRequestHandler,
-    @inject(GAME_ADAPTER_TYPES.server.reqHandler.POST_GAME_V1_REQUEST_HANDLER)
+    @inject(
+      GAME_ADAPTER_TYPES.server.reqHandler.live
+        .POST_LIVE_GAME_V1_REQUEST_HANDLER,
+    )
     private readonly postGameV1RequestHandler: FastifyRequestHandler,
   ) {}
 

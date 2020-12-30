@@ -19,7 +19,7 @@ export const GAME_ADAPTER_PUBLIC_TYPES = {
   },
   server: {
     router: {
-      GAME_ROUTER: GAME_ADAPTER_TYPES.server.router.GAME_ROUTER,
+      GAME_ROUTER: GAME_ADAPTER_TYPES.server.router.live.LIVE_GAME_ROUTER,
       card: {
         CARD_ROUTER: GAME_ADAPTER_TYPES.server.router.card.CARD_ROUTER,
       },

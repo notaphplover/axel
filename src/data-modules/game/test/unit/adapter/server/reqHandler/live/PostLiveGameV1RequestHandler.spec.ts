@@ -6,26 +6,26 @@ import {
   ValidationFail,
   ValidationResult,
   Validator,
-} from '../../../../../../../common/domain';
+} from '../../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { GameApiV1 } from '../../../../../adapter/api/model/GameApiV1';
-import { GameCreationQuery } from '../../../../../domain/query/GameCreationQuery';
-import { GameCreationQueryApiV1 } from '../../../../../adapter/api/query/GameCreationQueryApiV1';
-import { LiveGame } from '../../../../../domain/model/live/LiveGame';
-import { PostGameV1RequestHandler } from '../../../../../adapter/server/reqHandler/PostGameV1RequestHandler';
+import { GameCreationQuery } from '../../../../../../domain/query/GameCreationQuery';
+import { GameCreationQueryApiV1 } from '../../../../../../adapter/api/query/GameCreationQueryApiV1';
+import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
+import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
+import { PostLiveGameV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/PostLiveGameV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
-import { commonTest } from '../../../../../../../common/test';
-import { gameApiV1FixtureFactory } from '../../../../fixtures/adapter/api/model';
-import { gameCreationQueryApiV1FixtureFactory } from '../../../../fixtures/adapter/api/query/card';
-import { gameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
-import { gameFixtureFactory } from '../../../../fixtures/domain/model';
+import { commonTest } from '../../../../../../../../common/test';
+import { gameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
+import { gameCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
+import { gameCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
+import { gameFixtureFactory } from '../../../../../fixtures/domain/model';
 
-describe(PostGameV1RequestHandler.name, () => {
+describe(PostLiveGameV1RequestHandler.name, () => {
   let createGamesInteractor: Interactor<GameCreationQuery, Promise<LiveGame[]>>;
   let gameCreationQueryApiV1Validator: Validator<GameCreationQueryApiV1>;
-  let gameToGameApiV1Converter: Converter<LiveGame, GameApiV1>;
+  let gameToGameApiV1Converter: Converter<LiveGame, LiveGameApiV1>;
 
-  let postGameV1RequestHandler: PostGameV1RequestHandler;
+  let postGameV1RequestHandler: PostLiveGameV1RequestHandler;
 
   beforeAll(() => {
     createGamesInteractor = {
@@ -34,7 +34,7 @@ describe(PostGameV1RequestHandler.name, () => {
     gameCreationQueryApiV1Validator = { validate: jest.fn() };
     gameToGameApiV1Converter = { transform: jest.fn() };
 
-    postGameV1RequestHandler = new PostGameV1RequestHandler(
+    postGameV1RequestHandler = new PostLiveGameV1RequestHandler(
       createGamesInteractor,
       gameCreationQueryApiV1Validator,
       gameToGameApiV1Converter,

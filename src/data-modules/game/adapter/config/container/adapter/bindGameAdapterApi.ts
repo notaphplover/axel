@@ -30,7 +30,7 @@ import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayCo
 import { GameSetupUpdateQueryApiV1ContextBasedValidator } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1ContextBasedValidator';
 import { GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter } from '../../../api/converter/setup/GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter';
 import { GameSetupUpdateQueryApiV1Validator } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1Validator';
-import { LiveGameToGameApiV1Converter } from '../../../api/converter/LiveGameToGameApiV1Converter';
+import { LiveGameToLiveGameApiV1Converter } from '../../../api/converter/LiveGameToGameApiV1Converter';
 import { PlayerReferenceApiV1ToPlayerReferenceConverter } from '../../../api/converter/setup/PlayerReferenceApiV1ToPlayerReferenceConverter';
 import { ResourceApiV1ToResourceConverter } from '../../../api/converter/card/ResourceApiV1ToResourceConverter';
 import { ResourceToResourceApiV1Converter } from '../../../api/converter/card/ResourceToResourceApiV1Converter';
@@ -53,8 +53,9 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
       .GAME_FORMAT_API_V1_TO_GAME_FORMAT_CONVERTER,
   ).to(GameFormatApiV1ToGameFormatConverter);
   bind(
-    GAME_ADAPTER_TYPES.api.converter.live.LIVE_GAME_TO_GAME_API_V1_CONVERTER,
-  ).to(LiveGameToGameApiV1Converter);
+    GAME_ADAPTER_TYPES.api.converter.live
+      .LIVE_GAME_TO_LIVE_GAME_API_V1_CONVERTER,
+  ).to(LiveGameToLiveGameApiV1Converter);
   bind(
     GAME_ADAPTER_TYPES.api.converter.card
       .CARD_CREATION_QUERY_API_V1_TO_CARD_CREATION_QUERY_CONVERTER,

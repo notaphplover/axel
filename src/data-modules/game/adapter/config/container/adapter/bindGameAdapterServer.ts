@@ -1,26 +1,27 @@
 import { CardRouter } from '../../../server/router/card/CardRouter';
 import { DeckRouter } from '../../../server/router/deck/DeckRouter';
 import { GAME_ADAPTER_TYPES } from '../../types';
-import { GameRouter } from '../../../server/router/GameRouter';
 import { GameSetupRouter } from '../../../server/router/setup/GameSetupRouter';
 import { GetCardDeckByIdV1RequestHandler } from '../../../server/reqHandler/deck/GetCardDeckByIdV1RequestHandler';
-import { GetGameByIdV1RequestHandler } from '../../../server/reqHandler/GetGameByIdV1RequestHandler';
+import { GetLiveGameByIdV1RequestHandler } from '../../../server/reqHandler/live/GetLiveGameByIdV1RequestHandler';
+import { LiveGameRouter } from '../../../server/router/live/LiveGameRouter';
 import { PatchGameSetupByIdV1RequestHandler } from '../../../server/reqHandler/setup/PatchGameSetupByIdV1RequestHandler';
 import { PostCardDeckV1RequestHandler } from '../../../server/reqHandler/deck/PostCardDeckV1RequestHandler';
 import { PostCardV1RequestHandler } from '../../../server/reqHandler/card/PostCardV1RequestHandler';
 import { PostCardsSearchesV1RequestHandler } from '../../../server/reqHandler/card/PostCardsSearchesV1RequestHandler';
 import { PostGameSetupV1RequestHandler } from '../../../server/reqHandler/setup/PostGameSetupV1RequestHandler';
 import { PostGameSetupsSearchesV1RequestHandler } from '../../../server/reqHandler/setup/PostGameSetupsSearchesV1RequestHandler';
-import { PostGameV1RequestHandler } from '../../../server/reqHandler/PostGameV1RequestHandler';
+import { PostLiveGameV1RequestHandler } from '../../../server/reqHandler/live/PostLiveGameV1RequestHandler';
 import { interfaces } from 'inversify';
 
 export function bindGameAdapterServer(bind: interfaces.Bind): void {
   bind(
-    GAME_ADAPTER_TYPES.server.reqHandler.GET_GAME_BY_ID_V1_REQUEST_HANDLER,
-  ).to(GetGameByIdV1RequestHandler);
-  bind(GAME_ADAPTER_TYPES.server.reqHandler.POST_GAME_V1_REQUEST_HANDLER).to(
-    PostGameV1RequestHandler,
-  );
+    GAME_ADAPTER_TYPES.server.reqHandler.live
+      .GET_LIVE_GAME_BY_ID_V1_REQUEST_HANDLER,
+  ).to(GetLiveGameByIdV1RequestHandler);
+  bind(
+    GAME_ADAPTER_TYPES.server.reqHandler.live.POST_LIVE_GAME_V1_REQUEST_HANDLER,
+  ).to(PostLiveGameV1RequestHandler);
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.card.POST_CARD_V1_REQUEST_HANDLER,
   ).to(PostCardV1RequestHandler);
@@ -50,7 +51,9 @@ export function bindGameAdapterServer(bind: interfaces.Bind): void {
       .POST_GAME_SETUPS_SEARCHES_V1_REQUEST_HANDLER,
   ).to(PostGameSetupsSearchesV1RequestHandler);
 
-  bind(GAME_ADAPTER_TYPES.server.router.GAME_ROUTER).to(GameRouter);
+  bind(GAME_ADAPTER_TYPES.server.router.live.LIVE_GAME_ROUTER).to(
+    LiveGameRouter,
+  );
   bind(GAME_ADAPTER_TYPES.server.router.card.CARD_ROUTER).to(CardRouter);
   bind(GAME_ADAPTER_TYPES.server.router.deck.DECK_ROUTER).to(DeckRouter);
   bind(GAME_ADAPTER_TYPES.server.router.setup.GAME_SETUP_ROUTER).to(

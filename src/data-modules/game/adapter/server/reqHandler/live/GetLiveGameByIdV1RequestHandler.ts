@@ -1,17 +1,17 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
-import { Converter } from '../../../../../common/domain';
-import { FastifyRequestHandler } from '../../../../../integration-modules/fastify/adapter';
-import { GAME_ADAPTER_TYPES } from '../../config/types';
-import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
-import { GameApiV1 } from '../../api/model/GameApiV1';
-import { GameFindQuery } from '../../../domain/query/GameFindQuery';
-import { Interactor } from '../../../../../common/domain';
-import { LiveGame } from '../../../domain/model/live/LiveGame';
+import { Converter } from '../../../../../../common/domain';
+import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { GameFindQuery } from '../../../../domain/query/GameFindQuery';
+import { Interactor } from '../../../../../../common/domain';
+import { LiveGame } from '../../../../domain/model/live/LiveGame';
+import { LiveGameApiV1 } from '../../../api/model/live/LiveGameApiV1';
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()
-export class GetGameByIdV1RequestHandler implements FastifyRequestHandler {
+export class GetLiveGameByIdV1RequestHandler implements FastifyRequestHandler {
   constructor(
     @inject(GAME_DOMAIN_TYPES.interactor.live.FIND_GAME_INTERACTOR)
     private readonly findGameInteractor: Interactor<
@@ -19,9 +19,10 @@ export class GetGameByIdV1RequestHandler implements FastifyRequestHandler {
       Promise<LiveGame | null>
     >,
     @inject(
-      GAME_ADAPTER_TYPES.api.converter.live.LIVE_GAME_TO_GAME_API_V1_CONVERTER,
+      GAME_ADAPTER_TYPES.api.converter.live
+        .LIVE_GAME_TO_LIVE_GAME_API_V1_CONVERTER,
     )
-    private readonly gameToGameApiV1Port: Converter<LiveGame, GameApiV1>,
+    private readonly gameToGameApiV1Port: Converter<LiveGame, LiveGameApiV1>,
   ) {}
 
   public async handle(
