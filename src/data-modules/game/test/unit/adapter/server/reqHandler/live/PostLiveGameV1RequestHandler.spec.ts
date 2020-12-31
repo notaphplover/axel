@@ -8,10 +8,10 @@ import {
   Validator,
 } from '../../../../../../../../common/domain';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { GameCreationQueryApiV1 } from '../../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
 import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
 import { LiveGameCreationQuery } from '../../../../../../domain/query/live/LiveGameCreationQuery';
+import { LiveGameCreationQueryApiV1 } from '../../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import { PostLiveGameV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/PostLiveGameV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
 import { commonTest } from '../../../../../../../../common/test';
@@ -25,7 +25,7 @@ describe(PostLiveGameV1RequestHandler.name, () => {
     LiveGameCreationQuery,
     Promise<LiveGame[]>
   >;
-  let gameCreationQueryApiV1Validator: Validator<GameCreationQueryApiV1>;
+  let gameCreationQueryApiV1Validator: Validator<LiveGameCreationQueryApiV1>;
   let gameToGameApiV1Converter: Converter<LiveGame, LiveGameApiV1>;
 
   let postGameV1RequestHandler: PostLiveGameV1RequestHandler;
@@ -58,7 +58,7 @@ describe(PostLiveGameV1RequestHandler.name, () => {
         (createGamesInteractor.interact as jest.Mock).mockResolvedValueOnce([
           gameFixtureFactory.get(),
         ]);
-        const gameCreationQueryApiV1ValidatorValidationResult: ValidationResult<GameCreationQueryApiV1> = {
+        const gameCreationQueryApiV1ValidatorValidationResult: ValidationResult<LiveGameCreationQueryApiV1> = {
           model: gameCreationQueryApiV1FixtureFactory.get(),
           result: true,
         };

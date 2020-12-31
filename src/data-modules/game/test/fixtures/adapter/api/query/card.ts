@@ -15,8 +15,8 @@ import { CardFindQueryApiV1 } from '../../../../../adapter/api/query/card/CardFi
 import { CardTypeApiV1 } from '../../../../../adapter/api/model/card/CardTypeApiV1';
 import { CreatureCreationQueryApiV1 } from '../../../../../adapter/api/query/card/CreatureCreationQueryApiV1';
 import { EnchantmentCreationQueryApiV1 } from '../../../../../adapter/api/query/card/EnchantmentCreationQueryApiV1';
-import { GameCreationQueryApiV1 } from '../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import { LandCreationQueryApiV1 } from '../../../../../adapter/api/query/card/LandCreationQueryApiV1';
+import { LiveGameCreationQueryApiV1 } from '../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import { game } from '../../../domain/model';
 
 export const artifactCreationQueryApiV1: ArtifactCreationQueryApiV1 = {
@@ -84,11 +84,11 @@ export const enchantmentFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQue
   enchantmentFindQueryApiV1,
 );
 
-const gameCreationQueryApiV1: GameCreationQueryApiV1 = {
+const gameCreationQueryApiV1: LiveGameCreationQueryApiV1 = {
   round: game.round,
 };
 
-export const gameCreationQueryApiV1FixtureFactory: FixtureFactory<GameCreationQueryApiV1> = new DeepCloneFixtureFactory(
+export const gameCreationQueryApiV1FixtureFactory: FixtureFactory<LiveGameCreationQueryApiV1> = new DeepCloneFixtureFactory(
   gameCreationQueryApiV1,
 );
 

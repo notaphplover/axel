@@ -9,10 +9,10 @@ import { inject, injectable } from 'inversify';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
-import { GameCreationQueryApiV1 } from '../../../api/query/live/LiveGameCreationQueryApiV1';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { LiveGameApiV1 } from '../../../api/model/live/LiveGameApiV1';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
+import { LiveGameCreationQueryApiV1 } from '../../../api/query/live/LiveGameCreationQueryApiV1';
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()
@@ -26,7 +26,7 @@ export class PostLiveGameV1RequestHandler implements FastifyRequestHandler {
     @inject(
       GAME_ADAPTER_TYPES.api.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR,
     )
-    private readonly gameCreationQueryApiV1Validator: Validator<GameCreationQueryApiV1>,
+    private readonly gameCreationQueryApiV1Validator: Validator<LiveGameCreationQueryApiV1>,
     @inject(
       GAME_ADAPTER_TYPES.api.converter.live
         .LIVE_GAME_TO_LIVE_GAME_API_V1_CONVERTER,
@@ -41,7 +41,7 @@ export class PostLiveGameV1RequestHandler implements FastifyRequestHandler {
     request: FastifyRequest,
     reply: FastifyReply,
   ): Promise<void> {
-    const validationResult: ValidationResult<GameCreationQueryApiV1> = this.gameCreationQueryApiV1Validator.validate(
+    const validationResult: ValidationResult<LiveGameCreationQueryApiV1> = this.gameCreationQueryApiV1Validator.validate(
       request.body,
     );
     if (validationResult.result) {

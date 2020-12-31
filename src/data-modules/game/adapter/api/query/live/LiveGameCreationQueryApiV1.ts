@@ -1,3 +1,3 @@
-export interface GameCreationQueryApiV1 {
+export interface LiveGameCreationQueryApiV1 {
   round: number;
 }
