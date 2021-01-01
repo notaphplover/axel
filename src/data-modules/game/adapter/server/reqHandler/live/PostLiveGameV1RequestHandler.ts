@@ -45,13 +45,13 @@ export class PostLiveGameV1RequestHandler implements FastifyRequestHandler {
       request.body,
     );
     if (validationResult.result) {
-      const gameCreationQuery: LiveGameCreationQuery = {
-        round: validationResult.model.round,
+      const liveGameCreationQuery: LiveGameCreationQuery = {
+        round: 1,
       };
       const [
         gameCreated,
       ]: LiveGame[] = await this.createGamesInteractor.interact(
-        gameCreationQuery,
+        liveGameCreationQuery,
       );
 
       const gameApiV1Created: LiveGameApiV1 = this.gameToGameApiV1Converter.transform(
