@@ -87,9 +87,6 @@ export const GAME_ADAPTER_API_TYPES = {
     },
   },
   validator: {
-    GAME_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
-      'GameCreationQueryApiV1Validator',
-    ),
     card: {
       CARD_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
         'CardCreationQueryApiV1Validator',
@@ -101,6 +98,14 @@ export const GAME_ADAPTER_API_TYPES = {
     deck: {
       CARD_DECK_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
         'CardDeckCreationQueryApiV1Validator',
+      ),
+    },
+    live: {
+      LIVE_GAME_CREATION_QUERY_API_V1_CONTEXT_BASED_VALIDATOR: Symbol.for(
+        'LiveGameCreationQueryApiV1ContextBasedValidator',
+      ),
+      LIVE_GAME_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
+        'LiveGameCreationQueryApiV1Validator',
       ),
     },
     schema: {

@@ -24,7 +24,8 @@ export class PostLiveGameV1RequestHandler implements FastifyRequestHandler {
       Promise<LiveGame[]>
     >,
     @inject(
-      GAME_ADAPTER_TYPES.api.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR,
+      GAME_ADAPTER_TYPES.api.validator.live
+        .LIVE_GAME_CREATION_QUERY_API_V1_VALIDATOR,
     )
     private readonly gameCreationQueryApiV1Validator: Validator<LiveGameCreationQueryApiV1>,
     @inject(

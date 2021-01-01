@@ -152,7 +152,10 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
       .PLAYER_REFERENCE_API_V1_TO_PLAYER_REFERENCE_CONVERTER,
   ).to(PlayerReferenceApiV1ToPlayerReferenceConverter);
 
-  bind(GAME_ADAPTER_TYPES.api.validator.GAME_CREATION_QUERY_API_V1_VALIDATOR)
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.live
+      .LIVE_GAME_CREATION_QUERY_API_V1_VALIDATOR,
+  )
     .to(LiveGameCreationQueryApiV1Validator)
     .inSingletonScope();
   bind(
