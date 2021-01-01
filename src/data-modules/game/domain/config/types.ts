@@ -2,57 +2,55 @@
 export const GAME_DOMAIN_TYPES = {
   converter: {
     setup: {
-      PLAYER_SETUP_TO_PLAYER_REFERENCE_CONVERTER: Symbol.for(
+      PLAYER_SETUP_TO_PLAYER_REFERENCE_CONVERTER: Symbol(
         'PlayerSetupToPlayerReferenceConverter',
       ),
     },
   },
   interactor: {
     card: {
-      CREATE_ARTIFACTS_INTERACTOR: Symbol.for('CreateArtifactsInteractor'),
-      CREATE_CARDS_INTERACTOR: Symbol.for('CreateCardsInteractor'),
-      CREATE_CREATURES_INTERACTOR: Symbol.for('CreateCreaturesInteractor'),
-      CREATE_ENCHANTMENTS_INTERACTOR: Symbol.for(
-        'CreateEnchantmentsInteractor',
-      ),
-      CREATE_LANDS_INTERACTOR: Symbol.for('CreateLandsInteractor'),
-      FIND_CARDS_INTERACTOR: Symbol.for('FindCardsInteractor'),
+      CREATE_ARTIFACTS_INTERACTOR: Symbol('CreateArtifactsInteractor'),
+      CREATE_CARDS_INTERACTOR: Symbol('CreateCardsInteractor'),
+      CREATE_CREATURES_INTERACTOR: Symbol('CreateCreaturesInteractor'),
+      CREATE_ENCHANTMENTS_INTERACTOR: Symbol('CreateEnchantmentsInteractor'),
+      CREATE_LANDS_INTERACTOR: Symbol('CreateLandsInteractor'),
+      FIND_CARDS_INTERACTOR: Symbol('FindCardsInteractor'),
     },
     deck: {
-      CREATE_CARD_DECKS_INTERACTOR: Symbol.for('CreateCardDecksInteractor'),
-      FIND_CARD_DECK_INTERACTOR: Symbol.for('FindCardDeckInteractor'),
-      FIND_CARD_DECKS_INTERACTOR: Symbol.for('FindCardDecksInteractor'),
+      CREATE_CARD_DECKS_INTERACTOR: Symbol('CreateCardDecksInteractor'),
+      FIND_CARD_DECK_INTERACTOR: Symbol('FindCardDeckInteractor'),
+      FIND_CARD_DECKS_INTERACTOR: Symbol('FindCardDecksInteractor'),
     },
     live: {
-      CREATE_LIVE_GAMES_INTERACTOR: Symbol.for('CreateLiveGamesInteractor'),
-      FIND_GAME_INTERACTOR: Symbol.for('FindGameInteractor'),
+      CREATE_LIVE_GAMES_INTERACTOR: Symbol('CreateLiveGamesInteractor'),
+      FIND_GAME_INTERACTOR: Symbol('FindGameInteractor'),
     },
     setup: {
-      CREATE_GAME_SETUPS_INTERACTOR: Symbol.for('CreateGameSetupsInteractor'),
-      FIND_GAME_SETUPS_INTERACTOR: Symbol.for('FindGameSetupsInteractor'),
-      UPDATE_GAME_SETUP_INTERACTOR: Symbol.for('UpdateGameSetupInteractor'),
+      CREATE_GAME_SETUPS_INTERACTOR: Symbol('CreateGameSetupsInteractor'),
+      FIND_GAME_SETUPS_INTERACTOR: Symbol('FindGameSetupsInteractor'),
+      UPDATE_GAME_SETUP_INTERACTOR: Symbol('UpdateGameSetupInteractor'),
     },
   },
   repository: {
     card: {
-      ARTIFACT_INSERT_REPOSITORY: Symbol.for('ArtifactInsertRepository'),
-      CARD_SEARCH_REPOSITORY: Symbol.for('CardSearchRepository'),
-      CREATURE_INSERT_REPOSITORY: Symbol.for('CreatureInsertRepository'),
-      ENCHANTMENT_INSERT_REPOSITORY: Symbol.for('EnchantmentInsertRepository'),
-      LAND_INSERT_REPOSITORY: Symbol.for('LandInsertRepository'),
+      ARTIFACT_INSERT_REPOSITORY: Symbol('ArtifactInsertRepository'),
+      CARD_SEARCH_REPOSITORY: Symbol('CardSearchRepository'),
+      CREATURE_INSERT_REPOSITORY: Symbol('CreatureInsertRepository'),
+      ENCHANTMENT_INSERT_REPOSITORY: Symbol('EnchantmentInsertRepository'),
+      LAND_INSERT_REPOSITORY: Symbol('LandInsertRepository'),
     },
     deck: {
-      CARD_DECK_INSERT_REPOSITORY: Symbol.for('CardDeckInsertRepository'),
-      CARD_DECK_SEARCH_REPOSITORY: Symbol.for('CardDeckSearchRepository'),
+      CARD_DECK_INSERT_REPOSITORY: Symbol('CardDeckInsertRepository'),
+      CARD_DECK_SEARCH_REPOSITORY: Symbol('CardDeckSearchRepository'),
     },
     live: {
-      LIVE_GAME_INSERT_REPOSITORY: Symbol.for('LiveGameInsertRepository'),
-      LIVE_GAME_SEARCH_REPOSITORY: Symbol.for('LiveGameSearchRepository'),
+      LIVE_GAME_INSERT_REPOSITORY: Symbol('LiveGameInsertRepository'),
+      LIVE_GAME_SEARCH_REPOSITORY: Symbol('LiveGameSearchRepository'),
     },
     setup: {
-      GAME_SETUP_INSERT_REPOSITORY: Symbol.for('GameSetupInsertRepository'),
-      GAME_SETUP_SEARCH_REPOSITORY: Symbol.for('GameSetupSearchRepository'),
-      GAME_SETUP_UPDATE_REPOSITORY: Symbol.for('GameSetupUpdateRepository'),
+      GAME_SETUP_INSERT_REPOSITORY: Symbol('GameSetupInsertRepository'),
+      GAME_SETUP_SEARCH_REPOSITORY: Symbol('GameSetupSearchRepository'),
+      GAME_SETUP_UPDATE_REPOSITORY: Symbol('GameSetupUpdateRepository'),
     },
   },
 };

@@ -1,14 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const APP_ADAPTER_TYPES = {
   env: {
-    APP_ENV_LOADER: Symbol.for('AppEnvLoader'),
+    APP_ENV_LOADER: Symbol('AppEnvLoader'),
   },
   server: {
     reqHandler: {
-      GET_STATUS_V1_REQUEST_HANDLER: Symbol.for('GetStatusV1RequestHandler'),
+      GET_STATUS_V1_REQUEST_HANDLER: Symbol('GetStatusV1RequestHandler'),
     },
     router: {
-      STATUS_ROUTER: Symbol.for('StatusRouter'),
+      STATUS_ROUTER: Symbol('StatusRouter'),
     },
   },
 };

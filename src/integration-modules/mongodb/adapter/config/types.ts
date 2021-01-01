@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const MONGODB_ADAPTER_TYPES = {
   db: {
-    MONGODB_CONNECTOR: Symbol.for('MongoDbConnector'),
+    MONGODB_CONNECTOR: Symbol('MongoDbConnector'),
   },
 };
 

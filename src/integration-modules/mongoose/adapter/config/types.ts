@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const MONGOOSE_ADAPTER_TYPES = {
   db: {
-    MONGOOSE_CONNECTOR: Symbol.for('MongooseConnector'),
+    MONGOOSE_CONNECTOR: Symbol('MongooseConnector'),
   },
 };
 

@@ -2,64 +2,64 @@
 export const USER_ADAPTER_TYPES = {
   api: {
     converter: {
-      USER_ROLE_TO_USER_ROLE_API_V1_CONVERTER: Symbol.for(
+      USER_ROLE_TO_USER_ROLE_API_V1_CONVERTER: Symbol(
         'UserRoleToUserRoleApiV1Converter',
       ),
-      USER_TOKEN_TO_USER_TOKEN_API_V1_CONVERTER: Symbol.for(
+      USER_TOKEN_TO_USER_TOKEN_API_V1_CONVERTER: Symbol(
         'UserTokenToUserTokenApiV1Converter',
       ),
-      USER_TO_USER_API_V1_CONVERTER: Symbol.for('UserToUserApiV1Converter'),
+      USER_TO_USER_API_V1_CONVERTER: Symbol('UserToUserApiV1Converter'),
     },
     validator: {
       schema: {
-        AUTH_CREATION_QUERY_API_V1_JOI_VALIDATOR_SCHEMA: Symbol.for(
+        AUTH_CREATION_QUERY_API_V1_JOI_VALIDATOR_SCHEMA: Symbol(
           'authCreationQueryApiV1JoiValidator',
         ),
-        USER_CREATION_QUERY_API_V1_JOI_VALIDATOR_SCHEMA: Symbol.for(
+        USER_CREATION_QUERY_API_V1_JOI_VALIDATOR_SCHEMA: Symbol(
           'userCreationQueryApiV1JoiValidator',
         ),
       },
-      AUTH_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
+      AUTH_CREATION_QUERY_API_V1_VALIDATOR: Symbol(
         'AuthCreationQueryApiV1Validator',
       ),
-      USER_CREATION_QUERY_API_V1_VALIDATOR: Symbol.for(
+      USER_CREATION_QUERY_API_V1_VALIDATOR: Symbol(
         'UserCreationQueryApiV1Validator',
       ),
     },
   },
   auth: {
-    FASTIFY_USER_AUTHENTICATOR: Symbol.for('FastifyUserAuthenticator'),
+    FASTIFY_USER_AUTHENTICATOR: Symbol('FastifyUserAuthenticator'),
   },
   db: {
     collection: {
-      USER_COLLECTION_NAME: Symbol.for('UserCollectionName'),
+      USER_COLLECTION_NAME: Symbol('UserCollectionName'),
     },
     converter: {
-      USER_CREATION_QUERY_TO_USER_DBS_CONVERTER: Symbol.for(
+      USER_CREATION_QUERY_TO_USER_DBS_CONVERTER: Symbol(
         'UserCreationQueryToUserDbsConverter',
       ),
-      USER_DB_TO_USER_CONVERTER: Symbol.for('UserDbToUserConverter'),
-      USER_FIND_QUERY_TO_USER_DB_FILTER_QUERY_CONVERTER: Symbol.for(
+      USER_DB_TO_USER_CONVERTER: Symbol('UserDbToUserConverter'),
+      USER_FIND_QUERY_TO_USER_DB_FILTER_QUERY_CONVERTER: Symbol(
         'UserFindQueryToUserDbFilterQueryConverter',
       ),
     },
     filter: {
-      POST_USER_DB_SEARCH_FILTER: Symbol.for('PostUserDbSearchFilter'),
+      POST_USER_DB_SEARCH_FILTER: Symbol('PostUserDbSearchFilter'),
     },
   },
   security: {
-    PASSWORD_HASHER: Symbol.for('PasswordHasher'),
+    PASSWORD_HASHER: Symbol('PasswordHasher'),
   },
   server: {
     reqHandler: {
-      POST_AUTH_USER_TOKEN_V1_REQUEST_HANDLER: Symbol.for(
+      POST_AUTH_USER_TOKEN_V1_REQUEST_HANDLER: Symbol(
         'PostAuthTokenV1RequestHandler',
       ),
-      POST_USER_V1_REQUEST_HANDLER: Symbol.for('PostUserV1RequestHandler'),
+      POST_USER_V1_REQUEST_HANDLER: Symbol('PostUserV1RequestHandler'),
     },
     router: {
-      AUTH_ROUTER: Symbol.for('AuthRouter'),
-      USER_ROUTER: Symbol.for('UserRouter'),
+      AUTH_ROUTER: Symbol('AuthRouter'),
+      USER_ROUTER: Symbol('UserRouter'),
     },
   },
 };

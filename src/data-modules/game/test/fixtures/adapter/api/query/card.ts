@@ -17,7 +17,7 @@ import { CreatureCreationQueryApiV1 } from '../../../../../adapter/api/query/car
 import { EnchantmentCreationQueryApiV1 } from '../../../../../adapter/api/query/card/EnchantmentCreationQueryApiV1';
 import { LandCreationQueryApiV1 } from '../../../../../adapter/api/query/card/LandCreationQueryApiV1';
 import { LiveGameCreationQueryApiV1 } from '../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
-import { game } from '../../../domain/model';
+import { gameSetupApiV1 } from '../model/setup';
 
 export const artifactCreationQueryApiV1: ArtifactCreationQueryApiV1 = {
   cost: resourceApiV1,
@@ -85,7 +85,7 @@ export const enchantmentFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQue
 );
 
 const gameCreationQueryApiV1: LiveGameCreationQueryApiV1 = {
-  round: game.round,
+  gameSetupIdId: gameSetupApiV1.id,
 };
 
 export const gameCreationQueryApiV1FixtureFactory: FixtureFactory<LiveGameCreationQueryApiV1> = new DeepCloneFixtureFactory(

@@ -2,49 +2,47 @@
 export const GAME_ADAPTER_SERVER_TYPES = {
   reqHandler: {
     card: {
-      POST_CARD_V1_REQUEST_HANDLER: Symbol.for('PostCardV1RequestHandler'),
-      POST_CARDS_SEARCHES_V1_REQUEST_HANDLER: Symbol.for(
+      POST_CARD_V1_REQUEST_HANDLER: Symbol('PostCardV1RequestHandler'),
+      POST_CARDS_SEARCHES_V1_REQUEST_HANDLER: Symbol(
         'PostCardsSearchesV1RequestHandler',
       ),
     },
     deck: {
-      GET_CARD_DECK_BY_ID_V1_REQUEST_HANDLER: Symbol.for(
+      GET_CARD_DECK_BY_ID_V1_REQUEST_HANDLER: Symbol(
         'GetCardDeckByIdV1RequestHandler',
       ),
-      POST_CARD_DECK_V1_REQUEST_HANDLER: Symbol.for(
-        'PostCardDeckV1RequestHandler',
-      ),
+      POST_CARD_DECK_V1_REQUEST_HANDLER: Symbol('PostCardDeckV1RequestHandler'),
     },
     live: {
-      GET_LIVE_GAME_BY_ID_V1_REQUEST_HANDLER: Symbol.for(
+      GET_LIVE_GAME_BY_ID_V1_REQUEST_HANDLER: Symbol(
         'GetLiveGameByIdV1RequestHandler',
       ),
-      POST_LIVE_GAME_V1_REQUEST_HANDLER: Symbol.for('PostGameV1RequestHandler'),
+      POST_LIVE_GAME_V1_REQUEST_HANDLER: Symbol('PostGameV1RequestHandler'),
     },
     setup: {
-      PATCH_GAME_SETUP_BY_ID_V1_REQUEST_HANDLER: Symbol.for(
+      PATCH_GAME_SETUP_BY_ID_V1_REQUEST_HANDLER: Symbol(
         'PatchGameSetupByIdV1RequestHandler',
       ),
-      POST_GAME_SETUP_V1_REQUEST_HANDLER: Symbol.for(
+      POST_GAME_SETUP_V1_REQUEST_HANDLER: Symbol(
         'PostGameSetupV1RequestHandler',
       ),
-      POST_GAME_SETUPS_SEARCHES_V1_REQUEST_HANDLER: Symbol.for(
+      POST_GAME_SETUPS_SEARCHES_V1_REQUEST_HANDLER: Symbol(
         'PostGameSetupsSearchesV1RequestHandler',
       ),
     },
   },
   router: {
     card: {
-      CARD_ROUTER: Symbol.for('CardRouter'),
+      CARD_ROUTER: Symbol('CardRouter'),
     },
     deck: {
-      DECK_ROUTER: Symbol.for('DeckRouter'),
+      DECK_ROUTER: Symbol('DeckRouter'),
     },
     live: {
-      LIVE_GAME_ROUTER: Symbol.for('GameRouter'),
+      LIVE_GAME_ROUTER: Symbol('GameRouter'),
     },
     setup: {
-      GAME_SETUP_ROUTER: Symbol.for('GameSetupRouter'),
+      GAME_SETUP_ROUTER: Symbol('GameSetupRouter'),
     },
   },
 };
