@@ -22,10 +22,8 @@ export class UserToUserApiV1Converter implements Converter<User, UserApiV1> {
     return {
       email: input.email,
       id: input.id,
-      roles: input.roles.map(
-        this.userRoleToUserRoleApiV1Converter.transform.bind(
-          this.userRoleToUserRoleApiV1Converter,
-        ),
+      roles: input.roles.map((role: UserRole) =>
+        this.userRoleToUserRoleApiV1Converter.transform(role),
       ),
       username: input.username,
     };

@@ -26,10 +26,8 @@ export class CardFindQueryApiV1ToCardFindQueryConverter
     if (input.types === undefined) {
       cardTypes = undefined;
     } else if (Array.isArray(input.types)) {
-      cardTypes = input.types.map(
-        this.cardTypeApiV1ToCardTypeConverter.transform.bind(
-          this.cardTypeApiV1ToCardTypeConverter,
-        ),
+      cardTypes = input.types.map((type: CardTypeApiV1) =>
+        this.cardTypeApiV1ToCardTypeConverter.transform(type),
       );
     } else {
       cardTypes = this.cardTypeApiV1ToCardTypeConverter.transform(input.types);
