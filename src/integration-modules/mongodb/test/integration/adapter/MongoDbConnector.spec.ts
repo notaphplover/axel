@@ -35,7 +35,7 @@ describe(MongoDbConnector.name, () => {
         await mongoDbConnector.close();
       });
 
-      it('should establish a connection', () => {
+      it('must establish a connection', () => {
         expect(testCommand).not.toBeUndefined();
       });
     });
