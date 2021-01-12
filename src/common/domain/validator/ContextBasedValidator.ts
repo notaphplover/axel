@@ -1,5 +1,7 @@
-import { ValidationResult } from './ValidationResult';
+import { Validator } from './Validator';
 
-export interface ContextBasedValidator<TModel, TContext> {
-  validate(value: unknown, context: TContext): ValidationResult<TModel>;
-}
+export type ContextBasedValidator<TModel, TContext> = Validator<
+  TModel,
+  unknown,
+  TContext
+>;
