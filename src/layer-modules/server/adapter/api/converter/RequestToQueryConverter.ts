@@ -41,7 +41,16 @@ export abstract class RequestToQueryConverter<
 
     const queryApi: TQueryApi = syntaxValidationResult.model;
 
-    const context: TContext = await this.getContext(request, queryApi);
+    const contextValidationResult: ValidationResult<TContext> = await this.getContextAndValidateIt(
+      request,
+      queryApi,
+    );
+
+    if (!contextValidationResult.result) {
+      return contextValidationResult;
+    }
+
+    const context: TContext = contextValidationResult.model;
 
     if (this.contextBasedValidator !== undefined) {
       const semanticValidationResult: ValidationResult<TQueryApi> = this.contextBasedValidator.validate(
@@ -69,8 +78,8 @@ export abstract class RequestToQueryConverter<
 
   protected abstract extractRequestQuery(request: TRequest): unknown;
 
-  protected abstract getContext(
+  protected abstract getContextAndValidateIt(
     request: TRequest,
     queryApi: TQueryApi,
-  ): Promise<TContext>;
+  ): Promise<ValidationResult<TContext>>;
 }

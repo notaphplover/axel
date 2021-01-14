@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import {
   Converter,
   ValidationFail,
+  ValidationResult,
   ValidationSuccess,
   Validator,
 } from '../../../../../../../common/domain';
@@ -42,7 +43,7 @@ class RequestToQueryConverterMock extends RequestToQueryConverter<
       ContextMock
     >,
     syntaxValidator: Validator<QueryApiMock>,
-    public readonly getContextMock: jest.Mock,
+    public readonly getContextAndValidateMock: jest.Mock,
   ) {
     super(contextBasedValidator, queryApiToQueryConverter, syntaxValidator);
   }
@@ -50,11 +51,13 @@ class RequestToQueryConverterMock extends RequestToQueryConverter<
   protected extractRequestQuery(request: RequestMock): unknown {
     return { ...request.body };
   }
-  protected async getContext(
+  protected async getContextAndValidateIt(
     request: RequestMock,
     queryApi: QueryApiMock,
-  ): Promise<ContextMock> {
-    return this.getContextMock(request, queryApi) as Promise<ContextMock>;
+  ): Promise<ValidationResult<ContextMock>> {
+    return this.getContextAndValidateMock(request, queryApi) as Promise<
+      ValidationResult<ContextMock>
+    >;
   }
 }
 
@@ -99,7 +102,8 @@ describe(RequestToQueryConverter.name, () => {
 
     let requestFixture: RequestMock;
 
-    let queryApiValidationSuccess: ValidationSuccess<QueryApiMock>;
+    let contextValidationSuccessFixture: ValidationSuccess<ContextMock>;
+    let queryApiValidationSuccessFixture: ValidationSuccess<QueryApiMock>;
     let queryValidationSuccessFixture: ValidationSuccess<QueryMock>;
 
     beforeAll(() => {
@@ -119,7 +123,12 @@ describe(RequestToQueryConverter.name, () => {
         body: { ...queryApiFixture },
       };
 
-      queryApiValidationSuccess = {
+      contextValidationSuccessFixture = {
+        model: contextFixture,
+        result: true,
+      };
+
+      queryApiValidationSuccessFixture = {
         model: { ...queryApiFixture },
         result: true,
       };
@@ -135,7 +144,7 @@ describe(RequestToQueryConverter.name, () => {
 
       beforeAll(async () => {
         (contextBasedValidator.validate as jest.Mock).mockReturnValueOnce(
-          queryApiValidationSuccess,
+          queryApiValidationSuccessFixture,
         );
 
         (queryApiToQueryConverter.transform as jest.Mock).mockReturnValueOnce(
@@ -143,11 +152,11 @@ describe(RequestToQueryConverter.name, () => {
         );
 
         (syntaxValidator.validate as jest.Mock).mockReturnValueOnce(
-          queryApiValidationSuccess,
+          queryApiValidationSuccessFixture,
         );
 
-        requestToQueryConverter.getContextMock.mockResolvedValueOnce(
-          contextFixture,
+        requestToQueryConverter.getContextAndValidateMock.mockResolvedValueOnce(
+          contextValidationSuccessFixture,
         );
 
         result = await requestToQueryConverter.transform(requestFixture);
@@ -157,7 +166,7 @@ describe(RequestToQueryConverter.name, () => {
         (contextBasedValidator.validate as jest.Mock).mockClear();
         (queryApiToQueryConverter.transform as jest.Mock).mockClear();
         (syntaxValidator.validate as jest.Mock).mockClear();
-        requestToQueryConverter.getContextMock.mockClear();
+        requestToQueryConverter.getContextAndValidateMock.mockClear();
       });
 
       it('must call syntaxValidator.validate', () => {
@@ -202,8 +211,8 @@ describe(RequestToQueryConverter.name, () => {
           queryValidationFailFixture,
         );
 
-        requestToQueryConverter.getContextMock.mockResolvedValueOnce(
-          contextFixture,
+        requestToQueryConverter.getContextAndValidateMock.mockResolvedValueOnce(
+          contextValidationSuccessFixture,
         );
 
         result = await requestToQueryConverter.transform(requestFixture);
@@ -211,7 +220,7 @@ describe(RequestToQueryConverter.name, () => {
 
       afterAll(() => {
         (syntaxValidator.validate as jest.Mock).mockClear();
-        requestToQueryConverter.getContextMock.mockClear();
+        requestToQueryConverter.getContextAndValidateMock.mockClear();
       });
 
       it('must not call contextBasedValidator.validate', () => {
@@ -244,11 +253,11 @@ describe(RequestToQueryConverter.name, () => {
         );
 
         (syntaxValidator.validate as jest.Mock).mockReturnValueOnce(
-          queryApiValidationSuccess,
+          queryApiValidationSuccessFixture,
         );
 
-        requestToQueryConverter.getContextMock.mockResolvedValueOnce(
-          contextFixture,
+        requestToQueryConverter.getContextAndValidateMock.mockResolvedValueOnce(
+          contextValidationSuccessFixture,
         );
 
         result = await requestToQueryConverter.transform(requestFixture);
@@ -257,7 +266,7 @@ describe(RequestToQueryConverter.name, () => {
       afterAll(() => {
         (contextBasedValidator.validate as jest.Mock).mockClear();
         (syntaxValidator.validate as jest.Mock).mockClear();
-        requestToQueryConverter.getContextMock.mockClear();
+        requestToQueryConverter.getContextAndValidateMock.mockClear();
       });
 
       it('must not call queryApiToQueryConverter.transform', () => {
