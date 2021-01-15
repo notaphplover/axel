@@ -30,6 +30,7 @@ import { GameSetupUpdateQueryApiV1ContextBasedValidator } from '../../../api/val
 import { GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter } from '../../../api/converter/setup/GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter';
 import { GameSetupUpdateQueryApiV1Validator } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1Validator';
 import { LiveGameCreationQueryApiV1SemanticValidator } from '../../../api/validator/live/LiveGameCreationQueryApiV1SemanticValidator';
+import { LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter } from '../../../api/converter/live/LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter';
 import { LiveGameCreationQueryApiV1Validator } from '../../../api/validator/live/LiveGameCreationQueryApiV1Validator';
 import { LiveGameToLiveGameApiV1Converter } from '../../../api/converter/live/LiveGameToLiveGameApiV1Converter';
 import { PlayerReferenceApiV1ToPlayerReferenceConverter } from '../../../api/converter/setup/PlayerReferenceApiV1ToPlayerReferenceConverter';
@@ -53,10 +54,7 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.converter
       .GAME_FORMAT_API_V1_TO_GAME_FORMAT_CONVERTER,
   ).to(GameFormatApiV1ToGameFormatConverter);
-  bind(
-    GAME_ADAPTER_TYPES.api.converter.live
-      .LIVE_GAME_TO_LIVE_GAME_API_V1_CONVERTER,
-  ).to(LiveGameToLiveGameApiV1Converter);
+
   bind(
     GAME_ADAPTER_TYPES.api.converter.card
       .CARD_CREATION_QUERY_API_V1_TO_CARD_CREATION_QUERY_CONVERTER,
@@ -115,6 +113,15 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.converter.deck
       .CARD_SET_REFERENCES_TO_CARD_SET_REFERENCES_API_V1_CONVERTER,
   ).to(CardSetReferencesToCardSetReferencesApiV1Converter);
+
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.live
+      .LIVE_GAME_TO_LIVE_GAME_API_V1_CONVERTER,
+  ).to(LiveGameToLiveGameApiV1Converter);
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.live
+      .LIVE_GAME_CREATION_QUERY_API_V1_TO_LIVE_GAME_CREATION_QUERY_CONVERTER,
+  ).to(LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter);
 
   bind(
     GAME_ADAPTER_TYPES.api.converter.setup
