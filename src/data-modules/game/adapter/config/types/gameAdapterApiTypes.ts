@@ -99,8 +99,8 @@ export const GAME_ADAPTER_API_TYPES = {
       ),
     },
     live: {
-      LIVE_GAME_CREATION_QUERY_API_V1_CONTEXT_BASED_VALIDATOR: Symbol(
-        'LiveGameCreationQueryApiV1ContextBasedValidator',
+      LIVE_GAME_CREATION_QUERY_API_V1_SEMANTIC_VALIDATOR: Symbol.for(
+        'LiveGameCreationQueryApiV1SemanticValidator',
       ),
       LIVE_GAME_CREATION_QUERY_API_V1_VALIDATOR: Symbol(
         'LiveGameCreationQueryApiV1Validator',

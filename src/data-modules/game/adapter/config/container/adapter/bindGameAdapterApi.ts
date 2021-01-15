@@ -29,6 +29,7 @@ import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayCo
 import { GameSetupUpdateQueryApiV1ContextBasedValidator } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1ContextBasedValidator';
 import { GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter } from '../../../api/converter/setup/GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter';
 import { GameSetupUpdateQueryApiV1Validator } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1Validator';
+import { LiveGameCreationQueryApiV1SemanticValidator } from '../../../api/validator/live/LiveGameCreationQueryApiV1SemanticValidator';
 import { LiveGameCreationQueryApiV1Validator } from '../../../api/validator/live/LiveGameCreationQueryApiV1Validator';
 import { LiveGameToLiveGameApiV1Converter } from '../../../api/converter/live/LiveGameToLiveGameApiV1Converter';
 import { PlayerReferenceApiV1ToPlayerReferenceConverter } from '../../../api/converter/setup/PlayerReferenceApiV1ToPlayerReferenceConverter';
@@ -152,6 +153,10 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
       .PLAYER_REFERENCE_API_V1_TO_PLAYER_REFERENCE_CONVERTER,
   ).to(PlayerReferenceApiV1ToPlayerReferenceConverter);
 
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.live
+      .LIVE_GAME_CREATION_QUERY_API_V1_SEMANTIC_VALIDATOR,
+  ).to(LiveGameCreationQueryApiV1SemanticValidator);
   bind(
     GAME_ADAPTER_TYPES.api.validator.live
       .LIVE_GAME_CREATION_QUERY_API_V1_VALIDATOR,
