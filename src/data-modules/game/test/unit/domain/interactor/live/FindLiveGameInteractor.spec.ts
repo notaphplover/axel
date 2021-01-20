@@ -5,7 +5,7 @@ import { LiveGame } from '../../../../../domain/model/live/LiveGame';
 import { LiveGameFindQuery } from '../../../../../domain/query/live/LiveGameFindQuery';
 import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
 import { gameFindQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
-import { gameFixtureFactory } from '../../../../fixtures/domain/model';
+import { liveGameFixtureFactory } from '../../../../fixtures/domain/model';
 
 describe(FindLiveGameInteractor.name, () => {
   let liveGameSearchRepository: SearchRepository<LiveGame, LiveGameFindQuery>;
@@ -29,7 +29,7 @@ describe(FindLiveGameInteractor.name, () => {
 
       beforeAll(async () => {
         (liveGameSearchRepository.findOne as jest.Mock).mockResolvedValueOnce(
-          gameFixtureFactory.get(),
+          liveGameFixtureFactory.get(),
         );
 
         result = await findLiveGameInteractor.interact(
@@ -45,7 +45,7 @@ describe(FindLiveGameInteractor.name, () => {
       });
 
       it('must return the repository result', () => {
-        expect(result).toStrictEqual(gameFixtureFactory.get());
+        expect(result).toStrictEqual(liveGameFixtureFactory.get());
       });
     });
   });

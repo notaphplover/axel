@@ -64,7 +64,7 @@ export class GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter
 
           if (playerSetupDeck === undefined) {
             throw new EntitiesNotFoundError(
-              `playerSetup for id ${gameSetupCreationQueryPlayerSetupApiV1.deckId} not found`,
+              `playerSetup deck for id ${gameSetupCreationQueryPlayerSetupApiV1.deckId} not found`,
             );
           }
 

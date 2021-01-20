@@ -9,7 +9,7 @@ import { LiveGameFindQuery } from '../../../../../domain/query/live/LiveGameFind
 import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { gameFindQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
-import { gameFixtureFactory } from '../../../../fixtures/domain/model';
+import { liveGameFixtureFactory } from '../../../../fixtures/domain/model';
 import mongodb from 'mongodb';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
@@ -57,7 +57,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let result: unknown;
 
         beforeAll(async () => {
-          const gameFixture: LiveGame = gameFixtureFactory.get();
+          const gameFixture: LiveGame = liveGameFixtureFactory.get();
 
           const gameDbCollection: mongodb.Collection<LiveGameDb> = mongoDbConnector.db.collection(
             collectionName,
@@ -105,7 +105,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         });
 
         it('must return the games', () => {
-          expect(result).toStrictEqual([gameFixtureFactory.get()]);
+          expect(result).toStrictEqual([liveGameFixtureFactory.get()]);
         });
       });
 

@@ -8,8 +8,8 @@ import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGame
 import { LiveGameFindQuery } from '../../../../../../domain/query/live/LiveGameFindQuery';
 import { StatusCodes } from 'http-status-codes';
 import { commonTest } from '../../../../../../../../common/test';
-import { gameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
-import { gameFixtureFactory } from '../../../../../fixtures/domain/model';
+import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
+import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model';
 
 describe(GetLiveGameByIdV1RequestHandler.name, () => {
   let findGameInteractor: Interactor<
@@ -44,11 +44,11 @@ describe(GetLiveGameByIdV1RequestHandler.name, () => {
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         (findGameInteractor.interact as jest.Mock).mockResolvedValueOnce(
-          gameFixtureFactory.get(),
+          liveGameFixtureFactory.get(),
         );
 
         (gameToGameApiV1Port.transform as jest.Mock).mockReturnValueOnce(
-          gameApiV1FixtureFactory.get(),
+          liveGameApiV1FixtureFactory.get(),
         );
 
         await getGameByIdV1RequestHandler.handle(requestFixture, replyFixture);
@@ -64,14 +64,14 @@ describe(GetLiveGameByIdV1RequestHandler.name, () => {
       it('must call gameToGameApiV1Port.transform()', () => {
         expect(gameToGameApiV1Port.transform).toHaveBeenCalledTimes(1);
         expect(gameToGameApiV1Port.transform).toHaveBeenCalledWith(
-          gameFixtureFactory.get(),
+          liveGameFixtureFactory.get(),
         );
       });
 
       it('must call reply.send()', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
         expect(replyFixture.send).toHaveBeenCalledWith(
-          gameApiV1FixtureFactory.get(),
+          liveGameApiV1FixtureFactory.get(),
         );
       });
     });

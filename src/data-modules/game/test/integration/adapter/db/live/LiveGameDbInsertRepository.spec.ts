@@ -7,8 +7,8 @@ import { LiveGameDb } from '../../../../../adapter/db/model/live/LiveGameDb';
 import { LiveGameDbInsertRepository } from '../../../../../adapter/db/repository/live/LiveGameDbInsertRepository';
 import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
-import { gameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
-import { gameFixtureFactory } from '../../../../fixtures/domain/model';
+import { liveGameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { liveGameFixtureFactory } from '../../../../fixtures/domain/model';
 import mongodb from 'mongodb';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
@@ -57,7 +57,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let result: unknown;
 
         beforeAll(async () => {
-          gameFixture = gameFixtureFactory.get();
+          gameFixture = liveGameFixtureFactory.get();
           gameDbFixture = {
             round: gameFixture.round,
           };
@@ -71,7 +71,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           );
 
           result = await gameDbInsertRepository.insert(
-            gameCreationQueryFixtureFactory.get(),
+            liveGameCreationQueryFixtureFactory.get(),
           );
         });
 

@@ -1,10 +1,9 @@
+import * as fastify from 'fastify';
 import {
   Converter,
   Interactor,
   ValidationResult,
-  Validator,
 } from '../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'inversify';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
@@ -12,22 +11,18 @@ import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { LiveGameApiV1 } from '../../../api/model/live/LiveGameApiV1';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
-import { LiveGameCreationQueryApiV1 } from '../../../api/query/live/LiveGameCreationQueryApiV1';
 import { StatusCodes } from 'http-status-codes';
+import { UserContainer } from '../../../../../user/domain';
 
 @injectable()
-export class PostLiveGameV1RequestHandler implements FastifyRequestHandler {
+export class PostLiveGameV1RequestHandler
+  implements FastifyRequestHandler<fastify.FastifyRequest & UserContainer> {
   constructor(
     @inject(GAME_DOMAIN_TYPES.interactor.live.CREATE_LIVE_GAMES_INTERACTOR)
     private readonly createGamesInteractor: Interactor<
       LiveGameCreationQuery,
       Promise<LiveGame[]>
     >,
-    @inject(
-      GAME_ADAPTER_TYPES.api.validator.live
-        .LIVE_GAME_CREATION_QUERY_API_V1_VALIDATOR,
-    )
-    private readonly gameCreationQueryApiV1Validator: Validator<LiveGameCreationQueryApiV1>,
     @inject(
       GAME_ADAPTER_TYPES.api.converter.live
         .LIVE_GAME_TO_LIVE_GAME_API_V1_CONVERTER,
@@ -36,19 +31,27 @@ export class PostLiveGameV1RequestHandler implements FastifyRequestHandler {
       LiveGame,
       LiveGameApiV1
     >,
+    @inject(
+      GAME_ADAPTER_TYPES.server.converter.live
+        .POST_LIVE_GAME_V1_REQUEST_TO_LIVE_GAME_CREATION_QUERY_CONVERTER,
+    )
+    private readonly postLiveGameV1RequestToLiveGameCreationQueryConverter: Converter<
+      fastify.FastifyRequest & UserContainer,
+      Promise<ValidationResult<LiveGameCreationQuery>>
+    >,
   ) {}
 
   public async handle(
-    request: FastifyRequest,
-    reply: FastifyReply,
+    request: fastify.FastifyRequest & UserContainer,
+    reply: fastify.FastifyReply,
   ): Promise<void> {
-    const validationResult: ValidationResult<LiveGameCreationQueryApiV1> = this.gameCreationQueryApiV1Validator.validate(
-      request.body,
+    const validationResult: ValidationResult<LiveGameCreationQuery> = await this.postLiveGameV1RequestToLiveGameCreationQueryConverter.transform(
+      request,
     );
     if (validationResult.result) {
-      const liveGameCreationQuery: LiveGameCreationQuery = {
-        round: 1,
-      };
+      const liveGameCreationQuery: LiveGameCreationQuery =
+        validationResult.model;
+
       const [
         gameCreated,
       ]: LiveGame[] = await this.createGamesInteractor.interact(

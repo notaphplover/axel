@@ -84,12 +84,12 @@ export const enchantmentFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQue
   enchantmentFindQueryApiV1,
 );
 
-const gameCreationQueryApiV1: LiveGameCreationQueryApiV1 = {
+const liveGameCreationQueryApiV1: LiveGameCreationQueryApiV1 = {
   gameSetupIdId: gameSetupApiV1.id,
 };
 
-export const gameCreationQueryApiV1FixtureFactory: FixtureFactory<LiveGameCreationQueryApiV1> = new DeepCloneFixtureFactory(
-  gameCreationQueryApiV1,
+export const liveGameCreationQueryApiV1FixtureFactory: FixtureFactory<LiveGameCreationQueryApiV1> = new DeepCloneFixtureFactory(
+  liveGameCreationQueryApiV1,
 );
 
 export const landCreationQueryApiV1: LandCreationQueryApiV1 = {

@@ -4,11 +4,11 @@ import {
 } from '../../../../../../common/test';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
 
-export const game: LiveGame = {
+export const liveGame: LiveGame = {
   id: '5f5cb76273fd1130685e00dc',
   round: 1,
 };
 
-export const gameFixtureFactory: FixtureFactory<LiveGame> = new DeepCloneFixtureFactory(
-  game,
+export const liveGameFixtureFactory: FixtureFactory<LiveGame> = new DeepCloneFixtureFactory(
+  liveGame,
 );

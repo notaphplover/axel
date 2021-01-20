@@ -1,126 +1,144 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import * as fastify from 'fastify';
 import {
   Converter,
   Interactor,
   ValidationFail,
   ValidationResult,
-  Validator,
+  ValidationSuccess,
 } from '../../../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
 import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
 import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
 import { LiveGameCreationQuery } from '../../../../../../domain/query/live/LiveGameCreationQuery';
-import { LiveGameCreationQueryApiV1 } from '../../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import { PostLiveGameV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/PostLiveGameV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
+import { UserContainer } from '../../../../../../../user/domain';
 import { commonTest } from '../../../../../../../../common/test';
-import { gameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
-import { gameCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
-import { gameCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
-import { gameFixtureFactory } from '../../../../../fixtures/domain/model';
+import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
+import { liveGameCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
+import { liveGameCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
+import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model';
+import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';
 
 describe(PostLiveGameV1RequestHandler.name, () => {
   let createGamesInteractor: Interactor<
     LiveGameCreationQuery,
     Promise<LiveGame[]>
   >;
-  let gameCreationQueryApiV1Validator: Validator<LiveGameCreationQueryApiV1>;
   let gameToGameApiV1Converter: Converter<LiveGame, LiveGameApiV1>;
 
   let postGameV1RequestHandler: PostLiveGameV1RequestHandler;
+
+  let postLiveGameV1RequestToLiveGameCreationQueryConverter: Converter<
+    fastify.FastifyRequest & UserContainer,
+    Promise<ValidationResult<LiveGameCreationQuery>>
+  >;
 
   beforeAll(() => {
     createGamesInteractor = {
       interact: jest.fn(),
     };
-    gameCreationQueryApiV1Validator = { validate: jest.fn() };
     gameToGameApiV1Converter = { transform: jest.fn() };
+
+    postLiveGameV1RequestToLiveGameCreationQueryConverter = {
+      transform: jest.fn(),
+    };
 
     postGameV1RequestHandler = new PostLiveGameV1RequestHandler(
       createGamesInteractor,
-      gameCreationQueryApiV1Validator,
       gameToGameApiV1Converter,
+      postLiveGameV1RequestToLiveGameCreationQueryConverter,
     );
   });
 
   describe('.handle()', () => {
     describe('when called and the request is valid', () => {
-      let requestFixture: FastifyRequest;
-      let replyFixture: FastifyReply;
+      let liveGameCreationQueryValidationSuccess: ValidationSuccess<LiveGameCreationQuery>;
+
+      let requestFixture: fastify.FastifyRequest & UserContainer;
+      let replyFixture: fastify.FastifyReply;
 
       beforeAll(async () => {
+        liveGameCreationQueryValidationSuccess = {
+          model: liveGameCreationQueryFixtureFactory.get(),
+          result: true,
+        };
+
         requestFixture = ({
-          body: gameCreationQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
+          body: liveGameCreationQueryApiV1FixtureFactory.get(),
+          user: userFixtureFactory.get(),
+        } as Partial<
+          fastify.FastifyRequest & UserContainer
+        >) as fastify.FastifyRequest & UserContainer;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         (createGamesInteractor.interact as jest.Mock).mockResolvedValueOnce([
-          gameFixtureFactory.get(),
+          liveGameFixtureFactory.get(),
         ]);
-        const gameCreationQueryApiV1ValidatorValidationResult: ValidationResult<LiveGameCreationQueryApiV1> = {
-          model: gameCreationQueryApiV1FixtureFactory.get(),
-          result: true,
-        };
-        (gameCreationQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
-          gameCreationQueryApiV1ValidatorValidationResult,
-        );
         (gameToGameApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
-          gameApiV1FixtureFactory.get(),
+          liveGameApiV1FixtureFactory.get(),
+        );
+        (postLiveGameV1RequestToLiveGameCreationQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
+          liveGameCreationQueryValidationSuccess,
         );
 
         await postGameV1RequestHandler.handle(requestFixture, replyFixture);
       });
 
-      it('must call gameCreationQueryApiV1Validator.validate() with the request body', () => {
-        expect(gameCreationQueryApiV1Validator.validate).toHaveBeenCalledTimes(
-          1,
-        );
-        expect(gameCreationQueryApiV1Validator.validate).toHaveBeenCalledWith(
-          requestFixture.body,
-        );
+      it('must call postLiveGameV1RequestToLiveGameCreationQueryConverter.transform', () => {
+        expect(
+          postLiveGameV1RequestToLiveGameCreationQueryConverter.transform,
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          postLiveGameV1RequestToLiveGameCreationQueryConverter.transform,
+        ).toHaveBeenCalledWith(requestFixture);
       });
 
       it('must call createGamesInteractor.interact()', () => {
         expect(createGamesInteractor.interact).toHaveBeenCalledTimes(1);
         expect(createGamesInteractor.interact).toHaveBeenCalledWith(
-          gameCreationQueryFixtureFactory.get(),
+          liveGameCreationQueryFixtureFactory.get(),
         );
       });
 
       it('must call gameToGameApiV1Converter.transform() with the game created', () => {
         expect(gameToGameApiV1Converter.transform).toHaveBeenCalledTimes(1);
         expect(gameToGameApiV1Converter.transform).toHaveBeenCalledWith(
-          gameFixtureFactory.get(),
+          liveGameFixtureFactory.get(),
         );
       });
 
       it('must call reply.send with the gameApiV1 generated', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
         expect(replyFixture.send).toHaveBeenCalledWith(
-          gameApiV1FixtureFactory.get(),
+          liveGameApiV1FixtureFactory.get(),
         );
       });
     });
 
     describe('when called and the request is not valid', () => {
-      let requestFixture: FastifyRequest;
-      let replyFixture: FastifyReply;
+      let liveGameCreationQueryValidationFail: ValidationFail;
 
-      let gameCreationQueryApiV1ValidatorValidationResult: ValidationFail;
+      let requestFixture: fastify.FastifyRequest & UserContainer;
+      let replyFixture: fastify.FastifyReply;
 
       beforeAll(async () => {
+        liveGameCreationQueryValidationFail = {
+          errorMessage: 'Test when validation fails',
+          result: false,
+        };
+
         requestFixture = ({
-          body: gameCreationQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
+          body: liveGameCreationQueryApiV1FixtureFactory.get(),
+          user: userFixtureFactory.get(),
+        } as Partial<
+          fastify.FastifyRequest & UserContainer
+        >) as fastify.FastifyRequest & UserContainer;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        gameCreationQueryApiV1ValidatorValidationResult = {
-          result: false,
-          errorMessage: 'test error message',
-        };
-        (gameCreationQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
-          gameCreationQueryApiV1ValidatorValidationResult,
+        (postLiveGameV1RequestToLiveGameCreationQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
+          liveGameCreationQueryValidationFail,
         );
 
         await postGameV1RequestHandler.handle(requestFixture, replyFixture);
@@ -134,7 +152,7 @@ describe(PostLiveGameV1RequestHandler.name, () => {
       it('must call reply.send() with the validation errror message', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
         expect(replyFixture.send).toHaveBeenCalledWith({
-          message: gameCreationQueryApiV1ValidatorValidationResult.errorMessage,
+          message: liveGameCreationQueryValidationFail.errorMessage,
         });
       });
     });

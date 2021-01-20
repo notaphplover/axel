@@ -4,8 +4,8 @@ import { CreateLiveGamesInteractor } from '../../../../../domain/interactor/live
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { LiveGame } from '../../../../../domain/model/live/LiveGame';
 import { LiveGameCreationQuery } from '../../../../../domain/query/live/LiveGameCreationQuery';
-import { gameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
-import { gameFixtureFactory } from '../../../../fixtures/domain/model';
+import { liveGameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { liveGameFixtureFactory } from '../../../../fixtures/domain/model';
 
 describe(CreateLiveGamesInteractor.name, () => {
   let liveGameInsertRepository: InsertRepository<
@@ -33,23 +33,23 @@ describe(CreateLiveGamesInteractor.name, () => {
 
       beforeAll(async () => {
         (liveGameInsertRepository.insert as jest.Mock).mockResolvedValueOnce([
-          gameFixtureFactory.get(),
+          liveGameFixtureFactory.get(),
         ]);
 
         result = await createLiveGamesInteractor.interact(
-          gameCreationQueryFixtureFactory.get(),
+          liveGameCreationQueryFixtureFactory.get(),
         );
       });
 
       it('must call gameInsertRepository.insert() with the games obtained from the converter', () => {
         expect(liveGameInsertRepository.insert).toHaveBeenCalledTimes(1);
         expect(liveGameInsertRepository.insert).toHaveBeenCalledWith(
-          gameCreationQueryFixtureFactory.get(),
+          liveGameCreationQueryFixtureFactory.get(),
         );
       });
 
       it('must return the game created', () => {
-        expect(result).toStrictEqual([gameFixtureFactory.get()]);
+        expect(result).toStrictEqual([liveGameFixtureFactory.get()]);
       });
     });
   });

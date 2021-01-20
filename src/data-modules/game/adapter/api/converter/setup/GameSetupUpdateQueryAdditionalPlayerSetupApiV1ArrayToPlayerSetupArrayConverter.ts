@@ -52,7 +52,7 @@ export class GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArr
 
         if (playerSetupDeck === undefined) {
           throw new EntitiesNotFoundError(
-            `playerSetup for id ${gameSetupUpdateQueryAdditionalPlayerSetupApiV1.deckId} not found`,
+            `playerSetup deck for id ${gameSetupUpdateQueryAdditionalPlayerSetupApiV1.deckId} not found`,
           );
         }
 

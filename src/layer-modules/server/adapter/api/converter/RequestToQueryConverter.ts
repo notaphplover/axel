@@ -12,7 +12,7 @@ export abstract class RequestToQueryConverter<
   TQuery,
   TQueryApi,
   TContext = void
-> implements Converter<TRequest, Promise<ValidationResult<TQuery>>, TContext> {
+> implements Converter<TRequest, Promise<ValidationResult<TQuery>>> {
   constructor(
     @unmanaged()
     private readonly contextBasedValidator:
