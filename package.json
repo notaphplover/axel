@@ -58,7 +58,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.20",
     "@types/jsonwebtoken": "^8.5.0",
-    "@types/lodash": "^4.14.167",
+    "@types/lodash": "^4.14.168",
     "@types/mongodb": "^3.6.3",
     "@types/ncp": "^2.0.4",
     "@types/node": "^12.19.9",
