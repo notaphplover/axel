@@ -12,9 +12,14 @@ import { PostCardsSearchesV1RequestHandler } from '../../../server/reqHandler/ca
 import { PostGameSetupV1RequestHandler } from '../../../server/reqHandler/setup/PostGameSetupV1RequestHandler';
 import { PostGameSetupsSearchesV1RequestHandler } from '../../../server/reqHandler/setup/PostGameSetupsSearchesV1RequestHandler';
 import { PostLiveGameV1RequestHandler } from '../../../server/reqHandler/live/PostLiveGameV1RequestHandler';
+import { PostLiveGameV1RequestToLiveGameCreationQueryConverter } from '../../../server/converter/live/PostLiveGameV1RequestToLiveGameCreationQueryConverter';
 import { interfaces } from 'inversify';
 
 export function bindGameAdapterServer(bind: interfaces.Bind): void {
+  bind(
+    GAME_ADAPTER_TYPES.server.converter.live
+      .POST_LIVE_GAME_V1_REQUEST_TO_LIVE_GAME_CREATION_QUERY_CONVERTER,
+  ).to(PostLiveGameV1RequestToLiveGameCreationQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.live
       .GET_LIVE_GAME_BY_ID_V1_REQUEST_HANDLER,
