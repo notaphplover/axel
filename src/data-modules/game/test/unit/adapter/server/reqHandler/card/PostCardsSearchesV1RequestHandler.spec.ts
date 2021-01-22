@@ -1,17 +1,12 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import {
-  Converter,
-  Interactor,
-  ValidationSuccess,
-  Validator,
-} from '../../../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import * as fastify from 'fastify';
+import { Converter, Interactor } from '../../../../../../../../common/domain';
 import { Card } from '../../../../../../domain/model/card/Card';
 import { CardApiV1 } from '../../../../../../adapter/api/model/card/CardApiV1';
 import { CardFindQuery } from '../../../../../../domain/query/card/CardFindQuery';
-import { CardFindQueryApiV1 } from '../../../../../../adapter/api/query/card/CardFindQueryApiV1';
 import { PostCardsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/PostCardsSearchesV1RequestHandler';
+import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
 import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
 import { artifactFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
 import { artifactFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
@@ -19,87 +14,72 @@ import { artifactFixtureFactory } from '../../../../../fixtures/domain/model/car
 import { fastifyReplyFixtureFactory } from '../../../../../../../../integration-modules/fastify/test/fixtures/fastify.fixture';
 
 describe(PostCardsSearchesV1RequestHandler.name, () => {
-  let cardFindQueryApiV1ToCardFindQueryConverter: Converter<
-    CardFindQueryApiV1,
-    CardFindQuery
-  >;
-  let cardFindQueryApiV1Validator: Validator<CardFindQueryApiV1>;
   let cardToCardApiV1Converter: Converter<Card, CardApiV1>;
   let findCardsInteractor: Interactor<CardFindQuery, Promise<Card[]>>;
+  let postCardsSearchesV1RequestToCardFindQueryConverter: Converter<
+    fastify.FastifyRequest,
+    Promise<ValueOrErrors<CardFindQuery>>
+  >;
 
   let getCardsV1RequestHandler: PostCardsSearchesV1RequestHandler;
 
   beforeAll(async () => {
-    cardFindQueryApiV1ToCardFindQueryConverter = {
-      transform: jest.fn(),
-    };
-    cardFindQueryApiV1Validator = {
-      validate: jest.fn(),
-    };
     cardToCardApiV1Converter = {
       transform: jest.fn(),
     };
     findCardsInteractor = {
       interact: jest.fn(),
     };
+    postCardsSearchesV1RequestToCardFindQueryConverter = {
+      transform: jest.fn(),
+    };
 
     getCardsV1RequestHandler = new PostCardsSearchesV1RequestHandler(
-      cardFindQueryApiV1ToCardFindQueryConverter,
-      cardFindQueryApiV1Validator,
       cardToCardApiV1Converter,
       findCardsInteractor,
+      postCardsSearchesV1RequestToCardFindQueryConverter,
     );
   });
 
   describe('.handle()', () => {
     describe('when called with a valid request', () => {
-      let requestFixture: FastifyRequest;
-      let replyFixture: FastifyReply;
+      let requestFixture: fastify.FastifyRequest;
+      let replyFixture: fastify.FastifyReply;
 
-      let validationResultFixture: ValidationSuccess<CardFindQueryApiV1>;
+      let cardFindQueryOrErrors: ValueOrErrors<CardFindQuery>;
 
       beforeAll(async () => {
         requestFixture = ({
           body: artifactFindQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
 
         replyFixture = fastifyReplyFixtureFactory.get();
 
-        validationResultFixture = {
-          model: artifactFindQueryApiV1FixtureFactory.get(),
-          result: true,
+        cardFindQueryOrErrors = {
+          isEither: false,
+          value: artifactFindQueryFixtureFactory.get(),
         };
 
-        (cardFindQueryApiV1ToCardFindQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          artifactFindQueryFixtureFactory.get(),
-        );
-        (cardFindQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
-          validationResultFixture,
-        );
         (cardToCardApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
           artifactApiV1FixtureFactory.get(),
         );
         (findCardsInteractor.interact as jest.Mock).mockResolvedValueOnce([
           artifactFixtureFactory.get(),
         ]);
+        (postCardsSearchesV1RequestToCardFindQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
+          cardFindQueryOrErrors,
+        );
 
         await getCardsV1RequestHandler.handle(requestFixture, replyFixture);
       });
 
-      it('must call cardFindQueryApiV1Validator.validate with the request params', () => {
-        expect(cardFindQueryApiV1Validator.validate).toHaveBeenCalledTimes(1);
-        expect(cardFindQueryApiV1Validator.validate).toHaveBeenCalledWith(
-          artifactFindQueryApiV1FixtureFactory.get(),
-        );
-      });
-
-      it('must call cardFindQueryApiV1ToCardFindQueryConverter.transform with the validation result model', () => {
+      it('must call postCardsSearchesV1RequestToCardFindQueryConverter.transform', () => {
         expect(
-          cardFindQueryApiV1ToCardFindQueryConverter.transform,
+          postCardsSearchesV1RequestToCardFindQueryConverter.transform,
         ).toHaveBeenCalledTimes(1);
         expect(
-          cardFindQueryApiV1ToCardFindQueryConverter.transform,
-        ).toHaveBeenCalledWith(validationResultFixture.model);
+          postCardsSearchesV1RequestToCardFindQueryConverter.transform,
+        ).toHaveBeenCalledWith(requestFixture);
       });
 
       it('must call findCardsInteractor.interact with the card find query generated', () => {
