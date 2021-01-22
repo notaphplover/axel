@@ -1,10 +1,10 @@
 import {
   Converter,
   ValidationResult,
-  ValidationSuccess,
   Validator,
 } from '../../../../../common/domain';
 import { injectable, unmanaged } from 'inversify';
+import { ValueOrErrors } from '../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()
 export abstract class RequestToQueryConverter<
@@ -12,7 +12,7 @@ export abstract class RequestToQueryConverter<
   TQuery,
   TQueryApi,
   TContext = void
-> implements Converter<TRequest, Promise<ValidationResult<TQuery>>> {
+> implements Converter<TRequest, Promise<ValueOrErrors<TQuery>>> {
   constructor(
     @unmanaged()
     private readonly contextBasedValidator:
@@ -28,7 +28,7 @@ export abstract class RequestToQueryConverter<
     private readonly syntaxValidator: Validator<TQueryApi>,
   ) {}
 
-  public async transform(request: TRequest): Promise<ValidationResult<TQuery>> {
+  public async transform(request: TRequest): Promise<ValueOrErrors<TQuery>> {
     const requestQuery: unknown = this.extractRequestQuery(request);
 
     const syntaxValidationResult: ValidationResult<TQueryApi> = this.syntaxValidator.validate(
@@ -36,21 +36,26 @@ export abstract class RequestToQueryConverter<
     );
 
     if (!syntaxValidationResult.result) {
-      return syntaxValidationResult;
+      const validationError: ValueOrErrors<TQuery> = {
+        isEither: true,
+        value: [syntaxValidationResult.errorMessage],
+      };
+
+      return validationError;
     }
 
     const queryApi: TQueryApi = syntaxValidationResult.model;
 
-    const contextValidationResult: ValidationResult<TContext> = await this.getContextAndValidateIt(
+    const contextOrErrors: ValueOrErrors<TContext> = await this.getContextOrErrors(
       request,
       queryApi,
     );
 
-    if (!contextValidationResult.result) {
-      return contextValidationResult;
+    if (contextOrErrors.isEither) {
+      return contextOrErrors;
     }
 
-    const context: TContext = contextValidationResult.model;
+    const context: TContext = contextOrErrors.value;
 
     if (this.contextBasedValidator !== undefined) {
       const semanticValidationResult: ValidationResult<TQueryApi> = this.contextBasedValidator.validate(
@@ -59,7 +64,12 @@ export abstract class RequestToQueryConverter<
       );
 
       if (!semanticValidationResult.result) {
-        return semanticValidationResult;
+        const validationError: ValueOrErrors<TQuery> = {
+          isEither: true,
+          value: [semanticValidationResult.errorMessage],
+        };
+
+        return validationError;
       }
     }
 
@@ -68,18 +78,18 @@ export abstract class RequestToQueryConverter<
       context,
     );
 
-    const validationSuccess: ValidationSuccess<TQuery> = {
-      model: query,
-      result: true,
+    const queryOrErrors: ValueOrErrors<TQuery> = {
+      isEither: false,
+      value: query,
     };
 
-    return validationSuccess;
+    return queryOrErrors;
   }
 
   protected abstract extractRequestQuery(request: TRequest): unknown;
 
-  protected abstract getContextAndValidateIt(
+  protected abstract getContextOrErrors(
     request: TRequest,
     queryApi: TQueryApi,
-  ): Promise<ValidationResult<TContext>>;
+  ): Promise<ValueOrErrors<TContext>>;
 }

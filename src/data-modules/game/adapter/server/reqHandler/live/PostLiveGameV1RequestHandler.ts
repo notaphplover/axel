@@ -1,9 +1,5 @@
 import * as fastify from 'fastify';
-import {
-  Converter,
-  Interactor,
-  ValidationResult,
-} from '../../../../../../common/domain';
+import { Converter, Interactor } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
@@ -13,6 +9,7 @@ import { LiveGameApiV1 } from '../../../api/model/live/LiveGameApiV1';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
 import { StatusCodes } from 'http-status-codes';
 import { UserContainer } from '../../../../../user/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()
 export class PostLiveGameV1RequestHandler
@@ -37,7 +34,7 @@ export class PostLiveGameV1RequestHandler
     )
     private readonly postLiveGameV1RequestToLiveGameCreationQueryConverter: Converter<
       fastify.FastifyRequest & UserContainer,
-      Promise<ValidationResult<LiveGameCreationQuery>>
+      Promise<ValueOrErrors<LiveGameCreationQuery>>
     >,
   ) {}
 
@@ -45,12 +42,15 @@ export class PostLiveGameV1RequestHandler
     request: fastify.FastifyRequest & UserContainer,
     reply: fastify.FastifyReply,
   ): Promise<void> {
-    const validationResult: ValidationResult<LiveGameCreationQuery> = await this.postLiveGameV1RequestToLiveGameCreationQueryConverter.transform(
+    const queryOrErrors: ValueOrErrors<LiveGameCreationQuery> = await this.postLiveGameV1RequestToLiveGameCreationQueryConverter.transform(
       request,
     );
-    if (validationResult.result) {
-      const liveGameCreationQuery: LiveGameCreationQuery =
-        validationResult.model;
+    if (queryOrErrors.isEither) {
+      await reply
+        .code(StatusCodes.BAD_REQUEST)
+        .send({ message: queryOrErrors.value.join('\n') });
+    } else {
+      const liveGameCreationQuery: LiveGameCreationQuery = queryOrErrors.value;
 
       const [
         gameCreated,
@@ -63,10 +63,6 @@ export class PostLiveGameV1RequestHandler
       );
 
       await reply.send(gameApiV1Created);
-    } else {
-      await reply
-        .code(StatusCodes.BAD_REQUEST)
-        .send({ message: validationResult.errorMessage });
     }
   }
 }

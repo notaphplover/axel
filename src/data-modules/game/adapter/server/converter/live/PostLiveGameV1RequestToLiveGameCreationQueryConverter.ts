@@ -2,9 +2,6 @@ import * as fastify from 'fastify';
 import {
   Converter,
   Interactor,
-  ValidationFail,
-  ValidationResult,
-  ValidationSuccess,
   Validator,
 } from '../../../../../../common/domain';
 import { User, UserContainer } from '../../../../../user/domain';
@@ -17,6 +14,7 @@ import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCre
 import { LiveGameCreationQueryApiV1 } from '../../../api/query/live/LiveGameCreationQueryApiV1';
 import { LiveGameCreationQueryApiV1ValidationContext } from '../../../api/validator/live/LiveGameCreationQueryApiV1ValidationContext';
 import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()
 export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends RequestToQueryConverter<
@@ -63,45 +61,45 @@ export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends Reque
     return request.body;
   }
 
-  protected async getContextAndValidateIt(
+  protected async getContextOrErrors(
     request: fastify.FastifyRequest & UserContainer,
     queryApi: LiveGameCreationQueryApiV1,
-  ): Promise<ValidationResult<LiveGameCreationQueryApiV1ValidationContext>> {
+  ): Promise<ValueOrErrors<LiveGameCreationQueryApiV1ValidationContext>> {
     try {
-      const gameSetupValidation: ValidationResult<GameSetup> = await this.getGameSetupFromQueryApi(
+      const gameSetupOrErrors: ValueOrErrors<GameSetup> = await this.getGameSetupFromQueryApi(
         queryApi,
       );
 
-      if (!gameSetupValidation.result) {
-        return gameSetupValidation;
+      if (gameSetupOrErrors.isEither) {
+        return gameSetupOrErrors;
       }
 
       const user: User = this.getUserFromRequest(request);
 
       const context: LiveGameCreationQueryApiV1ValidationContext = {
-        gameSetup: gameSetupValidation.model,
+        gameSetup: gameSetupOrErrors.value,
         user: user,
       };
 
-      const validationSuccess: ValidationSuccess<LiveGameCreationQueryApiV1ValidationContext> = {
-        model: context,
-        result: true,
+      const contextOrErrors: ValueOrErrors<LiveGameCreationQueryApiV1ValidationContext> = {
+        isEither: false,
+        value: context,
       };
 
-      return validationSuccess;
+      return contextOrErrors;
     } catch (err: unknown) {
-      const validationFail: ValidationFail = {
-        errorMessage: (err as Error).message,
-        result: false,
+      const contextOrErrors: ValueOrErrors<LiveGameCreationQueryApiV1ValidationContext> = {
+        isEither: true,
+        value: [(err as Error).message],
       };
 
-      return validationFail;
+      return contextOrErrors;
     }
   }
 
   private async getGameSetupFromQueryApi(
     queryApi: LiveGameCreationQueryApiV1,
-  ): Promise<ValidationResult<GameSetup>> {
+  ): Promise<ValueOrErrors<GameSetup>> {
     const gameSetupFindQuery: GameSetupFindQuery = {
       id: queryApi.gameSetupIdId,
     };
@@ -113,19 +111,19 @@ export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends Reque
     if (gamesSetup.length === 1) {
       const [gameSetup]: GameSetup[] = gamesSetup;
 
-      const gameSetupValidationSuccess: ValidationSuccess<GameSetup> = {
-        model: gameSetup,
-        result: true,
+      const gameSetupOrErrors: ValueOrErrors<GameSetup> = {
+        isEither: false,
+        value: gameSetup,
       };
 
-      return gameSetupValidationSuccess;
+      return gameSetupOrErrors;
     } else {
-      const validationFail: ValidationFail = {
-        errorMessage: 'Expecting a game setup to be found',
-        result: false,
+      const gameSetupOrErrors: ValueOrErrors<GameSetup> = {
+        isEither: true,
+        value: ['Expecting a game setup to be found'],
       };
 
-      return validationFail;
+      return gameSetupOrErrors;
     }
   }
 

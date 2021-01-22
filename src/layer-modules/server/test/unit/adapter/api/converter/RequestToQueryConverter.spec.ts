@@ -3,11 +3,15 @@ import 'reflect-metadata';
 import {
   Converter,
   ValidationFail,
-  ValidationResult,
   ValidationSuccess,
   Validator,
 } from '../../../../../../../common/domain';
+import {
+  EitherEither,
+  ValueEither,
+} from '../../../../../../../common/domain/either/Either';
 import { RequestToQueryConverter } from '../../../../../adapter/api/converter/RequestToQueryConverter';
+import { ValueOrErrors } from '../../../../../../../common/domain/either/ValueOrErrors';
 
 interface RequestMock {
   body: {
@@ -51,12 +55,12 @@ class RequestToQueryConverterMock extends RequestToQueryConverter<
   protected extractRequestQuery(request: RequestMock): unknown {
     return { ...request.body };
   }
-  protected async getContextAndValidateIt(
+  protected async getContextOrErrors(
     request: RequestMock,
     queryApi: QueryApiMock,
-  ): Promise<ValidationResult<ContextMock>> {
+  ): Promise<ValueOrErrors<ContextMock>> {
     return this.getContextAndValidateMock(request, queryApi) as Promise<
-      ValidationResult<ContextMock>
+      ValueOrErrors<ContextMock>
     >;
   }
 }
@@ -102,7 +106,7 @@ describe(RequestToQueryConverter.name, () => {
 
     let requestFixture: RequestMock;
 
-    let contextValidationSuccessFixture: ValidationSuccess<ContextMock>;
+    let contextOrErrorsSuccessFixture: ValueEither<ContextMock>;
     let queryApiValidationSuccessFixture: ValidationSuccess<QueryApiMock>;
     let queryValidationSuccessFixture: ValidationSuccess<QueryMock>;
 
@@ -123,9 +127,9 @@ describe(RequestToQueryConverter.name, () => {
         body: { ...queryApiFixture },
       };
 
-      contextValidationSuccessFixture = {
-        model: contextFixture,
-        result: true,
+      contextOrErrorsSuccessFixture = {
+        isEither: false,
+        value: contextFixture,
       };
 
       queryApiValidationSuccessFixture = {
@@ -156,7 +160,7 @@ describe(RequestToQueryConverter.name, () => {
         );
 
         requestToQueryConverter.getContextAndValidateMock.mockResolvedValueOnce(
-          contextValidationSuccessFixture,
+          contextOrErrorsSuccessFixture,
         );
 
         result = await requestToQueryConverter.transform(requestFixture);
@@ -190,8 +194,13 @@ describe(RequestToQueryConverter.name, () => {
         );
       });
 
-      it('must return a validation success', () => {
-        expect(result).toStrictEqual(queryValidationSuccessFixture);
+      it('must return an either value', () => {
+        const expectedError: ValueEither<QueryMock> = {
+          isEither: false,
+          value: queryValidationSuccessFixture.model,
+        };
+
+        expect(result).toStrictEqual(expectedError);
       });
     });
 
@@ -212,7 +221,7 @@ describe(RequestToQueryConverter.name, () => {
         );
 
         requestToQueryConverter.getContextAndValidateMock.mockResolvedValueOnce(
-          contextValidationSuccessFixture,
+          contextOrErrorsSuccessFixture,
         );
 
         result = await requestToQueryConverter.transform(requestFixture);
@@ -231,8 +240,13 @@ describe(RequestToQueryConverter.name, () => {
         expect(queryApiToQueryConverter.transform).not.toHaveBeenCalled();
       });
 
-      it('must return a validation failure', () => {
-        expect(result).toStrictEqual(queryValidationFailFixture);
+      it('must return an either error', () => {
+        const expectedError: EitherEither<string[]> = {
+          isEither: true,
+          value: [queryValidationFailFixture.errorMessage],
+        };
+
+        expect(result).toStrictEqual(expectedError);
       });
     });
 
@@ -257,7 +271,7 @@ describe(RequestToQueryConverter.name, () => {
         );
 
         requestToQueryConverter.getContextAndValidateMock.mockResolvedValueOnce(
-          contextValidationSuccessFixture,
+          contextOrErrorsSuccessFixture,
         );
 
         result = await requestToQueryConverter.transform(requestFixture);
@@ -273,8 +287,13 @@ describe(RequestToQueryConverter.name, () => {
         expect(queryApiToQueryConverter.transform).not.toHaveBeenCalled();
       });
 
-      it('must return a validation failure', () => {
-        expect(result).toStrictEqual(queryValidationFailFixture);
+      it('must return an either error', () => {
+        const expectedError: EitherEither<string[]> = {
+          isEither: true,
+          value: [queryValidationFailFixture.errorMessage],
+        };
+
+        expect(result).toStrictEqual(expectedError);
       });
     });
   });
