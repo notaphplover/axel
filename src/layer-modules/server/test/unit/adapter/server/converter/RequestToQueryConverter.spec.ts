@@ -10,7 +10,7 @@ import {
   EitherEither,
   ValueEither,
 } from '../../../../../../../common/domain/either/Either';
-import { RequestToQueryConverter } from '../../../../../adapter/api/converter/RequestToQueryConverter';
+import { RequestToQueryConverter } from '../../../../../adapter/server/converter/RequestToQueryConverter';
 import { ValueOrErrors } from '../../../../../../../common/domain/either/ValueOrErrors';
 
 interface RequestMock {

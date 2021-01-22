@@ -1,3 +1,3 @@
-import { RequestToQueryConverter } from './api/converter/RequestToQueryConverter';
+import { RequestToQueryConverter } from './server/converter/RequestToQueryConverter';
 
 export { RequestToQueryConverter };
