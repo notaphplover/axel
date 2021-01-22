@@ -1,6 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_ADAPTER_SERVER_TYPES = {
   converter: {
+    card: {
+      POST_CARDS_SEARCHES_V1_REQUEST_TO_CARD_FIND_QUERY_CONVERTER: Symbol(
+        'PostCardsSearchesV1RequestToCardFindQueryConverter',
+      ),
+    },
     live: {
       POST_LIVE_GAME_V1_REQUEST_TO_LIVE_GAME_CREATION_QUERY_CONVERTER: Symbol(
         'PostLiveGameV1RequestToLiveGameCreationQueryConverter',

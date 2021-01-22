@@ -9,6 +9,7 @@ import { PatchGameSetupByIdV1RequestHandler } from '../../../server/reqHandler/s
 import { PostCardDeckV1RequestHandler } from '../../../server/reqHandler/deck/PostCardDeckV1RequestHandler';
 import { PostCardV1RequestHandler } from '../../../server/reqHandler/card/PostCardV1RequestHandler';
 import { PostCardsSearchesV1RequestHandler } from '../../../server/reqHandler/card/PostCardsSearchesV1RequestHandler';
+import { PostCardsSearchesV1RequestToCardFindQueryConverter } from '../../../server/converter/card/PostCardSearchesV1RequestToCardFindQueryConverter';
 import { PostGameSetupV1RequestHandler } from '../../../server/reqHandler/setup/PostGameSetupV1RequestHandler';
 import { PostGameSetupsSearchesV1RequestHandler } from '../../../server/reqHandler/setup/PostGameSetupsSearchesV1RequestHandler';
 import { PostLiveGameV1RequestHandler } from '../../../server/reqHandler/live/PostLiveGameV1RequestHandler';
@@ -16,6 +17,10 @@ import { PostLiveGameV1RequestToLiveGameCreationQueryConverter } from '../../../
 import { interfaces } from 'inversify';
 
 export function bindGameAdapterServer(bind: interfaces.Bind): void {
+  bind(
+    GAME_ADAPTER_TYPES.server.converter.card
+      .POST_CARDS_SEARCHES_V1_REQUEST_TO_CARD_FIND_QUERY_CONVERTER,
+  ).to(PostCardsSearchesV1RequestToCardFindQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.server.converter.live
       .POST_LIVE_GAME_V1_REQUEST_TO_LIVE_GAME_CREATION_QUERY_CONVERTER,
