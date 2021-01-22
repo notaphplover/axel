@@ -1,36 +1,18 @@
-import {
-  Converter,
-  Interactor,
-  ValidationResult,
-  Validator,
-} from '../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import * as fastify from 'fastify';
+import { Converter, Interactor } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
 import { Card } from '../../../../domain/model/card/Card';
 import { CardApiV1 } from '../../../api/model/card/CardApiV1';
 import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
-import { CardCreationQueryApiV1 } from '../../../api/query/card/CardCreationQueryApiV1';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { StatusCodes } from 'http-status-codes';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()
 export class PostCardV1RequestHandler implements FastifyRequestHandler {
   constructor(
-    @inject(
-      GAME_ADAPTER_TYPES.api.converter.card
-        .CARD_CREATION_QUERY_API_V1_TO_CARD_CREATION_QUERY_CONVERTER,
-    )
-    private readonly cardCreationQueryApiV1ToCardCreationQueryConverter: Converter<
-      CardCreationQueryApiV1,
-      CardCreationQuery
-    >,
-    @inject(
-      GAME_ADAPTER_TYPES.api.validator.card
-        .CARD_CREATION_QUERY_API_V1_VALIDATOR,
-    )
-    private readonly cardCreationQueryApiV1Validator: Validator<CardCreationQueryApiV1>,
     @inject(GAME_ADAPTER_TYPES.api.converter.card.CARD_TO_CARD_API_V1_CONVERTER)
     private readonly cardToCardApiV1Converter: Converter<Card, CardApiV1>,
     @inject(GAME_DOMAIN_TYPES.interactor.card.CREATE_CARDS_INTERACTOR)
@@ -38,19 +20,30 @@ export class PostCardV1RequestHandler implements FastifyRequestHandler {
       CardCreationQuery,
       Promise<Card[]>
     >,
+    @inject(
+      GAME_ADAPTER_TYPES.server.converter.card
+        .POST_CARD_V1_REQUEST_TO_CARD_CREATION_QUERY_CONVERTER,
+    )
+    private readonly postCardV1RequestToCardCreationQueryConverter: Converter<
+      fastify.FastifyRequest,
+      Promise<ValueOrErrors<CardCreationQuery>>
+    >,
   ) {}
 
   public async handle(
-    request: FastifyRequest,
-    reply: FastifyReply,
+    request: fastify.FastifyRequest,
+    reply: fastify.FastifyReply,
   ): Promise<void> {
-    const validationResult: ValidationResult<CardCreationQueryApiV1> = this.cardCreationQueryApiV1Validator.validate(
-      request.body,
+    const queryOrErrors: ValueOrErrors<CardCreationQuery> = await this.postCardV1RequestToCardCreationQueryConverter.transform(
+      request,
     );
-    if (validationResult.result) {
-      const cardCreationQuery: CardCreationQuery = this.cardCreationQueryApiV1ToCardCreationQueryConverter.transform(
-        validationResult.model,
-      );
+
+    if (queryOrErrors.isEither) {
+      await reply
+        .code(StatusCodes.BAD_REQUEST)
+        .send({ message: queryOrErrors.value.join('\n') });
+    } else {
+      const cardCreationQuery: CardCreationQuery = queryOrErrors.value;
 
       const [cardCreated]: Card[] = await this.createCardsInteractor.interact(
         cardCreationQuery,
@@ -61,10 +54,6 @@ export class PostCardV1RequestHandler implements FastifyRequestHandler {
       );
 
       await reply.send(cardApiV1Created);
-    } else {
-      await reply
-        .code(StatusCodes.BAD_REQUEST)
-        .send({ message: validationResult.errorMessage });
     }
   }
 }

@@ -16,7 +16,7 @@ import { ResourceApiV1 } from '../../model/card/ResourceApiV1';
 
 @injectable()
 export class CardCreationQueryApiV1ToCardCreationQueryConverter
-  implements Converter<CardCreationQueryApiV1, CardCreationQuery> {
+  implements Converter<CardCreationQueryApiV1, Promise<CardCreationQuery>> {
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.card
@@ -44,7 +44,9 @@ export class CardCreationQueryApiV1ToCardCreationQueryConverter
     >,
   ) {}
 
-  public transform(input: CardCreationQueryApiV1): CardCreationQuery {
+  public async transform(
+    input: CardCreationQueryApiV1,
+  ): Promise<CardCreationQuery> {
     switch (input.type) {
       case CardTypeApiV1.Creature:
         return this.transformCreatureCreationQuery(input);
