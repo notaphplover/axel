@@ -103,6 +103,9 @@ export const GAME_ADAPTER_API_TYPES = {
       CARD_DECK_CREATION_QUERY_API_V1_VALIDATOR: Symbol(
         'CardDeckCreationQueryApiV1Validator',
       ),
+      CARD_DECK_FIND_QUERY_API_V1_VALIDATOR: Symbol(
+        'CardDeckFindQueryApiV1Validator',
+      ),
     },
     live: {
       LIVE_GAME_CREATION_QUERY_API_V1_SEMANTIC_VALIDATOR: Symbol.for(

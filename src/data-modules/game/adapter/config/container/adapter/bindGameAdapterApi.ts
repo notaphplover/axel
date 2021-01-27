@@ -3,6 +3,7 @@ import { CardCreationQueryApiV1Validator } from '../../../api/validator/card/Car
 import { CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter } from '../../../api/converter/deck/CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter';
 import { CardDeckCreationQueryApiV1Validator } from '../../../api/validator/deck/CardDeckCreationQueryApiV1Validator';
 import { CardDeckFindQueryApiV1ToCardDeckFindQueryConverter } from '../../../api/converter/deck/CardDeckFindQueryApiV1ToCardDeckFindQueryConverter';
+import { CardDeckFindQueryApiV1Validator } from '../../../api/validator/deck/CardDeckFindQueryApiV1Validator';
 import { CardDeckSectionsApiV1ToCardDeckSectionsConverter } from '../../../api/converter/deck/CardDeckSectionsApiV1ToCardDeckSectionsConverter';
 import { CardDeckSectionsToCardDeckSectionsApiV1Converter } from '../../../api/converter/deck/CardDeckSectionsToCardDeckSectionsApiV1Converter';
 import { CardDeckToCardDeckApiV1Converter } from '../../../api/converter/deck/CardDeckToCardDeckApiV1Converter';
@@ -190,6 +191,11 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
       .CARD_DECK_CREATION_QUERY_API_V1_VALIDATOR,
   )
     .to(CardDeckCreationQueryApiV1Validator)
+    .inSingletonScope();
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.deck.CARD_DECK_FIND_QUERY_API_V1_VALIDATOR,
+  )
+    .to(CardDeckFindQueryApiV1Validator)
     .inSingletonScope();
 
   bind(
