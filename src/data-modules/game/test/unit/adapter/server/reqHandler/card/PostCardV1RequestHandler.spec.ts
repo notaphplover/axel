@@ -1,15 +1,10 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import * as fastify from 'fastify';
-import {
-  Converter,
-  Interactor,
-  ValidationSuccess,
-} from '../../../../../../../../common/domain';
+import { Converter, Interactor } from '../../../../../../../../common/domain';
 import { Card } from '../../../../../../domain/model/card/Card';
 import { CardApiV1 } from '../../../../../../adapter/api/model/card/CardApiV1';
 import { CardCreationQuery } from '../../../../../../domain/query/card/CardCreationQuery';
-import { CardCreationQueryApiV1 } from '../../../../../../adapter/api/query/card/CardCreationQueryApiV1';
 import { PostCardV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/PostCardV1RequestHandler';
 import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
 import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
