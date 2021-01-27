@@ -126,6 +126,9 @@ export const GAME_ADAPTER_API_TYPES = {
           CARD_DECK_CREATION_QUERY_API_V1_JOI_VALIDATOR_SCHEMA: Symbol(
             'cardDeckCreationQueryApiV1JoiValidatorSchema',
           ),
+          CARD_DECK_FIND_QUERY_API_V1_JOI_VALIDATOR_SCHEMA: Symbol(
+            'cardDeckFindQueryApiV1JoiValidatorSchema',
+          ),
         },
         setup: {
           GAME_SETUP_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol(
