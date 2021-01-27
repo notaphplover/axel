@@ -38,6 +38,9 @@ export const GAME_ADAPTER_API_TYPES = {
       CARD_DECK_CREATION_QUERY_API_V1_TO_CARD_DECK_CREATION_QUERY_CONVERTER: Symbol(
         'CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter',
       ),
+      CARD_DECK_FIND_QUERY_API_V1_TO_CARD_DECK_FIND_QUERY_CONVERTER: Symbol(
+        'CardDeckFindQueryApiV1ToCardDeckFindQueryConverter',
+      ),
       CARD_DECK_SECTION_API_V1_TO_CARD_DECK_SECTIONS_CONVERTER: Symbol(
         'CardDeckSectionsApiV1ToCardDeckSectionsConverter',
       ),
