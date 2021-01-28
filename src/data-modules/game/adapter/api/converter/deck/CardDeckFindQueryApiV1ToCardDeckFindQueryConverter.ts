@@ -1,7 +1,9 @@
 import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
 import { CardDeckFindQueryApiV1 } from '../../query/deck/CardDeckFindQueryApiV1';
 import { Converter } from '../../../../../../common/domain';
+import { injectable } from 'inversify';
 
+@injectable()
 export class CardDeckFindQueryApiV1ToCardDeckFindQueryConverter
   implements Converter<CardDeckFindQueryApiV1, Promise<CardDeckFindQuery>> {
   public async transform(
