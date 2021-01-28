@@ -1,22 +1,30 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import * as fastify from 'fastify';
 import { Converter, Interactor } from '../../../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
 import { CardDeck } from '../../../../../../domain/model/deck/CardDeck';
 import { CardDeckApiV1 } from '../../../../../../adapter/api/model/deck/CardDeckApiV1';
 import { CardDeckFindQuery } from '../../../../../../domain/query/deck/CardDeckFindQuery';
 import { GetCardDeckByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/deck/GetCardDeckByIdV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
+import { ValueEither } from '../../../../../../../../common/domain/either/Either';
+import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
 import { cardDeckApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/deck';
+import { cardDeckFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/deck';
 import { cardDeckFixtureFactory } from '../../../../../fixtures/domain/model/deck';
 import { commonTest } from '../../../../../../../../common/test';
 
 describe(GetCardDeckByIdV1RequestHandler.name, () => {
-  let findCardDeckInteractor: Interactor<
-    CardDeckFindQuery,
-    Promise<CardDeck | null>
+  let findCardDeckInteractor: jest.Mocked<
+    Interactor<CardDeckFindQuery, Promise<CardDeck | null>>
   >;
-  let cardDeckToCardDeckApiV1Port: Converter<CardDeck, CardDeckApiV1>;
+  let cardDeckToCardDeckApiV1Port: jest.Mocked<
+    Converter<CardDeck, CardDeckApiV1>
+  >;
+  let getCardDeckV1RequestToCardDeckFindQueryConverter: jest.Mocked<
+    Converter<fastify.FastifyRequest, Promise<ValueOrErrors<CardDeckFindQuery>>>
+  >;
+
   let getCardDeckByIdV1RequestHandler: GetCardDeckByIdV1RequestHandler;
 
   beforeAll(() => {
@@ -26,28 +34,46 @@ describe(GetCardDeckByIdV1RequestHandler.name, () => {
     cardDeckToCardDeckApiV1Port = {
       transform: jest.fn(),
     };
+    getCardDeckV1RequestToCardDeckFindQueryConverter = {
+      transform: jest.fn(),
+    };
+
     getCardDeckByIdV1RequestHandler = new GetCardDeckByIdV1RequestHandler(
       cardDeckToCardDeckApiV1Port,
       findCardDeckInteractor,
+      getCardDeckV1RequestToCardDeckFindQueryConverter,
     );
   });
 
   describe('.handle()', () => {
     describe('when called and a cardDeck is found', () => {
-      let requestFixture: FastifyRequest;
-      let replyFixture: FastifyReply;
+      let requestFixture: fastify.FastifyRequest;
+      let replyFixture: fastify.FastifyReply;
+
+      let cardDeckFindQueryValueEither: ValueEither<CardDeckFindQuery>;
 
       beforeAll(async () => {
+        const cardDeckId: string = 'test-cardDeck-id';
+
         requestFixture = ({
-          params: { cardDeckId: 'test-cardDeck-id' },
-        } as Partial<FastifyRequest>) as FastifyRequest;
+          params: { cardDeckId: cardDeckId },
+        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        (findCardDeckInteractor.interact as jest.Mock).mockResolvedValueOnce(
+        cardDeckFindQueryValueEither = {
+          isEither: false,
+          value: cardDeckFindQueryFixtureFactory.get(),
+        };
+
+        getCardDeckV1RequestToCardDeckFindQueryConverter.transform.mockResolvedValueOnce(
+          cardDeckFindQueryValueEither,
+        );
+
+        findCardDeckInteractor.interact.mockResolvedValueOnce(
           cardDeckFixtureFactory.get(),
         );
 
-        (cardDeckToCardDeckApiV1Port.transform as jest.Mock).mockReturnValueOnce(
+        cardDeckToCardDeckApiV1Port.transform.mockReturnValueOnce(
           cardDeckApiV1FixtureFactory.get(),
         );
 
@@ -57,11 +83,20 @@ describe(GetCardDeckByIdV1RequestHandler.name, () => {
         );
       });
 
+      it('must call getCardDeckV1RequestToCardDeckFindQueryConverter.transform()', () => {
+        expect(
+          getCardDeckV1RequestToCardDeckFindQueryConverter.transform,
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          getCardDeckV1RequestToCardDeckFindQueryConverter.transform,
+        ).toHaveBeenCalledWith(requestFixture);
+      });
+
       it('must call findCardDeckInteractor.interact()', () => {
         expect(findCardDeckInteractor.interact).toHaveBeenCalledTimes(1);
-        expect(findCardDeckInteractor.interact).toHaveBeenCalledWith({
-          id: (requestFixture.params as { cardDeckId: string }).cardDeckId,
-        });
+        expect(findCardDeckInteractor.interact).toHaveBeenCalledWith(
+          cardDeckFindQueryFixtureFactory.get(),
+        );
       });
 
       it('must call cardDeckToCardDeckApiV1Port.transform()', () => {
@@ -80,18 +115,27 @@ describe(GetCardDeckByIdV1RequestHandler.name, () => {
     });
 
     describe('when called and no cardDeck is found', () => {
-      let requestFixture: FastifyRequest;
-      let replyFixture: FastifyReply;
+      let requestFixture: fastify.FastifyRequest;
+      let replyFixture: fastify.FastifyReply;
+
+      let cardDeckFindQueryValueEither: ValueEither<CardDeckFindQuery>;
 
       beforeAll(async () => {
         requestFixture = ({
           params: { cardDeckId: 'test-cardDeck-id' },
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        (findCardDeckInteractor.interact as jest.Mock).mockResolvedValueOnce(
-          null,
+        cardDeckFindQueryValueEither = {
+          isEither: false,
+          value: cardDeckFindQueryFixtureFactory.get(),
+        };
+
+        getCardDeckV1RequestToCardDeckFindQueryConverter.transform.mockResolvedValueOnce(
+          cardDeckFindQueryValueEither,
         );
+
+        findCardDeckInteractor.interact.mockResolvedValueOnce(null);
 
         await getCardDeckByIdV1RequestHandler.handle(
           requestFixture,
