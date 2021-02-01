@@ -13,6 +13,9 @@ export const GAME_ADAPTER_SERVER_TYPES = {
       GET_CARD_DECK_V1_REQUEST_TO_CARD_DECK_FIND_QUERY_CONVERTER: Symbol(
         'GetCardDeckV1RequestToCardDeckFindQueryConverter',
       ),
+      POST_CARD_DECK_V1_REQUEST_TO_CARD_DECK_CREATION_QUERY_CONVERTER: Symbol(
+        'PostCardDeckV1RequestToCardDeckCreationQueryConverter',
+      ),
     },
     live: {
       POST_LIVE_GAME_V1_REQUEST_TO_LIVE_GAME_CREATION_QUERY_CONVERTER: Symbol(
