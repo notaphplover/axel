@@ -1,19 +1,17 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import * as fastify from 'fastify';
+import { Converter, Interactor } from '../../../../../../../../common/domain';
 import {
-  Converter,
-  Interactor,
-  ValidationFail,
-  ValidationResult,
-  Validator,
-} from '../../../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
+  EitherEither,
+  ValueEither,
+} from '../../../../../../../../common/domain/either/Either';
 import { CardDeck } from '../../../../../../domain/model/deck/CardDeck';
 import { CardDeckApiV1 } from '../../../../../../adapter/api/model/deck/CardDeckApiV1';
 import { CardDeckCreationQuery } from '../../../../../../domain/query/deck/CardDeckCreationQuery';
-import { CardDeckCreationQueryApiV1 } from '../../../../../../adapter/api/query/deck/CardDeckCreationQueryApiV1';
 import { PostCardDeckV1RequestHandler } from '../../../../../../adapter/server/reqHandler/deck/PostCardDeckV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
+import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
 import { cardDeckApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/deck';
 import { cardDeckCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/deck';
 import { cardDeckCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/deck';
@@ -21,76 +19,66 @@ import { cardDeckFixtureFactory } from '../../../../../fixtures/domain/model/dec
 import { commonTest } from '../../../../../../../../common/test';
 
 describe(PostCardDeckV1RequestHandler.name, () => {
-  let cardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter: Converter<
-    CardDeckCreationQueryApiV1,
-    CardDeckCreationQuery
+  let createCardDecksInteractor: jest.Mocked<
+    Interactor<CardDeckCreationQuery, Promise<CardDeck[]>>
   >;
-  let createCardDecksInteractor: Interactor<
-    CardDeckCreationQuery,
-    Promise<CardDeck[]>
+  let cardDeckToCardDeckApiV1Converter: jest.Mocked<
+    Converter<CardDeck, CardDeckApiV1>
   >;
-  let cardDeckCreationQueryApiV1Validator: Validator<CardDeckCreationQueryApiV1>;
-  let cardDeckToCardDeckApiV1Converter: Converter<CardDeck, CardDeckApiV1>;
+  let postCardDeckV1RequestToCardDeckCreationQueryConverter: jest.Mocked<
+    Converter<
+      fastify.FastifyRequest,
+      Promise<ValueOrErrors<CardDeckCreationQuery>>
+    >
+  >;
 
   let postCardDeckV1RequestHandler: PostCardDeckV1RequestHandler;
 
   beforeAll(() => {
-    cardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter = {
-      transform: jest.fn(),
-    };
-    cardDeckCreationQueryApiV1Validator = { validate: jest.fn() };
     cardDeckToCardDeckApiV1Converter = { transform: jest.fn() };
     createCardDecksInteractor = {
       interact: jest.fn(),
     };
+    postCardDeckV1RequestToCardDeckCreationQueryConverter = {
+      transform: jest.fn(),
+    };
 
     postCardDeckV1RequestHandler = new PostCardDeckV1RequestHandler(
-      cardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter,
-      cardDeckCreationQueryApiV1Validator,
       cardDeckToCardDeckApiV1Converter,
       createCardDecksInteractor,
+      postCardDeckV1RequestToCardDeckCreationQueryConverter,
     );
   });
 
   describe('.handle()', () => {
     describe('when called and the request is valid', () => {
-      let requestFixture: FastifyRequest;
-      let replyFixture: FastifyReply;
+      let requestFixture: fastify.FastifyRequest;
+      let replyFixture: fastify.FastifyReply;
 
       beforeAll(async () => {
         requestFixture = ({
           body: cardDeckCreationQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        (cardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          cardDeckCreationQueryFixtureFactory.get(),
-        );
-        const cardDeckCreationQueryApiV1ValidatorValidationResult: ValidationResult<CardDeckCreationQueryApiV1> = {
-          model: cardDeckCreationQueryApiV1FixtureFactory.get(),
-          result: true,
-        };
-        (cardDeckCreationQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
-          cardDeckCreationQueryApiV1ValidatorValidationResult,
-        );
-        (cardDeckToCardDeckApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
+        cardDeckToCardDeckApiV1Converter.transform.mockReturnValueOnce(
           cardDeckApiV1FixtureFactory.get(),
         );
 
-        (createCardDecksInteractor.interact as jest.Mock).mockResolvedValueOnce(
-          [cardDeckFixtureFactory.get()],
+        createCardDecksInteractor.interact.mockResolvedValueOnce([
+          cardDeckFixtureFactory.get(),
+        ]);
+
+        const cardDeckCreationQueryOrErrors: ValueEither<CardDeckCreationQuery> = {
+          isEither: false,
+          value: cardDeckCreationQueryFixtureFactory.get(),
+        };
+
+        postCardDeckV1RequestToCardDeckCreationQueryConverter.transform.mockResolvedValueOnce(
+          cardDeckCreationQueryOrErrors,
         );
 
         await postCardDeckV1RequestHandler.handle(requestFixture, replyFixture);
-      });
-
-      it('must call cardDeckCreationQueryApiV1Validator.validate() with the request body', () => {
-        expect(
-          cardDeckCreationQueryApiV1Validator.validate,
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          cardDeckCreationQueryApiV1Validator.validate,
-        ).toHaveBeenCalledWith(requestFixture.body);
       });
 
       it('must call createCardDecksInteractor.interact()', () => {
@@ -118,23 +106,24 @@ describe(PostCardDeckV1RequestHandler.name, () => {
     });
 
     describe('when called and the request is not valid', () => {
-      let requestFixture: FastifyRequest;
-      let replyFixture: FastifyReply;
+      let requestFixture: fastify.FastifyRequest;
+      let replyFixture: fastify.FastifyReply;
 
-      let cardDeckCreationQueryApiV1ValidatorValidationResult: ValidationFail;
+      let cardDeckCreationQueryOrErrors: EitherEither<string[]>;
 
       beforeAll(async () => {
         requestFixture = ({
           body: cardDeckCreationQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        cardDeckCreationQueryApiV1ValidatorValidationResult = {
-          result: false,
-          errorMessage: 'test error message',
+        cardDeckCreationQueryOrErrors = {
+          isEither: true,
+          value: ['Test when the request is not valid'],
         };
-        (cardDeckCreationQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
-          cardDeckCreationQueryApiV1ValidatorValidationResult,
+
+        postCardDeckV1RequestToCardDeckCreationQueryConverter.transform.mockResolvedValueOnce(
+          cardDeckCreationQueryOrErrors,
         );
 
         await postCardDeckV1RequestHandler.handle(requestFixture, replyFixture);
@@ -148,8 +137,7 @@ describe(PostCardDeckV1RequestHandler.name, () => {
       it('must call reply.send() with the validation errror message', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
         expect(replyFixture.send).toHaveBeenCalledWith({
-          message:
-            cardDeckCreationQueryApiV1ValidatorValidationResult.errorMessage,
+          message: cardDeckCreationQueryOrErrors.value[0],
         });
       });
     });

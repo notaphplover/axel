@@ -1,36 +1,18 @@
-import {
-  Converter,
-  Interactor,
-  ValidationResult,
-  Validator,
-} from '../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import * as fastify from 'fastify';
+import { Converter, Interactor } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
 import { CardDeck } from '../../../../domain/model/deck/CardDeck';
 import { CardDeckApiV1 } from '../../../api/model/deck/CardDeckApiV1';
 import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
-import { CardDeckCreationQueryApiV1 } from '../../../api/query/deck/CardDeckCreationQueryApiV1';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { StatusCodes } from 'http-status-codes';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()
 export class PostCardDeckV1RequestHandler implements FastifyRequestHandler {
   constructor(
-    @inject(
-      GAME_ADAPTER_TYPES.api.converter.deck
-        .CARD_DECK_CREATION_QUERY_API_V1_TO_CARD_DECK_CREATION_QUERY_CONVERTER,
-    )
-    private readonly cardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter: Converter<
-      CardDeckCreationQueryApiV1,
-      CardDeckCreationQuery
-    >,
-    @inject(
-      GAME_ADAPTER_TYPES.api.validator.deck
-        .CARD_DECK_CREATION_QUERY_API_V1_VALIDATOR,
-    )
-    private readonly cardDeckCreationQueryApiV1Validator: Validator<CardDeckCreationQueryApiV1>,
     @inject(
       GAME_ADAPTER_TYPES.api.converter.deck
         .CARD_DECK_TO_CARD_DECK_API_V1_CONVERTER,
@@ -44,19 +26,30 @@ export class PostCardDeckV1RequestHandler implements FastifyRequestHandler {
       CardDeckCreationQuery,
       Promise<CardDeck[]>
     >,
+    @inject(
+      GAME_ADAPTER_TYPES.server.converter.deck
+        .POST_CARD_DECK_V1_REQUEST_TO_CARD_DECK_CREATION_QUERY_CONVERTER,
+    )
+    private readonly postCardDeckV1RequestToCardDeckCreationQueryConverter: Converter<
+      fastify.FastifyRequest,
+      Promise<ValueOrErrors<CardDeckCreationQuery>>
+    >,
   ) {}
 
   public async handle(
-    request: FastifyRequest,
-    reply: FastifyReply,
+    request: fastify.FastifyRequest,
+    reply: fastify.FastifyReply,
   ): Promise<void> {
-    const validationResult: ValidationResult<CardDeckCreationQueryApiV1> = this.cardDeckCreationQueryApiV1Validator.validate(
-      request.body,
+    const cardDeckCreatioqueryOrErrors: ValueOrErrors<CardDeckCreationQuery> = await this.postCardDeckV1RequestToCardDeckCreationQueryConverter.transform(
+      request,
     );
-    if (validationResult.result) {
-      const cardDeckCreationQuery: CardDeckCreationQuery = this.cardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter.transform(
-        validationResult.model,
-      );
+    if (cardDeckCreatioqueryOrErrors.isEither) {
+      await reply
+        .code(StatusCodes.BAD_REQUEST)
+        .send({ message: cardDeckCreatioqueryOrErrors.value.join('/n') });
+    } else {
+      const cardDeckCreationQuery: CardDeckCreationQuery =
+        cardDeckCreatioqueryOrErrors.value;
 
       const [
         cardDeckCreated,
@@ -69,10 +62,6 @@ export class PostCardDeckV1RequestHandler implements FastifyRequestHandler {
       );
 
       await reply.send(cardDeckApiV1Created);
-    } else {
-      await reply
-        .code(StatusCodes.BAD_REQUEST)
-        .send({ message: validationResult.errorMessage });
     }
   }
 }

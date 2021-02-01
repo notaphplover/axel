@@ -10,7 +10,8 @@ import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
 
 @injectable()
 export class CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter
-  implements Converter<CardDeckCreationQueryApiV1, CardDeckCreationQuery> {
+  implements
+    Converter<CardDeckCreationQueryApiV1, Promise<CardDeckCreationQuery>> {
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.deck
@@ -30,7 +31,9 @@ export class CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter
     >,
   ) {}
 
-  public transform(input: CardDeckCreationQueryApiV1): CardDeckCreationQuery {
+  public async transform(
+    input: CardDeckCreationQueryApiV1,
+  ): Promise<CardDeckCreationQuery> {
     return {
       description: input.description,
       format: this.gameFormatApiV1ToGameFormatConverter.transform(input.format),
