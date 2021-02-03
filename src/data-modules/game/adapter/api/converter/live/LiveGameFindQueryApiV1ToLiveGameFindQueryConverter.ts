@@ -5,8 +5,10 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class LiveGameFindQueryApiV1ToLiveGameFindQueryConverter
-  implements Converter<LiveGameFindQueryApiV1, LiveGameFindQuery> {
-  public transform(input: LiveGameFindQueryApiV1): LiveGameFindQuery {
+  implements Converter<LiveGameFindQueryApiV1, Promise<LiveGameFindQuery>> {
+  public async transform(
+    input: LiveGameFindQueryApiV1,
+  ): Promise<LiveGameFindQuery> {
     const liveGameFindQuery: LiveGameFindQuery = {
       id: input.id,
     };
