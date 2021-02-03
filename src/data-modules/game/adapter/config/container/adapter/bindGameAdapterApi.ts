@@ -48,6 +48,7 @@ import { gameSetupFindQueryApiV1JoiValidatorSchema } from '../../../api/validato
 import { gameSetupUpdateQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/setup/gameSetupUpdateQueryApiV1ValidatorSchema';
 import { interfaces } from 'inversify';
 import { liveGameCreationQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/live/liveGameCreationQueryApiV1JoiValidatorSchema';
+import { liveGameFindQueryApiV1JoiValidatorSchema } from '../../../api/validator/schema/query/live/liveGameFindQueryApiV1JoiValidatorSchema';
 
 export function bindGameAdapterApi(bind: interfaces.Bind): void {
   bind(
@@ -219,6 +220,16 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.validator.schema.query.deck
       .CARD_DECK_FIND_QUERY_API_V1_JOI_VALIDATOR_SCHEMA,
   ).toConstantValue(cardDeckFindQueryApiV1JoiValidatorSchema);
+
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.schema.query.live
+      .LIVE_GAME_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
+  ).toConstantValue(liveGameCreationQueryApiV1JoiValidatorSchema);
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.schema.query.live
+      .LIVE_GAME_FIND_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
+  ).toConstantValue(liveGameFindQueryApiV1JoiValidatorSchema);
+
   bind(
     GAME_ADAPTER_TYPES.api.validator.schema.query.setup
       .GAME_SETUP_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
@@ -252,9 +263,4 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.validator.setup
       .GAME_SETUP_UPDATE_QUERY_API_V1_VALIDATOR,
   ).to(GameSetupUpdateQueryApiV1Validator);
-
-  bind(
-    GAME_ADAPTER_TYPES.api.validator.schema.query
-      .GAME_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
-  ).toConstantValue(liveGameCreationQueryApiV1JoiValidatorSchema);
 }

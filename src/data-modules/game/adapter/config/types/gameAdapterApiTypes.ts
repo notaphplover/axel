@@ -136,6 +136,14 @@ export const GAME_ADAPTER_API_TYPES = {
             'cardDeckFindQueryApiV1JoiValidatorSchema',
           ),
         },
+        live: {
+          LIVE_GAME_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol(
+            'liveGameCreationQueryApiV1JoiValidatorSchema',
+          ),
+          LIVE_GAME_FIND_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol(
+            'liveGameFindQueryApiV1JoiValidatorSchema',
+          ),
+        },
         setup: {
           GAME_SETUP_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol(
             'gameSetupCreationQueryApiV1JoiValidatorSchema',
@@ -147,9 +155,6 @@ export const GAME_ADAPTER_API_TYPES = {
             'gameSetupUpdateQueryApiV1JoiValidatorSchema',
           ),
         },
-        GAME_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA: Symbol(
-          'gameCreationQueryApiV1JoiValidatorSchema',
-        ),
       },
     },
     setup: {

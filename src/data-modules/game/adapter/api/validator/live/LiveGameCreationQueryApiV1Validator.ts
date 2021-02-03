@@ -9,8 +9,8 @@ export class LiveGameCreationQueryApiV1Validator extends JoiObjectValidator<Live
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
     @inject(
-      GAME_ADAPTER_TYPES.api.validator.schema.query
-        .GAME_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
+      GAME_ADAPTER_TYPES.api.validator.schema.query.live
+        .LIVE_GAME_CREATION_QUERY_API_V1_JOY_VALIDATOR_SCHEMA,
     )
     gameCreationQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<LiveGameCreationQueryApiV1>,
   ) {
