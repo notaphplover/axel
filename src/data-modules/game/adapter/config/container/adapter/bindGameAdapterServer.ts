@@ -5,6 +5,7 @@ import { GameSetupRouter } from '../../../server/router/setup/GameSetupRouter';
 import { GetCardDeckByIdV1RequestHandler } from '../../../server/reqHandler/deck/GetCardDeckByIdV1RequestHandler';
 import { GetCardDeckV1RequestToCardDeckFindQueryConverter } from '../../../server/converter/deck/GetCardDeckV1RequestToCardDeckFindQueryConverter';
 import { GetLiveGameByIdV1RequestHandler } from '../../../server/reqHandler/live/GetLiveGameByIdV1RequestHandler';
+import { GetLiveGameV1RequestToLiveGameFindQueryConverter } from '../../../server/converter/live/GetLiveGameV1RequestToLiveGameFindQueryConverter';
 import { LiveGameRouter } from '../../../server/router/live/LiveGameRouter';
 import { PatchGameSetupByIdV1RequestHandler } from '../../../server/reqHandler/setup/PatchGameSetupByIdV1RequestHandler';
 import { PostCardDeckV1RequestHandler } from '../../../server/reqHandler/deck/PostCardDeckV1RequestHandler';
@@ -36,6 +37,10 @@ export function bindGameAdapterServer(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.server.converter.deck
       .POST_CARD_DECK_V1_REQUEST_TO_CARD_DECK_CREATION_QUERY_CONVERTER,
   ).to(PostCardDeckV1RequestToCardDeckCreationQueryConverter);
+  bind(
+    GAME_ADAPTER_TYPES.server.converter.live
+      .GET_LIVE_GAME_V1_REQUEST_TO_LIVE_GAME_FIND_QUERY_CONVERTER,
+  ).to(GetLiveGameV1RequestToLiveGameFindQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.server.converter.live
       .POST_LIVE_GAME_V1_REQUEST_TO_LIVE_GAME_CREATION_QUERY_CONVERTER,

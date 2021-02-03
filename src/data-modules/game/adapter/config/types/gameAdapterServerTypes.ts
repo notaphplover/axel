@@ -18,6 +18,9 @@ export const GAME_ADAPTER_SERVER_TYPES = {
       ),
     },
     live: {
+      GET_LIVE_GAME_V1_REQUEST_TO_LIVE_GAME_FIND_QUERY_CONVERTER: Symbol(
+        'GetLiveGameV1RequestToLiveGameFindQueryConverter',
+      ),
       POST_LIVE_GAME_V1_REQUEST_TO_LIVE_GAME_CREATION_QUERY_CONVERTER: Symbol(
         'PostLiveGameV1RequestToLiveGameCreationQueryConverter',
       ),
