@@ -35,6 +35,7 @@ import { LiveGameCreationQueryApiV1SemanticValidator } from '../../../api/valida
 import { LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter } from '../../../api/converter/live/LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter';
 import { LiveGameCreationQueryApiV1Validator } from '../../../api/validator/live/LiveGameCreationQueryApiV1Validator';
 import { LiveGameFindQueryApiV1ToLiveGameFindQueryConverter } from '../../../api/converter/live/LiveGameFindQueryApiV1ToLiveGameFindQueryConverter';
+import { LiveGameFindQueryApiV1Validator } from '../../../api/validator/live/LiveGameFindQueryApiV1Validator';
 import { LiveGameToLiveGameApiV1Converter } from '../../../api/converter/live/LiveGameToLiveGameApiV1Converter';
 import { PlayerReferenceApiV1ToPlayerReferenceConverter } from '../../../api/converter/setup/PlayerReferenceApiV1ToPlayerReferenceConverter';
 import { ResourceApiV1ToResourceConverter } from '../../../api/converter/card/ResourceApiV1ToResourceConverter';
@@ -182,6 +183,11 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
       .LIVE_GAME_CREATION_QUERY_API_V1_VALIDATOR,
   )
     .to(LiveGameCreationQueryApiV1Validator)
+    .inSingletonScope();
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.live.LIVE_GAME_FIND_QUERY_API_V1_VALIDATOR,
+  )
+    .to(LiveGameFindQueryApiV1Validator)
     .inSingletonScope();
   bind(
     GAME_ADAPTER_TYPES.api.validator.card.CARD_CREATION_QUERY_API_V1_VALIDATOR,

@@ -117,6 +117,9 @@ export const GAME_ADAPTER_API_TYPES = {
       LIVE_GAME_CREATION_QUERY_API_V1_VALIDATOR: Symbol(
         'LiveGameCreationQueryApiV1Validator',
       ),
+      LIVE_GAME_FIND_QUERY_API_V1_VALIDATOR: Symbol(
+        'LiveGameFindQueryApiV1Validator',
+      ),
     },
     schema: {
       query: {
