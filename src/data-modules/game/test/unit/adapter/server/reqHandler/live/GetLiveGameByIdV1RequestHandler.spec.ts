@@ -1,22 +1,28 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import * as fastify from 'fastify';
 import { Converter, Interactor } from '../../../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
 import { GetLiveGameByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/GetLiveGameByIdV1RequestHandler';
 import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
 import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
 import { LiveGameFindQuery } from '../../../../../../domain/query/live/LiveGameFindQuery';
 import { StatusCodes } from 'http-status-codes';
+import { ValueEither } from '../../../../../../../../common/domain/either/Either';
+import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
 import { commonTest } from '../../../../../../../../common/test';
 import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
+import { liveGameFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/live';
 import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model';
 
 describe(GetLiveGameByIdV1RequestHandler.name, () => {
-  let findGameInteractor: Interactor<
-    LiveGameFindQuery,
-    Promise<LiveGame | null>
+  let findGameInteractor: jest.Mocked<
+    Interactor<LiveGameFindQuery, Promise<LiveGame | null>>
   >;
-  let gameToGameApiV1Port: Converter<LiveGame, LiveGameApiV1>;
+  let gameToGameApiV1Port: jest.Mocked<Converter<LiveGame, LiveGameApiV1>>;
+  let getLiveGameV1RequestToLiveGameFindQueryConverter: jest.Mocked<
+    Converter<fastify.FastifyRequest, Promise<ValueOrErrors<LiveGameFindQuery>>>
+  >;
+
   let getGameByIdV1RequestHandler: GetLiveGameByIdV1RequestHandler;
 
   beforeAll(() => {
@@ -26,39 +32,70 @@ describe(GetLiveGameByIdV1RequestHandler.name, () => {
     gameToGameApiV1Port = {
       transform: jest.fn(),
     };
+    getLiveGameV1RequestToLiveGameFindQueryConverter = {
+      transform: jest.fn(),
+    };
+
     getGameByIdV1RequestHandler = new GetLiveGameByIdV1RequestHandler(
       findGameInteractor,
       gameToGameApiV1Port,
+      getLiveGameV1RequestToLiveGameFindQueryConverter,
     );
   });
 
   describe('.handle()', () => {
     describe('when called and a game is found', () => {
-      let requestFixture: FastifyRequest;
-      let replyFixture: FastifyReply;
+      let requestFixture: fastify.FastifyRequest;
+      let replyFixture: fastify.FastifyReply;
+
+      let liveGameFindQueryOrErrorsFixture: ValueEither<LiveGameFindQuery>;
 
       beforeAll(async () => {
         requestFixture = ({
           params: { gameId: 'test-game-id' },
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        (findGameInteractor.interact as jest.Mock).mockResolvedValueOnce(
+        liveGameFindQueryOrErrorsFixture = {
+          isEither: false,
+          value: liveGameFindQueryFixtureFactory.get(),
+        };
+
+        findGameInteractor.interact.mockResolvedValueOnce(
           liveGameFixtureFactory.get(),
         );
 
-        (gameToGameApiV1Port.transform as jest.Mock).mockReturnValueOnce(
+        gameToGameApiV1Port.transform.mockReturnValueOnce(
           liveGameApiV1FixtureFactory.get(),
+        );
+
+        getLiveGameV1RequestToLiveGameFindQueryConverter.transform.mockResolvedValueOnce(
+          liveGameFindQueryOrErrorsFixture,
         );
 
         await getGameByIdV1RequestHandler.handle(requestFixture, replyFixture);
       });
 
+      afterAll(() => {
+        findGameInteractor.interact.mockClear();
+        gameToGameApiV1Port.transform.mockClear();
+        getLiveGameV1RequestToLiveGameFindQueryConverter.transform.mockClear();
+      });
+
+      it('must call findGameInteractor.interact()', () => {
+        expect(
+          getLiveGameV1RequestToLiveGameFindQueryConverter.transform,
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          getLiveGameV1RequestToLiveGameFindQueryConverter.transform,
+        ).toHaveBeenCalledWith(requestFixture);
+      });
+
       it('must call findGameInteractor.interact()', () => {
         expect(findGameInteractor.interact).toHaveBeenCalledTimes(1);
-        expect(findGameInteractor.interact).toHaveBeenCalledWith({
-          id: (requestFixture.params as { gameId: string }).gameId,
-        });
+        expect(findGameInteractor.interact).toHaveBeenCalledWith(
+          liveGameFindQueryOrErrorsFixture.value,
+        );
       });
 
       it('must call gameToGameApiV1Port.transform()', () => {
@@ -77,18 +114,35 @@ describe(GetLiveGameByIdV1RequestHandler.name, () => {
     });
 
     describe('when called and no game is found', () => {
-      let requestFixture: FastifyRequest;
-      let replyFixture: FastifyReply;
+      let requestFixture: fastify.FastifyRequest;
+      let replyFixture: fastify.FastifyReply;
+
+      let liveGameFindQueryOrErrorsFixture: ValueEither<LiveGameFindQuery>;
 
       beforeAll(async () => {
         requestFixture = ({
           params: { gameId: 'test-game-id' },
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+
+        liveGameFindQueryOrErrorsFixture = {
+          isEither: false,
+          value: liveGameFindQueryFixtureFactory.get(),
+        };
 
         (findGameInteractor.interact as jest.Mock).mockResolvedValueOnce(null);
 
+        getLiveGameV1RequestToLiveGameFindQueryConverter.transform.mockResolvedValueOnce(
+          liveGameFindQueryOrErrorsFixture,
+        );
+
         await getGameByIdV1RequestHandler.handle(requestFixture, replyFixture);
+      });
+
+      afterAll(() => {
+        findGameInteractor.interact.mockClear();
+        gameToGameApiV1Port.transform.mockClear();
+        getLiveGameV1RequestToLiveGameFindQueryConverter.transform.mockClear();
       });
 
       it('must call reply.code with not found code', () => {
