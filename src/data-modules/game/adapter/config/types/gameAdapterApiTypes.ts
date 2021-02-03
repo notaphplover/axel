@@ -61,6 +61,9 @@ export const GAME_ADAPTER_API_TYPES = {
       LIVE_GAME_CREATION_QUERY_API_V1_TO_LIVE_GAME_CREATION_QUERY_CONVERTER: Symbol(
         'LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter',
       ),
+      LIVE_GAME_FIND_QUERY_API_V1_TO_LIVE_GAME_FIND_QUERY_CONVERTER: Symbol(
+        'LiveGameFindQueryApiV1ToLiveGameFindQueryConverter',
+      ),
       LIVE_GAME_TO_LIVE_GAME_API_V1_CONVERTER: Symbol(
         'LiveGameToGameApiV1Converter',
       ),
