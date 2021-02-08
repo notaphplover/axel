@@ -13,23 +13,16 @@ export abstract class JoiObjectValidator<TObject>
       value,
     );
 
-    if (hasValue(joiValidationResult.errors)) {
+    if (hasValue(joiValidationResult.error)) {
       return {
-        errorMessage: joiValidationResult.errors.message,
+        errorMessage: joiValidationResult.error.message,
         result: false,
       };
     } else {
-      if (hasValue(joiValidationResult.error)) {
-        return {
-          errorMessage: joiValidationResult.error.message,
-          result: false,
-        };
-      } else {
-        return {
-          model: value as TObject,
-          result: true,
-        };
-      }
+      return {
+        model: value as TObject,
+        result: true,
+      };
     }
   }
 }
