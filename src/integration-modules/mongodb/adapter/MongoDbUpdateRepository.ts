@@ -83,7 +83,7 @@ export abstract class MongoDbUpdateRepository<
     );
 
     const entitiesDbToBeUpdated: TModelDb[] = await this.collection
-      .find<TModelDb>(filterQuery)
+      .find<TModelDb>(filterQuery, {})
       .toArray();
 
     const entitiesDbToBeUpdatedIds: mongodb.ObjectID[] = entitiesDbToBeUpdated.map(
