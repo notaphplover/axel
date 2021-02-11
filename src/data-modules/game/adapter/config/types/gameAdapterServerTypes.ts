@@ -25,6 +25,11 @@ export const GAME_ADAPTER_SERVER_TYPES = {
         'PostLiveGameV1RequestToLiveGameCreationQueryConverter',
       ),
     },
+    setup: {
+      PATCH_GAME_SETUP_BY_ID_V1_REQUEST_TO_GAME_SETUP_UPDATE_QUERY_CONVERTER: Symbol(
+        'PatchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter',
+      ),
+    },
   },
   reqHandler: {
     card: {

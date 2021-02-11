@@ -8,6 +8,7 @@ import { GetLiveGameByIdV1RequestHandler } from '../../../server/reqHandler/live
 import { GetLiveGameV1RequestToLiveGameFindQueryConverter } from '../../../server/converter/live/GetLiveGameV1RequestToLiveGameFindQueryConverter';
 import { LiveGameRouter } from '../../../server/router/live/LiveGameRouter';
 import { PatchGameSetupByIdV1RequestHandler } from '../../../server/reqHandler/setup/PatchGameSetupByIdV1RequestHandler';
+import { PatchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter } from '../../../server/converter/setup/PatchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter';
 import { PostCardDeckV1RequestHandler } from '../../../server/reqHandler/deck/PostCardDeckV1RequestHandler';
 import { PostCardDeckV1RequestToCardDeckCreationQueryConverter } from '../../../server/converter/deck/PostCardDeckV1RequestToCardDeckCreationQueryConverter';
 import { PostCardV1RequestHandler } from '../../../server/reqHandler/card/PostCardV1RequestHandler';
@@ -45,6 +46,10 @@ export function bindGameAdapterServer(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.server.converter.live
       .POST_LIVE_GAME_V1_REQUEST_TO_LIVE_GAME_CREATION_QUERY_CONVERTER,
   ).to(PostLiveGameV1RequestToLiveGameCreationQueryConverter);
+  bind(
+    GAME_ADAPTER_TYPES.server.converter.setup
+      .PATCH_GAME_SETUP_BY_ID_V1_REQUEST_TO_GAME_SETUP_UPDATE_QUERY_CONVERTER,
+  ).to(PatchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.server.reqHandler.live
       .GET_LIVE_GAME_BY_ID_V1_REQUEST_HANDLER,
