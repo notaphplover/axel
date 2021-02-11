@@ -1,10 +1,5 @@
-import {
-  ContextBasedValidator,
-  Converter,
-  Interactor,
-  ValidationResult,
-} from '../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import * as fastify from 'fastify';
+import { Converter, Interactor } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
 import { BasicGameSetupApiV1 } from '../../../api/model/setup/BasicGameSetupApiV1';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
@@ -12,14 +7,13 @@ import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
-import { GameSetupUpdateQueryApiV1 } from '../../../api/query/setup/GameSetupUpdateQueryApiV1';
-import { GameSetupUpdateQueryApiV1ValidationContext } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1ValidationContext';
 import { StatusCodes } from 'http-status-codes';
 import { UserContainer } from '../../../../../user/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()
 export class PatchGameSetupByIdV1RequestHandler
-  implements FastifyRequestHandler<FastifyRequest & UserContainer> {
+  implements FastifyRequestHandler<fastify.FastifyRequest & UserContainer> {
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.setup
@@ -30,20 +24,12 @@ export class PatchGameSetupByIdV1RequestHandler
       BasicGameSetupApiV1
     >,
     @inject(
-      GAME_ADAPTER_TYPES.api.validator.setup
-        .GAME_SETUP_UPDATE_QUERY_API_V1_CONTEXT_BASED_VALIDATOR,
+      GAME_ADAPTER_TYPES.server.converter.setup
+        .PATCH_GAME_SETUP_BY_ID_V1_REQUEST_TO_GAME_SETUP_UPDATE_QUERY_CONVERTER,
     )
-    private readonly gameSetupUpdateQueryApiV1ContextBasedValidator: ContextBasedValidator<
-      GameSetupUpdateQueryApiV1,
-      GameSetupUpdateQueryApiV1ValidationContext
-    >,
-    @inject(
-      GAME_ADAPTER_TYPES.api.converter.setup
-        .GAME_SETUP_UPDATE_QUERY_API_V1_TO_GAME_SETUP_UPDATE_QUERY_CONVERTER,
-    )
-    private readonly gameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter: Converter<
-      GameSetupUpdateQueryApiV1,
-      Promise<GameSetupUpdateQuery>
+    private readonly patchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter: Converter<
+      fastify.FastifyRequest & UserContainer,
+      Promise<ValueOrErrors<GameSetupUpdateQuery>>
     >,
     @inject(GAME_DOMAIN_TYPES.interactor.setup.UPDATE_GAME_SETUP_INTERACTOR)
     private readonly updateGameSetupInteractor: Interactor<
@@ -53,25 +39,20 @@ export class PatchGameSetupByIdV1RequestHandler
   ) {}
 
   public async handle(
-    request: FastifyRequest & UserContainer,
-    reply: FastifyReply,
+    request: fastify.FastifyRequest & UserContainer,
+    reply: fastify.FastifyReply,
   ): Promise<void> {
-    const gameSetupUpdateQueryApiV1ToValidate: unknown = {
-      ...(request.body as Record<string, unknown>),
-      id: (request.params as { gameSetupId: string }).gameSetupId,
-    };
-    const validationResult: ValidationResult<GameSetupUpdateQueryApiV1> = this.gameSetupUpdateQueryApiV1ContextBasedValidator.validate(
-      gameSetupUpdateQueryApiV1ToValidate,
-      { user: request.user },
+    const gameSetupUpdateQueryOrErrors: ValueOrErrors<GameSetupUpdateQuery> = await this.patchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter.transform(
+      request,
     );
 
-    if (validationResult.result) {
-      const gameSetupUpdateQueryApiV1: GameSetupUpdateQueryApiV1 =
-        validationResult.model;
-
-      const gameSetupUpdateQuery: GameSetupUpdateQuery = await this.gameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter.transform(
-        gameSetupUpdateQueryApiV1,
-      );
+    if (gameSetupUpdateQueryOrErrors.isEither) {
+      await reply
+        .code(StatusCodes.BAD_REQUEST)
+        .send({ message: gameSetupUpdateQueryOrErrors.value.join('\n') });
+    } else {
+      const gameSetupUpdateQuery: GameSetupUpdateQuery =
+        gameSetupUpdateQueryOrErrors.value;
 
       const gameSetupUpdated: GameSetup | null = await this.updateGameSetupInteractor.interact(
         gameSetupUpdateQuery,
@@ -88,10 +69,6 @@ export class PatchGameSetupByIdV1RequestHandler
 
         await reply.send(basicGameSetupApiV1Updated);
       }
-    } else {
-      await reply
-        .code(StatusCodes.BAD_REQUEST)
-        .send({ message: validationResult.errorMessage });
     }
   }
 }

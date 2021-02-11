@@ -50,7 +50,12 @@ export class PatchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter extends 
   protected extractRequestQuery(
     request: fastify.FastifyRequest & UserContainer,
   ): unknown {
-    return request.body;
+    const gameSetupUpdateQueryApiV1ToValidate: unknown = {
+      ...(request.body as Record<string, unknown>),
+      id: (request.params as { gameSetupId: string }).gameSetupId,
+    };
+
+    return gameSetupUpdateQueryApiV1ToValidate;
   }
 
   protected async getContextOrErrors(
