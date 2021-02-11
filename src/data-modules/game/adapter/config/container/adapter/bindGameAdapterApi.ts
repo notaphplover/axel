@@ -29,6 +29,7 @@ import { GameSetupToBasicGameSetupApiV1Converter } from '../../../api/converter/
 import { GameSetupToExtendedGameSetupApiV1Converter } from '../../../api/converter/setup/GameSetupToExtendedGameSetupApiV1Converter';
 import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter } from '../../../api/converter/setup/GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter';
 import { GameSetupUpdateQueryApiV1ContextBasedValidator } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1ContextBasedValidator';
+import { GameSetupUpdateQueryApiV1SemanticValidator } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1SemanticValidator';
 import { GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter } from '../../../api/converter/setup/GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter';
 import { GameSetupUpdateQueryApiV1Validator } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1Validator';
 import { LiveGameCreationQueryApiV1SemanticValidator } from '../../../api/validator/live/LiveGameCreationQueryApiV1SemanticValidator';
@@ -265,6 +266,10 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.validator.setup
       .GAME_SETUP_UPDATE_QUERY_API_V1_CONTEXT_BASED_VALIDATOR,
   ).to(GameSetupUpdateQueryApiV1ContextBasedValidator);
+  bind(
+    GAME_ADAPTER_TYPES.api.validator.setup
+      .GAME_SETUP_UPDATE_QUERY_API_V1_SEMANTIC_VALIDATOR,
+  ).to(GameSetupUpdateQueryApiV1SemanticValidator);
   bind(
     GAME_ADAPTER_TYPES.api.validator.setup
       .GAME_SETUP_UPDATE_QUERY_API_V1_VALIDATOR,
