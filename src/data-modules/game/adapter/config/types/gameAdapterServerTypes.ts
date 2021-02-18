@@ -29,6 +29,9 @@ export const GAME_ADAPTER_SERVER_TYPES = {
       PATCH_GAME_SETUP_BY_ID_V1_REQUEST_TO_GAME_SETUP_UPDATE_QUERY_CONVERTER: Symbol(
         'PatchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter',
       ),
+      POST_GAME_SETUPS_SEARCHES_V1_REQUEST_TO_GAME_SETUP_FIND_QUERY_CONVERTER: Symbol(
+        'PostGameSetupsSearchesV1RequestToGameSetupFindQueryConverter',
+      ),
     },
   },
   reqHandler: {
