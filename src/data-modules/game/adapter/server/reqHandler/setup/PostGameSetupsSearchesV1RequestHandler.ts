@@ -1,10 +1,5 @@
-import {
-  Converter,
-  Interactor,
-  ValidationResult,
-  Validator,
-} from '../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import * as fastify from 'fastify';
+import { Converter, Interactor } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
 import { BasicGameSetupApiV1 } from '../../../api/model/setup/BasicGameSetupApiV1';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
@@ -12,8 +7,8 @@ import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
-import { GameSetupFindQueryApiV1 } from '../../../api/query/setup/GameSetupFindQueryApiV1';
 import { StatusCodes } from 'http-status-codes';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()
 export class PostGameSetupsSearchesV1RequestHandler
@@ -33,32 +28,31 @@ export class PostGameSetupsSearchesV1RequestHandler
       Promise<GameSetup[]>
     >,
     @inject(
-      GAME_ADAPTER_TYPES.api.converter.setup
-        .GAME_SETUP_FIND_QUERY_API_V1_TO_GAME_SETUP_FIND_QUERY_CONVERTER,
+      GAME_ADAPTER_TYPES.server.converter.setup
+        .POST_GAME_SETUPS_SEARCHES_V1_REQUEST_TO_GAME_SETUP_FIND_QUERY_CONVERTER,
     )
-    private readonly gameSetupFindQueryApiV1ToGameSetupFindQueryConverter: Converter<
-      GameSetupFindQueryApiV1,
-      GameSetupFindQuery
+    private readonly postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter: Converter<
+      fastify.FastifyRequest,
+      Promise<ValueOrErrors<GameSetupFindQuery>>
     >,
-    @inject(
-      GAME_ADAPTER_TYPES.api.validator.setup
-        .GAME_SETUP_FIND_QUERY_API_V1_VALIDATOR,
-    )
-    private readonly gameSetupFindQueryApiV1Validator: Validator<GameSetupFindQueryApiV1>,
   ) {}
 
   public async handle(
-    request: FastifyRequest,
-    reply: FastifyReply,
+    request: fastify.FastifyRequest,
+    reply: fastify.FastifyReply,
   ): Promise<void> {
-    const validationResult: ValidationResult<GameSetupFindQueryApiV1> = this.gameSetupFindQueryApiV1Validator.validate(
-      request.body,
+    const gameSetupFindQueryOrErrors: ValueOrErrors<GameSetupFindQuery> = await this.postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter.transform(
+      request,
     );
 
-    if (validationResult.result) {
-      const gameSetupFindQuery: GameSetupFindQuery = this.gameSetupFindQueryApiV1ToGameSetupFindQueryConverter.transform(
-        validationResult.model,
-      );
+    if (gameSetupFindQueryOrErrors.isEither) {
+      await reply
+        .code(StatusCodes.BAD_REQUEST)
+        .send({ message: gameSetupFindQueryOrErrors.value.join('\n') });
+    } else {
+      const gameSetupFindQuery: GameSetupFindQuery =
+        gameSetupFindQueryOrErrors.value;
+
       const gameSetupsFound: GameSetup[] = await this.findGameSetupsInteractor.interact(
         gameSetupFindQuery,
       );
@@ -69,10 +63,6 @@ export class PostGameSetupsSearchesV1RequestHandler
       );
 
       await reply.send(basicGameSetypsApiV1Found);
-    } else {
-      await reply
-        .code(StatusCodes.BAD_REQUEST)
-        .send({ message: validationResult.errorMessage });
     }
   }
 }

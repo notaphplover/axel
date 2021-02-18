@@ -1,19 +1,17 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import * as fastify from 'fastify';
+import { Converter, Interactor } from '../../../../../../../../common/domain';
 import {
-  Converter,
-  Interactor,
-  ValidationFail,
-  ValidationSuccess,
-  Validator,
-} from '../../../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
+  EitherEither,
+  ValueEither,
+} from '../../../../../../../../common/domain/either/Either';
 import { BasicGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/BasicGameSetupApiV1';
 import { GameSetup } from '../../../../../../domain/model/setup/GameSetup';
 import { GameSetupFindQuery } from '../../../../../../domain/query/setup/GameSetupFindQuery';
-import { GameSetupFindQueryApiV1 } from '../../../../../../adapter/api/query/setup/GameSetupFindQueryApiV1';
 import { PostGameSetupsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PostGameSetupsSearchesV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
+import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
 import { basicGameSetupApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/setup';
 import { commonTest } from '../../../../../../../../common/test';
 import { gameSetupFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/setup';
@@ -21,19 +19,18 @@ import { gameSetupFindQueryFixtureFactory } from '../../../../../fixtures/domain
 import { gameSetupFixtureFactory } from '../../../../../fixtures/domain/model/setup';
 
 describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
-  let gameSetupToBasicGameSetupApiV1Converter: Converter<
-    GameSetup,
-    BasicGameSetupApiV1
+  let gameSetupToBasicGameSetupApiV1Converter: jest.Mocked<
+    Converter<GameSetup, BasicGameSetupApiV1>
   >;
-  let findGameSetupsInteractor: Interactor<
-    GameSetupFindQuery,
-    Promise<GameSetup[]>
+  let findGameSetupsInteractor: jest.Mocked<
+    Interactor<GameSetupFindQuery, Promise<GameSetup[]>>
   >;
-  let gameSetupFindQueryApiV1ToGameSetupFindQueryConverter: Converter<
-    GameSetupFindQueryApiV1,
-    GameSetupFindQuery
+  let postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter: jest.Mocked<
+    Converter<
+      fastify.FastifyRequest,
+      Promise<ValueOrErrors<GameSetupFindQuery>>
+    >
   >;
-  let gameSetupFindQueryApiV1Validator: Validator<GameSetupFindQueryApiV1>;
 
   let postGameSetupsSearchesV1RequestHandler: PostGameSetupsSearchesV1RequestHandler;
 
@@ -44,53 +41,45 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
     findGameSetupsInteractor = {
       interact: jest.fn(),
     };
-    gameSetupFindQueryApiV1ToGameSetupFindQueryConverter = {
+    postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter = {
       transform: jest.fn(),
-    };
-    gameSetupFindQueryApiV1Validator = {
-      validate: jest.fn(),
     };
 
     postGameSetupsSearchesV1RequestHandler = new PostGameSetupsSearchesV1RequestHandler(
       gameSetupToBasicGameSetupApiV1Converter,
       findGameSetupsInteractor,
-      gameSetupFindQueryApiV1ToGameSetupFindQueryConverter,
-      gameSetupFindQueryApiV1Validator,
+      postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter,
     );
   });
 
   describe('.handle()', () => {
     describe('when called and some game setups are found', () => {
-      let requestFixture: FastifyRequest;
-      let replyFixture: FastifyReply;
+      let requestFixture: fastify.FastifyRequest;
+      let replyFixture: fastify.FastifyReply;
 
-      let validationResultFixture: ValidationSuccess<GameSetupFindQueryApiV1>;
+      let gameSetupFindQueryOrErrors: ValueEither<GameSetupFindQuery>;
 
       beforeAll(async () => {
         requestFixture = ({
           body: gameSetupFindQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        validationResultFixture = {
-          model: gameSetupFindQueryApiV1FixtureFactory.get(),
-          result: true,
+        gameSetupFindQueryOrErrors = {
+          isEither: false,
+          value: gameSetupFindQueryFixtureFactory.get(),
         };
 
-        (gameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
+        gameSetupToBasicGameSetupApiV1Converter.transform.mockReturnValueOnce(
           basicGameSetupApiV1FixtureFactory.get(),
         );
 
-        (findGameSetupsInteractor.interact as jest.Mock).mockResolvedValueOnce([
+        findGameSetupsInteractor.interact.mockResolvedValueOnce([
           gameSetupFixtureFactory.get(),
         ]);
 
-        (gameSetupFindQueryApiV1ToGameSetupFindQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-          gameSetupFindQueryFixtureFactory.get(),
-        );
-
-        (gameSetupFindQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
-          validationResultFixture,
+        postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter.transform.mockResolvedValueOnce(
+          gameSetupFindQueryOrErrors,
         );
 
         await postGameSetupsSearchesV1RequestHandler.handle(
@@ -100,28 +89,9 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
       });
 
       afterAll(() => {
-        (gameSetupToBasicGameSetupApiV1Converter.transform as jest.Mock).mockClear();
-        (findGameSetupsInteractor.interact as jest.Mock).mockClear();
-        (gameSetupFindQueryApiV1ToGameSetupFindQueryConverter.transform as jest.Mock).mockClear();
-        (gameSetupFindQueryApiV1Validator.validate as jest.Mock).mockClear();
-      });
-
-      it('must call gameSetupFindQueryApiV1Validator.validate with the request params', () => {
-        expect(gameSetupFindQueryApiV1Validator.validate).toHaveBeenCalledTimes(
-          1,
-        );
-        expect(gameSetupFindQueryApiV1Validator.validate).toHaveBeenCalledWith(
-          requestFixture.body,
-        );
-      });
-
-      it('must call gameSetupFindQueryApiV1ToGameSetupFindQueryConverter.transform with the validation model', () => {
-        expect(
-          gameSetupFindQueryApiV1ToGameSetupFindQueryConverter.transform,
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          gameSetupFindQueryApiV1ToGameSetupFindQueryConverter.transform,
-        ).toHaveBeenCalledWith(validationResultFixture.model);
+        gameSetupToBasicGameSetupApiV1Converter.transform.mockClear();
+        findGameSetupsInteractor.interact.mockClear();
+        postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter.transform.mockClear();
       });
 
       it('must call findGameSetupsInteractor.interact()', () => {
@@ -149,24 +119,24 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
     });
 
     describe('when called and the params are not valid', () => {
-      let requestFixture: FastifyRequest;
-      let replyFixture: FastifyReply;
+      let requestFixture: fastify.FastifyRequest;
+      let replyFixture: fastify.FastifyReply;
 
-      let validationResultFixture: ValidationFail;
+      let errorsFixture: EitherEither<string[]>;
 
       beforeAll(async () => {
         requestFixture = ({
           body: gameSetupFindQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        validationResultFixture = {
-          errorMessage: 'sample-error-message',
-          result: false,
+        errorsFixture = {
+          value: ['sample-error-message'],
+          isEither: true,
         };
 
-        (gameSetupFindQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
-          validationResultFixture,
+        postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter.transform.mockResolvedValueOnce(
+          errorsFixture,
         );
 
         await postGameSetupsSearchesV1RequestHandler.handle(
@@ -176,7 +146,7 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
       });
 
       afterAll(() => {
-        (gameSetupFindQueryApiV1Validator.validate as jest.Mock).mockClear();
+        postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter.transform.mockClear();
       });
 
       it('must call reply.code() with BAD_REQUEST http code', () => {
@@ -187,7 +157,7 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
       it('must call reply.send() with the validation error message', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
         expect(replyFixture.send).toHaveBeenCalledWith({
-          message: validationResultFixture.errorMessage,
+          message: errorsFixture.value[0],
         });
       });
     });
