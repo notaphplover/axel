@@ -4,7 +4,6 @@ import {
   ValidationSuccess,
 } from './validator/ValidationResult';
 import { Capsule } from './model/Capsule';
-import { ContextBasedValidator } from './validator/ContextBasedValidator';
 import { Converter } from './converter/Converter';
 import { Filter } from './filter/Filter';
 import { Interactor } from './interactor/Interactor';
@@ -24,7 +23,6 @@ import { waitMs } from './utils/waitMs';
 
 export {
   Capsule,
-  ContextBasedValidator,
   Converter,
   Filter,
   Interactor,
