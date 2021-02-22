@@ -21,6 +21,7 @@ import { PostGameSetupsSearchesV1RequestToGameSetupFindQueryConverter } from '..
 import { PostLiveGameV1RequestHandler } from '../../../server/reqHandler/live/PostLiveGameV1RequestHandler';
 import { PostLiveGameV1RequestToLiveGameCreationQueryConverter } from '../../../server/converter/live/PostLiveGameV1RequestToLiveGameCreationQueryConverter';
 import { interfaces } from 'inversify';
+import { PostGameSetupV1RequestToGameSetupsCreationQueryConverter } from '../../../server/converter/setup/PostGameSetupV1RequestToGameSetupCreationQueryConverter';
 
 export function bindGameAdapterServer(bind: interfaces.Bind): void {
   bind(
@@ -51,6 +52,10 @@ export function bindGameAdapterServer(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.server.converter.setup
       .PATCH_GAME_SETUP_BY_ID_V1_REQUEST_TO_GAME_SETUP_UPDATE_QUERY_CONVERTER,
   ).to(PatchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter);
+  bind(
+    GAME_ADAPTER_TYPES.server.converter.setup
+      .POST_GAME_SETUP_V1_REQUEST_TO_GAME_SETUPS_CREATION_QUERY_CONVERTER,
+  ).to(PostGameSetupV1RequestToGameSetupsCreationQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.server.converter.setup
       .POST_GAME_SETUPS_SEARCHES_V1_REQUEST_TO_GAME_SETUP_FIND_QUERY_CONVERTER,
