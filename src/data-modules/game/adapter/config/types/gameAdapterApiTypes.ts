@@ -164,6 +164,9 @@ export const GAME_ADAPTER_API_TYPES = {
       GAME_SETUP_CREATION_QUERY_API_V1_CONTEXT_BASED_VALIDATOR: Symbol(
         'GameSetupCreationQueryApiV1ContextBasedValidator',
       ),
+      GAME_SETUP_CREATION_QUERY_API_V1_SEMANTIC_VALIDATOR: Symbol(
+        'GameSetupCreationQueryApiV1SemanticValidator',
+      ),
       GAME_SETUP_CREATION_QUERY_API_V1_VALIDATOR: Symbol(
         'GameSetupCreationQueryApiV1Validator',
       ),
