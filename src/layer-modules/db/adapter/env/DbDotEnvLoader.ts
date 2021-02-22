@@ -1,13 +1,16 @@
+import { join } from 'path';
+import { env } from 'process';
+
+import { inject, injectable } from 'inversify';
+
 import {
   AppEnvVariables,
   appAdapter,
 } from '../../../../data-modules/app/adapter';
-import { EnvLoader, Index } from '../../../env/domain';
-import { inject, injectable } from 'inversify';
-import { DbDotEnvVariables } from './DbDotEnvVariables';
 import { DotEnvLoader } from '../../../../integration-modules/dotenv/adapter';
-import { env } from 'process';
-import { join } from 'path';
+import { EnvLoader, Index } from '../../../env/domain';
+import { DbDotEnvVariables } from './DbDotEnvVariables';
+
 
 const CONFIG_DIR: string = join(__dirname, '..', '..', 'env');
 

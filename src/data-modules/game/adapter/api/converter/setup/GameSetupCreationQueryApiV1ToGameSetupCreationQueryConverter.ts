@@ -1,16 +1,17 @@
-import { Converter, Interactor } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
-import { CardDeck } from '../../../../domain/model/deck/CardDeck';
-import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
+
+import { Converter, Interactor } from '../../../../../../common/domain';
 import { EntitiesNotFoundError } from '../../../../../../layer-modules/db/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { CardDeck } from '../../../../domain/model/deck/CardDeck';
 import { GameFormat } from '../../../../domain/model/GameFormat';
+import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
+import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
+import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
 import { GameSetupCreationQueryApiV1 } from '../../query/setup/GameSetupCreationQueryApiV1';
 import { GameSetupCreationQueryPlayerSetupApiV1 } from '../../query/setup/GameSetupCreationQueryPlayerSetupApiV1';
-import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
-import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 
 @injectable()
 export class GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter

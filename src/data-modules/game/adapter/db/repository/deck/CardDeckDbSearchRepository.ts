@@ -1,15 +1,17 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
-import { CardDeck } from '../../../../domain/model/deck/CardDeck';
-import { CardDeckDb } from '../../model/deck/CardDeckDb';
-import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
-import { Converter } from '../../../../../../common/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { MongoDbSearchRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbSearchRepository';
-import mongodb from 'mongodb';
+import { CardDeck } from '../../../../domain/model/deck/CardDeck';
+import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardDeckDb } from '../../model/deck/CardDeckDb';
+
 
 @injectable()
 export class CardDeckDbSearchRepository extends MongoDbSearchRepository<

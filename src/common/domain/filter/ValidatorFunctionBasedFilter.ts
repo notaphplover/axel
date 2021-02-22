@@ -1,5 +1,6 @@
-import { Filter } from './Filter';
 import { injectable } from 'inversify';
+
+import { Filter } from './Filter';
 
 @injectable()
 export abstract class ValidatorFunctionBasedFilter<TModel, TQuery>

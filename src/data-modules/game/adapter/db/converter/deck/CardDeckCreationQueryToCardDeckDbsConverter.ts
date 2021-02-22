@@ -1,8 +1,9 @@
-import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
-import { CardDeckDb } from '../../model/deck/CardDeckDb';
-import { Converter } from '../../../../../../common/domain';
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
+import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
+import { CardDeckDb } from '../../model/deck/CardDeckDb';
 
 @injectable()
 export class CardDeckCreationQueryToCardDeckDbsConverter

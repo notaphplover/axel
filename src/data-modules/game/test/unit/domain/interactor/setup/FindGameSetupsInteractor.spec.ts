@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
 import { FindGameSetupsInteractor } from '../../../../../domain/interactor/setup/FindGameSetupsInteractor';
 import { GameSetup } from '../../../../../domain/model/setup/GameSetup';
 import { GameSetupFindQuery } from '../../../../../domain/query/setup/GameSetupFindQuery';
-import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
-import { gameSetupFindQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 import { gameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
+import { gameSetupFindQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 
 describe(FindGameSetupsInteractor.name, () => {
   let gameSetupSearchRepository: SearchRepository<

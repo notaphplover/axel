@@ -1,10 +1,11 @@
 import { inject, injectable } from 'inversify';
-import { CardDeckSections } from '../../../../domain/model/deck/CardDeckSections';
-import { CardDeckSectionsApiV1 } from '../../model/deck/CardDeckSectionsApiV1';
-import { CardSetReferences } from '../../../../domain/model/deck/CardSetReferences';
-import { CardSetReferencesApiV1 } from '../../model/deck/CardSetReferencesApiV1';
+
 import { Converter } from '../../../../../../common/domain';
+import { CardDeckSections } from '../../../../domain/model/deck/CardDeckSections';
+import { CardSetReferences } from '../../../../domain/model/deck/CardSetReferences';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardDeckSectionsApiV1 } from '../../model/deck/CardDeckSectionsApiV1';
+import { CardSetReferencesApiV1 } from '../../model/deck/CardSetReferencesApiV1';
 
 @injectable()
 export class CardDeckSectionsApiV1ToCardDeckSectionsConverter

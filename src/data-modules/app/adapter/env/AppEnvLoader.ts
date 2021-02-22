@@ -1,9 +1,14 @@
-import { AppEnvVariables } from './AppEnvVariables';
+import { join } from 'path';
+import { env } from 'process';
+
+import { injectable } from 'inversify';
+
 import { DotEnvLoader } from '../../../../integration-modules/dotenv/adapter';
 import { Index } from '../../../../layer-modules/env/domain';
-import { env } from 'process';
-import { injectable } from 'inversify';
-import { join } from 'path';
+import { AppEnvVariables } from './AppEnvVariables';
+
+
+
 
 export const DEFAULT_APP_ENV: string = 'local';
 

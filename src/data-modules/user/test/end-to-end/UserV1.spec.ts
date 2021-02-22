@@ -1,17 +1,18 @@
 import 'reflect-metadata';
 import * as axios from 'axios';
+import { StatusCodes } from 'http-status-codes';
+import { v4 as uuidv4 } from 'uuid';
+
+import { EnvLoader } from '../../../../layer-modules/env/domain';
+import { AppEnvVariables } from '../../../app/adapter';
+import { AppEnvLoader } from '../../../app/adapter/env/AppEnvLoader';
+import { UserApiV1 } from '../../adapter/api/model/UserApiV1';
+import { AuthCreationQueryApiV1 } from '../../adapter/api/query/AuthCreationQueryApiV1';
+import { UserCreationQueryApiV1 } from '../../adapter/api/query/UserCreationQueryApiV1';
 import {
   authCreationQueryApiV1FixtureFactory,
   userCreationQueryApiV1FixtureFactory,
 } from '../fixtures/adapter/api/query/fixtures';
-import { AppEnvLoader } from '../../../app/adapter/env/AppEnvLoader';
-import { AppEnvVariables } from '../../../app/adapter';
-import { AuthCreationQueryApiV1 } from '../../adapter/api/query/AuthCreationQueryApiV1';
-import { EnvLoader } from '../../../../layer-modules/env/domain';
-import { StatusCodes } from 'http-status-codes';
-import { UserApiV1 } from '../../adapter/api/model/UserApiV1';
-import { UserCreationQueryApiV1 } from '../../adapter/api/query/UserCreationQueryApiV1';
-import { v4 as uuidv4 } from 'uuid';
 
 const dockerAppEnvLoader: EnvLoader<AppEnvVariables> = new AppEnvLoader(
   'docker',

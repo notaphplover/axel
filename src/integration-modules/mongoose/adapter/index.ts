@@ -1,10 +1,10 @@
+import { mongooseContainer } from './config/container';
 import { MONGOOSE_ADAPTER_PUBLIC_TYPES } from './config/types';
 import { MongooseInsertRepository } from './MongooseInsertRepository';
 import { MongoosePaginatedSearchRepository } from './MongoosePaginatedSearchRepository';
 import { MongooseProjectionPaginatedSearchRepository } from './MongooseProjectionPaginatedSearchRepository';
 import { MongooseSearchRepository } from './MongooseSearchRepository';
 import { MongooseUpdateRepository } from './MongooseUpdateRepository';
-import { mongooseContainer } from './config/container';
 
 export {
   MongooseInsertRepository,

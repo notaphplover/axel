@@ -1,7 +1,8 @@
+import { injectable } from 'inversify';
+
 import { Converter } from '../../../../../../common/domain';
 import { Resource } from '../../../../domain/model/card/Resource';
 import { ResourceApiV1 } from '../../model/card/ResourceApiV1';
-import { injectable } from 'inversify';
 
 @injectable()
 export class ResourceToResourceApiV1Converter

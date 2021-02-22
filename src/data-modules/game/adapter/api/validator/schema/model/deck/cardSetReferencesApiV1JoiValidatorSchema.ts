@@ -1,5 +1,6 @@
-import { CardSetReferencesApiV1 } from '../../../../model/deck/CardSetReferencesApiV1';
 import Joi from 'joi';
+
+import { CardSetReferencesApiV1 } from '../../../../model/deck/CardSetReferencesApiV1';
 
 export const cardSetReferencesApiV1JoiValidatorSchema: Joi.ObjectSchema<CardSetReferencesApiV1> = Joi.object<CardSetReferencesApiV1>(
   {

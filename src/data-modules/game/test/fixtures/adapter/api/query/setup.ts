@@ -2,10 +2,6 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../../common/test';
-import {
-  gameSetupFindQuery,
-  gameSetupUpdateQuery,
-} from '../../../domain/query/setup';
 import { GameFormatApiV1 } from '../../../../../adapter/api/model/GameFormatApiV1';
 import { GameSetupCreationQueryApiV1 } from '../../../../../adapter/api/query/setup/GameSetupCreationQueryApiV1';
 import { GameSetupFindQueryApiV1 } from '../../../../../adapter/api/query/setup/GameSetupFindQueryApiV1';
@@ -13,6 +9,10 @@ import { GameSetupFindQueryPlayerSetupApiV1 } from '../../../../../adapter/api/q
 import { GameSetupUpdateQueryApiV1 } from '../../../../../adapter/api/query/setup/GameSetupUpdateQueryApiV1';
 import { cardDeck } from '../../../domain/model/deck';
 import { gameSetup } from '../../../domain/model/setup';
+import {
+  gameSetupFindQuery,
+  gameSetupUpdateQuery,
+} from '../../../domain/query/setup';
 
 export const gameSetupCreationQueryApiV1: GameSetupCreationQueryApiV1 = {
   format: GameFormatApiV1.UNRESTRICTED,

@@ -2,6 +2,13 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../../common/test';
+import { ArtifactApiV1 } from '../../../../../adapter/api/model/card/ArtifactApiV1';
+import { CardDetailApiV1 } from '../../../../../adapter/api/model/card/CardDetailApiV1';
+import { CardTypeApiV1 } from '../../../../../adapter/api/model/card/CardTypeApiV1';
+import { CreatureApiV1 } from '../../../../../adapter/api/model/card/CreatureApiV1';
+import { EnchantmentApiV1 } from '../../../../../adapter/api/model/card/EnchantmentApiV1';
+import { LandApiV1 } from '../../../../../adapter/api/model/card/LandApiV1';
+import { ResourceApiV1 } from '../../../../../adapter/api/model/card/ResourceApiV1';
 import {
   artifact,
   cardDetail,
@@ -10,13 +17,6 @@ import {
   land,
   resource,
 } from '../../../domain/model/card';
-import { ArtifactApiV1 } from '../../../../../adapter/api/model/card/ArtifactApiV1';
-import { CardDetailApiV1 } from '../../../../../adapter/api/model/card/CardDetailApiV1';
-import { CardTypeApiV1 } from '../../../../../adapter/api/model/card/CardTypeApiV1';
-import { CreatureApiV1 } from '../../../../../adapter/api/model/card/CreatureApiV1';
-import { EnchantmentApiV1 } from '../../../../../adapter/api/model/card/EnchantmentApiV1';
-import { LandApiV1 } from '../../../../../adapter/api/model/card/LandApiV1';
-import { ResourceApiV1 } from '../../../../../adapter/api/model/card/ResourceApiV1';
 
 export const cardDetailApiV1: CardDetailApiV1 = {
   description: cardDetail.description,

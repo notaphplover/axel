@@ -1,5 +1,6 @@
-import { GameSetupCreationQueryApiV1 } from '../../../../query/setup/GameSetupCreationQueryApiV1';
 import Joi from 'joi';
+
+import { GameSetupCreationQueryApiV1 } from '../../../../query/setup/GameSetupCreationQueryApiV1';
 import { gameFormatApiV1JoiValidatorSchema } from '../../model/gameFormatApiV1JoiValidatorSchema';
 import { gameSetupCreationQueryPlayerSetupApiV1ValidatorSchema } from './gameSetupCreationQueryPlayerSetupApiV1ValidatorSchema';
 

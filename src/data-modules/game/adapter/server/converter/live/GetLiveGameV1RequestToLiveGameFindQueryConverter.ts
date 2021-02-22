@@ -1,11 +1,12 @@
 import * as fastify from 'fastify';
-import { Converter, Validator } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
+
+import { Converter, Validator } from '../../../../../../common/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
 import { LiveGameFindQueryApiV1 } from '../../../api/query/live/LiveGameFindQueryApiV1';
-import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
 @injectable()
 export class GetLiveGameV1RequestToLiveGameFindQueryConverter extends RequestToQueryConverter<

@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import mongodb from 'mongodb';
+
 import { Capsule, Converter } from '../../../../../../../common/domain';
-import { Creature } from '../../../../../domain/model/card/Creature';
-import { CreatureCreationQuery } from '../../../../../domain/query/card/CreatureCreationQuery';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
+import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { CreatureDb } from '../../../../../adapter/db/model/card/CreatureDb';
 import { CreatureDbInsertRepository } from '../../../../../adapter/db/repository/card/CreatureDbInsertRepository';
-import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
-import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { Creature } from '../../../../../domain/model/card/Creature';
+import { CreatureCreationQuery } from '../../../../../domain/query/card/CreatureCreationQuery';
 import { creatureFixtureFactory } from '../../../../fixtures/domain/model/card';
-import { dbTest } from '../../../../../../../layer-modules/db/test';
-import mongodb from 'mongodb';
+import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 

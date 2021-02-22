@@ -1,12 +1,14 @@
+import { inject, injectable } from 'inversify';
+import mongoose from 'mongoose';
+
+import { commonDomain } from '../../../common/domain';
 import {
   DbDotEnvVariables,
   dbAdapter,
 } from '../../../layer-modules/db/adapter';
-import { inject, injectable } from 'inversify';
 import { DbConnector } from '../../../layer-modules/db/domain';
 import { EnvLoader } from '../../../layer-modules/env/domain';
-import { commonDomain } from '../../../common/domain';
-import mongoose from 'mongoose';
+
 
 const MAX_ATTEMPTS: number = 10;
 const ATTEMPT_WAIT_MS: number = 1000;

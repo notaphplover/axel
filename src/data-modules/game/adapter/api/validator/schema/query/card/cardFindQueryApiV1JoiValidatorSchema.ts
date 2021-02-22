@@ -1,5 +1,6 @@
-import { CardFindQueryApiV1 } from '../../../../query/card/CardFindQueryApiV1';
 import Joi from 'joi';
+
+import { CardFindQueryApiV1 } from '../../../../query/card/CardFindQueryApiV1';
 import { cardTypeApiV1JoiValidatorSchema } from '../../model/card/cardTypeApiV1JoiValidatorSchema';
 
 const CARD_FIND_QUERY_API_V1_LIMIT_MAX_VALUE: number = 100;

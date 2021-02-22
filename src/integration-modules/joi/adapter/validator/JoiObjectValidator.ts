@@ -1,7 +1,9 @@
-import { ValidationResult, Validator } from '../../../../common/domain';
-import Joi from 'joi';
-import { hasValue } from '../../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
+import Joi from 'joi';
+
+import { ValidationResult, Validator } from '../../../../common/domain';
+import { hasValue } from '../../../../common/domain/utils/hasValue';
+
 
 @injectable()
 export abstract class JoiObjectValidator<TObject>

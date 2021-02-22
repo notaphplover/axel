@@ -1,14 +1,17 @@
 import * as fastify from 'fastify';
-import { Converter, Interactor } from '../../../../../../common/domain';
-import { inject, injectable } from 'inversify';
-import { Card } from '../../../../domain/model/card/Card';
-import { CardApiV1 } from '../../../api/model/card/CardApiV1';
-import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
-import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { StatusCodes } from 'http-status-codes';
+import { inject, injectable } from 'inversify';
+
+import { Converter, Interactor } from '../../../../../../common/domain';
 import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
+import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { Card } from '../../../../domain/model/card/Card';
+import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
+import { CardApiV1 } from '../../../api/model/card/CardApiV1';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+
+
 
 @injectable()
 export class PostCardsSearchesV1RequestHandler

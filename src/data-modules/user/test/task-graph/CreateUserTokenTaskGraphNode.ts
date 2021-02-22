@@ -1,10 +1,11 @@
+import { injectable, unmanaged } from 'inversify';
+
+import { Capsule, Interactor } from '../../../../common/domain';
 import {
   BaseTaskGraphNode,
   TaskGraph,
   TaskGraphNode,
 } from '../../../task-graph/domain';
-import { Capsule, Interactor } from '../../../../common/domain';
-import { injectable, unmanaged } from 'inversify';
 import { User } from '../../domain';
 import { UserToken } from '../../domain/model/UserToken';
 

@@ -1,4 +1,5 @@
 import { Container } from 'inversify';
+
 import { TaskGraphNode } from '../../domain/TaskGraphNode';
 import { TaskGraphNodeExtractor } from '../../domain/TaskGraphNodeExtractor';
 

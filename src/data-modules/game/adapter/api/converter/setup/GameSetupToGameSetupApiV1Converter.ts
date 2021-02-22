@@ -1,10 +1,11 @@
+import { injectable } from 'inversify';
+
 import { Converter } from '../../../../../../common/domain';
 import { GameFormat } from '../../../../domain/model/GameFormat';
-import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
-import { GameSetupApiV1 } from '../../model/setup/GameSetupApiV1';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
-import { injectable } from 'inversify';
+import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
+import { GameSetupApiV1 } from '../../model/setup/GameSetupApiV1';
 
 @injectable()
 export abstract class GameSetupToGameSetupApiV1Converter<TOutput>

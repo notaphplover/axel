@@ -1,11 +1,12 @@
 import * as fastify from 'fastify';
-import { Converter, Validator } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
+
+import { Converter, Validator } from '../../../../../../common/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { GameSetupFindQueryApiV1 } from '../../../api/query/setup/GameSetupFindQueryApiV1';
-import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
 @injectable()
 export class PostGameSetupsSearchesV1RequestToGameSetupFindQueryConverter extends RequestToQueryConverter<

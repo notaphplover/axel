@@ -1,15 +1,17 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
-import { Converter } from '../../../../../../common/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { GameSetup } from '../../../../domain/model/setup/GameSetup';
-import { GameSetupDb } from '../../model/setup/GameSetupDb';
-import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
-import mongodb from 'mongodb';
+import { GameSetup } from '../../../../domain/model/setup/GameSetup';
+import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
+
 
 @injectable()
 export class GameSetupDbInsertRepository extends MongoDbInsertRepository<

@@ -1,11 +1,12 @@
 import { inject, injectable } from 'inversify';
-import { CardDeck } from '../../../../domain/model/deck/CardDeck';
-import { CardDeckApiV1 } from '../../model/deck/CardDeckApiV1';
-import { CardDeckSections } from '../../../../domain/model/deck/CardDeckSections';
-import { CardDeckSectionsApiV1 } from '../../model/deck/CardDeckSectionsApiV1';
+
 import { Converter } from '../../../../../../common/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardDeck } from '../../../../domain/model/deck/CardDeck';
+import { CardDeckSections } from '../../../../domain/model/deck/CardDeckSections';
 import { GameFormat } from '../../../../domain/model/GameFormat';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardDeckApiV1 } from '../../model/deck/CardDeckApiV1';
+import { CardDeckSectionsApiV1 } from '../../model/deck/CardDeckSectionsApiV1';
 import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
 
 @injectable()

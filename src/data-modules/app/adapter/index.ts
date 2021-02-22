@@ -1,6 +1,6 @@
+import { appContainer } from './config/container';
 import { APP_ADAPTER_PUBLIC_TYPES } from './config/types';
 import { AppEnvVariables } from './env/AppEnvVariables';
-import { appContainer } from './config/container';
 
 export { AppEnvVariables };
 

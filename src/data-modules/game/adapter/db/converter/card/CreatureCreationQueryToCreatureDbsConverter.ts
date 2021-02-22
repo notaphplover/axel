@@ -1,8 +1,9 @@
+import { injectable } from 'inversify';
+import mongodb from 'mongodb';
+
 import { Converter } from '../../../../../../common/domain';
 import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
 import { CreatureDb } from '../../model/card/CreatureDb';
-import { injectable } from 'inversify';
-import mongodb from 'mongodb';
 
 @injectable()
 export class CreatureCreationQueryToCreatureDbsConverter

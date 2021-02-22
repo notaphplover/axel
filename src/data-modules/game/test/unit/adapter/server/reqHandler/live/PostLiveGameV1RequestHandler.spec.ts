@@ -1,21 +1,22 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import * as fastify from 'fastify';
+import { StatusCodes } from 'http-status-codes';
+
 import { Converter, Interactor } from '../../../../../../../../common/domain';
 import { EitherEither } from '../../../../../../../../common/domain/either/Either';
-import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
-import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
-import { LiveGameCreationQuery } from '../../../../../../domain/query/live/LiveGameCreationQuery';
-import { PostLiveGameV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/PostLiveGameV1RequestHandler';
-import { StatusCodes } from 'http-status-codes';
-import { UserContainer } from '../../../../../../../user/domain';
 import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
 import { commonTest } from '../../../../../../../../common/test';
+import { UserContainer } from '../../../../../../../user/domain';
+import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';
+import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
+import { PostLiveGameV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/PostLiveGameV1RequestHandler';
+import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
+import { LiveGameCreationQuery } from '../../../../../../domain/query/live/LiveGameCreationQuery';
 import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
 import { liveGameCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
-import { liveGameCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
 import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model';
-import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';
+import { liveGameCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
 
 describe(PostLiveGameV1RequestHandler.name, () => {
   let createGamesInteractor: Interactor<

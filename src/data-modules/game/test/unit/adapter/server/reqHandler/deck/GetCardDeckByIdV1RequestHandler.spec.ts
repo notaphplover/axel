@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import * as fastify from 'fastify';
-import { Converter, Interactor } from '../../../../../../../../common/domain';
-import { CardDeck } from '../../../../../../domain/model/deck/CardDeck';
-import { CardDeckApiV1 } from '../../../../../../adapter/api/model/deck/CardDeckApiV1';
-import { CardDeckFindQuery } from '../../../../../../domain/query/deck/CardDeckFindQuery';
-import { GetCardDeckByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/deck/GetCardDeckByIdV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
+
+import { Converter, Interactor } from '../../../../../../../../common/domain';
 import { ValueEither } from '../../../../../../../../common/domain/either/Either';
 import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
-import { cardDeckApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/deck';
-import { cardDeckFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/deck';
-import { cardDeckFixtureFactory } from '../../../../../fixtures/domain/model/deck';
 import { commonTest } from '../../../../../../../../common/test';
+import { CardDeckApiV1 } from '../../../../../../adapter/api/model/deck/CardDeckApiV1';
+import { GetCardDeckByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/deck/GetCardDeckByIdV1RequestHandler';
+import { CardDeck } from '../../../../../../domain/model/deck/CardDeck';
+import { CardDeckFindQuery } from '../../../../../../domain/query/deck/CardDeckFindQuery';
+import { cardDeckApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/deck';
+import { cardDeckFixtureFactory } from '../../../../../fixtures/domain/model/deck';
+import { cardDeckFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/deck';
 
 describe(GetCardDeckByIdV1RequestHandler.name, () => {
   let findCardDeckInteractor: jest.Mocked<

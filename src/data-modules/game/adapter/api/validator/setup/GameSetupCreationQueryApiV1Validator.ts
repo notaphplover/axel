@@ -1,8 +1,9 @@
 import { inject, injectable } from 'inversify';
+import Joi from 'joi';
+
+import { JoiObjectValidator } from '../../../../../../integration-modules/joi/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameSetupCreationQueryApiV1 } from '../../query/setup/GameSetupCreationQueryApiV1';
-import Joi from 'joi';
-import { JoiObjectValidator } from '../../../../../../integration-modules/joi/adapter';
 
 @injectable()
 export class GameSetupCreationQueryApiV1Validator extends JoiObjectValidator<GameSetupCreationQueryApiV1> {

@@ -1,5 +1,6 @@
-import { PrototypeBasedFixtureFactory } from './PrototypeBasedFixtureFactory';
 import _ from 'lodash';
+
+import { PrototypeBasedFixtureFactory } from './PrototypeBasedFixtureFactory';
 
 export class DeepCloneFixtureFactory<
   TData

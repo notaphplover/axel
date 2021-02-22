@@ -1,11 +1,12 @@
+import { injectable } from 'inversify';
+import { MongoError } from 'mongodb';
 import { Document, Model } from 'mongoose';
+
+import { Converter } from '../../../common/domain';
 import {
   EntitiesNotCreatedError,
   InsertRepository,
 } from '../../../layer-modules/db/domain';
-import { Converter } from '../../../common/domain';
-import { MongoError } from 'mongodb';
-import { injectable } from 'inversify';
 
 const MONGODB_DUPLICATED_KEY_ERR_CODE: number = 11000;
 

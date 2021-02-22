@@ -1,15 +1,17 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
-import { Converter } from '../../../../../../common/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
 import { Land } from '../../../../domain/model/card/Land';
 import { LandCreationQuery } from '../../../../domain/query/card/LandCreationQuery';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { LandDb } from '../../model/card/LandDb';
-import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
-import mongodb from 'mongodb';
+
 
 @injectable()
 export class LandDbInsertRepository extends MongoDbInsertRepository<

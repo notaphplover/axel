@@ -1,30 +1,31 @@
+import { interfaces } from 'inversify';
+
 import { ArtifactCreationQueryToArtifactDbsConverter } from '../../../db/converter/card/ArtifactCreationQueryToArtifactDbsConverter';
 import { ArtifactDbToArtifactConverter } from '../../../db/converter/card/ArtifactDbToArtifactConverter';
-import { CardDbCollectionInitializer } from '../../../db/initializer/card/CardDbCollectionInitializer';
 import { CardDbToCardConverter } from '../../../db/converter/card/CardDbToCardConverter';
-import { CardDeckCreationQueryToCardDeckDbsConverter } from '../../../db/converter/deck/CardDeckCreationQueryToCardDeckDbsConverter';
-import { CardDeckDbToCardDeckConverter } from '../../../db/converter/deck/CardDeckDbToCardDeckConverter';
-import { CardDeckFindQueryToCardDeckDbFilterQueryConverter } from '../../../db/converter/deck/CardDeckFindQueryToCardDeckDbFilterQueryConverter';
 import { CardFindQueryToCardDbFilterQueryConverter } from '../../../db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
 import { CreatureCreationQueryToCreatureDbsConverter } from '../../../db/converter/card/CreatureCreationQueryToCreatureDbsConverter';
 import { CreatureDbToCreatureConverter } from '../../../db/converter/card/CreatureDbToCreatureConverter';
 import { EnchantmentCreationQueryToEnchantmentDbsConverter } from '../../../db/converter/card/EnchantmentCreationQueryToEnchantmentDbsConverter';
 import { EnchantmentDbToEnchantmentConverter } from '../../../db/converter/card/EnchantmentDbToEnchantmentConverter';
-import { GAME_ADAPTER_TYPES } from '../../types';
-import { GameDbCollectionName } from '../../../db/GameDbCollection';
-import { GameDbInitializer } from '../../../db/initializer/GameDbInitializer';
+import { LandCreationQueryToLandDbsConverter } from '../../../db/converter/card/LandCreationQueryToLandDbsConverter';
+import { LandDbToLandConverter } from '../../../db/converter/card/LandDbToLandConverter';
+import { CardDeckCreationQueryToCardDeckDbsConverter } from '../../../db/converter/deck/CardDeckCreationQueryToCardDeckDbsConverter';
+import { CardDeckDbToCardDeckConverter } from '../../../db/converter/deck/CardDeckDbToCardDeckConverter';
+import { CardDeckFindQueryToCardDeckDbFilterQueryConverter } from '../../../db/converter/deck/CardDeckFindQueryToCardDeckDbFilterQueryConverter';
+import { LiveGameDbToLiveGameConverter } from '../../../db/converter/live/GameDbToLiveGameConverter';
+import { LiveGameCreationQueryToLiveGameDbsConverter } from '../../../db/converter/live/LiveGameCreationQueryToLiveGameDbsConverter';
+import { LiveGameFindQueryToLiveGameDbFilterQueryConverter } from '../../../db/converter/live/LiveGameFindQueryToLiveGameDbFilterQueryConverter';
 import { GameSetupCreationQueryToGameSetupDbsConverter } from '../../../db/converter/setup/GameSetupCreationQueryToGameSetupDbsConverter';
-import { GameSetupDbCollectionInitializer } from '../../../db/initializer/setup/GameSetupDbCollectionInitializer';
 import { GameSetupDbToGameSetupConverter } from '../../../db/converter/setup/GameSetupDbToGameSetupConverter';
 import { GameSetupFindQueryToGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupFindQueryToGameSetupDbFilterQueryConverter';
 import { GameSetupUpdateQueryToGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToGameSetupDbFilterQueryConverter';
 import { GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter';
-import { LandCreationQueryToLandDbsConverter } from '../../../db/converter/card/LandCreationQueryToLandDbsConverter';
-import { LandDbToLandConverter } from '../../../db/converter/card/LandDbToLandConverter';
-import { LiveGameCreationQueryToLiveGameDbsConverter } from '../../../db/converter/live/LiveGameCreationQueryToLiveGameDbsConverter';
-import { LiveGameDbToLiveGameConverter } from '../../../db/converter/live/GameDbToLiveGameConverter';
-import { LiveGameFindQueryToLiveGameDbFilterQueryConverter } from '../../../db/converter/live/LiveGameFindQueryToLiveGameDbFilterQueryConverter';
-import { interfaces } from 'inversify';
+import { GameDbCollectionName } from '../../../db/GameDbCollection';
+import { CardDbCollectionInitializer } from '../../../db/initializer/card/CardDbCollectionInitializer';
+import { GameDbInitializer } from '../../../db/initializer/GameDbInitializer';
+import { GameSetupDbCollectionInitializer } from '../../../db/initializer/setup/GameSetupDbCollectionInitializer';
+import { GAME_ADAPTER_TYPES } from '../../types';
 
 export function bindGameAdapterDb(bind: interfaces.Bind): void {
   bind(GAME_ADAPTER_TYPES.db.collection.GAME_COLLECTION_NAME).toConstantValue(

@@ -1,25 +1,26 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import * as fastify from 'fastify';
+import { StatusCodes } from 'http-status-codes';
+
 import { Converter, Interactor } from '../../../../../../../../common/domain';
+import { EitherEither } from '../../../../../../../../common/domain/either/Either';
+import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
+import { commonTest } from '../../../../../../../../common/test';
+import { UserContainer } from '../../../../../../../user/domain';
+import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';
+import { BasicGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/BasicGameSetupApiV1';
+import { GameSetupUpdateQueryApiV1 } from '../../../../../../adapter/api/query/setup/GameSetupUpdateQueryApiV1';
+import { PatchGameSetupByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PatchGameSetupByIdV1RequestHandler';
+import { GameSetup } from '../../../../../../domain/model/setup/GameSetup';
+import { GameSetupUpdateQuery } from '../../../../../../domain/query/setup/GameSetupUpdateQuery';
 import {
   basicGameSetupApiV1FixtureFactory,
   extendedGameSetupApiV1FixtureFactory,
 } from '../../../../../fixtures/adapter/api/model/setup';
-import { BasicGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/BasicGameSetupApiV1';
-import { EitherEither } from '../../../../../../../../common/domain/either/Either';
-import { GameSetup } from '../../../../../../domain/model/setup/GameSetup';
-import { GameSetupUpdateQuery } from '../../../../../../domain/query/setup/GameSetupUpdateQuery';
-import { GameSetupUpdateQueryApiV1 } from '../../../../../../adapter/api/query/setup/GameSetupUpdateQueryApiV1';
-import { PatchGameSetupByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PatchGameSetupByIdV1RequestHandler';
-import { StatusCodes } from 'http-status-codes';
-import { UserContainer } from '../../../../../../../user/domain';
-import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
-import { commonTest } from '../../../../../../../../common/test';
-import { gameSetupFixtureFactory } from '../../../../../fixtures/domain/model/setup';
 import { gameSetupUpdateQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/setup';
+import { gameSetupFixtureFactory } from '../../../../../fixtures/domain/model/setup';
 import { gameSetupUpdateQueryFixtureFactory } from '../../../../../fixtures/domain/query/setup';
-import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';
 
 describe(PatchGameSetupByIdV1RequestHandler.name, () => {
   let gameSetupToBasicGameSetupApiV1Converter: jest.Mocked<

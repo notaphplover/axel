@@ -1,15 +1,17 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
 import { Converter, Filter } from '../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
 import { MongoDbSearchRepository } from '../../../../../integration-modules/mongodb/adapter/MongoDbSearchRepository';
-import { USER_ADAPTER_TYPES } from '../../config/types';
 import { User } from '../../../domain/model/User';
-import { UserDb } from '../model/UserDb';
 import { UserFindQuery } from '../../../domain/query/UserFindQuery';
-import mongodb from 'mongodb';
+import { USER_ADAPTER_TYPES } from '../../config/types';
+import { UserDb } from '../model/UserDb';
+
 
 @injectable()
 export class UserDbSearchRepository extends MongoDbSearchRepository<

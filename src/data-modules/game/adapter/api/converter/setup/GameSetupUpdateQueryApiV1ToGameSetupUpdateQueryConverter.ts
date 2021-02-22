@@ -1,12 +1,13 @@
 import { inject, injectable } from 'inversify';
+
 import { Converter } from '../../../../../../common/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
-import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1 } from '../../query/setup/GameSetupUpdateQueryPlayerSetupApiV1';
-import { GameSetupUpdateQueryApiV1 } from '../../query/setup/GameSetupUpdateQueryApiV1';
 import { PlayerReference } from '../../../../domain/model/setup/PlayerReference';
-import { PlayerReferenceApiV1 } from '../../model/setup/PlayerReferenceApiV1';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
+import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { PlayerReferenceApiV1 } from '../../model/setup/PlayerReferenceApiV1';
+import { GameSetupUpdateQueryApiV1 } from '../../query/setup/GameSetupUpdateQueryApiV1';
+import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1 } from '../../query/setup/GameSetupUpdateQueryPlayerSetupApiV1';
 
 @injectable()
 export class GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter

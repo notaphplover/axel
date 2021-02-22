@@ -1,19 +1,21 @@
 import 'reflect-metadata';
-import { Capsule } from '../../../../../../../common/domain';
 import { Container } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
-import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
-import { GameSetup } from '../../../../../domain/model/setup/GameSetup';
-import { GameSetupDb } from '../../../../../adapter/db/model/setup/GameSetupDb';
-import { GameSetupDbUpdateRepository } from '../../../../../adapter/db/repository/setup/GameSetupDbUpdateRepository';
-import { GameSetupUpdateQuery } from '../../../../../domain/query/setup/GameSetupUpdateQuery';
+import mongodb from 'mongodb';
+
+import { Capsule } from '../../../../../../../common/domain';
 import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
-import { PlayerSetup } from '../../../../../domain/model/setup/PlayerSetup';
 import { configAdapter } from '../../../../../../../layer-modules/config/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
+import { GAME_ADAPTER_TYPES } from '../../../../../adapter/config/types';
+import { GameSetupDb } from '../../../../../adapter/db/model/setup/GameSetupDb';
+import { GameSetupDbUpdateRepository } from '../../../../../adapter/db/repository/setup/GameSetupDbUpdateRepository';
+import { GAME_DOMAIN_TYPES } from '../../../../../domain/config/types';
+import { GameSetup } from '../../../../../domain/model/setup/GameSetup';
+import { PlayerSetup } from '../../../../../domain/model/setup/PlayerSetup';
+import { GameSetupUpdateQuery } from '../../../../../domain/query/setup/GameSetupUpdateQuery';
 import { gameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
 import { gameSetupUpdateQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
-import mongodb from 'mongodb';
+
 
 const container: Container = configAdapter.container;
 

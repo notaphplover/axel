@@ -1,13 +1,14 @@
 import * as fastify from 'fastify';
-import { Converter, Validator } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { GameSetupCreationQueryApiV1 } from '../../../api/query/setup/GameSetupCreationQueryApiV1';
-import { GameSetupCreationQueryApiV1ValidationContext } from '../../../api/validator/setup/GameSetupCreationQueryApiV1ValidationContext';
-import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
+
+import { Converter, Validator } from '../../../../../../common/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { UserContainer } from '../../../../../user/domain';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
+import { GameSetupCreationQueryApiV1 } from '../../../api/query/setup/GameSetupCreationQueryApiV1';
+import { GameSetupCreationQueryApiV1ValidationContext } from '../../../api/validator/setup/GameSetupCreationQueryApiV1ValidationContext';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
 @injectable()
 export class PostGameSetupV1RequestToGameSetupsCreationQueryConverter extends RequestToQueryConverter<

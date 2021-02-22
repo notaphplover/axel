@@ -1,11 +1,12 @@
-import { Converter, Interactor } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
-import { CardDeck } from '../../../../domain/model/deck/CardDeck';
-import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
+
+import { Converter, Interactor } from '../../../../../../common/domain';
 import { EntitiesNotFoundError } from '../../../../../../layer-modules/db/domain';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
-import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1 } from '../../query/setup/GameSetupUpdateQueryPlayerSetupApiV1';
+import { CardDeck } from '../../../../domain/model/deck/CardDeck';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
+import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
+import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1 } from '../../query/setup/GameSetupUpdateQueryPlayerSetupApiV1';
 
 @injectable()
 export class GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter

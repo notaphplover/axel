@@ -1,8 +1,9 @@
 import { ContainerModule, interfaces } from 'inversify';
-import { APP_ADAPTER_TYPES } from './types';
+
 import { AppEnvLoader } from '../env/AppEnvLoader';
 import { GetStatusV1RequestHandler } from '../server/reqHandler/GetStatusV1RequestHandler';
 import { StatusRouter } from '../server/router/StatusRouter';
+import { APP_ADAPTER_TYPES } from './types';
 
 function bindAdapter(bind: interfaces.Bind): void {
   bind(APP_ADAPTER_TYPES.server.reqHandler.GET_STATUS_V1_REQUEST_HANDLER).to(

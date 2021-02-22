@@ -1,8 +1,9 @@
+import { injectable } from 'inversify';
+
 import { Converter } from '../../../../../../common/domain';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
-import { GameSetupDb } from '../../model/setup/GameSetupDb';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
-import { injectable } from 'inversify';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
 
 @injectable()
 export class GameSetupDbToGameSetupConverter

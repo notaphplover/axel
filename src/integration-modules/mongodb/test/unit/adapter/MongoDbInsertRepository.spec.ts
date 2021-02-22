@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import mongodb from 'mongodb';
+
 import { Converter } from '../../../../../common/domain';
 import { Document } from '../../../adapter/model/Document';
 import { MongoDbConnector } from '../../../adapter/MongoDbConnector';
 import { MongoDbInsertRepository } from '../../../adapter/MongoDbInsertRepository';
-import mongodb from 'mongodb';
 
 class ModelMock {
   constructor(public foo: string) {}

@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import * as fastify from 'fastify';
+
 import { Converter, Interactor } from '../../../../../../../../common/domain';
-import { Card } from '../../../../../../domain/model/card/Card';
-import { CardApiV1 } from '../../../../../../adapter/api/model/card/CardApiV1';
-import { CardFindQuery } from '../../../../../../domain/query/card/CardFindQuery';
-import { PostCardsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/PostCardsSearchesV1RequestHandler';
 import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
+import { fastifyReplyFixtureFactory } from '../../../../../../../../integration-modules/fastify/test/fixtures/fastify.fixture';
+import { CardApiV1 } from '../../../../../../adapter/api/model/card/CardApiV1';
+import { PostCardsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/PostCardsSearchesV1RequestHandler';
+import { Card } from '../../../../../../domain/model/card/Card';
+import { CardFindQuery } from '../../../../../../domain/query/card/CardFindQuery';
 import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
 import { artifactFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
-import { artifactFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
 import { artifactFixtureFactory } from '../../../../../fixtures/domain/model/card';
-import { fastifyReplyFixtureFactory } from '../../../../../../../../integration-modules/fastify/test/fixtures/fastify.fixture';
+import { artifactFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
 
 describe(PostCardsSearchesV1RequestHandler.name, () => {
   let cardToCardApiV1Converter: Converter<Card, CardApiV1>;

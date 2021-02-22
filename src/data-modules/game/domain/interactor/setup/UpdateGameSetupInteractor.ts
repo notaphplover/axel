@@ -1,9 +1,10 @@
 import { inject, injectable } from 'inversify';
+
+import { Interactor } from '../../../../../common/domain';
+import { UpdateRepository } from '../../../../../layer-modules/db/domain';
 import { GAME_DOMAIN_TYPES } from '../../config/types';
 import { GameSetup } from '../../model/setup/GameSetup';
 import { GameSetupUpdateQuery } from '../../query/setup/GameSetupUpdateQuery';
-import { Interactor } from '../../../../../common/domain';
-import { UpdateRepository } from '../../../../../layer-modules/db/domain';
 
 @injectable()
 export class UpdateGameSetupInteractor

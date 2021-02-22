@@ -1,17 +1,18 @@
+import { inject, injectable } from 'inversify';
+
+import { Capsule, Interactor } from '../../../../../common/domain';
+import { commonTest } from '../../../../../common/test';
 import {
   BaseTaskGraphNode,
   TaskGraph,
   TaskGraphNode,
 } from '../../../../task-graph/domain';
-import { Capsule, Interactor } from '../../../../../common/domain';
-import { inject, injectable } from 'inversify';
-import { CardDeck } from '../../../domain/model/deck/CardDeck';
-import { CardDeckCreationQuery } from '../../../domain/query/deck/CardDeckCreationQuery';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
-import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
-import { GameFormat } from '../../../domain/model/GameFormat';
 import { Land } from '../../../domain/model/card/Land';
-import { commonTest } from '../../../../../common/test';
+import { CardDeck } from '../../../domain/model/deck/CardDeck';
+import { GameFormat } from '../../../domain/model/GameFormat';
+import { CardDeckCreationQuery } from '../../../domain/query/deck/CardDeckCreationQuery';
+import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
 
 @injectable()
 export class CreateCardDeckOfVoidLandGraphNode extends BaseTaskGraphNode<

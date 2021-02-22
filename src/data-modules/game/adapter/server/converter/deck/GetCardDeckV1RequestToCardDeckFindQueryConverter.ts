@@ -1,11 +1,12 @@
 import * as fastify from 'fastify';
-import { Converter, Validator } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
+
+import { Converter, Validator } from '../../../../../../common/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
 import { CardDeckFindQueryApiV1 } from '../../../api/query/deck/CardDeckFindQueryApiV1';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()
 export class GetCardDeckV1RequestToCardDeckFindQueryConverter extends RequestToQueryConverter<

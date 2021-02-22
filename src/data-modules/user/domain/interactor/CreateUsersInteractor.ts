@@ -1,6 +1,7 @@
 import { inject, injectable } from 'inversify';
-import { InsertRepository } from '../../../../layer-modules/db/domain';
+
 import { Interactor } from '../../../../common/domain';
+import { InsertRepository } from '../../../../layer-modules/db/domain';
 import { USER_DOMAIN_TYPES } from '../config/types';
 import { User } from '../model/User';
 import { UserCreationQuery } from '../query/UserCreationQuery';

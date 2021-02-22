@@ -4,16 +4,17 @@ import {
   FastifyRequest,
   FastifyServerOptions,
 } from 'fastify';
+import { inject, injectable } from 'inversify';
+
 import {
   FastifyRequestHandler,
   FastifyRouter,
 } from '../../../../../../integration-modules/fastify/adapter';
-import { inject, injectable } from 'inversify';
 import { ApiVersion } from '../../../../../../layer-modules/api/adapter';
-import { FastifyUserAuthenticator } from '../../../../../user/adapter';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { FastifyUserAuthenticator , userAdapter } from '../../../../../user/adapter';
 import { UserRole } from '../../../../../user/domain/model/UserRole';
-import { userAdapter } from '../../../../../user/adapter';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+
 
 const CARD_ROUTER_PATH_PREFIX: string = 'cards';
 

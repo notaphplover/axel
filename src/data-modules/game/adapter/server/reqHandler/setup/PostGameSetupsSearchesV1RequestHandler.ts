@@ -1,14 +1,17 @@
 import * as fastify from 'fastify';
-import { Converter, Interactor } from '../../../../../../common/domain';
+import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
-import { BasicGameSetupApiV1 } from '../../../api/model/setup/BasicGameSetupApiV1';
+
+import { Converter, Interactor } from '../../../../../../common/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
-import { StatusCodes } from 'http-status-codes';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { BasicGameSetupApiV1 } from '../../../api/model/setup/BasicGameSetupApiV1';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+
+
 
 @injectable()
 export class PostGameSetupsSearchesV1RequestHandler

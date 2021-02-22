@@ -1,10 +1,11 @@
-import { Artifact } from '../../../../domain/model/card/Artifact';
-import { ArtifactDb } from '../../model/card/ArtifactDb';
-import { BaseCard } from '../../../../domain/model/card/BaseCard';
-import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
-import { CardType } from '../../../../domain/model/card/CardType';
-import { Converter } from '../../../../../../common/domain';
 import { injectable } from 'inversify';
+
+import { Converter } from '../../../../../../common/domain';
+import { Artifact } from '../../../../domain/model/card/Artifact';
+import { BaseCard } from '../../../../domain/model/card/BaseCard';
+import { CardType } from '../../../../domain/model/card/CardType';
+import { ArtifactDb } from '../../model/card/ArtifactDb';
+import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
 
 @injectable()
 export class ArtifactDbToArtifactConverter

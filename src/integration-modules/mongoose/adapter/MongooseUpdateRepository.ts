@@ -1,3 +1,5 @@
+import { injectable } from 'inversify';
+import mongodb from 'mongodb';
 import {
   Document,
   FilterQuery,
@@ -6,10 +8,9 @@ import {
   Query,
   UpdateQuery,
 } from 'mongoose';
+
 import { Converter } from '../../../common/domain';
 import { UpdateRepository } from '../../../layer-modules/db/domain';
-import { injectable } from 'inversify';
-import mongodb from 'mongodb';
 
 @injectable()
 export abstract class MongooseUpdateRepository<

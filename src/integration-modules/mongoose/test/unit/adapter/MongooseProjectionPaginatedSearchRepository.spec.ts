@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { Converter, PaginationQuery } from '../../../../../common/domain';
 import { Document, FilterQuery, Model, Query } from 'mongoose';
+
+import { Converter, PaginationQuery } from '../../../../../common/domain';
 import { MongooseProjectionPaginatedSearchRepository } from '../../../../../integration-modules/mongoose/adapter/MongooseProjectionPaginatedSearchRepository';
 
 class ModelMock {

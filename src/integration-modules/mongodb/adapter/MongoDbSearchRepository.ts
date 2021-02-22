@@ -1,8 +1,10 @@
-import { Converter, Filter } from '../../../common/domain';
 import { injectable, unmanaged } from 'inversify';
-import { MongoDbConnector } from './MongoDbConnector';
-import { SearchRepository } from '../../../layer-modules/db/domain';
 import mongodb from 'mongodb';
+
+import { Converter, Filter } from '../../../common/domain';
+import { SearchRepository } from '../../../layer-modules/db/domain';
+import { MongoDbConnector } from './MongoDbConnector';
+
 
 @injectable()
 export abstract class MongoDbSearchRepository<

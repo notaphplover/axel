@@ -1,9 +1,10 @@
 import { inject, injectable } from 'inversify';
-import { CardDeck } from '../../model/deck/CardDeck';
-import { CardDeckFindQuery } from '../../query/deck/CardDeckFindQuery';
-import { GAME_DOMAIN_TYPES } from '../../config/types';
+
 import { Interactor } from '../../../../../common/domain';
 import { SearchRepository } from '../../../../../layer-modules/db/domain';
+import { GAME_DOMAIN_TYPES } from '../../config/types';
+import { CardDeck } from '../../model/deck/CardDeck';
+import { CardDeckFindQuery } from '../../query/deck/CardDeckFindQuery';
 
 @injectable()
 export class FindCardDecksInteractor

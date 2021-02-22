@@ -1,7 +1,8 @@
+import { injectable } from 'inversify';
+
+import { Converter } from '../../../../../../common/domain';
 import { BaseCard } from '../../../../domain/model/card/BaseCard';
 import { CardDb } from '../../model/card/CardDb';
-import { Converter } from '../../../../../../common/domain';
-import { injectable } from 'inversify';
 
 @injectable()
 export abstract class BaseCardDbToCardConverter<

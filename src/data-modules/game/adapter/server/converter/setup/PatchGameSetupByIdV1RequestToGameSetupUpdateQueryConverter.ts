@@ -1,13 +1,14 @@
 import * as fastify from 'fastify';
-import { Converter, Validator } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
+
+import { Converter, Validator } from '../../../../../../common/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
+import { UserContainer } from '../../../../../user/domain';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
 import { GameSetupUpdateQueryApiV1 } from '../../../api/query/setup/GameSetupUpdateQueryApiV1';
 import { GameSetupUpdateQueryApiV1ValidationContext } from '../../../api/validator/setup/GameSetupUpdateQueryApiV1ValidationContext';
-import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
-import { UserContainer } from '../../../../../user/domain';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
 @injectable()
 export class PatchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter extends RequestToQueryConverter<

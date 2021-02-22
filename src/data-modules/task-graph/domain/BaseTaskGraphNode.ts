@@ -1,6 +1,7 @@
-import { TaskGraphNode, TaskGraphNodeStatus } from './TaskGraphNode';
 import { injectable, unmanaged } from 'inversify';
+
 import { Capsule } from '../../../common/domain';
+import { TaskGraphNode, TaskGraphNodeStatus } from './TaskGraphNode';
 
 @injectable()
 export abstract class BaseTaskGraphNode<TId, TOutput>

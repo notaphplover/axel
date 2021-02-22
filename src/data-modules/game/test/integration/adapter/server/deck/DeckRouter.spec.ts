@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import { StatusCodes } from 'http-status-codes';
+import { Response as LightMyRequestResponse } from 'light-my-request';
+
 import {
   FastifyRequestHandler,
   FastifyRouter,
@@ -10,12 +13,10 @@ import {
   FastifyServerTestOutputParam,
   serverTest,
 } from '../../../../../../../integration-modules/fastify/test';
-import { DeckRouter } from '../../../../../adapter/server/router/deck/DeckRouter';
 import { FastifyUserAuthenticator } from '../../../../../../user/adapter';
-import { Response as LightMyRequestResponse } from 'light-my-request';
-import { StatusCodes } from 'http-status-codes';
 import { UserRole } from '../../../../../../user/domain/model/UserRole';
 import { userFixtureFactory } from '../../../../../../user/test/fixtures/domain/model/fixtures';
+import { DeckRouter } from '../../../../../adapter/server/router/deck/DeckRouter';
 
 const fastifyIntegrationDescribeGenerator: (
   router: FastifyRouter,

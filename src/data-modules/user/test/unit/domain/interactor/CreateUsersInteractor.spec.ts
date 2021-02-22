@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { CreateUsersInteractor } from '../../../../domain/interactor/CreateUsersInteractor';
 import { InsertRepository } from '../../../../../../layer-modules/db/domain';
+import { CreateUsersInteractor } from '../../../../domain/interactor/CreateUsersInteractor';
 import { User } from '../../../../domain/model/User';
 import { UserCreationQuery } from '../../../../domain/query/UserCreationQuery';
-import { userCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+import { userCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 
 describe(CreateUsersInteractor.name, () => {
   let userInsertRepository: InsertRepository<User, UserCreationQuery>;

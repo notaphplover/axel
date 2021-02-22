@@ -1,5 +1,6 @@
-import { GameSetupCreationQueryPlayerSetupApiV1 } from '../../../../query/setup/GameSetupCreationQueryPlayerSetupApiV1';
 import Joi from 'joi';
+
+import { GameSetupCreationQueryPlayerSetupApiV1 } from '../../../../query/setup/GameSetupCreationQueryPlayerSetupApiV1';
 
 export const gameSetupCreationQueryPlayerSetupApiV1ValidatorSchema: Joi.ObjectSchema<GameSetupCreationQueryPlayerSetupApiV1> = Joi.object<GameSetupCreationQueryPlayerSetupApiV1>(
   {

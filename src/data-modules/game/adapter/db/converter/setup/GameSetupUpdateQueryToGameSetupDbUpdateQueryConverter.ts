@@ -1,9 +1,10 @@
-import { Converter } from '../../../../../../common/domain';
-import { GameSetupDb } from '../../model/setup/GameSetupDb';
-import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
-import { PlayerReference } from '../../../../domain/model/setup/PlayerReference';
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
+import { PlayerReference } from '../../../../domain/model/setup/PlayerReference';
+import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
 
 @injectable()
 export class GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter

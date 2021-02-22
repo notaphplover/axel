@@ -1,21 +1,22 @@
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { StatusCodes } from 'http-status-codes';
+import { inject, injectable } from 'inversify';
+
 import {
   Converter,
   Interactor,
   ValidationResult,
   Validator,
 } from '../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { inject, injectable } from 'inversify';
-import { EntitiesNotCreatedError } from '../../../../../layer-modules/db/domain';
 import { FastifyRequestHandler } from '../../../../../integration-modules/fastify/adapter';
-import { StatusCodes } from 'http-status-codes';
-import { USER_ADAPTER_TYPES } from '../../config/types';
+import { EntitiesNotCreatedError } from '../../../../../layer-modules/db/domain';
 import { USER_DOMAIN_TYPES } from '../../../domain/config/types';
 import { User } from '../../../domain/model/User';
-import { UserApiV1 } from '../../api/model/UserApiV1';
-import { UserCreationQuery } from '../../../domain/query/UserCreationQuery';
-import { UserCreationQueryApiV1 } from '../../api/query/UserCreationQueryApiV1';
 import { UserRole } from '../../../domain/model/UserRole';
+import { UserCreationQuery } from '../../../domain/query/UserCreationQuery';
+import { UserApiV1 } from '../../api/model/UserApiV1';
+import { UserCreationQueryApiV1 } from '../../api/query/UserCreationQueryApiV1';
+import { USER_ADAPTER_TYPES } from '../../config/types';
 
 @injectable()
 export class PostUserV1RequestHandler implements FastifyRequestHandler {

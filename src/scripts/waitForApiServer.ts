@@ -1,10 +1,13 @@
 import 'reflect-metadata';
 import * as axios from 'axios';
-import { AppEnvVariables, appAdapter } from '../data-modules/app/adapter';
-import { Container } from 'inversify';
-import { EnvLoader } from '../layer-modules/env/domain';
 import { StatusCodes } from 'http-status-codes';
+import { Container } from 'inversify';
+
+import { AppEnvVariables, appAdapter } from '../data-modules/app/adapter';
 import { configAdapter } from '../layer-modules/config/adapter';
+import { EnvLoader } from '../layer-modules/env/domain';
+
+
 
 const container: Container = configAdapter.container;
 

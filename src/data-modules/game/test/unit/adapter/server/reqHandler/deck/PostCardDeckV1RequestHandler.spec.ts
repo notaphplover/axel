@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import * as fastify from 'fastify';
+import { StatusCodes } from 'http-status-codes';
+
 import { Converter, Interactor } from '../../../../../../../../common/domain';
 import {
   EitherEither,
   ValueEither,
 } from '../../../../../../../../common/domain/either/Either';
-import { CardDeck } from '../../../../../../domain/model/deck/CardDeck';
-import { CardDeckApiV1 } from '../../../../../../adapter/api/model/deck/CardDeckApiV1';
-import { CardDeckCreationQuery } from '../../../../../../domain/query/deck/CardDeckCreationQuery';
-import { PostCardDeckV1RequestHandler } from '../../../../../../adapter/server/reqHandler/deck/PostCardDeckV1RequestHandler';
-import { StatusCodes } from 'http-status-codes';
 import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
+import { commonTest } from '../../../../../../../../common/test';
+import { CardDeckApiV1 } from '../../../../../../adapter/api/model/deck/CardDeckApiV1';
+import { PostCardDeckV1RequestHandler } from '../../../../../../adapter/server/reqHandler/deck/PostCardDeckV1RequestHandler';
+import { CardDeck } from '../../../../../../domain/model/deck/CardDeck';
+import { CardDeckCreationQuery } from '../../../../../../domain/query/deck/CardDeckCreationQuery';
 import { cardDeckApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/deck';
 import { cardDeckCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/deck';
-import { cardDeckCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/deck';
 import { cardDeckFixtureFactory } from '../../../../../fixtures/domain/model/deck';
-import { commonTest } from '../../../../../../../../common/test';
+import { cardDeckCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/deck';
 
 describe(PostCardDeckV1RequestHandler.name, () => {
   let createCardDecksInteractor: jest.Mocked<

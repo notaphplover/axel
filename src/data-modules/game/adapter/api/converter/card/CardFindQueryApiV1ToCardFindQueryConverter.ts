@@ -1,10 +1,11 @@
 import { inject, injectable } from 'inversify';
-import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
-import { CardFindQueryApiV1 } from '../../query/card/CardFindQueryApiV1';
-import { CardType } from '../../../../domain/model/card/CardType';
-import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
+
 import { Converter } from '../../../../../../common/domain';
+import { CardType } from '../../../../domain/model/card/CardType';
+import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
+import { CardFindQueryApiV1 } from '../../query/card/CardFindQueryApiV1';
 
 @injectable()
 export class CardFindQueryApiV1ToCardFindQueryConverter

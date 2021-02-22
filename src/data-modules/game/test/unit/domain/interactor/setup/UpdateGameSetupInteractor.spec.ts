@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import { UpdateRepository } from '../../../../../../../layer-modules/db/domain';
+import { UpdateGameSetupInteractor } from '../../../../../domain/interactor/setup/UpdateGameSetupInteractor';
 import { GameSetup } from '../../../../../domain/model/setup/GameSetup';
 import { GameSetupUpdateQuery } from '../../../../../domain/query/setup/GameSetupUpdateQuery';
-import { UpdateGameSetupInteractor } from '../../../../../domain/interactor/setup/UpdateGameSetupInteractor';
-import { UpdateRepository } from '../../../../../../../layer-modules/db/domain';
 import { gameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
 import { gameSetupUpdateQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 

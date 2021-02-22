@@ -1,6 +1,7 @@
-import { EnvLoader, Index } from '../../../layer-modules/env/domain';
-import { injectable, unmanaged } from 'inversify';
 import dotenv from 'dotenv';
+import { injectable, unmanaged } from 'inversify';
+
+import { EnvLoader, Index } from '../../../layer-modules/env/domain';
 
 @injectable()
 export abstract class DotEnvLoader<T> implements EnvLoader<T> {

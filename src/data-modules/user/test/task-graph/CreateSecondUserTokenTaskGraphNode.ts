@@ -1,12 +1,13 @@
 import { inject, injectable } from 'inversify';
-import { CreateUserTokenTaskGraphNode } from './CreateUserTokenTaskGraphNode';
+
 import { Interactor } from '../../../../common/domain';
-import { TaskGraph } from '../../../task-graph/domain';
-import { USER_DOMAIN_TYPES } from '../../domain/config/types';
-import { USER_E2E_TYPES } from '../config/types/e2eTypes';
-import { User } from '../../domain';
-import { UserToken } from '../../domain/model/UserToken';
 import { commonTest } from '../../../../common/test';
+import { TaskGraph } from '../../../task-graph/domain';
+import { User } from '../../domain';
+import { USER_DOMAIN_TYPES } from '../../domain/config/types';
+import { UserToken } from '../../domain/model/UserToken';
+import { USER_E2E_TYPES } from '../config/types/e2eTypes';
+import { CreateUserTokenTaskGraphNode } from './CreateUserTokenTaskGraphNode';
 
 @injectable()
 export class CreateSecondUserTokenTaskGraphNode extends CreateUserTokenTaskGraphNode<symbol> {

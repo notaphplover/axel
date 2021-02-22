@@ -26,10 +26,11 @@ jest.mock('mongodb', () => {
 });
 
 import { Db, MongoClient } from 'mongodb';
+
 import { DbDotEnvVariables } from '../../../../../layer-modules/db/adapter';
+import { dbDotEnvVariablesFixtureFactory } from '../../../../../layer-modules/db/test/fixtures/adapter/env/fixtures';
 import { EnvLoader } from '../../../../../layer-modules/env/domain';
 import { MongoDbConnector } from '../../../adapter/MongoDbConnector';
-import { dbDotEnvVariablesFixtureFactory } from '../../../../../layer-modules/db/test/fixtures/adapter/env/fixtures';
 
 describe(MongoDbConnector.name, () => {
   let dbEnvLoader: EnvLoader<DbDotEnvVariables>;

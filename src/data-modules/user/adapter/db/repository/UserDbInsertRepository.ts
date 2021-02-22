@@ -1,15 +1,17 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
-import { Converter } from '../../../../../common/domain';
 import { MongoDbInsertRepository } from '../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
-import { USER_ADAPTER_TYPES } from '../../config/types';
 import { User } from '../../../domain/model/User';
 import { UserCreationQuery } from '../../../domain/query/UserCreationQuery';
+import { USER_ADAPTER_TYPES } from '../../config/types';
 import { UserDb } from '../model/UserDb';
-import mongodb from 'mongodb';
+
 
 @injectable()
 export class UserDbInsertRepository extends MongoDbInsertRepository<

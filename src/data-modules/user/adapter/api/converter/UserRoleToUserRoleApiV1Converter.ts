@@ -1,7 +1,8 @@
+import { injectable } from 'inversify';
+
 import { Converter } from '../../../../../common/domain';
 import { UserRole } from '../../../domain/model/UserRole';
 import { UserRoleApiV1 } from '../model/UserRoleApiV1';
-import { injectable } from 'inversify';
 
 const userRoleToUserRoleApiV1Map: { [TKey in UserRole]: UserRoleApiV1 } = {
   [UserRole.ADMIN]: UserRoleApiV1.ADMIN,

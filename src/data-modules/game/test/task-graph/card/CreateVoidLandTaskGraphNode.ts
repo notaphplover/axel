@@ -1,10 +1,11 @@
 import { inject, injectable } from 'inversify';
+
+import { Interactor } from '../../../../../common/domain';
 import { BaseTaskGraphNode } from '../../../../task-graph/domain';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
-import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
-import { Interactor } from '../../../../../common/domain';
 import { Land } from '../../../domain/model/card/Land';
 import { LandCreationQuery } from '../../../domain/query/card/LandCreationQuery';
+import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
 import { landCreationQuery } from '../../fixtures/domain/query/card';
 
 @injectable()

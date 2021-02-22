@@ -1,17 +1,19 @@
+import { interfaces } from 'inversify';
+
+import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { ArtifactDbInsertRepository } from '../../../db/repository/card/ArtifactDbInsertRepository';
 import { CardDbSearchRepository } from '../../../db/repository/card/CardDbSearchRepository';
-import { CardDeckDbInsertRepository } from '../../../db/repository/deck/CardDeckDbInsertRepository';
-import { CardDeckDbSearchRepository } from '../../../db/repository/deck/CardDeckDbSearchRepository';
 import { CreatureDbInsertRepository } from '../../../db/repository/card/CreatureDbInsertRepository';
 import { EnchantmentDbInsertRepository } from '../../../db/repository/card/EnchantmentDbInsertRepository';
-import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { LandDbInsertRepository } from '../../../db/repository/card/LandDbInsertRepository';
+import { CardDeckDbInsertRepository } from '../../../db/repository/deck/CardDeckDbInsertRepository';
+import { CardDeckDbSearchRepository } from '../../../db/repository/deck/CardDeckDbSearchRepository';
+import { LiveGameDbInsertRepository } from '../../../db/repository/live/LiveGameDbInsertRepository';
+import { LiveGameDbSearchRepository } from '../../../db/repository/live/LiveGameDbSearchRepository';
 import { GameSetupDbInsertRepository } from '../../../db/repository/setup/GameSetupDbInsertRepository';
 import { GameSetupDbSearchRepository } from '../../../db/repository/setup/GameSetupDbSearchRepository';
 import { GameSetupDbUpdateRepository } from '../../../db/repository/setup/GameSetupDbUpdateRepository';
-import { LandDbInsertRepository } from '../../../db/repository/card/LandDbInsertRepository';
-import { LiveGameDbInsertRepository } from '../../../db/repository/live/LiveGameDbInsertRepository';
-import { LiveGameDbSearchRepository } from '../../../db/repository/live/LiveGameDbSearchRepository';
-import { interfaces } from 'inversify';
+
 
 export function bindGameDomainRepository(bind: interfaces.Bind): void {
   bind(GAME_DOMAIN_TYPES.repository.live.LIVE_GAME_INSERT_REPOSITORY).to(

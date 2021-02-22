@@ -1,4 +1,5 @@
 import Joi from 'joi';
+
 import { artifactCreationQueryApiV1JoiValidatorSchema } from './artifactCreationQueryApiV1JoiValidatorSchema';
 import { creatureCreationQueryApiV1JoiValidatorSchema } from './creatureCreationQueryApiV1JoiValidatorSchema';
 import { enchantmentCreationQueryApiV1JoiValidatorSchema } from './enchantmentCreationQueryApiV1JoiValidatorSchema';

@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import * as fastify from 'fastify';
+import { StatusCodes } from 'http-status-codes';
+
 import { Converter, Interactor } from '../../../../../../../../common/domain';
 import {
   EitherEither,
   ValueEither,
 } from '../../../../../../../../common/domain/either/Either';
+import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
+import { commonTest } from '../../../../../../../../common/test';
 import { BasicGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/BasicGameSetupApiV1';
+import { PostGameSetupsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PostGameSetupsSearchesV1RequestHandler';
 import { GameSetup } from '../../../../../../domain/model/setup/GameSetup';
 import { GameSetupFindQuery } from '../../../../../../domain/query/setup/GameSetupFindQuery';
-import { PostGameSetupsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PostGameSetupsSearchesV1RequestHandler';
-import { StatusCodes } from 'http-status-codes';
-import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
 import { basicGameSetupApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/setup';
-import { commonTest } from '../../../../../../../../common/test';
 import { gameSetupFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/setup';
-import { gameSetupFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/setup';
 import { gameSetupFixtureFactory } from '../../../../../fixtures/domain/model/setup';
+import { gameSetupFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/setup';
 
 describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
   let gameSetupToBasicGameSetupApiV1Converter: jest.Mocked<

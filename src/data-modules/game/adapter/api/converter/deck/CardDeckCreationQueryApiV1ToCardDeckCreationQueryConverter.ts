@@ -1,12 +1,13 @@
 import { inject, injectable } from 'inversify';
-import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
-import { CardDeckCreationQueryApiV1 } from '../../query/deck/CardDeckCreationQueryApiV1';
-import { CardDeckSections } from '../../../../domain/model/deck/CardDeckSections';
-import { CardDeckSectionsApiV1 } from '../../model/deck/CardDeckSectionsApiV1';
+
 import { Converter } from '../../../../../../common/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardDeckSections } from '../../../../domain/model/deck/CardDeckSections';
 import { GameFormat } from '../../../../domain/model/GameFormat';
+import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardDeckSectionsApiV1 } from '../../model/deck/CardDeckSectionsApiV1';
 import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
+import { CardDeckCreationQueryApiV1 } from '../../query/deck/CardDeckCreationQueryApiV1';
 
 @injectable()
 export class CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter

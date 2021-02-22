@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { FindUserInteractor } from '../../../../domain/interactor/FindUserInteractor';
 import { SearchRepository } from '../../../../../../layer-modules/db/domain';
+import { FindUserInteractor } from '../../../../domain/interactor/FindUserInteractor';
 import { User } from '../../../../domain/model/User';
 import { UserFindQuery } from '../../../../domain/query/UserFindQuery';
-import { userFindQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+import { userFindQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 
 describe(FindUserInteractor.name, () => {
   let userSearchRepository: SearchRepository<User, UserFindQuery>;

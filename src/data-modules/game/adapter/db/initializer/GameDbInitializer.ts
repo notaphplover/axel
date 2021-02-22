@@ -1,7 +1,8 @@
 import { inject, injectable } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../config/types';
 import { MongoClient } from 'mongodb';
+
 import { MongoDbInitializer } from '../../../../../integration-modules/mongodb/adapter';
+import { GAME_ADAPTER_TYPES } from '../../config/types';
 
 @injectable()
 export class GameDbInitializer implements MongoDbInitializer {

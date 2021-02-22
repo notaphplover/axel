@@ -1,20 +1,21 @@
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { StatusCodes } from 'http-status-codes';
+import { inject, injectable } from 'inversify';
+
 import {
   Converter,
   Interactor,
   ValidationResult,
   Validator,
 } from '../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { inject, injectable } from 'inversify';
-import { AuthCreationQueryApiV1 } from '../../api/query/AuthCreationQueryApiV1';
 import { FastifyRequestHandler } from '../../../../../integration-modules/fastify/adapter';
-import { StatusCodes } from 'http-status-codes';
-import { USER_ADAPTER_TYPES } from '../../config/types';
 import { USER_DOMAIN_TYPES } from '../../../domain/config/types';
 import { User } from '../../../domain/model/User';
-import { UserFindQuery } from '../../../domain/query/UserFindQuery';
 import { UserToken } from '../../../domain/model/UserToken';
+import { UserFindQuery } from '../../../domain/query/UserFindQuery';
 import { UserTokenApiV1 } from '../../api/model/UserTokenApiV1';
+import { AuthCreationQueryApiV1 } from '../../api/query/AuthCreationQueryApiV1';
+import { USER_ADAPTER_TYPES } from '../../config/types';
 
 @injectable()
 export class PostAuthTokenV1RequestHandler implements FastifyRequestHandler {

@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { StatusCodes } from 'http-status-codes';
+
 import {
   Converter,
   Interactor,
@@ -7,20 +10,18 @@ import {
   ValidationResult,
   Validator,
 } from '../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { EntitiesNotCreatedError } from '../../../../../../layer-modules/db/domain';
-import { PostUserV1RequestHandler } from '../../../../adapter/server/reqHandler/PostUserV1RequestHandler';
-import { StatusCodes } from 'http-status-codes';
-import { User } from '../../../../domain/model/User';
-import { UserApiV1 } from '../../../../adapter/api/model/UserApiV1';
-import { UserCreationQuery } from '../../../../domain/query/UserCreationQuery';
-import { UserCreationQueryApiV1 } from '../../../../adapter/api/query/UserCreationQueryApiV1';
-import { UserRole } from '../../../../domain/model/UserRole';
 import { commonTest } from '../../../../../../common/test';
+import { EntitiesNotCreatedError } from '../../../../../../layer-modules/db/domain';
+import { UserApiV1 } from '../../../../adapter/api/model/UserApiV1';
+import { UserCreationQueryApiV1 } from '../../../../adapter/api/query/UserCreationQueryApiV1';
+import { PostUserV1RequestHandler } from '../../../../adapter/server/reqHandler/PostUserV1RequestHandler';
+import { User } from '../../../../domain/model/User';
+import { UserRole } from '../../../../domain/model/UserRole';
+import { UserCreationQuery } from '../../../../domain/query/UserCreationQuery';
 import { userApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/fixtures';
 import { userCreationQueryApiV1FixtureFactory } from '../../../fixtures/adapter/api/query/fixtures';
-import { userCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+import { userCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 
 describe(PostUserV1RequestHandler.name, () => {
   let createUsersInteractor: Interactor<UserCreationQuery, Promise<User[]>>;

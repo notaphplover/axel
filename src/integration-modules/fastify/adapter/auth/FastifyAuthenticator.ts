@@ -1,8 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { inject, injectable } from 'inversify';
-import { JwtManager } from '../../../../data-modules/jwt/domain';
 import { StatusCodes } from 'http-status-codes';
-import { jwtDomain } from '../../../../data-modules/jwt/domain';
+import { inject, injectable } from 'inversify';
+
+import { JwtManager , jwtDomain } from '../../../../data-modules/jwt/domain';
+
 
 const AUTH_HEADER_PREFIX: string = 'Bearer ';
 const NO_AUTH_HEADER_ERR_MESSAGE: string = 'Expected an authorization header';

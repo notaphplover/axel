@@ -1,4 +1,5 @@
 import { ContainerModule, interfaces } from 'inversify';
+
 import { bindGameAdapter } from './adapter';
 import { bindGameDomain } from './domain';
 

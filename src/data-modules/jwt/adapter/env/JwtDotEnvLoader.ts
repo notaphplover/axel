@@ -1,10 +1,13 @@
-import { AppEnvVariables, appAdapter } from '../../../app/adapter';
-import { EnvLoader, Index } from '../../../../layer-modules/env/domain';
-import { inject, injectable } from 'inversify';
-import { DotEnvLoader } from '../../../../integration-modules/dotenv/adapter';
-import { JwtDotEnvVariables } from './JwtDotEnvVariables';
-import { env } from 'process';
 import { join } from 'path';
+import { env } from 'process';
+
+import { inject, injectable } from 'inversify';
+
+import { DotEnvLoader } from '../../../../integration-modules/dotenv/adapter';
+import { EnvLoader, Index } from '../../../../layer-modules/env/domain';
+import { AppEnvVariables, appAdapter } from '../../../app/adapter';
+import { JwtDotEnvVariables } from './JwtDotEnvVariables';
+
 
 const CONFIG_DIR: string = join(__dirname, '..', '..', 'env');
 

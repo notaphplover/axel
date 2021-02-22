@@ -1,7 +1,8 @@
 import { inject, injectable } from 'inversify';
-import { GAME_DOMAIN_TYPES } from '../../config/types';
-import { InsertRepository } from '../../../../../layer-modules/db/domain';
+
 import { Interactor } from '../../../../../common/domain';
+import { InsertRepository } from '../../../../../layer-modules/db/domain';
+import { GAME_DOMAIN_TYPES } from '../../config/types';
 import { LiveGame } from '../../model/live/LiveGame';
 import { LiveGameCreationQuery } from '../../query/live/LiveGameCreationQuery';
 

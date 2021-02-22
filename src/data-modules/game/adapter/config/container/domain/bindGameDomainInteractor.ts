@@ -1,19 +1,21 @@
+import { interfaces } from 'inversify';
+
+import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { CreateArtifactsInteractor } from '../../../../domain/interactor/card/CreateArtifactsInteractor';
-import { CreateCardDecksInteractor } from '../../../../domain/interactor/deck/CreateCardDecksInteractor';
 import { CreateCardsInteractor } from '../../../../domain/interactor/card/CreateCardsInteractor';
 import { CreateCreaturesInteractor } from '../../../../domain/interactor/card/CreateCreaturesInteractor';
 import { CreateEnchantmentsInteractor } from '../../../../domain/interactor/card/CreateEnchantmentsInteractor';
-import { CreateGameSetupsInteractor } from '../../../../domain/interactor/setup/CreateGameSetupsInteractor';
 import { CreateLandsInteractor } from '../../../../domain/interactor/card/CreateLandsInteractor';
-import { CreateLiveGamesInteractor } from '../../../../domain/interactor/live/CreateLiveGamesInteractor';
+import { FindCardsInteractor } from '../../../../domain/interactor/card/FindCardsInteractor';
+import { CreateCardDecksInteractor } from '../../../../domain/interactor/deck/CreateCardDecksInteractor';
 import { FindCardDeckInteractor } from '../../../../domain/interactor/deck/FindCardDeckInteractor';
 import { FindCardDecksInteractor } from '../../../../domain/interactor/deck/FindCardDecksInteractor';
-import { FindCardsInteractor } from '../../../../domain/interactor/card/FindCardsInteractor';
-import { FindGameSetupsInteractor } from '../../../../domain/interactor/setup/FindGameSetupsInteractor';
+import { CreateLiveGamesInteractor } from '../../../../domain/interactor/live/CreateLiveGamesInteractor';
 import { FindLiveGameInteractor } from '../../../../domain/interactor/live/FindLiveGameInteractor';
-import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { CreateGameSetupsInteractor } from '../../../../domain/interactor/setup/CreateGameSetupsInteractor';
+import { FindGameSetupsInteractor } from '../../../../domain/interactor/setup/FindGameSetupsInteractor';
 import { UpdateGameSetupInteractor } from '../../../../domain/interactor/setup/UpdateGameSetupInteractor';
-import { interfaces } from 'inversify';
+
 
 export function bindGameDomainInteractor(bind: interfaces.Bind): void {
   bind(GAME_DOMAIN_TYPES.interactor.live.CREATE_LIVE_GAMES_INTERACTOR).to(

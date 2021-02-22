@@ -1,6 +1,7 @@
-import { isFile } from './isFile';
-import { join } from 'path';
 import { readdirSync } from 'fs';
+import { join } from 'path';
+
+import { isFile } from './isFile';
 
 export function getFiles(source: string): string[] {
   return readdirSync(source).filter((fileName: string) =>

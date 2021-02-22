@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import * as fastify from 'fastify';
-import { Converter, Interactor } from '../../../../../../../../common/domain';
-import { GetLiveGameByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/GetLiveGameByIdV1RequestHandler';
-import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
-import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
-import { LiveGameFindQuery } from '../../../../../../domain/query/live/LiveGameFindQuery';
 import { StatusCodes } from 'http-status-codes';
+
+import { Converter, Interactor } from '../../../../../../../../common/domain';
 import { ValueEither } from '../../../../../../../../common/domain/either/Either';
 import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
 import { commonTest } from '../../../../../../../../common/test';
+import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGameApiV1';
+import { GetLiveGameByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/GetLiveGameByIdV1RequestHandler';
+import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
+import { LiveGameFindQuery } from '../../../../../../domain/query/live/LiveGameFindQuery';
 import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
-import { liveGameFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/live';
 import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model';
+import { liveGameFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/live';
 
 describe(GetLiveGameByIdV1RequestHandler.name, () => {
   let findGameInteractor: jest.Mocked<

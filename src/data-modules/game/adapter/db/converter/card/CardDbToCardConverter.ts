@@ -1,16 +1,17 @@
 import { inject, injectable } from 'inversify';
-import { Artifact } from '../../../../domain/model/card/Artifact';
-import { ArtifactDb } from '../../model/card/ArtifactDb';
-import { Card } from '../../../../domain/model/card/Card';
-import { CardDb } from '../../model/card/CardDb';
-import { CardType } from '../../../../domain/model/card/CardType';
+
 import { Converter } from '../../../../../../common/domain';
+import { Artifact } from '../../../../domain/model/card/Artifact';
+import { Card } from '../../../../domain/model/card/Card';
+import { CardType } from '../../../../domain/model/card/CardType';
 import { Creature } from '../../../../domain/model/card/Creature';
-import { CreatureDb } from '../../model/card/CreatureDb';
 import { Enchantment } from '../../../../domain/model/card/Enchantment';
-import { EnchantmentDb } from '../../model/card/EnchantmentDb';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { Land } from '../../../../domain/model/card/Land';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { ArtifactDb } from '../../model/card/ArtifactDb';
+import { CardDb } from '../../model/card/CardDb';
+import { CreatureDb } from '../../model/card/CreatureDb';
+import { EnchantmentDb } from '../../model/card/EnchantmentDb';
 import { LandDb } from '../../model/card/LandDb';
 
 @injectable()

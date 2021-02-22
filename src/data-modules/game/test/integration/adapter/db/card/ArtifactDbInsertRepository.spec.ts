@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import mongodb from 'mongodb';
+
 import { Capsule, Converter } from '../../../../../../../common/domain';
-import { Artifact } from '../../../../../domain/model/card/Artifact';
-import { ArtifactCreationQuery } from '../../../../../domain/query/card/ArtifactCreationQuery';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
+import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { ArtifactDb } from '../../../../../adapter/db/model/card/ArtifactDb';
 import { ArtifactDbInsertRepository } from '../../../../../adapter/db/repository/card/ArtifactDbInsertRepository';
-import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
-import { artifactCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { Artifact } from '../../../../../domain/model/card/Artifact';
+import { ArtifactCreationQuery } from '../../../../../domain/query/card/ArtifactCreationQuery';
 import { artifactFixtureFactory } from '../../../../fixtures/domain/model/card';
-import { dbTest } from '../../../../../../../layer-modules/db/test';
-import mongodb from 'mongodb';
+import { artifactCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 

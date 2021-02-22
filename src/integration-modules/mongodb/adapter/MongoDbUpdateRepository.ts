@@ -1,9 +1,11 @@
-import { Converter, commonDomain } from '../../../common/domain';
 import { injectable, unmanaged } from 'inversify';
-import { Document } from './model/Document';
-import { MongoDbConnector } from '.';
-import { UpdateRepository } from '../../../layer-modules/db/domain/UpdateRepository';
 import mongodb from 'mongodb';
+
+import { MongoDbConnector } from '.';
+import { Converter, commonDomain } from '../../../common/domain';
+import { UpdateRepository } from '../../../layer-modules/db/domain/UpdateRepository';
+import { Document } from './model/Document';
+
 
 const hasValue: <TType>(
   value: TType,

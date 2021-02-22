@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import { MongoError } from 'mongodb';
 import { Document, Model } from 'mongoose';
+
 import { Converter } from '../../../../../common/domain';
 import { EntitiesNotCreatedError } from '../../../../../layer-modules/db/domain/exception/EntitiesNotCreatedError';
-import { MongoError } from 'mongodb';
 import { MongooseInsertRepository } from '../../../adapter/MongooseInsertRepository';
 
 class ModelMock {

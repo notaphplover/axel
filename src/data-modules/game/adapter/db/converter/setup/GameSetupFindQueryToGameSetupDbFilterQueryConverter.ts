@@ -1,10 +1,11 @@
-import { Converter } from '../../../../../../common/domain';
-import { GameSetupDb } from '../../model/setup/GameSetupDb';
-import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
-import { GameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/GameSetupFindQueryPlayerSetup';
-import { hasValue } from '../../../../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
+import { hasValue } from '../../../../../../common/domain/utils/hasValue';
+import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
+import { GameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/GameSetupFindQueryPlayerSetup';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
 
 @injectable()
 export class GameSetupFindQueryToGameSetupDbFilterQueryConverter

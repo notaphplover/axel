@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { FastifyRequestHandler } from '../../../../../integration-modules/fastify/adapter';
 import { injectable } from 'inversify';
+
+import { FastifyRequestHandler } from '../../../../../integration-modules/fastify/adapter';
 
 @injectable()
 export class GetStatusV1RequestHandler implements FastifyRequestHandler {

@@ -1,4 +1,5 @@
 import Joi from 'joi';
+
 import { ResourceApiV1 } from '../../../../model/card/ResourceApiV1';
 import { ResourceTypeApiV1 } from '../../../../model/card/ResourceTypeApiV1';
 

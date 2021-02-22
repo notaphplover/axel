@@ -1,5 +1,6 @@
-import { CardTypeApiV1 } from '../../../../model/card/CardTypeApiV1';
 import Joi from 'joi';
+
+import { CardTypeApiV1 } from '../../../../model/card/CardTypeApiV1';
 import { LandCreationQueryApiV1 } from '../../../../query/card/LandCreationQueryApiV1';
 import { baseCardCreationQueryApiV1JoiValidatorSchema } from './baseCardCreationQueryApiV1JoiValidatorSchema';
 

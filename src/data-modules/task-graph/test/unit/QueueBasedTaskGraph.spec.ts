@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { TaskGraphNode, TaskGraphNodeStatus } from '../../domain/TaskGraphNode';
-import { PerformTasksResult } from '../../domain/TaskGraph';
-import { QueueBasedTaskGraph } from '../../domain/QueueBasedTaskGraph';
 import { Writable } from '../../../../common/domain';
+import { QueueBasedTaskGraph } from '../../domain/QueueBasedTaskGraph';
+import { PerformTasksResult } from '../../domain/TaskGraph';
+import { TaskGraphNode, TaskGraphNodeStatus } from '../../domain/TaskGraphNode';
 
 describe(QueueBasedTaskGraph.name, () => {
   describe('.getNode()', () => {

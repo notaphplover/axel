@@ -1,4 +1,5 @@
 import { ContainerModule, interfaces } from 'inversify';
+
 import { CreateFirstUserTaskGraphNode } from '../../task-graph/CreateFirstUserTaskGraphNode';
 import { CreateFirstUserTokenTaskGraphNode } from '../../task-graph/CreateFirstUserTokenTaskGraphNode';
 import { CreateSecondUserTaskGraphNode } from '../../task-graph/CreateSecondUserTaskGraphNode';

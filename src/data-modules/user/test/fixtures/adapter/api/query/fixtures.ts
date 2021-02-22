@@ -2,12 +2,12 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../../common/test';
+import { AuthCreationQueryApiV1 } from '../../../../../adapter/api/query/AuthCreationQueryApiV1';
+import { UserCreationQueryApiV1 } from '../../../../../adapter/api/query/UserCreationQueryApiV1';
 import {
   userCreationQuery,
   userFindQuery,
 } from '../../../domain/query/fixtures';
-import { AuthCreationQueryApiV1 } from '../../../../../adapter/api/query/AuthCreationQueryApiV1';
-import { UserCreationQueryApiV1 } from '../../../../../adapter/api/query/UserCreationQueryApiV1';
 
 export const authCreationQueryApiV1: AuthCreationQueryApiV1 = {
   password: userFindQuery.password as string,

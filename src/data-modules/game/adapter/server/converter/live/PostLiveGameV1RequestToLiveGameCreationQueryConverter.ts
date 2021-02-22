@@ -1,20 +1,21 @@
 import * as fastify from 'fastify';
+import { inject, injectable } from 'inversify';
+
 import {
   Converter,
   Interactor,
   Validator,
 } from '../../../../../../common/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { User, UserContainer } from '../../../../../user/domain';
-import { inject, injectable } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
-import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
+import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { LiveGameCreationQueryApiV1 } from '../../../api/query/live/LiveGameCreationQueryApiV1';
 import { LiveGameCreationQueryApiV1ValidationContext } from '../../../api/validator/live/LiveGameCreationQueryApiV1ValidationContext';
-import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
 @injectable()
 export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends RequestToQueryConverter<

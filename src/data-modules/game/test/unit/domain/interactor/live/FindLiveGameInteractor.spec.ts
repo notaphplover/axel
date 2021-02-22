@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
 import { FindLiveGameInteractor } from '../../../../../domain/interactor/live/FindLiveGameInteractor';
 import { LiveGame } from '../../../../../domain/model/live/LiveGame';
 import { LiveGameFindQuery } from '../../../../../domain/query/live/LiveGameFindQuery';
-import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
-import { gameFindQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 import { liveGameFixtureFactory } from '../../../../fixtures/domain/model';
+import { gameFindQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 describe(FindLiveGameInteractor.name, () => {
   let liveGameSearchRepository: SearchRepository<LiveGame, LiveGameFindQuery>;

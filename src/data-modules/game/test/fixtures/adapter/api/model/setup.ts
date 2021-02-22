@@ -2,12 +2,12 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../../common/test';
-import { gameSetup, playerSetup } from '../../../domain/model/setup';
+import { GameFormatApiV1 } from '../../../../../adapter/api/model/GameFormatApiV1';
 import { BasicGameSetupApiV1 } from '../../../../../adapter/api/model/setup/BasicGameSetupApiV1';
 import { ExtendedGameSetupApiV1 } from '../../../../../adapter/api/model/setup/ExtendedGameSetupApiV1';
-import { GameFormatApiV1 } from '../../../../../adapter/api/model/GameFormatApiV1';
 import { PlayerReferenceApiV1 } from '../../../../../adapter/api/model/setup/PlayerReferenceApiV1';
 import { PlayerSetupApiV1 } from '../../../../../adapter/api/model/setup/PlayerSetupApiV1';
+import { gameSetup, playerSetup } from '../../../domain/model/setup';
 import { cardDeckApiV1 } from './deck';
 
 export const playerSetupApiV1: PlayerSetupApiV1 = {

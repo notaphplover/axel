@@ -1,10 +1,11 @@
+import { Container } from 'inversify';
+
+import { Capsule } from '../../../../../common/domain';
+import { commonTest } from '../../../../../common/test';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../integration-modules/mongodb/adapter';
-import { Capsule } from '../../../../../common/domain';
-import { Container } from 'inversify';
-import { commonTest } from '../../../../../common/test';
 import { configAdapter } from '../../../../config/adapter';
 
 const container: Container = configAdapter.container;

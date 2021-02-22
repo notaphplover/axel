@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 import 'reflect-metadata';
+import { Container } from 'inversify';
+
 import { AppEnvVariables, appAdapter } from './data-modules/app/adapter';
+import { gameAdapter } from './data-modules/game/adapter';
+import { userAdapter } from './data-modules/user/adapter';
 import {
   FastifyPortListeningServer,
   FastifyRouter,
@@ -8,13 +12,10 @@ import {
 import {
   MongoDbConnector,
   MongoDbInitializer,
-} from './integration-modules/mongodb/adapter';
-import { Container } from 'inversify';
-import { EnvLoader } from './layer-modules/env/domain';
+ mongodbAdapter } from './integration-modules/mongodb/adapter';
 import { configAdapter } from './layer-modules/config/adapter';
-import { gameAdapter } from './data-modules/game/adapter';
-import { mongodbAdapter } from './integration-modules/mongodb/adapter';
-import { userAdapter } from './data-modules/user/adapter';
+import { EnvLoader } from './layer-modules/env/domain';
+
 
 const container: Container = configAdapter.container;
 

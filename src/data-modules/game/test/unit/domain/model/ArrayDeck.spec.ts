@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { ArrayDeck } from '../../../../domain/model/ArrayDeck';
 import { InvalidNumberOfCardsError } from '../../../../domain/exception/InvalidNumberOfCardsError';
+import { ArrayDeck } from '../../../../domain/model/ArrayDeck';
 
 describe(ArrayDeck.name, () => {
   describe(`.${ArrayDeck.prototype.draw.name}`, () => {

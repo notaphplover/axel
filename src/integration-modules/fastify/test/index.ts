@@ -1,8 +1,8 @@
+import { FastifyServerTest } from './integration/FastifyServerTest';
 import {
   FastifyServerTestOutputParam,
   fastifyIntegrationDescribeGenerator,
 } from './integration/utils/fastifyIntegrationDescribeGenerator';
-import { FastifyServerTest } from './integration/FastifyServerTest';
 
 export { FastifyServerTest, FastifyServerTestOutputParam };
 

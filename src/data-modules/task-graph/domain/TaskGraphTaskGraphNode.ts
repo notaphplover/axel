@@ -1,5 +1,5 @@
-import { PerformTasksResult, TaskGraph } from './TaskGraph';
 import { BaseTaskGraphNode } from './BaseTaskGraphNode';
+import { PerformTasksResult, TaskGraph } from './TaskGraph';
 
 export class TaskGraphTaskGraphNode<TId> extends BaseTaskGraphNode<TId, void> {
   constructor(

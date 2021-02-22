@@ -1,12 +1,13 @@
+import { inject, injectable } from 'inversify';
 import { Db, MongoClient } from 'mongodb';
+
+import { waitMs } from '../../../common/domain/utils/waitMs';
 import {
   DbDotEnvVariables,
   dbAdapter,
 } from '../../../layer-modules/db/adapter';
-import { inject, injectable } from 'inversify';
 import { DbConnector } from '../../../layer-modules/db/domain';
 import { EnvLoader } from '../../../layer-modules/env/domain';
-import { waitMs } from '../../../common/domain/utils/waitMs';
 
 const MAX_ATTEMPTS: number = 10;
 const ATTEMPT_WAIT_MS: number = 1000;

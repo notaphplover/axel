@@ -1,11 +1,12 @@
 import * as fastify from 'fastify';
-import { Converter, Validator } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
+
+import { Converter, Validator } from '../../../../../../common/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
 import { CardCreationQueryApiV1 } from '../../../api/query/card/CardCreationQueryApiV1';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()
 export class PostCardV1RequestToCardCreationQueryConverter extends RequestToQueryConverter<

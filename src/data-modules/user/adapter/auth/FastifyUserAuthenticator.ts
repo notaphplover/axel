@@ -1,9 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { FastifyAuthenticator } from '../../../../integration-modules/fastify/adapter';
 import { StatusCodes } from 'http-status-codes';
+import { injectable } from 'inversify';
+
+import { FastifyAuthenticator } from '../../../../integration-modules/fastify/adapter';
 import { User } from '../../domain';
 import { UserRole } from '../../domain/model/UserRole';
-import { injectable } from 'inversify';
+
 
 @injectable()
 export class FastifyUserAuthenticator extends FastifyAuthenticator<User> {

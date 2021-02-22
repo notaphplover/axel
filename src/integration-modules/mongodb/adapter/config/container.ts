@@ -1,6 +1,7 @@
 import { ContainerModule, interfaces } from 'inversify';
-import { MONGODB_ADAPTER_TYPES } from './types';
+
 import { MongoDbConnector } from '../MongoDbConnector';
+import { MONGODB_ADAPTER_TYPES } from './types';
 
 function bindAdapter(bind: interfaces.Bind): void {
   bind(MONGODB_ADAPTER_TYPES.db.MONGODB_CONNECTOR)

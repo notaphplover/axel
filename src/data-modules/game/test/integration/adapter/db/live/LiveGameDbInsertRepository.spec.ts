@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import mongodb from 'mongodb';
+
 import { Capsule, Converter } from '../../../../../../../common/domain';
-import { LiveGame } from '../../../../../domain/model/live/LiveGame';
-import { LiveGameCreationQuery } from '../../../../../domain/query/live/LiveGameCreationQuery';
-import { LiveGameDb } from '../../../../../adapter/db/model/live/LiveGameDb';
-import { LiveGameDbInsertRepository } from '../../../../../adapter/db/repository/live/LiveGameDbInsertRepository';
 import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
-import { liveGameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { LiveGameDb } from '../../../../../adapter/db/model/live/LiveGameDb';
+import { LiveGameDbInsertRepository } from '../../../../../adapter/db/repository/live/LiveGameDbInsertRepository';
+import { LiveGame } from '../../../../../domain/model/live/LiveGame';
+import { LiveGameCreationQuery } from '../../../../../domain/query/live/LiveGameCreationQuery';
 import { liveGameFixtureFactory } from '../../../../fixtures/domain/model';
-import mongodb from 'mongodb';
+import { liveGameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 

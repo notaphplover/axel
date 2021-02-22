@@ -1,29 +1,30 @@
 import { ContainerModule, interfaces } from 'inversify';
-import { AuthCreationQueryApiV1Validator } from '../api/validator/AuthCreationQueryApiV1Validator';
-import { AuthRouter } from '../server/router/AuthRouter';
-import { CreateUserTokenInteractor } from '../../domain/interactor/CreateUserTokenInteractor';
-import { CreateUsersInteractor } from '../../domain/interactor/CreateUsersInteractor';
-import { FastifyUserAuthenticator } from '../auth/FastifyUserAuthenticator';
-import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
-import { PasswordHasher } from '../security/PasswordHasher';
-import { PostAuthTokenV1RequestHandler } from '../server/reqHandler/PostAuthUserTokenV1RequestHandler';
-import { PostUserDbSearchFilter } from '../db/filter/PostUserDbSearchFilter';
-import { PostUserV1RequestHandler } from '../server/reqHandler/PostUserV1RequestHandler';
-import { USER_ADAPTER_TYPES } from './types';
+
 import { USER_DOMAIN_TYPES } from '../../domain/config/types';
-import { UserCreationQueryApiV1Validator } from '../api/validator/UserCreationQueryApiV1Validator';
-import { UserCreationQueryToUserDbsConverter } from '../db/converter/UserCreationQueryToUserDbsConverter';
-import { UserDbCollectionName } from '../db/UserDbCollectionName';
-import { UserDbInsertRepository } from '../db/repository/UserDbInsertRepository';
-import { UserDbSearchRepository } from '../db/repository/UserDbSearchRepository';
-import { UserDbToUserConverter } from '../db/converter/UserDbToUserConverter';
-import { UserFindQueryToUserDbFilterQueryConverter } from '../db/converter/UserFindQueryToUserDbFilterQueryConverter';
+import { CreateUsersInteractor } from '../../domain/interactor/CreateUsersInteractor';
+import { CreateUserTokenInteractor } from '../../domain/interactor/CreateUserTokenInteractor';
+import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
 import { UserRoleToUserRoleApiV1Converter } from '../api/converter/UserRoleToUserRoleApiV1Converter';
-import { UserRouter } from '../server/router/UserRouter';
-import { UserToUserApiV1Converter } from '../api/converter/UserToUserApiV1Converter';
 import { UserTokenToUserTokenApiV1Converter } from '../api/converter/UserTokenToUserTokenApiV1Converter';
+import { UserToUserApiV1Converter } from '../api/converter/UserToUserApiV1Converter';
+import { AuthCreationQueryApiV1Validator } from '../api/validator/AuthCreationQueryApiV1Validator';
 import { authCreationQueryApiV1JoiValidatorSchema } from '../api/validator/schema/query/authCreationQueryApiV1JoiValidatorSchema';
 import { userCreationQueryApiV1JoiValidatorSchema } from '../api/validator/schema/query/userCreationQueryApiV1JoiValidatorSchema';
+import { UserCreationQueryApiV1Validator } from '../api/validator/UserCreationQueryApiV1Validator';
+import { FastifyUserAuthenticator } from '../auth/FastifyUserAuthenticator';
+import { UserCreationQueryToUserDbsConverter } from '../db/converter/UserCreationQueryToUserDbsConverter';
+import { UserDbToUserConverter } from '../db/converter/UserDbToUserConverter';
+import { UserFindQueryToUserDbFilterQueryConverter } from '../db/converter/UserFindQueryToUserDbFilterQueryConverter';
+import { PostUserDbSearchFilter } from '../db/filter/PostUserDbSearchFilter';
+import { UserDbInsertRepository } from '../db/repository/UserDbInsertRepository';
+import { UserDbSearchRepository } from '../db/repository/UserDbSearchRepository';
+import { UserDbCollectionName } from '../db/UserDbCollectionName';
+import { PasswordHasher } from '../security/PasswordHasher';
+import { PostAuthTokenV1RequestHandler } from '../server/reqHandler/PostAuthUserTokenV1RequestHandler';
+import { PostUserV1RequestHandler } from '../server/reqHandler/PostUserV1RequestHandler';
+import { AuthRouter } from '../server/router/AuthRouter';
+import { UserRouter } from '../server/router/UserRouter';
+import { USER_ADAPTER_TYPES } from './types';
 
 function bindAdapters(bind: interfaces.Bind) {
   bind(

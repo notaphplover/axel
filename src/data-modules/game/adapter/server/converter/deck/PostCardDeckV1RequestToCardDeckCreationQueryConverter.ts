@@ -1,11 +1,12 @@
 import * as fastify from 'fastify';
-import { Converter, Validator } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
+
+import { Converter, Validator } from '../../../../../../common/domain';
+import { ValueEither } from '../../../../../../common/domain/either/Either';
+import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
 import { CardDeckCreationQueryApiV1 } from '../../../api/query/deck/CardDeckCreationQueryApiV1';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
-import { ValueEither } from '../../../../../../common/domain/either/Either';
 
 @injectable()
 export class PostCardDeckV1RequestToCardDeckCreationQueryConverter extends RequestToQueryConverter<

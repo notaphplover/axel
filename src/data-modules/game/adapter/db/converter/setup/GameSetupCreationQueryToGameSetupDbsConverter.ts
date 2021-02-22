@@ -1,9 +1,10 @@
-import { Converter } from '../../../../../../common/domain';
-import { GameSetupDb } from '../../model/setup/GameSetupDb';
-import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
-import _ from 'lodash';
 import { injectable } from 'inversify';
+import _ from 'lodash';
 import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
+import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
 
 @injectable()
 export class GameSetupCreationQueryToGameSetupDbsConverter

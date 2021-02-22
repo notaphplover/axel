@@ -1,7 +1,8 @@
+import { injectable } from 'inversify';
+
+import { Converter } from '../../../../../../common/domain';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
-import { Converter } from '../../../../../../common/domain';
-import { injectable } from 'inversify';
 
 const cardTypeToCardTypeApiV1Map: { [TKey in CardType]: CardTypeApiV1 } = {
   [CardType.Artifact]: CardTypeApiV1.Artifact,

@@ -1,39 +1,40 @@
 import 'reflect-metadata';
 import * as axios from 'axios';
+import { Container } from 'inversify';
+
+import { Capsule } from '../../../../../common/domain';
+import { commonTest } from '../../../../../common/test';
+import { mongodbAdapter } from '../../../../../integration-modules/mongodb/adapter';
+import { configAdapter } from '../../../../../layer-modules/config/adapter';
+import { configTest } from '../../../../../layer-modules/config/test';
+import { DbConnector } from '../../../../../layer-modules/db/domain';
+import { EnvLoader } from '../../../../../layer-modules/env/domain';
+import { AppEnvVariables } from '../../../../app/adapter';
+import { AppEnvLoader } from '../../../../app/adapter/env/AppEnvLoader';
+import { InversifyContainerTaskGraphNodeExtractor } from '../../../../task-graph/adapter';
 import {
   QueueBasedTaskGraph,
   TaskGraphNode,
 } from '../../../../task-graph/domain';
+import { PerformTasksResult } from '../../../../task-graph/domain/TaskGraph';
+import { UserToken } from '../../../../user/domain';
+import { userTest } from '../../../../user/test';
+import { ArtifactApiV1 } from '../../../adapter/api/model/card/ArtifactApiV1';
+import { CardApiV1 } from '../../../adapter/api/model/card/CardApiV1';
+import { CreatureApiV1 } from '../../../adapter/api/model/card/CreatureApiV1';
+import { EnchantmentApiV1 } from '../../../adapter/api/model/card/EnchantmentApiV1';
+import { LandApiV1 } from '../../../adapter/api/model/card/LandApiV1';
+import { ArtifactCreationQueryApiV1 } from '../../../adapter/api/query/card/ArtifactCreationQueryApiV1';
+import { CardFindQueryApiV1 } from '../../../adapter/api/query/card/CardFindQueryApiV1';
+import { CreatureCreationQueryApiV1 } from '../../../adapter/api/query/card/CreatureCreationQueryApiV1';
+import { EnchantmentCreationQueryApiV1 } from '../../../adapter/api/query/card/EnchantmentCreationQueryApiV1';
+import { LandCreationQueryApiV1 } from '../../../adapter/api/query/card/LandCreationQueryApiV1';
 import {
   artifactCreationQueryApiV1FixtureFactory,
   creatureCreationQueryApiV1FixtureFactory,
   enchantmentCreationQueryApiV1FixtureFactory,
   landCreationQueryApiV1FixtureFactory,
 } from '../../fixtures/adapter/api/query/card';
-import { AppEnvLoader } from '../../../../app/adapter/env/AppEnvLoader';
-import { AppEnvVariables } from '../../../../app/adapter';
-import { ArtifactApiV1 } from '../../../adapter/api/model/card/ArtifactApiV1';
-import { ArtifactCreationQueryApiV1 } from '../../../adapter/api/query/card/ArtifactCreationQueryApiV1';
-import { Capsule } from '../../../../../common/domain';
-import { CardApiV1 } from '../../../adapter/api/model/card/CardApiV1';
-import { CardFindQueryApiV1 } from '../../../adapter/api/query/card/CardFindQueryApiV1';
-import { Container } from 'inversify';
-import { CreatureApiV1 } from '../../../adapter/api/model/card/CreatureApiV1';
-import { CreatureCreationQueryApiV1 } from '../../../adapter/api/query/card/CreatureCreationQueryApiV1';
-import { DbConnector } from '../../../../../layer-modules/db/domain';
-import { EnchantmentApiV1 } from '../../../adapter/api/model/card/EnchantmentApiV1';
-import { EnchantmentCreationQueryApiV1 } from '../../../adapter/api/query/card/EnchantmentCreationQueryApiV1';
-import { EnvLoader } from '../../../../../layer-modules/env/domain';
-import { InversifyContainerTaskGraphNodeExtractor } from '../../../../task-graph/adapter';
-import { LandApiV1 } from '../../../adapter/api/model/card/LandApiV1';
-import { LandCreationQueryApiV1 } from '../../../adapter/api/query/card/LandCreationQueryApiV1';
-import { PerformTasksResult } from '../../../../task-graph/domain/TaskGraph';
-import { UserToken } from '../../../../user/domain';
-import { commonTest } from '../../../../../common/test';
-import { configAdapter } from '../../../../../layer-modules/config/adapter';
-import { configTest } from '../../../../../layer-modules/config/test';
-import { mongodbAdapter } from '../../../../../integration-modules/mongodb/adapter';
-import { userTest } from '../../../../user/test';
 
 const container: Container = configAdapter.container;
 

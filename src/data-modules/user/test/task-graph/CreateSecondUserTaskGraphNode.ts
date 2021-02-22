@@ -1,10 +1,11 @@
 import { inject, injectable } from 'inversify';
-import { CreateUserTaskGraphNode } from './CreateUserTaskGraphNode';
+
 import { Interactor } from '../../../../common/domain';
 import { USER_DOMAIN_TYPES } from '../../domain/config/types';
-import { USER_E2E_TYPES } from '../config/types/e2eTypes';
 import { User } from '../../domain/model/User';
 import { UserCreationQuery } from '../../domain/query/UserCreationQuery';
+import { USER_E2E_TYPES } from '../config/types/e2eTypes';
+import { CreateUserTaskGraphNode } from './CreateUserTaskGraphNode';
 
 @injectable()
 export class CreateSecondUserTaskGraphNode extends CreateUserTaskGraphNode<symbol> {

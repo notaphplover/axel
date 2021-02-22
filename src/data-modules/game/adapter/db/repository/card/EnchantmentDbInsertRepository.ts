@@ -1,15 +1,16 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
-import { Converter } from '../../../../../../common/domain';
+import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
 import { Enchantment } from '../../../../domain/model/card/Enchantment';
 import { EnchantmentCreationQuery } from '../../../../domain/query/card/EnchantmentCreationQuery';
-import { EnchantmentDb } from '../../model/card/EnchantmentDb';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
-import mongodb from 'mongodb';
+import { EnchantmentDb } from '../../model/card/EnchantmentDb';
 
 @injectable()
 export class EnchantmentDbInsertRepository extends MongoDbInsertRepository<

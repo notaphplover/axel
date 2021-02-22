@@ -1,6 +1,6 @@
+import { dbContainer } from './config/container';
 import { DB_ADAPTER_PUBLIC_TYPES } from './config/types';
 import { DbDotEnvVariables } from './env/DbDotEnvVariables';
-import { dbContainer } from './config/container';
 
 export { DbDotEnvVariables };
 

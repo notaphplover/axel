@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import mongodb from 'mongodb';
+
 import { Capsule, Converter, Filter } from '../../../../../../common/domain';
 import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
-import { User } from '../../../../domain/model/User';
+import { dbTest } from '../../../../../../layer-modules/db/test';
 import { UserDb } from '../../../../adapter/db/model/UserDb';
 import { UserDbSearchRepository } from '../../../../adapter/db/repository/UserDbSearchRepository';
+import { User } from '../../../../domain/model/User';
 import { UserFindQuery } from '../../../../domain/query/UserFindQuery';
-import { dbTest } from '../../../../../../layer-modules/db/test';
-import mongodb from 'mongodb';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };

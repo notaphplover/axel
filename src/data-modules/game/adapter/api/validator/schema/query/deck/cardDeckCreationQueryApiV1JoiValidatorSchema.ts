@@ -1,5 +1,6 @@
-import { CardDeckCreationQueryApiV1 } from '../../../../query/deck/CardDeckCreationQueryApiV1';
 import Joi from 'joi';
+
+import { CardDeckCreationQueryApiV1 } from '../../../../query/deck/CardDeckCreationQueryApiV1';
 import { cardDeckSectionsApiV1JoiValidatorSchema } from '../../model/deck/cardDeckSectionsApiV1JoiValidatorSchema';
 import { gameFormatApiV1JoiValidatorSchema } from '../../model/gameFormatApiV1JoiValidatorSchema';
 

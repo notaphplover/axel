@@ -1,6 +1,6 @@
+import { jwtContainer } from './config/container';
 import { JWT_ADAPTER_PUBLIC_TYPES } from './config/types';
 import { JwtDotEnvVariables } from './env/JwtDotEnvVariables';
-import { jwtContainer } from './config/container';
 
 export { JwtDotEnvVariables };
 

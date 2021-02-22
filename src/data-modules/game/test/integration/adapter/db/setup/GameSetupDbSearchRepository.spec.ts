@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import mongodb from 'mongodb';
+
 import { Capsule, Converter } from '../../../../../../../common/domain';
-import { GameSetup } from '../../../../../domain/model/setup/GameSetup';
-import { GameSetupDb } from '../../../../../adapter/db/model/setup/GameSetupDb';
-import { GameSetupDbSearchRepository } from '../../../../../adapter/db/repository/setup/GameSetupDbSearchRepository';
-import { GameSetupFindQuery } from '../../../../../domain/query/setup/GameSetupFindQuery';
 import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
-import { gameSetupFindQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
+import { GameSetupDb } from '../../../../../adapter/db/model/setup/GameSetupDb';
+import { GameSetupDbSearchRepository } from '../../../../../adapter/db/repository/setup/GameSetupDbSearchRepository';
+import { GameSetup } from '../../../../../domain/model/setup/GameSetup';
+import { GameSetupFindQuery } from '../../../../../domain/query/setup/GameSetupFindQuery';
 import { gameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
-import mongodb from 'mongodb';
+import { gameSetupFindQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 

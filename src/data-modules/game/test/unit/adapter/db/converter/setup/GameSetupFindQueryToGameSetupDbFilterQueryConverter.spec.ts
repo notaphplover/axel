@@ -1,8 +1,9 @@
 import 'reflect-metadata';
+import mongodb from 'mongodb';
+
+import { GameSetupFindQueryToGameSetupDbFilterQueryConverter } from '../../../../../../adapter/db/converter/setup/GameSetupFindQueryToGameSetupDbFilterQueryConverter';
 import { GameSetupDb } from '../../../../../../adapter/db/model/setup/GameSetupDb';
 import { GameSetupFindQuery } from '../../../../../../domain/query/setup/GameSetupFindQuery';
-import { GameSetupFindQueryToGameSetupDbFilterQueryConverter } from '../../../../../../adapter/db/converter/setup/GameSetupFindQueryToGameSetupDbFilterQueryConverter';
-import mongodb from 'mongodb';
 
 describe(GameSetupFindQueryToGameSetupDbFilterQueryConverter.name, () => {
   let gameSetupFindQueryToGameSetupDbFilterQueryConverter: GameSetupFindQueryToGameSetupDbFilterQueryConverter;

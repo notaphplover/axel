@@ -1,12 +1,13 @@
 import 'reflect-metadata';
+import { Container } from 'inversify';
+
+import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import {
   DbDotEnvVariables,
   dbAdapter,
 } from '../../../../../layer-modules/db/adapter';
-import { Container } from 'inversify';
 import { EnvLoader } from '../../../../../layer-modules/env/domain';
 import { MongoDbConnector } from '../../../adapter/MongoDbConnector';
-import { configAdapter } from '../../../../../layer-modules/config/adapter';
 
 describe(MongoDbConnector.name, () => {
   let mongoDbConnector: MongoDbConnector;

@@ -1,17 +1,18 @@
 import { inject, injectable } from 'inversify';
+
+import { Interactor } from '../../../../../common/domain';
+import { GAME_DOMAIN_TYPES } from '../../config/types';
 import { Artifact } from '../../model/card/Artifact';
-import { ArtifactCreationQuery } from '../../query/card/ArtifactCreationQuery';
-import { BaseCardCreationQuery } from '../../query/card/BaseCardCreationQuery';
 import { Card } from '../../model/card/Card';
-import { CardCreationQuery } from '../../query/card/CardCreationQuery';
 import { CardType } from '../../model/card/CardType';
 import { Creature } from '../../model/card/Creature';
-import { CreatureCreationQuery } from '../../query/card/CreatureCreationQuery';
 import { Enchantment } from '../../model/card/Enchantment';
-import { EnchantmentCreationQuery } from '../../query/card/EnchantmentCreationQuery';
-import { GAME_DOMAIN_TYPES } from '../../config/types';
-import { Interactor } from '../../../../../common/domain';
 import { Land } from '../../model/card/Land';
+import { ArtifactCreationQuery } from '../../query/card/ArtifactCreationQuery';
+import { BaseCardCreationQuery } from '../../query/card/BaseCardCreationQuery';
+import { CardCreationQuery } from '../../query/card/CardCreationQuery';
+import { CreatureCreationQuery } from '../../query/card/CreatureCreationQuery';
+import { EnchantmentCreationQuery } from '../../query/card/EnchantmentCreationQuery';
 import { LandCreationQuery } from '../../query/card/LandCreationQuery';
 
 @injectable()

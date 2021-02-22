@@ -1,8 +1,9 @@
-import { ArtifactCreationQuery } from '../../../../domain/query/card/ArtifactCreationQuery';
-import { ArtifactDb } from '../../model/card/ArtifactDb';
-import { Converter } from '../../../../../../common/domain';
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
+import { ArtifactCreationQuery } from '../../../../domain/query/card/ArtifactCreationQuery';
+import { ArtifactDb } from '../../model/card/ArtifactDb';
 
 @injectable()
 export class ArtifactCreationQueryToArtifactDbsConverter

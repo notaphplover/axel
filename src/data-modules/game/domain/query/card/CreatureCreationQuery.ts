@@ -1,5 +1,5 @@
-import { BaseCardCreationQuery } from './BaseCardCreationQuery';
 import { CardType } from '../../model/card/CardType';
+import { BaseCardCreationQuery } from './BaseCardCreationQuery';
 
 export interface CreatureCreationQuery extends BaseCardCreationQuery {
   type: CardType.Creature;

@@ -1,12 +1,14 @@
+import { injectable } from 'inversify';
+import _ from 'lodash';
+import mongodb from 'mongodb';
+
 import { Converter } from '../../../../../../common/domain';
-import { GameSetupDb } from '../../model/setup/GameSetupDb';
-import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
+import { lodashAdapter } from '../../../../../../integration-modules/lodash/adapter';
 import { PlayerReference } from '../../../../domain/model/setup/PlayerReference';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
-import _ from 'lodash';
-import { injectable } from 'inversify';
-import { lodashAdapter } from '../../../../../../integration-modules/lodash/adapter';
-import mongodb from 'mongodb';
+import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
+
 
 @injectable()
 export class GameSetupUpdateQueryToGameSetupDbFilterQueryConverter

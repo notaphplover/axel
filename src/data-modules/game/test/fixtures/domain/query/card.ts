@@ -2,16 +2,16 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../common/test';
-import { artifact, creature, enchantment, land } from '../model/card';
+import { CardType } from '../../../../domain/model/card/CardType';
 import { ArtifactCreationQuery } from '../../../../domain/query/card/ArtifactCreationQuery';
 import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
-import { CardType } from '../../../../domain/model/card/CardType';
 import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
 import { EnchantmentCreationQuery } from '../../../../domain/query/card/EnchantmentCreationQuery';
 import { LandCreationQuery } from '../../../../domain/query/card/LandCreationQuery';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
 import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
 import { liveGame } from '../model';
+import { artifact, creature, enchantment, land } from '../model/card';
 
 export const artifactCreationQuery: ArtifactCreationQuery = {
   cost: artifact.cost,

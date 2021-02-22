@@ -1,21 +1,22 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import * as fastify from 'fastify';
+import { StatusCodes } from 'http-status-codes';
+
 import { Converter, Interactor } from '../../../../../../../../common/domain';
 import { EitherEither } from '../../../../../../../../common/domain/either/Either';
-import { ExtendedGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/ExtendedGameSetupApiV1';
-import { GameSetup } from '../../../../../../domain/model/setup/GameSetup';
-import { GameSetupsCreationQuery } from '../../../../../../domain/query/setup/GameSetupCreationQuery';
-import { PostGameSetupV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PostGameSetupV1RequestHandler';
-import { StatusCodes } from 'http-status-codes';
-import { UserContainer } from '../../../../../../../user/domain';
 import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
 import { commonTest } from '../../../../../../../../common/test';
+import { UserContainer } from '../../../../../../../user/domain';
+import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';
+import { ExtendedGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/ExtendedGameSetupApiV1';
+import { PostGameSetupV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PostGameSetupV1RequestHandler';
+import { GameSetup } from '../../../../../../domain/model/setup/GameSetup';
+import { GameSetupsCreationQuery } from '../../../../../../domain/query/setup/GameSetupCreationQuery';
 import { extendedGameSetupApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/setup';
 import { gameSetupCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/setup';
 import { gameSetupFixtureFactory } from '../../../../../fixtures/domain/model/setup';
 import { gameSetupsCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/setup';
-import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';
 
 describe(PostGameSetupV1RequestHandler.name, () => {
   let gameSetupToExtendedGameSetupApiV1Converter: jest.Mocked<

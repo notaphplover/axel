@@ -1,10 +1,12 @@
-import { BaseCard } from '../../../../domain/model/card/BaseCard';
-import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
-import { CardType } from '../../../../domain/model/card/CardType';
+import { injectable } from 'inversify';
+
 import { Converter } from '../../../../../../common/domain';
+import { BaseCard } from '../../../../domain/model/card/BaseCard';
+import { CardType } from '../../../../domain/model/card/CardType';
 import { Creature } from '../../../../domain/model/card/Creature';
 import { CreatureDb } from '../../model/card/CreatureDb';
-import { injectable } from 'inversify';
+import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
+
 
 @injectable()
 export class CreatureDbToCreatureConverter

@@ -1,10 +1,10 @@
-import { Document } from './model/Document';
+import { mongoDbContainer } from './config/container';
 import { MONGODB_ADAPTER_PUBLIC_TYPES } from './config/types';
+import { Document } from './model/Document';
 import { MongoDbCollectionInitializer } from './MongoDbCollectionInitializer';
 import { MongoDbConnector } from './MongoDbConnector';
 import { MongoDbIndex } from './MongoDbIndex';
 import { MongoDbInitializer } from './MongoDbInitializer';
-import { mongoDbContainer } from './config/container';
 
 export {
   Document,

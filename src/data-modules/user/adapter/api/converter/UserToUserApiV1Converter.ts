@@ -1,9 +1,10 @@
 import { inject, injectable } from 'inversify';
+
 import { Converter } from '../../../../../common/domain';
-import { USER_ADAPTER_TYPES } from '../../config/types';
 import { User } from '../../../domain/model/User';
-import { UserApiV1 } from '../model/UserApiV1';
 import { UserRole } from '../../../domain/model/UserRole';
+import { USER_ADAPTER_TYPES } from '../../config/types';
+import { UserApiV1 } from '../model/UserApiV1';
 import { UserRoleApiV1 } from '../model/UserRoleApiV1';
 
 @injectable()

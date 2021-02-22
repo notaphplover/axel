@@ -1,6 +1,7 @@
 import { ContainerModule, interfaces } from 'inversify';
-import { JWT_ADAPTER_TYPES } from './types';
+
 import { JwtDotEnvLoader } from '../env/JwtDotEnvLoader';
+import { JWT_ADAPTER_TYPES } from './types';
 
 function bindAdapter(bind: interfaces.Bind): void {
   bind(JWT_ADAPTER_TYPES.env.JWT_ENV_LOADER)

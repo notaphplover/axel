@@ -1,5 +1,6 @@
-import { CardDetailApiV1 } from '../../../../model/card/CardDetailApiV1';
 import Joi from 'joi';
+
+import { CardDetailApiV1 } from '../../../../model/card/CardDetailApiV1';
 
 export const cardDetailApiV1JoiValidatorSchema: Joi.ObjectSchema<CardDetailApiV1> = Joi.object<CardDetailApiV1>(
   {

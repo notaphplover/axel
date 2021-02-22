@@ -1,15 +1,16 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
-import { Converter } from '../../../../../../common/domain';
+import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
 import { Creature } from '../../../../domain/model/card/Creature';
 import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
-import { CreatureDb } from '../../model/card/CreatureDb';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
-import mongodb from 'mongodb';
+import { CreatureDb } from '../../model/card/CreatureDb';
 
 @injectable()
 export class CreatureDbInsertRepository extends MongoDbInsertRepository<

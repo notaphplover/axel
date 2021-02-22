@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable @typescript-eslint/typedef */
 import 'reflect-metadata';
+import mongodb from 'mongodb';
+
 import { Capsule, Converter } from '../../../../../../../common/domain';
-import { CardDeck } from '../../../../../domain/model/deck/CardDeck';
+import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
+import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { CardDeckDb } from '../../../../../adapter/db/model/deck/CardDeckDb';
 import { CardDeckDbSearchRepository } from '../../../../../adapter/db/repository/deck/CardDeckDbSearchRepository';
+import { CardDeck } from '../../../../../domain/model/deck/CardDeck';
 import { CardDeckFindQuery } from '../../../../../domain/query/deck/CardDeckFindQuery';
-import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
-import { cardDeckFindQueryFixtureFactory } from '../../../../fixtures/domain/query/deck';
 import { cardDeckFixtureFactory } from '../../../../fixtures/domain/model/deck';
-import { dbTest } from '../../../../../../../layer-modules/db/test';
-import mongodb from 'mongodb';
+import { cardDeckFindQueryFixtureFactory } from '../../../../fixtures/domain/query/deck';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 

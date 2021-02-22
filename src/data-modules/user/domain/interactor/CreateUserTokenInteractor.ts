@@ -1,6 +1,7 @@
-import { JwtManager, jwtDomain } from '../../../jwt/domain';
 import { inject, injectable } from 'inversify';
+
 import { Interactor } from '../../../../common/domain';
+import { JwtManager, jwtDomain } from '../../../jwt/domain';
 import { User } from '../model/User';
 import { UserToken } from '../model/UserToken';
 

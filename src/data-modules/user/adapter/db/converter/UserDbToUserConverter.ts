@@ -1,7 +1,8 @@
+import { injectable } from 'inversify';
+
 import { Converter } from '../../../../../common/domain';
 import { User } from '../../../domain/model/User';
 import { UserDb } from '../model/UserDb';
-import { injectable } from 'inversify';
 
 @injectable()
 export class UserDbToUserConverter implements Converter<UserDb, User> {

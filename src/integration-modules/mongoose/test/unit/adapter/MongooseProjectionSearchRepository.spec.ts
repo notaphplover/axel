@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { Converter, Filter } from '../../../../../common/domain';
 import { Document, FilterQuery, Model, Query } from 'mongoose';
+
+import { Converter, Filter } from '../../../../../common/domain';
 import { MongooseProjectionSearchRepository } from '../../../../../integration-modules/mongoose/adapter/MongooseProjectionSearchRepository';
 
 class ModelMock {

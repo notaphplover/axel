@@ -1,7 +1,8 @@
+import { injectable } from 'inversify';
+
 import { Converter } from '../../../../../../common/domain';
 import { GameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/GameSetupFindQueryPlayerSetup';
 import { GameSetupFindQueryPlayerSetupApiV1 } from '../../query/setup/GameSetupFindQueryPlayerSetupApiV1';
-import { injectable } from 'inversify';
 
 @injectable()
 export class GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter

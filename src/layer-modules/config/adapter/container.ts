@@ -1,11 +1,12 @@
 import { Container } from 'inversify';
+
 import { appAdapter } from '../../../data-modules/app/adapter';
-import { dbAdapter } from '../../db/adapter';
 import { gameAdapter } from '../../../data-modules/game/adapter';
-import { jsonwebtokenAdapter } from '../../../integration-modules/jsonwebtoken/adapter';
 import { jwtAdapter } from '../../../data-modules/jwt/adapter';
-import { mongodbAdapter } from '../../../integration-modules/mongodb/adapter';
 import { userAdapter } from '../../../data-modules/user/adapter';
+import { jsonwebtokenAdapter } from '../../../integration-modules/jsonwebtoken/adapter';
+import { mongodbAdapter } from '../../../integration-modules/mongodb/adapter';
+import { dbAdapter } from '../../db/adapter';
 
 export const container: Container = new Container();
 

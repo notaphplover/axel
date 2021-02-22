@@ -1,6 +1,7 @@
-import { isDirectory } from './isDirectory';
-import { join } from 'path';
 import { readdirSync } from 'fs';
+import { join } from 'path';
+
+import { isDirectory } from './isDirectory';
 
 export function getDirectories(source: string): string[] {
   return readdirSync(source).filter((directoryName: string) =>

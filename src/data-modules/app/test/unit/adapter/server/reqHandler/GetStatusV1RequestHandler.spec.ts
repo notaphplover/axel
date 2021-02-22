@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { GetStatusV1RequestHandler } from '../../../../../adapter/server/reqHandler/GetStatusV1RequestHandler';
+
 import { commonTest } from '../../../../../../../common/test';
+import { GetStatusV1RequestHandler } from '../../../../../adapter/server/reqHandler/GetStatusV1RequestHandler';
 
 describe(GetStatusV1RequestHandler.name, () => {
   let getStatusV1RequestHandler: GetStatusV1RequestHandler;

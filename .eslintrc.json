@@ -9,6 +9,9 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
     "prettier"
   ],
   "globals": {
@@ -22,7 +25,8 @@
     "project": "./tsconfig.json"
   },
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "import"
   ],
   "rules": {
     "@typescript-eslint/consistent-type-definitions": [
@@ -59,7 +63,6 @@
     "@typescript-eslint/no-floating-promises": [
       "error"
     ],
-    "no-magic-numbers": "off",
     "@typescript-eslint/no-require-imports": "error",
     "@typescript-eslint/no-unnecessary-condition": "error",
     "@typescript-eslint/no-unused-expressions": [
@@ -100,6 +103,15 @@
       }
     ],
     "@typescript-eslint/unified-signatures": "error",
-    "sort-imports": "error"
+    "import/newline-after-import": "error",
+    "import/order": ["error", {
+      "alphabetize": {
+        "order": "asc",
+        "caseInsensitive": true
+      },
+      "groups": ["builtin", "external"],
+      "newlines-between": "always"
+    }],
+    "no-magic-numbers": "off"
   }
 }

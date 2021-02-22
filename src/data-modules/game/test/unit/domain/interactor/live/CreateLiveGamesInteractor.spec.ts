@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { CreateLiveGamesInteractor } from '../../../../../domain/interactor/live/CreateLiveGamesInteractor';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
+import { CreateLiveGamesInteractor } from '../../../../../domain/interactor/live/CreateLiveGamesInteractor';
 import { LiveGame } from '../../../../../domain/model/live/LiveGame';
 import { LiveGameCreationQuery } from '../../../../../domain/query/live/LiveGameCreationQuery';
-import { liveGameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 import { liveGameFixtureFactory } from '../../../../fixtures/domain/model';
+import { liveGameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 describe(CreateLiveGamesInteractor.name, () => {
   let liveGameInsertRepository: InsertRepository<

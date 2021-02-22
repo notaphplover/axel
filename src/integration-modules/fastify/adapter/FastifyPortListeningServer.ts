@@ -1,7 +1,8 @@
 import { FastifyInstance } from 'fastify';
+import { injectable } from 'inversify';
+
 import { FastifyRouter } from './FastifyRouter';
 import { FastifyServer } from './FastifyServer';
-import { injectable } from 'inversify';
 
 @injectable()
 export class FastifyPortListeningServer extends FastifyServer {

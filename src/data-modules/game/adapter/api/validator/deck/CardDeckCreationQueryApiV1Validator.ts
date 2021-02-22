@@ -1,8 +1,9 @@
 import { inject, injectable } from 'inversify';
-import { CardDeckCreationQueryApiV1 } from '../../query/deck/CardDeckCreationQueryApiV1';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import Joi from 'joi';
+
 import { JoiObjectValidator } from '../../../../../../integration-modules/joi/adapter';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardDeckCreationQueryApiV1 } from '../../query/deck/CardDeckCreationQueryApiV1';
 
 @injectable()
 export class CardDeckCreationQueryApiV1Validator extends JoiObjectValidator<CardDeckCreationQueryApiV1> {

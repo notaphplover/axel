@@ -1,11 +1,12 @@
+import { inject, injectable } from 'inversify';
+import jwt, { VerifyErrors } from 'jsonwebtoken';
+
 import {
   JwtDotEnvVariables,
   jwtAdapter,
 } from '../../../data-modules/jwt/adapter';
-import { inject, injectable } from 'inversify';
-import jwt, { VerifyErrors } from 'jsonwebtoken';
-import { EnvLoader } from '../../../layer-modules/env/domain';
 import { JwtManager } from '../../../data-modules/jwt/domain';
+import { EnvLoader } from '../../../layer-modules/env/domain';
 
 @injectable()
 export class JsonWebTokenManager<TToken extends Record<string, unknown>>

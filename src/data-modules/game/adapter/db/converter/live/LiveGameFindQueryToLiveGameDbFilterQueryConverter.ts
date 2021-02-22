@@ -1,9 +1,10 @@
-import { Converter } from '../../../../../../common/domain';
-import { LiveGameDb } from '../../model/live/LiveGameDb';
-import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
-import { commonDomain } from '../../../../../../common/domain';
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
+
+import { Converter , commonDomain } from '../../../../../../common/domain';
+import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
+import { LiveGameDb } from '../../model/live/LiveGameDb';
+
 
 const hasValue: <TType>(
   value: TType,

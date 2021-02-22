@@ -1,15 +1,17 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
+import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
 import { Artifact } from '../../../../domain/model/card/Artifact';
 import { ArtifactCreationQuery } from '../../../../domain/query/card/ArtifactCreationQuery';
-import { ArtifactDb } from '../../model/card/ArtifactDb';
-import { Converter } from '../../../../../../common/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
-import mongodb from 'mongodb';
+import { ArtifactDb } from '../../model/card/ArtifactDb';
+
 
 @injectable()
 export class ArtifactDbInsertRepository extends MongoDbInsertRepository<

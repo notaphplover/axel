@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { CreateCreaturesInteractor } from '../../../../../domain/interactor/card/CreateCreaturesInteractor';
 import { Creature } from '../../../../../domain/model/card/Creature';
 import { CreatureCreationQuery } from '../../../../../domain/query/card/CreatureCreationQuery';
-import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
-import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 import { creatureFixtureFactory } from '../../../../fixtures/domain/model/card';
+import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 describe(CreateCreaturesInteractor.name, () => {
   let creatureInsertRepository: InsertRepository<

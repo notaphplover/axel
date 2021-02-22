@@ -1,18 +1,19 @@
 import { inject, injectable } from 'inversify';
-import { BaseCardCreationQuery } from '../../../../domain/query/card/BaseCardCreationQuery';
-import { BaseCardCreationQueryApiV1 } from '../../query/card/BaseCardCreationQueryApiV1';
-import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
-import { CardCreationQueryApiV1 } from '../../query/card/CardCreationQueryApiV1';
-import { CardDetail } from '../../../../domain/model/card/CardDetail';
-import { CardDetailApiV1 } from '../../model/card/CardDetailApiV1';
-import { CardType } from '../../../../domain/model/card/CardType';
-import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
+
 import { Converter } from '../../../../../../common/domain';
-import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
-import { CreatureCreationQueryApiV1 } from '../../query/card/CreatureCreationQueryApiV1';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardDetail } from '../../../../domain/model/card/CardDetail';
+import { CardType } from '../../../../domain/model/card/CardType';
 import { Resource } from '../../../../domain/model/card/Resource';
+import { BaseCardCreationQuery } from '../../../../domain/query/card/BaseCardCreationQuery';
+import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
+import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardDetailApiV1 } from '../../model/card/CardDetailApiV1';
+import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
 import { ResourceApiV1 } from '../../model/card/ResourceApiV1';
+import { BaseCardCreationQueryApiV1 } from '../../query/card/BaseCardCreationQueryApiV1';
+import { CardCreationQueryApiV1 } from '../../query/card/CardCreationQueryApiV1';
+import { CreatureCreationQueryApiV1 } from '../../query/card/CreatureCreationQueryApiV1';
 
 @injectable()
 export class CardCreationQueryApiV1ToCardCreationQueryConverter

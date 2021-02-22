@@ -1,7 +1,8 @@
+import { injectable } from 'inversify';
+
 import { ValidationResult, Validator } from '../../../../../../common/domain';
 import { LiveGameCreationQueryApiV1 } from '../../query/live/LiveGameCreationQueryApiV1';
 import { LiveGameCreationQueryApiV1ValidationContext } from './LiveGameCreationQueryApiV1ValidationContext';
-import { injectable } from 'inversify';
 
 @injectable()
 export class LiveGameCreationQueryApiV1SemanticValidator

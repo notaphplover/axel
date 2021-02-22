@@ -1,17 +1,18 @@
 import { inject, injectable } from 'inversify';
-import { BaseCard } from '../../../../domain/model/card/BaseCard';
-import { BaseCardApiV1 } from '../../model/card/BaseCardApiV1';
-import { Card } from '../../../../domain/model/card/Card';
-import { CardApiV1 } from '../../model/card/CardApiV1';
-import { CardDetail } from '../../../../domain/model/card/CardDetail';
-import { CardDetailApiV1 } from '../../model/card/CardDetailApiV1';
-import { CardType } from '../../../../domain/model/card/CardType';
-import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
+
 import { Converter } from '../../../../../../common/domain';
+import { BaseCard } from '../../../../domain/model/card/BaseCard';
+import { Card } from '../../../../domain/model/card/Card';
+import { CardDetail } from '../../../../domain/model/card/CardDetail';
+import { CardType } from '../../../../domain/model/card/CardType';
 import { Creature } from '../../../../domain/model/card/Creature';
-import { CreatureApiV1 } from '../../model/card/CreatureApiV1';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { Resource } from '../../../../domain/model/card/Resource';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { BaseCardApiV1 } from '../../model/card/BaseCardApiV1';
+import { CardApiV1 } from '../../model/card/CardApiV1';
+import { CardDetailApiV1 } from '../../model/card/CardDetailApiV1';
+import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
+import { CreatureApiV1 } from '../../model/card/CreatureApiV1';
 import { ResourceApiV1 } from '../../model/card/ResourceApiV1';
 
 @injectable()

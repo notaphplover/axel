@@ -1,8 +1,9 @@
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
-import { ApiVersion } from '../../../layer-modules/api/adapter';
-import { FastifyRouter } from './FastifyRouter';
-import { Server } from '../../../layer-modules/server/domain/Server';
 import { injectable } from 'inversify';
+
+import { ApiVersion } from '../../../layer-modules/api/adapter';
+import { Server } from '../../../layer-modules/server/domain/Server';
+import { FastifyRouter } from './FastifyRouter';
 
 @injectable()
 export class FastifyServer implements Server {

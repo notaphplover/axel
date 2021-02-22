@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { Converter, Interactor } from '../../../../../../../common/domain';
-import { CardDeck } from '../../../../../domain/model/deck/CardDeck';
-import { CardDeckFindQuery } from '../../../../../domain/query/deck/CardDeckFindQuery';
 import { EntitiesNotFoundError } from '../../../../../../../layer-modules/db/domain';
-import { GameFormat } from '../../../../../domain/model/GameFormat';
-import { GameFormatApiV1 } from '../../../../../adapter/api/model/GameFormatApiV1';
 import { GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter } from '../../../../../adapter/api/converter/setup/GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter';
+import { GameFormatApiV1 } from '../../../../../adapter/api/model/GameFormatApiV1';
+import { CardDeck } from '../../../../../domain/model/deck/CardDeck';
+import { GameFormat } from '../../../../../domain/model/GameFormat';
+import { CardDeckFindQuery } from '../../../../../domain/query/deck/CardDeckFindQuery';
 import { GameSetupsCreationQuery } from '../../../../../domain/query/setup/GameSetupCreationQuery';
-import { cardDeckFixtureFactory } from '../../../../fixtures/domain/model/deck';
 import { gameSetupCreationQueryApiV1FixtureFactory } from '../../../../fixtures/adapter/api/query/setup';
+import { cardDeckFixtureFactory } from '../../../../fixtures/domain/model/deck';
 import { gameSetupsCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 
 describe(

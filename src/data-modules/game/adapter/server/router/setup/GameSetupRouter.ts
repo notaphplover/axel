@@ -4,19 +4,20 @@ import {
   FastifyRequest,
   FastifyServerOptions,
 } from 'fastify';
+import { inject, injectable } from 'inversify';
+
 import {
   FastifyRequestHandler,
   FastifyRouter,
 } from '../../../../../../integration-modules/fastify/adapter';
+import { ApiVersion } from '../../../../../../layer-modules/api/adapter';
 import {
   FastifyUserAuthenticator,
   userAdapter,
 } from '../../../../../user/adapter';
 import { User, UserContainer } from '../../../../../user/domain';
-import { inject, injectable } from 'inversify';
-import { ApiVersion } from '../../../../../../layer-modules/api/adapter';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { UserRole } from '../../../../../user/domain/model/UserRole';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
 const GAME_SETUP_ROUTER_PATH_PREFIX: string = 'game-setups';
 

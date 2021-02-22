@@ -1,5 +1,5 @@
-import { CardDeckSections } from './CardDeckSections';
 import { GameFormat } from '../GameFormat';
+import { CardDeckSections } from './CardDeckSections';
 
 export interface CardDeck {
   sections: CardDeckSections;

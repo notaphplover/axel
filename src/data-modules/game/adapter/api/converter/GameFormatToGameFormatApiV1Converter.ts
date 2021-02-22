@@ -1,7 +1,8 @@
+import { injectable } from 'inversify';
+
 import { Converter } from '../../../../../common/domain';
 import { GameFormat } from '../../../domain/model/GameFormat';
 import { GameFormatApiV1 } from '../model/GameFormatApiV1';
-import { injectable } from 'inversify';
 
 const gameFormatToGameFormatApiV1Map: {
   [TKey in GameFormat]: GameFormatApiV1;

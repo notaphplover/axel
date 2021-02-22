@@ -1,8 +1,9 @@
 import { Container } from 'inversify';
+
 import { commonTest } from '../../../../common/test';
-import { container } from '../../adapter/container';
 import { gameTest } from '../../../../data-modules/game/test';
 import { userTest } from '../../../../data-modules/user/test';
+import { container } from '../../adapter/container';
 
 export const e2eContainer: Container = container.createChild();
 

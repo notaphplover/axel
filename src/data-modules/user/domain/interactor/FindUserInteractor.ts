@@ -1,4 +1,5 @@
 import { inject, injectable } from 'inversify';
+
 import { Interactor } from '../../../../common/domain';
 import { SearchRepository } from '../../../../layer-modules/db/domain';
 import { USER_DOMAIN_TYPES } from '../config/types';

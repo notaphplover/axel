@@ -1,4 +1,5 @@
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
+
 import { ApiVersion } from '../../../layer-modules/api/adapter';
 
 export interface FastifyRouter<

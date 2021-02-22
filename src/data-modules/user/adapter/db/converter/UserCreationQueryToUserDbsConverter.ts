@@ -1,10 +1,11 @@
 import { inject, injectable } from 'inversify';
-import { Converter } from '../../../../../common/domain';
-import { PasswordHasher } from '../../security/PasswordHasher';
-import { USER_ADAPTER_TYPES } from '../../config/types';
-import { UserCreationQuery } from '../../../domain/query/UserCreationQuery';
-import { UserDb } from '../model/UserDb';
 import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../common/domain';
+import { UserCreationQuery } from '../../../domain/query/UserCreationQuery';
+import { USER_ADAPTER_TYPES } from '../../config/types';
+import { PasswordHasher } from '../../security/PasswordHasher';
+import { UserDb } from '../model/UserDb';
 
 @injectable()
 export class UserCreationQueryToUserDbsConverter

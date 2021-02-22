@@ -1,9 +1,10 @@
 import { injectable, unmanaged } from 'inversify';
+import mongodb from 'mongodb';
+
 import { DbDotEnvVariables } from '../../../layer-modules/db/adapter';
 import { EnvLoader } from '../../../layer-modules/env/domain';
 import { MongoDbIndex } from './MongoDbIndex';
 import { MongoDbInitializer } from './MongoDbInitializer';
-import mongodb from 'mongodb';
 
 @injectable()
 export abstract class MongoDbCollectionInitializer

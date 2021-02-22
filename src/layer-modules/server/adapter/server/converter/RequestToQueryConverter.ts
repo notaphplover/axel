@@ -1,9 +1,10 @@
+import { injectable, unmanaged } from 'inversify';
+
 import {
   Converter,
   ValidationResult,
   Validator,
 } from '../../../../../common/domain';
-import { injectable, unmanaged } from 'inversify';
 import { ValueOrErrors } from '../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()

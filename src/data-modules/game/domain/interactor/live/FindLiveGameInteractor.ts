@@ -1,9 +1,10 @@
 import { inject, injectable } from 'inversify';
-import { GAME_DOMAIN_TYPES } from '../../config/types';
+
 import { Interactor } from '../../../../../common/domain';
+import { SearchRepository } from '../../../../../layer-modules/db/domain';
+import { GAME_DOMAIN_TYPES } from '../../config/types';
 import { LiveGame } from '../../model/live/LiveGame';
 import { LiveGameFindQuery } from '../../query/live/LiveGameFindQuery';
-import { SearchRepository } from '../../../../../layer-modules/db/domain';
 
 @injectable()
 export class FindLiveGameInteractor

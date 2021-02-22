@@ -1,15 +1,17 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
-import { Converter } from '../../../../../../common/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { GameSetup } from '../../../../domain/model/setup/GameSetup';
-import { GameSetupDb } from '../../model/setup/GameSetupDb';
-import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { MongoDbPaginatedSearchRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbPaginatedSearchRepository';
-import mongodb from 'mongodb';
+import { GameSetup } from '../../../../domain/model/setup/GameSetup';
+import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { GameSetupDb } from '../../model/setup/GameSetupDb';
+
 
 @injectable()
 export class GameSetupDbSearchRepository extends MongoDbPaginatedSearchRepository<

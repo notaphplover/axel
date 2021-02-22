@@ -1,33 +1,34 @@
 import 'reflect-metadata';
 import * as axios from 'axios';
+import { Container } from 'inversify';
+
+import { Capsule } from '../../../../../common/domain';
+import { commonTest } from '../../../../../common/test';
+import { mongodbAdapter } from '../../../../../integration-modules/mongodb/adapter';
+import { configAdapter } from '../../../../../layer-modules/config/adapter';
+import { configTest } from '../../../../../layer-modules/config/test';
+import { DbConnector } from '../../../../../layer-modules/db/domain';
+import { EnvLoader } from '../../../../../layer-modules/env/domain';
+import { AppEnvVariables } from '../../../../app/adapter';
+import { AppEnvLoader } from '../../../../app/adapter/env/AppEnvLoader';
+import { InversifyContainerTaskGraphNodeExtractor } from '../../../../task-graph/adapter';
 import {
   PerformTasksResult,
   QueueBasedTaskGraph,
   TaskGraphNode,
 } from '../../../../task-graph/domain';
 import { User, UserToken } from '../../../../user/domain';
-import { AppEnvLoader } from '../../../../app/adapter/env/AppEnvLoader';
-import { AppEnvVariables } from '../../../../app/adapter';
-import { BasicGameSetupApiV1 } from '../../../adapter/api/model/setup/BasicGameSetupApiV1';
-import { Capsule } from '../../../../../common/domain';
-import { CardDeck } from '../../../domain/model/deck/CardDeck';
-import { Container } from 'inversify';
-import { DbConnector } from '../../../../../layer-modules/db/domain';
-import { EnvLoader } from '../../../../../layer-modules/env/domain';
-import { ExtendedGameSetupApiV1 } from '../../../adapter/api/model/setup/ExtendedGameSetupApiV1';
-import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
+import { userTest } from '../../../../user/test';
 import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
+import { BasicGameSetupApiV1 } from '../../../adapter/api/model/setup/BasicGameSetupApiV1';
+import { ExtendedGameSetupApiV1 } from '../../../adapter/api/model/setup/ExtendedGameSetupApiV1';
+import { PlayerReferenceApiV1 } from '../../../adapter/api/model/setup/PlayerReferenceApiV1';
+import { PlayerSetupApiV1 } from '../../../adapter/api/model/setup/PlayerSetupApiV1';
 import { GameSetupCreationQueryApiV1 } from '../../../adapter/api/query/setup/GameSetupCreationQueryApiV1';
 import { GameSetupFindQueryApiV1 } from '../../../adapter/api/query/setup/GameSetupFindQueryApiV1';
 import { GameSetupUpdateQueryApiV1 } from '../../../adapter/api/query/setup/GameSetupUpdateQueryApiV1';
-import { InversifyContainerTaskGraphNodeExtractor } from '../../../../task-graph/adapter';
-import { PlayerReferenceApiV1 } from '../../../adapter/api/model/setup/PlayerReferenceApiV1';
-import { PlayerSetupApiV1 } from '../../../adapter/api/model/setup/PlayerSetupApiV1';
-import { commonTest } from '../../../../../common/test';
-import { configAdapter } from '../../../../../layer-modules/config/adapter';
-import { configTest } from '../../../../../layer-modules/config/test';
-import { mongodbAdapter } from '../../../../../integration-modules/mongodb/adapter';
-import { userTest } from '../../../../user/test';
+import { CardDeck } from '../../../domain/model/deck/CardDeck';
+import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
 
 const container: Container = configAdapter.container;
 

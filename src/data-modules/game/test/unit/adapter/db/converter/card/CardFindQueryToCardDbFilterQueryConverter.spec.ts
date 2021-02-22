@@ -1,7 +1,8 @@
 import 'reflect-metadata';
-import { CardFindQuery } from '../../../../../../domain/query/card/CardFindQuery';
-import { CardFindQueryToCardDbFilterQueryConverter } from '../../../../../../adapter/db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
 import mongodb from 'mongodb';
+
+import { CardFindQueryToCardDbFilterQueryConverter } from '../../../../../../adapter/db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
+import { CardFindQuery } from '../../../../../../domain/query/card/CardFindQuery';
 
 describe(CardFindQueryToCardDbFilterQueryConverter.name, () => {
   let cardFindQueryToCardDbFilterQueryConverter: CardFindQueryToCardDbFilterQueryConverter;

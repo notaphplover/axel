@@ -1,11 +1,12 @@
 import { inject, injectable } from 'inversify';
+
 import { Converter } from '../../../../../../common/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameFormat } from '../../../../domain/model/GameFormat';
-import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
-import { GameSetupToGameSetupApiV1Converter } from './GameSetupToGameSetupApiV1Converter';
-import { PlayerReferenceApiV1 } from '../../model/setup/PlayerReferenceApiV1';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
+import { PlayerReferenceApiV1 } from '../../model/setup/PlayerReferenceApiV1';
+import { GameSetupToGameSetupApiV1Converter } from './GameSetupToGameSetupApiV1Converter';
 
 @injectable()
 export class GameSetupToBasicGameSetupApiV1Converter extends GameSetupToGameSetupApiV1Converter<PlayerReferenceApiV1> {

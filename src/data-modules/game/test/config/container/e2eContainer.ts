@@ -1,6 +1,7 @@
 import { ContainerModule, interfaces } from 'inversify';
-import { CreateCardDeckOfVoidLandGraphNode } from '../../task-graph/deck/CreateCardDeckOfVoidLandGraphNode';
+
 import { CreateVoidLandTaskGraphNode } from '../../task-graph/card/CreateVoidLandTaskGraphNode';
+import { CreateCardDeckOfVoidLandGraphNode } from '../../task-graph/deck/CreateCardDeckOfVoidLandGraphNode';
 import { GAME_E2E_TYPES } from '../types/e2eTypes';
 
 export function bindE2e(bind: interfaces.Bind): void {

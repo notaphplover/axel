@@ -1,9 +1,10 @@
 import { injectable, unmanaged } from 'inversify';
-import { Converter } from '../../../common/domain';
-import { Document } from './model/Document';
-import { EntitiesNotCreatedError } from '../../../layer-modules/db/domain';
-import { MongoDbConnector } from './MongoDbConnector';
 import mongodb from 'mongodb';
+
+import { Converter } from '../../../common/domain';
+import { EntitiesNotCreatedError } from '../../../layer-modules/db/domain';
+import { Document } from './model/Document';
+import { MongoDbConnector } from './MongoDbConnector';
 
 const MONGODB_DUPLICATED_KEY_ERR_CODE: number = 11000;
 

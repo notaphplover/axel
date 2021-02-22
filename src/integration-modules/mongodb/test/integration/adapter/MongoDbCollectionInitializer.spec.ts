@@ -1,15 +1,16 @@
 import 'reflect-metadata';
-import { Capsule } from '../../../../../common/domain';
 import { Container } from 'inversify';
-import { DB_ADAPTER_PUBLIC_TYPES } from '../../../../../layer-modules/db/adapter/config/types';
-import { DbDotEnvVariables } from '../../../../../layer-modules/db/adapter';
-import { EnvLoader } from '../../../../../layer-modules/env/domain';
-import { MongoDbCollectionInitializer } from '../../../adapter/MongoDbCollectionInitializer';
-import { MongoDbConnector } from '../../../adapter';
-import { MongoDbIndex } from '../../../adapter/MongoDbIndex';
-import { configAdapter } from '../../../../../layer-modules/config/adapter';
-import { dbTest } from '../../../../../layer-modules/db/test';
 import mongodb from 'mongodb';
+
+import { Capsule } from '../../../../../common/domain';
+import { configAdapter } from '../../../../../layer-modules/config/adapter';
+import { DbDotEnvVariables } from '../../../../../layer-modules/db/adapter';
+import { DB_ADAPTER_PUBLIC_TYPES } from '../../../../../layer-modules/db/adapter/config/types';
+import { dbTest } from '../../../../../layer-modules/db/test';
+import { EnvLoader } from '../../../../../layer-modules/env/domain';
+import { MongoDbConnector } from '../../../adapter';
+import { MongoDbCollectionInitializer } from '../../../adapter/MongoDbCollectionInitializer';
+import { MongoDbIndex } from '../../../adapter/MongoDbIndex';
 
 const container: Container = configAdapter.container;
 

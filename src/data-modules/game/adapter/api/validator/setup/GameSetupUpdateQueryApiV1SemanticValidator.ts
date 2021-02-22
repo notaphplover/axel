@@ -1,7 +1,8 @@
+import { injectable } from 'inversify';
+
 import { ValidationResult, Validator } from '../../../../../../common/domain';
 import { GameSetupUpdateQueryApiV1 } from '../../query/setup/GameSetupUpdateQueryApiV1';
 import { GameSetupUpdateQueryApiV1ValidationContext } from './GameSetupUpdateQueryApiV1ValidationContext';
-import { injectable } from 'inversify';
 
 @injectable()
 export class GameSetupUpdateQueryApiV1SemanticValidator

@@ -1,8 +1,10 @@
-import { Capsule, PaginationQuery, commonDomain } from '../../../common/domain';
-import { Document, Query } from 'mongoose';
-import { MongooseProjectionSearchRepository } from './MongooseProjectionSearchRepository';
-import { SearchRepository } from '../../../layer-modules/db/domain';
 import { injectable } from 'inversify';
+import { Document, Query } from 'mongoose';
+
+import { Capsule, PaginationQuery, commonDomain } from '../../../common/domain';
+import { SearchRepository } from '../../../layer-modules/db/domain';
+import { MongooseProjectionSearchRepository } from './MongooseProjectionSearchRepository';
+
 
 @injectable()
 export abstract class MongooseProjectionPaginatedSearchRepository<

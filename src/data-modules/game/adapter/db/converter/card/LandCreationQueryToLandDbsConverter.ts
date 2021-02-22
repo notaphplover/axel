@@ -1,8 +1,9 @@
+import { injectable } from 'inversify';
+import mongodb from 'mongodb';
+
 import { Converter } from '../../../../../../common/domain';
 import { LandCreationQuery } from '../../../../domain/query/card/LandCreationQuery';
 import { LandDb } from '../../model/card/LandDb';
-import { injectable } from 'inversify';
-import mongodb from 'mongodb';
 
 @injectable()
 export class LandCreationQueryToLandDbsConverter

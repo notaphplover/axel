@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import {
-  artifactCreationQueryFixtureFactory,
-  creatureCreationQueryFixtureFactory,
-  enchantmentCreationQueryFixtureFactory,
-  landCreationQueryFixtureFactory,
-} from '../../../../fixtures/domain/query/card';
+import { Interactor } from '../../../../../../../common/domain';
+import { CreateCardsInteractor } from '../../../../../domain/interactor/card/CreateCardsInteractor';
+import { Artifact } from '../../../../../domain/model/card/Artifact';
+import { CardType } from '../../../../../domain/model/card/CardType';
+import { Creature } from '../../../../../domain/model/card/Creature';
+import { Enchantment } from '../../../../../domain/model/card/Enchantment';
+import { Land } from '../../../../../domain/model/card/Land';
+import { ArtifactCreationQuery } from '../../../../../domain/query/card/ArtifactCreationQuery';
+import { CardCreationQuery } from '../../../../../domain/query/card/CardCreationQuery';
+import { CreatureCreationQuery } from '../../../../../domain/query/card/CreatureCreationQuery';
+import { EnchantmentCreationQuery } from '../../../../../domain/query/card/EnchantmentCreationQuery';
+import { LandCreationQuery } from '../../../../../domain/query/card/LandCreationQuery';
 import {
   artifactFixtureFactory,
   creatureFixtureFactory,
   enchantmentFixtureFactory,
   landFixtureFactory,
 } from '../../../../fixtures/domain/model/card';
-import { Artifact } from '../../../../../domain/model/card/Artifact';
-import { ArtifactCreationQuery } from '../../../../../domain/query/card/ArtifactCreationQuery';
-import { CardCreationQuery } from '../../../../../domain/query/card/CardCreationQuery';
-import { CardType } from '../../../../../domain/model/card/CardType';
-import { CreateCardsInteractor } from '../../../../../domain/interactor/card/CreateCardsInteractor';
-import { Creature } from '../../../../../domain/model/card/Creature';
-import { CreatureCreationQuery } from '../../../../../domain/query/card/CreatureCreationQuery';
-import { Enchantment } from '../../../../../domain/model/card/Enchantment';
-import { EnchantmentCreationQuery } from '../../../../../domain/query/card/EnchantmentCreationQuery';
-import { Interactor } from '../../../../../../../common/domain';
-import { Land } from '../../../../../domain/model/card/Land';
-import { LandCreationQuery } from '../../../../../domain/query/card/LandCreationQuery';
+import {
+  artifactCreationQueryFixtureFactory,
+  creatureCreationQueryFixtureFactory,
+  enchantmentCreationQueryFixtureFactory,
+  landCreationQueryFixtureFactory,
+} from '../../../../fixtures/domain/query/card';
 
 describe(CreateCardsInteractor.name, () => {
   let createArtifactsInteractor: Interactor<

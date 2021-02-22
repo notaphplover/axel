@@ -1,10 +1,12 @@
 import { injectable, unmanaged } from 'inversify';
-import { BaseTaskGraphNode } from '../../../task-graph/domain';
+import { v4 as uuidv4 } from 'uuid';
+
 import { Interactor } from '../../../../common/domain';
+import { BaseTaskGraphNode } from '../../../task-graph/domain';
 import { User } from '../../domain/model/User';
 import { UserCreationQuery } from '../../domain/query/UserCreationQuery';
 import { userCreationQuery } from '../fixtures/domain/query/fixtures';
-import { v4 as uuidv4 } from 'uuid';
+
 
 @injectable()
 export abstract class CreateUserTaskGraphNode<TId> extends BaseTaskGraphNode<

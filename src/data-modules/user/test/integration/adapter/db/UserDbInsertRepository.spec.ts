@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import mongodb from 'mongodb';
+
 import { Capsule, Converter } from '../../../../../../common/domain';
 import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
-import { User } from '../../../../domain/model/User';
-import { UserCreationQuery } from '../../../../domain/query/UserCreationQuery';
+import { dbTest } from '../../../../../../layer-modules/db/test';
 import { UserDb } from '../../../../adapter/db/model/UserDb';
 import { UserDbInsertRepository } from '../../../../adapter/db/repository/UserDbInsertRepository';
-import { dbTest } from '../../../../../../layer-modules/db/test';
-import mongodb from 'mongodb';
-import { userCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
+import { User } from '../../../../domain/model/User';
+import { UserCreationQuery } from '../../../../domain/query/UserCreationQuery';
 import { userFixtureFactory } from '../../../fixtures/domain/model/fixtures';
+import { userCreationQueryFixtureFactory } from '../../../fixtures/domain/query/fixtures';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 

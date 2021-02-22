@@ -1,10 +1,11 @@
 import { inject, injectable } from 'inversify';
-import { PasswordHasher } from '../../security/PasswordHasher';
-import { USER_ADAPTER_TYPES } from '../../config/types';
-import { UserDb } from '../model/UserDb';
+
+import { ValidatorFunctionBasedFilter , commonDomain } from '../../../../../common/domain';
 import { UserFindQuery } from '../../../domain/query/UserFindQuery';
-import { ValidatorFunctionBasedFilter } from '../../../../../common/domain';
-import { commonDomain } from '../../../../../common/domain';
+import { USER_ADAPTER_TYPES } from '../../config/types';
+import { PasswordHasher } from '../../security/PasswordHasher';
+import { UserDb } from '../model/UserDb';
+
 
 @injectable()
 export class PostUserDbSearchFilter extends ValidatorFunctionBasedFilter<

@@ -1,15 +1,16 @@
 import * as fastify from 'fastify';
-import { Converter, Interactor } from '../../../../../../common/domain';
+import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
-import { BasicGameSetupApiV1 } from '../../../api/model/setup/BasicGameSetupApiV1';
+
+import { Converter, Interactor } from '../../../../../../common/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { UserContainer } from '../../../../../user/domain';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
-import { StatusCodes } from 'http-status-codes';
-import { UserContainer } from '../../../../../user/domain';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { BasicGameSetupApiV1 } from '../../../api/model/setup/BasicGameSetupApiV1';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
 @injectable()
 export class PatchGameSetupByIdV1RequestHandler

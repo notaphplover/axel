@@ -1,4 +1,5 @@
 import { FastifyReply } from 'fastify';
+
 import { FixtureFactory } from '../../../../common/test';
 
 export class FastifyReplyFixtureFactory

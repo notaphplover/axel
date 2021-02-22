@@ -1,6 +1,6 @@
 import { FastifyUserAuthenticator } from './auth/FastifyUserAuthenticator';
-import { USER_ADAPTER_PUBLIC_TYPES } from './config/types';
 import { userContainer } from './config/container';
+import { USER_ADAPTER_PUBLIC_TYPES } from './config/types';
 
 export { FastifyUserAuthenticator };
 

@@ -1,9 +1,10 @@
 import { inject, injectable } from 'inversify';
+
+import { Interactor } from '../../../../../common/domain';
+import { InsertRepository } from '../../../../../layer-modules/db/domain';
+import { GAME_DOMAIN_TYPES } from '../../config/types';
 import { Creature } from '../../model/card/Creature';
 import { CreatureCreationQuery } from '../../query/card/CreatureCreationQuery';
-import { GAME_DOMAIN_TYPES } from '../../config/types';
-import { InsertRepository } from '../../../../../layer-modules/db/domain';
-import { Interactor } from '../../../../../common/domain';
 
 @injectable()
 export class CreateCreaturesInteractor

@@ -1,8 +1,9 @@
+import { injectable } from 'inversify';
+
 import { ValidationResult, Validator } from '../../../../../../common/domain';
 import { GameSetupCreationQueryApiV1 } from '../../query/setup/GameSetupCreationQueryApiV1';
-import { GameSetupCreationQueryApiV1ValidationContext } from './GameSetupCreationQueryApiV1ValidationContext';
 import { GameSetupCreationQueryPlayerSetupApiV1 } from '../../query/setup/GameSetupCreationQueryPlayerSetupApiV1';
-import { injectable } from 'inversify';
+import { GameSetupCreationQueryApiV1ValidationContext } from './GameSetupCreationQueryApiV1ValidationContext';
 
 @injectable()
 export class GameSetupCreationQueryApiV1SemanticValidator

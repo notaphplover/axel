@@ -1,13 +1,14 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
 import {
   MongoDbCollectionInitializer,
   MongoDbIndex,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
-import { DbDotEnvVariables } from '../../../../../../layer-modules/db/adapter';
+import { DbDotEnvVariables , dbAdapter } from '../../../../../../layer-modules/db/adapter';
 import { EnvLoader } from '../../../../../../layer-modules/env/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { dbAdapter } from '../../../../../../layer-modules/db/adapter';
-import mongodb from 'mongodb';
+
 
 @injectable()
 export class GameSetupDbCollectionInitializer extends MongoDbCollectionInitializer {

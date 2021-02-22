@@ -1,5 +1,5 @@
-import { CardDeckSectionsApiV1 } from './CardDeckSectionsApiV1';
 import { GameFormatApiV1 } from '../GameFormatApiV1';
+import { CardDeckSectionsApiV1 } from './CardDeckSectionsApiV1';
 
 export interface CardDeckApiV1 {
   sections: CardDeckSectionsApiV1;

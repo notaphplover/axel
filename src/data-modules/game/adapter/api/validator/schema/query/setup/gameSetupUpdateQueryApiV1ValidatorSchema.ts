@@ -1,7 +1,8 @@
-import { GameSetupUpdateQueryApiV1 } from '../../../../query/setup/GameSetupUpdateQueryApiV1';
 import Joi from 'joi';
-import { gameSetupUpdateQueryAdditionalPlayerSetupApiV1ValidatorSchema } from './gameSetupUpdateQueryAdditionalPlayerSetupApiV1ValidatorSchema';
+
+import { GameSetupUpdateQueryApiV1 } from '../../../../query/setup/GameSetupUpdateQueryApiV1';
 import { playerReferenceApiV1JoiValidatorSchema } from '../../model/schema/playerReferenceApiV1JoiValidatorSchema';
+import { gameSetupUpdateQueryAdditionalPlayerSetupApiV1ValidatorSchema } from './gameSetupUpdateQueryAdditionalPlayerSetupApiV1ValidatorSchema';
 
 const ADDITIONAL_PLAYER_SETUPS_LENGTH: number = 1;
 const REMOVE_PLAYER_SETUPS_LENGTH: number = 1;

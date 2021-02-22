@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { CreateEnchantmentsInteractor } from '../../../../../domain/interactor/card/CreateEnchantmentsInteractor';
 import { Enchantment } from '../../../../../domain/model/card/Enchantment';
 import { EnchantmentCreationQuery } from '../../../../../domain/query/card/EnchantmentCreationQuery';
-import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
-import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 import { enchantmentFixtureFactory } from '../../../../fixtures/domain/model/card';
+import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 describe(CreateEnchantmentsInteractor.name, () => {
   let enchantmentInsertRepository: InsertRepository<

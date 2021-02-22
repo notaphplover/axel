@@ -1,5 +1,6 @@
 import { inject, injectable } from 'inversify';
 import Joi from 'joi';
+
 import { JoiObjectValidator } from '../../../../../integration-modules/joi/adapter';
 import { USER_ADAPTER_TYPES } from '../../config/types';
 import { UserCreationQueryApiV1 } from '../query/UserCreationQueryApiV1';

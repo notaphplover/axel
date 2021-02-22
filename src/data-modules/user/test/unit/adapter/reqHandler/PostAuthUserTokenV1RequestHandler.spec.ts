@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { StatusCodes } from 'http-status-codes';
+
 import {
   Converter,
   Interactor,
@@ -7,21 +10,19 @@ import {
   ValidationResult,
   Validator,
 } from '../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { commonTest } from '../../../../../../common/test';
+import { UserTokenApiV1 } from '../../../../adapter/api/model/UserTokenApiV1';
+import { AuthCreationQueryApiV1 } from '../../../../adapter/api/query/AuthCreationQueryApiV1';
+import { PostAuthTokenV1RequestHandler } from '../../../../adapter/server/reqHandler/PostAuthUserTokenV1RequestHandler';
+import { User } from '../../../../domain/model/User';
+import { UserToken } from '../../../../domain/model/UserToken';
+import { UserFindQuery } from '../../../../domain/query/UserFindQuery';
+import { userTokenApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/fixtures';
+import { authCreationQueryApiV1FixtureFactory } from '../../../fixtures/adapter/api/query/fixtures';
 import {
   userFixtureFactory,
   userTokenFixtureFactory,
 } from '../../../fixtures/domain/model/fixtures';
-import { AuthCreationQueryApiV1 } from '../../../../adapter/api/query/AuthCreationQueryApiV1';
-import { PostAuthTokenV1RequestHandler } from '../../../../adapter/server/reqHandler/PostAuthUserTokenV1RequestHandler';
-import { StatusCodes } from 'http-status-codes';
-import { User } from '../../../../domain/model/User';
-import { UserFindQuery } from '../../../../domain/query/UserFindQuery';
-import { UserToken } from '../../../../domain/model/UserToken';
-import { UserTokenApiV1 } from '../../../../adapter/api/model/UserTokenApiV1';
-import { authCreationQueryApiV1FixtureFactory } from '../../../fixtures/adapter/api/query/fixtures';
-import { commonTest } from '../../../../../../common/test';
-import { userTokenApiV1FixtureFactory } from '../../../fixtures/adapter/api/model/fixtures';
 
 describe(PostAuthTokenV1RequestHandler.name, () => {
   let authCreationQueryApiV1Validator: Validator<AuthCreationQueryApiV1>;

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import { CreateLandsInteractor } from '../../../../../domain/interactor/card/CreateLandsInteractor';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
+import { CreateLandsInteractor } from '../../../../../domain/interactor/card/CreateLandsInteractor';
 import { Land } from '../../../../../domain/model/card/Land';
 import { LandCreationQuery } from '../../../../../domain/query/card/LandCreationQuery';
-import { landCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 import { landFixtureFactory } from '../../../../fixtures/domain/model/card';
+import { landCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 describe(CreateLandsInteractor.name, () => {
   let landInsertRepository: InsertRepository<Land, LandCreationQuery>;

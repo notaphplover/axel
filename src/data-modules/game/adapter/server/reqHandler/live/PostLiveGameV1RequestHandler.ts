@@ -1,15 +1,18 @@
 import * as fastify from 'fastify';
-import { Converter, Interactor } from '../../../../../../common/domain';
+import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
+
+import { Converter, Interactor } from '../../../../../../common/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { UserContainer } from '../../../../../user/domain';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
-import { LiveGameApiV1 } from '../../../api/model/live/LiveGameApiV1';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
-import { StatusCodes } from 'http-status-codes';
-import { UserContainer } from '../../../../../user/domain';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import { LiveGameApiV1 } from '../../../api/model/live/LiveGameApiV1';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+
+
 
 @injectable()
 export class PostLiveGameV1RequestHandler

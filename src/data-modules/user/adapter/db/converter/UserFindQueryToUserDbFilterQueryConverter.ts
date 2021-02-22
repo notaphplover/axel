@@ -1,9 +1,10 @@
-import { Converter } from '../../../../../common/domain';
-import { UserDb } from '../model/UserDb';
-import { UserFindQuery } from '../../../domain/query/UserFindQuery';
-import { hasValue } from '../../../../../common/domain/utils/hasValue';
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../common/domain';
+import { hasValue } from '../../../../../common/domain/utils/hasValue';
+import { UserFindQuery } from '../../../domain/query/UserFindQuery';
+import { UserDb } from '../model/UserDb';
 
 @injectable()
 export class UserFindQueryToUserDbFilterQueryConverter

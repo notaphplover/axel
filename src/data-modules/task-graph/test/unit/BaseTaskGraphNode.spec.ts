@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { BaseTaskGraphNode, TaskGraphNodeStatus } from '../../domain';
 import { Capsule } from '../../../../common/domain';
+import { BaseTaskGraphNode, TaskGraphNodeStatus } from '../../domain';
 
 class BaseTaskGraphNodeMock extends BaseTaskGraphNode<number, number> {
   constructor(

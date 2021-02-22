@@ -1,15 +1,17 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
-import { Converter } from '../../../../../../common/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { LiveGame } from '../../../../domain/model/live/LiveGame';
-import { LiveGameDb } from '../../model/live/LiveGameDb';
-import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
 import { MongoDbSearchRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbSearchRepository';
-import mongodb from 'mongodb';
+import { LiveGame } from '../../../../domain/model/live/LiveGame';
+import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { LiveGameDb } from '../../model/live/LiveGameDb';
+
 
 @injectable()
 export class LiveGameDbSearchRepository extends MongoDbSearchRepository<

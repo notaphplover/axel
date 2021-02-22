@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
+import { CreateArtifactsInteractor } from '../../../../../domain/interactor/card/CreateArtifactsInteractor';
 import { Artifact } from '../../../../../domain/model/card/Artifact';
 import { ArtifactCreationQuery } from '../../../../../domain/query/card/ArtifactCreationQuery';
-import { CreateArtifactsInteractor } from '../../../../../domain/interactor/card/CreateArtifactsInteractor';
-import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
-import { artifactCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 import { artifactFixtureFactory } from '../../../../fixtures/domain/model/card';
+import { artifactCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 describe(CreateArtifactsInteractor.name, () => {
   let artifactInsertRepository: InsertRepository<

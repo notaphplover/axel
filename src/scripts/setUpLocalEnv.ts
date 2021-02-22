@@ -1,6 +1,4 @@
 import 'reflect-metadata';
-import { PassThrough, Readable } from 'stream';
-import { basename, join } from 'path';
 import {
   copyFileSync,
   createReadStream,
@@ -8,8 +6,12 @@ import {
   existsSync,
   mkdirSync,
 } from 'fs';
-import { commonDomain } from '../common/domain';
+import { basename, join } from 'path';
+import { PassThrough, Readable } from 'stream';
+
 import { ncp } from 'ncp';
+
+import { commonDomain } from '../common/domain';
 
 const rootDir: string = commonDomain.io.rootDir;
 

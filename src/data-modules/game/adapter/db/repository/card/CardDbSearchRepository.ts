@@ -1,15 +1,17 @@
+import { inject, injectable } from 'inversify';
+import mongodb from 'mongodb';
+
+import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { inject, injectable } from 'inversify';
-import { Card } from '../../../../domain/model/card/Card';
-import { CardDb } from '../../model/card/CardDb';
-import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
-import { Converter } from '../../../../../../common/domain';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { MongoDbPaginatedSearchRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbPaginatedSearchRepository';
-import mongodb from 'mongodb';
+import { Card } from '../../../../domain/model/card/Card';
+import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardDb } from '../../model/card/CardDb';
+
 
 @injectable()
 export class CardDbSearchRepository extends MongoDbPaginatedSearchRepository<

@@ -1,7 +1,8 @@
 import { inject, injectable } from 'inversify';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import Joi from 'joi';
+
 import { JoiObjectValidator } from '../../../../../../integration-modules/joi/adapter';
+import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { LiveGameFindQueryApiV1 } from '../../query/live/LiveGameFindQueryApiV1';
 
 @injectable()

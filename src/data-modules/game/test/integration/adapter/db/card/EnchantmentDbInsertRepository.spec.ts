@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
+import mongodb from 'mongodb';
+
 import { Capsule, Converter } from '../../../../../../../common/domain';
-import { Enchantment } from '../../../../../domain/model/card/Enchantment';
-import { EnchantmentCreationQuery } from '../../../../../domain/query/card/EnchantmentCreationQuery';
-import { EnchantmentDb } from '../../../../../adapter/db/model/card/EnchantmentDb';
-import { EnchantmentDbInsertRepository } from '../../../../../adapter/db/repository/card/EnchantmentDbInsertRepository';
 import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
-import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { EnchantmentDb } from '../../../../../adapter/db/model/card/EnchantmentDb';
+import { EnchantmentDbInsertRepository } from '../../../../../adapter/db/repository/card/EnchantmentDbInsertRepository';
+import { Enchantment } from '../../../../../domain/model/card/Enchantment';
+import { EnchantmentCreationQuery } from '../../../../../domain/query/card/EnchantmentCreationQuery';
 import { enchantmentFixtureFactory } from '../../../../fixtures/domain/model/card';
-import mongodb from 'mongodb';
+import { enchantmentCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 

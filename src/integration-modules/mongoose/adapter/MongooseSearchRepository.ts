@@ -1,8 +1,10 @@
-import { Converter, Filter } from '../../../common/domain';
-import { Document, FilterQuery, Model } from 'mongoose';
-import { MongooseProjectionSearchRepository } from './MongooseProjectionSearchRepository';
-import { SearchRepository } from '../../../layer-modules/db/domain';
 import { injectable } from 'inversify';
+import { Document, FilterQuery, Model } from 'mongoose';
+
+import { Converter, Filter } from '../../../common/domain';
+import { SearchRepository } from '../../../layer-modules/db/domain';
+import { MongooseProjectionSearchRepository } from './MongooseProjectionSearchRepository';
+
 
 @injectable()
 export abstract class MongooseSearchRepository<

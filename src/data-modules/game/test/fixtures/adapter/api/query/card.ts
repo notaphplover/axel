@@ -2,6 +2,13 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../../common/test';
+import { CardTypeApiV1 } from '../../../../../adapter/api/model/card/CardTypeApiV1';
+import { ArtifactCreationQueryApiV1 } from '../../../../../adapter/api/query/card/ArtifactCreationQueryApiV1';
+import { CardFindQueryApiV1 } from '../../../../../adapter/api/query/card/CardFindQueryApiV1';
+import { CreatureCreationQueryApiV1 } from '../../../../../adapter/api/query/card/CreatureCreationQueryApiV1';
+import { EnchantmentCreationQueryApiV1 } from '../../../../../adapter/api/query/card/EnchantmentCreationQueryApiV1';
+import { LandCreationQueryApiV1 } from '../../../../../adapter/api/query/card/LandCreationQueryApiV1';
+import { LiveGameCreationQueryApiV1 } from '../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import {
   artifactFindQuery,
   creatureCreationQuery,
@@ -10,13 +17,6 @@ import {
   landFindQuery,
 } from '../../../domain/query/card';
 import { cardDetailApiV1, resourceApiV1 } from '../model/card';
-import { ArtifactCreationQueryApiV1 } from '../../../../../adapter/api/query/card/ArtifactCreationQueryApiV1';
-import { CardFindQueryApiV1 } from '../../../../../adapter/api/query/card/CardFindQueryApiV1';
-import { CardTypeApiV1 } from '../../../../../adapter/api/model/card/CardTypeApiV1';
-import { CreatureCreationQueryApiV1 } from '../../../../../adapter/api/query/card/CreatureCreationQueryApiV1';
-import { EnchantmentCreationQueryApiV1 } from '../../../../../adapter/api/query/card/EnchantmentCreationQueryApiV1';
-import { LandCreationQueryApiV1 } from '../../../../../adapter/api/query/card/LandCreationQueryApiV1';
-import { LiveGameCreationQueryApiV1 } from '../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import { gameSetupApiV1 } from '../model/setup';
 
 export const artifactCreationQueryApiV1: ArtifactCreationQueryApiV1 = {
