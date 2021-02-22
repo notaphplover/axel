@@ -1,21 +1,15 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
-import {
-  ContextBasedValidator,
-  Converter,
-  Interactor,
-  ValidationFail,
-  ValidationSuccess,
-} from '../../../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import * as fastify from 'fastify';
+import { Converter, Interactor } from '../../../../../../../../common/domain';
+import { EitherEither } from '../../../../../../../../common/domain/either/Either';
 import { ExtendedGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/ExtendedGameSetupApiV1';
 import { GameSetup } from '../../../../../../domain/model/setup/GameSetup';
-import { GameSetupCreationQueryApiV1 } from '../../../../../../adapter/api/query/setup/GameSetupCreationQueryApiV1';
-import { GameSetupCreationQueryApiV1ValidationContext } from '../../../../../../adapter/api/validator/setup/GameSetupCreationQueryApiV1ValidationContext';
 import { GameSetupsCreationQuery } from '../../../../../../domain/query/setup/GameSetupCreationQuery';
 import { PostGameSetupV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PostGameSetupV1RequestHandler';
 import { StatusCodes } from 'http-status-codes';
 import { UserContainer } from '../../../../../../../user/domain';
+import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
 import { commonTest } from '../../../../../../../../common/test';
 import { extendedGameSetupApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/setup';
 import { gameSetupCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/setup';
@@ -24,37 +18,24 @@ import { gameSetupsCreationQueryFixtureFactory } from '../../../../../fixtures/d
 import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';
 
 describe(PostGameSetupV1RequestHandler.name, () => {
-  let gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter: Converter<
-    GameSetupCreationQueryApiV1,
-    Promise<GameSetupsCreationQuery>
+  let gameSetupToExtendedGameSetupApiV1Converter: jest.Mocked<
+    Converter<GameSetup, ExtendedGameSetupApiV1>
   >;
 
-  let gameSetupCreationQueryApiV1ContextBasedValidator: ContextBasedValidator<
-    GameSetupCreationQueryApiV1,
-    GameSetupCreationQueryApiV1ValidationContext
+  let createGameSetupsInteractor: jest.Mocked<
+    Interactor<GameSetupsCreationQuery, Promise<GameSetup[]>>
   >;
 
-  let gameSetupToExtendedGameSetupApiV1Converter: Converter<
-    GameSetup,
-    ExtendedGameSetupApiV1
-  >;
-
-  let createGameSetupsInteractor: Interactor<
-    GameSetupsCreationQuery,
-    Promise<GameSetup[]>
+  let postGameSetupV1RequestToGameSetupsCreationQueryConverter: jest.Mocked<
+    Converter<
+      fastify.FastifyRequest & UserContainer,
+      Promise<ValueOrErrors<GameSetupsCreationQuery>>
+    >
   >;
 
   let postGameSetupV1RequestHandler: PostGameSetupV1RequestHandler;
 
   beforeAll(() => {
-    gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter = {
-      transform: jest.fn(),
-    };
-
-    gameSetupCreationQueryApiV1ContextBasedValidator = {
-      validate: jest.fn(),
-    };
-
     gameSetupToExtendedGameSetupApiV1Converter = {
       transform: jest.fn(),
     };
@@ -63,72 +44,52 @@ describe(PostGameSetupV1RequestHandler.name, () => {
       interact: jest.fn(),
     };
 
+    postGameSetupV1RequestToGameSetupsCreationQueryConverter = {
+      transform: jest.fn(),
+    };
+
     postGameSetupV1RequestHandler = new PostGameSetupV1RequestHandler(
-      gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter,
-      gameSetupCreationQueryApiV1ContextBasedValidator,
       gameSetupToExtendedGameSetupApiV1Converter,
       createGameSetupsInteractor,
+      postGameSetupV1RequestToGameSetupsCreationQueryConverter,
     );
   });
 
   describe('.handle()', () => {
     describe('when called, and the request is valid', () => {
-      let requestFixture: FastifyRequest & UserContainer;
-      let replyFixture: FastifyReply;
+      let requestFixture: fastify.FastifyRequest & UserContainer;
+      let replyFixture: fastify.FastifyReply;
 
       beforeAll(async () => {
         requestFixture = ({
           body: gameSetupCreationQueryApiV1FixtureFactory.get(),
           user: userFixtureFactory.get(),
-        } as Partial<FastifyRequest & UserContainer>) as FastifyRequest &
-          UserContainer;
+        } as Partial<
+          fastify.FastifyRequest & UserContainer
+        >) as fastify.FastifyRequest & UserContainer;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        const expectedValidationResult: ValidationSuccess<GameSetupCreationQueryApiV1> = {
-          model: gameSetupCreationQueryApiV1FixtureFactory.get(),
-          result: true,
+        const gameSetupsCreationQueryOrErrors: ValueOrErrors<GameSetupsCreationQuery> = {
+          isEither: false,
+          value: gameSetupsCreationQueryFixtureFactory.get(),
         };
-        (gameSetupCreationQueryApiV1ContextBasedValidator.validate as jest.Mock).mockReturnValueOnce(
-          expectedValidationResult,
-        );
 
-        (gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
-          gameSetupsCreationQueryFixtureFactory.get(),
-        );
+        createGameSetupsInteractor.interact.mockResolvedValueOnce([
+          gameSetupFixtureFactory.get(),
+        ]);
 
-        (createGameSetupsInteractor.interact as jest.Mock).mockResolvedValueOnce(
-          [gameSetupFixtureFactory.get()],
-        );
-
-        (gameSetupToExtendedGameSetupApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
+        gameSetupToExtendedGameSetupApiV1Converter.transform.mockReturnValueOnce(
           extendedGameSetupApiV1FixtureFactory.get(),
+        );
+
+        postGameSetupV1RequestToGameSetupsCreationQueryConverter.transform.mockResolvedValueOnce(
+          gameSetupsCreationQueryOrErrors,
         );
 
         await postGameSetupV1RequestHandler.handle(
           requestFixture,
           replyFixture,
         );
-      });
-
-      it('must call gameSetupCreationQueryApiV1ContextBasedValidator.validate with the request body and the validation context', () => {
-        expect(
-          gameSetupCreationQueryApiV1ContextBasedValidator.validate,
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          gameSetupCreationQueryApiV1ContextBasedValidator.validate,
-        ).toHaveBeenCalledWith(
-          gameSetupCreationQueryApiV1FixtureFactory.get(),
-          { user: userFixtureFactory.get() },
-        );
-      });
-
-      it('must call gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform with the model obtained', () => {
-        expect(
-          gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform,
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform,
-        ).toHaveBeenCalledWith(gameSetupCreationQueryApiV1FixtureFactory.get());
       });
 
       it('must call createGameSetupsInteractor.interact with the gameSetupsCreationQuery obtained', () => {
@@ -156,25 +117,27 @@ describe(PostGameSetupV1RequestHandler.name, () => {
     });
 
     describe('when called and the request is not valid', () => {
-      let requestFixture: FastifyRequest & UserContainer;
-      let replyFixture: FastifyReply;
+      let requestFixture: fastify.FastifyRequest & UserContainer;
+      let replyFixture: fastify.FastifyReply;
 
-      let gameSetupCreationQueryApiV1ContextBasedValidatorValidationResult: ValidationFail;
+      let gameSetupCreationQueryOrErrors: EitherEither<string[]>;
 
       beforeAll(async () => {
         requestFixture = ({
           body: gameSetupCreationQueryApiV1FixtureFactory.get(),
           user: userFixtureFactory.get(),
-        } as Partial<FastifyRequest & UserContainer>) as FastifyRequest &
-          UserContainer;
+        } as Partial<
+          fastify.FastifyRequest & UserContainer
+        >) as fastify.FastifyRequest & UserContainer;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        gameSetupCreationQueryApiV1ContextBasedValidatorValidationResult = {
-          result: false,
-          errorMessage: 'test error message',
+        gameSetupCreationQueryOrErrors = {
+          isEither: true,
+          value: ['test error message'],
         };
-        (gameSetupCreationQueryApiV1ContextBasedValidator.validate as jest.Mock).mockReturnValueOnce(
-          gameSetupCreationQueryApiV1ContextBasedValidatorValidationResult,
+
+        postGameSetupV1RequestToGameSetupsCreationQueryConverter.transform.mockResolvedValueOnce(
+          gameSetupCreationQueryOrErrors,
         );
 
         await postGameSetupV1RequestHandler.handle(
@@ -191,8 +154,7 @@ describe(PostGameSetupV1RequestHandler.name, () => {
       it('must call reply.send() with the validation errror message', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
         expect(replyFixture.send).toHaveBeenCalledWith({
-          message:
-            gameSetupCreationQueryApiV1ContextBasedValidatorValidationResult.errorMessage,
+          message: gameSetupCreationQueryOrErrors.value[0],
         });
       });
     });

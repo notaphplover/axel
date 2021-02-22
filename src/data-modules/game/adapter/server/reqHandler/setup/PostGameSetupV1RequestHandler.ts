@@ -1,42 +1,20 @@
-import {
-  ContextBasedValidator,
-  Converter,
-  Interactor,
-  ValidationResult,
-} from '../../../../../../common/domain';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import * as fastify from 'fastify';
+import { Converter, Interactor } from '../../../../../../common/domain';
 import { inject, injectable } from 'inversify';
 import { ExtendedGameSetupApiV1 } from '../../../api/model/setup/ExtendedGameSetupApiV1';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
-import { GameSetupCreationQueryApiV1 } from '../../../api/query/setup/GameSetupCreationQueryApiV1';
-import { GameSetupCreationQueryApiV1ValidationContext } from '../../../api/validator/setup/GameSetupCreationQueryApiV1ValidationContext';
 import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { StatusCodes } from 'http-status-codes';
 import { UserContainer } from '../../../../../user/domain';
+import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()
 export class PostGameSetupV1RequestHandler
-  implements FastifyRequestHandler<FastifyRequest & UserContainer> {
+  implements FastifyRequestHandler<fastify.FastifyRequest & UserContainer> {
   constructor(
-    @inject(
-      GAME_ADAPTER_TYPES.api.converter.setup
-        .GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER,
-    )
-    private readonly gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter: Converter<
-      GameSetupCreationQueryApiV1,
-      Promise<GameSetupsCreationQuery>
-    >,
-    @inject(
-      GAME_ADAPTER_TYPES.api.validator.setup
-        .GAME_SETUP_CREATION_QUERY_API_V1_CONTEXT_BASED_VALIDATOR,
-    )
-    private readonly gameSetupCreationQueryApiV1ContextBasedValidator: ContextBasedValidator<
-      GameSetupCreationQueryApiV1,
-      GameSetupCreationQueryApiV1ValidationContext
-    >,
     @inject(
       GAME_ADAPTER_TYPES.api.converter.setup
         .GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER,
@@ -50,24 +28,31 @@ export class PostGameSetupV1RequestHandler
       GameSetupsCreationQuery,
       Promise<GameSetup[]>
     >,
+    @inject(
+      GAME_ADAPTER_TYPES.server.converter.setup
+        .POST_GAME_SETUP_V1_REQUEST_TO_GAME_SETUPS_CREATION_QUERY_CONVERTER,
+    )
+    private readonly postGameSetupV1RequestToGameSetupsCreationQueryConverter: Converter<
+      fastify.FastifyRequest & UserContainer,
+      Promise<ValueOrErrors<GameSetupsCreationQuery>>
+    >,
   ) {}
 
   public async handle(
-    request: FastifyRequest & UserContainer,
-    reply: FastifyReply,
+    request: fastify.FastifyRequest & UserContainer,
+    reply: fastify.FastifyReply,
   ): Promise<void> {
-    const validationResult: ValidationResult<GameSetupCreationQueryApiV1> = this.gameSetupCreationQueryApiV1ContextBasedValidator.validate(
-      request.body,
-      { user: request.user },
+    const gameSetupCreationQueryOrErrors: ValueOrErrors<GameSetupsCreationQuery> = await this.postGameSetupV1RequestToGameSetupsCreationQueryConverter.transform(
+      request,
     );
 
-    if (validationResult.result) {
-      const gameSetupCreationQueryApiV1: GameSetupCreationQueryApiV1 =
-        validationResult.model;
-
-      const gameSetupCreationQuery: GameSetupsCreationQuery = await this.gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform(
-        gameSetupCreationQueryApiV1,
-      );
+    if (gameSetupCreationQueryOrErrors.isEither) {
+      await reply
+        .code(StatusCodes.BAD_REQUEST)
+        .send({ message: gameSetupCreationQueryOrErrors.value.join('\n') });
+    } else {
+      const gameSetupCreationQuery: GameSetupsCreationQuery =
+        gameSetupCreationQueryOrErrors.value;
 
       const [
         gameSetupCreated,
@@ -80,10 +65,6 @@ export class PostGameSetupV1RequestHandler
       );
 
       await reply.send(gameSetupApiV1Created);
-    } else {
-      await reply
-        .code(StatusCodes.BAD_REQUEST)
-        .send({ message: validationResult.errorMessage });
     }
   }
 }
