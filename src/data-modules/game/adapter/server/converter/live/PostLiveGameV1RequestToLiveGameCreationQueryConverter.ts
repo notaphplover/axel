@@ -102,7 +102,7 @@ export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends Reque
     queryApi: LiveGameCreationQueryApiV1,
   ): Promise<ValueOrErrors<GameSetup>> {
     const gameSetupFindQuery: GameSetupFindQuery = {
-      id: queryApi.gameSetupIdId,
+      id: queryApi.gameSetupId,
     };
 
     const gamesSetup: GameSetup[] = await this.findGameSetupsInteractor.interact(

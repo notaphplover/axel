@@ -25,7 +25,7 @@ export class LiveGameCreationQueryApiV1SemanticValidator
   ): ValidationResult<LiveGameCreationQueryApiV1> {
     const errors: string[] = [];
 
-    if (liveGameCreationQueryApiV1.gameSetupIdId !== context.gameSetup.id) {
+    if (liveGameCreationQueryApiV1.gameSetupId !== context.gameSetup.id) {
       throw new Error(
         'Invalid validation context. Expecting the game setup provided to match gameSetupId',
       );

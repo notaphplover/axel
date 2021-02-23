@@ -85,7 +85,7 @@ export const enchantmentFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQue
 );
 
 const liveGameCreationQueryApiV1: LiveGameCreationQueryApiV1 = {
-  gameSetupIdId: gameSetupApiV1.id,
+  gameSetupId: gameSetupApiV1.id,
 };
 
 export const liveGameCreationQueryApiV1FixtureFactory: FixtureFactory<LiveGameCreationQueryApiV1> = new DeepCloneFixtureFactory(

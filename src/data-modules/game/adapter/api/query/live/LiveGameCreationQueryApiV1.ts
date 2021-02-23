@@ -1,3 +1,3 @@
 export interface LiveGameCreationQueryApiV1 {
-  gameSetupIdId: string;
+  gameSetupId: string;
 }
