@@ -1,3 +1,5 @@
+import { GameSetup } from '../../model/setup/GameSetup';
+
 export interface LiveGameCreationQuery {
-  round: number;
+  gameSetup: GameSetup;
 }

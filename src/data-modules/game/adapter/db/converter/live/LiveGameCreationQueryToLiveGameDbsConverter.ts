@@ -9,12 +9,10 @@ import { LiveGameDb } from '../../model/live/LiveGameDb';
 export class LiveGameCreationQueryToLiveGameDbsConverter
   implements
     Converter<LiveGameCreationQuery, mongodb.OptionalId<LiveGameDb>[]> {
-  public transform(
-    query: LiveGameCreationQuery,
-  ): mongodb.OptionalId<LiveGameDb>[] {
+  public transform(): mongodb.OptionalId<LiveGameDb>[] {
     return [
       {
-        round: query.round,
+        round: 1,
       },
     ];
   }
