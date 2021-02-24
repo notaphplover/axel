@@ -54,6 +54,11 @@
         "selector": "typeParameter",
         "filter": "^T[A-Z][a-zA-Z]+$",
         "format": ["PascalCase"]
+      },
+      {
+        "selector": ["parameter"],
+        "format": ["strictCamelCase"],
+        "leadingUnderscore": "allow"
       }
     ],
     "@typescript-eslint/no-dynamic-delete": "error",
