@@ -4,7 +4,7 @@ import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
 import { FindLiveGameInteractor } from '../../../../../domain/interactor/live/FindLiveGameInteractor';
 import { LiveGame } from '../../../../../domain/model/live/LiveGame';
 import { LiveGameFindQuery } from '../../../../../domain/query/live/LiveGameFindQuery';
-import { liveGameFixtureFactory } from '../../../../fixtures/domain/model';
+import { liveGameFixtureFactory } from '../../../../fixtures/domain/model/live';
 import { gameFindQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 describe(FindLiveGameInteractor.name, () => {

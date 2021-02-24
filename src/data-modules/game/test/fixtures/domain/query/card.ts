@@ -8,10 +8,9 @@ import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
 import { EnchantmentCreationQuery } from '../../../../domain/query/card/EnchantmentCreationQuery';
 import { LandCreationQuery } from '../../../../domain/query/card/LandCreationQuery';
-import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
 import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
-import { liveGame } from '../model';
 import { artifact, creature, enchantment, land } from '../model/card';
+import { liveGame } from '../model/live';
 
 export const artifactCreationQuery: ArtifactCreationQuery = {
   cost: artifact.cost,
@@ -76,14 +75,6 @@ export const enchantmentFindQuery: Required<CardFindQuery> = {
 
 export const enchantmentFindQueryFixtureFactory: FixtureFactory<CardFindQuery> = new DeepCloneFixtureFactory(
   enchantmentFindQuery,
-);
-
-export const liveGameCreationQuery: LiveGameCreationQuery = {
-  round: liveGame.round,
-};
-
-export const liveGameCreationQueryFixtureFactory: FixtureFactory<LiveGameCreationQuery> = new DeepCloneFixtureFactory(
-  liveGameCreationQuery,
 );
 
 export const gameFindQuery: LiveGameFindQuery = {

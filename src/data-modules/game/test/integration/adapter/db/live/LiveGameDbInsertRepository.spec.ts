@@ -9,8 +9,8 @@ import { LiveGameDb } from '../../../../../adapter/db/model/live/LiveGameDb';
 import { LiveGameDbInsertRepository } from '../../../../../adapter/db/repository/live/LiveGameDbInsertRepository';
 import { LiveGame } from '../../../../../domain/model/live/LiveGame';
 import { LiveGameCreationQuery } from '../../../../../domain/query/live/LiveGameCreationQuery';
-import { liveGameFixtureFactory } from '../../../../fixtures/domain/model';
-import { liveGameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { liveGameFixtureFactory } from '../../../../fixtures/domain/model/live';
+import { liveGameCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/live';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 

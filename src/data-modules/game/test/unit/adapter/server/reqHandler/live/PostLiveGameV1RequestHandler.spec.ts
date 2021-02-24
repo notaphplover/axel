@@ -15,8 +15,8 @@ import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
 import { LiveGameCreationQuery } from '../../../../../../domain/query/live/LiveGameCreationQuery';
 import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
 import { liveGameCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
-import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model';
-import { liveGameCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
+import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model/live';
+import { liveGameCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/live';
 
 describe(PostLiveGameV1RequestHandler.name, () => {
   let createGamesInteractor: Interactor<

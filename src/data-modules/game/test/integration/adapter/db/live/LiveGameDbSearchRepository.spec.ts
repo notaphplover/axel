@@ -10,7 +10,7 @@ import { LiveGameDb } from '../../../../../adapter/db/model/live/LiveGameDb';
 import { LiveGameDbSearchRepository } from '../../../../../adapter/db/repository/live/LiveGameDbSearchRepository';
 import { LiveGame } from '../../../../../domain/model/live/LiveGame';
 import { LiveGameFindQuery } from '../../../../../domain/query/live/LiveGameFindQuery';
-import { liveGameFixtureFactory } from '../../../../fixtures/domain/model';
+import { liveGameFixtureFactory } from '../../../../fixtures/domain/model/live';
 import { gameFindQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };

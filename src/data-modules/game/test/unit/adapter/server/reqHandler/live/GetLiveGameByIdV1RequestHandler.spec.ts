@@ -12,7 +12,7 @@ import { GetLiveGameByIdV1RequestHandler } from '../../../../../../adapter/serve
 import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
 import { LiveGameFindQuery } from '../../../../../../domain/query/live/LiveGameFindQuery';
 import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
-import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model';
+import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model/live';
 import { liveGameFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/live';
 
 describe(GetLiveGameByIdV1RequestHandler.name, () => {
