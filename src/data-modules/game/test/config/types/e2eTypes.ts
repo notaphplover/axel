@@ -8,4 +8,9 @@ export const GAME_E2E_TYPES = {
       'CreateCardDeckOfVoidLandGraphNode',
     ),
   },
+  setup: {
+    CREATE_GAME_SETUP_OF_ONE_PLAYER_GRAPH_NODE: Symbol(
+      'CreateGameSetupOfOnePlayerGraphNode',
+    ),
+  },
 };
