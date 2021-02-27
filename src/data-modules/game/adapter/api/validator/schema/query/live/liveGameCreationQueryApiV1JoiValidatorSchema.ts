@@ -4,6 +4,6 @@ import { LiveGameCreationQueryApiV1 } from '../../../../query/live/LiveGameCreat
 
 export const liveGameCreationQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<LiveGameCreationQueryApiV1> = Joi.object(
   {
-    gameSetupIdId: Joi.string().strict().required(),
+    gameSetupId: Joi.string().strict().required(),
   },
 );
