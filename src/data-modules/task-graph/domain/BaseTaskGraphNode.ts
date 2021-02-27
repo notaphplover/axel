@@ -32,16 +32,15 @@ export abstract class BaseTaskGraphNode<TId, TOutput>
   }
 
   public async perform(): Promise<void> {
-    if (this.innerStatus !== TaskGraphNodeStatus.NotStarted) {
+    if (this.innerStatus === TaskGraphNodeStatus.NotStarted) {
+      this.innerStatus = TaskGraphNodeStatus.InProgress;
+
+      this.innerPerformPromise = this.getPerformPromise();
+
+      this.innerOutput = await this.innerPerformPromise;
+    } else {
       await this.innerPerformPromise;
-      return;
     }
-
-    this.innerStatus = TaskGraphNodeStatus.InProgress;
-
-    this.innerPerformPromise = this.getPerformPromise();
-
-    this.innerOutput = await this.innerPerformPromise;
   }
 
   public get status(): TaskGraphNodeStatus {
