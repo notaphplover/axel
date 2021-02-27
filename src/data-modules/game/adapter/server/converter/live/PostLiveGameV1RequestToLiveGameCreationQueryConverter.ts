@@ -10,7 +10,10 @@ import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErr
 import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { User, UserContainer } from '../../../../../user/domain';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { CardDeck } from '../../../../domain/model/deck/CardDeck';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
+import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
+import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { LiveGameCreationQueryApiV1 } from '../../../api/query/live/LiveGameCreationQueryApiV1';
@@ -34,6 +37,11 @@ export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends Reque
       LiveGameCreationQueryApiV1,
       LiveGameCreationQueryApiV1,
       LiveGameCreationQueryApiV1ValidationContext
+    >,
+    @inject(GAME_DOMAIN_TYPES.interactor.deck.FIND_CARD_DECKS_INTERACTOR)
+    private readonly findCardDecksInteractor: Interactor<
+      CardDeckFindQuery,
+      Promise<CardDeck[]>
     >,
     @inject(GAME_DOMAIN_TYPES.interactor.setup.FIND_GAME_SETUPS_INTERACTOR)
     private readonly findGameSetupsInteractor: Interactor<
@@ -77,7 +85,14 @@ export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends Reque
 
       const user: User = this.getUserFromRequest(request);
 
+      const gameSetup: GameSetup = gameSetupOrErrors.value;
+      const deckIdTodeckMap: Map<
+        string,
+        CardDeck
+      > = await this.getDeckIdToDeckMapFromGameSetup(gameSetup);
+
       const context: LiveGameCreationQueryApiV1ValidationContext = {
+        deckIdToDeckMap: deckIdTodeckMap,
         gameSetup: gameSetupOrErrors.value,
         user: user,
       };
@@ -96,6 +111,26 @@ export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends Reque
 
       return contextOrErrors;
     }
+  }
+
+  private async getDeckIdToDeckMapFromGameSetup(
+    gameSetup: GameSetup,
+  ): Promise<Map<string, CardDeck>> {
+    const cardDeckFindQuery: CardDeckFindQuery = {
+      ids: gameSetup.playerSetups.map(
+        (playerSetup: PlayerSetup) => playerSetup.deckId,
+      ),
+    };
+
+    const cardDecks: CardDeck[] = await this.findCardDecksInteractor.interact(
+      cardDeckFindQuery,
+    );
+
+    const cardDeckIdToCardDeckMap: Map<string, CardDeck> = new Map(
+      cardDecks.map((cardDeck: CardDeck) => [cardDeck.id, cardDeck]),
+    );
+
+    return cardDeckIdToCardDeckMap;
   }
 
   private async getGameSetupFromQueryApi(
