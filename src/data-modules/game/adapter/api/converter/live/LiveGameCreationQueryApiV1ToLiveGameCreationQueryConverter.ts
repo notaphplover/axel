@@ -18,6 +18,7 @@ export class LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter
     context: LiveGameCreationQueryApiV1ValidationContext,
   ): LiveGameCreationQuery {
     const liveGameCreationQuery: LiveGameCreationQuery = {
+      deckIdToDeckMap: context.deckIdToDeckMap,
       gameSetup: context.gameSetup,
     };
 

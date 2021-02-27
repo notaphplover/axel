@@ -4,10 +4,12 @@ import {
 } from '../../../../../../common/test';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
 import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
+import { cardDeck } from '../model/deck';
 import { liveGame } from '../model/live';
 import { gameSetup } from '../model/setup';
 
 export const liveGameCreationQuery: LiveGameCreationQuery = {
+  deckIdToDeckMap: new Map([[cardDeck.id, cardDeck]]),
   gameSetup: gameSetup,
 };
 
