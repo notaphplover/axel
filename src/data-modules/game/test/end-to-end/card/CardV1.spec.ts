@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import * as axios from 'axios';
 import { Container } from 'inversify';
 
-import { Capsule } from '../../../../../common/domain';
 import { commonTest } from '../../../../../common/test';
 import { mongodbAdapter } from '../../../../../integration-modules/mongodb/adapter';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
@@ -84,8 +83,7 @@ async function prepareData(): Promise<E2EComponents> {
   }
 
   return {
-    userToken: (createUserTokenTaskGraphNode.getOutput() as Capsule<UserToken>)
-      .elem,
+    userToken: createUserTokenTaskGraphNode.getOutput(),
   };
 }
 
@@ -167,9 +165,7 @@ describe('Card V1', () => {
 
       it('must return a response with the card created', () => {
         expect(postCardsSearchesByIdV1Response.data).toBeInstanceOf(Array);
-        expect((postCardsSearchesByIdV1Response.data as unknown[]).length).toBe(
-          1,
-        );
+        expect(postCardsSearchesByIdV1Response.data).toHaveLength(1);
 
         expect(
           (postCardsSearchesByIdV1ResponseBodyFirstElement as ArtifactApiV1).id,
@@ -253,9 +249,7 @@ describe('Card V1', () => {
 
       it('must return a response with the card created', () => {
         expect(postCardsSearchesByIdV1Response.data).toBeInstanceOf(Array);
-        expect((postCardsSearchesByIdV1Response.data as unknown[]).length).toBe(
-          1,
-        );
+        expect(postCardsSearchesByIdV1Response.data).toHaveLength(1);
 
         expect(
           (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1).id,
@@ -341,9 +335,7 @@ describe('Card V1', () => {
 
       it('must return a response with the card created', () => {
         expect(postCardsSearchesByIdV1Response.data).toBeInstanceOf(Array);
-        expect((postCardsSearchesByIdV1Response.data as unknown[]).length).toBe(
-          1,
-        );
+        expect(postCardsSearchesByIdV1Response.data).toHaveLength(1);
 
         expect(
           (postCardsSearchesByIdV1ResponseBodyFirstElement as EnchantmentApiV1)
@@ -422,9 +414,7 @@ describe('Card V1', () => {
 
       it('must return a response with the card created', () => {
         expect(postCardsSearchesByIdV1Response.data).toBeInstanceOf(Array);
-        expect((postCardsSearchesByIdV1Response.data as unknown[]).length).toBe(
-          1,
-        );
+        expect(postCardsSearchesByIdV1Response.data).toHaveLength(1);
 
         expect(
           (postCardsSearchesByIdV1ResponseBodyFirstElement as LandApiV1).id,

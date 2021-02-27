@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { Converter, Interactor } from '../../../../../../../common/domain';
 import { EntitiesNotFoundError } from '../../../../../../../layer-modules/db/domain';

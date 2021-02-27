@@ -3,7 +3,6 @@ import 'reflect-metadata';
 import * as axios from 'axios';
 import { Container } from 'inversify';
 
-import { Capsule } from '../../../../../common/domain';
 import { commonTest } from '../../../../../common/test';
 import { mongodbAdapter } from '../../../../../integration-modules/mongodb/adapter';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
@@ -20,11 +19,11 @@ import {
 } from '../../../../task-graph/domain';
 import { UserToken } from '../../../../user/domain';
 import { userTest } from '../../../../user/test';
+import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
 import { LiveGameApiV1 } from '../../../adapter/api/model/live/LiveGameApiV1';
 import { LiveGameCreationQueryApiV1 } from '../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import { GameSetup } from '../../../domain/model/setup/GameSetup';
 import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
-import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
 
 const container: Container = configAdapter.container;
 
@@ -90,10 +89,8 @@ async function prepareData(): Promise<E2EComponents> {
   }
 
   const e2eComponents: E2EComponents = {
-    gameSetup: (createGameSetupOfOnePlayerGraphNode.getOutput() as Capsule<GameSetup>)
-      .elem,
-    userToken: (createUserTokenTaskGraphNode.getOutput() as Capsule<UserToken>)
-      .elem,
+    gameSetup: createGameSetupOfOnePlayerGraphNode.getOutput(),
+    userToken: createUserTokenTaskGraphNode.getOutput(),
   };
 
   return e2eComponents;

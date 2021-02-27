@@ -1,6 +1,6 @@
 import { injectable, unmanaged } from 'inversify';
 
-import { Capsule, Interactor } from '../../../../common/domain';
+import { Interactor } from '../../../../common/domain';
 import {
   BaseTaskGraphNode,
   TaskGraph,
@@ -38,8 +38,7 @@ export abstract class CreateUserTokenTaskGraphNode<
     > = this.currentTaskGraph.getNode(
       this.createUserTaskGraphNodeId,
     ) as TaskGraphNode<TId, User>;
-    const userFromTaskGraphNode: User = (createUserTaskGraphNode.getOutput() as Capsule<User>)
-      .elem;
+    const userFromTaskGraphNode: User = createUserTaskGraphNode.getOutput();
 
     return this.createUserTokenInteractor.interact(userFromTaskGraphNode);
   }

@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import { Capsule, Interactor } from '../../../../../common/domain';
+import { Interactor } from '../../../../../common/domain';
 import { commonTest } from '../../../../../common/test';
 import {
   BaseTaskGraphNode,
@@ -53,11 +53,8 @@ export class CreateGameSetupOfOnePlayerGraphNode extends BaseTaskGraphNode<
       USER_E2E_TYPES.CREATE_FIRST_USER_TASK_GRAPH_NODE,
     ) as TaskGraphNode<symbol, User>;
 
-    const cardDeck: CardDeck = (createCardDeckOfVoidLandGraphNode.getOutput() as Capsule<CardDeck>)
-      .elem;
-
-    const user: User = (createFirstUserGraphNode.getOutput() as Capsule<User>)
-      .elem;
+    const cardDeck: CardDeck = createCardDeckOfVoidLandGraphNode.getOutput();
+    const user: User = createFirstUserGraphNode.getOutput();
 
     const gameSetupCreationQuery: GameSetupsCreationQuery = {
       format: cardDeck.format,

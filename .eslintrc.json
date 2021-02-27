@@ -118,5 +118,19 @@
       "newlines-between": "always"
     }],
     "no-magic-numbers": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.spec.ts"],
+      "extends": [
+        "plugin:jest/recommended",
+        "plugin:jest/style"
+      ],
+      "rules": {
+        "jest/valid-title": "off",
+        "@typescript-eslint/unbound-method": "off",
+        "@typescript-eslint/no-magic-numbers": "off"
+      }
+    }
+  ]
 }

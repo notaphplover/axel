@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import mongodb from 'mongodb';
 
@@ -154,13 +153,6 @@ describe(MongoDbSearchRepository.name, () => {
         );
       });
 
-      it('must call queryToFilterQueryConverter.transform with the query received', () => {
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
-          expectedQuery,
-        );
-      });
-
       it('must call collection.find with the querydb generated', () => {
         expect(collectionMock.find).toHaveBeenCalledTimes(1);
         expect(collectionMock.find).toHaveBeenCalledWith(expectedDbQuery, {});
@@ -239,13 +231,6 @@ describe(MongoDbSearchRepository.name, () => {
         (mongoDbConnector.db.collection as jest.Mock).mockClear();
         (modelDbToModelConverter.transform as jest.Mock).mockClear();
         (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
-      });
-
-      it('must call queryToFilterQueryConverter.transform with the query received', () => {
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
-          expectedQuery,
-        );
       });
 
       it('must call queryToFilterQueryConverter.transform with the query received', () => {
@@ -335,13 +320,6 @@ describe(MongoDbSearchRepository.name, () => {
         );
       });
 
-      it('must call queryToFilterQueryConverter.transform with the query received', () => {
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
-          expectedQuery,
-        );
-      });
-
       it('must call collection.findOne with the querydb generated', () => {
         expect(collectionMock.findOne).toHaveBeenCalledTimes(1);
         expect(collectionMock.findOne).toHaveBeenCalledWith(
@@ -419,13 +397,6 @@ describe(MongoDbSearchRepository.name, () => {
         (mongoDbConnector.db.collection as jest.Mock).mockClear();
         (modelDbToModelConverter.transform as jest.Mock).mockClear();
         (queryToFilterQueryConverter.transform as jest.Mock).mockClear();
-      });
-
-      it('must call queryToFilterQueryConverter.transform with the query received', () => {
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledTimes(1);
-        expect(queryToFilterQueryConverter.transform).toHaveBeenCalledWith(
-          expectedQuery,
-        );
       });
 
       it('must call queryToFilterQueryConverter.transform with the query received', () => {

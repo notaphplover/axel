@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { UpdateRepository } from '../../../../../../../layer-modules/db/domain';
 import { UpdateGameSetupInteractor } from '../../../../../domain/interactor/setup/UpdateGameSetupInteractor';

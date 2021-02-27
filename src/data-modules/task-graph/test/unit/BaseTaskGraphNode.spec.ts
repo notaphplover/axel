@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Capsule } from '../../../../common/domain';
+
 import { BaseTaskGraphNode, TaskGraphNodeStatus } from '../../domain';
 
 class BaseTaskGraphNodeMock extends BaseTaskGraphNode<number, number> {
@@ -51,10 +51,8 @@ describe(BaseTaskGraphNode.name, () => {
         expect(baseTaskGraphNode.status).toBe(TaskGraphNodeStatus.Ended);
       });
 
-      it("the node's output must be a capsule with the output", () => {
-        const expectedOutput: Capsule<number> = { elem: innerPerformResult };
-
-        expect(baseTaskGraphNode.getOutput()).toStrictEqual(expectedOutput);
+      it("the node's output must be the output", () => {
+        expect(baseTaskGraphNode.getOutput()).toStrictEqual(innerPerformResult);
       });
     });
 
@@ -91,10 +89,8 @@ describe(BaseTaskGraphNode.name, () => {
         expect(baseTaskGraphNode.status).toBe(TaskGraphNodeStatus.Error);
       });
 
-      it("the node's output must be null", () => {
-        const expectedOutput: null = null;
-
-        expect(baseTaskGraphNode.getOutput()).toStrictEqual(expectedOutput);
+      it("the node's output must throw an error", () => {
+        expect(baseTaskGraphNode.getOutput).toThrow();
       });
     });
 
@@ -129,10 +125,8 @@ describe(BaseTaskGraphNode.name, () => {
         expect(baseTaskGraphNode.status).toBe(TaskGraphNodeStatus.InProgress);
       });
 
-      it("the node's output must be null", () => {
-        const expectedOutput: null = null;
-
-        expect(baseTaskGraphNode.getOutput()).toStrictEqual(expectedOutput);
+      it("the node's output must throw an error", () => {
+        expect(baseTaskGraphNode.getOutput).toThrow();
       });
     });
   });

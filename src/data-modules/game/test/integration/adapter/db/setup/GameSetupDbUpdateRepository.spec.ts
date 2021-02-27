@@ -16,7 +16,6 @@ import { GameSetupUpdateQuery } from '../../../../../domain/query/setup/GameSetu
 import { gameSetupFixtureFactory } from '../../../../fixtures/domain/model/setup';
 import { gameSetupUpdateQueryFixtureFactory } from '../../../../fixtures/domain/query/setup';
 
-
 const container: Container = configAdapter.container;
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
@@ -96,7 +95,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
         it('must return the game setup updated', () => {
           expect(result).toHaveProperty('length');
-          expect((result as unknown[]).length).toBe(1);
+          expect(result).toHaveLength(1);
 
           const [innerResult]: unknown[] = result as unknown[];
 
@@ -152,7 +151,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
         it('must return no games', () => {
           expect(result).toHaveProperty('length');
-          expect((result as unknown[]).length).toBe(0);
+          expect(result).toHaveLength(0);
         });
       });
 
@@ -205,7 +204,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
         it('must return no games', () => {
           expect(result).toHaveProperty('length');
-          expect((result as unknown[]).length).toBe(0);
+          expect(result).toHaveLength(0);
         });
       });
     });

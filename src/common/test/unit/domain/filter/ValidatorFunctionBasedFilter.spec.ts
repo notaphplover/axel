@@ -133,7 +133,7 @@ describe(ValidatorFunctionBasedFilter.name, () => {
       });
 
       it('must return null', () => {
-        expect(result).toStrictEqual(null);
+        expect(result).toBeNull();
       });
     });
   });

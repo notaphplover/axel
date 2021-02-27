@@ -95,7 +95,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         });
 
         it('must create the collection', () => {
-          expect(collectionsMatchingName.length).toBe(1);
+          expect(collectionsMatchingName).toHaveLength(1);
         });
 
         it('must create the index', () => {

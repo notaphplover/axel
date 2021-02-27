@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
 import { FindLiveGameInteractor } from '../../../../../domain/interactor/live/FindLiveGameInteractor';

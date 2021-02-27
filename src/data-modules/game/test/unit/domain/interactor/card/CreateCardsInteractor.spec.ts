@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { Interactor } from '../../../../../../../common/domain';
 import { CreateCardsInteractor } from '../../../../../domain/interactor/card/CreateCardsInteractor';

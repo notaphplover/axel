@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import mongodb from 'mongodb';
 
@@ -97,12 +96,12 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             type: enchantmentFixture.type,
           };
 
-          expect(enchantmentDbToEnchantmentConverter.transform).toBeCalledTimes(
-            1,
-          );
-          expect(enchantmentDbToEnchantmentConverter.transform).toBeCalledWith(
-            expectedEnchantmentDb,
-          );
+          expect(
+            enchantmentDbToEnchantmentConverter.transform,
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            enchantmentDbToEnchantmentConverter.transform,
+          ).toHaveBeenCalledWith(expectedEnchantmentDb);
         });
 
         it('must return the enchantment created', () => {

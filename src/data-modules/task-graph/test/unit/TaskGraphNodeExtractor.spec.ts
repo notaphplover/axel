@@ -153,7 +153,7 @@ describe(TaskGraphNodeExtractor.name, () => {
 
       it('must return all the nodes', () => {
         expect(result).toBeInstanceOf(Array);
-        expect((result as Array<unknown>).length).toBe(2);
+        expect(result).toHaveLength(2);
 
         expect(result).toContain(node);
         expect(result).toContain(dependentNode);
@@ -230,7 +230,7 @@ describe(TaskGraphNodeExtractor.name, () => {
 
       it('must return all the nodes', () => {
         expect(result).toBeInstanceOf(Array);
-        expect((result as Array<unknown>).length).toBe(3);
+        expect(result).toHaveLength(3);
 
         expect(result).toContain(node);
         expect(result).toContain(dependentNode);

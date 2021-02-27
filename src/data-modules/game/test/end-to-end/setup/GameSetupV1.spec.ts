@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import * as axios from 'axios';
 import { Container } from 'inversify';
 
-import { Capsule } from '../../../../../common/domain';
 import { commonTest } from '../../../../../common/test';
 import { mongodbAdapter } from '../../../../../integration-modules/mongodb/adapter';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
@@ -130,15 +129,11 @@ async function prepareData(): Promise<E2EComponents> {
   }
 
   return {
-    cardDeck: (createCardDeckOfVoidLandTaskGraphNode.getOutput() as Capsule<CardDeck>)
-      .elem,
-    firstUser: (createFirstUserTaskGraphNode.getOutput() as Capsule<User>).elem,
-    firstUserToken: (createFirstUserTokenTaskGraphNode.getOutput() as Capsule<UserToken>)
-      .elem,
-    secondUser: (createSecondUserTaskGraphNode.getOutput() as Capsule<User>)
-      .elem,
-    secondUserToken: (createSecondUserTokenTaskGraphNode.getOutput() as Capsule<UserToken>)
-      .elem,
+    cardDeck: createCardDeckOfVoidLandTaskGraphNode.getOutput(),
+    firstUser: createFirstUserTaskGraphNode.getOutput(),
+    firstUserToken: createFirstUserTokenTaskGraphNode.getOutput(),
+    secondUser: createSecondUserTaskGraphNode.getOutput(),
+    secondUserToken: createSecondUserTokenTaskGraphNode.getOutput(),
   };
 }
 

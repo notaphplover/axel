@@ -21,8 +21,14 @@ export abstract class BaseTaskGraphNode<TId, TOutput>
     this.innerStatus = TaskGraphNodeStatus.NotStarted;
   }
 
-  public getOutput(): Capsule<TOutput> | null {
-    return this.innerOutput === null ? null : { elem: this.innerOutput.elem };
+  public getOutput(): TOutput {
+    if (this.innerOutput === null) {
+      throw new Error(
+        'Unable to get any output. The task is probably not accomplished',
+      );
+    } else {
+      return this.innerOutput.elem;
+    }
   }
 
   public async perform(): Promise<void> {

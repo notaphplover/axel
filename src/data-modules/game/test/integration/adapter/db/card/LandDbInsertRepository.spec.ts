@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import mongodb from 'mongodb';
 
@@ -94,8 +93,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             type: landFixture.type,
           };
 
-          expect(landDbToLandConverter.transform).toBeCalledTimes(1);
-          expect(landDbToLandConverter.transform).toBeCalledWith(
+          expect(landDbToLandConverter.transform).toHaveBeenCalledTimes(1);
+          expect(landDbToLandConverter.transform).toHaveBeenCalledWith(
             expectedLandDb,
           );
         });

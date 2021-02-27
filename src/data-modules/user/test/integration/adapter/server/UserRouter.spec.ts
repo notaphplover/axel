@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { Response as LightMyRequestResponse } from 'light-my-request';
@@ -10,7 +9,8 @@ import {
 import {
   FastifyServerTestOutputParam,
   serverTest,
- FastifyServerTest } from '../../../../../../integration-modules/fastify/test';
+  FastifyServerTest,
+} from '../../../../../../integration-modules/fastify/test';
 import { UserRouter } from '../../../../adapter/server/router/UserRouter';
 
 const fastifyIntegrationDescribeGenerator: (

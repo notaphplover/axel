@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import * as fastify from 'fastify';
 import { StatusCodes } from 'http-status-codes';
@@ -83,7 +82,7 @@ describe(GetLiveGameByIdV1RequestHandler.name, () => {
         getLiveGameV1RequestToLiveGameFindQueryConverter.transform.mockClear();
       });
 
-      it('must call findGameInteractor.interact()', () => {
+      it('must call getLiveGameV1RequestToLiveGameFindQueryConverter.transform()', () => {
         expect(
           getLiveGameV1RequestToLiveGameFindQueryConverter.transform,
         ).toHaveBeenCalledTimes(1);

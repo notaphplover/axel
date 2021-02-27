@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import { Writable } from '../../../../common/domain';
 import { QueueBasedTaskGraph } from '../../domain/QueueBasedTaskGraph';
 import { PerformTasksResult } from '../../domain/TaskGraph';
@@ -13,9 +12,7 @@ describe(QueueBasedTaskGraph.name, () => {
       beforeAll(() => {
         nodeFixture = {
           dependsOn: [],
-          getOutput: () => {
-            return { elem: 3 };
-          },
+          getOutput: () => 3,
           status: TaskGraphNodeStatus.NotStarted,
           id: 2,
           perform: async () => undefined,

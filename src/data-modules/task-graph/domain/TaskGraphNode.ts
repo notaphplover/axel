@@ -1,5 +1,3 @@
-import { Capsule } from '../../../common/domain';
-
 /**
  * Represents the status of a task node
  */
@@ -41,10 +39,10 @@ export interface TaskGraphNode<TId, TOutput> {
   /**
    * Gets the task result.
    *
-   * - If the status of this task is not Ended, this method must return null.
-   * - If the status of this task is Ended, this method must return the output of the task inside a Capsule
+   * - If the status of this task is not Ended, this method must throw an Error.
+   * - If the status of this task is Ended, this method must return the output of the task.
    */
-  getOutput(): Capsule<TOutput> | null;
+  getOutput(): TOutput;
   /**
    * Performs the task.
    *

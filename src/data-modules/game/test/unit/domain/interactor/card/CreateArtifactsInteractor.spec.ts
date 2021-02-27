@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import { InsertRepository } from '../../../../../../../layer-modules/db/domain';
 import { CreateArtifactsInteractor } from '../../../../../domain/interactor/card/CreateArtifactsInteractor';

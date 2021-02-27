@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Capsule } from '../../../../common/domain';
+
 import { PerformTasksResult, TaskGraph } from '../../domain/TaskGraph';
 import { TaskGraphTaskGraphNode } from '../../domain/TaskGraphTaskGraphNode';
 
@@ -27,14 +27,8 @@ describe(TaskGraphTaskGraphNode.name, () => {
         await taskGraphTaskGraphNode.perform();
       });
 
-      it('the node output must be an undefined capsule', () => {
-        const expectedOutput: Capsule<void> = {
-          elem: undefined,
-        };
-
-        expect(taskGraphTaskGraphNode.getOutput()).toStrictEqual(
-          expectedOutput,
-        );
+      it('the node output must be undefined', () => {
+        expect(taskGraphTaskGraphNode.getOutput()).toBeUndefined();
       });
     });
 
@@ -63,8 +57,8 @@ describe(TaskGraphTaskGraphNode.name, () => {
         await taskGraphTaskGraphNode.perform();
       });
 
-      it('the node output must be null', () => {
-        expect(taskGraphTaskGraphNode.getOutput()).toBeNull();
+      it('the node output must throw an error', () => {
+        expect(taskGraphTaskGraphNode.getOutput).toThrow();
       });
     });
   });

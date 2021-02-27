@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
-/* eslint-disable @typescript-eslint/typedef */
 import 'reflect-metadata';
 import mongodb from 'mongodb';
 
@@ -64,6 +62,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             collectionName,
           );
 
+          // eslint-disable-next-line @typescript-eslint/typedef
           [cardDeckDbInserted] = (
             await cardDeckDbCollection.insertMany([
               {

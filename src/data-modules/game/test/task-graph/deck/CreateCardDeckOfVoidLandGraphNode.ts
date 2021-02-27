@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import { Capsule, Interactor } from '../../../../../common/domain';
+import { Interactor } from '../../../../../common/domain';
 import { commonTest } from '../../../../../common/test';
 import {
   BaseTaskGraphNode,
@@ -42,8 +42,7 @@ export class CreateCardDeckOfVoidLandGraphNode extends BaseTaskGraphNode<
       GAME_E2E_TYPES.card.CREATE_VOID_LAND_TASK_GRAPH_NODE,
     ) as TaskGraphNode<symbol, Land>;
 
-    const voidLand: Land = (createVoidLandTaskGraphNode.getOutput() as Capsule<Land>)
-      .elem;
+    const voidLand: Land = createVoidLandTaskGraphNode.getOutput();
 
     const cardDeckCreationQuery: CardDeckCreationQuery = {
       description: 'sample-description',

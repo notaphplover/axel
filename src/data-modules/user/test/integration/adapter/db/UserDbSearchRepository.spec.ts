@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 import 'reflect-metadata';
 import mongodb from 'mongodb';
 
@@ -160,7 +159,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
         it('must return no user', () => {
           expect(result).toHaveProperty('length');
-          expect((result as Array<unknown>).length).toBe(0);
+          expect(result).toHaveLength(0);
         });
       });
     });

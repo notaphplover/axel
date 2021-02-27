@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import * as axios from 'axios';
 import { Container } from 'inversify';
 
-import { Capsule } from '../../../../../common/domain';
 import { commonTest } from '../../../../../common/test';
 import { mongodbAdapter } from '../../../../../integration-modules/mongodb/adapter';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
@@ -97,9 +96,8 @@ async function prepareData(): Promise<E2EComponents> {
   }
 
   return {
-    land: (createVoidLandTaskGraphNode.getOutput() as Capsule<Land>).elem,
-    userToken: (createUserTokenTaskGraphNode.getOutput() as Capsule<UserToken>)
-      .elem,
+    land: createVoidLandTaskGraphNode.getOutput(),
+    userToken: createUserTokenTaskGraphNode.getOutput(),
   };
 }
 
