@@ -24,6 +24,7 @@ import { LiveGameApiV1 } from '../../../adapter/api/model/live/LiveGameApiV1';
 import { LiveGameCreationQueryApiV1 } from '../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import { GameSetup } from '../../../domain/model/setup/GameSetup';
 import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
+import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
 
 const container: Container = configAdapter.container;
 
@@ -138,6 +139,9 @@ describe('LiveGame V1', () => {
 
     it('must return a response with the liveGame created', () => {
       expect(postLiveGamesV1Response.data).toHaveProperty('id');
+      expect((postLiveGamesV1Response.data as LiveGameApiV1).format).toBe(
+        GameFormatApiV1.UNRESTRICTED,
+      );
       expect((postLiveGamesV1Response.data as LiveGameApiV1).round).toBe(1);
     });
   });

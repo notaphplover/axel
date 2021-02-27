@@ -11,7 +11,7 @@ import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGame
 import { GetLiveGameByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/GetLiveGameByIdV1RequestHandler';
 import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
 import { LiveGameFindQuery } from '../../../../../../domain/query/live/LiveGameFindQuery';
-import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
+import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/live';
 import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model/live';
 import { liveGameFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/live';
 

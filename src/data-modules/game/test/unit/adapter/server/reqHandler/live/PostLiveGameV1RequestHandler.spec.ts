@@ -13,7 +13,7 @@ import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGame
 import { PostLiveGameV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/PostLiveGameV1RequestHandler';
 import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
 import { LiveGameCreationQuery } from '../../../../../../domain/query/live/LiveGameCreationQuery';
-import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model';
+import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/live';
 import { liveGameCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
 import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model/live';
 import { liveGameCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/live';
