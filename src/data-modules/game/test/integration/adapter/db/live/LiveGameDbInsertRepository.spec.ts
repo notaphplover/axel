@@ -60,7 +60,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         beforeAll(async () => {
           gameFixture = liveGameFixtureFactory.get();
           gameDbFixture = {
+            format: gameFixture.format,
             round: gameFixture.round,
+            playerAreas: gameFixture.playerAreas,
           };
 
           (gameDbToGameConverter.transform as jest.Mock).mockReturnValueOnce(

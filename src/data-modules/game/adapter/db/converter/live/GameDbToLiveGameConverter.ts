@@ -9,7 +9,9 @@ export class LiveGameDbToLiveGameConverter
   implements Converter<LiveGameDb, LiveGame> {
   public transform(input: LiveGameDb): LiveGame {
     return {
+      format: input.format,
       id: input._id.toHexString(),
+      playerAreas: input.playerAreas,
       round: input.round,
     };
   }

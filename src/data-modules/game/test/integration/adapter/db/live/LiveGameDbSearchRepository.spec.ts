@@ -68,7 +68,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           [gameDbInserted] = (
             await gameDbCollection.insertMany([
               {
+                format: gameFixture.format,
                 round: gameFixture.round,
+                playerAreas: gameFixture.playerAreas,
               },
             ])
           ).ops;
