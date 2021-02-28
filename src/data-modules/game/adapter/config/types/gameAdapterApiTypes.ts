@@ -58,6 +58,9 @@ export const GAME_ADAPTER_API_TYPES = {
       ),
     },
     live: {
+      BATTLEFIELD_TO_BATTLEFIELD_API_V1_CONVERTER: Symbol(
+        'BattlefieldToBattlefieldApiV1Converter',
+      ),
       LIVE_GAME_CREATION_QUERY_API_V1_TO_LIVE_GAME_CREATION_QUERY_CONVERTER: Symbol(
         'LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter',
       ),
