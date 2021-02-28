@@ -61,6 +61,9 @@ export const GAME_ADAPTER_API_TYPES = {
       BATTLEFIELD_TO_BATTLEFIELD_API_V1_CONVERTER: Symbol(
         'BattlefieldToBattlefieldApiV1Converter',
       ),
+      GRAVEYARD_TO_GRAVEYARD_API_V1_CONVERTER: Symbol.for(
+        'GraveyardToGraveyardApiV1Converter',
+      ),
       LIVE_GAME_CREATION_QUERY_API_V1_TO_LIVE_GAME_CREATION_QUERY_CONVERTER: Symbol(
         'LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter',
       ),

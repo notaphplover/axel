@@ -19,6 +19,7 @@ import { CardSetReferencesToCardSetReferencesApiV1Converter } from '../../../api
 import { GameFormatApiV1ToGameFormatConverter } from '../../../api/converter/GameFormatApiV1ToGameFormatConverter';
 import { GameFormatToGameFormatApiV1Converter } from '../../../api/converter/GameFormatToGameFormatApiV1Converter';
 import { BattlefieldToBattlefieldApiV1Converter } from '../../../api/converter/live/BattlefieldToBattlefieldApiV1Converter';
+import { GraveyardToGraveyardApiV1Converter } from '../../../api/converter/live/GraveyardToGraveyardApiV1Converter';
 import { LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter } from '../../../api/converter/live/LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter';
 import { LiveGameFindQueryApiV1ToLiveGameFindQueryConverter } from '../../../api/converter/live/LiveGameFindQueryApiV1ToLiveGameFindQueryConverter';
 import { LiveGameToLiveGameApiV1Converter } from '../../../api/converter/live/LiveGameToLiveGameApiV1Converter';
@@ -130,6 +131,10 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.converter.live
       .BATTLEFIELD_TO_BATTLEFIELD_API_V1_CONVERTER,
   ).to(BattlefieldToBattlefieldApiV1Converter);
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.live
+      .GRAVEYARD_TO_GRAVEYARD_API_V1_CONVERTER,
+  ).to(GraveyardToGraveyardApiV1Converter);
   bind(
     GAME_ADAPTER_TYPES.api.converter.live
       .LIVE_GAME_TO_LIVE_GAME_API_V1_CONVERTER,
