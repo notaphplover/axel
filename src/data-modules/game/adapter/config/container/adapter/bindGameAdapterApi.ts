@@ -20,6 +20,7 @@ import { GameFormatApiV1ToGameFormatConverter } from '../../../api/converter/Gam
 import { GameFormatToGameFormatApiV1Converter } from '../../../api/converter/GameFormatToGameFormatApiV1Converter';
 import { BattlefieldToBattlefieldApiV1Converter } from '../../../api/converter/live/BattlefieldToBattlefieldApiV1Converter';
 import { GraveyardToGraveyardApiV1Converter } from '../../../api/converter/live/GraveyardToGraveyardApiV1Converter';
+import { HandToHandApiV1Converter } from '../../../api/converter/live/HandToHandApiV1Converter';
 import { LibraryToLibraryApiV1Converter } from '../../../api/converter/live/LibraryToLibraryApiV1Converter';
 import { LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter } from '../../../api/converter/live/LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter';
 import { LiveGameFindQueryApiV1ToLiveGameFindQueryConverter } from '../../../api/converter/live/LiveGameFindQueryApiV1ToLiveGameFindQueryConverter';
@@ -136,6 +137,9 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.api.converter.live
       .GRAVEYARD_TO_GRAVEYARD_API_V1_CONVERTER,
   ).to(GraveyardToGraveyardApiV1Converter);
+  bind(GAME_ADAPTER_TYPES.api.converter.live.HAND_TO_HAND_API_V1_CONVERTER).to(
+    HandToHandApiV1Converter,
+  );
   bind(
     GAME_ADAPTER_TYPES.api.converter.live.LIBRARY_TO_LIBRARY_API_V1_CONVERTER,
   ).to(LibraryToLibraryApiV1Converter);
