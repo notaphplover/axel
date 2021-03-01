@@ -64,6 +64,9 @@ export const GAME_ADAPTER_API_TYPES = {
       GRAVEYARD_TO_GRAVEYARD_API_V1_CONVERTER: Symbol.for(
         'GraveyardToGraveyardApiV1Converter',
       ),
+      LIBRARY_TO_LIBRARY_API_V1_CONVERTER: Symbol(
+        'LibraryToLibraryApiV1Converter',
+      ),
       LIVE_GAME_CREATION_QUERY_API_V1_TO_LIVE_GAME_CREATION_QUERY_CONVERTER: Symbol(
         'LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter',
       ),
