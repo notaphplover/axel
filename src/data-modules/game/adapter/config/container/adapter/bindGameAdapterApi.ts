@@ -24,6 +24,7 @@ import { HandToHandApiV1Converter } from '../../../api/converter/live/HandToHand
 import { LibraryToLibraryApiV1Converter } from '../../../api/converter/live/LibraryToLibraryApiV1Converter';
 import { LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter } from '../../../api/converter/live/LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter';
 import { LiveGameFindQueryApiV1ToLiveGameFindQueryConverter } from '../../../api/converter/live/LiveGameFindQueryApiV1ToLiveGameFindQueryConverter';
+import { LiveGamePlayerAreaToLiveGamePlayerAreaApiV1Converter } from '../../../api/converter/live/LiveGamePlayerAreaToLiveGamePlayerAreaApiV1Converter';
 import { LiveGamePlayerToLiveGamePlayerApiV1Converter } from '../../../api/converter/live/LiveGamePlayerToLiveGamePlayerApiV1Converter';
 import { LiveGameToLiveGameApiV1Converter } from '../../../api/converter/live/LiveGameToLiveGameApiV1Converter';
 import { GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter } from '../../../api/converter/setup/GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter';
@@ -144,6 +145,10 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
   bind(
     GAME_ADAPTER_TYPES.api.converter.live.LIBRARY_TO_LIBRARY_API_V1_CONVERTER,
   ).to(LibraryToLibraryApiV1Converter);
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.live
+      .LIVE_GAME_PLAYER_AREA_TO_LIVE_GAME_PLAYER_AREA_API_V1_CONVERTER,
+  ).to(LiveGamePlayerAreaToLiveGamePlayerAreaApiV1Converter);
   bind(
     GAME_ADAPTER_TYPES.api.converter.live
       .LIVE_GAME_PLAYER_TO_LIVE_GAME_PLAYER_API_V1_CONVERTER,
