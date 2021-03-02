@@ -8,7 +8,6 @@ import { CardDeck } from '../../../../domain/model/deck/CardDeck';
 import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
-import { cardDeck } from '../../../../test/fixtures/domain/model/deck';
 import { LiveGameDb } from '../../model/live/LiveGameDb';
 
 @injectable()
@@ -57,7 +56,7 @@ export class LiveGameCreationQueryToLiveGameDbsConverter
       },
       library: {
         cards: {
-          references: [...cardDeck.sections.core.references],
+          references: [...deck.sections.core.references],
         },
       },
       player: {
