@@ -7,7 +7,7 @@ import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
 import { cardDeck } from './deck';
 
-export const playerAreas: LiveGamePlayerArea = {
+export const playerArea: LiveGamePlayerArea = {
   battlefield: {
     permanents: [],
   },
@@ -30,7 +30,7 @@ export const playerAreas: LiveGamePlayerArea = {
 export const liveGame: LiveGame = {
   format: GameFormat.UNRESTRICTED,
   id: '5f5cb76273fd1130685e00dc',
-  playerAreas: [playerAreas],
+  playerAreas: [playerArea],
   round: 1,
 };
 

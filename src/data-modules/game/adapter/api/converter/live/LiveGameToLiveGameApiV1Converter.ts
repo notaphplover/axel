@@ -3,9 +3,11 @@ import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../../../common/domain';
 import { GameFormat } from '../../../../domain/model/GameFormat';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
+import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
 import { LiveGameApiV1 } from '../../model/live/LiveGameApiV1';
+import { LiveGamePlayerAreaApiV1 } from '../../model/live/LiveGamePlayerAreaApiV1';
 
 @injectable()
 export class LiveGameToLiveGameApiV1Converter
@@ -19,12 +21,26 @@ export class LiveGameToLiveGameApiV1Converter
       GameFormat,
       GameFormatApiV1
     >,
+    @inject(
+      GAME_ADAPTER_TYPES.api.converter.live
+        .LIVE_GAME_PLAYER_AREA_TO_LIVE_GAME_PLAYER_AREA_API_V1_CONVERTER,
+    )
+    private readonly liveGamePlayerAreaToLiveGamePlayerAreaApiV1Converter: Converter<
+      LiveGamePlayerArea,
+      LiveGamePlayerAreaApiV1
+    >,
   ) {}
 
   public transform(input: LiveGame): LiveGameApiV1 {
     return {
       format: this.gameFormatToGameFormatApiV1Converter.transform(input.format),
       id: input.id,
+      playerAreas: input.playerAreas.map(
+        (liveGamePlayerArea: LiveGamePlayerArea) =>
+          this.liveGamePlayerAreaToLiveGamePlayerAreaApiV1Converter.transform(
+            liveGamePlayerArea,
+          ),
+      ),
       round: input.round,
     };
   }
