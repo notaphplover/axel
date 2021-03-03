@@ -72,6 +72,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             cost: enchantmentFixture.cost,
             detail: enchantmentFixture.detail,
             type: enchantmentFixture.type,
+            subtypes: [],
+            supertypes: [],
           };
 
           (enchantmentCreationQueryToEnchantmentDbsConverter.transform as jest.Mock).mockReturnValueOnce(
@@ -94,6 +96,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             cost: enchantmentFixture.cost,
             detail: enchantmentFixture.detail,
             type: enchantmentFixture.type,
+            subtypes: [],
+            supertypes: [],
           };
 
           expect(

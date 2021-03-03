@@ -86,6 +86,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                   cost: artifactFixture.cost,
                   detail: artifactFixture.detail,
                   type: artifactFixture.type,
+                  subtypes: [],
+                  supertypes: [],
                 },
               ])
             ).ops;
@@ -151,6 +153,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                   power: creatureFixture.power,
                   toughness: creatureFixture.toughness,
                   type: creatureFixture.type,
+                  subtypes: [],
+                  supertypes: [],
                 },
               ])
             ).ops;
@@ -214,6 +218,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                   cost: enchantmentFixture.cost,
                   detail: enchantmentFixture.detail,
                   type: enchantmentFixture.type,
+                  subtypes: [],
+                  supertypes: [],
                 },
               ])
             ).ops;
@@ -277,6 +283,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                   cost: landFixture.cost,
                   detail: landFixture.detail,
                   type: landFixture.type,
+                  subtypes: [],
+                  supertypes: [],
                 },
               ])
             ).ops;
@@ -368,6 +376,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
               cost: artifactFixture.cost,
               detail: artifactFixture.detail,
               type: artifactFixture.type,
+              subtypes: [],
+              supertypes: [],
             },
           ]);
 

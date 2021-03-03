@@ -19,6 +19,8 @@ export class CreatureCreationQueryToCreatureDbsConverter
         type: input.type,
         power: input.power,
         toughness: input.toughness,
+        subtypes: [],
+        supertypes: [],
       },
     ];
   }

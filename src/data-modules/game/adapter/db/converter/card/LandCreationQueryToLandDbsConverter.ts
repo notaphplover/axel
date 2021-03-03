@@ -14,6 +14,8 @@ export class LandCreationQueryToLandDbsConverter
         cost: input.cost,
         detail: input.detail,
         type: input.type,
+        subtypes: [],
+        supertypes: [],
       },
     ];
   }

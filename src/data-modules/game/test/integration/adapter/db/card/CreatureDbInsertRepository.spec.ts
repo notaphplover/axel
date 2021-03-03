@@ -71,6 +71,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             power: creatureFixture.power,
             toughness: creatureFixture.toughness,
             type: creatureFixture.type,
+            subtypes: [],
+            supertypes: [],
           };
 
           (creatureCreationQueryToCreatureDbsConverter.transform as jest.Mock).mockReturnValueOnce(
@@ -95,6 +97,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             power: creatureFixture.power,
             toughness: creatureFixture.toughness,
             type: creatureFixture.type,
+            subtypes: [],
+            supertypes: [],
           };
 
           expect(creatureDbToCreatureConverter.transform).toHaveBeenCalledTimes(

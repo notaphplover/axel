@@ -69,6 +69,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             cost: artifactFixture.cost,
             detail: artifactFixture.detail,
             type: artifactFixture.type,
+            subtypes: [],
+            supertypes: [],
           };
 
           (artifactCreationQueryToArtifactDbsConverter.transform as jest.Mock).mockReturnValueOnce(
@@ -91,6 +93,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             cost: artifactFixture.cost,
             detail: artifactFixture.detail,
             type: artifactFixture.type,
+            subtypes: [],
+            supertypes: [],
           };
 
           expect(artifactDbToArtifactConverter.transform).toHaveBeenCalledTimes(
