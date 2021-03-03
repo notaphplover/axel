@@ -56,6 +56,9 @@ export const GAME_ADAPTER_API_TYPES = {
       CARD_SET_REFERENCES_TO_CARD_SET_REFERENCES_API_V1_CONVERTER: Symbol(
         'CardSetReferencesToCardSetReferencesApiV1Converter',
       ),
+      CARD_SUPERTYPE_TO_CARD_SUPERTYPE_API_V1_CONVERTER: Symbol(
+        'CardSupertypeToCardSupertypeApiV1Converter',
+      ),
     },
     live: {
       BATTLEFIELD_TO_BATTLEFIELD_API_V1_CONVERTER: Symbol(
