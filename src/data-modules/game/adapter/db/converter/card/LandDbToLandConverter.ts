@@ -7,7 +7,6 @@ import { Land } from '../../../../domain/model/card/Land';
 import { LandDb } from '../../model/card/LandDb';
 import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
 
-
 @injectable()
 export class LandDbToLandConverter
   extends BaseCardDbToCardConverter<LandDb, Land>
@@ -19,6 +18,8 @@ export class LandDbToLandConverter
       cost: baseCard.cost,
       detail: baseCard.detail,
       id: baseCard.id,
+      subtypes: baseCard.subtypes,
+      supertypes: baseCard.supertypes,
       type: baseCard.type as CardType.Land,
     };
   }

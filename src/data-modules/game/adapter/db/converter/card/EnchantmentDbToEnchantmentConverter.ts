@@ -7,7 +7,6 @@ import { Enchantment } from '../../../../domain/model/card/Enchantment';
 import { EnchantmentDb } from '../../model/card/EnchantmentDb';
 import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
 
-
 @injectable()
 export class EnchantmentDbToEnchantmentConverter
   extends BaseCardDbToCardConverter<EnchantmentDb, Enchantment>
@@ -19,6 +18,8 @@ export class EnchantmentDbToEnchantmentConverter
       cost: baseCard.cost,
       detail: baseCard.detail,
       id: baseCard.id,
+      subtypes: baseCard.subtypes,
+      supertypes: baseCard.supertypes,
       type: baseCard.type as CardType.Enchantment,
     };
   }

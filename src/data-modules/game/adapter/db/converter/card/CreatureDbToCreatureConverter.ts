@@ -7,7 +7,6 @@ import { Creature } from '../../../../domain/model/card/Creature';
 import { CreatureDb } from '../../model/card/CreatureDb';
 import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
 
-
 @injectable()
 export class CreatureDbToCreatureConverter
   extends BaseCardDbToCardConverter<CreatureDb, Creature>
@@ -19,9 +18,11 @@ export class CreatureDbToCreatureConverter
       cost: baseCard.cost,
       detail: baseCard.detail,
       id: baseCard.id,
-      type: baseCard.type as CardType.Creature,
       power: input.power,
+      subtypes: baseCard.subtypes,
+      supertypes: baseCard.supertypes,
       toughness: input.toughness,
+      type: baseCard.type as CardType.Creature,
     };
   }
 }

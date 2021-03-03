@@ -29,6 +29,8 @@ export abstract class BaseCardDbToCardConverter<
         title: cardDb.detail.title,
       },
       id: cardDb._id.toHexString(),
+      subtypes: [...cardDb.subtypes],
+      supertypes: [...cardDb.supertypes],
       type: cardDb.type,
     };
   }

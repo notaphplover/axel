@@ -18,6 +18,8 @@ export class ArtifactDbToArtifactConverter
       cost: baseCard.cost,
       detail: baseCard.detail,
       id: baseCard.id,
+      subtypes: baseCard.subtypes,
+      supertypes: baseCard.supertypes,
       type: baseCard.type as CardType.Artifact,
     };
   }
