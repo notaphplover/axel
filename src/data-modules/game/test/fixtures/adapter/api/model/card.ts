@@ -41,6 +41,8 @@ export const artifactApiV1: ArtifactApiV1 = {
   cost: resourceApiV1,
   detail: cardDetailApiV1,
   id: artifact.id,
+  subtypes: [],
+  supertypes: [],
   type: CardTypeApiV1.Artifact,
 };
 
@@ -53,6 +55,8 @@ export const creatureApiV1: CreatureApiV1 = {
   detail: cardDetailApiV1,
   id: creature.id,
   power: creature.power,
+  subtypes: [],
+  supertypes: [],
   toughness: creature.toughness,
   type: CardTypeApiV1.Creature,
 };
@@ -65,6 +69,8 @@ export const enchantmentApiV1: EnchantmentApiV1 = {
   cost: resourceApiV1,
   detail: cardDetailApiV1,
   id: enchantment.id,
+  subtypes: [],
+  supertypes: [],
   type: CardTypeApiV1.Enchantment,
 };
 
@@ -76,6 +82,8 @@ export const landApiV1: LandApiV1 = {
   cost: resourceApiV1,
   detail: cardDetailApiV1,
   id: land.id,
+  subtypes: [],
+  supertypes: [],
   type: CardTypeApiV1.Land,
 };
 
