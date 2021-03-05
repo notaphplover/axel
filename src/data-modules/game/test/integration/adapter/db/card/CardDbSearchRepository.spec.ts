@@ -5,24 +5,13 @@ import { Capsule, Converter } from '../../../../../../../common/domain';
 import { MongoDbConnector } from '../../../../../../../integration-modules/mongodb/adapter';
 import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
-import { ArtifactDb } from '../../../../../adapter/db/model/card/ArtifactDb';
 import { CardDb } from '../../../../../adapter/db/model/card/CardDb';
 import { CreatureDb } from '../../../../../adapter/db/model/card/CreatureDb';
-import { EnchantmentDb } from '../../../../../adapter/db/model/card/EnchantmentDb';
-import { LandDb } from '../../../../../adapter/db/model/card/LandDb';
 import { CardDbSearchRepository } from '../../../../../adapter/db/repository/card/CardDbSearchRepository';
-import { Artifact } from '../../../../../domain/model/card/Artifact';
 import { Card } from '../../../../../domain/model/card/Card';
 import { Creature } from '../../../../../domain/model/card/Creature';
-import { Enchantment } from '../../../../../domain/model/card/Enchantment';
-import { Land } from '../../../../../domain/model/card/Land';
 import { CardFindQuery } from '../../../../../domain/query/card/CardFindQuery';
-import {
-  artifactFixtureFactory,
-  creatureFixtureFactory,
-  enchantmentFixtureFactory,
-  landFixtureFactory,
-} from '../../../../fixtures/domain/model/card';
+import { creatureFixtureFactory } from '../../../../fixtures/domain/model/card';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
@@ -67,71 +56,6 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
     describe('.find()', () => {
       describe('when called and some cards satisfies the query', () => {
-        describe('when the cards are artifacts', () => {
-          let artifactDbInserted: ArtifactDb;
-
-          let artifactResult: unknown;
-
-          beforeAll(async () => {
-            const artifactFixture: Artifact = artifactFixtureFactory.get();
-
-            const cardDbCollection: mongodb.Collection<ArtifactDb> = mongoDbConnector.db.collection(
-              collectionName,
-            );
-
-            // eslint-disable-next-line @typescript-eslint/typedef
-            [artifactDbInserted] = (
-              await cardDbCollection.insertMany([
-                {
-                  cost: artifactFixture.cost,
-                  detail: artifactFixture.detail,
-                  type: artifactFixture.type,
-                  subtypes: [],
-                  supertypes: [],
-                },
-              ])
-            ).ops;
-
-            const artifactCardFindQueryFixture: CardFindQuery = {
-              id: artifactDbInserted._id.toHexString(),
-            };
-
-            (cardDbToCardConverter.transform as jest.Mock).mockReturnValueOnce(
-              artifactFixture,
-            );
-
-            const cardDbFilterQuery: mongodb.FilterQuery<CardDb> = {
-              _id: new mongodb.ObjectID(artifactCardFindQueryFixture.id),
-            };
-
-            (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-              cardDbFilterQuery,
-            );
-
-            artifactResult = await cardDbSearchRepository.find(
-              artifactCardFindQueryFixture,
-            );
-          });
-
-          afterAll(() => {
-            (cardDbToCardConverter.transform as jest.Mock).mockClear();
-            (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockClear();
-          });
-
-          it('must call cardDbToCardConverter.transform with the db entities found', () => {
-            expect(cardDbToCardConverter.transform).toHaveBeenCalledTimes(1);
-            expect(cardDbToCardConverter.transform).toHaveBeenCalledWith(
-              artifactDbInserted,
-            );
-          });
-
-          it('must return the artifact cards', () => {
-            expect(artifactResult).toStrictEqual([
-              artifactFixtureFactory.get(),
-            ]);
-          });
-        });
-
         describe('when the cards are creatures', () => {
           let creatureDbInserted: CreatureDb;
 
@@ -198,134 +122,6 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             ]);
           });
         });
-
-        describe('when the cards are enchantments', () => {
-          let enchantmentDbInserted: EnchantmentDb;
-
-          let enchantmentResult: unknown;
-
-          beforeAll(async () => {
-            const enchantmentFixture: Enchantment = enchantmentFixtureFactory.get();
-
-            const cardDbCollection: mongodb.Collection<EnchantmentDb> = mongoDbConnector.db.collection(
-              collectionName,
-            );
-
-            // eslint-disable-next-line @typescript-eslint/typedef
-            [enchantmentDbInserted] = (
-              await cardDbCollection.insertMany([
-                {
-                  cost: enchantmentFixture.cost,
-                  detail: enchantmentFixture.detail,
-                  type: enchantmentFixture.type,
-                  subtypes: [],
-                  supertypes: [],
-                },
-              ])
-            ).ops;
-
-            const enchantmentCardFindQueryFixture: CardFindQuery = {
-              id: enchantmentDbInserted._id.toHexString(),
-            };
-
-            (cardDbToCardConverter.transform as jest.Mock).mockReturnValueOnce(
-              enchantmentFixture,
-            );
-
-            const cardDbFilterQuery: mongodb.FilterQuery<CardDb> = {
-              _id: new mongodb.ObjectID(enchantmentCardFindQueryFixture.id),
-            };
-
-            (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-              cardDbFilterQuery,
-            );
-
-            enchantmentResult = await cardDbSearchRepository.find(
-              enchantmentCardFindQueryFixture,
-            );
-          });
-
-          afterAll(() => {
-            (cardDbToCardConverter.transform as jest.Mock).mockClear();
-            (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockClear();
-          });
-
-          it('must call cardDbToCardConverter.transform with the db entities found', () => {
-            expect(cardDbToCardConverter.transform).toHaveBeenCalledTimes(1);
-            expect(cardDbToCardConverter.transform).toHaveBeenCalledWith(
-              enchantmentDbInserted,
-            );
-          });
-
-          it('must return the enchantment cards', () => {
-            expect(enchantmentResult).toStrictEqual([
-              enchantmentFixtureFactory.get(),
-            ]);
-          });
-        });
-
-        describe('when the cards are lands', () => {
-          let landDbInserted: LandDb;
-
-          let landResult: unknown;
-
-          beforeAll(async () => {
-            const landFixture: Land = landFixtureFactory.get();
-
-            const cardDbCollection: mongodb.Collection<LandDb> = mongoDbConnector.db.collection(
-              collectionName,
-            );
-
-            // eslint-disable-next-line @typescript-eslint/typedef
-            [landDbInserted] = (
-              await cardDbCollection.insertMany([
-                {
-                  cost: landFixture.cost,
-                  detail: landFixture.detail,
-                  type: landFixture.type,
-                  subtypes: [],
-                  supertypes: [],
-                },
-              ])
-            ).ops;
-
-            const landCardFindQueryFixture: CardFindQuery = {
-              id: landDbInserted._id.toHexString(),
-            };
-
-            (cardDbToCardConverter.transform as jest.Mock).mockReturnValueOnce(
-              landFixture,
-            );
-
-            const cardDbFilterQuery: mongodb.FilterQuery<CardDb> = {
-              _id: new mongodb.ObjectID(landCardFindQueryFixture.id),
-            };
-
-            (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-              cardDbFilterQuery,
-            );
-
-            landResult = await cardDbSearchRepository.find(
-              landCardFindQueryFixture,
-            );
-          });
-
-          afterAll(() => {
-            (cardDbToCardConverter.transform as jest.Mock).mockClear();
-            (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockClear();
-          });
-
-          it('must call cardDbToCardConverter.transform with the db entities found', () => {
-            expect(cardDbToCardConverter.transform).toHaveBeenCalledTimes(1);
-            expect(cardDbToCardConverter.transform).toHaveBeenCalledWith(
-              landDbInserted,
-            );
-          });
-
-          it('must return the land cards', () => {
-            expect(landResult).toStrictEqual([landFixtureFactory.get()]);
-          });
-        });
       });
 
       describe('when caled, and no card satisfies the query', () => {
@@ -365,19 +161,21 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let result: unknown;
 
         beforeAll(async () => {
-          const artifactFixture: Artifact = artifactFixtureFactory.get();
+          const creatureFixture: Creature = creatureFixtureFactory.get();
 
-          const cardDbCollection: mongodb.Collection<ArtifactDb> = mongoDbConnector.db.collection(
+          const cardDbCollection: mongodb.Collection<CreatureDb> = mongoDbConnector.db.collection(
             collectionName,
           );
 
           await cardDbCollection.insertMany([
             {
-              cost: artifactFixture.cost,
-              detail: artifactFixture.detail,
-              type: artifactFixture.type,
+              cost: creatureFixture.cost,
+              detail: creatureFixture.detail,
+              power: creatureFixture.power,
               subtypes: [],
               supertypes: [],
+              toughness: creatureFixture.toughness,
+              type: creatureFixture.type,
             },
           ]);
 
@@ -387,7 +185,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           };
 
           (cardDbToCardConverter.transform as jest.Mock).mockReturnValueOnce(
-            artifactFixtureFactory.get(),
+            creatureFixtureFactory.get(),
           );
 
           const cardDbFilterQuery: mongodb.FilterQuery<CardDb> = {};
@@ -412,7 +210,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         });
 
         it('must return the artifact cards', () => {
-          expect(result).toStrictEqual([artifactFixtureFactory.get()]);
+          expect(result).toStrictEqual([creatureFixtureFactory.get()]);
         });
       });
     });
