@@ -3,24 +3,11 @@ import {
   FixtureFactory,
 } from '../../../../../../common/test';
 import { CardType } from '../../../../domain/model/card/CardType';
-import { ArtifactCreationQuery } from '../../../../domain/query/card/ArtifactCreationQuery';
 import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
-import { EnchantmentCreationQuery } from '../../../../domain/query/card/EnchantmentCreationQuery';
-import { LandCreationQuery } from '../../../../domain/query/card/LandCreationQuery';
 import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
 import { artifact, creature, enchantment, land } from '../model/card';
 import { liveGame } from '../model/live';
-
-export const artifactCreationQuery: ArtifactCreationQuery = {
-  cost: artifact.cost,
-  detail: artifact.detail,
-  type: CardType.Artifact,
-};
-
-export const artifactCreationQueryFixtureFactory: FixtureFactory<ArtifactCreationQuery> = new DeepCloneFixtureFactory(
-  artifactCreationQuery,
-);
 
 export const artifactFindQuery: Required<CardFindQuery> = {
   id: artifact.id,
@@ -56,16 +43,6 @@ export const creatureFindQueryFixtureFactory: FixtureFactory<CardFindQuery> = ne
   creatureFindQuery,
 );
 
-export const enchantmentCreationQuery: EnchantmentCreationQuery = {
-  cost: enchantment.cost,
-  detail: enchantment.detail,
-  type: CardType.Enchantment,
-};
-
-export const enchantmentCreationQueryFixtureFactory: FixtureFactory<EnchantmentCreationQuery> = new DeepCloneFixtureFactory(
-  enchantmentCreationQuery,
-);
-
 export const enchantmentFindQuery: Required<CardFindQuery> = {
   id: enchantment.id,
   limit: 1,
@@ -84,16 +61,6 @@ export const gameFindQuery: LiveGameFindQuery = {
 
 export const gameFindQueryFixtureFactory: FixtureFactory<LiveGameFindQuery> = new DeepCloneFixtureFactory(
   gameFindQuery,
-);
-
-export const landCreationQuery: LandCreationQuery = {
-  cost: land.cost,
-  detail: land.detail,
-  type: CardType.Land,
-};
-
-export const landCreationQueryFixtureFactory: FixtureFactory<LandCreationQuery> = new DeepCloneFixtureFactory(
-  landCreationQuery,
 );
 
 export const landFindQuery: Required<CardFindQuery> = {

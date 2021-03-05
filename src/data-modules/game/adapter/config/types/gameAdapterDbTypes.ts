@@ -14,9 +14,6 @@ export const GAME_ADAPTER_DB_TYPES = {
   },
   converter: {
     card: {
-      ARTIFACT_CREATION_QUERY_TO_ARTIFACT_DBS_CONVERTER: Symbol(
-        'ArtifactCreationQueryToArtifactDbsConverter',
-      ),
       ARTIFACT_DB_TO_ARTIFACT_CONVERTER: Symbol(
         'ArtifactDbToArtifactConverter',
       ),
@@ -30,14 +27,8 @@ export const GAME_ADAPTER_DB_TYPES = {
       CREATURE_DB_TO_CREATURE_CONVERTER: Symbol(
         'CreatureDbToCreatureConverter',
       ),
-      ENCHANTMENT_CREATION_QUERY_TO_ENCHANTMENT_DBS_CONVERTER: Symbol(
-        'EnchantmentCreationQueryToEnchantmentDbsConverter',
-      ),
       ENCHANTMENT_DB_TO_ENCHANTMENT_CONVERTER: Symbol(
         'EnchantmentDbToEnchantmentConverter',
-      ),
-      LAND_CREATION_QUERY_TO_LAND_DBS_CONVERTER: Symbol(
-        'LandCreationQueryToLandDbsConverter',
       ),
       LAND_DB_TO_LAND_CONVERTER: Symbol('LandDbToLandConverter'),
     },
