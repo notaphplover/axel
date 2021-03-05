@@ -1,20 +1,28 @@
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 
 import { Converter } from '../../../../../../common/domain';
+import { BaseCard } from '../../../../domain/model/card/BaseCard';
 import { Card } from '../../../../domain/model/card/Card';
-import { GAME_ADAPTER_TYPES } from '../../../config/types';
+import { CardType } from '../../../../domain/model/card/CardType';
 import { CardDb } from '../../model/card/CardDb';
+import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
 
 @injectable()
-export class CardDbToCardConverter implements Converter<CardDb, Card> {
-  constructor(
-    @inject(
-      GAME_ADAPTER_TYPES.db.converter.card.CREATURE_DB_TO_CREATURE_CONVERTER,
-    )
-    private readonly creatureDbToCreatureConverter: Converter<CardDb, Card>,
-  ) {}
-
+export class CardDbToCardConverter
+  extends BaseCardDbToCardConverter<Card>
+  implements Converter<CardDb, Card> {
   public transform(input: CardDb): Card {
-    return this.creatureDbToCreatureConverter.transform(input);
+    const baseCard: BaseCard = this.innerTransform(input);
+
+    return {
+      cost: baseCard.cost,
+      detail: baseCard.detail,
+      id: baseCard.id,
+      power: input.power,
+      subtypes: baseCard.subtypes,
+      supertypes: baseCard.supertypes,
+      toughness: input.toughness,
+      type: baseCard.type as CardType.Creature,
+    };
   }
 }
