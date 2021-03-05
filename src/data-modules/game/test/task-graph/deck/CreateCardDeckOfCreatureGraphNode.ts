@@ -8,7 +8,7 @@ import {
   TaskGraphNode,
 } from '../../../../task-graph/domain';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
-import { Creature } from '../../../domain/model/card/Creature';
+import { Card } from '../../../domain/model/card/Card';
 import { CardDeck } from '../../../domain/model/deck/CardDeck';
 import { GameFormat } from '../../../domain/model/GameFormat';
 import { CardDeckCreationQuery } from '../../../domain/query/deck/CardDeckCreationQuery';
@@ -37,12 +37,12 @@ export class CreateCardDeckOfCreatureGraphNode extends BaseTaskGraphNode<
   protected async innerPerform(): Promise<CardDeck> {
     const createCreatureTaskGraphNode: TaskGraphNode<
       symbol,
-      Creature
+      Card
     > = this.currentTaskGraph.getNode(
       GAME_E2E_TYPES.card.CREATE_CREATURE_TASK_GRAPH_NODE,
-    ) as TaskGraphNode<symbol, Creature>;
+    ) as TaskGraphNode<symbol, Card>;
 
-    const creature: Creature = createCreatureTaskGraphNode.getOutput();
+    const creature: Card = createCreatureTaskGraphNode.getOutput();
 
     const cardDeckCreationQuery: CardDeckCreationQuery = {
       description: 'sample-description',

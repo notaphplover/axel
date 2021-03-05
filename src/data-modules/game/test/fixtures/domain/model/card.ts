@@ -2,9 +2,9 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../common/test';
+import { Card } from '../../../../domain/model/card/Card';
 import { CardDetail } from '../../../../domain/model/card/CardDetail';
 import { CardType } from '../../../../domain/model/card/CardType';
-import { Creature } from '../../../../domain/model/card/Creature';
 import { Resource } from '../../../../domain/model/card/Resource';
 
 export const cardDetail: CardDetail = {
@@ -30,7 +30,7 @@ export const resourceFixtureFactory: FixtureFactory<Resource> = new DeepCloneFix
   resource,
 );
 
-export const creature: Creature = {
+export const creature: Card = {
   cost: resource,
   detail: cardDetail,
   id: '5f5cb76243faa130688e00dc',
@@ -41,6 +41,6 @@ export const creature: Creature = {
   type: CardType.Creature,
 };
 
-export const creatureFixtureFactory: FixtureFactory<Creature> = new DeepCloneFixtureFactory(
+export const creatureFixtureFactory: FixtureFactory<Card> = new DeepCloneFixtureFactory(
   creature,
 );

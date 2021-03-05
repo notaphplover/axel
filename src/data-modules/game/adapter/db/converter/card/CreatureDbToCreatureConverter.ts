@@ -2,16 +2,16 @@ import { injectable } from 'inversify';
 
 import { Converter } from '../../../../../../common/domain';
 import { BaseCard } from '../../../../domain/model/card/BaseCard';
+import { Card } from '../../../../domain/model/card/Card';
 import { CardType } from '../../../../domain/model/card/CardType';
-import { Creature } from '../../../../domain/model/card/Creature';
 import { CardDb } from '../../model/card/CardDb';
 import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
 
 @injectable()
 export class CreatureDbToCreatureConverter
-  extends BaseCardDbToCardConverter<Creature>
-  implements Converter<CardDb, Creature> {
-  public transform(input: CardDb): Creature {
+  extends BaseCardDbToCardConverter<Card>
+  implements Converter<CardDb, Card> {
+  public transform(input: CardDb): Card {
     const baseCard: BaseCard = this.innerTransform(input);
 
     return {

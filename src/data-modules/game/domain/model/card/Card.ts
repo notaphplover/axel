@@ -1,3 +1,8 @@
-import { Creature } from './Creature';
+import { BaseCard } from './BaseCard';
+import { CardType } from './CardType';
 
-export type Card = Creature;
+export interface Card extends BaseCard {
+  type: CardType.Creature;
+  power: number;
+  toughness: number;
+}

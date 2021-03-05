@@ -4,7 +4,6 @@ import { Interactor } from '../../../../../common/domain';
 import { BaseTaskGraphNode } from '../../../../task-graph/domain';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
 import { Card } from '../../../domain/model/card/Card';
-import { Creature } from '../../../domain/model/card/Creature';
 import { CardCreationQuery } from '../../../domain/query/card/CardCreationQuery';
 import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
 import { creatureCreationQuery } from '../../fixtures/domain/query/card';
@@ -12,7 +11,7 @@ import { creatureCreationQuery } from '../../fixtures/domain/query/card';
 @injectable()
 export class CreateCreatureTaskGraphNode extends BaseTaskGraphNode<
   symbol,
-  Creature
+  Card
 > {
   constructor(
     @inject(GAME_DOMAIN_TYPES.interactor.card.CREATE_CARDS_INTERACTOR)

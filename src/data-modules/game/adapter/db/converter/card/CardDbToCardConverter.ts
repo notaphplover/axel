@@ -2,8 +2,6 @@ import { inject, injectable } from 'inversify';
 
 import { Converter } from '../../../../../../common/domain';
 import { Card } from '../../../../domain/model/card/Card';
-import { CardType } from '../../../../domain/model/card/CardType';
-import { Creature } from '../../../../domain/model/card/Creature';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { CardDb } from '../../model/card/CardDb';
 
@@ -13,15 +11,10 @@ export class CardDbToCardConverter implements Converter<CardDb, Card> {
     @inject(
       GAME_ADAPTER_TYPES.db.converter.card.CREATURE_DB_TO_CREATURE_CONVERTER,
     )
-    private readonly creatureDbToCreatureConverter: Converter<CardDb, Creature>,
+    private readonly creatureDbToCreatureConverter: Converter<CardDb, Card>,
   ) {}
 
   public transform(input: CardDb): Card {
-    switch (input.type) {
-      case CardType.Creature:
-        return this.creatureDbToCreatureConverter.transform(input);
-      default:
-        throw new Error('Unexpected card type');
-    }
+    return this.creatureDbToCreatureConverter.transform(input);
   }
 }

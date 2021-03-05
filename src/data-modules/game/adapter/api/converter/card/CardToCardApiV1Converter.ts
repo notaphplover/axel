@@ -7,7 +7,6 @@ import { CardDetail } from '../../../../domain/model/card/CardDetail';
 import { CardSubtype } from '../../../../domain/model/card/CardSubtype';
 import { CardSupertype } from '../../../../domain/model/card/CardSupertype';
 import { CardType } from '../../../../domain/model/card/CardType';
-import { Creature } from '../../../../domain/model/card/Creature';
 import { Resource } from '../../../../domain/model/card/Resource';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { BaseCardApiV1 } from '../../model/card/BaseCardApiV1';
@@ -16,7 +15,6 @@ import { CardDetailApiV1 } from '../../model/card/CardDetailApiV1';
 import { CardSubtypeApiV1 } from '../../model/card/CardSubtypeApiV1';
 import { CardSupertypeApiV1 } from '../../model/card/CardSupertypeApiV1';
 import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
-import { CreatureApiV1 } from '../../model/card/CreatureApiV1';
 import { ResourceApiV1 } from '../../model/card/ResourceApiV1';
 
 @injectable()
@@ -66,12 +64,18 @@ export class CardToCardApiV1Converter implements Converter<Card, CardApiV1> {
   ) {}
 
   public transform(input: Card): CardApiV1 {
-    switch (input.type) {
-      case CardType.Creature:
-        return this.transformCreatureCard(input);
-      default:
-        return this.transformBaseCard(input) as CardApiV1;
-    }
+    const baseCardApiV1: BaseCardApiV1 = this.transformBaseCard(input);
+
+    return {
+      cost: baseCardApiV1.cost,
+      detail: baseCardApiV1.detail,
+      id: baseCardApiV1.id,
+      power: input.power,
+      subtypes: baseCardApiV1.subtypes,
+      supertypes: baseCardApiV1.supertypes,
+      toughness: input.toughness,
+      type: CardTypeApiV1.Creature,
+    };
   }
 
   private transformBaseCard(input: BaseCard): BaseCardApiV1 {
@@ -86,21 +90,6 @@ export class CardToCardApiV1Converter implements Converter<Card, CardApiV1> {
         this.cardSupertypeToCardSupertypeApiV1Converter.transform(supertype),
       ),
       type: this.cardTypeToCardTypeApiV1Converter.transform(input.type),
-    };
-  }
-
-  private transformCreatureCard(input: Creature): CreatureApiV1 {
-    const baseCardApiV1: BaseCardApiV1 = this.transformBaseCard(input);
-
-    return {
-      cost: baseCardApiV1.cost,
-      detail: baseCardApiV1.detail,
-      id: baseCardApiV1.id,
-      power: input.power,
-      subtypes: baseCardApiV1.subtypes,
-      supertypes: baseCardApiV1.supertypes,
-      toughness: input.toughness,
-      type: CardTypeApiV1.Creature,
     };
   }
 }

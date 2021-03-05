@@ -21,7 +21,7 @@ import { userTest } from '../../../../user/test';
 import { CardDeckApiV1 } from '../../../adapter/api/model/deck/CardDeckApiV1';
 import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
 import { CardDeckCreationQueryApiV1 } from '../../../adapter/api/query/deck/CardDeckCreationQueryApiV1';
-import { Creature } from '../../../domain/model/card/Creature';
+import { Card } from '../../../domain/model/card/Card';
 import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
 
 const container: Container = configAdapter.container;
@@ -35,7 +35,7 @@ const APP_URL_HOST: string = '127.0.0.1';
 const APP_URL_PORT: number = dockerAppEnvLoader.index.APP_SERVER_PORT;
 
 interface E2EComponents {
-  creature: Creature;
+  card: Card;
   userToken: UserToken;
 }
 
@@ -48,10 +48,10 @@ function getCardDeckCreationQueryApiV1(
     name: 'sample-name',
     sections: {
       core: {
-        references: [components.creature.id],
+        references: [components.card.id],
       },
       sideboard: {
-        references: [components.creature.id],
+        references: [components.card.id],
       },
     },
   };
@@ -75,7 +75,7 @@ async function prepareData(): Promise<E2EComponents> {
 
   const createCreatureTaskGraphNode: TaskGraphNode<
     symbol,
-    Creature
+    Card
   > = e2eContainer.get(GAME_E2E_TYPES.card.CREATE_CREATURE_TASK_GRAPH_NODE);
 
   const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor = new InversifyContainerTaskGraphNodeExtractor(
@@ -96,7 +96,7 @@ async function prepareData(): Promise<E2EComponents> {
   }
 
   return {
-    creature: createCreatureTaskGraphNode.getOutput(),
+    card: createCreatureTaskGraphNode.getOutput(),
     userToken: createUserTokenTaskGraphNode.getOutput(),
   };
 }

@@ -8,7 +8,6 @@ import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { CardDb } from '../../../../../adapter/db/model/card/CardDb';
 import { CardDbSearchRepository } from '../../../../../adapter/db/repository/card/CardDbSearchRepository';
 import { Card } from '../../../../../domain/model/card/Card';
-import { Creature } from '../../../../../domain/model/card/Creature';
 import { CardFindQuery } from '../../../../../domain/query/card/CardFindQuery';
 import { creatureFixtureFactory } from '../../../../fixtures/domain/model/card';
 
@@ -61,7 +60,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           let creatureResult: unknown;
 
           beforeAll(async () => {
-            const creatureFixture: Creature = creatureFixtureFactory.get();
+            const creatureFixture: Card = creatureFixtureFactory.get();
 
             const cardDbCollection: mongodb.Collection<CardDb> = mongoDbConnector.db.collection(
               collectionName,
@@ -160,7 +159,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let result: unknown;
 
         beforeAll(async () => {
-          const creatureFixture: Creature = creatureFixtureFactory.get();
+          const creatureFixture: Card = creatureFixtureFactory.get();
 
           const cardDbCollection: mongodb.Collection<CardDb> = mongoDbConnector.db.collection(
             collectionName,
