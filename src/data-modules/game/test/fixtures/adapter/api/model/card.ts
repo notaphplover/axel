@@ -2,9 +2,9 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../../common/test';
+import { CardApiV1 } from '../../../../../adapter/api/model/card/CardApiV1';
 import { CardDetailApiV1 } from '../../../../../adapter/api/model/card/CardDetailApiV1';
 import { CardTypeApiV1 } from '../../../../../adapter/api/model/card/CardTypeApiV1';
-import { CreatureApiV1 } from '../../../../../adapter/api/model/card/CreatureApiV1';
 import { ResourceApiV1 } from '../../../../../adapter/api/model/card/ResourceApiV1';
 import { cardDetail, creature, resource } from '../../../domain/model/card';
 
@@ -27,7 +27,7 @@ export const resourceApiV1: ResourceApiV1 = {
   white: resource.white,
 };
 
-export const creatureApiV1: CreatureApiV1 = {
+export const creatureApiV1: CardApiV1 = {
   cost: resourceApiV1,
   detail: cardDetailApiV1,
   id: creature.id,
@@ -38,6 +38,6 @@ export const creatureApiV1: CreatureApiV1 = {
   type: CardTypeApiV1.Creature,
 };
 
-export const creatureApiV1FixtureFactory: FixtureFactory<CreatureApiV1> = new DeepCloneFixtureFactory(
+export const creatureApiV1FixtureFactory: FixtureFactory<CardApiV1> = new DeepCloneFixtureFactory(
   creatureApiV1,
 );

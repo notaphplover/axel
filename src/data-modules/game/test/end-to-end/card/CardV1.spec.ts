@@ -19,7 +19,6 @@ import { PerformTasksResult } from '../../../../task-graph/domain/TaskGraph';
 import { UserToken } from '../../../../user/domain';
 import { userTest } from '../../../../user/test';
 import { CardApiV1 } from '../../../adapter/api/model/card/CardApiV1';
-import { CreatureApiV1 } from '../../../adapter/api/model/card/CreatureApiV1';
 import { CardFindQueryApiV1 } from '../../../adapter/api/query/card/CardFindQueryApiV1';
 import { CreatureCreationQueryApiV1 } from '../../../adapter/api/query/card/CreatureCreationQueryApiV1';
 import { creatureCreationQueryApiV1FixtureFactory } from '../../fixtures/adapter/api/query/card';
@@ -116,19 +115,19 @@ describe('Card V1', () => {
 
     it('must return a response with the creature created', () => {
       expect(postCardV1Response.data).toHaveProperty('id');
-      expect((postCardV1Response.data as CreatureApiV1).cost).toStrictEqual(
+      expect((postCardV1Response.data as CardApiV1).cost).toStrictEqual(
         creatureCreationQueryApiV1.cost,
       );
-      expect((postCardV1Response.data as CreatureApiV1).detail).toStrictEqual(
+      expect((postCardV1Response.data as CardApiV1).detail).toStrictEqual(
         creatureCreationQueryApiV1.detail,
       );
-      expect((postCardV1Response.data as CreatureApiV1).power).toStrictEqual(
+      expect((postCardV1Response.data as CardApiV1).power).toStrictEqual(
         creatureCreationQueryApiV1.power,
       );
-      expect(
-        (postCardV1Response.data as CreatureApiV1).toughness,
-      ).toStrictEqual(creatureCreationQueryApiV1.toughness);
-      expect((postCardV1Response.data as CreatureApiV1).type).toStrictEqual(
+      expect((postCardV1Response.data as CardApiV1).toughness).toStrictEqual(
+        creatureCreationQueryApiV1.toughness,
+      );
+      expect((postCardV1Response.data as CardApiV1).type).toStrictEqual(
         creatureCreationQueryApiV1.type,
       );
     });
@@ -163,27 +162,23 @@ describe('Card V1', () => {
         expect(postCardsSearchesByIdV1Response.data).toHaveLength(1);
 
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1).id,
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).id,
         ).toBe(cardId);
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1)
-            .cost,
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).cost,
         ).toStrictEqual(creatureCreationQueryApiV1.cost);
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1)
-            .detail,
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).detail,
         ).toStrictEqual(creatureCreationQueryApiV1.detail);
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1)
-            .power,
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).power,
         ).toStrictEqual(creatureCreationQueryApiV1.power);
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1)
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1)
             .toughness,
         ).toStrictEqual(creatureCreationQueryApiV1.toughness);
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1)
-            .type,
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).type,
         ).toBe(creatureCreationQueryApiV1.type);
       });
     });

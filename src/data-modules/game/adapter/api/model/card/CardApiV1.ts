@@ -1,3 +1,8 @@
-import { CreatureApiV1 } from './CreatureApiV1';
+import { BaseCardApiV1 } from './BaseCardApiV1';
+import { CardTypeApiV1 } from './CardTypeApiV1';
 
-export type CardApiV1 = CreatureApiV1;
+export interface CardApiV1 extends BaseCardApiV1 {
+  type: CardTypeApiV1.Creature;
+  power: number;
+  toughness: number;
+}
