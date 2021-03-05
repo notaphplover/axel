@@ -5,11 +5,9 @@ import { BaseCard } from '../../../../domain/model/card/BaseCard';
 import { CardDb } from '../../model/card/CardDb';
 
 @injectable()
-export abstract class BaseCardDbToCardConverter<
-  TCardDb extends CardDb,
-  TCard extends BaseCard
-> implements Converter<TCardDb, TCard> {
-  public transform(input: TCardDb): TCard {
+export abstract class BaseCardDbToCardConverter<TCard extends BaseCard>
+  implements Converter<CardDb, TCard> {
+  public transform(input: CardDb): TCard {
     return this.innerTransform(input) as TCard;
   }
 

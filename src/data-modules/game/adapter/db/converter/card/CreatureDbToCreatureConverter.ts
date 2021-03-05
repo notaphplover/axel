@@ -4,14 +4,14 @@ import { Converter } from '../../../../../../common/domain';
 import { BaseCard } from '../../../../domain/model/card/BaseCard';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { Creature } from '../../../../domain/model/card/Creature';
-import { CreatureDb } from '../../model/card/CreatureDb';
+import { CardDb } from '../../model/card/CardDb';
 import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
 
 @injectable()
 export class CreatureDbToCreatureConverter
-  extends BaseCardDbToCardConverter<CreatureDb, Creature>
-  implements Converter<CreatureDb, Creature> {
-  public transform(input: CreatureDb): Creature {
+  extends BaseCardDbToCardConverter<Creature>
+  implements Converter<CardDb, Creature> {
+  public transform(input: CardDb): Creature {
     const baseCard: BaseCard = this.innerTransform(input);
 
     return {

@@ -6,7 +6,6 @@ import { MongoDbConnector } from '../../../../../../../integration-modules/mongo
 import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
 import { dbTest } from '../../../../../../../layer-modules/db/test';
 import { CardDb } from '../../../../../adapter/db/model/card/CardDb';
-import { CreatureDb } from '../../../../../adapter/db/model/card/CreatureDb';
 import { CardDbSearchRepository } from '../../../../../adapter/db/repository/card/CardDbSearchRepository';
 import { Card } from '../../../../../domain/model/card/Card';
 import { Creature } from '../../../../../domain/model/card/Creature';
@@ -57,14 +56,14 @@ mongodbIntegrationDescribeGenerator(outputParam)(
     describe('.find()', () => {
       describe('when called and some cards satisfies the query', () => {
         describe('when the cards are creatures', () => {
-          let creatureDbInserted: CreatureDb;
+          let creatureDbInserted: CardDb;
 
           let creatureResult: unknown;
 
           beforeAll(async () => {
             const creatureFixture: Creature = creatureFixtureFactory.get();
 
-            const cardDbCollection: mongodb.Collection<CreatureDb> = mongoDbConnector.db.collection(
+            const cardDbCollection: mongodb.Collection<CardDb> = mongoDbConnector.db.collection(
               collectionName,
             );
 
@@ -163,7 +162,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         beforeAll(async () => {
           const creatureFixture: Creature = creatureFixtureFactory.get();
 
-          const cardDbCollection: mongodb.Collection<CreatureDb> = mongoDbConnector.db.collection(
+          const cardDbCollection: mongodb.Collection<CardDb> = mongoDbConnector.db.collection(
             collectionName,
           );
 

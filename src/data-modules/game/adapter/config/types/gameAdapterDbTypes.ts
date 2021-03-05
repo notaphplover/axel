@@ -18,7 +18,7 @@ export const GAME_ADAPTER_DB_TYPES = {
       CARD_FIND_QUERY_TO_CARD_DB_FILTER_QUERY_CONVERTER: Symbol(
         'CardFindQueryToCardDbFilterQueryConverter',
       ),
-      CREATURE_CREATION_QUERY_TO_CREATURE_DBS_CONVERTER: Symbol(
+      CARD_CREATION_QUERY_TO_CARD_DBS_CONVERTER: Symbol(
         'CreatureCreationQueryToCreatureDbsConverter',
       ),
       CREATURE_DB_TO_CREATURE_CONVERTER: Symbol(

@@ -2,16 +2,13 @@ import { injectable } from 'inversify';
 import mongodb from 'mongodb';
 
 import { Converter } from '../../../../../../common/domain';
-import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
-import { CreatureDb } from '../../model/card/CreatureDb';
+import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
+import { CardDb } from '../../model/card/CardDb';
 
 @injectable()
-export class CreatureCreationQueryToCreatureDbsConverter
-  implements
-    Converter<CreatureCreationQuery, mongodb.OptionalId<CreatureDb>[]> {
-  public transform(
-    input: CreatureCreationQuery,
-  ): mongodb.OptionalId<CreatureDb>[] {
+export class CardCreationQueryToCardDbsConverter
+  implements Converter<CardCreationQuery, mongodb.OptionalId<CardDb>[]> {
+  public transform(input: CardCreationQuery): mongodb.OptionalId<CardDb>[] {
     return [
       {
         cost: input.cost,

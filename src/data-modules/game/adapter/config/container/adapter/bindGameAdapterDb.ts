@@ -2,7 +2,7 @@ import { interfaces } from 'inversify';
 
 import { CardDbToCardConverter } from '../../../db/converter/card/CardDbToCardConverter';
 import { CardFindQueryToCardDbFilterQueryConverter } from '../../../db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
-import { CreatureCreationQueryToCreatureDbsConverter } from '../../../db/converter/card/CreatureCreationQueryToCreatureDbsConverter';
+import { CardCreationQueryToCardDbsConverter } from '../../../db/converter/card/CreatureCreationQueryToCreatureDbsConverter';
 import { CreatureDbToCreatureConverter } from '../../../db/converter/card/CreatureDbToCreatureConverter';
 import { CardDeckCreationQueryToCardDeckDbsConverter } from '../../../db/converter/deck/CardDeckCreationQueryToCardDeckDbsConverter';
 import { CardDeckDbToCardDeckConverter } from '../../../db/converter/deck/CardDeckDbToCardDeckConverter';
@@ -55,8 +55,8 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   ).to(CardFindQueryToCardDbFilterQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.card
-      .CREATURE_CREATION_QUERY_TO_CREATURE_DBS_CONVERTER,
-  ).to(CreatureCreationQueryToCreatureDbsConverter);
+      .CARD_CREATION_QUERY_TO_CARD_DBS_CONVERTER,
+  ).to(CardCreationQueryToCardDbsConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.card.CREATURE_DB_TO_CREATURE_CONVERTER,
   ).to(CreatureDbToCreatureConverter);

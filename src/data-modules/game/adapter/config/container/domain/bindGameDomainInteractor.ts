@@ -2,7 +2,6 @@ import { interfaces } from 'inversify';
 
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { CreateCardsInteractor } from '../../../../domain/interactor/card/CreateCardsInteractor';
-import { CreateCreaturesInteractor } from '../../../../domain/interactor/card/CreateCreaturesInteractor';
 import { FindCardsInteractor } from '../../../../domain/interactor/card/FindCardsInteractor';
 import { CreateCardDecksInteractor } from '../../../../domain/interactor/deck/CreateCardDecksInteractor';
 import { FindCardDeckInteractor } from '../../../../domain/interactor/deck/FindCardDeckInteractor';
@@ -22,9 +21,6 @@ export function bindGameDomainInteractor(bind: interfaces.Bind): void {
   );
   bind(GAME_DOMAIN_TYPES.interactor.card.CREATE_CARDS_INTERACTOR).to(
     CreateCardsInteractor,
-  );
-  bind(GAME_DOMAIN_TYPES.interactor.card.CREATE_CREATURES_INTERACTOR).to(
-    CreateCreaturesInteractor,
   );
   bind(GAME_DOMAIN_TYPES.interactor.card.FIND_CARDS_INTERACTOR).to(
     FindCardsInteractor,

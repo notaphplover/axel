@@ -7,41 +7,39 @@ import {
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
 import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
-import { Creature } from '../../../../domain/model/card/Creature';
-import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
+import { Card } from '../../../../domain/model/card/Card';
+import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-import { CreatureDb } from '../../model/card/CreatureDb';
+import { CardDb } from '../../model/card/CardDb';
 
 @injectable()
-export class CreatureDbInsertRepository extends MongoDbInsertRepository<
-  Creature,
-  CreatureDb,
-  CreatureCreationQuery
+export class CardDbInsertRepository extends MongoDbInsertRepository<
+  Card,
+  CardDb,
+  CardCreationQuery
 > {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
     @inject(GAME_ADAPTER_TYPES.db.collection.card.CARD_COLLECTION_NAME)
     collectionName: string,
-    @inject(
-      GAME_ADAPTER_TYPES.db.converter.card.CREATURE_DB_TO_CREATURE_CONVERTER,
-    )
-    creatureDbToCreatureConverter: Converter<CreatureDb, Creature>,
+    @inject(GAME_ADAPTER_TYPES.db.converter.card.CARD_DB_TO_CARD_CONVERTER)
+    cardDbToCardConverter: Converter<CardDb, Card>,
     @inject(mongodbAdapter.config.types.db.MONGODB_CONNECTOR)
     mongoDbConnector: MongoDbConnector,
     @inject(
       GAME_ADAPTER_TYPES.db.converter.card
-        .CREATURE_CREATION_QUERY_TO_CREATURE_DBS_CONVERTER,
+        .CARD_CREATION_QUERY_TO_CARD_DBS_CONVERTER,
     )
-    creatureCreationQueryToCreatureDbsConverter: Converter<
-      CreatureCreationQuery,
-      mongodb.OptionalId<CreatureDb>[]
+    cardCreationQueryToCardDbsConverter: Converter<
+      CardCreationQuery,
+      mongodb.OptionalId<CardDb>[]
     >,
   ) {
     super(
       collectionName,
-      creatureDbToCreatureConverter,
+      cardDbToCardConverter,
       mongoDbConnector,
-      creatureCreationQueryToCreatureDbsConverter,
+      cardCreationQueryToCardDbsConverter,
     );
   }
 }

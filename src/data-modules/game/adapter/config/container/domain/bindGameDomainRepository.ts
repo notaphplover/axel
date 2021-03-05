@@ -1,8 +1,8 @@
 import { interfaces } from 'inversify';
 
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { CardDbInsertRepository } from '../../../db/repository/card/CardDbInsertRepository';
 import { CardDbSearchRepository } from '../../../db/repository/card/CardDbSearchRepository';
-import { CreatureDbInsertRepository } from '../../../db/repository/card/CreatureDbInsertRepository';
 import { CardDeckDbInsertRepository } from '../../../db/repository/deck/CardDeckDbInsertRepository';
 import { CardDeckDbSearchRepository } from '../../../db/repository/deck/CardDeckDbSearchRepository';
 import { LiveGameDbInsertRepository } from '../../../db/repository/live/LiveGameDbInsertRepository';
@@ -21,8 +21,8 @@ export function bindGameDomainRepository(bind: interfaces.Bind): void {
   bind(GAME_DOMAIN_TYPES.repository.card.CARD_SEARCH_REPOSITORY).to(
     CardDbSearchRepository,
   );
-  bind(GAME_DOMAIN_TYPES.repository.card.CREATURE_INSERT_REPOSITORY).to(
-    CreatureDbInsertRepository,
+  bind(GAME_DOMAIN_TYPES.repository.card.CARD_INSERT_REPOSITORY).to(
+    CardDbInsertRepository,
   );
 
   bind(GAME_DOMAIN_TYPES.repository.deck.CARD_DECK_INSERT_REPOSITORY).to(

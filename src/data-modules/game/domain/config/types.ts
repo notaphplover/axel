@@ -10,7 +10,6 @@ export const GAME_DOMAIN_TYPES = {
   interactor: {
     card: {
       CREATE_CARDS_INTERACTOR: Symbol('CreateCardsInteractor'),
-      CREATE_CREATURES_INTERACTOR: Symbol('CreateCreaturesInteractor'),
       FIND_CARDS_INTERACTOR: Symbol('FindCardsInteractor'),
     },
     deck: {
@@ -31,7 +30,7 @@ export const GAME_DOMAIN_TYPES = {
   repository: {
     card: {
       CARD_SEARCH_REPOSITORY: Symbol('CardSearchRepository'),
-      CREATURE_INSERT_REPOSITORY: Symbol('CreatureInsertRepository'),
+      CARD_INSERT_REPOSITORY: Symbol('CreatureInsertRepository'),
     },
     deck: {
       CARD_DECK_INSERT_REPOSITORY: Symbol('CardDeckInsertRepository'),
