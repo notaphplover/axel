@@ -48,12 +48,7 @@ export class CardCreationQueryApiV1ToCardCreationQueryConverter
   public async transform(
     input: CardCreationQueryApiV1,
   ): Promise<CardCreationQuery> {
-    switch (input.type) {
-      case CardTypeApiV1.Creature:
-        return this.transformCreatureCreationQuery(input);
-      default:
-        return this.transformBaseCardCreationQuery(input) as CardCreationQuery;
-    }
+    return this.transformCreatureCreationQuery(input);
   }
 
   private transformBaseCardCreationQuery(
