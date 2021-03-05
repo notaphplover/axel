@@ -8,14 +8,14 @@ import {
   TaskGraphNode,
 } from '../../../../task-graph/domain';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
-import { Land } from '../../../domain/model/card/Land';
+import { Creature } from '../../../domain/model/card/Creature';
 import { CardDeck } from '../../../domain/model/deck/CardDeck';
 import { GameFormat } from '../../../domain/model/GameFormat';
 import { CardDeckCreationQuery } from '../../../domain/query/deck/CardDeckCreationQuery';
 import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
 
 @injectable()
-export class CreateCardDeckOfVoidLandGraphNode extends BaseTaskGraphNode<
+export class CreateCardDeckOfCreatureGraphNode extends BaseTaskGraphNode<
   symbol,
   CardDeck
 > {
@@ -29,20 +29,20 @@ export class CreateCardDeckOfVoidLandGraphNode extends BaseTaskGraphNode<
     >,
   ) {
     super(
-      [GAME_E2E_TYPES.card.CREATE_VOID_LAND_TASK_GRAPH_NODE],
-      GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_VOID_LAND_TASK_GRAPH_NODE,
+      [GAME_E2E_TYPES.card.CREATE_CREATURE_TASK_GRAPH_NODE],
+      GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_CREATURE_TASK_GRAPH_NODE,
     );
   }
 
   protected async innerPerform(): Promise<CardDeck> {
-    const createVoidLandTaskGraphNode: TaskGraphNode<
+    const createCreatureTaskGraphNode: TaskGraphNode<
       symbol,
-      Land
+      Creature
     > = this.currentTaskGraph.getNode(
-      GAME_E2E_TYPES.card.CREATE_VOID_LAND_TASK_GRAPH_NODE,
-    ) as TaskGraphNode<symbol, Land>;
+      GAME_E2E_TYPES.card.CREATE_CREATURE_TASK_GRAPH_NODE,
+    ) as TaskGraphNode<symbol, Creature>;
 
-    const voidLand: Land = createVoidLandTaskGraphNode.getOutput();
+    const creature: Creature = createCreatureTaskGraphNode.getOutput();
 
     const cardDeckCreationQuery: CardDeckCreationQuery = {
       description: 'sample-description',
@@ -50,20 +50,20 @@ export class CreateCardDeckOfVoidLandGraphNode extends BaseTaskGraphNode<
       name: 'sample-name',
       sections: {
         core: {
-          references: [voidLand.id],
+          references: [creature.id],
         },
         sideboard: {
-          references: [voidLand.id],
+          references: [creature.id],
         },
       },
     };
 
     const [
-      cardDeckOfVoidLand,
+      cardDeckOfCreatureLand,
     ]: CardDeck[] = await this.createCardDecksInteractor.interact(
       cardDeckCreationQuery,
     );
 
-    return cardDeckOfVoidLand;
+    return cardDeckOfCreatureLand;
   }
 }

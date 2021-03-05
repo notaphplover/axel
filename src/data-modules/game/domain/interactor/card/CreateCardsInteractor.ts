@@ -2,55 +2,28 @@ import { inject, injectable } from 'inversify';
 
 import { Interactor } from '../../../../../common/domain';
 import { GAME_DOMAIN_TYPES } from '../../config/types';
-import { Artifact } from '../../model/card/Artifact';
 import { Card } from '../../model/card/Card';
 import { CardType } from '../../model/card/CardType';
 import { Creature } from '../../model/card/Creature';
-import { Enchantment } from '../../model/card/Enchantment';
-import { Land } from '../../model/card/Land';
-import { ArtifactCreationQuery } from '../../query/card/ArtifactCreationQuery';
 import { BaseCardCreationQuery } from '../../query/card/BaseCardCreationQuery';
 import { CardCreationQuery } from '../../query/card/CardCreationQuery';
 import { CreatureCreationQuery } from '../../query/card/CreatureCreationQuery';
-import { EnchantmentCreationQuery } from '../../query/card/EnchantmentCreationQuery';
-import { LandCreationQuery } from '../../query/card/LandCreationQuery';
 
 @injectable()
 export class CreateCardsInteractor
   implements Interactor<BaseCardCreationQuery, Promise<Card[]>> {
   constructor(
-    @inject(GAME_DOMAIN_TYPES.interactor.card.CREATE_ARTIFACTS_INTERACTOR)
-    private readonly createArtifactsInteractor: Interactor<
-      ArtifactCreationQuery,
-      Promise<Artifact[]>
-    >,
     @inject(GAME_DOMAIN_TYPES.interactor.card.CREATE_CREATURES_INTERACTOR)
     private readonly createCreaturesInteractor: Interactor<
       CreatureCreationQuery,
       Promise<Creature[]>
     >,
-    @inject(GAME_DOMAIN_TYPES.interactor.card.CREATE_ENCHANTMENTS_INTERACTOR)
-    private readonly createEnchantmentsInteractor: Interactor<
-      EnchantmentCreationQuery,
-      Promise<Enchantment[]>
-    >,
-    @inject(GAME_DOMAIN_TYPES.interactor.card.CREATE_LANDS_INTERACTOR)
-    private readonly createLandsInteractor: Interactor<
-      LandCreationQuery,
-      Promise<Land[]>
-    >,
   ) {}
 
   public async interact(query: CardCreationQuery): Promise<Card[]> {
     switch (query.type) {
-      case CardType.Artifact:
-        return this.createArtifactsInteractor.interact(query);
       case CardType.Creature:
         return this.createCreaturesInteractor.interact(query);
-      case CardType.Enchantment:
-        return this.createEnchantmentsInteractor.interact(query);
-      case CardType.Land:
-        return this.createLandsInteractor.interact(query);
       default:
         throw new Error('Unexpected card type');
     }

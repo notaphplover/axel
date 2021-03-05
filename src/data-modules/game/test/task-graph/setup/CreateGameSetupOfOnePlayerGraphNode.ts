@@ -32,18 +32,18 @@ export class CreateGameSetupOfOnePlayerGraphNode extends BaseTaskGraphNode<
     super(
       [
         USER_E2E_TYPES.CREATE_FIRST_USER_TASK_GRAPH_NODE,
-        GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_VOID_LAND_TASK_GRAPH_NODE,
+        GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_CREATURE_TASK_GRAPH_NODE,
       ],
       GAME_E2E_TYPES.setup.CREATE_GAME_SETUP_OF_ONE_PLAYER_GRAPH_NODE,
     );
   }
 
   protected async innerPerform(): Promise<GameSetup> {
-    const createCardDeckOfVoidLandGraphNode: TaskGraphNode<
+    const createCardDeckOfCreatureGraphNode: TaskGraphNode<
       symbol,
       CardDeck
     > = this.currentTaskGraph.getNode(
-      GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_VOID_LAND_TASK_GRAPH_NODE,
+      GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_CREATURE_TASK_GRAPH_NODE,
     ) as TaskGraphNode<symbol, CardDeck>;
 
     const createFirstUserGraphNode: TaskGraphNode<
@@ -53,7 +53,7 @@ export class CreateGameSetupOfOnePlayerGraphNode extends BaseTaskGraphNode<
       USER_E2E_TYPES.CREATE_FIRST_USER_TASK_GRAPH_NODE,
     ) as TaskGraphNode<symbol, User>;
 
-    const cardDeck: CardDeck = createCardDeckOfVoidLandGraphNode.getOutput();
+    const cardDeck: CardDeck = createCardDeckOfCreatureGraphNode.getOutput();
     const user: User = createFirstUserGraphNode.getOutput();
 
     const gameSetupCreationQuery: GameSetupsCreationQuery = {
