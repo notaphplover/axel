@@ -3,8 +3,8 @@ import {
   FixtureFactory,
 } from '../../../../../../../common/test';
 import { CardTypeApiV1 } from '../../../../../adapter/api/model/card/CardTypeApiV1';
+import { CardCreationQueryApiV1 } from '../../../../../adapter/api/query/card/CardCreationQueryApiV1';
 import { CardFindQueryApiV1 } from '../../../../../adapter/api/query/card/CardFindQueryApiV1';
-import { CreatureCreationQueryApiV1 } from '../../../../../adapter/api/query/card/CreatureCreationQueryApiV1';
 import { LiveGameCreationQueryApiV1 } from '../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import {
   cardCreationQuery,
@@ -13,7 +13,7 @@ import {
 import { cardDetailApiV1, resourceApiV1 } from '../model/card';
 import { gameSetupApiV1 } from '../model/setup';
 
-export const creatureCreationQueryApiV1: CreatureCreationQueryApiV1 = {
+export const cardCreationQueryApiV1: CardCreationQueryApiV1 = {
   cost: resourceApiV1,
   detail: cardDetailApiV1,
   power: cardCreationQuery.power,
@@ -21,8 +21,8 @@ export const creatureCreationQueryApiV1: CreatureCreationQueryApiV1 = {
   type: CardTypeApiV1.Creature,
 };
 
-export const creatureCreationQueryApiV1FixtureFactory: FixtureFactory<CreatureCreationQueryApiV1> = new DeepCloneFixtureFactory(
-  creatureCreationQueryApiV1,
+export const cardCreationQueryApiV1FixtureFactory: FixtureFactory<CardCreationQueryApiV1> = new DeepCloneFixtureFactory(
+  cardCreationQueryApiV1,
 );
 
 export const creatureFindQueryApiV1: CardFindQueryApiV1 = {

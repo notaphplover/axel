@@ -12,7 +12,6 @@ import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
 import { ResourceApiV1 } from '../../model/card/ResourceApiV1';
 import { BaseCardCreationQueryApiV1 } from '../../query/card/BaseCardCreationQueryApiV1';
 import { CardCreationQueryApiV1 } from '../../query/card/CardCreationQueryApiV1';
-import { CreatureCreationQueryApiV1 } from '../../query/card/CreatureCreationQueryApiV1';
 
 @injectable()
 export class CardCreationQueryApiV1ToCardCreationQueryConverter
@@ -47,22 +46,6 @@ export class CardCreationQueryApiV1ToCardCreationQueryConverter
   public async transform(
     input: CardCreationQueryApiV1,
   ): Promise<CardCreationQuery> {
-    return this.transformCreatureCreationQuery(input);
-  }
-
-  private transformBaseCardCreationQuery(
-    input: BaseCardCreationQueryApiV1,
-  ): BaseCardCreationQuery {
-    return {
-      cost: this.resourceApiV1ToResourceConverter.transform(input.cost),
-      detail: this.cardDetailApiV1ToCardDetailConverter.transform(input.detail),
-      type: this.cardTypeApiV1ToCardTypeConverter.transform(input.type),
-    };
-  }
-
-  private transformCreatureCreationQuery(
-    input: CreatureCreationQueryApiV1,
-  ): CardCreationQuery {
     const baseCardCreationQuery: BaseCardCreationQuery = this.transformBaseCardCreationQuery(
       input,
     );
@@ -73,6 +56,16 @@ export class CardCreationQueryApiV1ToCardCreationQueryConverter
       power: input.power,
       toughness: input.toughness,
       type: CardType.Creature,
+    };
+  }
+
+  private transformBaseCardCreationQuery(
+    input: BaseCardCreationQueryApiV1,
+  ): BaseCardCreationQuery {
+    return {
+      cost: this.resourceApiV1ToResourceConverter.transform(input.cost),
+      detail: this.cardDetailApiV1ToCardDetailConverter.transform(input.detail),
+      type: this.cardTypeApiV1ToCardTypeConverter.transform(input.type),
     };
   }
 }

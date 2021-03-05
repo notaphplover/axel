@@ -9,7 +9,7 @@ import { PostCardV1RequestHandler } from '../../../../../../adapter/server/reqHa
 import { Card } from '../../../../../../domain/model/card/Card';
 import { CardCreationQuery } from '../../../../../../domain/query/card/CardCreationQuery';
 import { creatureApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
-import { creatureCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
+import { cardCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
 import { creatureFixtureFactory } from '../../../../../fixtures/domain/model/card';
 import { cardCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
 
@@ -50,7 +50,7 @@ describe(PostCardV1RequestHandler.name, () => {
 
       beforeAll(async () => {
         requestFixture = ({
-          body: creatureCreationQueryApiV1FixtureFactory.get(),
+          body: cardCreationQueryApiV1FixtureFactory.get(),
         } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
 
         replyFixture = fastifyReplyFixtureFactory.get();

@@ -19,9 +19,9 @@ import { PerformTasksResult } from '../../../../task-graph/domain/TaskGraph';
 import { UserToken } from '../../../../user/domain';
 import { userTest } from '../../../../user/test';
 import { CardApiV1 } from '../../../adapter/api/model/card/CardApiV1';
+import { CardCreationQueryApiV1 } from '../../../adapter/api/query/card/CardCreationQueryApiV1';
 import { CardFindQueryApiV1 } from '../../../adapter/api/query/card/CardFindQueryApiV1';
-import { CreatureCreationQueryApiV1 } from '../../../adapter/api/query/card/CreatureCreationQueryApiV1';
-import { creatureCreationQueryApiV1FixtureFactory } from '../../fixtures/adapter/api/query/card';
+import { cardCreationQueryApiV1FixtureFactory } from '../../fixtures/adapter/api/query/card';
 
 const container: Container = configAdapter.container;
 
@@ -96,12 +96,12 @@ describe('Card V1', () => {
     await mongoDbConnector.close();
   });
 
-  describe('when called POST, with a request with a valid CreatureCreationQueryApiV1', () => {
-    let creatureCreationQueryApiV1: CreatureCreationQueryApiV1;
+  describe('when called POST, with a request with a valid CardCreationQueryApiV1', () => {
+    let creatureCreationQueryApiV1: CardCreationQueryApiV1;
     let postCardV1Response: axios.AxiosResponse;
 
     beforeAll(async () => {
-      creatureCreationQueryApiV1 = creatureCreationQueryApiV1FixtureFactory.get();
+      creatureCreationQueryApiV1 = cardCreationQueryApiV1FixtureFactory.get();
       postCardV1Response = await client.post(
         `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/cards`,
         creatureCreationQueryApiV1,
