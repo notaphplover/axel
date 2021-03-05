@@ -6,7 +6,7 @@ import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
 import { Card } from '../../../domain/model/card/Card';
 import { CardCreationQuery } from '../../../domain/query/card/CardCreationQuery';
 import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
-import { creatureCreationQuery } from '../../fixtures/domain/query/card';
+import { cardCreationQuery } from '../../fixtures/domain/query/card';
 
 @injectable()
 export class CreateCreatureTaskGraphNode extends BaseTaskGraphNode<
@@ -26,11 +26,11 @@ export class CreateCreatureTaskGraphNode extends BaseTaskGraphNode<
   protected async innerPerform(): Promise<Card> {
     const [creatureCreated]: Card[] = await this.createCardsInteractor.interact(
       {
-        cost: creatureCreationQuery.cost,
-        detail: creatureCreationQuery.detail,
-        power: creatureCreationQuery.power,
-        toughness: creatureCreationQuery.toughness,
-        type: creatureCreationQuery.type,
+        cost: cardCreationQuery.cost,
+        detail: cardCreationQuery.detail,
+        power: cardCreationQuery.power,
+        toughness: cardCreationQuery.toughness,
+        type: cardCreationQuery.type,
       },
     );
 

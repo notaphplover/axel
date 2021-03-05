@@ -4,7 +4,7 @@ import { CreateCardsInteractor } from '../../../../../domain/interactor/card/Cre
 import { Card } from '../../../../../domain/model/card/Card';
 import { CardCreationQuery } from '../../../../../domain/query/card/CardCreationQuery';
 import { creatureFixtureFactory } from '../../../../fixtures/domain/model/card';
-import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { cardCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 describe(CreateCardsInteractor.name, () => {
   let createCardsRepository: InsertRepository<Card, CardCreationQuery>;
@@ -29,14 +29,14 @@ describe(CreateCardsInteractor.name, () => {
         ]);
 
         result = await createCardsInteractor.interact(
-          creatureCreationQueryFixtureFactory.get(),
+          cardCreationQueryFixtureFactory.get(),
         );
       });
 
       it('must call createCreaturesInteractor.interact', () => {
         expect(createCardsRepository.insert).toHaveBeenCalledTimes(1);
         expect(createCardsRepository.insert).toHaveBeenCalledWith(
-          creatureCreationQueryFixtureFactory.get(),
+          cardCreationQueryFixtureFactory.get(),
         );
       });
 

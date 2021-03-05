@@ -11,7 +11,7 @@ import { CardCreationQuery } from '../../../../../../domain/query/card/CardCreat
 import { creatureApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
 import { creatureCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
 import { creatureFixtureFactory } from '../../../../../fixtures/domain/model/card';
-import { creatureCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
+import { cardCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
 
 describe(PostCardV1RequestHandler.name, () => {
   let cardToCardApiV1Converter: Converter<Card, CardApiV1>;
@@ -57,7 +57,7 @@ describe(PostCardV1RequestHandler.name, () => {
 
         creatureCreationQueryOrErrorsFixture = {
           isEither: false,
-          value: creatureCreationQueryFixtureFactory.get(),
+          value: cardCreationQueryFixtureFactory.get(),
         };
 
         (cardToCardApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
@@ -87,7 +87,7 @@ describe(PostCardV1RequestHandler.name, () => {
       it('must call createCardsInteractor with the query obtained', () => {
         expect(createCardsInteractor.interact).toHaveBeenCalledTimes(1);
         expect(createCardsInteractor.interact).toHaveBeenCalledWith(
-          creatureCreationQueryFixtureFactory.get(),
+          cardCreationQueryFixtureFactory.get(),
         );
       });
 

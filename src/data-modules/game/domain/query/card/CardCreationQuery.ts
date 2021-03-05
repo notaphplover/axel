@@ -1,3 +1,8 @@
-import { CreatureCreationQuery } from './CreatureCreationQuery';
+import { CardType } from '../../model/card/CardType';
+import { BaseCardCreationQuery } from './BaseCardCreationQuery';
 
-export type CardCreationQuery = CreatureCreationQuery;
+export interface CardCreationQuery extends BaseCardCreationQuery {
+  type: CardType.Creature;
+  power: number;
+  toughness: number;
+}

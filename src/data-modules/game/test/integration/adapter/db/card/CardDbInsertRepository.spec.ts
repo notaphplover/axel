@@ -9,7 +9,7 @@ import { CardDbInsertRepository } from '../../../../../adapter/db/repository/car
 import { Card } from '../../../../../domain/model/card/Card';
 import { CardCreationQuery } from '../../../../../domain/query/card/CardCreationQuery';
 import { creatureFixtureFactory } from '../../../../fixtures/domain/model/card';
-import { creatureCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { cardCreationQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 const outputParam: Capsule<MongoDbConnector | undefined> = { elem: undefined };
 
@@ -80,7 +80,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           );
 
           result = await creatureDbInsertRepository.insert(
-            creatureCreationQueryFixtureFactory.get(),
+            cardCreationQueryFixtureFactory.get(),
           );
         });
 

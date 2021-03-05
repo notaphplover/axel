@@ -3,13 +3,13 @@ import {
   FixtureFactory,
 } from '../../../../../../common/test';
 import { CardType } from '../../../../domain/model/card/CardType';
+import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
 import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
-import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
 import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
 import { creature } from '../model/card';
 import { liveGame } from '../model/live';
 
-export const creatureCreationQuery: CreatureCreationQuery = {
+export const cardCreationQuery: CardCreationQuery = {
   cost: creature.cost,
   detail: creature.detail,
   type: CardType.Creature,
@@ -17,8 +17,8 @@ export const creatureCreationQuery: CreatureCreationQuery = {
   toughness: creature.toughness,
 };
 
-export const creatureCreationQueryFixtureFactory: FixtureFactory<CreatureCreationQuery> = new DeepCloneFixtureFactory(
-  creatureCreationQuery,
+export const cardCreationQueryFixtureFactory: FixtureFactory<CardCreationQuery> = new DeepCloneFixtureFactory(
+  cardCreationQuery,
 );
 
 export const creatureFindQuery: Required<CardFindQuery> = {

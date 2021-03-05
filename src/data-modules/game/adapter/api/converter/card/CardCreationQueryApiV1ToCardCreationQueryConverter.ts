@@ -6,7 +6,6 @@ import { CardType } from '../../../../domain/model/card/CardType';
 import { Resource } from '../../../../domain/model/card/Resource';
 import { BaseCardCreationQuery } from '../../../../domain/query/card/BaseCardCreationQuery';
 import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
-import { CreatureCreationQuery } from '../../../../domain/query/card/CreatureCreationQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { CardDetailApiV1 } from '../../model/card/CardDetailApiV1';
 import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
@@ -63,7 +62,7 @@ export class CardCreationQueryApiV1ToCardCreationQueryConverter
 
   private transformCreatureCreationQuery(
     input: CreatureCreationQueryApiV1,
-  ): CreatureCreationQuery {
+  ): CardCreationQuery {
     const baseCardCreationQuery: BaseCardCreationQuery = this.transformBaseCardCreationQuery(
       input,
     );

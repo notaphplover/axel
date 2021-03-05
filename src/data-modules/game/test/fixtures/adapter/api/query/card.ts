@@ -7,7 +7,7 @@ import { CardFindQueryApiV1 } from '../../../../../adapter/api/query/card/CardFi
 import { CreatureCreationQueryApiV1 } from '../../../../../adapter/api/query/card/CreatureCreationQueryApiV1';
 import { LiveGameCreationQueryApiV1 } from '../../../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import {
-  creatureCreationQuery,
+  cardCreationQuery,
   creatureFindQuery,
 } from '../../../domain/query/card';
 import { cardDetailApiV1, resourceApiV1 } from '../model/card';
@@ -16,8 +16,8 @@ import { gameSetupApiV1 } from '../model/setup';
 export const creatureCreationQueryApiV1: CreatureCreationQueryApiV1 = {
   cost: resourceApiV1,
   detail: cardDetailApiV1,
-  power: creatureCreationQuery.power,
-  toughness: creatureCreationQuery.toughness,
+  power: cardCreationQuery.power,
+  toughness: cardCreationQuery.toughness,
   type: CardTypeApiV1.Creature,
 };
 
