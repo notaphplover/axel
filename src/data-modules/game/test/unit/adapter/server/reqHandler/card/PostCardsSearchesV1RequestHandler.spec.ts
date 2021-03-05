@@ -8,10 +8,10 @@ import { CardApiV1 } from '../../../../../../adapter/api/model/card/CardApiV1';
 import { PostCardsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/PostCardsSearchesV1RequestHandler';
 import { Card } from '../../../../../../domain/model/card/Card';
 import { CardFindQuery } from '../../../../../../domain/query/card/CardFindQuery';
-import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
-import { artifactFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
-import { artifactFixtureFactory } from '../../../../../fixtures/domain/model/card';
-import { artifactFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
+import { creatureApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
+import { creatureFindQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
+import { creatureFixtureFactory } from '../../../../../fixtures/domain/model/card';
+import { creatureFindQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
 
 describe(PostCardsSearchesV1RequestHandler.name, () => {
   let cardToCardApiV1Converter: Converter<Card, CardApiV1>;
@@ -50,21 +50,21 @@ describe(PostCardsSearchesV1RequestHandler.name, () => {
 
       beforeAll(async () => {
         requestFixture = ({
-          body: artifactFindQueryApiV1FixtureFactory.get(),
+          body: creatureFindQueryApiV1FixtureFactory.get(),
         } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
 
         replyFixture = fastifyReplyFixtureFactory.get();
 
         cardFindQueryOrErrors = {
           isEither: false,
-          value: artifactFindQueryFixtureFactory.get(),
+          value: creatureFindQueryFixtureFactory.get(),
         };
 
         (cardToCardApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
-          artifactApiV1FixtureFactory.get(),
+          creatureApiV1FixtureFactory.get(),
         );
         (findCardsInteractor.interact as jest.Mock).mockResolvedValueOnce([
-          artifactFixtureFactory.get(),
+          creatureFixtureFactory.get(),
         ]);
         (postCardsSearchesV1RequestToCardFindQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
           cardFindQueryOrErrors,
@@ -85,21 +85,21 @@ describe(PostCardsSearchesV1RequestHandler.name, () => {
       it('must call findCardsInteractor.interact with the card find query generated', () => {
         expect(findCardsInteractor.interact).toHaveBeenCalledTimes(1);
         expect(findCardsInteractor.interact).toHaveBeenCalledWith(
-          artifactFindQueryFixtureFactory.get(),
+          creatureFindQueryFixtureFactory.get(),
         );
       });
 
       it('must call cardToCardApiV1Converter.transform with the card found', () => {
         expect(cardToCardApiV1Converter.transform).toHaveBeenCalledTimes(1);
         expect(cardToCardApiV1Converter.transform).toHaveBeenCalledWith(
-          artifactFixtureFactory.get(),
+          creatureFixtureFactory.get(),
         );
       });
 
       it('must call reply.send with the cards api found', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
         expect(replyFixture.send).toHaveBeenCalledWith([
-          artifactApiV1FixtureFactory.get(),
+          creatureApiV1FixtureFactory.get(),
         ]);
       });
     });
