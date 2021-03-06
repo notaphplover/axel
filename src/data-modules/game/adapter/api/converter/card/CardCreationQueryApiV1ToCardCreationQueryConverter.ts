@@ -4,13 +4,11 @@ import { Converter } from '../../../../../../common/domain';
 import { CardDetail } from '../../../../domain/model/card/CardDetail';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { Resource } from '../../../../domain/model/card/Resource';
-import { BaseCardCreationQuery } from '../../../../domain/query/card/BaseCardCreationQuery';
 import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { CardDetailApiV1 } from '../../model/card/CardDetailApiV1';
 import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
 import { ResourceApiV1 } from '../../model/card/ResourceApiV1';
-import { BaseCardCreationQueryApiV1 } from '../../query/card/BaseCardCreationQueryApiV1';
 import { CardCreationQueryApiV1 } from '../../query/card/CardCreationQueryApiV1';
 
 @injectable()
@@ -46,25 +44,11 @@ export class CardCreationQueryApiV1ToCardCreationQueryConverter
   public async transform(
     input: CardCreationQueryApiV1,
   ): Promise<CardCreationQuery> {
-    const baseCardCreationQuery: BaseCardCreationQuery = this.transformBaseCardCreationQuery(
-      input,
-    );
-
-    return {
-      cost: baseCardCreationQuery.cost,
-      detail: baseCardCreationQuery.detail,
-      power: input.power,
-      toughness: input.toughness,
-      type: CardType.Creature,
-    };
-  }
-
-  private transformBaseCardCreationQuery(
-    input: BaseCardCreationQueryApiV1,
-  ): BaseCardCreationQuery {
     return {
       cost: this.resourceApiV1ToResourceConverter.transform(input.cost),
       detail: this.cardDetailApiV1ToCardDetailConverter.transform(input.detail),
+      power: input.power,
+      toughness: input.toughness,
       type: this.cardTypeApiV1ToCardTypeConverter.transform(input.type),
     };
   }

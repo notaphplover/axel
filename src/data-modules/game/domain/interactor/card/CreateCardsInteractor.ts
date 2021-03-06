@@ -4,12 +4,11 @@ import { Interactor } from '../../../../../common/domain';
 import { InsertRepository } from '../../../../../layer-modules/db/domain';
 import { GAME_DOMAIN_TYPES } from '../../config/types';
 import { Card } from '../../model/card/Card';
-import { BaseCardCreationQuery } from '../../query/card/BaseCardCreationQuery';
 import { CardCreationQuery } from '../../query/card/CardCreationQuery';
 
 @injectable()
 export class CreateCardsInteractor
-  implements Interactor<BaseCardCreationQuery, Promise<Card[]>> {
+  implements Interactor<CardCreationQuery, Promise<Card[]>> {
   constructor(
     @inject(GAME_DOMAIN_TYPES.repository.card.CARD_INSERT_REPOSITORY)
     private readonly cardInsertRepository: InsertRepository<
