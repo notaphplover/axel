@@ -49,7 +49,9 @@ export class CardCreationQueryApiV1ToCardCreationQueryConverter
       detail: this.cardDetailApiV1ToCardDetailConverter.transform(input.detail),
       power: input.power,
       toughness: input.toughness,
-      type: this.cardTypeApiV1ToCardTypeConverter.transform(input.type),
+      types: input.types.map((type: CardTypeApiV1) =>
+        this.cardTypeApiV1ToCardTypeConverter.transform(type),
+      ),
     };
   }
 }

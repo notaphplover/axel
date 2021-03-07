@@ -12,7 +12,7 @@ import { liveGame } from '../model/live';
 export const cardCreationQuery: CardCreationQuery = {
   cost: creature.cost,
   detail: creature.detail,
-  type: CardType.Creature,
+  types: [CardType.Creature],
   power: creature.power,
   toughness: creature.toughness,
 };

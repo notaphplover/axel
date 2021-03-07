@@ -12,5 +12,5 @@ export interface CardApiV1 {
   subtypes: CardSubtypeApiV1[];
   supertypes: CardSupertypeApiV1[];
   toughness?: number;
-  type: CardTypeApiV1;
+  types: CardTypeApiV1[];
 }

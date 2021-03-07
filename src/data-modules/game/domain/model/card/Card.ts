@@ -12,5 +12,5 @@ export interface Card {
   subtypes: CardSubtype[];
   supertypes: CardSupertype[];
   toughness?: number;
-  type: CardType;
+  types: CardType[];
 }

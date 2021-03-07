@@ -13,7 +13,7 @@ export class CardCreationQueryToCardDbsConverter
       {
         cost: input.cost,
         detail: input.detail,
-        type: input.type,
+        types: [...input.types],
         power: input.power,
         toughness: input.toughness,
         subtypes: [],

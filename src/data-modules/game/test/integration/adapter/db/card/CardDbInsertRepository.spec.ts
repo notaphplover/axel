@@ -70,7 +70,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             detail: cardFixture.detail,
             power: cardFixture.power,
             toughness: cardFixture.toughness,
-            type: cardFixture.type,
+            types: [...cardFixture.types],
             subtypes: [],
             supertypes: [],
           };
@@ -96,7 +96,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             detail: cardFixture.detail,
             power: cardFixture.power,
             toughness: cardFixture.toughness,
-            type: cardFixture.type,
+            types: cardFixture.types,
             subtypes: [],
             supertypes: [],
           };

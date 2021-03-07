@@ -74,7 +74,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                   detail: creatureFixture.detail,
                   power: creatureFixture.power,
                   toughness: creatureFixture.toughness,
-                  type: creatureFixture.type,
+                  types: [...creatureFixture.types],
                   subtypes: [],
                   supertypes: [],
                 },
@@ -173,7 +173,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
               subtypes: [],
               supertypes: [],
               toughness: creatureFixture.toughness,
-              type: creatureFixture.type,
+              types: creatureFixture.types,
             },
           ]);
 

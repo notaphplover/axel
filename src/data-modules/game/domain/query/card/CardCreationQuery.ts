@@ -7,5 +7,5 @@ export interface CardCreationQuery {
   detail: CardDetail;
   power?: number;
   toughness?: number;
-  type: CardType;
+  types: CardType[];
 }

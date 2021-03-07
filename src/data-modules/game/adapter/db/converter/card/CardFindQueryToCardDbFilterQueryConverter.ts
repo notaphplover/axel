@@ -22,12 +22,12 @@ export class CardFindQueryToCardDbFilterQueryConverter
         if (input.types.length > 0) {
           andFilterQuery.push({
             $or: input.types.map((type: CardType) => {
-              return { type };
+              return { types: type };
             }),
           });
         }
       } else {
-        andFilterQuery.push({ type: input.types });
+        andFilterQuery.push({ types: input.types });
       }
     }
 

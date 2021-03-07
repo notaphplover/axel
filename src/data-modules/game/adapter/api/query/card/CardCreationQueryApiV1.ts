@@ -7,5 +7,5 @@ export interface CardCreationQueryApiV1 {
   detail: CardDetailApiV1;
   power?: number;
   toughness?: number;
-  type: CardTypeApiV1;
+  types: CardTypeApiV1[];
 }

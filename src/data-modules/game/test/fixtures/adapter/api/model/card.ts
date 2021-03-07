@@ -35,7 +35,7 @@ export const creatureApiV1: CardApiV1 = {
   subtypes: [],
   supertypes: [],
   toughness: creature.toughness,
-  type: CardTypeApiV1.Creature,
+  types: [CardTypeApiV1.Creature],
 };
 
 export const creatureApiV1FixtureFactory: FixtureFactory<CardApiV1> = new DeepCloneFixtureFactory(

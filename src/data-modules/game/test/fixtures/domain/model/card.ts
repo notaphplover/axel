@@ -38,7 +38,7 @@ export const creature: Card = {
   subtypes: [],
   supertypes: [],
   toughness: 3,
-  type: CardType.Creature,
+  types: [CardType.Creature],
 };
 
 export const creatureFixtureFactory: FixtureFactory<Card> = new DeepCloneFixtureFactory(

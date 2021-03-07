@@ -74,7 +74,9 @@ export class CardToCardApiV1Converter implements Converter<Card, CardApiV1> {
         this.cardSupertypeToCardSupertypeApiV1Converter.transform(supertype),
       ),
       toughness: input.toughness,
-      type: this.cardTypeToCardTypeApiV1Converter.transform(input.type),
+      types: input.types.map((type: CardType) =>
+        this.cardTypeToCardTypeApiV1Converter.transform(type),
+      ),
     };
   }
 }

@@ -18,7 +18,7 @@ export const cardCreationQueryApiV1: CardCreationQueryApiV1 = {
   detail: cardDetailApiV1,
   power: cardCreationQuery.power,
   toughness: cardCreationQuery.toughness,
-  type: CardTypeApiV1.Creature,
+  types: [CardTypeApiV1.Creature],
 };
 
 export const cardCreationQueryApiV1FixtureFactory: FixtureFactory<CardCreationQueryApiV1> = new DeepCloneFixtureFactory(

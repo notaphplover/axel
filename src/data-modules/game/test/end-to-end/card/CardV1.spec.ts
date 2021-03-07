@@ -127,8 +127,8 @@ describe('Card V1', () => {
       expect((postCardV1Response.data as CardApiV1).toughness).toStrictEqual(
         creatureCreationQueryApiV1.toughness,
       );
-      expect((postCardV1Response.data as CardApiV1).type).toStrictEqual(
-        creatureCreationQueryApiV1.type,
+      expect((postCardV1Response.data as CardApiV1).types).toStrictEqual(
+        creatureCreationQueryApiV1.types,
       );
     });
 
@@ -178,8 +178,8 @@ describe('Card V1', () => {
             .toughness,
         ).toStrictEqual(creatureCreationQueryApiV1.toughness);
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).type,
-        ).toBe(creatureCreationQueryApiV1.type);
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).types,
+        ).toStrictEqual(creatureCreationQueryApiV1.types);
       });
     });
   });

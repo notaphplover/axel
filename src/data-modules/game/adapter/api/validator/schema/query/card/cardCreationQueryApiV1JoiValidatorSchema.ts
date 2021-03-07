@@ -11,6 +11,6 @@ export const cardCreationQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<CardCrea
     detail: cardDetailApiV1JoiValidatorSchema,
     power: Joi.number().strict().integer(),
     toughness: Joi.number().strict().integer(),
-    type: cardTypeApiV1JoiValidatorSchema,
+    types: Joi.array().items(cardTypeApiV1JoiValidatorSchema),
   },
 );

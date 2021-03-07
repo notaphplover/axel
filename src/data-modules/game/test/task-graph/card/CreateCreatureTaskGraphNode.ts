@@ -30,7 +30,7 @@ export class CreateCreatureTaskGraphNode extends BaseTaskGraphNode<
         detail: cardCreationQuery.detail,
         power: cardCreationQuery.power,
         toughness: cardCreationQuery.toughness,
-        type: cardCreationQuery.type,
+        types: [...cardCreationQuery.types],
       },
     );
 

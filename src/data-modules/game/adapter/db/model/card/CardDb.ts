@@ -12,5 +12,5 @@ export interface CardDb extends Document {
   subtypes: CardSubtype[];
   supertypes: CardSupertype[];
   toughness?: number;
-  type: CardType;
+  types: CardType[];
 }

@@ -26,7 +26,7 @@ export class CardDbToCardConverter implements Converter<CardDb, Card> {
       subtypes: [...cardDb.subtypes],
       supertypes: [...cardDb.supertypes],
       toughness: cardDb.toughness,
-      type: cardDb.type,
+      types: [...cardDb.types],
     };
   }
 }
