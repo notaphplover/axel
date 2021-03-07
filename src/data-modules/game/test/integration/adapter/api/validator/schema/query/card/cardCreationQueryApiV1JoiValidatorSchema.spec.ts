@@ -41,11 +41,6 @@ describe('cardCreationQueryApiV1JoiValidatorSchema', () => {
         detail: cardDetailApiV1FixtureFactory.get(),
         types: [CardTypeApiV1.Artifact],
       },
-      {
-        cost: resourceApiV1FixtureFactory.get(),
-        detail: cardDetailApiV1FixtureFactory.get(),
-        types: [],
-      },
     ];
 
     describe.each(validCardCreationQueryApiV1Fixtures)(
