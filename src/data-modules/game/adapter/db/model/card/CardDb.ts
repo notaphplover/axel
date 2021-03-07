@@ -8,9 +8,9 @@ import { Resource } from '../../../../domain/model/card/Resource';
 export interface CardDb extends Document {
   cost: Resource;
   detail: CardDetail;
-  power: number;
+  power?: number;
   subtypes: CardSubtype[];
   supertypes: CardSupertype[];
-  toughness: number;
+  toughness?: number;
   type: CardType;
 }

@@ -8,9 +8,9 @@ export interface Card {
   cost: Resource;
   detail: CardDetail;
   id: string;
+  power?: number;
   subtypes: CardSubtype[];
   supertypes: CardSupertype[];
-  power: number;
-  toughness: number;
+  toughness?: number;
   type: CardType;
 }

@@ -8,9 +8,9 @@ export interface CardApiV1 {
   cost: ResourceApiV1;
   detail: CardDetailApiV1;
   id: string;
+  power?: number;
   subtypes: CardSubtypeApiV1[];
   supertypes: CardSupertypeApiV1[];
-  power: number;
-  toughness: number;
+  toughness?: number;
   type: CardTypeApiV1;
 }

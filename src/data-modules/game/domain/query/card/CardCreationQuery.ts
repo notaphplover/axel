@@ -5,7 +5,7 @@ import { Resource } from '../../model/card/Resource';
 export interface CardCreationQuery {
   cost: Resource;
   detail: CardDetail;
-  power: number;
-  toughness: number;
+  power?: number;
+  toughness?: number;
   type: CardType;
 }

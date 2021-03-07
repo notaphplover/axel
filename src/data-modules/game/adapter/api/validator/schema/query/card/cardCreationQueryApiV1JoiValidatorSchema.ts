@@ -9,8 +9,8 @@ export const cardCreationQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<CardCrea
   {
     cost: resourceApiV1JoiValidatorSchema,
     detail: cardDetailApiV1JoiValidatorSchema,
-    power: Joi.number().strict().integer().required(),
-    toughness: Joi.number().strict().integer().required(),
+    power: Joi.number().strict().integer(),
+    toughness: Joi.number().strict().integer(),
     type: cardTypeApiV1JoiValidatorSchema,
   },
 );
