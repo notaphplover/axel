@@ -1,10 +1,11 @@
-import { ArtifactCreationQueryApiV1 } from './ArtifactCreationQueryApiV1';
-import { CreatureCreationQueryApiV1 } from './CreatureCreationQueryApiV1';
-import { EnchantmentCreationQueryApiV1 } from './EnchantmentCreationQueryApiV1';
-import { LandCreationQueryApiV1 } from './LandCreationQueryApiV1';
+import { CardDetailApiV1 } from '../../model/card/CardDetailApiV1';
+import { CardTypeApiV1 } from '../../model/card/CardTypeApiV1';
+import { ResourceApiV1 } from '../../model/card/ResourceApiV1';
 
-export type CardCreationQueryApiV1 =
-  | ArtifactCreationQueryApiV1
-  | CreatureCreationQueryApiV1
-  | EnchantmentCreationQueryApiV1
-  | LandCreationQueryApiV1;
+export interface CardCreationQueryApiV1 {
+  cost: ResourceApiV1;
+  detail: CardDetailApiV1;
+  power?: number;
+  toughness?: number;
+  types: CardTypeApiV1[];
+}

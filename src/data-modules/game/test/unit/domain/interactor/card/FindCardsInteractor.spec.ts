@@ -3,8 +3,8 @@ import { SearchRepository } from '../../../../../../../layer-modules/db/domain';
 import { FindCardsInteractor } from '../../../../../domain/interactor/card/FindCardsInteractor';
 import { Card } from '../../../../../domain/model/card/Card';
 import { CardFindQuery } from '../../../../../domain/query/card/CardFindQuery';
-import { artifactFixtureFactory } from '../../../../fixtures/domain/model/card';
-import { artifactFindQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
+import { creatureFixtureFactory } from '../../../../fixtures/domain/model/card';
+import { creatureFindQueryFixtureFactory } from '../../../../fixtures/domain/query/card';
 
 describe(FindCardsInteractor.name, () => {
   let cardSearchRepository: SearchRepository<Card, CardFindQuery>;
@@ -27,23 +27,23 @@ describe(FindCardsInteractor.name, () => {
 
       beforeAll(async () => {
         (cardSearchRepository.find as jest.Mock).mockResolvedValueOnce([
-          artifactFixtureFactory.get(),
+          creatureFixtureFactory.get(),
         ]);
 
         result = await findCardsInteractor.interact(
-          artifactFindQueryFixtureFactory.get(),
+          creatureFindQueryFixtureFactory.get(),
         );
       });
 
       it('must call cardSearchRepository.find() with the received query', () => {
         expect(cardSearchRepository.find).toHaveBeenCalledTimes(1);
         expect(cardSearchRepository.find).toHaveBeenCalledWith(
-          artifactFindQueryFixtureFactory.get(),
+          creatureFindQueryFixtureFactory.get(),
         );
       });
 
       it('must return the repository result', () => {
-        expect(result).toStrictEqual([artifactFixtureFactory.get()]);
+        expect(result).toStrictEqual([creatureFixtureFactory.get()]);
       });
     });
   });

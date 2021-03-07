@@ -84,11 +84,11 @@ async function prepareData(): Promise<E2EComponents> {
     userTest.config.types.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
   );
 
-  const createCardDeckOfVoidLandTaskGraphNode: TaskGraphNode<
+  const createCardDeckOfCreatureTaskGraphNode: TaskGraphNode<
     symbol,
     CardDeck
   > = e2eContainer.get(
-    GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_VOID_LAND_TASK_GRAPH_NODE,
+    GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_CREATURE_TASK_GRAPH_NODE,
   );
 
   const createSecondUserTaskGraphNode: TaskGraphNode<
@@ -110,7 +110,7 @@ async function prepareData(): Promise<E2EComponents> {
     [
       createFirstUserTaskGraphNode,
       createFirstUserTokenTaskGraphNode,
-      createCardDeckOfVoidLandTaskGraphNode,
+      createCardDeckOfCreatureTaskGraphNode,
       createSecondUserTaskGraphNode,
       createSecondUserTokenTaskGraphNode,
     ],
@@ -129,7 +129,7 @@ async function prepareData(): Promise<E2EComponents> {
   }
 
   return {
-    cardDeck: createCardDeckOfVoidLandTaskGraphNode.getOutput(),
+    cardDeck: createCardDeckOfCreatureTaskGraphNode.getOutput(),
     firstUser: createFirstUserTaskGraphNode.getOutput(),
     firstUserToken: createFirstUserTokenTaskGraphNode.getOutput(),
     secondUser: createSecondUserTaskGraphNode.getOutput(),

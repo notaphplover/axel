@@ -1,15 +1,8 @@
 import { interfaces } from 'inversify';
 
-import { ArtifactCreationQueryToArtifactDbsConverter } from '../../../db/converter/card/ArtifactCreationQueryToArtifactDbsConverter';
-import { ArtifactDbToArtifactConverter } from '../../../db/converter/card/ArtifactDbToArtifactConverter';
+import { CardCreationQueryToCardDbsConverter } from '../../../db/converter/card/CardCreationQueryToCardDbsConverter';
 import { CardDbToCardConverter } from '../../../db/converter/card/CardDbToCardConverter';
 import { CardFindQueryToCardDbFilterQueryConverter } from '../../../db/converter/card/CardFindQueryToCardDbFilterQueryConverter';
-import { CreatureCreationQueryToCreatureDbsConverter } from '../../../db/converter/card/CreatureCreationQueryToCreatureDbsConverter';
-import { CreatureDbToCreatureConverter } from '../../../db/converter/card/CreatureDbToCreatureConverter';
-import { EnchantmentCreationQueryToEnchantmentDbsConverter } from '../../../db/converter/card/EnchantmentCreationQueryToEnchantmentDbsConverter';
-import { EnchantmentDbToEnchantmentConverter } from '../../../db/converter/card/EnchantmentDbToEnchantmentConverter';
-import { LandCreationQueryToLandDbsConverter } from '../../../db/converter/card/LandCreationQueryToLandDbsConverter';
-import { LandDbToLandConverter } from '../../../db/converter/card/LandDbToLandConverter';
 import { CardDeckCreationQueryToCardDeckDbsConverter } from '../../../db/converter/deck/CardDeckCreationQueryToCardDeckDbsConverter';
 import { CardDeckDbToCardDeckConverter } from '../../../db/converter/deck/CardDeckDbToCardDeckConverter';
 import { CardDeckFindQueryToCardDeckDbFilterQueryConverter } from '../../../db/converter/deck/CardDeckFindQueryToCardDeckDbFilterQueryConverter';
@@ -52,13 +45,6 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.db.converter.live
       .LIVE_GAME_CREATION_QUERY_TO_LIVE_GAME_DBS_CONVERTER,
   ).to(LiveGameCreationQueryToLiveGameDbsConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.card
-      .ARTIFACT_CREATION_QUERY_TO_ARTIFACT_DBS_CONVERTER,
-  ).to(ArtifactCreationQueryToArtifactDbsConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.card.ARTIFACT_DB_TO_ARTIFACT_CONVERTER,
-  ).to(ArtifactDbToArtifactConverter);
   bind(GAME_ADAPTER_TYPES.db.converter.card.CARD_DB_TO_CARD_CONVERTER).to(
     CardDbToCardConverter,
   );
@@ -68,26 +54,8 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   ).to(CardFindQueryToCardDbFilterQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.card
-      .CREATURE_CREATION_QUERY_TO_CREATURE_DBS_CONVERTER,
-  ).to(CreatureCreationQueryToCreatureDbsConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.card.CREATURE_DB_TO_CREATURE_CONVERTER,
-  ).to(CreatureDbToCreatureConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.card
-      .ENCHANTMENT_CREATION_QUERY_TO_ENCHANTMENT_DBS_CONVERTER,
-  ).to(EnchantmentCreationQueryToEnchantmentDbsConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.card
-      .ENCHANTMENT_DB_TO_ENCHANTMENT_CONVERTER,
-  ).to(EnchantmentDbToEnchantmentConverter);
-  bind(
-    GAME_ADAPTER_TYPES.db.converter.card
-      .LAND_CREATION_QUERY_TO_LAND_DBS_CONVERTER,
-  ).to(LandCreationQueryToLandDbsConverter);
-  bind(GAME_ADAPTER_TYPES.db.converter.card.LAND_DB_TO_LAND_CONVERTER).to(
-    LandDbToLandConverter,
-  );
+      .CARD_CREATION_QUERY_TO_CARD_DBS_CONVERTER,
+  ).to(CardCreationQueryToCardDbsConverter);
 
   bind(
     GAME_ADAPTER_TYPES.db.converter.deck

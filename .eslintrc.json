@@ -73,6 +73,7 @@
     "@typescript-eslint/no-unused-expressions": [
       "error"
     ],
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     "@typescript-eslint/no-useless-constructor": "error",
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/prefer-nullish-coalescing": [

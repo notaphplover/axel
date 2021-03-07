@@ -1,10 +1,16 @@
-import { ArtifactApiV1 } from './ArtifactApiV1';
-import { CreatureApiV1 } from './CreatureApiV1';
-import { EnchantmentApiV1 } from './EnchantmentApiV1';
-import { LandApiV1 } from './LandApiV1';
+import { CardDetailApiV1 } from './CardDetailApiV1';
+import { CardSubtypeApiV1 } from './CardSubtypeApiV1';
+import { CardSupertypeApiV1 } from './CardSupertypeApiV1';
+import { CardTypeApiV1 } from './CardTypeApiV1';
+import { ResourceApiV1 } from './ResourceApiV1';
 
-export type CardApiV1 =
-  | ArtifactApiV1
-  | CreatureApiV1
-  | EnchantmentApiV1
-  | LandApiV1;
+export interface CardApiV1 {
+  cost: ResourceApiV1;
+  detail: CardDetailApiV1;
+  id: string;
+  power?: number;
+  subtypes: CardSubtypeApiV1[];
+  supertypes: CardSupertypeApiV1[];
+  toughness?: number;
+  types: CardTypeApiV1[];
+}

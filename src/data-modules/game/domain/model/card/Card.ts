@@ -1,6 +1,16 @@
-import { Artifact } from './Artifact';
-import { Creature } from './Creature';
-import { Enchantment } from './Enchantment';
-import { Land } from './Land';
+import { CardDetail } from './CardDetail';
+import { CardSubtype } from './CardSubtype';
+import { CardSupertype } from './CardSupertype';
+import { CardType } from './CardType';
+import { Resource } from './Resource';
 
-export type Card = Artifact | Creature | Enchantment | Land;
+export interface Card {
+  cost: Resource;
+  detail: CardDetail;
+  id: string;
+  power?: number;
+  subtypes: CardSubtype[];
+  supertypes: CardSupertype[];
+  toughness?: number;
+  types: CardType[];
+}

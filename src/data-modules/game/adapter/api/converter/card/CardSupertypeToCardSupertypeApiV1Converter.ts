@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+
 import { Converter } from '../../../../../../common/domain';
 import { CardSupertype } from '../../../../domain/model/card/CardSupertype';
 import { CardSupertypeApiV1 } from '../../model/card/CardSupertypeApiV1';

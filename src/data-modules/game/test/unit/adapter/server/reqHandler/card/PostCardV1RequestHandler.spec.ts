@@ -8,10 +8,10 @@ import { CardApiV1 } from '../../../../../../adapter/api/model/card/CardApiV1';
 import { PostCardV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/PostCardV1RequestHandler';
 import { Card } from '../../../../../../domain/model/card/Card';
 import { CardCreationQuery } from '../../../../../../domain/query/card/CardCreationQuery';
-import { artifactApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
-import { artifactCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
-import { artifactFixtureFactory } from '../../../../../fixtures/domain/model/card';
-import { artifactCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
+import { creatureApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/card';
+import { cardCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
+import { creatureFixtureFactory } from '../../../../../fixtures/domain/model/card';
+import { cardCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/card';
 
 describe(PostCardV1RequestHandler.name, () => {
   let cardToCardApiV1Converter: Converter<Card, CardApiV1>;
@@ -46,30 +46,30 @@ describe(PostCardV1RequestHandler.name, () => {
       let requestFixture: fastify.FastifyRequest;
       let replyFixture: fastify.FastifyReply;
 
-      let artifactCreationQueryOrErrorsFixture: ValueOrErrors<CardCreationQuery>;
+      let creatureCreationQueryOrErrorsFixture: ValueOrErrors<CardCreationQuery>;
 
       beforeAll(async () => {
         requestFixture = ({
-          body: artifactCreationQueryApiV1FixtureFactory.get(),
+          body: cardCreationQueryApiV1FixtureFactory.get(),
         } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
 
         replyFixture = fastifyReplyFixtureFactory.get();
 
-        artifactCreationQueryOrErrorsFixture = {
+        creatureCreationQueryOrErrorsFixture = {
           isEither: false,
-          value: artifactCreationQueryFixtureFactory.get(),
+          value: cardCreationQueryFixtureFactory.get(),
         };
 
         (cardToCardApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
-          artifactApiV1FixtureFactory.get(),
+          creatureApiV1FixtureFactory.get(),
         );
 
         (createCardsInteractor.interact as jest.Mock).mockResolvedValueOnce([
-          artifactFixtureFactory.get(),
+          creatureFixtureFactory.get(),
         ]);
 
         (postCardV1RequestToCardCreationQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
-          artifactCreationQueryOrErrorsFixture,
+          creatureCreationQueryOrErrorsFixture,
         );
 
         await postCardV1RequestHandler.handle(requestFixture, replyFixture);
@@ -87,21 +87,21 @@ describe(PostCardV1RequestHandler.name, () => {
       it('must call createCardsInteractor with the query obtained', () => {
         expect(createCardsInteractor.interact).toHaveBeenCalledTimes(1);
         expect(createCardsInteractor.interact).toHaveBeenCalledWith(
-          artifactCreationQueryFixtureFactory.get(),
+          cardCreationQueryFixtureFactory.get(),
         );
       });
 
       it('must call cardToCardApiV1Converter with the cards obtained', () => {
         expect(cardToCardApiV1Converter.transform).toHaveBeenCalledTimes(1);
         expect(cardToCardApiV1Converter.transform).toHaveBeenCalledWith(
-          artifactFixtureFactory.get(),
+          creatureFixtureFactory.get(),
         );
       });
 
       it('must call reply.send with the api cards obtained', () => {
         expect(replyFixture.send).toHaveBeenCalledTimes(1);
         expect(replyFixture.send).toHaveBeenCalledWith(
-          artifactApiV1FixtureFactory.get(),
+          creatureApiV1FixtureFactory.get(),
         );
       });
     });

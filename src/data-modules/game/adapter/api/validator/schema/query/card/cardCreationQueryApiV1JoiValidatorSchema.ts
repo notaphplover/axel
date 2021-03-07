@@ -1,13 +1,16 @@
 import Joi from 'joi';
 
-import { artifactCreationQueryApiV1JoiValidatorSchema } from './artifactCreationQueryApiV1JoiValidatorSchema';
-import { creatureCreationQueryApiV1JoiValidatorSchema } from './creatureCreationQueryApiV1JoiValidatorSchema';
-import { enchantmentCreationQueryApiV1JoiValidatorSchema } from './enchantmentCreationQueryApiV1JoiValidatorSchema';
-import { landCreationQueryApiV1JoiValidatorSchema } from './landCreationQueryApiV1JoiValidatorSchema';
+import { CardCreationQueryApiV1 } from '../../../../query/card/CardCreationQueryApiV1';
+import { cardDetailApiV1JoiValidatorSchema } from '../../model/card/cardDetailApiV1ValidatorSchema';
+import { cardTypeApiV1JoiValidatorSchema } from '../../model/card/cardTypeApiV1JoiValidatorSchema';
+import { resourceApiV1JoiValidatorSchema } from '../../model/card/resourceApiV1JoiValidatorSchema';
 
-export const cardCreationQueryApiV1JoiValidatorSchema: Joi.AlternativesSchema = Joi.alternatives(
-  artifactCreationQueryApiV1JoiValidatorSchema,
-  creatureCreationQueryApiV1JoiValidatorSchema,
-  enchantmentCreationQueryApiV1JoiValidatorSchema,
-  landCreationQueryApiV1JoiValidatorSchema,
+export const cardCreationQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<CardCreationQueryApiV1> = Joi.object<CardCreationQueryApiV1>(
+  {
+    cost: resourceApiV1JoiValidatorSchema.required(),
+    detail: cardDetailApiV1JoiValidatorSchema.required(),
+    power: Joi.number().strict().integer(),
+    toughness: Joi.number().strict().integer(),
+    types: Joi.array().items(cardTypeApiV1JoiValidatorSchema).required(),
+  },
 );

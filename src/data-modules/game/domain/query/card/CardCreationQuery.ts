@@ -1,10 +1,11 @@
-import { ArtifactCreationQuery } from './ArtifactCreationQuery';
-import { CreatureCreationQuery } from './CreatureCreationQuery';
-import { EnchantmentCreationQuery } from './EnchantmentCreationQuery';
-import { LandCreationQuery } from './LandCreationQuery';
+import { CardDetail } from '../../model/card/CardDetail';
+import { CardType } from '../../model/card/CardType';
+import { Resource } from '../../model/card/Resource';
 
-export type CardCreationQuery =
-  | ArtifactCreationQuery
-  | CreatureCreationQuery
-  | EnchantmentCreationQuery
-  | LandCreationQuery;
+export interface CardCreationQuery {
+  cost: Resource;
+  detail: CardDetail;
+  power?: number;
+  toughness?: number;
+  types: CardType[];
+}

@@ -4,6 +4,7 @@ import { CardCreationQueryApiV1ToCardCreationQueryConverter } from '../../../api
 import { CardDetailApiV1ToCardDetailConverter } from '../../../api/converter/card/CardDetailApiV1ToCardDetailConverter';
 import { CardDetailToCardDetailV1Converter } from '../../../api/converter/card/CardDetailToCardDetailApiV1Converter';
 import { CardFindQueryApiV1ToCardFindQueryConverter } from '../../../api/converter/card/CardFindQueryApiV1ToCardFindQueryConverter';
+import { CardSubtypeToCardSubtypeApiV1Converter } from '../../../api/converter/card/CardSubtypeToCardSubtypeApiV1Converter';
 import { CardSupertypeToCardSupertypeApiV1Converter } from '../../../api/converter/card/CardSupertypeToCardSupertypeApiV1Converter';
 import { CardToCardApiV1Converter } from '../../../api/converter/card/CardToCardApiV1Converter';
 import { CardTypeApiV1ToCardTypeConverter } from '../../../api/converter/card/CardTypeApiV1ToCardTypeConverter';
@@ -132,7 +133,11 @@ export function bindGameAdapterApi(bind: interfaces.Bind): void {
       .CARD_SET_REFERENCES_TO_CARD_SET_REFERENCES_API_V1_CONVERTER,
   ).to(CardSetReferencesToCardSetReferencesApiV1Converter);
   bind(
-    GAME_ADAPTER_TYPES.api.converter.deck
+    GAME_ADAPTER_TYPES.api.converter.card
+      .CARD_SUBTYPE_TO_CARD_SUBTYPE_API_V1_CONVERTER,
+  ).to(CardSubtypeToCardSubtypeApiV1Converter);
+  bind(
+    GAME_ADAPTER_TYPES.api.converter.card
       .CARD_SUPERTYPE_TO_CARD_SUPERTYPE_API_V1_CONVERTER,
   ).to(CardSupertypeToCardSupertypeApiV1Converter);
 

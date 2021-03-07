@@ -18,22 +18,10 @@ import {
 import { PerformTasksResult } from '../../../../task-graph/domain/TaskGraph';
 import { UserToken } from '../../../../user/domain';
 import { userTest } from '../../../../user/test';
-import { ArtifactApiV1 } from '../../../adapter/api/model/card/ArtifactApiV1';
 import { CardApiV1 } from '../../../adapter/api/model/card/CardApiV1';
-import { CreatureApiV1 } from '../../../adapter/api/model/card/CreatureApiV1';
-import { EnchantmentApiV1 } from '../../../adapter/api/model/card/EnchantmentApiV1';
-import { LandApiV1 } from '../../../adapter/api/model/card/LandApiV1';
-import { ArtifactCreationQueryApiV1 } from '../../../adapter/api/query/card/ArtifactCreationQueryApiV1';
+import { CardCreationQueryApiV1 } from '../../../adapter/api/query/card/CardCreationQueryApiV1';
 import { CardFindQueryApiV1 } from '../../../adapter/api/query/card/CardFindQueryApiV1';
-import { CreatureCreationQueryApiV1 } from '../../../adapter/api/query/card/CreatureCreationQueryApiV1';
-import { EnchantmentCreationQueryApiV1 } from '../../../adapter/api/query/card/EnchantmentCreationQueryApiV1';
-import { LandCreationQueryApiV1 } from '../../../adapter/api/query/card/LandCreationQueryApiV1';
-import {
-  artifactCreationQueryApiV1FixtureFactory,
-  creatureCreationQueryApiV1FixtureFactory,
-  enchantmentCreationQueryApiV1FixtureFactory,
-  landCreationQueryApiV1FixtureFactory,
-} from '../../fixtures/adapter/api/query/card';
+import { cardCreationQueryApiV1FixtureFactory } from '../../fixtures/adapter/api/query/card';
 
 const container: Container = configAdapter.container;
 
@@ -108,90 +96,12 @@ describe('Card V1', () => {
     await mongoDbConnector.close();
   });
 
-  describe('when called POST, with a request with a valid ArtifactCreationQueryApiV1', () => {
-    let artifactCreationQueryApiV1: ArtifactCreationQueryApiV1;
+  describe('when called POST, with a request with a valid CardCreationQueryApiV1', () => {
+    let creatureCreationQueryApiV1: CardCreationQueryApiV1;
     let postCardV1Response: axios.AxiosResponse;
 
     beforeAll(async () => {
-      artifactCreationQueryApiV1 = artifactCreationQueryApiV1FixtureFactory.get();
-      postCardV1Response = await client.post(
-        `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/cards`,
-        artifactCreationQueryApiV1,
-        {
-          headers: {
-            Authorization: `Bearer ${e2eComponents.userToken.token}`,
-          },
-        },
-      );
-    });
-
-    it('must return a response with the artifact created', () => {
-      expect(postCardV1Response.data).toHaveProperty('id');
-      expect((postCardV1Response.data as ArtifactApiV1).cost).toStrictEqual(
-        artifactCreationQueryApiV1.cost,
-      );
-      expect((postCardV1Response.data as ArtifactApiV1).detail).toStrictEqual(
-        artifactCreationQueryApiV1.detail,
-      );
-      expect((postCardV1Response.data as ArtifactApiV1).type).toStrictEqual(
-        artifactCreationQueryApiV1.type,
-      );
-    });
-
-    describe('when called POST cards searches, with the card id created', () => {
-      let cardId: string;
-      let postCardsSearchesByIdV1Response: axios.AxiosResponse;
-      let postCardsSearchesByIdV1ResponseBodyFirstElement: unknown;
-
-      beforeAll(async () => {
-        cardId = (postCardV1Response.data as CardApiV1).id;
-
-        const cardFindQueryApiV1ById: CardFindQueryApiV1 = {
-          id: cardId,
-          limit: 1,
-          offset: 0,
-        };
-
-        postCardsSearchesByIdV1Response = await client.post(
-          `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/cards/searches`,
-          cardFindQueryApiV1ById,
-        );
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/typedef
-        [
-          postCardsSearchesByIdV1ResponseBodyFirstElement,
-        ] = postCardsSearchesByIdV1Response.data;
-      });
-
-      it('must return a response with the card created', () => {
-        expect(postCardsSearchesByIdV1Response.data).toBeInstanceOf(Array);
-        expect(postCardsSearchesByIdV1Response.data).toHaveLength(1);
-
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as ArtifactApiV1).id,
-        ).toBe(cardId);
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as ArtifactApiV1)
-            .cost,
-        ).toStrictEqual(artifactCreationQueryApiV1.cost);
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as ArtifactApiV1)
-            .detail,
-        ).toStrictEqual(artifactCreationQueryApiV1.detail);
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as ArtifactApiV1)
-            .type,
-        ).toBe(artifactCreationQueryApiV1.type);
-      });
-    });
-  });
-
-  describe('when called POST, with a request with a valid CreatureCreationQueryApiV1', () => {
-    let creatureCreationQueryApiV1: CreatureCreationQueryApiV1;
-    let postCardV1Response: axios.AxiosResponse;
-
-    beforeAll(async () => {
-      creatureCreationQueryApiV1 = creatureCreationQueryApiV1FixtureFactory.get();
+      creatureCreationQueryApiV1 = cardCreationQueryApiV1FixtureFactory.get();
       postCardV1Response = await client.post(
         `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/cards`,
         creatureCreationQueryApiV1,
@@ -205,20 +115,20 @@ describe('Card V1', () => {
 
     it('must return a response with the creature created', () => {
       expect(postCardV1Response.data).toHaveProperty('id');
-      expect((postCardV1Response.data as CreatureApiV1).cost).toStrictEqual(
+      expect((postCardV1Response.data as CardApiV1).cost).toStrictEqual(
         creatureCreationQueryApiV1.cost,
       );
-      expect((postCardV1Response.data as CreatureApiV1).detail).toStrictEqual(
+      expect((postCardV1Response.data as CardApiV1).detail).toStrictEqual(
         creatureCreationQueryApiV1.detail,
       );
-      expect((postCardV1Response.data as CreatureApiV1).power).toStrictEqual(
+      expect((postCardV1Response.data as CardApiV1).power).toStrictEqual(
         creatureCreationQueryApiV1.power,
       );
-      expect(
-        (postCardV1Response.data as CreatureApiV1).toughness,
-      ).toStrictEqual(creatureCreationQueryApiV1.toughness);
-      expect((postCardV1Response.data as CreatureApiV1).type).toStrictEqual(
-        creatureCreationQueryApiV1.type,
+      expect((postCardV1Response.data as CardApiV1).toughness).toStrictEqual(
+        creatureCreationQueryApiV1.toughness,
+      );
+      expect((postCardV1Response.data as CardApiV1).types).toStrictEqual(
+        creatureCreationQueryApiV1.types,
       );
     });
 
@@ -252,182 +162,24 @@ describe('Card V1', () => {
         expect(postCardsSearchesByIdV1Response.data).toHaveLength(1);
 
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1).id,
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).id,
         ).toBe(cardId);
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1)
-            .cost,
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).cost,
         ).toStrictEqual(creatureCreationQueryApiV1.cost);
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1)
-            .detail,
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).detail,
         ).toStrictEqual(creatureCreationQueryApiV1.detail);
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1)
-            .power,
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).power,
         ).toStrictEqual(creatureCreationQueryApiV1.power);
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1)
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1)
             .toughness,
         ).toStrictEqual(creatureCreationQueryApiV1.toughness);
         expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as CreatureApiV1)
-            .type,
-        ).toBe(creatureCreationQueryApiV1.type);
-      });
-    });
-  });
-
-  describe('when called POST, with a request with a valid EnchantmentCreationQueryApiV1', () => {
-    let enchantmentCreationQueryApiV1: EnchantmentCreationQueryApiV1;
-    let postCardV1Response: axios.AxiosResponse;
-
-    beforeAll(async () => {
-      enchantmentCreationQueryApiV1 = enchantmentCreationQueryApiV1FixtureFactory.get();
-      postCardV1Response = await client.post(
-        `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/cards`,
-        enchantmentCreationQueryApiV1,
-        {
-          headers: {
-            Authorization: `Bearer ${e2eComponents.userToken.token}`,
-          },
-        },
-      );
-    });
-
-    it('must return a response with the enchantment created', () => {
-      expect(postCardV1Response.data).toHaveProperty('id');
-      expect((postCardV1Response.data as EnchantmentApiV1).cost).toStrictEqual(
-        enchantmentCreationQueryApiV1.cost,
-      );
-      expect(
-        (postCardV1Response.data as EnchantmentApiV1).detail,
-      ).toStrictEqual(enchantmentCreationQueryApiV1.detail);
-      expect((postCardV1Response.data as EnchantmentApiV1).type).toStrictEqual(
-        enchantmentCreationQueryApiV1.type,
-      );
-    });
-
-    describe('when called POST cards searches, with the card id created', () => {
-      let cardId: string;
-      let postCardsSearchesByIdV1Response: axios.AxiosResponse;
-      let postCardsSearchesByIdV1ResponseBodyFirstElement: unknown;
-
-      beforeAll(async () => {
-        cardId = (postCardV1Response.data as CardApiV1).id;
-
-        const cardFindQueryApiV1ById: CardFindQueryApiV1 = {
-          id: cardId,
-          limit: 1,
-          offset: 0,
-        };
-
-        postCardsSearchesByIdV1Response = await client.post(
-          `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/cards/searches`,
-          cardFindQueryApiV1ById,
-        );
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/typedef
-        [
-          postCardsSearchesByIdV1ResponseBodyFirstElement,
-        ] = postCardsSearchesByIdV1Response.data;
-      });
-
-      it('must return a response with the card created', () => {
-        expect(postCardsSearchesByIdV1Response.data).toBeInstanceOf(Array);
-        expect(postCardsSearchesByIdV1Response.data).toHaveLength(1);
-
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as EnchantmentApiV1)
-            .id,
-        ).toBe(cardId);
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as EnchantmentApiV1)
-            .cost,
-        ).toStrictEqual(enchantmentCreationQueryApiV1.cost);
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as EnchantmentApiV1)
-            .detail,
-        ).toStrictEqual(enchantmentCreationQueryApiV1.detail);
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as EnchantmentApiV1)
-            .type,
-        ).toBe(enchantmentCreationQueryApiV1.type);
-      });
-    });
-  });
-
-  describe('when called POST, with a request with a valid LandCreationQueryApiV1', () => {
-    let landCreationQueryApiV1: LandCreationQueryApiV1;
-    let postCardV1Response: axios.AxiosResponse;
-
-    beforeAll(async () => {
-      landCreationQueryApiV1 = landCreationQueryApiV1FixtureFactory.get();
-      postCardV1Response = await client.post(
-        `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/cards`,
-        landCreationQueryApiV1,
-        {
-          headers: {
-            Authorization: `Bearer ${e2eComponents.userToken.token}`,
-          },
-        },
-      );
-    });
-
-    it('must return a response with the land created', () => {
-      expect(postCardV1Response.data).toHaveProperty('id');
-      expect((postCardV1Response.data as LandApiV1).cost).toStrictEqual(
-        landCreationQueryApiV1.cost,
-      );
-      expect((postCardV1Response.data as LandApiV1).detail).toStrictEqual(
-        landCreationQueryApiV1.detail,
-      );
-      expect((postCardV1Response.data as LandApiV1).type).toStrictEqual(
-        landCreationQueryApiV1.type,
-      );
-    });
-
-    describe('when called POST cards searches, with the card id created', () => {
-      let cardId: string;
-      let postCardsSearchesByIdV1Response: axios.AxiosResponse;
-      let postCardsSearchesByIdV1ResponseBodyFirstElement: unknown;
-
-      beforeAll(async () => {
-        cardId = (postCardV1Response.data as CardApiV1).id;
-
-        const cardFindQueryApiV1ById: CardFindQueryApiV1 = {
-          id: cardId,
-          limit: 1,
-          offset: 0,
-        };
-
-        postCardsSearchesByIdV1Response = await client.post(
-          `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/cards/searches`,
-          cardFindQueryApiV1ById,
-        );
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/typedef
-        [
-          postCardsSearchesByIdV1ResponseBodyFirstElement,
-        ] = postCardsSearchesByIdV1Response.data;
-      });
-
-      it('must return a response with the card created', () => {
-        expect(postCardsSearchesByIdV1Response.data).toBeInstanceOf(Array);
-        expect(postCardsSearchesByIdV1Response.data).toHaveLength(1);
-
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as LandApiV1).id,
-        ).toBe(cardId);
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as LandApiV1).cost,
-        ).toStrictEqual(landCreationQueryApiV1.cost);
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as LandApiV1).detail,
-        ).toStrictEqual(landCreationQueryApiV1.detail);
-        expect(
-          (postCardsSearchesByIdV1ResponseBodyFirstElement as LandApiV1).type,
-        ).toBe(landCreationQueryApiV1.type);
+          (postCardsSearchesByIdV1ResponseBodyFirstElement as CardApiV1).types,
+        ).toStrictEqual(creatureCreationQueryApiV1.types);
       });
     });
   });

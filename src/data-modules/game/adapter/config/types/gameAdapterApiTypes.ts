@@ -20,6 +20,12 @@ export const GAME_ADAPTER_API_TYPES = {
       CARD_FIND_QUERY_API_V1_TO_CARD_FIND_QUERY_CONVERTER: Symbol(
         'CardFindQueryApiV1ToCardFindQueryConverter',
       ),
+      CARD_SUBTYPE_TO_CARD_SUBTYPE_API_V1_CONVERTER: Symbol(
+        'CardSubtypeToCardSubtypeApiV1Converter',
+      ),
+      CARD_SUPERTYPE_TO_CARD_SUPERTYPE_API_V1_CONVERTER: Symbol(
+        'CardSupertypeToCardSupertypeApiV1Converter',
+      ),
       CARD_TO_CARD_API_V1_CONVERTER: Symbol('CardToCardApiV1Converter'),
       CARD_TYPE_API_V1_TO_CARD_TYPE_CONVERTER: Symbol(
         'CardTypeApiV1ToCardTypeConverter',
@@ -55,9 +61,6 @@ export const GAME_ADAPTER_API_TYPES = {
       ),
       CARD_SET_REFERENCES_TO_CARD_SET_REFERENCES_API_V1_CONVERTER: Symbol(
         'CardSetReferencesToCardSetReferencesApiV1Converter',
-      ),
-      CARD_SUPERTYPE_TO_CARD_SUPERTYPE_API_V1_CONVERTER: Symbol(
-        'CardSupertypeToCardSupertypeApiV1Converter',
       ),
     },
     live: {

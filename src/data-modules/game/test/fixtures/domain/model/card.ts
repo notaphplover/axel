@@ -2,12 +2,9 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../common/test';
-import { Artifact } from '../../../../domain/model/card/Artifact';
+import { Card } from '../../../../domain/model/card/Card';
 import { CardDetail } from '../../../../domain/model/card/CardDetail';
 import { CardType } from '../../../../domain/model/card/CardType';
-import { Creature } from '../../../../domain/model/card/Creature';
-import { Enchantment } from '../../../../domain/model/card/Enchantment';
-import { Land } from '../../../../domain/model/card/Land';
 import { Resource } from '../../../../domain/model/card/Resource';
 
 export const cardDetail: CardDetail = {
@@ -33,20 +30,7 @@ export const resourceFixtureFactory: FixtureFactory<Resource> = new DeepCloneFix
   resource,
 );
 
-export const artifact: Artifact = {
-  cost: resource,
-  detail: cardDetail,
-  id: '5f5cb76243fda130685e00dc',
-  subtypes: [],
-  supertypes: [],
-  type: CardType.Artifact,
-};
-
-export const artifactFixtureFactory: FixtureFactory<Artifact> = new DeepCloneFixtureFactory(
-  artifact,
-);
-
-export const creature: Creature = {
+export const creature: Card = {
   cost: resource,
   detail: cardDetail,
   id: '5f5cb76243faa130688e00dc',
@@ -54,35 +38,9 @@ export const creature: Creature = {
   subtypes: [],
   supertypes: [],
   toughness: 3,
-  type: CardType.Creature,
+  types: [CardType.Creature],
 };
 
-export const creatureFixtureFactory: FixtureFactory<Creature> = new DeepCloneFixtureFactory(
+export const creatureFixtureFactory: FixtureFactory<Card> = new DeepCloneFixtureFactory(
   creature,
-);
-
-export const enchantment: Enchantment = {
-  cost: resource,
-  detail: cardDetail,
-  id: '5f5cb76243fda130685e00dc',
-  subtypes: [],
-  supertypes: [],
-  type: CardType.Enchantment,
-};
-
-export const enchantmentFixtureFactory: FixtureFactory<Enchantment> = new DeepCloneFixtureFactory(
-  enchantment,
-);
-
-export const land: Land = {
-  cost: resource,
-  detail: cardDetail,
-  id: '5f5cb76c43fda630685e00dc',
-  subtypes: [],
-  supertypes: [],
-  type: CardType.Land,
-};
-
-export const landFixtureFactory: FixtureFactory<Land> = new DeepCloneFixtureFactory(
-  land,
 );

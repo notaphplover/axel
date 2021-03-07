@@ -21,7 +21,7 @@ import { userTest } from '../../../../user/test';
 import { CardDeckApiV1 } from '../../../adapter/api/model/deck/CardDeckApiV1';
 import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
 import { CardDeckCreationQueryApiV1 } from '../../../adapter/api/query/deck/CardDeckCreationQueryApiV1';
-import { Land } from '../../../domain/model/card/Land';
+import { Card } from '../../../domain/model/card/Card';
 import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
 
 const container: Container = configAdapter.container;
@@ -35,7 +35,7 @@ const APP_URL_HOST: string = '127.0.0.1';
 const APP_URL_PORT: number = dockerAppEnvLoader.index.APP_SERVER_PORT;
 
 interface E2EComponents {
-  land: Land;
+  card: Card;
   userToken: UserToken;
 }
 
@@ -48,10 +48,10 @@ function getCardDeckCreationQueryApiV1(
     name: 'sample-name',
     sections: {
       core: {
-        references: [components.land.id],
+        references: [components.card.id],
       },
       sideboard: {
-        references: [components.land.id],
+        references: [components.card.id],
       },
     },
   };
@@ -73,14 +73,14 @@ async function prepareData(): Promise<E2EComponents> {
     userTest.config.types.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
   );
 
-  const createVoidLandTaskGraphNode: TaskGraphNode<
+  const createCreatureTaskGraphNode: TaskGraphNode<
     symbol,
-    Land
-  > = e2eContainer.get(GAME_E2E_TYPES.card.CREATE_VOID_LAND_TASK_GRAPH_NODE);
+    Card
+  > = e2eContainer.get(GAME_E2E_TYPES.card.CREATE_CREATURE_TASK_GRAPH_NODE);
 
   const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor = new InversifyContainerTaskGraphNodeExtractor(
     e2eContainer,
-    [createUserTokenTaskGraphNode, createVoidLandTaskGraphNode],
+    [createUserTokenTaskGraphNode, createCreatureTaskGraphNode],
   );
 
   const extractedNodes: Iterable<
@@ -96,7 +96,7 @@ async function prepareData(): Promise<E2EComponents> {
   }
 
   return {
-    land: createVoidLandTaskGraphNode.getOutput(),
+    card: createCreatureTaskGraphNode.getOutput(),
     userToken: createUserTokenTaskGraphNode.getOutput(),
   };
 }

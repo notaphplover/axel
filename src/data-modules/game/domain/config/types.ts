@@ -9,11 +9,7 @@ export const GAME_DOMAIN_TYPES = {
   },
   interactor: {
     card: {
-      CREATE_ARTIFACTS_INTERACTOR: Symbol('CreateArtifactsInteractor'),
       CREATE_CARDS_INTERACTOR: Symbol('CreateCardsInteractor'),
-      CREATE_CREATURES_INTERACTOR: Symbol('CreateCreaturesInteractor'),
-      CREATE_ENCHANTMENTS_INTERACTOR: Symbol('CreateEnchantmentsInteractor'),
-      CREATE_LANDS_INTERACTOR: Symbol('CreateLandsInteractor'),
       FIND_CARDS_INTERACTOR: Symbol('FindCardsInteractor'),
     },
     deck: {
@@ -33,11 +29,8 @@ export const GAME_DOMAIN_TYPES = {
   },
   repository: {
     card: {
-      ARTIFACT_INSERT_REPOSITORY: Symbol('ArtifactInsertRepository'),
       CARD_SEARCH_REPOSITORY: Symbol('CardSearchRepository'),
-      CREATURE_INSERT_REPOSITORY: Symbol('CreatureInsertRepository'),
-      ENCHANTMENT_INSERT_REPOSITORY: Symbol('EnchantmentInsertRepository'),
-      LAND_INSERT_REPOSITORY: Symbol('LandInsertRepository'),
+      CARD_INSERT_REPOSITORY: Symbol('CreatureInsertRepository'),
     },
     deck: {
       CARD_DECK_INSERT_REPOSITORY: Symbol('CardDeckInsertRepository'),
