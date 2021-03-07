@@ -7,8 +7,8 @@ import { resourceApiV1JoiValidatorSchema } from '../../model/card/resourceApiV1J
 
 export const cardCreationQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<CardCreationQueryApiV1> = Joi.object<CardCreationQueryApiV1>(
   {
-    cost: resourceApiV1JoiValidatorSchema,
-    detail: cardDetailApiV1JoiValidatorSchema,
+    cost: resourceApiV1JoiValidatorSchema.required(),
+    detail: cardDetailApiV1JoiValidatorSchema.required(),
     power: Joi.number().strict().integer(),
     toughness: Joi.number().strict().integer(),
     types: Joi.array().items(cardTypeApiV1JoiValidatorSchema).min(1).required(),

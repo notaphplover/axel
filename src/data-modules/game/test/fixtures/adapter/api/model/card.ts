@@ -27,6 +27,10 @@ export const resourceApiV1: ResourceApiV1 = {
   white: resource.white,
 };
 
+export const resourceApiV1FixtureFactory: FixtureFactory<ResourceApiV1> = new DeepCloneFixtureFactory(
+  resourceApiV1,
+);
+
 export const creatureApiV1: CardApiV1 = {
   cost: resourceApiV1,
   detail: cardDetailApiV1,
