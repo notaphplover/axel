@@ -1,28 +1,32 @@
 import { injectable } from 'inversify';
 
 import { Converter } from '../../../../../../common/domain';
-import { BaseCard } from '../../../../domain/model/card/BaseCard';
 import { Card } from '../../../../domain/model/card/Card';
-import { CardType } from '../../../../domain/model/card/CardType';
 import { CardDb } from '../../model/card/CardDb';
-import { BaseCardDbToCardConverter } from './BaseCardDbToCardConverter';
 
 @injectable()
-export class CardDbToCardConverter
-  extends BaseCardDbToCardConverter<Card>
-  implements Converter<CardDb, Card> {
-  public transform(input: CardDb): Card {
-    const baseCard: BaseCard = this.innerTransform(input);
-
+export class CardDbToCardConverter implements Converter<CardDb, Card> {
+  public transform(cardDb: CardDb): Card {
     return {
-      cost: baseCard.cost,
-      detail: baseCard.detail,
-      id: baseCard.id,
-      power: input.power,
-      subtypes: baseCard.subtypes,
-      supertypes: baseCard.supertypes,
-      toughness: input.toughness,
-      type: baseCard.type as CardType.Creature,
+      cost: {
+        black: cardDb.cost.black,
+        blue: cardDb.cost.blue,
+        green: cardDb.cost.green,
+        red: cardDb.cost.red,
+        uncolored: cardDb.cost.uncolored,
+        white: cardDb.cost.white,
+      },
+      detail: {
+        description: cardDb.detail.description,
+        image: cardDb.detail.image,
+        title: cardDb.detail.title,
+      },
+      id: cardDb._id.toHexString(),
+      power: cardDb.power,
+      subtypes: [...cardDb.subtypes],
+      supertypes: [...cardDb.supertypes],
+      toughness: cardDb.toughness,
+      type: cardDb.type,
     };
   }
 }

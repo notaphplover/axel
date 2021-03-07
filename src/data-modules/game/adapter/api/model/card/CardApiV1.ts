@@ -1,8 +1,16 @@
-import { BaseCardApiV1 } from './BaseCardApiV1';
+import { CardDetailApiV1 } from './CardDetailApiV1';
+import { CardSubtypeApiV1 } from './CardSubtypeApiV1';
+import { CardSupertypeApiV1 } from './CardSupertypeApiV1';
 import { CardTypeApiV1 } from './CardTypeApiV1';
+import { ResourceApiV1 } from './ResourceApiV1';
 
-export interface CardApiV1 extends BaseCardApiV1 {
-  type: CardTypeApiV1.Creature;
+export interface CardApiV1 {
+  cost: ResourceApiV1;
+  detail: CardDetailApiV1;
+  id: string;
+  subtypes: CardSubtypeApiV1[];
+  supertypes: CardSupertypeApiV1[];
   power: number;
   toughness: number;
+  type: CardTypeApiV1;
 }
