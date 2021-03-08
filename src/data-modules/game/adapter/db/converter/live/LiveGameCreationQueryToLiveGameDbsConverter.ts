@@ -1,5 +1,6 @@
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Converter } from '../../../../../../common/domain';
 import { hasValue } from '../../../../../../common/domain/utils/hasValue';
@@ -64,6 +65,7 @@ export class LiveGameCreationQueryToLiveGameDbsConverter
           cards: [],
         },
         lives: 20,
+        targetId: uuidv4(),
       },
     };
 

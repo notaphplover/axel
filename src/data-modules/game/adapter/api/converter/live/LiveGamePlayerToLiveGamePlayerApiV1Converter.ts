@@ -19,6 +19,7 @@ export class LiveGamePlayerToLiveGamePlayerApiV1Converter
     return {
       hand: this.handToHandApiV1Converter.transform(liveGamePlayer.hand),
       lives: liveGamePlayer.lives,
+      targetId: liveGamePlayer.targetId,
     };
   }
 }

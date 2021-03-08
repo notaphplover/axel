@@ -5,7 +5,7 @@ import {
 import { GameFormatApiV1 } from '../../../../../adapter/api/model/GameFormatApiV1';
 import { LiveGameApiV1 } from '../../../../../adapter/api/model/live/LiveGameApiV1';
 import { LiveGamePlayerAreaApiV1 } from '../../../../../adapter/api/model/live/LiveGamePlayerAreaApiV1';
-import { liveGame } from '../../../domain/model/live';
+import { liveGame, playerArea } from '../../../domain/model/live';
 import { cardDeckApiV1 } from './deck';
 
 export const playerAreaApiV1: LiveGamePlayerAreaApiV1 = {
@@ -24,7 +24,8 @@ export const playerAreaApiV1: LiveGamePlayerAreaApiV1 = {
     hand: {
       cards: [],
     },
-    lives: 20,
+    lives: playerArea.player.lives,
+    targetId: playerArea.player.targetId,
   },
 };
 

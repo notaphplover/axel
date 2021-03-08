@@ -24,6 +24,7 @@ export const playerArea: LiveGamePlayerArea = {
       cards: [],
     },
     lives: 20,
+    targetId: '23ce2772-04a2-470b-ae78-3acf941a8ba6',
   },
 };
 

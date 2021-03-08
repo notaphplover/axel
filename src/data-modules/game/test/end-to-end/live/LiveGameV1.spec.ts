@@ -168,6 +168,7 @@ describe('LiveGame V1', () => {
               cards: [],
             },
             lives: 20,
+            targetId: expect.any(String) as string,
           },
         },
       ];
