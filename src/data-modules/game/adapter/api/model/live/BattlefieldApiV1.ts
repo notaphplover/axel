@@ -1,5 +1,5 @@
-import { PermanentApiV1 } from './PermanentApiV1';
+import { TargeteableCardApiV1 } from './TargeteableCardApiV1';
 
 export interface BattlefieldApiV1 {
-  permanents: PermanentApiV1[];
+  permanents: TargeteableCardApiV1[];
 }

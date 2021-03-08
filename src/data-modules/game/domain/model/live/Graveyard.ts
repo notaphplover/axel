@@ -1,5 +1,5 @@
-import { Card } from '../card/Card';
+import { TargeteableCard } from './TargeteableCard';
 
 export interface Graveyard {
-  cards: Card[];
+  cards: TargeteableCard[];
 }

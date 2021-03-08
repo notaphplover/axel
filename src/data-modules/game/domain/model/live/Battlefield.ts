@@ -1,5 +1,5 @@
-import { Permanent } from './Permanent';
+import { TargeteableCard } from './TargeteableCard';
 
 export interface Battlefield {
-  permanents: Permanent[];
+  permanents: TargeteableCard[];
 }

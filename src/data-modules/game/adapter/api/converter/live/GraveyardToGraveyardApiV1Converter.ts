@@ -3,6 +3,7 @@ import { inject, injectable } from 'inversify';
 import { Converter } from '../../../../../../common/domain';
 import { Card } from '../../../../domain/model/card/Card';
 import { Graveyard } from '../../../../domain/model/live/Graveyard';
+import { TargeteableCard } from '../../../../domain/model/live/TargeteableCard';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { CardApiV1 } from '../../model/card/CardApiV1';
 import { GraveyardApiV1 } from '../../model/live/GraveyardApiV1';
@@ -17,9 +18,10 @@ export class GraveyardToGraveyardApiV1Converter
 
   public transform(graveyard: Graveyard): GraveyardApiV1 {
     return {
-      cards: graveyard.cards.map((card: Card) =>
-        this.cardToCardApiV1Converter.transform(card),
-      ),
+      cards: graveyard.cards.map((targeteableCard: TargeteableCard) => ({
+        card: this.cardToCardApiV1Converter.transform(targeteableCard.card),
+        targetId: targeteableCard.targetId,
+      })),
     };
   }
 }

@@ -1,5 +1,5 @@
-import { CardApiV1 } from '../card/CardApiV1';
+import { TargeteableCardApiV1 } from './TargeteableCardApiV1';
 
 export interface HandApiV1 {
-  cards: CardApiV1[];
+  cards: TargeteableCardApiV1[];
 }
