@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Converter } from '../../../../../../common/domain';
 import { hasValue } from '../../../../../../common/domain/utils/hasValue';
 import { EntitiesNotFoundError } from '../../../../../../layer-modules/db/domain';
+import { ResourceType } from '../../../../domain/model/card/ResourceType';
 import { CardDeck } from '../../../../domain/model/deck/CardDeck';
 import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
@@ -65,6 +66,14 @@ export class LiveGameCreationQueryToLiveGameDbsConverter
           cards: [],
         },
         lives: 20,
+        manaPool: {
+          [ResourceType.Black]: 0,
+          [ResourceType.Blue]: 0,
+          [ResourceType.Green]: 0,
+          [ResourceType.Red]: 0,
+          [ResourceType.Uncolored]: 0,
+          [ResourceType.White]: 0,
+        },
         targetId: uuidv4(),
       },
     };

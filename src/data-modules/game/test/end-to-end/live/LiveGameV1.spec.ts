@@ -19,6 +19,7 @@ import {
 } from '../../../../task-graph/domain';
 import { UserToken } from '../../../../user/domain';
 import { userTest } from '../../../../user/test';
+import { ResourceTypeApiV1 } from '../../../adapter/api/model/card/ResourceTypeApiV1';
 import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
 import { LiveGameApiV1 } from '../../../adapter/api/model/live/LiveGameApiV1';
 import { LiveGamePlayerAreaApiV1 } from '../../../adapter/api/model/live/LiveGamePlayerAreaApiV1';
@@ -168,6 +169,14 @@ describe('LiveGame V1', () => {
               cards: [],
             },
             lives: 20,
+            manaPool: {
+              [ResourceTypeApiV1.Black]: 0,
+              [ResourceTypeApiV1.Blue]: 0,
+              [ResourceTypeApiV1.Green]: 0,
+              [ResourceTypeApiV1.Red]: 0,
+              [ResourceTypeApiV1.Uncolored]: 0,
+              [ResourceTypeApiV1.White]: 0,
+            },
             targetId: expect.any(String) as string,
           },
         },

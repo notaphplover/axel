@@ -2,6 +2,7 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../common/test';
+import { ResourceType } from '../../../../domain/model/card/ResourceType';
 import { GameFormat } from '../../../../domain/model/GameFormat';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
@@ -24,6 +25,14 @@ export const playerArea: LiveGamePlayerArea = {
       cards: [],
     },
     lives: 20,
+    manaPool: {
+      [ResourceType.Black]: 0,
+      [ResourceType.Blue]: 0,
+      [ResourceType.Green]: 0,
+      [ResourceType.Red]: 0,
+      [ResourceType.Uncolored]: 0,
+      [ResourceType.White]: 0,
+    },
     targetId: '23ce2772-04a2-470b-ae78-3acf941a8ba6',
   },
 };
