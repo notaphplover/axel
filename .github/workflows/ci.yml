@@ -25,7 +25,7 @@ jobs:
             context: .
             file: ./Dockerfile
             push: true
-            tags: docker.pkg.github.com/notaphplover/axel:latest
+            tags: docker.pkg.github.com/notaphplover/axel/backend:latest
 
   build-test:
     name: (OS ${{ matrix.os }}, Node ${{ matrix.node-version }}) Setup machine, build Typescript and launch tests
