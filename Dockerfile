@@ -8,4 +8,8 @@ RUN npm ci --quiet
 
 COPY . .
 
-CMD [ "npm", "run", "start"]
+RUN npm run build && npm run setup:local
+
+RUN npm ci --prod
+
+CMD [ "npm", "run", "start:docker"]
