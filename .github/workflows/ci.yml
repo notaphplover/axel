@@ -23,9 +23,9 @@ jobs:
           uses: docker/build-push-action@v2
           with:
             context: .
-            pull: true
+            file: ./Dockerfile
             push: true
-            tags: notaphplover/axel/backend:latest
+            tags: notaphplover/axel:latest
 
   build-test:
     name: (OS ${{ matrix.os }}, Node ${{ matrix.node-version }}) Setup machine, build Typescript and launch tests
