@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.axel/name: axel-backend
+  name: backend-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app.axel/name: axel-backend
+  template:
+    metadata:
+      labels:
+        app.axel/name: axel-backend
+    spec:
+      containers:
+      - image: ghcr.io/notaphplover/axel/backend-node:latest
+        env:
+        - name: APP_ENV
+          value: "kubernetes"
+        name: backend
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
