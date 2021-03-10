@@ -23,6 +23,11 @@ src/*/env/docker.env
 src/data-modules/*/env/docker.env
 src/integration-modules/*/env/docker.env
 src/layer-modules/*/env/docker.env
+### kubernetes.env files from modules
+src/*/env/kubernetes.env
+src/data-modules/*/env/kubernetes.env
+src/integration-modules/*/env/kubernetes.env
+src/layer-modules/*/env/kubernetes.env
 
 ### auto generated .env file
 .env
