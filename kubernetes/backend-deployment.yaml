@@ -26,3 +26,7 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+      initContainers:
+        - name: init-db
+          image: busybox:1.32
+          command: ['sh', '-c', "until nc -z db-service 27017; do echo waiting for db; sleep 2; done"]
