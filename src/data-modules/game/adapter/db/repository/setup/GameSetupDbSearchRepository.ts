@@ -5,13 +5,12 @@ import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
+  MongoDbPaginatedSearchRepository,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { MongoDbPaginatedSearchRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbPaginatedSearchRepository';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameSetupDb } from '../../model/setup/GameSetupDb';
-
 
 @injectable()
 export class GameSetupDbSearchRepository extends MongoDbPaginatedSearchRepository<

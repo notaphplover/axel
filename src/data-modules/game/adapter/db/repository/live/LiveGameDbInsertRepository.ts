@@ -5,13 +5,12 @@ import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
+  MongoDbInsertRepository,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { LiveGameDb } from '../../model/live/LiveGameDb';
-
 
 @injectable()
 export class LiveGameDbInsertRepository extends MongoDbInsertRepository<

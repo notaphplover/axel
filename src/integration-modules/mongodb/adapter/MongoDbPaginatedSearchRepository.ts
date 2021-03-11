@@ -1,9 +1,7 @@
 import mongodb from 'mongodb';
 
-import { PaginationQuery , commonDomain } from '../../../common/domain';
+import { PaginationQuery, commonDomain } from '../../../common/domain';
 import { MongoDbSearchRepository } from './MongoDbSearchRepository';
-
-
 
 const hasValue: <TType>(
   value: TType,

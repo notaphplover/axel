@@ -4,14 +4,13 @@ import mongodb from 'mongodb';
 import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
+  MongoDbPaginatedSearchRepository,
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { MongoDbPaginatedSearchRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbPaginatedSearchRepository';
 import { Card } from '../../../../domain/model/card/Card';
 import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { CardDb } from '../../model/card/CardDb';
-
 
 @injectable()
 export class CardDbSearchRepository extends MongoDbPaginatedSearchRepository<

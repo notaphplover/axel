@@ -5,13 +5,12 @@ import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
+  MongoDbSearchRepository,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { MongoDbSearchRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbSearchRepository';
 import { CardDeck } from '../../../../domain/model/deck/CardDeck';
 import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { CardDeckDb } from '../../model/deck/CardDeckDb';
-
 
 @injectable()
 export class CardDeckDbSearchRepository extends MongoDbSearchRepository<

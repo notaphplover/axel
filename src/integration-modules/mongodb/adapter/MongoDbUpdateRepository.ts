@@ -3,9 +3,8 @@ import mongodb from 'mongodb';
 
 import { MongoDbConnector } from '.';
 import { Converter, commonDomain } from '../../../common/domain';
-import { UpdateRepository } from '../../../layer-modules/db/domain/UpdateRepository';
+import { UpdateRepository } from '../../../layer-modules/db/domain';
 import { Document } from './model/Document';
-
 
 const hasValue: <TType>(
   value: TType,

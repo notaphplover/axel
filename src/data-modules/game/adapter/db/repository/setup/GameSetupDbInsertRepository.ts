@@ -5,13 +5,12 @@ import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
+  MongoDbInsertRepository,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { GameSetupsCreationQuery } from '../../../../domain/query/setup/GameSetupCreationQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameSetupDb } from '../../model/setup/GameSetupDb';
-
 
 @injectable()
 export class GameSetupDbInsertRepository extends MongoDbInsertRepository<

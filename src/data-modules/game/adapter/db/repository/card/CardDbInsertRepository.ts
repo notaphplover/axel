@@ -4,9 +4,9 @@ import mongodb from 'mongodb';
 import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
+  MongoDbInsertRepository,
   mongodbAdapter,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
 import { Card } from '../../../../domain/model/card/Card';
 import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';

@@ -2,9 +2,11 @@ import { inject, injectable } from 'inversify';
 import mongodb from 'mongodb';
 
 import { Converter } from '../../../../../../common/domain';
-import { MongoDbConnector } from '../../../../../../integration-modules/mongodb/adapter';
-import { MONGODB_ADAPTER_TYPES } from '../../../../../../integration-modules/mongodb/adapter/config/types';
-import { MongoDbUpdateRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbUpdateRepository';
+import {
+  mongodbAdapter,
+  MongoDbConnector,
+  MongoDbUpdateRepository,
+} from '../../../../../../integration-modules/mongodb/adapter';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
@@ -41,7 +43,7 @@ export class GameSetupDbUpdateRepository extends MongoDbUpdateRepository<
       GameSetupUpdateQuery,
       mongodb.UpdateQuery<GameSetupDb>
     >,
-    @inject(MONGODB_ADAPTER_TYPES.db.MONGODB_CONNECTOR)
+    @inject(mongodbAdapter.config.types.db.MONGODB_CONNECTOR)
     protected readonly mongoDbConnector: MongoDbConnector,
   ) {
     super(

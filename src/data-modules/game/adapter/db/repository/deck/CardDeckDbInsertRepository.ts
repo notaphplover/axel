@@ -5,13 +5,12 @@ import { Converter } from '../../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
+  MongoDbInsertRepository,
 } from '../../../../../../integration-modules/mongodb/adapter';
-import { MongoDbInsertRepository } from '../../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
 import { CardDeck } from '../../../../domain/model/deck/CardDeck';
 import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { CardDeckDb } from '../../model/deck/CardDeckDb';
-
 
 @injectable()
 export class CardDeckDbInsertRepository extends MongoDbInsertRepository<
