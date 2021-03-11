@@ -1,14 +1,21 @@
 import * as fastify from 'fastify';
 import { inject, injectable } from 'inversify';
 
-import { Converter, Validator } from '../../../../../../common/domain';
+import {
+  commonDomain,
+  Converter,
+  Validator,
+} from '../../../../../../common/domain';
 import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
-import { hasValue } from '../../../../../../common/domain/utils/hasValue';
 import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
 import { CardTypeApiV1 } from '../../../api/model/card/CardTypeApiV1';
 import { CardCreationQueryApiV1 } from '../../../api/query/card/CardCreationQueryApiV1';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
+
+const hasValue: <TType>(
+  value: TType,
+) => value is Exclude<TType, null | undefined> = commonDomain.utils.hasValue;
 
 @injectable()
 export class PostCardV1RequestToCardCreationQueryConverter extends RequestToQueryConverter<

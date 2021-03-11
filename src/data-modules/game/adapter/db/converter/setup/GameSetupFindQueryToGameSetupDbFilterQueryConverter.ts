@@ -1,11 +1,14 @@
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
 
-import { Converter } from '../../../../../../common/domain';
-import { hasValue } from '../../../../../../common/domain/utils/hasValue';
+import { commonDomain, Converter } from '../../../../../../common/domain';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { GameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/GameSetupFindQueryPlayerSetup';
 import { GameSetupDb } from '../../model/setup/GameSetupDb';
+
+const hasValue: <TType>(
+  value: TType,
+) => value is Exclude<TType, null | undefined> = commonDomain.utils.hasValue;
 
 @injectable()
 export class GameSetupFindQueryToGameSetupDbFilterQueryConverter

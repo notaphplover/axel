@@ -1,10 +1,13 @@
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
 
-import { Converter } from '../../../../../common/domain';
-import { hasValue } from '../../../../../common/domain/utils/hasValue';
+import { commonDomain, Converter } from '../../../../../common/domain';
 import { UserFindQuery } from '../../../domain/query/UserFindQuery';
 import { UserDb } from '../model/UserDb';
+
+const hasValue: <TType>(
+  value: TType,
+) => value is Exclude<TType, null | undefined> = commonDomain.utils.hasValue;
 
 @injectable()
 export class UserFindQueryToUserDbFilterQueryConverter

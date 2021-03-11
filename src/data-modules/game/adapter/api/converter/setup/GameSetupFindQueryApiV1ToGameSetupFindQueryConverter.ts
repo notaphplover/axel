@@ -1,7 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import { Converter } from '../../../../../../common/domain';
-import { hasValue } from '../../../../../../common/domain/utils/hasValue';
+import { commonDomain, Converter } from '../../../../../../common/domain';
 import { GameFormat } from '../../../../domain/model/GameFormat';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { GameSetupFindQueryPlayerSetup } from '../../../../domain/query/setup/GameSetupFindQueryPlayerSetup';
@@ -9,6 +8,10 @@ import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
 import { GameSetupFindQueryApiV1 } from '../../query/setup/GameSetupFindQueryApiV1';
 import { GameSetupFindQueryPlayerSetupApiV1 } from '../../query/setup/GameSetupFindQueryPlayerSetupApiV1';
+
+const hasValue: <TType>(
+  value: TType,
+) => value is Exclude<TType, null | undefined> = commonDomain.utils.hasValue;
 
 @injectable()
 export class GameSetupFindQueryApiV1ToGameSetupFindQueryConverter

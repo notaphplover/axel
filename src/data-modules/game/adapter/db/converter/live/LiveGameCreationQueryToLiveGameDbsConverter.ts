@@ -2,8 +2,7 @@ import { injectable } from 'inversify';
 import mongodb from 'mongodb';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Converter } from '../../../../../../common/domain';
-import { hasValue } from '../../../../../../common/domain/utils/hasValue';
+import { commonDomain, Converter } from '../../../../../../common/domain';
 import { EntitiesNotFoundError } from '../../../../../../layer-modules/db/domain';
 import { ResourceType } from '../../../../domain/model/card/ResourceType';
 import { CardDeck } from '../../../../domain/model/deck/CardDeck';
@@ -12,6 +11,10 @@ import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayer
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
 import { LiveGameDb } from '../../model/live/LiveGameDb';
+
+const hasValue: <TType>(
+  value: TType,
+) => value is Exclude<TType, null | undefined> = commonDomain.utils.hasValue;
 
 @injectable()
 export class LiveGameCreationQueryToLiveGameDbsConverter

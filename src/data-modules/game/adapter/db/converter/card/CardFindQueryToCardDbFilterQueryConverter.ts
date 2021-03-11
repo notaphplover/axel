@@ -1,11 +1,14 @@
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
 
-import { Converter } from '../../../../../../common/domain';
-import { hasValue } from '../../../../../../common/domain/utils/hasValue';
+import { commonDomain, Converter } from '../../../../../../common/domain';
 import { CardType } from '../../../../domain/model/card/CardType';
 import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { CardDb } from '../../model/card/CardDb';
+
+const hasValue: <TType>(
+  value: TType,
+) => value is Exclude<TType, null | undefined> = commonDomain.utils.hasValue;
 
 @injectable()
 export class CardFindQueryToCardDbFilterQueryConverter

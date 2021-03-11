@@ -1,9 +1,15 @@
 import { injectable } from 'inversify';
 import Joi from 'joi';
 
-import { ValidationResult, Validator } from '../../../../common/domain';
-import { hasValue } from '../../../../common/domain/utils/hasValue';
+import {
+  commonDomain,
+  ValidationResult,
+  Validator,
+} from '../../../../common/domain';
 
+const hasValue: <TType>(
+  value: TType,
+) => value is Exclude<TType, null | undefined> = commonDomain.utils.hasValue;
 
 @injectable()
 export abstract class JoiObjectValidator<TObject>
