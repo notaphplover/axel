@@ -62,6 +62,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             format: gameFixture.format,
             round: gameFixture.round,
             playerAreas: gameFixture.playerAreas,
+            state: gameFixture.state,
           };
 
           (gameDbToGameConverter.transform as jest.Mock).mockReturnValueOnce(

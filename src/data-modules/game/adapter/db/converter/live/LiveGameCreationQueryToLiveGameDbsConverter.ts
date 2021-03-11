@@ -7,6 +7,7 @@ import { hasValue } from '../../../../../../common/domain/utils/hasValue';
 import { EntitiesNotFoundError } from '../../../../../../layer-modules/db/domain';
 import { ResourceType } from '../../../../domain/model/card/ResourceType';
 import { CardDeck } from '../../../../domain/model/deck/CardDeck';
+import { GameState } from '../../../../domain/model/live/GameState';
 import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
 import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
@@ -29,6 +30,7 @@ export class LiveGameCreationQueryToLiveGameDbsConverter
         format: liveGameCreationQuery.gameSetup.format,
         round: 1,
         playerAreas: playerAreas,
+        state: GameState.NOT_STARTED,
       },
     ];
   }

@@ -13,6 +13,7 @@ export class LiveGameDbToLiveGameConverter
       id: input._id.toHexString(),
       playerAreas: input.playerAreas,
       round: input.round,
+      state: input.state,
     };
   }
 }

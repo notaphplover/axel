@@ -1,4 +1,5 @@
 import { GameFormat } from '../GameFormat';
+import { GameState } from './GameState';
 import { LiveGamePlayerArea } from './LiveGamePlayerArea';
 
 export interface LiveGame {
@@ -6,4 +7,5 @@ export interface LiveGame {
   id: string;
   playerAreas: LiveGamePlayerArea[];
   round: number;
+  state: GameState;
 }
