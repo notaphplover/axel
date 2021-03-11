@@ -1,15 +1,13 @@
 import 'reflect-metadata';
 import {
   Converter,
+  EitherEither,
+  ValueEither,
   ValidationFail,
   ValidationSuccess,
   Validator,
+  ValueOrErrors,
 } from '../../../../../../../common/domain';
-import {
-  EitherEither,
-  ValueEither,
-} from '../../../../../../../common/domain/either/Either';
-import { ValueOrErrors } from '../../../../../../../common/domain/either/ValueOrErrors';
 import { RequestToQueryConverter } from '../../../../../adapter/server/converter/RequestToQueryConverter';
 
 interface RequestMock {

@@ -4,8 +4,8 @@ import {
   Converter,
   ValidationResult,
   Validator,
+  ValueOrErrors,
 } from '../../../../../common/domain';
-import { ValueOrErrors } from '../../../../../common/domain/either/ValueOrErrors';
 
 @injectable()
 export abstract class RequestToQueryConverter<

@@ -5,13 +5,12 @@ import { Converter } from '../../../../../common/domain';
 import {
   MongoDbConnector,
   mongodbAdapter,
+  MongoDbInsertRepository,
 } from '../../../../../integration-modules/mongodb/adapter';
-import { MongoDbInsertRepository } from '../../../../../integration-modules/mongodb/adapter/MongoDbInsertRepository';
 import { User } from '../../../domain/model/User';
 import { UserCreationQuery } from '../../../domain/query/UserCreationQuery';
 import { USER_ADAPTER_TYPES } from '../../config/types';
 import { UserDb } from '../model/UserDb';
-
 
 @injectable()
 export class UserDbInsertRepository extends MongoDbInsertRepository<

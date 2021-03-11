@@ -1,9 +1,13 @@
 import 'reflect-metadata';
+import { Container } from 'inversify';
+
 import {
   MongoDbConnector,
   mongodbAdapter,
 } from '../integration-modules/mongodb/adapter';
-import { container } from '../layer-modules/config/adapter/container';
+import { configAdapter } from '../layer-modules/config/adapter';
+
+const container: Container = configAdapter.container;
 
 const mongoDbConnector: MongoDbConnector = container.get(
   mongodbAdapter.config.types.db.MONGODB_CONNECTOR,

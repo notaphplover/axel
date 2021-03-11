@@ -2,8 +2,11 @@ import * as fastify from 'fastify';
 import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
 
-import { Converter , Interactor } from '../../../../../../common/domain';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import {
+  Converter,
+  Interactor,
+  ValueOrErrors,
+} from '../../../../../../common/domain';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';

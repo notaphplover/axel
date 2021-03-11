@@ -4,8 +4,10 @@ import mongodb from 'mongodb';
 
 import { Capsule } from '../../../../../common/domain';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
-import { DbDotEnvVariables } from '../../../../../layer-modules/db/adapter';
-import { DB_ADAPTER_PUBLIC_TYPES } from '../../../../../layer-modules/db/adapter/config/types';
+import {
+  dbAdapter,
+  DbDotEnvVariables,
+} from '../../../../../layer-modules/db/adapter';
 import { dbTest } from '../../../../../layer-modules/db/test';
 import { EnvLoader } from '../../../../../layer-modules/env/domain';
 import { MongoDbConnector } from '../../../adapter';
@@ -53,7 +55,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
       indexName = 'mongoDbIndexInitializerIntegrationTest.bar';
 
       const dbEnvLoader: EnvLoader<DbDotEnvVariables> = container.get(
-        DB_ADAPTER_PUBLIC_TYPES.env.DB_ENV_LOADER,
+        dbAdapter.config.types.env.DB_ENV_LOADER,
       );
 
       mongoDbIndexInitializer = new MongoDbIndexInitializerMock(

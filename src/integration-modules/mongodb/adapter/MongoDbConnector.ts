@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { Db, MongoClient } from 'mongodb';
 
-import { waitMs } from '../../../common/domain/utils/waitMs';
+import { commonDomain } from '../../../common/domain';
 import {
   DbDotEnvVariables,
   dbAdapter,
@@ -59,7 +59,7 @@ export class MongoDbConnector implements DbConnector {
         if (attempt >= MAX_ATTEMPTS) {
           throw err;
         } else {
-          await waitMs(ATTEMPT_WAIT_MS);
+          await commonDomain.utils.waitMs(ATTEMPT_WAIT_MS);
         }
       }
     }

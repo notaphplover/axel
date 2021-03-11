@@ -2,9 +2,12 @@ import 'reflect-metadata';
 import * as fastify from 'fastify';
 import { StatusCodes } from 'http-status-codes';
 
-import { Converter, Interactor } from '../../../../../../../../common/domain';
-import { ValueEither } from '../../../../../../../../common/domain/either/Either';
-import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
+import {
+  Converter,
+  Interactor,
+  ValueEither,
+  ValueOrErrors,
+} from '../../../../../../../../common/domain';
 import { commonTest } from '../../../../../../../../common/test';
 import { CardDeckApiV1 } from '../../../../../../adapter/api/model/deck/CardDeckApiV1';
 import { GetCardDeckByIdV1RequestHandler } from '../../../../../../adapter/server/reqHandler/deck/GetCardDeckByIdV1RequestHandler';

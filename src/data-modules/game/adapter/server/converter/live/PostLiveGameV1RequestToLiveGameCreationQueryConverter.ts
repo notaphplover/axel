@@ -5,8 +5,8 @@ import {
   Converter,
   Interactor,
   Validator,
+  ValueOrErrors,
 } from '../../../../../../common/domain';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { User, UserContainer } from '../../../../../user/domain';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';

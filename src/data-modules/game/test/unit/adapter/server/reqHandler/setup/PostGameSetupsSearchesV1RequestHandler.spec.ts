@@ -2,12 +2,13 @@ import 'reflect-metadata';
 import * as fastify from 'fastify';
 import { StatusCodes } from 'http-status-codes';
 
-import { Converter, Interactor } from '../../../../../../../../common/domain';
 import {
+  Converter,
   EitherEither,
+  Interactor,
   ValueEither,
-} from '../../../../../../../../common/domain/either/Either';
-import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
+  ValueOrErrors,
+} from '../../../../../../../../common/domain';
 import { commonTest } from '../../../../../../../../common/test';
 import { BasicGameSetupApiV1 } from '../../../../../../adapter/api/model/setup/BasicGameSetupApiV1';
 import { PostGameSetupsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/setup/PostGameSetupsSearchesV1RequestHandler';

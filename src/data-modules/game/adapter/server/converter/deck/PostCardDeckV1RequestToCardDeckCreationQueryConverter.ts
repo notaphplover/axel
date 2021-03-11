@@ -1,8 +1,11 @@
 import * as fastify from 'fastify';
 import { inject, injectable } from 'inversify';
 
-import { Converter, Validator } from '../../../../../../common/domain';
-import { ValueEither } from '../../../../../../common/domain/either/Either';
+import {
+  Converter,
+  Validator,
+  ValueEither,
+} from '../../../../../../common/domain';
 import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { CardDeckCreationQuery } from '../../../../domain/query/deck/CardDeckCreationQuery';
 import { CardDeckCreationQueryApiV1 } from '../../../api/query/deck/CardDeckCreationQueryApiV1';

@@ -2,11 +2,12 @@ import 'reflect-metadata';
 
 import * as fastify from 'fastify';
 
-import { Converter, Validator } from '../../../../../../../../common/domain';
 import {
+  Converter,
   EitherEither,
+  Validator,
   ValueEither,
-} from '../../../../../../../../common/domain/either/Either';
+} from '../../../../../../../../common/domain';
 import { CardTypeApiV1 } from '../../../../../../adapter/api/model/card/CardTypeApiV1';
 import { CardCreationQueryApiV1 } from '../../../../../../adapter/api/query/card/CardCreationQueryApiV1';
 import { PostCardV1RequestToCardCreationQueryConverter } from '../../../../../../adapter/server/converter/card/PostCardV1RequestToCardCreationQueryConverter';

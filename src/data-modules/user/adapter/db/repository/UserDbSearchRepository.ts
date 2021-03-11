@@ -4,14 +4,13 @@ import mongodb from 'mongodb';
 import { Converter, Filter } from '../../../../../common/domain';
 import {
   MongoDbConnector,
+  MongoDbSearchRepository,
   mongodbAdapter,
 } from '../../../../../integration-modules/mongodb/adapter';
-import { MongoDbSearchRepository } from '../../../../../integration-modules/mongodb/adapter/MongoDbSearchRepository';
 import { User } from '../../../domain/model/User';
 import { UserFindQuery } from '../../../domain/query/UserFindQuery';
 import { USER_ADAPTER_TYPES } from '../../config/types';
 import { UserDb } from '../model/UserDb';
-
 
 @injectable()
 export class UserDbSearchRepository extends MongoDbSearchRepository<

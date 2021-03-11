@@ -1,8 +1,11 @@
 import * as fastify from 'fastify';
 import { inject, injectable } from 'inversify';
 
-import { Converter, Validator } from '../../../../../../common/domain';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import {
+  Converter,
+  Validator,
+  ValueOrErrors,
+} from '../../../../../../common/domain';
 import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { CardFindQuery } from '../../../../domain/query/card/CardFindQuery';
 import { CardFindQueryApiV1 } from '../../../api/query/card/CardFindQueryApiV1';

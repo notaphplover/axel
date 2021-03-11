@@ -5,8 +5,8 @@ import {
   commonDomain,
   Converter,
   Validator,
+  ValueOrErrors,
 } from '../../../../../../common/domain';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
 import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
 import { CardTypeApiV1 } from '../../../api/model/card/CardTypeApiV1';

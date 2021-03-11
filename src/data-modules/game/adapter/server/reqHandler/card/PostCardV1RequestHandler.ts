@@ -2,16 +2,17 @@ import * as fastify from 'fastify';
 import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
 
-import { Converter, Interactor } from '../../../../../../common/domain';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import {
+  Converter,
+  Interactor,
+  ValueOrErrors,
+} from '../../../../../../common/domain';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { Card } from '../../../../domain/model/card/Card';
 import { CardCreationQuery } from '../../../../domain/query/card/CardCreationQuery';
 import { CardApiV1 } from '../../../api/model/card/CardApiV1';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-
-
 
 @injectable()
 export class PostCardV1RequestHandler implements FastifyRequestHandler {

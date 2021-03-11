@@ -1,8 +1,11 @@
 import 'reflect-metadata';
 import * as fastify from 'fastify';
 
-import { Converter, Interactor } from '../../../../../../../../common/domain';
-import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
+import {
+  Converter,
+  Interactor,
+  ValueOrErrors,
+} from '../../../../../../../../common/domain';
 import { fastifyReplyFixtureFactory } from '../../../../../../../../integration-modules/fastify/test/fixtures/fastify.fixture';
 import { CardApiV1 } from '../../../../../../adapter/api/model/card/CardApiV1';
 import { PostCardsSearchesV1RequestHandler } from '../../../../../../adapter/server/reqHandler/card/PostCardsSearchesV1RequestHandler';

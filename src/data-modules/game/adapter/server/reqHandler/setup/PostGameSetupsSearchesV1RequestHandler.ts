@@ -2,16 +2,17 @@ import * as fastify from 'fastify';
 import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
 
-import { Converter, Interactor } from '../../../../../../common/domain';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import {
+  Converter,
+  Interactor,
+  ValueOrErrors,
+} from '../../../../../../common/domain';
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
 import { GameSetup } from '../../../../domain/model/setup/GameSetup';
 import { GameSetupFindQuery } from '../../../../domain/query/setup/GameSetupFindQuery';
 import { BasicGameSetupApiV1 } from '../../../api/model/setup/BasicGameSetupApiV1';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-
-
 
 @injectable()
 export class PostGameSetupsSearchesV1RequestHandler

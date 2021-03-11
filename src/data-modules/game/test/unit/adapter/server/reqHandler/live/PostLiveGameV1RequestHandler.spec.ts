@@ -2,9 +2,12 @@ import 'reflect-metadata';
 import * as fastify from 'fastify';
 import { StatusCodes } from 'http-status-codes';
 
-import { Converter, Interactor } from '../../../../../../../../common/domain';
-import { EitherEither } from '../../../../../../../../common/domain/either/Either';
-import { ValueOrErrors } from '../../../../../../../../common/domain/either/ValueOrErrors';
+import {
+  Converter,
+  Interactor,
+  EitherEither,
+  ValueOrErrors,
+} from '../../../../../../../../common/domain';
 import { commonTest } from '../../../../../../../../common/test';
 import { UserContainer } from '../../../../../../../user/domain';
 import { userFixtureFactory } from '../../../../../../../user/test/fixtures/domain/model/fixtures';

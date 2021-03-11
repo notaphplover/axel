@@ -1,8 +1,11 @@
 import * as fastify from 'fastify';
 import { inject, injectable } from 'inversify';
 
-import { Converter, Validator } from '../../../../../../common/domain';
-import { ValueOrErrors } from '../../../../../../common/domain/either/ValueOrErrors';
+import {
+  Converter,
+  Validator,
+  ValueOrErrors,
+} from '../../../../../../common/domain';
 import { RequestToQueryConverter } from '../../../../../../layer-modules/server/adapter';
 import { CardDeckFindQuery } from '../../../../domain/query/deck/CardDeckFindQuery';
 import { CardDeckFindQueryApiV1 } from '../../../api/query/deck/CardDeckFindQueryApiV1';

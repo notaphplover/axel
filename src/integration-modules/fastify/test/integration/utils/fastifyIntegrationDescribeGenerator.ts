@@ -1,11 +1,17 @@
 import { Container } from 'inversify';
 
-import { customDescribe } from '../../../../../common/test/integration/utills/customDescribe';
+import { commonTest } from '../../../../../common/test';
 import { configAdapter } from '../../../../../layer-modules/config/adapter';
 import { DbConnector } from '../../../../../layer-modules/db/domain';
 import { mongodbAdapter } from '../../../../mongodb/adapter';
 import { FastifyRouter } from '../../../adapter';
 import { FastifyServerTest } from '../FastifyServerTest';
+
+const customDescribe: (
+  describeFn: jest.Describe,
+  setupName: string,
+  setupCallback: () => void,
+) => jest.Describe = commonTest.integration.utils.customDescribe;
 
 const container: Container = configAdapter.container;
 
