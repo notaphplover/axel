@@ -67,7 +67,10 @@ export const GAME_ADAPTER_API_TYPES = {
       BATTLEFIELD_TO_BATTLEFIELD_API_V1_CONVERTER: Symbol(
         'BattlefieldToBattlefieldApiV1Converter',
       ),
-      GRAVEYARD_TO_GRAVEYARD_API_V1_CONVERTER: Symbol.for(
+      GAME_STATE_TO_GAME_STATE_API_V1_CONVERTER: Symbol(
+        'GameStateToGameStateApiV1Converter',
+      ),
+      GRAVEYARD_TO_GRAVEYARD_API_V1_CONVERTER: Symbol(
         'GraveyardToGraveyardApiV1Converter',
       ),
       HAND_TO_HAND_API_V1_CONVERTER: Symbol('HandToHandApiV1Converter'),
@@ -133,7 +136,7 @@ export const GAME_ADAPTER_API_TYPES = {
       ),
     },
     live: {
-      LIVE_GAME_CREATION_QUERY_API_V1_SEMANTIC_VALIDATOR: Symbol.for(
+      LIVE_GAME_CREATION_QUERY_API_V1_SEMANTIC_VALIDATOR: Symbol(
         'LiveGameCreationQueryApiV1SemanticValidator',
       ),
       LIVE_GAME_CREATION_QUERY_API_V1_VALIDATOR: Symbol(
