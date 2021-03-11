@@ -2,10 +2,12 @@ import { inject, injectable } from 'inversify';
 
 import { Converter } from '../../../../../../common/domain';
 import { GameFormat } from '../../../../domain/model/GameFormat';
+import { GameState } from '../../../../domain/model/live/GameState';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
+import { GameStateApiV1 } from '../../model/live/GameStateApiV1';
 import { LiveGameApiV1 } from '../../model/live/LiveGameApiV1';
 import { LiveGamePlayerAreaApiV1 } from '../../model/live/LiveGamePlayerAreaApiV1';
 
@@ -20,6 +22,14 @@ export class LiveGameToLiveGameApiV1Converter
     private readonly gameFormatToGameFormatApiV1Converter: Converter<
       GameFormat,
       GameFormatApiV1
+    >,
+    @inject(
+      GAME_ADAPTER_TYPES.api.converter.live
+        .GAME_STATE_TO_GAME_STATE_API_V1_CONVERTER,
+    )
+    private readonly gameStateToGameStateApiV1Converter: Converter<
+      GameState,
+      GameStateApiV1
     >,
     @inject(
       GAME_ADAPTER_TYPES.api.converter.live
@@ -42,6 +52,7 @@ export class LiveGameToLiveGameApiV1Converter
           ),
       ),
       round: input.round,
+      state: this.gameStateToGameStateApiV1Converter.transform(input.state),
     };
   }
 }

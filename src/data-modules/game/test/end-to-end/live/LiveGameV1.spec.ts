@@ -21,6 +21,7 @@ import { UserToken } from '../../../../user/domain';
 import { userTest } from '../../../../user/test';
 import { ResourceTypeApiV1 } from '../../../adapter/api/model/card/ResourceTypeApiV1';
 import { GameFormatApiV1 } from '../../../adapter/api/model/GameFormatApiV1';
+import { GameStateApiV1 } from '../../../adapter/api/model/live/GameStateApiV1';
 import { LiveGameApiV1 } from '../../../adapter/api/model/live/LiveGameApiV1';
 import { LiveGamePlayerAreaApiV1 } from '../../../adapter/api/model/live/LiveGamePlayerAreaApiV1';
 import { LiveGameCreationQueryApiV1 } from '../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
@@ -190,6 +191,9 @@ describe('LiveGame V1', () => {
       expect(
         (postLiveGamesV1Response.data as LiveGameApiV1).playerAreas,
       ).toStrictEqual(expectedPlayerAreas);
+      expect(
+        (postLiveGamesV1Response.data as LiveGameApiV1).state,
+      ).toStrictEqual(GameStateApiV1.NOT_STARTED);
     });
   });
 });

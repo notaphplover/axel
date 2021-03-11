@@ -4,6 +4,7 @@ import {
 } from '../../../../../../../common/test';
 import { ResourceTypeApiV1 } from '../../../../../adapter/api/model/card/ResourceTypeApiV1';
 import { GameFormatApiV1 } from '../../../../../adapter/api/model/GameFormatApiV1';
+import { GameStateApiV1 } from '../../../../../adapter/api/model/live/GameStateApiV1';
 import { LiveGameApiV1 } from '../../../../../adapter/api/model/live/LiveGameApiV1';
 import { LiveGamePlayerAreaApiV1 } from '../../../../../adapter/api/model/live/LiveGamePlayerAreaApiV1';
 import { liveGame, playerArea } from '../../../domain/model/live';
@@ -43,6 +44,7 @@ const liveGameApiV1: LiveGameApiV1 = {
   id: liveGame.id,
   playerAreas: [playerAreaApiV1],
   round: liveGame.round,
+  state: GameStateApiV1.NOT_STARTED,
 };
 
 export const liveGameApiV1FixtureFactory: FixtureFactory<LiveGameApiV1> = new DeepCloneFixtureFactory(
