@@ -11,6 +11,7 @@ import { LiveGameCreationQueryToLiveGameDbsConverter } from '../../../db/convert
 import { LiveGameFindQueryToLiveGameDbFilterQueryConverter } from '../../../db/converter/live/LiveGameFindQueryToLiveGameDbFilterQueryConverter';
 import { GameSetupCreationQueryToGameSetupDbsConverter } from '../../../db/converter/setup/GameSetupCreationQueryToGameSetupDbsConverter';
 import { GameSetupDbToGameSetupConverter } from '../../../db/converter/setup/GameSetupDbToGameSetupConverter';
+import { GameSetupDeletionQueryToGameSetupDbFilterConverter } from '../../../db/converter/setup/GameSetupDeletionQueryToGameSetupDbFilterConverter';
 import { GameSetupFindQueryToGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupFindQueryToGameSetupDbFilterQueryConverter';
 import { GameSetupUpdateQueryToGameSetupDbFilterQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToGameSetupDbFilterQueryConverter';
 import { GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter } from '../../../db/converter/setup/GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter';
@@ -76,6 +77,10 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   bind(
     GAME_ADAPTER_TYPES.db.converter.setup.GAME_SETUP_DB_TO_GAME_SETUP_CONVERTER,
   ).to(GameSetupDbToGameSetupConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.setup
+      .GAME_SETUP_DELETION_QUERY_TO_GAME_SETUP_DB_FILTER_CONVERTER,
+  ).to(GameSetupDeletionQueryToGameSetupDbFilterConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.setup
       .GAME_SETUP_FIND_QUERY_TO_GAME_SETUP_DB_FILTER_QUERY_CONVERTER,
