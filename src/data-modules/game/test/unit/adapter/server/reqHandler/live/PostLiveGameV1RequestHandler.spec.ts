@@ -15,37 +15,45 @@ import { LiveGameApiV1 } from '../../../../../../adapter/api/model/live/LiveGame
 import { PostLiveGameV1RequestHandler } from '../../../../../../adapter/server/reqHandler/live/PostLiveGameV1RequestHandler';
 import { LiveGame } from '../../../../../../domain/model/live/LiveGame';
 import { LiveGameCreationQuery } from '../../../../../../domain/query/live/LiveGameCreationQuery';
+import { GameSetupDeletionQuery } from '../../../../../../domain/query/setup/GameSetupDeletionQuery';
 import { liveGameApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/model/live';
 import { liveGameCreationQueryApiV1FixtureFactory } from '../../../../../fixtures/adapter/api/query/card';
 import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model/live';
 import { liveGameCreationQueryFixtureFactory } from '../../../../../fixtures/domain/query/live';
+import { gameSetupDeletionQueryFixtureFactory } from '../../../../../fixtures/domain/query/setup';
 
 describe(PostLiveGameV1RequestHandler.name, () => {
-  let createGamesInteractor: Interactor<
-    LiveGameCreationQuery,
-    Promise<LiveGame[]>
+  let createGamesInteractor: jest.Mocked<
+    Interactor<LiveGameCreationQuery, Promise<LiveGame[]>>
   >;
-  let gameToGameApiV1Converter: Converter<LiveGame, LiveGameApiV1>;
+  let deleteGameSetupInteractor: jest.Mocked<
+    Interactor<GameSetupDeletionQuery, Promise<void>>
+  >;
+  let gameToGameApiV1Converter: jest.Mocked<Converter<LiveGame, LiveGameApiV1>>;
+  let postLiveGameV1RequestToLiveGameCreationQueryConverter: jest.Mocked<
+    Converter<
+      fastify.FastifyRequest & UserContainer,
+      Promise<ValueOrErrors<LiveGameCreationQuery>>
+    >
+  >;
 
   let postGameV1RequestHandler: PostLiveGameV1RequestHandler;
-
-  let postLiveGameV1RequestToLiveGameCreationQueryConverter: Converter<
-    fastify.FastifyRequest & UserContainer,
-    Promise<ValueOrErrors<LiveGameCreationQuery>>
-  >;
 
   beforeAll(() => {
     createGamesInteractor = {
       interact: jest.fn(),
     };
+    deleteGameSetupInteractor = {
+      interact: jest.fn(),
+    };
     gameToGameApiV1Converter = { transform: jest.fn() };
-
     postLiveGameV1RequestToLiveGameCreationQueryConverter = {
       transform: jest.fn(),
     };
 
     postGameV1RequestHandler = new PostLiveGameV1RequestHandler(
       createGamesInteractor,
+      deleteGameSetupInteractor,
       gameToGameApiV1Converter,
       postLiveGameV1RequestToLiveGameCreationQueryConverter,
     );
@@ -72,17 +80,25 @@ describe(PostLiveGameV1RequestHandler.name, () => {
         >) as fastify.FastifyRequest & UserContainer;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        (createGamesInteractor.interact as jest.Mock).mockResolvedValueOnce([
+        createGamesInteractor.interact.mockResolvedValueOnce([
           liveGameFixtureFactory.get(),
         ]);
-        (gameToGameApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
+        deleteGameSetupInteractor.interact.mockResolvedValueOnce(undefined);
+        gameToGameApiV1Converter.transform.mockReturnValueOnce(
           liveGameApiV1FixtureFactory.get(),
         );
-        (postLiveGameV1RequestToLiveGameCreationQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
+        postLiveGameV1RequestToLiveGameCreationQueryConverter.transform.mockResolvedValueOnce(
           liveGameCreationQueryOrErrors,
         );
 
         await postGameV1RequestHandler.handle(requestFixture, replyFixture);
+      });
+
+      afterAll(() => {
+        createGamesInteractor.interact.mockClear();
+        deleteGameSetupInteractor.interact.mockClear();
+        gameToGameApiV1Converter.transform.mockClear();
+        postLiveGameV1RequestToLiveGameCreationQueryConverter.transform.mockClear();
       });
 
       it('must call postLiveGameV1RequestToLiveGameCreationQueryConverter.transform', () => {
@@ -98,6 +114,13 @@ describe(PostLiveGameV1RequestHandler.name, () => {
         expect(createGamesInteractor.interact).toHaveBeenCalledTimes(1);
         expect(createGamesInteractor.interact).toHaveBeenCalledWith(
           liveGameCreationQueryFixtureFactory.get(),
+        );
+      });
+
+      it('must call deleteGameSetupInteractor.interact()', () => {
+        expect(deleteGameSetupInteractor.interact).toHaveBeenCalledTimes(1);
+        expect(deleteGameSetupInteractor.interact).toHaveBeenCalledWith(
+          gameSetupDeletionQueryFixtureFactory.get(),
         );
       });
 
@@ -136,7 +159,7 @@ describe(PostLiveGameV1RequestHandler.name, () => {
         >) as fastify.FastifyRequest & UserContainer;
         replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        (postLiveGameV1RequestToLiveGameCreationQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
+        postLiveGameV1RequestToLiveGameCreationQueryConverter.transform.mockResolvedValueOnce(
           liveGameCreationQueryOrErrors,
         );
 
