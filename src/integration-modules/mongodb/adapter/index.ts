@@ -3,6 +3,7 @@ import { MONGODB_ADAPTER_PUBLIC_TYPES } from './config/types';
 import { Document } from './model/Document';
 import { MongoDbCollectionInitializer } from './MongoDbCollectionInitializer';
 import { MongoDbConnector } from './MongoDbConnector';
+import { MongoDbDeleteRepository } from './MongoDbDeleteRepository';
 import { MongoDbIndex } from './MongoDbIndex';
 import { MongoDbInitializer } from './MongoDbInitializer';
 import { MongoDbInsertRepository } from './MongoDbInsertRepository';
@@ -14,6 +15,7 @@ export {
   Document,
   MongoDbCollectionInitializer,
   MongoDbConnector,
+  MongoDbDeleteRepository,
   MongoDbIndex,
   MongoDbInitializer,
   MongoDbInsertRepository,
