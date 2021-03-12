@@ -7,6 +7,7 @@ import { CardDeckDbInsertRepository } from '../../../db/repository/deck/CardDeck
 import { CardDeckDbSearchRepository } from '../../../db/repository/deck/CardDeckDbSearchRepository';
 import { LiveGameDbInsertRepository } from '../../../db/repository/live/LiveGameDbInsertRepository';
 import { LiveGameDbSearchRepository } from '../../../db/repository/live/LiveGameDbSearchRepository';
+import { GameSetupDbDeleteRepository } from '../../../db/repository/setup/GameSetupDbDeleteRepository';
 import { GameSetupDbInsertRepository } from '../../../db/repository/setup/GameSetupDbInsertRepository';
 import { GameSetupDbSearchRepository } from '../../../db/repository/setup/GameSetupDbSearchRepository';
 import { GameSetupDbUpdateRepository } from '../../../db/repository/setup/GameSetupDbUpdateRepository';
@@ -32,6 +33,9 @@ export function bindGameDomainRepository(bind: interfaces.Bind): void {
     CardDeckDbSearchRepository,
   );
 
+  bind(GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_DELETE_REPOSITORY).to(
+    GameSetupDbDeleteRepository,
+  );
   bind(GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_INSERT_REPOSITORY).to(
     GameSetupDbInsertRepository,
   );

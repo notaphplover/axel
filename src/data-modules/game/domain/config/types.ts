@@ -41,6 +41,7 @@ export const GAME_DOMAIN_TYPES = {
       LIVE_GAME_SEARCH_REPOSITORY: Symbol('LiveGameSearchRepository'),
     },
     setup: {
+      GAME_SETUP_DELETE_REPOSITORY: Symbol('GameSetupDeleteRepository'),
       GAME_SETUP_INSERT_REPOSITORY: Symbol('GameSetupInsertRepository'),
       GAME_SETUP_SEARCH_REPOSITORY: Symbol('GameSetupSearchRepository'),
       GAME_SETUP_UPDATE_REPOSITORY: Symbol('GameSetupUpdateRepository'),
