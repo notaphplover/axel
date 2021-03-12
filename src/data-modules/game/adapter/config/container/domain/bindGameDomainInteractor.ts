@@ -9,6 +9,7 @@ import { FindCardDecksInteractor } from '../../../../domain/interactor/deck/Find
 import { CreateLiveGamesInteractor } from '../../../../domain/interactor/live/CreateLiveGamesInteractor';
 import { FindLiveGameInteractor } from '../../../../domain/interactor/live/FindLiveGameInteractor';
 import { CreateGameSetupsInteractor } from '../../../../domain/interactor/setup/CreateGameSetupsInteractor';
+import { DeleteGameSetupsInteractor } from '../../../../domain/interactor/setup/DeleteGameSetupsInteractor';
 import { FindGameSetupsInteractor } from '../../../../domain/interactor/setup/FindGameSetupsInteractor';
 import { UpdateGameSetupInteractor } from '../../../../domain/interactor/setup/UpdateGameSetupInteractor';
 
@@ -38,6 +39,9 @@ export function bindGameDomainInteractor(bind: interfaces.Bind): void {
 
   bind(GAME_DOMAIN_TYPES.interactor.setup.CREATE_GAME_SETUPS_INTERACTOR).to(
     CreateGameSetupsInteractor,
+  );
+  bind(GAME_DOMAIN_TYPES.interactor.setup.DELETE_GAME_SETUPS_INTERACTOR).to(
+    DeleteGameSetupsInteractor,
   );
   bind(GAME_DOMAIN_TYPES.interactor.setup.FIND_GAME_SETUPS_INTERACTOR).to(
     FindGameSetupsInteractor,

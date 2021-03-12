@@ -23,6 +23,7 @@ export const GAME_DOMAIN_TYPES = {
     },
     setup: {
       CREATE_GAME_SETUPS_INTERACTOR: Symbol('CreateGameSetupsInteractor'),
+      DELETE_GAME_SETUPS_INTERACTOR: Symbol('DeleteGameSetupsInteractor'),
       FIND_GAME_SETUPS_INTERACTOR: Symbol('FindGameSetupsInteractor'),
       UPDATE_GAME_SETUP_INTERACTOR: Symbol('UpdateGameSetupInteractor'),
     },
