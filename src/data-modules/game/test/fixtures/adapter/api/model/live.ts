@@ -36,6 +36,7 @@ export const playerAreaApiV1: LiveGamePlayerAreaApiV1 = {
       [ResourceTypeApiV1.White]: 0,
     },
     targetId: playerArea.player.targetId,
+    userId: playerArea.player.userId,
   },
 };
 

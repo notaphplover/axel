@@ -33,6 +33,7 @@ export class LiveGamePlayerToLiveGamePlayerApiV1Converter
         liveGamePlayer.manaPool,
       ),
       targetId: liveGamePlayer.targetId,
+      userId: liveGamePlayer.userId,
     };
   }
 }

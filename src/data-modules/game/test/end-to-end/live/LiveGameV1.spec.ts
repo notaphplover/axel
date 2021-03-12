@@ -179,6 +179,7 @@ describe('LiveGame V1', () => {
               [ResourceTypeApiV1.White]: 0,
             },
             targetId: expect.any(String) as string,
+            userId: e2eComponents.gameSetup.playerSetups[0].userId,
           },
         },
       ];
