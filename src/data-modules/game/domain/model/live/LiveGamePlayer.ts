@@ -6,4 +6,5 @@ export interface LiveGamePlayer {
   lives: number;
   manaPool: Resource;
   targetId: string;
+  userId: string;
 }

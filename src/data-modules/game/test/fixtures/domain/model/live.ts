@@ -8,6 +8,7 @@ import { GameState } from '../../../../domain/model/live/GameState';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
 import { cardDeck } from './deck';
+import { playerSetup } from './setup';
 
 export const playerArea: LiveGamePlayerArea = {
   battlefield: {
@@ -35,6 +36,7 @@ export const playerArea: LiveGamePlayerArea = {
       [ResourceType.White]: 0,
     },
     targetId: '23ce2772-04a2-470b-ae78-3acf941a8ba6',
+    userId: playerSetup.userId,
   },
 };
 

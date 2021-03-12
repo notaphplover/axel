@@ -80,6 +80,7 @@ export class LiveGameCreationQueryToLiveGameDbsConverter
           [ResourceType.White]: 0,
         },
         targetId: uuidv4(),
+        userId: playerSetup.userId,
       },
     };
 
