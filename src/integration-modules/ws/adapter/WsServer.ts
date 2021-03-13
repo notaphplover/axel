@@ -3,7 +3,7 @@ import http from 'http';
 import WebSocket from 'ws';
 
 import { Server } from '../../../layer-modules/server/domain';
-import { WsMessageHandler } from './WsMessageHandler';
+import { WsMessageHandler } from './msgHandler/WsMessageHandler';
 
 export class WsServer implements Server {
   private webSocketServer: WebSocket.Server | undefined;

@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 
-import { WsMessageHandler } from '../../../adapter/WsMessageHandler';
+import { WsMessageHandler } from '../../../adapter/msgHandler/WsMessageHandler';
 import { WsServer } from '../../../adapter/WsServer';
 
 describe(WsServer.name, () => {
