@@ -15,6 +15,18 @@ export class WsInMemoryRoom implements WsRoom {
     }
   }
 
+  public send(agentId: string, data: Record<string, unknown>): void {
+    const webSocket: WebSocket | undefined = this.agentIdToSocketMap.get(
+      agentId,
+    );
+
+    if (webSocket === undefined) {
+      throw new Error(`No socket is associated to agentId "${agentId}"`);
+    }
+
+    webSocket.send(JSON.stringify(data));
+  }
+
   public subscribe(agentId: string, socket: WebSocket): void {
     this.agentIdToSocketMap.set(agentId, socket);
   }
