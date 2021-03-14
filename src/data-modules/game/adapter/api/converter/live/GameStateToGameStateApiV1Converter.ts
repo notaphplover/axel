@@ -10,6 +10,7 @@ const gameStateToGameStateApiV1Map: {
   [GameState.ENDED]: GameStateApiV1.ENDED,
   [GameState.NOT_STARTED]: GameStateApiV1.NOT_STARTED,
   [GameState.STARTED]: GameStateApiV1.STARTED,
+  [GameState.STARTING]: GameStateApiV1.STARTING,
 };
 
 @injectable()
