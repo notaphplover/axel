@@ -3,23 +3,23 @@ import WebSocket from 'ws';
 import { WsRoom } from './WsRoom';
 
 export class WsInMemoryRoom implements WsRoom {
-  private readonly sockets: Set<WebSocket>;
+  private readonly agentIdToSocketMap: Map<string, WebSocket>;
 
   constructor(public readonly id: string) {
-    this.sockets = new Set<WebSocket>();
+    this.agentIdToSocketMap = new Map<string, WebSocket>();
   }
 
   public broadcast(data: Record<string, unknown>): void {
-    for (const socket of this.sockets) {
+    for (const socket of this.agentIdToSocketMap.values()) {
       socket.send(JSON.stringify(data));
     }
   }
 
-  public subscribe(socket: WebSocket): void {
-    this.sockets.add(socket);
+  public subscribe(agentId: string, socket: WebSocket): void {
+    this.agentIdToSocketMap.set(agentId, socket);
   }
 
-  public unsubscribe(socket: WebSocket): void {
-    this.sockets.delete(socket);
+  public unsubscribe(agentId: string): void {
+    this.agentIdToSocketMap.delete(agentId);
   }
 }

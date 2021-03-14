@@ -5,7 +5,7 @@ export interface WsRoom {
 
   broadcast(data: Record<string, unknown>): void;
 
-  subscribe(socket: WebSocket): void;
+  subscribe(agentId: string, socket: WebSocket): void;
 
-  unsubscribe(socket: WebSocket): void;
+  unsubscribe(agentId: string): void;
 }

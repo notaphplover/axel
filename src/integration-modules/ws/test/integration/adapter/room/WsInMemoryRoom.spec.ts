@@ -18,7 +18,7 @@ describe(WsInMemoryRoom.name, () => {
         wsInMemoryRoom = new WsInMemoryRoom('room-sample-id');
         messageFixture = { foo: 'bar' };
 
-        wsInMemoryRoom.subscribe(socketMock);
+        wsInMemoryRoom.subscribe('sample-agent-id', socketMock);
 
         wsInMemoryRoom.broadcast(messageFixture);
       });
