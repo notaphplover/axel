@@ -7,6 +7,7 @@ import { GameFormatApiV1 } from '../model/GameFormatApiV1';
 const gameFormatApiV1ToGameFormatMap: {
   [TKey in GameFormatApiV1]: GameFormat;
 } = {
+  [GameFormatApiV1.ALPHA]: GameFormat.ALPHA,
   [GameFormatApiV1.UNRESTRICTED]: GameFormat.UNRESTRICTED,
 };
 
