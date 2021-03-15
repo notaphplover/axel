@@ -16,13 +16,52 @@ export class LiveGameCreationQueryApiV1SemanticValidator
     value: LiveGameCreationQueryApiV1,
     context: LiveGameCreationQueryApiV1ValidationContext,
   ): ValidationResult<LiveGameCreationQueryApiV1> {
-    return this.validateLiveGameCreationQueryApiV1(value, context);
+    const errors: string[] = [
+      ...this.validateLiveGameCreationQueryApiV1ValidationContext(context),
+      ...this.validateLiveGameCreationQueryApiV1(value, context),
+    ];
+
+    if (errors.length === 0) {
+      return {
+        model: value,
+        result: true,
+      };
+    } else {
+      return {
+        errorMessage: errors.join('\n'),
+        result: false,
+      };
+    }
+  }
+
+  private validateLiveGameCreationQueryApiV1ValidationContext(
+    context: LiveGameCreationQueryApiV1ValidationContext,
+  ): string[] {
+    const errors: string[] = [];
+
+    if (
+      context.gameSetup.playerSetups.length !== context.gameSetup.playerSlots
+    ) {
+      errors.push(
+        'Invalid game setup. Expected as many player setups as slots available',
+      );
+    }
+
+    for (const cardDeck of context.deckIdToDeckMap.values()) {
+      if (context.gameSetup.format !== cardDeck.format) {
+        errors.push(
+          `Invalid card deck ${cardDeck.id} . Expected a card deck of "${context.gameSetup.format}" format, got "${cardDeck.format}" instead.`,
+        );
+      }
+    }
+
+    return errors;
   }
 
   private validateLiveGameCreationQueryApiV1(
     liveGameCreationQueryApiV1: LiveGameCreationQueryApiV1,
     context: LiveGameCreationQueryApiV1ValidationContext,
-  ): ValidationResult<LiveGameCreationQueryApiV1> {
+  ): string[] {
     const errors: string[] = [];
 
     if (liveGameCreationQueryApiV1.gameSetupId !== context.gameSetup.id) {
@@ -35,16 +74,6 @@ export class LiveGameCreationQueryApiV1SemanticValidator
       errors.push(`Expected user to be the game's owner`);
     }
 
-    if (errors.length === 0) {
-      return {
-        model: liveGameCreationQueryApiV1,
-        result: true,
-      };
-    } else {
-      return {
-        errorMessage: errors.join('\n'),
-        result: false,
-      };
-    }
+    return errors;
   }
 }
