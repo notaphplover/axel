@@ -57,24 +57,31 @@ export class WsServer implements Server {
     socket.send(stringifiedErrorObject);
   }
 
+  private webSocketOnMessageHandler(
+    socket: WebSocket,
+    data: WebSocket.Data,
+  ): void {
+    try {
+      const stringifiedData: string = data.toString();
+
+      const parsedData: unknown = JSON.parse(stringifiedData);
+
+      void this.wsMessageHandler
+        .handle(socket, parsedData)
+        .catch((err: unknown) => {
+          this.handleError(socket, err);
+        });
+    } catch (err: unknown) {
+      this.handleError(socket, err);
+    }
+  }
+
   private webSocketServerOnConnectionHandler(
     socket: WebSocket,
     _request: http.IncomingMessage,
   ): void {
     socket.on('message', (data: WebSocket.Data): void => {
-      try {
-        const stringifiedData: string = data.toString();
-
-        const parsedData: unknown = JSON.parse(stringifiedData);
-
-        void this.wsMessageHandler
-          .handle(socket, parsedData)
-          .catch((err: unknown) => {
-            this.handleError(socket, err);
-          });
-      } catch (err: unknown) {
-        this.handleError(socket, err);
-      }
+      this.webSocketOnMessageHandler(socket, data);
     });
   }
 }
