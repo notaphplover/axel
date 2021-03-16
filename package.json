@@ -34,7 +34,11 @@
     "test:integration:js": "npm run test:js -- --selectProjects Integration",
     "test:unit": "jest --selectProjects Unit",
     "test:unit:js": "npm run test:js -- --selectProjects Unit",
-    "test:unit:js:ci": "npm run test:unit:js -- --ci"
+    "test:unit:js:ci": "npm run test:unit:js -- --ci",
+    "ws-server:delete:prod": "pm2 delete \"axel-ws-server\"",
+    "ws-server:start": "TS_NODE_FILES=true ts-node ./src/scripts/start-ws-server.ts",
+    "ws-server:start:prod": "pm2 start ./dist/scripts/start-ws-server.js --watch --name \"axel-ws-server\"",
+    "ws-server:stop:prod": "pm2 stop \"axel-ws-server\""
   },
   "keywords": [
     "axel",
@@ -64,6 +68,7 @@
     "@types/ncp": "^2.0.4",
     "@types/node": "^12.19.14",
     "@types/uuid": "^8.3.0",
+    "@types/ws": "^7.4.0",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "axios": "^0.21.1",
@@ -94,6 +99,7 @@
     "mongodb": "^3.6.4",
     "pm2": "^4.5.5",
     "reflect-metadata": "^0.1.13",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "ws": "^7.4.4"
   }
 }
