@@ -17,6 +17,11 @@ export class GameDbInitializer implements MongoDbInitializer {
     )
     private readonly gameSetupDbCollectionInitializer: MongoDbInitializer,
     @inject(
+      GAME_ADAPTER_TYPES.db.initializer.live.connection
+        .LIVE_GAME_DB_CONNECTIONS_COLLECTION_INITIALIZER,
+    )
+    private readonly liveGameConnectionsDbCollectionInitializer: MongoDbInitializer,
+    @inject(
       GAME_ADAPTER_TYPES.db.initializer.live
         .LIVE_GAME_DB_COLLECTION_INITIALIZER,
     )
@@ -27,6 +32,7 @@ export class GameDbInitializer implements MongoDbInitializer {
     await Promise.all([
       this.cardDbCollectionInitializer.initialize(mongoClient),
       this.gameSetupDbCollectionInitializer.initialize(mongoClient),
+      this.liveGameConnectionsDbCollectionInitializer.initialize(mongoClient),
       this.liveGameDbCollectionInitializer.initialize(mongoClient),
     ]);
   }

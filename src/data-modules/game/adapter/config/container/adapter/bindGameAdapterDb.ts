@@ -117,7 +117,7 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   ).to(CardDbCollectionInitializer);
   bind(
     GAME_ADAPTER_TYPES.db.initializer.live.connection
-      .LIVE_GAME_DB_CONNECTION_COLLECTION_INITIALIZER,
+      .LIVE_GAME_DB_CONNECTIONS_COLLECTION_INITIALIZER,
   ).to(LiveGameConnectionsDbCollectionInitializer);
   bind(
     GAME_ADAPTER_TYPES.db.initializer.live.LIVE_GAME_DB_COLLECTION_INITIALIZER,

@@ -85,8 +85,8 @@ export const GAME_ADAPTER_DB_TYPES = {
     },
     live: {
       connection: {
-        LIVE_GAME_DB_CONNECTION_COLLECTION_INITIALIZER: Symbol(
-          'LiveGameDbCollectionInitializer',
+        LIVE_GAME_DB_CONNECTIONS_COLLECTION_INITIALIZER: Symbol(
+          'LiveGameDbCollectionsInitializer',
         ),
       },
       LIVE_GAME_DB_COLLECTION_INITIALIZER: Symbol(
