@@ -36,8 +36,8 @@ export class LiveGameConnectionsDbInsertRepository extends MongoDbInsertReposito
     @inject(mongodbAdapter.config.types.db.MONGODB_CONNECTOR)
     mongoDbConnector: MongoDbConnector,
     @inject(
-      GAME_ADAPTER_TYPES.db.converter.live
-        .LIVE_GAME_CREATION_QUERY_TO_LIVE_GAME_DBS_CONVERTER,
+      GAME_ADAPTER_TYPES.db.converter.live.connection
+        .LIVE_GAME_CONNECTIONS_CREATION_QUERY_TO_LIVE_GAME_CONNECTIONS_CONVERTER,
     )
     gameCreationQueryToGameDbsConverter: Converter<
       LiveGameConnectionsCreationQuery,

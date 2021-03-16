@@ -10,7 +10,9 @@ import {
 import { FastifyRequestHandler } from '../../../../../../integration-modules/fastify/adapter';
 import { UserContainer } from '../../../../../user/domain';
 import { GAME_DOMAIN_TYPES } from '../../../../domain/config/types';
+import { LiveGameConnections } from '../../../../domain/model/live/connection/LiveGameConnections';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
+import { LiveGameConnectionsCreationQuery } from '../../../../domain/query/live/connection/LiveGameConnectionsCreationQuery';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
 import { GameSetupDeletionQuery } from '../../../../domain/query/setup/GameSetupDeletionQuery';
 import { LiveGameApiV1 } from '../../../api/model/live/LiveGameApiV1';
@@ -20,8 +22,16 @@ import { GAME_ADAPTER_TYPES } from '../../../config/types';
 export class PostLiveGameV1RequestHandler
   implements FastifyRequestHandler<fastify.FastifyRequest & UserContainer> {
   constructor(
+    @inject(
+      GAME_DOMAIN_TYPES.interactor.live.connection
+        .CREATE_LIVE_GAMES_CONNECTIONS_INTERACTOR,
+    )
+    private readonly createLiveGamesConnectionsInteractor: Interactor<
+      LiveGameConnectionsCreationQuery,
+      Promise<LiveGameConnections[]>
+    >,
     @inject(GAME_DOMAIN_TYPES.interactor.live.CREATE_LIVE_GAMES_INTERACTOR)
-    private readonly createGamesInteractor: Interactor<
+    private readonly createLiveGamesInteractor: Interactor<
       LiveGameCreationQuery,
       Promise<LiveGame[]>
     >,
@@ -65,7 +75,7 @@ export class PostLiveGameV1RequestHandler
 
       const [
         gameCreated,
-      ]: LiveGame[] = await this.createGamesInteractor.interact(
+      ]: LiveGame[] = await this.createLiveGamesInteractor.interact(
         liveGameCreationQuery,
       );
 
@@ -73,7 +83,16 @@ export class PostLiveGameV1RequestHandler
         id: liveGameCreationQuery.gameSetup.id,
       };
 
-      await this.deleteGameSetupInteractor.interact(gameSetupDeletionQuery);
+      const liveGameConnectionsCreationQuery: LiveGameConnectionsCreationQuery = {
+        liveGameId: gameCreated.id,
+      };
+
+      await Promise.all([
+        this.createLiveGamesConnectionsInteractor.interact(
+          liveGameConnectionsCreationQuery,
+        ),
+        this.deleteGameSetupInteractor.interact(gameSetupDeletionQuery),
+      ]);
 
       const gameApiV1Created: LiveGameApiV1 = this.gameToGameApiV1Converter.transform(
         gameCreated,
