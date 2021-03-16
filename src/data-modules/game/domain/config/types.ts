@@ -18,6 +18,11 @@ export const GAME_DOMAIN_TYPES = {
       FIND_CARD_DECKS_INTERACTOR: Symbol('FindCardDecksInteractor'),
     },
     live: {
+      connection: {
+        CREATE_LIVE_GAMES_CONNECTIONS_INTERACTOR: Symbol(
+          'CreateLiveGamesConnectionsInteractor',
+        ),
+      },
       CREATE_LIVE_GAMES_INTERACTOR: Symbol('CreateLiveGamesInteractor'),
       FIND_GAME_INTERACTOR: Symbol('FindGameInteractor'),
     },
