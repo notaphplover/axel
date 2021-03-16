@@ -16,6 +16,7 @@ import { floatToInt } from './parse/floatToInt';
 import { PaginationQuery } from './query/PaginationQuery';
 import { hasValue } from './utils/hasValue';
 import { waitMs } from './utils/waitMs';
+import { AsyncValidator } from './validator/AsyncValidator';
 import {
   ValidationFail,
   ValidationResult,
@@ -24,6 +25,7 @@ import {
 import { Validator } from './validator/Validator';
 
 export {
+  AsyncValidator,
   Capsule,
   Converter,
   Either,
