@@ -25,23 +25,7 @@ export class WsServer implements Server {
 
       this.webSocketServer.on(
         'connection',
-        (socket: WebSocket, _request: http.IncomingMessage): void => {
-          socket.on('message', (data: WebSocket.Data): void => {
-            try {
-              const stringifiedData: string = data.toString();
-
-              const parsedData: unknown = JSON.parse(stringifiedData);
-
-              void this.wsMessageHandler
-                .handle(socket, parsedData)
-                .catch((err: unknown) => {
-                  this.handleError(socket, err);
-                });
-            } catch (err: unknown) {
-              this.handleError(socket, err);
-            }
-          });
-        },
+        this.webSocketServerOnConnectionHandler.bind(this),
       );
     });
   }
@@ -71,5 +55,26 @@ export class WsServer implements Server {
     const stringifiedErrorObject: string = JSON.stringify(errorObject);
 
     socket.send(stringifiedErrorObject);
+  }
+
+  private webSocketServerOnConnectionHandler(
+    socket: WebSocket,
+    _request: http.IncomingMessage,
+  ): void {
+    socket.on('message', (data: WebSocket.Data): void => {
+      try {
+        const stringifiedData: string = data.toString();
+
+        const parsedData: unknown = JSON.parse(stringifiedData);
+
+        void this.wsMessageHandler
+          .handle(socket, parsedData)
+          .catch((err: unknown) => {
+            this.handleError(socket, err);
+          });
+      } catch (err: unknown) {
+        this.handleError(socket, err);
+      }
+    });
   }
 }
