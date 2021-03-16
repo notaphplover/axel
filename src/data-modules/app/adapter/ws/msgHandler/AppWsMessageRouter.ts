@@ -7,13 +7,13 @@ import { AppWsMessageHandler } from './AppWsMessageHandler';
 export class AppWsMessageRouter implements WsMessageHandler {
   private readonly messageTypeToMessageHandlersMap: Map<
     string,
-    WsMessageHandler[]
+    AppWsMessageHandler[]
   >;
 
   constructor(appWsMessageHandlers: Iterable<AppWsMessageHandler>) {
     this.messageTypeToMessageHandlersMap = new Map<
       string,
-      WsMessageHandler[]
+      AppWsMessageHandler[]
     >();
 
     this.setMessageTypeToMessageHandlersMap(appWsMessageHandlers);
@@ -24,7 +24,7 @@ export class AppWsMessageRouter implements WsMessageHandler {
     }
 
     const appWsMessageHandlers:
-      | WsMessageHandler[]
+      | AppWsMessageHandler[]
       | undefined = this.messageTypeToMessageHandlersMap.get(message.type);
 
     if (appWsMessageHandlers === undefined) {
@@ -33,7 +33,7 @@ export class AppWsMessageRouter implements WsMessageHandler {
 
     await Promise.all(
       appWsMessageHandlers.map(
-        async (appWsMessageHandler: WsMessageHandler): Promise<void> =>
+        async (appWsMessageHandler: AppWsMessageHandler): Promise<void> =>
           appWsMessageHandler.handle(socket, message),
       ),
     );
@@ -45,7 +45,7 @@ export class AppWsMessageRouter implements WsMessageHandler {
     for (const appWsMessageHandler of appWsMessageHandlers) {
       for (const type of appWsMessageHandler.messageTypes) {
         let typeAppWsMessageHandlers:
-          | WsMessageHandler[]
+          | AppWsMessageHandler[]
           | undefined = this.messageTypeToMessageHandlersMap.get(type);
 
         if (typeAppWsMessageHandlers === undefined) {
