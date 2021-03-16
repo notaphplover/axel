@@ -6,6 +6,7 @@ import { CardFindQueryToCardDbFilterQueryConverter } from '../../../db/converter
 import { CardDeckCreationQueryToCardDeckDbsConverter } from '../../../db/converter/deck/CardDeckCreationQueryToCardDeckDbsConverter';
 import { CardDeckDbToCardDeckConverter } from '../../../db/converter/deck/CardDeckDbToCardDeckConverter';
 import { CardDeckFindQueryToCardDeckDbFilterQueryConverter } from '../../../db/converter/deck/CardDeckFindQueryToCardDeckDbFilterQueryConverter';
+import { LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter } from '../../../db/converter/live/connection/LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter';
 import { LiveGameDbToLiveGameConverter } from '../../../db/converter/live/GameDbToLiveGameConverter';
 import { LiveGameCreationQueryToLiveGameDbsConverter } from '../../../db/converter/live/LiveGameCreationQueryToLiveGameDbsConverter';
 import { LiveGameFindQueryToLiveGameDbFilterQueryConverter } from '../../../db/converter/live/LiveGameFindQueryToLiveGameDbFilterQueryConverter';
@@ -35,6 +36,10 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.db.collection.setup.GAME_SETUP_COLLECTION_NAME,
   ).toConstantValue(GameDbCollectionName.GameSetup);
 
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.live.connection
+      .LIVE_GAME_CONNECTIONS_CREATION_QUERY_TO_LIVE_GAME_CONNECTIONS_CONVERTER,
+  ).to(LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.live.LIVE_GAME_DB_TO_LIVE_GAME_CONVERTER,
   ).to(LiveGameDbToLiveGameConverter);
