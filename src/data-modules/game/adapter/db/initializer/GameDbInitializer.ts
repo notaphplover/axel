@@ -16,12 +16,18 @@ export class GameDbInitializer implements MongoDbInitializer {
         .GAME_SETUP_DB_COLLECTION_INITIALIZER,
     )
     private readonly gameSetupDbCollectionInitializer: MongoDbInitializer,
+    @inject(
+      GAME_ADAPTER_TYPES.db.initializer.live
+        .LIVE_GAME_DB_COLLECTION_INITIALIZER,
+    )
+    private readonly liveGameDbCollectionInitializer: MongoDbInitializer,
   ) {}
 
   public async initialize(mongoClient: MongoClient): Promise<void> {
     await Promise.all([
       this.cardDbCollectionInitializer.initialize(mongoClient),
       this.gameSetupDbCollectionInitializer.initialize(mongoClient),
+      this.liveGameDbCollectionInitializer.initialize(mongoClient),
     ]);
   }
 }
