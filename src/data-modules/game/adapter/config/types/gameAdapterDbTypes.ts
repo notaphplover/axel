@@ -83,6 +83,11 @@ export const GAME_ADAPTER_DB_TYPES = {
     card: {
       CARD_DB_COLLECTION_INITIALIZER: Symbol('CardDbCollectionInitializer'),
     },
+    live: {
+      LIVE_GAME_DB_COLLECTION_INITIALIZER: Symbol(
+        'LiveGameDbCollectionInitializer',
+      ),
+    },
     setup: {
       GAME_SETUP_DB_COLLECTION_INITIALIZER: Symbol(
         'GameSetupDbCollectionInitializer',
