@@ -4,6 +4,7 @@ import {
 } from '../../../../../../common/test';
 import { ResourceType } from '../../../../domain/model/card/ResourceType';
 import { GameFormat } from '../../../../domain/model/GameFormat';
+import { LiveGameConnections } from '../../../../domain/model/live/connection/LiveGameConnections';
 import { GameState } from '../../../../domain/model/live/GameState';
 import { LiveGame } from '../../../../domain/model/live/LiveGame';
 import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
@@ -50,4 +51,14 @@ export const liveGame: LiveGame = {
 
 export const liveGameFixtureFactory: FixtureFactory<LiveGame> = new DeepCloneFixtureFactory(
   liveGame,
+);
+
+export const liveGameConnections: LiveGameConnections = {
+  connections: [],
+  id: '5f5cb76273fd1130685e01dd',
+  liveGameId: liveGame.id,
+};
+
+export const liveGameConnectionsFixtureFactory: FixtureFactory<LiveGameConnections> = new DeepCloneFixtureFactory(
+  liveGameConnections,
 );

@@ -2,6 +2,7 @@ import {
   DeepCloneFixtureFactory,
   FixtureFactory,
 } from '../../../../../../common/test';
+import { LiveGameConnectionsCreationQuery } from '../../../../domain/query/live/connection/LiveGameConnectionsCreationQuery';
 import { LiveGameCreationQuery } from '../../../../domain/query/live/LiveGameCreationQuery';
 import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
 import { cardDeck } from '../model/deck';
@@ -24,4 +25,12 @@ export const liveGameFindQuery: LiveGameFindQuery = {
 
 export const liveGameFindQueryFixtureFactory: FixtureFactory<LiveGameFindQuery> = new DeepCloneFixtureFactory(
   liveGameFindQuery,
+);
+
+export const liveGameConnectionsCreationQuery: LiveGameConnectionsCreationQuery = {
+  liveGameId: liveGame.id,
+};
+
+export const liveGameConnectionsCreationQueryFixtureFactory: FixtureFactory<LiveGameConnectionsCreationQuery> = new DeepCloneFixtureFactory(
+  liveGameConnectionsCreationQuery,
 );

@@ -38,6 +38,11 @@ export const GAME_DOMAIN_TYPES = {
       CARD_DECK_SEARCH_REPOSITORY: Symbol('CardDeckSearchRepository'),
     },
     live: {
+      connection: {
+        LIVE_GAME_CONNECTIONS_INSERT_REPOSITORY: Symbol(
+          'LiveGameConnectionsInsertRepository',
+        ),
+      },
       LIVE_GAME_INSERT_REPOSITORY: Symbol('LiveGameInsertRepository'),
       LIVE_GAME_SEARCH_REPOSITORY: Symbol('LiveGameSearchRepository'),
     },

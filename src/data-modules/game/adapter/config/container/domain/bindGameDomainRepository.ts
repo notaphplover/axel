@@ -5,6 +5,7 @@ import { CardDbInsertRepository } from '../../../db/repository/card/CardDbInsert
 import { CardDbSearchRepository } from '../../../db/repository/card/CardDbSearchRepository';
 import { CardDeckDbInsertRepository } from '../../../db/repository/deck/CardDeckDbInsertRepository';
 import { CardDeckDbSearchRepository } from '../../../db/repository/deck/CardDeckDbSearchRepository';
+import { LiveGameConnectionsDbInsertRepository } from '../../../db/repository/live/connection/LiveGameConnectionsDbInsertRepository';
 import { LiveGameDbInsertRepository } from '../../../db/repository/live/LiveGameDbInsertRepository';
 import { LiveGameDbSearchRepository } from '../../../db/repository/live/LiveGameDbSearchRepository';
 import { GameSetupDbDeleteRepository } from '../../../db/repository/setup/GameSetupDbDeleteRepository';
@@ -13,6 +14,10 @@ import { GameSetupDbSearchRepository } from '../../../db/repository/setup/GameSe
 import { GameSetupDbUpdateRepository } from '../../../db/repository/setup/GameSetupDbUpdateRepository';
 
 export function bindGameDomainRepository(bind: interfaces.Bind): void {
+  bind(
+    GAME_DOMAIN_TYPES.repository.live.connection
+      .LIVE_GAME_CONNECTIONS_INSERT_REPOSITORY,
+  ).to(LiveGameConnectionsDbInsertRepository);
   bind(GAME_DOMAIN_TYPES.repository.live.LIVE_GAME_INSERT_REPOSITORY).to(
     LiveGameDbInsertRepository,
   );
