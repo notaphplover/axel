@@ -20,6 +20,7 @@ import { GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter } from '../../../
 import { GameDbCollectionName } from '../../../db/GameDbCollection';
 import { CardDbCollectionInitializer } from '../../../db/initializer/card/CardDbCollectionInitializer';
 import { GameDbInitializer } from '../../../db/initializer/GameDbInitializer';
+import { LiveGameConnectionsDbCollectionInitializer } from '../../../db/initializer/live/connection/LiveGameConnectionsDbInitializer';
 import { LiveGameDbCollectionInitializer } from '../../../db/initializer/live/LiveGameDbCollectionInitializer';
 import { GameSetupDbCollectionInitializer } from '../../../db/initializer/setup/GameSetupDbCollectionInitializer';
 import { GAME_ADAPTER_TYPES } from '../../types';
@@ -114,6 +115,10 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
   bind(
     GAME_ADAPTER_TYPES.db.initializer.card.CARD_DB_COLLECTION_INITIALIZER,
   ).to(CardDbCollectionInitializer);
+  bind(
+    GAME_ADAPTER_TYPES.db.initializer.live.connection
+      .LIVE_GAME_DB_CONNECTION_COLLECTION_INITIALIZER,
+  ).to(LiveGameConnectionsDbCollectionInitializer);
   bind(
     GAME_ADAPTER_TYPES.db.initializer.live.LIVE_GAME_DB_COLLECTION_INITIALIZER,
   ).to(LiveGameDbCollectionInitializer);
