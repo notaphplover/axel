@@ -1,12 +1,17 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_ADAPTER_DB_TYPES = {
   collection: {
-    GAME_COLLECTION_NAME: Symbol('GameCollectionName'),
     card: {
       CARD_COLLECTION_NAME: Symbol('CardCollectionName'),
     },
     deck: {
       DECK_COLLECTION_NAME: Symbol('DeckCollectionName'),
+    },
+    live: {
+      LIVE_GAME_COLLECTION_NAME: Symbol('LiveGameCollectionName'),
+      LIVE_GAME_CONNECTIONS_COLLECTION_NAME: Symbol(
+        'LiveGameConnectionsCollectionName',
+      ),
     },
     setup: {
       GAME_SETUP_COLLECTION_NAME: Symbol('GameSetupCollectionName'),

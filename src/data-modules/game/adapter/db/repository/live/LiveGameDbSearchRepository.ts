@@ -21,7 +21,7 @@ export class LiveGameDbSearchRepository extends MongoDbSearchRepository<
 > {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
-    @inject(GAME_ADAPTER_TYPES.db.collection.GAME_COLLECTION_NAME)
+    @inject(GAME_ADAPTER_TYPES.db.collection.live.LIVE_GAME_COLLECTION_NAME)
     collectionName: string,
     @inject(
       GAME_ADAPTER_TYPES.db.converter.live.LIVE_GAME_DB_TO_LIVE_GAME_CONVERTER,

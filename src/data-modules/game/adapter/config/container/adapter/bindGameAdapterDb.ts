@@ -24,15 +24,18 @@ import { GameSetupDbCollectionInitializer } from '../../../db/initializer/setup/
 import { GAME_ADAPTER_TYPES } from '../../types';
 
 export function bindGameAdapterDb(bind: interfaces.Bind): void {
-  bind(GAME_ADAPTER_TYPES.db.collection.GAME_COLLECTION_NAME).toConstantValue(
-    GameDbCollectionName.Game,
-  );
   bind(
     GAME_ADAPTER_TYPES.db.collection.card.CARD_COLLECTION_NAME,
   ).toConstantValue(GameDbCollectionName.Card);
   bind(
     GAME_ADAPTER_TYPES.db.collection.deck.DECK_COLLECTION_NAME,
   ).toConstantValue(GameDbCollectionName.CardDeck);
+  bind(
+    GAME_ADAPTER_TYPES.db.collection.live.LIVE_GAME_COLLECTION_NAME,
+  ).toConstantValue(GameDbCollectionName.LiveGame);
+  bind(
+    GAME_ADAPTER_TYPES.db.collection.live.LIVE_GAME_CONNECTIONS_COLLECTION_NAME,
+  ).toConstantValue(GameDbCollectionName.LiveGameConnection);
   bind(
     GAME_ADAPTER_TYPES.db.collection.setup.GAME_SETUP_COLLECTION_NAME,
   ).toConstantValue(GameDbCollectionName.GameSetup);
