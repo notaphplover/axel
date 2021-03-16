@@ -1,5 +1,5 @@
 import WebSocket from 'ws';
 
-export interface WsMessageHandler {
-  handle(socket: WebSocket, message: unknown): Promise<void>;
+export interface WsMessageHandler<TMessage = unknown> {
+  handle(socket: WebSocket, message: TMessage): Promise<void>;
 }
