@@ -2,9 +2,17 @@ import http from 'http';
 
 import WebSocket from 'ws';
 
-import { AsyncValidator, ValidationResult } from '../../../../../common/domain';
+import {
+  Converter,
+  ValueEither,
+  ValueOrErrors,
+} from '../../../../../common/domain';
 import { WsMessageHandler } from '../../../adapter/msgHandler/WsMessageHandler';
 import { WsServer } from '../../../adapter/WsServer';
+
+interface RequestContextMock {
+  context: unknown;
+}
 
 async function waitSocketConnected(socket: WebSocket): Promise<void> {
   return new Promise((resolve: () => void) => {
@@ -18,9 +26,11 @@ async function waitSocketConnected(socket: WebSocket): Promise<void> {
 }
 
 describe(WsServer.name, () => {
-  let wsMessageHandler: jest.Mocked<WsMessageHandler>;
-  let webSocketConnectionRequestValidator: jest.Mocked<
-    AsyncValidator<http.IncomingMessage, http.IncomingMessage>
+  let wsMessageHandler: jest.Mocked<
+    WsMessageHandler<unknown, RequestContextMock>
+  >;
+  let webSocketConnectionRequestToRequestContextTransformer: jest.Mocked<
+    Converter<http.IncomingMessage, Promise<ValueOrErrors<RequestContextMock>>>
   >;
 
   beforeAll(() => {
@@ -28,31 +38,35 @@ describe(WsServer.name, () => {
       handle: jest.fn().mockResolvedValue(undefined),
     };
 
-    webSocketConnectionRequestValidator = {
-      validate: jest.fn(),
+    webSocketConnectionRequestToRequestContextTransformer = {
+      transform: jest.fn(),
     };
   });
 
   describe('.bootstrap()', () => {
     describe('having a valid incoming message', () => {
+      let requestContextOrErrorsFixture: ValueEither<RequestContextMock>;
+
       let finishValidation: () => void;
 
       beforeAll(() => {
-        webSocketConnectionRequestValidator.validate.mockImplementation(
-          async (
-            httpIncomingMessage: http.IncomingMessage,
-          ): Promise<ValidationResult<http.IncomingMessage>> => {
+        requestContextOrErrorsFixture = {
+          isEither: false,
+          value: {
+            context: undefined,
+          },
+        };
+
+        webSocketConnectionRequestToRequestContextTransformer.transform.mockImplementation(
+          async (): Promise<ValueOrErrors<RequestContextMock>> => {
             return new Promise(
               (
                 resolve: (
-                  validationResult: ValidationResult<http.IncomingMessage>,
+                  validationResult: ValueOrErrors<RequestContextMock>,
                 ) => void,
               ) => {
                 finishValidation = () => {
-                  resolve({
-                    model: httpIncomingMessage,
-                    result: true,
-                  });
+                  resolve(requestContextOrErrorsFixture);
                 };
               },
             );
@@ -61,7 +75,7 @@ describe(WsServer.name, () => {
       });
 
       describe('when called', () => {
-        let wsServer: WsServer;
+        let wsServer: WsServer<RequestContextMock>;
         let webSocket: WebSocket;
         let webSocketOnOpenHandlerMock: jest.Mock;
         let webSocketOnUpgradeHandlerMock: jest.Mock;
@@ -71,7 +85,7 @@ describe(WsServer.name, () => {
 
           wsServer = new WsServer(
             port,
-            webSocketConnectionRequestValidator,
+            webSocketConnectionRequestToRequestContextTransformer,
             wsMessageHandler,
           );
 
@@ -123,7 +137,7 @@ describe(WsServer.name, () => {
 
             afterAll(() => {
               wsMessageHandler.handle.mockClear();
-              webSocketConnectionRequestValidator.validate.mockClear();
+              webSocketConnectionRequestToRequestContextTransformer.transform.mockClear();
             });
 
             it('must handle the message', () => {
@@ -131,6 +145,7 @@ describe(WsServer.name, () => {
               expect(wsMessageHandler.handle).toHaveBeenCalledWith(
                 expect.any(WebSocket),
                 JSON.parse(message),
+                requestContextOrErrorsFixture.value,
               );
             });
           });
@@ -154,7 +169,7 @@ describe(WsServer.name, () => {
 
             afterAll(() => {
               wsMessageHandler.handle.mockClear();
-              webSocketConnectionRequestValidator.validate.mockClear();
+              webSocketConnectionRequestToRequestContextTransformer.transform.mockClear();
             });
 
             it('must not handle the message', () => {
@@ -196,7 +211,7 @@ describe(WsServer.name, () => {
 
             afterAll(() => {
               wsMessageHandler.handle.mockClear();
-              webSocketConnectionRequestValidator.validate.mockClear();
+              webSocketConnectionRequestToRequestContextTransformer.transform.mockClear();
             });
 
             it('must handle the message', () => {
@@ -204,6 +219,7 @@ describe(WsServer.name, () => {
               expect(wsMessageHandler.handle).toHaveBeenCalledWith(
                 expect.any(WebSocket),
                 JSON.parse(message),
+                requestContextOrErrorsFixture.value,
               );
             });
 
@@ -219,7 +235,7 @@ describe(WsServer.name, () => {
 
       describe('when called, and a message is receive before the validator gets the validation result', () => {
         let messageFixture: string;
-        let wsServer: WsServer;
+        let wsServer: WsServer<RequestContextMock>;
         let webSocket: WebSocket;
         let webSocketOnOpenHandlerMock: jest.Mock;
         let webSocketOnUpgradeHandlerMock: jest.Mock;
@@ -231,7 +247,7 @@ describe(WsServer.name, () => {
 
           wsServer = new WsServer(
             port,
-            webSocketConnectionRequestValidator,
+            webSocketConnectionRequestToRequestContextTransformer,
             wsMessageHandler,
           );
 
@@ -240,6 +256,10 @@ describe(WsServer.name, () => {
           webSocket = new WebSocket(`ws://localhost:${port}`);
 
           return new Promise<void>((resolve: () => void) => {
+            wsMessageHandler.handle.mockImplementationOnce(async () => {
+              resolve();
+            });
+
             webSocketOnOpenHandlerMock = jest.fn();
 
             webSocketOnUpgradeHandlerMock = jest
@@ -249,7 +269,6 @@ describe(WsServer.name, () => {
                   await waitSocketConnected(webSocket);
                   webSocket.send(messageFixture, () => {
                     finishValidation();
-                    resolve();
                   });
                 })();
               });
@@ -260,6 +279,8 @@ describe(WsServer.name, () => {
         });
 
         afterAll(async () => {
+          wsMessageHandler.handle.mockClear();
+
           await wsServer.close();
         });
 
@@ -272,7 +293,12 @@ describe(WsServer.name, () => {
         });
 
         it('must handle the message', () => {
-          expect(wsMessageHandler.handle).not.toHaveBeenCalledTimes(1);
+          expect(wsMessageHandler.handle).toHaveBeenCalledTimes(1);
+          expect(wsMessageHandler.handle).toHaveBeenCalledWith(
+            expect.any(WebSocket),
+            JSON.parse(messageFixture),
+            requestContextOrErrorsFixture.value,
+          );
         });
 
         it('must not close the connection', () => {
@@ -287,19 +313,18 @@ describe(WsServer.name, () => {
       let finishValidation: () => void;
 
       beforeAll(() => {
-        webSocketConnectionRequestValidator.validate.mockImplementation(
-          async (): Promise<ValidationResult<http.IncomingMessage>> => {
+        webSocketConnectionRequestToRequestContextTransformer.transform.mockImplementation(
+          async (): Promise<ValueOrErrors<RequestContextMock>> => {
             return new Promise(
               (
                 resolve: (
-                  validationResult: ValidationResult<http.IncomingMessage>,
+                  validationResult: ValueOrErrors<RequestContextMock>,
                 ) => void,
               ) => {
                 finishValidation = () => {
                   resolve({
-                    errorMessage:
-                      'Error when an invalid incoming message is sent',
-                    result: false,
+                    value: ['Error when an invalid incoming message is sent'],
+                    isEither: true,
                   });
                 };
               },
@@ -309,7 +334,7 @@ describe(WsServer.name, () => {
       });
 
       describe('when called, and a message is receive before the validator gets the validation result', () => {
-        let wsServer: WsServer;
+        let wsServer: WsServer<RequestContextMock>;
         let webSocket: WebSocket;
         let webSocketOnOpenHandlerMock: jest.Mock;
         let webSocketOnUpgradeHandlerMock: jest.Mock;
@@ -319,7 +344,7 @@ describe(WsServer.name, () => {
 
           wsServer = new WsServer(
             port,
-            webSocketConnectionRequestValidator,
+            webSocketConnectionRequestToRequestContextTransformer,
             wsMessageHandler,
           );
 

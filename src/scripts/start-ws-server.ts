@@ -27,12 +27,12 @@ void (async () => {
     `Launching Websocked server to listen port ${appEnvLoader.index.WS_SERVER_PORT}`,
   );
 
-  const wsServer: WsServer = new WsServer(
+  const wsServer: WsServer<void> = new WsServer(
     appEnvLoader.index.WS_SERVER_PORT,
     {
-      validate: async (message: http.IncomingMessage) => ({
-        model: message,
-        result: true,
+      transform: async (_message: http.IncomingMessage) => ({
+        isEither: false,
+        value: undefined,
       }),
     },
     appWsMessageRouter,

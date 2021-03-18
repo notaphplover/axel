@@ -2,20 +2,23 @@ import http from 'http';
 
 import WebSocket from 'ws';
 
-import { AsyncValidator, ValidationResult } from '../../../common/domain';
+import { Converter, ValueOrErrors } from '../../../common/domain';
 import { Server } from '../../../layer-modules/server/domain';
 import { WsMessageHandler } from './msgHandler/WsMessageHandler';
 
-export class WsServer implements Server {
+export class WsServer<TRequestContext> implements Server {
   private webSocketServer: WebSocket.Server | undefined;
 
   constructor(
     private readonly port: number,
-    private readonly webSocketConnectionRequestValidator: AsyncValidator<
+    private readonly webSocketConnectionRequestToRequestContextTransformer: Converter<
       http.IncomingMessage,
-      http.IncomingMessage
+      Promise<ValueOrErrors<TRequestContext>>
     >,
-    private readonly wsMessageHandler: WsMessageHandler,
+    private readonly wsMessageHandler: WsMessageHandler<
+      unknown,
+      TRequestContext
+    >,
   ) {}
 
   public async bootstrap(): Promise<void> {
@@ -77,13 +80,14 @@ export class WsServer implements Server {
   private async webSocketOnMessageHandler(
     socket: WebSocket,
     data: WebSocket.Data,
+    requestContext: TRequestContext,
   ): Promise<void> {
     try {
       const stringifiedData: string = data.toString();
 
       const parsedData: unknown = JSON.parse(stringifiedData);
 
-      await this.wsMessageHandler.handle(socket, parsedData);
+      await this.wsMessageHandler.handle(socket, parsedData, requestContext);
     } catch (err: unknown) {
       this.handleError(socket, err);
     }
@@ -103,28 +107,30 @@ export class WsServer implements Server {
 
     socket.on('message', preValidationWebSocketOnMessageHandler);
 
-    const validationResult: ValidationResult<http.IncomingMessage> = await this.webSocketConnectionRequestValidator.validate(
+    const validationResult: ValueOrErrors<TRequestContext> = await this.webSocketConnectionRequestToRequestContextTransformer.transform(
       request,
     );
 
-    if (validationResult.result) {
-      socket.off('message', preValidationWebSocketOnMessageHandler);
-
-      for (const message of messagesQueue) {
-        void this.webSocketOnMessageHandler(socket, message);
-      }
-
-      socket.on('message', (data: WebSocket.Data): void => {
-        void this.webSocketOnMessageHandler(socket, data);
-      });
-    } else {
+    if (validationResult.isEither) {
       const policyViolationCode: number = 1008;
 
       this.closeSocket(
         socket,
         policyViolationCode,
-        'Invalid connection: ' + validationResult.errorMessage,
+        'Invalid connection: ' + validationResult.value.join('\n'),
       );
+    } else {
+      const requestContext: TRequestContext = validationResult.value;
+
+      socket.off('message', preValidationWebSocketOnMessageHandler);
+
+      for (const message of messagesQueue) {
+        void this.webSocketOnMessageHandler(socket, message, requestContext);
+      }
+
+      socket.on('message', (data: WebSocket.Data): void => {
+        void this.webSocketOnMessageHandler(socket, data, requestContext);
+      });
     }
   }
 }
