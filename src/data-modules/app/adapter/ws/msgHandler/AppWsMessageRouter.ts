@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 
 import { WsMessageHandler } from '../../../../../integration-modules/ws/adapter';
-import { AppWsMessage } from '../message/AppWsMessage';
+import { AppWsMessage } from '../model/AppWsMessage';
 import { AppWsMessageHandler } from './AppWsMessageHandler';
 
 export class AppWsMessageRouter implements WsMessageHandler {
