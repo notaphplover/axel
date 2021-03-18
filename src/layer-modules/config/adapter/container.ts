@@ -6,6 +6,7 @@ import { jwtAdapter } from '../../../data-modules/jwt/adapter';
 import { userAdapter } from '../../../data-modules/user/adapter';
 import { jsonwebtokenAdapter } from '../../../integration-modules/jsonwebtoken/adapter';
 import { mongodbAdapter } from '../../../integration-modules/mongodb/adapter';
+import { wsAdapter } from '../../../integration-modules/ws/adapter';
 import { dbAdapter } from '../../db/adapter';
 
 export const container: Container = new Container();
@@ -17,3 +18,4 @@ container.load(jsonwebtokenAdapter.config.container);
 container.load(jwtAdapter.config.container);
 container.load(mongodbAdapter.config.container);
 container.load(userAdapter.config.container);
+container.load(wsAdapter.config.container);
