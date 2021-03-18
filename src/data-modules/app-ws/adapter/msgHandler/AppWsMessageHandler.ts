@@ -1,4 +1,4 @@
-import { WsMessageHandler } from '../../../../../integration-modules/ws/adapter';
+import { WsMessageHandler } from '../../../../integration-modules/ws/adapter';
 import { AppWsMessage } from '../model/AppWsMessage';
 
 export interface AppWsMessageHandler<

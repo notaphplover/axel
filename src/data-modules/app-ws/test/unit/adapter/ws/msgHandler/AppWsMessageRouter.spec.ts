@@ -1,8 +1,8 @@
 import WebSocket from 'ws';
 
-import { AppWsMessage } from '../../../../../adapter/ws/model/AppWsMessage';
-import { AppWsMessageHandler } from '../../../../../adapter/ws/msgHandler/AppWsMessageHandler';
-import { AppWsMessageRouter } from '../../../../../adapter/ws/msgHandler/AppWsMessageRouter';
+import { AppWsMessage } from '../../../../../adapter/model/AppWsMessage';
+import { AppWsMessageHandler } from '../../../../../adapter/msgHandler/AppWsMessageHandler';
+import { AppWsMessageRouter } from '../../../../../adapter/msgHandler/AppWsMessageRouter';
 
 describe(AppWsMessageRouter.name, () => {
   let appWsMessageHandlerMock: jest.Mocked<AppWsMessageHandler>;

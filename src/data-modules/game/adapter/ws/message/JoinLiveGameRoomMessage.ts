@@ -1,4 +1,4 @@
-import { AppWsMessage } from '../../../../app/adapter/ws/model/AppWsMessage';
+import { AppWsMessage } from '../../../../app-ws/adapter';
 import { GameMessageTypes } from './GameMessageTypes';
 
 export interface JoinLiveGameRoomMesage extends AppWsMessage {

@@ -5,11 +5,8 @@ import http from 'http';
 import 'reflect-metadata';
 import { Container } from 'inversify';
 
-import {
-  appAdapter,
-  AppEnvVariables,
-  AppWsMessageRouter,
-} from '../data-modules/app/adapter';
+import { AppWsMessageRouter } from '../data-modules/app-ws/adapter';
+import { appAdapter, AppEnvVariables } from '../data-modules/app/adapter';
 import { WsMessageHandler, WsServer } from '../integration-modules/ws/adapter';
 import { configAdapter } from '../layer-modules/config/adapter';
 import { EnvLoader } from '../layer-modules/env/domain';
