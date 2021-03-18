@@ -4,27 +4,36 @@ import { WsMessageHandler } from '../../../../../integration-modules/ws/adapter'
 import { AppWsMessage } from '../model/AppWsMessage';
 import { AppWsMessageHandler } from './AppWsMessageHandler';
 
-export class AppWsMessageRouter implements WsMessageHandler {
+export class AppWsMessageRouter<
+  TMessage extends AppWsMessage = AppWsMessage,
+  TContext = void
+> implements WsMessageHandler<TMessage, TContext> {
   private readonly messageTypeToMessageHandlersMap: Map<
     string,
-    AppWsMessageHandler[]
+    AppWsMessageHandler<AppWsMessage, TContext>[]
   >;
 
-  constructor(appWsMessageHandlers: Iterable<AppWsMessageHandler>) {
+  constructor(
+    appWsMessageHandlers: Iterable<AppWsMessageHandler<AppWsMessage, TContext>>,
+  ) {
     this.messageTypeToMessageHandlersMap = new Map<
       string,
-      AppWsMessageHandler[]
+      AppWsMessageHandler<AppWsMessage, TContext>[]
     >();
 
     this.setMessageTypeToMessageHandlersMap(appWsMessageHandlers);
   }
-  public async handle(socket: WebSocket, message: unknown): Promise<void> {
+  public async handle(
+    socket: WebSocket,
+    message: unknown,
+    context: TContext,
+  ): Promise<void> {
     if (!this.isAppWsMessage(message)) {
       throw new Error('invalid message');
     }
 
     const appWsMessageHandlers:
-      | AppWsMessageHandler[]
+      | AppWsMessageHandler<AppWsMessage, TContext>[]
       | undefined = this.messageTypeToMessageHandlersMap.get(message.type);
 
     if (appWsMessageHandlers === undefined) {
@@ -33,19 +42,21 @@ export class AppWsMessageRouter implements WsMessageHandler {
 
     await Promise.all(
       appWsMessageHandlers.map(
-        async (appWsMessageHandler: AppWsMessageHandler): Promise<void> =>
-          appWsMessageHandler.handle(socket, message),
+        async (
+          appWsMessageHandler: AppWsMessageHandler<AppWsMessage, TContext>,
+        ): Promise<void> =>
+          appWsMessageHandler.handle(socket, message, context),
       ),
     );
   }
 
   private setMessageTypeToMessageHandlersMap(
-    appWsMessageHandlers: Iterable<AppWsMessageHandler>,
+    appWsMessageHandlers: Iterable<AppWsMessageHandler<AppWsMessage, TContext>>,
   ) {
     for (const appWsMessageHandler of appWsMessageHandlers) {
       for (const type of appWsMessageHandler.messageTypes) {
         let typeAppWsMessageHandlers:
-          | AppWsMessageHandler[]
+          | AppWsMessageHandler<AppWsMessage, TContext>[]
           | undefined = this.messageTypeToMessageHandlersMap.get(type);
 
         if (typeAppWsMessageHandlers === undefined) {

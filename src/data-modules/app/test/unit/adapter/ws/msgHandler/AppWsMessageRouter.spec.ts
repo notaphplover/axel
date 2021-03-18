@@ -122,6 +122,7 @@ describe(AppWsMessageRouter.name, () => {
           expect(appWsMessageHandlerMock.handle).toHaveBeenCalledWith(
             webSocketMock,
             appWsMessageFixture,
+            undefined,
           );
         });
       });
