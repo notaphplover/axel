@@ -2,6 +2,7 @@ import http from 'http';
 
 import WebSocket from 'ws';
 
+import { AsyncValidator, ValidationResult } from '../../../common/domain';
 import { Server } from '../../../layer-modules/server/domain';
 import { WsMessageHandler } from './msgHandler/WsMessageHandler';
 
@@ -9,8 +10,12 @@ export class WsServer implements Server {
   private webSocketServer: WebSocket.Server | undefined;
 
   constructor(
-    private readonly wsMessageHandler: WsMessageHandler,
     private readonly port: number,
+    private readonly webSocketConnectionRequestValidator: AsyncValidator<
+      http.IncomingMessage,
+      http.IncomingMessage
+    >,
+    private readonly wsMessageHandler: WsMessageHandler,
   ) {}
 
   public async bootstrap(): Promise<void> {
@@ -25,7 +30,9 @@ export class WsServer implements Server {
 
       this.webSocketServer.on(
         'connection',
-        this.webSocketServerOnConnectionHandler.bind(this),
+        (socket: WebSocket, request: http.IncomingMessage): void => {
+          void this.webSocketServerOnConnectionHandler(socket, request);
+        },
       );
     });
   }
@@ -40,6 +47,16 @@ export class WsServer implements Server {
         resolve();
       });
     });
+  }
+
+  private closeSocket(socket: WebSocket, code: number, reason: string): void {
+    socket.close(code, reason);
+
+    const socketTerminateTimeoutMillis: number = 1000;
+
+    setTimeout(() => {
+      socket.terminate();
+    }, socketTerminateTimeoutMillis);
   }
 
   private handleError(socket: WebSocket, error: unknown): void {
@@ -57,31 +74,57 @@ export class WsServer implements Server {
     socket.send(stringifiedErrorObject);
   }
 
-  private webSocketOnMessageHandler(
+  private async webSocketOnMessageHandler(
     socket: WebSocket,
     data: WebSocket.Data,
-  ): void {
+  ): Promise<void> {
     try {
       const stringifiedData: string = data.toString();
 
       const parsedData: unknown = JSON.parse(stringifiedData);
 
-      void this.wsMessageHandler
-        .handle(socket, parsedData)
-        .catch((err: unknown) => {
-          this.handleError(socket, err);
-        });
+      await this.wsMessageHandler.handle(socket, parsedData);
     } catch (err: unknown) {
       this.handleError(socket, err);
     }
   }
 
-  private webSocketServerOnConnectionHandler(
+  private async webSocketServerOnConnectionHandler(
     socket: WebSocket,
-    _request: http.IncomingMessage,
-  ): void {
-    socket.on('message', (data: WebSocket.Data): void => {
-      this.webSocketOnMessageHandler(socket, data);
-    });
+    request: http.IncomingMessage,
+  ): Promise<void> {
+    const messagesQueue: WebSocket.Data[] = [];
+
+    const preValidationWebSocketOnMessageHandler: (
+      data: WebSocket.Data,
+    ) => void = (data: WebSocket.Data): void => {
+      messagesQueue.push(data);
+    };
+
+    socket.on('message', preValidationWebSocketOnMessageHandler);
+
+    const validationResult: ValidationResult<http.IncomingMessage> = await this.webSocketConnectionRequestValidator.validate(
+      request,
+    );
+
+    if (validationResult.result) {
+      socket.off('message', preValidationWebSocketOnMessageHandler);
+
+      for (const message of messagesQueue) {
+        void this.webSocketOnMessageHandler(socket, message);
+      }
+
+      socket.on('message', (data: WebSocket.Data): void => {
+        void this.webSocketOnMessageHandler(socket, data);
+      });
+    } else {
+      const policyViolationCode: number = 1008;
+
+      this.closeSocket(
+        socket,
+        policyViolationCode,
+        'Invalid connection: ' + validationResult.errorMessage,
+      );
+    }
   }
 }

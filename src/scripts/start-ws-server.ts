@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import http from 'http';
+
 import 'reflect-metadata';
 import { Container } from 'inversify';
 
@@ -26,8 +28,14 @@ void (async () => {
   );
 
   const wsServer: WsServer = new WsServer(
-    appWsMessageRouter,
     appEnvLoader.index.WS_SERVER_PORT,
+    {
+      validate: async (message: http.IncomingMessage) => ({
+        model: message,
+        result: true,
+      }),
+    },
+    appWsMessageRouter,
   );
 
   await wsServer.bootstrap();
