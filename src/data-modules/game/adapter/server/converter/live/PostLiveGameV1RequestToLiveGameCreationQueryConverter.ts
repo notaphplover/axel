@@ -2,6 +2,7 @@ import * as fastify from 'fastify';
 import { inject, injectable } from 'inversify';
 
 import {
+  commonDomain,
   Converter,
   Interactor,
   Validator,
@@ -144,7 +145,7 @@ export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends Reque
       gameSetupFindQuery,
     );
 
-    if (gamesSetup.length === 1) {
+    if (commonDomain.utils.hasOneElement(gamesSetup)) {
       const [gameSetup]: GameSetup[] = gamesSetup;
 
       const gameSetupOrErrors: ValueOrErrors<GameSetup> = {
