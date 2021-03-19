@@ -8,7 +8,7 @@ import {
   ValueOrErrors,
 } from '../../../../../../common/domain';
 import { AppWsMessage, AppWsRequestContext } from '../../../../adapter';
-import { AppWsMessageApiToMessageConverter } from '../../../../adapter/converter/AppWsMessageApiToMessageConverter';
+import { MessageWsApiToMessageConverter } from '../../../../adapter/converter/MessageWsApiToMessageConverter';
 
 interface MessageWsApiFixture extends AppWsMessage {
   messageApiField: string;
@@ -22,7 +22,7 @@ interface ValidationContextFixture {
   validationContextField: string;
 }
 
-class AppWsMessageApiToMessageConverterMock extends AppWsMessageApiToMessageConverter<
+class AppWsMessageApiToMessageConverterMock extends MessageWsApiToMessageConverter<
   MessageWsApiFixture,
   MessageFixture,
   ValidationContextFixture
@@ -64,7 +64,7 @@ class AppWsMessageApiToMessageConverterMock extends AppWsMessageApiToMessageConv
   }
 }
 
-describe(AppWsMessageApiToMessageConverter.name, () => {
+describe(MessageWsApiToMessageConverter.name, () => {
   let contextBasedValidator: jest.Mocked<
     Validator<
       MessageWsApiFixture,

@@ -10,7 +10,7 @@ import { AppWsRequestContext } from '../model/AppWsRequestContext';
 import { MessageWsApi } from '../model/MessageWsApi';
 
 @injectable()
-export abstract class AppWsMessageApiToMessageConverter<
+export abstract class MessageWsApiToMessageConverter<
   TMessageWsApi,
   TMessage,
   TValidationContext = void
