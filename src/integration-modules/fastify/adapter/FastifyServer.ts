@@ -21,9 +21,7 @@ export class FastifyServer implements Server {
 
     this.fastifyInstance = fastifyInstance;
 
-    const promises: Promise<unknown>[] = this.registerRouters(fastifyInstance);
-
-    await Promise.all(promises);
+    await this.registerRouters(fastifyInstance);
   }
 
   public async close(): Promise<void> {
@@ -38,9 +36,9 @@ export class FastifyServer implements Server {
     await fastifyInstance.close();
   }
 
-  private registerRouters(
+  private async registerRouters(
     fastifyInstance: FastifyInstance,
-  ): Promise<unknown>[] {
+  ): Promise<void> {
     const registerRouterVersion: (
       router: FastifyRouter,
       version: ApiVersion,
@@ -62,6 +60,6 @@ export class FastifyServer implements Server {
         ),
       );
 
-    return this.routers.map(registerRouter);
+    await Promise.all(this.routers.map(registerRouter));
   }
 }
