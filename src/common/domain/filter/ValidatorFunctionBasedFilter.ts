@@ -6,15 +6,19 @@ import { Filter } from './Filter';
 export abstract class ValidatorFunctionBasedFilter<TModel, TQuery>
   implements Filter<TModel, TQuery> {
   public async filter(models: TModel[], filter: TQuery): Promise<TModel[]> {
-    const modelsComplains: boolean[] = await Promise.all(
-      models.map(async (model: TModel) => this.complains(model, filter)),
+    const modelComplainments: [TModel, boolean][] = await Promise.all(
+      models.map(async (model: TModel) =>
+        this.complains(model, filter).then<[TModel, boolean]>(
+          (complains: boolean) => [model, complains],
+        ),
+      ),
     );
 
     const filteredModels: TModel[] = [];
 
-    for (let i: number = 0; i < models.length; ++i) {
-      if (modelsComplains[i]) {
-        filteredModels.push(models[i]);
+    for (const [model, complains] of modelComplainments) {
+      if (complains) {
+        filteredModels.push(model);
       }
     }
 
