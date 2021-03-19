@@ -1,10 +1,10 @@
 import { injectable, unmanaged } from 'inversify';
 import mongodb from 'mongodb';
 
-import { MongoDbConnector } from '.';
 import { Converter, commonDomain } from '../../../common/domain';
 import { UpdateRepository } from '../../../layer-modules/db/domain';
 import { Document } from './model/Document';
+import { MongoDbConnector } from './MongoDbConnector';
 
 const hasValue: <TType>(
   value: TType,

@@ -1,10 +1,10 @@
 import { injectable, unmanaged } from 'inversify';
 import mongodb from 'mongodb';
 
-import { MongoDbConnector } from '.';
 import { Converter } from '../../../common/domain';
 import { DeleteRepository } from '../../../layer-modules/db/domain';
 import { Document } from './model/Document';
+import { MongoDbConnector } from './MongoDbConnector';
 
 @injectable()
 export abstract class MongoDbDeleteRepository<TQuery, TModelDb extends Document>
