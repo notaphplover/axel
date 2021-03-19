@@ -10,6 +10,7 @@ import { getFiles } from './io/file/getFiles';
 import { isFile } from './io/file/isFile';
 import { rootDir } from './io/rootDir';
 import { mergeReadables } from './io/stream/mergeReadables';
+import { Messenger } from './messenger/Messenger';
 import { Capsule } from './model/Capsule';
 import { Writable } from './model/Writable';
 import { floatToInt } from './parse/floatToInt';
@@ -32,6 +33,7 @@ export {
   EitherEither,
   Filter,
   Interactor,
+  Messenger,
   PaginationQuery,
   ValidationFail,
   ValidationResult,
