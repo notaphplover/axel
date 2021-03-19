@@ -15,6 +15,7 @@ import { Capsule } from './model/Capsule';
 import { Writable } from './model/Writable';
 import { floatToInt } from './parse/floatToInt';
 import { PaginationQuery } from './query/PaginationQuery';
+import { hasOneElement } from './utils/hasOneElement';
 import { hasValue } from './utils/hasValue';
 import { waitMs } from './utils/waitMs';
 import { AsyncValidator } from './validator/AsyncValidator';
@@ -62,5 +63,5 @@ export const commonDomain = {
     },
   },
   parse: { floatToInt },
-  utils: { hasValue, waitMs },
+  utils: { hasOneElement, hasValue, waitMs },
 };
