@@ -1,9 +1,9 @@
 import Joi from 'joi';
 
 import { GameMessageTypes } from '../../../message/GameMessageTypes';
-import { JoinLiveGameRoomMesageWsApiV1 } from '../../../message/JoinLiveGameRoomMesageWsApiV1';
+import { JoinLiveGameRoomMessageWsApiV1 } from '../../../message/JoinLiveGameRoomMessageWsApiV1';
 
-export const joinLiveGameRoomMessageWsApiV1JoiValidatorSchema: Joi.ObjectSchema<JoinLiveGameRoomMesageWsApiV1> = Joi.object(
+export const joinLiveGameRoomMessageWsApiV1JoiValidatorSchema: Joi.ObjectSchema<JoinLiveGameRoomMessageWsApiV1> = Joi.object(
   {
     type: Joi.string()
       .valid(GameMessageTypes.JoinLiveGameRoom)
