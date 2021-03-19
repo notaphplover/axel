@@ -1,11 +1,11 @@
 import { AppWsMessageApiToMessageConverter } from './converter/AppWsMessageApiToMessageConverter';
-import { AppWsMessage } from './model/AppWsMessage';
+import { MessageWsApi } from './model/MessageWsApi';
 import { AppWsRequestContext } from './model/AppWsRequestContext';
 import { AppWsMessageHandler } from './msgHandler/AppWsMessageHandler';
 import { AppWsMessageRouter } from './msgHandler/AppWsMessageRouter';
 
 export {
-  AppWsMessage,
+  MessageWsApi as AppWsMessage,
   AppWsMessageApiToMessageConverter,
   AppWsMessageHandler,
   AppWsMessageRouter,

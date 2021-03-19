@@ -6,8 +6,8 @@ import {
   Validator,
   ValueOrErrors,
 } from '../../../../common/domain';
-import { AppWsMessage } from '../model/AppWsMessage';
 import { AppWsRequestContext } from '../model/AppWsRequestContext';
+import { MessageWsApi } from '../model/MessageWsApi';
 
 @injectable()
 export abstract class AppWsMessageApiToMessageConverter<
@@ -16,7 +16,7 @@ export abstract class AppWsMessageApiToMessageConverter<
   TValidationContext = void
 > implements
     Converter<
-      AppWsMessage,
+      MessageWsApi,
       Promise<ValueOrErrors<TMessage>>,
       AppWsRequestContext
     > {
@@ -32,11 +32,11 @@ export abstract class AppWsMessageApiToMessageConverter<
       TValidationContext
     >,
     @unmanaged()
-    private readonly syntaxValidator: Validator<TMessageWsApi, AppWsMessage>,
+    private readonly syntaxValidator: Validator<TMessageWsApi, MessageWsApi>,
   ) {}
 
   public async transform(
-    appWsMessage: AppWsMessage,
+    appWsMessage: MessageWsApi,
     requestContext: AppWsRequestContext,
   ): Promise<ValueOrErrors<TMessage>> {
     const syntaxValidationResult: ValidationResult<TMessageWsApi> = this.syntaxValidator.validate(

@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 
-import { AppWsMessage } from '../../../../adapter/model/AppWsMessage';
+import { MessageWsApi } from '../../../../adapter/model/MessageWsApi';
 import { AppWsMessageHandler } from '../../../../adapter/msgHandler/AppWsMessageHandler';
 import { AppWsMessageRouter } from '../../../../adapter/msgHandler/AppWsMessageRouter';
 
@@ -56,7 +56,7 @@ describe(AppWsMessageRouter.name, () => {
     });
 
     describe('having a message of unregistered type', () => {
-      let appWsMessageFixture: AppWsMessage;
+      let appWsMessageFixture: MessageWsApi;
 
       beforeAll(() => {
         appWsMessageFixture = {
@@ -94,7 +94,7 @@ describe(AppWsMessageRouter.name, () => {
     });
 
     describe('having a message of registered type', () => {
-      let appWsMessageFixture: AppWsMessage;
+      let appWsMessageFixture: MessageWsApi;
 
       beforeAll(() => {
         appWsMessageFixture = {
