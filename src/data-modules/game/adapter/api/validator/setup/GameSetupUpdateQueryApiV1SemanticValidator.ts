@@ -1,6 +1,10 @@
 import { injectable } from 'inversify';
 
-import { ValidationResult, Validator } from '../../../../../../common/domain';
+import {
+  commonDomain,
+  ValidationResult,
+  Validator,
+} from '../../../../../../common/domain';
 import { GameSetupUpdateQueryApiV1 } from '../../query/setup/GameSetupUpdateQueryApiV1';
 import { GameSetupUpdateQueryApiV1ValidationContext } from './GameSetupUpdateQueryApiV1ValidationContext';
 
@@ -52,7 +56,9 @@ export class GameSetupUpdateQueryApiV1SemanticValidator
   ): void {
     if (gameSetupUpdateQuery.additionalPlayerSetups !== undefined) {
       if (
-        gameSetupUpdateQuery.additionalPlayerSetups.length !== 1 ||
+        !commonDomain.utils.hasOneElement(
+          gameSetupUpdateQuery.additionalPlayerSetups,
+        ) ||
         gameSetupUpdateQuery.additionalPlayerSetups[0].userId !==
           context.user.id
       ) {
@@ -70,7 +76,9 @@ export class GameSetupUpdateQueryApiV1SemanticValidator
   ): void {
     if (gameSetupUpdateQuery.removePlayerSetups !== undefined) {
       if (
-        gameSetupUpdateQuery.removePlayerSetups.length !== 1 &&
+        !commonDomain.utils.hasOneElement(
+          gameSetupUpdateQuery.removePlayerSetups,
+        ) ||
         gameSetupUpdateQuery.removePlayerSetups[0].userId !== context.user.id
       ) {
         errorMessages.push(
