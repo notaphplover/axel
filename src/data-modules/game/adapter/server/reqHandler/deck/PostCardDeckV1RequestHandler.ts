@@ -1,5 +1,4 @@
 import * as fastify from 'fastify';
-import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
 
 import {
