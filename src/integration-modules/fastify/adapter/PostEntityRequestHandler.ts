@@ -45,22 +45,22 @@ export abstract class PostEntityRequestHandler<
         .code(StatusCodes.BAD_REQUEST)
         .send({ message: queryOrErrors.value.join('\n') });
     } else {
-      const cardCreationQuery: TCreationQuery = queryOrErrors.value;
+      const entityCreationQuery: TCreationQuery = queryOrErrors.value;
 
-      const cardsCreated: TEntity[] = await this.createEntitiesInteractor.interact(
-        cardCreationQuery,
+      const entitiesCreated: TEntity[] = await this.createEntitiesInteractor.interact(
+        entityCreationQuery,
       );
 
-      if (commonDomain.utils.hasOneElement(cardsCreated)) {
-        const [cardCreated]: TEntity[] = cardsCreated;
+      if (commonDomain.utils.hasOneElement(entitiesCreated)) {
+        const [entityCreated]: TEntity[] = entitiesCreated;
 
-        await this.onEntityCreated(cardCreated);
+        await this.onEntityCreated(entityCreationQuery, entityCreated);
 
-        const cardApiV1Created: TEntityApi = this.entityToEntityApiConverter.transform(
-          cardCreated,
+        const entityApiV1Created: TEntityApi = this.entityToEntityApiConverter.transform(
+          entityCreated,
         );
 
-        await reply.send(cardApiV1Created);
+        await reply.send(entityApiV1Created);
       } else {
         await reply
           .code(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -69,7 +69,10 @@ export abstract class PostEntityRequestHandler<
     }
   }
 
-  protected async onEntityCreated(_entity: TEntity): Promise<void> {
+  protected async onEntityCreated(
+    _creationQuery: TCreationQuery,
+    _entity: TEntity,
+  ): Promise<void> {
     return undefined;
   }
 }
