@@ -54,6 +54,8 @@ export abstract class PostEntityRequestHandler<
       if (commonDomain.utils.hasOneElement(cardsCreated)) {
         const [cardCreated]: TEntity[] = cardsCreated;
 
+        await this.onEntityCreated(cardCreated);
+
         const cardApiV1Created: TEntityApi = this.entityToEntityApiConverter.transform(
           cardCreated,
         );
@@ -65,5 +67,9 @@ export abstract class PostEntityRequestHandler<
           .send({ message: 'Expected an entity to be created.' });
       }
     }
+  }
+
+  protected async onEntityCreated(_entity: TEntity): Promise<void> {
+    return undefined;
   }
 }
