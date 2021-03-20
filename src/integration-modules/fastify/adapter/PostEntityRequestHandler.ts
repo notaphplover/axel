@@ -14,8 +14,9 @@ import { FastifyRequestHandler } from './FastifyRequestHandler';
 export abstract class PostEntityRequestHandler<
   TEntity,
   TEntityApi,
-  TCreationQuery
-> implements FastifyRequestHandler {
+  TCreationQuery,
+  TRequest extends fastify.FastifyRequest = fastify.FastifyRequest
+> implements FastifyRequestHandler<TRequest> {
   constructor(
     @unmanaged()
     private readonly entityToEntityApiConverter: Converter<TEntity, TEntityApi>,
@@ -26,13 +27,13 @@ export abstract class PostEntityRequestHandler<
     >,
     @unmanaged()
     private readonly postEntityRequestToEntityCreationQueryConverter: Converter<
-      fastify.FastifyRequest,
+      TRequest,
       Promise<ValueOrErrors<TCreationQuery>>
     >,
   ) {}
 
   public async handle(
-    request: fastify.FastifyRequest,
+    request: TRequest,
     reply: fastify.FastifyReply,
   ): Promise<void> {
     const queryOrErrors: ValueOrErrors<TCreationQuery> = await this.postEntityRequestToEntityCreationQueryConverter.transform(
