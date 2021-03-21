@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import { Interactor } from '../../../../../common/domain';
+import { commonDomain, Interactor } from '../../../../../common/domain';
 import { commonTest } from '../../../../../common/test';
 import {
   BaseTaskGraphNode,
@@ -68,12 +68,16 @@ export class CreateGameSetupOfOnePlayerGraphNode extends BaseTaskGraphNode<
       playerSlots: 1,
     };
 
-    const [
-      gameSetup,
-    ]: GameSetup[] = await this.createGameSetupsInteractor.interact(
+    const gameSetups: GameSetup[] = await this.createGameSetupsInteractor.interact(
       gameSetupCreationQuery,
     );
 
-    return gameSetup;
+    if (commonDomain.utils.hasOneElement(gameSetups)) {
+      const [gameSetup]: [GameSetup] = gameSetups;
+
+      return gameSetup;
+    } else {
+      throw new Error('Expected one entity to be created');
+    }
   }
 }

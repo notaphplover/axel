@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import { Interactor } from '../../../../../common/domain';
+import { commonDomain, Interactor } from '../../../../../common/domain';
 import { BaseTaskGraphNode } from '../../../../task-graph/domain';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
 import { Card } from '../../../domain/model/card/Card';
@@ -24,16 +24,20 @@ export class CreateCreatureTaskGraphNode extends BaseTaskGraphNode<
   }
 
   protected async innerPerform(): Promise<Card> {
-    const [creatureCreated]: Card[] = await this.createCardsInteractor.interact(
-      {
-        cost: cardCreationQuery.cost,
-        detail: cardCreationQuery.detail,
-        power: cardCreationQuery.power,
-        toughness: cardCreationQuery.toughness,
-        types: [...cardCreationQuery.types],
-      },
-    );
+    const creaturesCreated: Card[] = await this.createCardsInteractor.interact({
+      cost: cardCreationQuery.cost,
+      detail: cardCreationQuery.detail,
+      power: cardCreationQuery.power,
+      toughness: cardCreationQuery.toughness,
+      types: [...cardCreationQuery.types],
+    });
 
-    return creatureCreated as Card;
+    if (commonDomain.utils.hasOneElement(creaturesCreated)) {
+      const [creatureCreated]: [Card] = creaturesCreated;
+
+      return creatureCreated;
+    } else {
+      throw new Error('Expected one entity to be created');
+    }
   }
 }

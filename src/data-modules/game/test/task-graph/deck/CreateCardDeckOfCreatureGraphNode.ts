@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import { Interactor } from '../../../../../common/domain';
+import { commonDomain, Interactor } from '../../../../../common/domain';
 import { commonTest } from '../../../../../common/test';
 import {
   BaseTaskGraphNode,
@@ -58,12 +58,16 @@ export class CreateCardDeckOfCreatureGraphNode extends BaseTaskGraphNode<
       },
     };
 
-    const [
-      cardDeckOfCreatureLand,
-    ]: CardDeck[] = await this.createCardDecksInteractor.interact(
+    const cardDecksOfCreatureLand: CardDeck[] = await this.createCardDecksInteractor.interact(
       cardDeckCreationQuery,
     );
 
-    return cardDeckOfCreatureLand;
+    if (commonDomain.utils.hasOneElement(cardDecksOfCreatureLand)) {
+      const [cardDeckOfCreatureLand]: [CardDeck] = cardDecksOfCreatureLand;
+
+      return cardDeckOfCreatureLand;
+    } else {
+      throw new Error('Expected one entity to be created');
+    }
   }
 }
