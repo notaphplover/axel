@@ -85,7 +85,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             mongodb.WithId<ModelMockDb>
           > = await collection.insertOne({ ...creationQueryMockDbFixture });
 
-          modelDbInserted = { ...insertionResult.ops[0] };
+          modelDbInserted = { ...(insertionResult.ops[0] as ModelMockDb) };
 
           findQueryMockDbFixture = { _id: modelDbInserted._id };
 

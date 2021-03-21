@@ -103,7 +103,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             mongodb.WithId<ModelMockDb>
           > = await collection.insertOne({ ...creationQueryMockDbFixture });
 
-          modelDbInserted = { ...insertionResult.ops[0] };
+          modelDbInserted = { ...(insertionResult.ops[0] as ModelMockDb) };
 
           expectedModelDbUpdated = {
             _id: modelDbInserted._id,
@@ -180,7 +180,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             mongodb.WithId<ModelMockDb>
           > = await collection.insertOne({ ...creationQueryMockDbFixture });
 
-          modelDbInserted = { ...inertionResult.ops[0] };
+          modelDbInserted = { ...(inertionResult.ops[0] as ModelMockDb) };
           findQueryMockDbFixture = { _id: modelDbInserted._id };
           expectedModelDbUpdated = {
             _id: modelDbInserted._id,
@@ -263,7 +263,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             mongodb.WithId<ModelMockDb>
           > = await collection.insertOne({ ...creationQueryMockDbFixture });
 
-          modelDbInserted = { ...inertionResult.ops[0] };
+          modelDbInserted = { ...(inertionResult.ops[0] as ModelMockDb) };
           findQueryMockDbFixture = { _id: modelDbInserted._id };
           expectedModelDbUpdated = {
             _id: modelDbInserted._id,
@@ -346,7 +346,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             mongodb.WithId<ModelMockDb>
           > = await collection.insertOne({ ...creationQueryMockDbFixture });
 
-          modelDbInserted = { ...inertionResult.ops[0] };
+          modelDbInserted = { ...(inertionResult.ops[0] as ModelMockDb) };
 
           expectedModelDbUpdated = {
             _id: modelDbInserted._id,

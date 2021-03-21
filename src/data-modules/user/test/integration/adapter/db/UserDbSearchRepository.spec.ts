@@ -75,7 +75,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                 hash: 'test-hash',
               },
             ])
-          ).ops;
+          ).ops as UserDb[] & [UserDb];
 
           const userDbFilterQuery: mongodb.FilterQuery<UserDb> = {
             _id: userDbInserted._id,
