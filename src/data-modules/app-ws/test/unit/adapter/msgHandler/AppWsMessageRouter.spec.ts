@@ -98,7 +98,7 @@ describe(AppWsMessageRouter.name, () => {
 
       beforeAll(() => {
         appWsMessageFixture = {
-          type: appWsMessageHandlerMock.messageTypes[0],
+          type: appWsMessageHandlerMock.messageTypes[0] as string,
         };
       });
 
