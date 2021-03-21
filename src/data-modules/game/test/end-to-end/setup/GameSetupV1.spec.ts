@@ -300,7 +300,7 @@ describe('GameSetup V1', () => {
               gameSetupUpdateQueryApiV1,
               {
                 headers: {
-                  Authorization: `Bearer ${e2eComponents.firstUserToken.token}`,
+                  Authorization: `Bearer ${e2eComponents.secondUserToken.token}`,
                 },
               },
             );
