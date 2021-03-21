@@ -29,8 +29,8 @@ export class ArrayDeck<TCard> implements Deck<TCard> {
   public shuffle(): void {
     for (let i: number = this.cards.length - 1; i > 0; --i) {
       const randomIndex: number = Math.floor(Math.random() * (i + 1));
-      const choosenCard: TCard = this.cards[randomIndex];
-      this.cards[randomIndex] = this.cards[i];
+      const choosenCard: TCard = this.cards[randomIndex] as TCard;
+      this.cards[randomIndex] = this.cards[i] as TCard;
       this.cards[i] = choosenCard;
     }
   }
