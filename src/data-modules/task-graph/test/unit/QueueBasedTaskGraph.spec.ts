@@ -378,10 +378,10 @@ describe(QueueBasedTaskGraph.name, () => {
           taskGraphNodeDependantPerformCalls === 1
         ) {
           it('must call taskGraphNode.perform before taskGraphNodeDependent.perform', () => {
-            const taskGraphNodePerformOrder: number = (taskGraphNode.perform as jest.Mock)
-              .mock.invocationCallOrder[0];
-            const taskGraphNodeDependentPerformOrder: number = (taskGraphNodeDependent.perform as jest.Mock)
-              .mock.invocationCallOrder[0];
+            const taskGraphNodePerformOrder: number = ((taskGraphNode.perform as jest.Mock)
+              .mock.invocationCallOrder as number[] & [number])[0];
+            const taskGraphNodeDependentPerformOrder: number = ((taskGraphNodeDependent.perform as jest.Mock)
+              .mock.invocationCallOrder as number[] & [number])[0];
             expect(taskGraphNodePerformOrder).toBeLessThan(
               taskGraphNodeDependentPerformOrder,
             );

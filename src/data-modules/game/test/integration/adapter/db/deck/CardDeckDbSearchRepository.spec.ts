@@ -72,7 +72,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                 sections: cardDeckFixture.sections,
               },
             ])
-          ).ops;
+          ).ops as CardDeckDb[] & [CardDeckDb];
 
           const cardDeckFindQueryFixture: CardDeckFindQuery = cardDeckFindQueryFixtureFactory.get();
 

@@ -79,7 +79,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                   supertypes: [],
                 },
               ])
-            ).ops;
+            ).ops as CardDb[] & [CardDb];
 
             const creatureCardFindQueryFixture: CardFindQuery = {
               id: creatureDbInserted._id.toHexString(),

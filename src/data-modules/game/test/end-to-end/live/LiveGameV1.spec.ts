@@ -27,6 +27,7 @@ import { LiveGamePlayerAreaApiV1 } from '../../../adapter/api/model/live/LiveGam
 import { LiveGameCreationQueryApiV1 } from '../../../adapter/api/query/live/LiveGameCreationQueryApiV1';
 import { CardDeck } from '../../../domain/model/deck/CardDeck';
 import { GameSetup } from '../../../domain/model/setup/GameSetup';
+import { PlayerSetup } from '../../../domain/model/setup/PlayerSetup';
 import { GAME_E2E_TYPES } from '../../config/types/e2eTypes';
 
 const container: Container = configAdapter.container;
@@ -179,7 +180,8 @@ describe('LiveGame V1', () => {
               [ResourceTypeApiV1.White]: 0,
             },
             targetId: expect.any(String) as string,
-            userId: e2eComponents.gameSetup.playerSetups[0].userId,
+            userId: (e2eComponents.gameSetup.playerSetups[0] as PlayerSetup)
+              .userId,
           },
         },
       ];

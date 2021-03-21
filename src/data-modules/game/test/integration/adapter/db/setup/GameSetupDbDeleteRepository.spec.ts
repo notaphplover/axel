@@ -68,7 +68,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                 playerSlots: gameSetupFixtureFactory.get().playerSlots,
               },
             ])
-          ).ops;
+          ).ops as GameSetupDb[] & [GameSetupDb];
 
           gameSetupDeleteQueryFixture = {
             id: gameSetupDbInserted._id.toHexString(),

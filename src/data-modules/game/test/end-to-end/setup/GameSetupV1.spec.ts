@@ -180,7 +180,8 @@ describe('GameSetup V1', () => {
       // eslint-disable-next-line @typescript-eslint/typedef
       [
         postGameSetupsV1ResponsePlayerSetup,
-      ] = (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).playerSetups;
+      ] = (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
+        .playerSetups as PlayerSetupApiV1[] & [PlayerSetupApiV1];
     });
 
     it('must return a response with the gameSetup created', () => {

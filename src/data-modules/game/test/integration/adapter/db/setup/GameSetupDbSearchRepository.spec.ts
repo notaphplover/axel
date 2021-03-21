@@ -72,7 +72,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                 playerSlots: gameSetupFixture.playerSlots,
               },
             ])
-          ).ops;
+          ).ops as GameSetupDb[] & [GameSetupDb];
 
           (gameSetupDbToGameSetupConverter.transform as jest.Mock).mockReturnValueOnce(
             gameSetupFixture,

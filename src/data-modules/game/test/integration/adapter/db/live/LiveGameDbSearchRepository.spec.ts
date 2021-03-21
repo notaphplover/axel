@@ -73,7 +73,7 @@ mongodbIntegrationDescribeGenerator(outputParam)(
                 state: gameFixture.state,
               },
             ])
-          ).ops;
+          ).ops as LiveGameDb[] & [LiveGameDb];
 
           const gameFindQueryFixture: LiveGameFindQuery = {
             ...gameFindQueryFixtureFactory.get(),
