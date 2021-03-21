@@ -34,6 +34,6 @@ export class CreateCreatureTaskGraphNode extends BaseTaskGraphNode<
       },
     );
 
-    return creatureCreated;
+    return creatureCreated as Card;
   }
 }
