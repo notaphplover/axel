@@ -152,8 +152,9 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
       }
     }
 
-    const lastTaskBatch: TaskGraphNode<TId, unknown>[] =
-      tasksSchedule[tasksSchedule.length - 1];
+    const lastTaskBatch: TaskGraphNode<TId, unknown>[] = tasksSchedule[
+      tasksSchedule.length - 1
+    ] as TaskGraphNode<TId, unknown>[];
     const lastTaskBatchCompletedPromise: Promise<void[]> = Promise.all(
       lastTaskBatch.map(
         async (task: TaskGraphNode<TId, unknown>): Promise<void> =>
