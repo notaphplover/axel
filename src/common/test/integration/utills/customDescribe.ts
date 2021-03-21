@@ -80,7 +80,7 @@ export const customDescribe: (
           return ((target as unknown) as Record<
             string,
             jest.Describe | jest.Each
-          >)[handler];
+          >)[handler] as jest.Describe | jest.Each;
       }
     },
   });
