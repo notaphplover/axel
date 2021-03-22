@@ -2,6 +2,9 @@
 export const USER_ADAPTER_TYPES = {
   api: {
     converter: {
+      USER_CREATION_QUERY_API_V1_TO_USER_CREATION_QUERY_CONVERTER: Symbol(
+        'UserCreationQueryApiV1ToUserCreationQueryConverter',
+      ),
       USER_ROLE_TO_USER_ROLE_API_V1_CONVERTER: Symbol(
         'UserRoleToUserRoleApiV1Converter',
       ),

@@ -4,6 +4,7 @@ import { USER_DOMAIN_TYPES } from '../../domain/config/types';
 import { CreateUsersInteractor } from '../../domain/interactor/CreateUsersInteractor';
 import { CreateUserTokenInteractor } from '../../domain/interactor/CreateUserTokenInteractor';
 import { FindUserInteractor } from '../../domain/interactor/FindUserInteractor';
+import { UserCreationQueryApiV1ToUserCreationQueryConverter } from '../api/converter/UserCreationQueryApiV1ToUserCreationQueryConverter';
 import { UserRoleToUserRoleApiV1Converter } from '../api/converter/UserRoleToUserRoleApiV1Converter';
 import { UserTokenToUserTokenApiV1Converter } from '../api/converter/UserTokenToUserTokenApiV1Converter';
 import { UserToUserApiV1Converter } from '../api/converter/UserToUserApiV1Converter';
@@ -27,6 +28,10 @@ import { UserRouter } from '../server/router/UserRouter';
 import { USER_ADAPTER_TYPES } from './types';
 
 function bindAdapters(bind: interfaces.Bind) {
+  bind(
+    USER_ADAPTER_TYPES.api.converter
+      .USER_CREATION_QUERY_API_V1_TO_USER_CREATION_QUERY_CONVERTER,
+  ).to(UserCreationQueryApiV1ToUserCreationQueryConverter);
   bind(
     USER_ADAPTER_TYPES.api.converter.USER_ROLE_TO_USER_ROLE_API_V1_CONVERTER,
   ).to(UserRoleToUserRoleApiV1Converter);
