@@ -27,7 +27,7 @@ export class PostUserV1RequestToUserCreationQueryConverter extends RequestToQuer
       Promise<UserCreationQuery>
     >,
     @inject(
-      USER_ADAPTER_TYPES.api.validator.AUTH_CREATION_QUERY_API_V1_VALIDATOR,
+      USER_ADAPTER_TYPES.api.validator.USER_CREATION_QUERY_API_V1_VALIDATOR,
     )
     userCreationQueryApiV1Validator: Validator<UserCreationQueryApiV1>,
   ) {

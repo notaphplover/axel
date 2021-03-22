@@ -1,76 +1,44 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { StatusCodes } from 'http-status-codes';
+import * as fastify from 'fastify';
 import { inject, injectable } from 'inversify';
 
 import {
   Converter,
   Interactor,
-  ValidationResult,
-  Validator,
+  ValueOrErrors,
 } from '../../../../../common/domain';
-import { FastifyRequestHandler } from '../../../../../integration-modules/fastify/adapter';
-import { EntitiesNotCreatedError } from '../../../../../layer-modules/db/domain';
+import { PostEntityRequestHandler } from '../../../../../integration-modules/fastify/adapter';
 import { USER_DOMAIN_TYPES } from '../../../domain/config/types';
 import { User } from '../../../domain/model/User';
-import { UserRole } from '../../../domain/model/UserRole';
 import { UserCreationQuery } from '../../../domain/query/UserCreationQuery';
 import { UserApiV1 } from '../../api/model/UserApiV1';
 import { UserCreationQueryApiV1 } from '../../api/query/UserCreationQueryApiV1';
 import { USER_ADAPTER_TYPES } from '../../config/types';
 
 @injectable()
-export class PostUserV1RequestHandler implements FastifyRequestHandler {
+export class PostUserV1RequestHandler extends PostEntityRequestHandler<
+  User,
+  UserApiV1,
+  UserCreationQueryApiV1
+> {
   constructor(
     @inject(USER_DOMAIN_TYPES.interactor.CREATE_USERS_INTERACTOR)
-    private readonly createUsersInteractor: Interactor<
-      UserCreationQuery,
-      Promise<User[]>
-    >,
+    createUsersInteractor: Interactor<UserCreationQuery, Promise<User[]>>,
+
     @inject(
-      USER_ADAPTER_TYPES.api.validator.USER_CREATION_QUERY_API_V1_VALIDATOR,
+      USER_ADAPTER_TYPES.server.converter
+        .POST_USER_V1_REQUEST_TO_USER_CREATION_QUERY_CONVERTER,
     )
-    private readonly userCreationQueryApiV1Validator: Validator<UserCreationQueryApiV1>,
+    postUserV1RequestToUserCreationQueryConverter: Converter<
+      fastify.FastifyRequest,
+      Promise<ValueOrErrors<UserCreationQuery>>
+    >,
     @inject(USER_ADAPTER_TYPES.api.converter.USER_TO_USER_API_V1_CONVERTER)
-    private readonly userToUserApiV1Converter: Converter<User, UserApiV1>,
-  ) {}
-
-  public async handle(
-    request: FastifyRequest,
-    reply: FastifyReply,
-  ): Promise<void> {
-    const validationResult: ValidationResult<UserCreationQueryApiV1> = this.userCreationQueryApiV1Validator.validate(
-      request.body,
+    userToUserApiV1Converter: Converter<User, UserApiV1>,
+  ) {
+    super(
+      userToUserApiV1Converter,
+      createUsersInteractor,
+      postUserV1RequestToUserCreationQueryConverter,
     );
-    if (validationResult.result) {
-      const userCreationQuery: UserCreationQuery = {
-        email: validationResult.model.email,
-        roles: [UserRole.CLIENT],
-        password: validationResult.model.password,
-        username: validationResult.model.username,
-      };
-
-      try {
-        const [userCreated]: User[] = await this.createUsersInteractor.interact(
-          userCreationQuery,
-        );
-        const userApiV1Created: UserApiV1 = this.userToUserApiV1Converter.transform(
-          userCreated,
-        );
-
-        await reply.code(StatusCodes.CREATED).send(userApiV1Created);
-      } catch (err) {
-        if (err instanceof EntitiesNotCreatedError) {
-          await reply
-            .code(StatusCodes.BAD_REQUEST)
-            .send({ message: err.message });
-        } else {
-          throw err;
-        }
-      }
-    } else {
-      await reply
-        .code(StatusCodes.BAD_REQUEST)
-        .send({ message: validationResult.errorMessage });
-    }
   }
 }
