@@ -8,6 +8,7 @@ import {
   Interactor,
   ValueOrErrors,
 } from '../../../common/domain';
+import { EntitiesNotCreatedError } from '../../../layer-modules/db/domain';
 import { FastifyRequestHandler } from './FastifyRequestHandler';
 
 @injectable()
@@ -45,26 +46,43 @@ export abstract class PostEntityRequestHandler<
         .code(StatusCodes.BAD_REQUEST)
         .send({ message: queryOrErrors.value.join('\n') });
     } else {
-      const entityCreationQuery: TCreationQuery = queryOrErrors.value;
+      try {
+        const entityCreationQuery: TCreationQuery = queryOrErrors.value;
 
-      const entitiesCreated: TEntity[] = await this.createEntitiesInteractor.interact(
-        entityCreationQuery,
-      );
-
-      if (commonDomain.utils.hasOneElement(entitiesCreated)) {
-        const [entityCreated]: TEntity[] = entitiesCreated;
-
-        await this.onEntityCreated(entityCreationQuery, entityCreated);
-
-        const entityApiV1Created: TEntityApi = this.entityToEntityApiConverter.transform(
-          entityCreated,
+        const entitiesCreated: TEntity[] = await this.createEntitiesInteractor.interact(
+          entityCreationQuery,
         );
 
-        await reply.send(entityApiV1Created);
-      } else {
-        await reply
-          .code(StatusCodes.INTERNAL_SERVER_ERROR)
-          .send({ message: 'Expected an entity to be created.' });
+        if (commonDomain.utils.hasOneElement(entitiesCreated)) {
+          const [entityCreated]: TEntity[] = entitiesCreated;
+
+          await this.onEntityCreated(entityCreationQuery, entityCreated);
+
+          const entityApiV1Created: TEntityApi = this.entityToEntityApiConverter.transform(
+            entityCreated,
+          );
+
+          await reply.code(StatusCodes.CREATED).send(entityApiV1Created);
+        } else {
+          await reply
+            .code(StatusCodes.INTERNAL_SERVER_ERROR)
+            .send({ message: 'Expected an entity to be created.' });
+        }
+      } catch (err: unknown) {
+        if (err instanceof EntitiesNotCreatedError) {
+          await reply
+            .code(StatusCodes.BAD_REQUEST)
+            .send({ message: err.message });
+        } else {
+          const stringifiedErrorMessage: string = JSON.stringify(
+            err,
+            Object.getOwnPropertyNames(err),
+          );
+
+          await reply.code(StatusCodes.INTERNAL_SERVER_ERROR).send({
+            message: `Unexpected error when creating entity. Underlying error:\n\n ${stringifiedErrorMessage}`,
+          });
+        }
       }
     }
   }
