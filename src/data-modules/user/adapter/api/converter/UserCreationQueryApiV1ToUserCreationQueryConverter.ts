@@ -7,10 +7,10 @@ import { UserCreationQueryApiV1 } from '../query/UserCreationQueryApiV1';
 
 @injectable()
 export class UserCreationQueryApiV1ToUserCreationQueryConverter
-  implements Converter<UserCreationQueryApiV1, UserCreationQuery> {
-  public transform(
+  implements Converter<UserCreationQueryApiV1, Promise<UserCreationQuery>> {
+  public async transform(
     userCreationQueryApiV1: UserCreationQueryApiV1,
-  ): UserCreationQuery {
+  ): Promise<UserCreationQuery> {
     const userCreationQuery: UserCreationQuery = {
       email: userCreationQueryApiV1.email,
       roles: [UserRole.CLIENT],
