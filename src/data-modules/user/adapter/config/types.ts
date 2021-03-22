@@ -54,6 +54,11 @@ export const USER_ADAPTER_TYPES = {
     PASSWORD_HASHER: Symbol('PasswordHasher'),
   },
   server: {
+    converter: {
+      POST_USER_V1_REQUEST_TO_USER_CREATION_QUERY_CONVERTER: Symbol(
+        'PostUserV1RequestToUserCreationQueryConverter',
+      ),
+    },
     reqHandler: {
       POST_AUTH_USER_TOKEN_V1_REQUEST_HANDLER: Symbol(
         'PostAuthTokenV1RequestHandler',

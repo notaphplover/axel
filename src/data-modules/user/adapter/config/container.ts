@@ -21,6 +21,7 @@ import { UserDbInsertRepository } from '../db/repository/UserDbInsertRepository'
 import { UserDbSearchRepository } from '../db/repository/UserDbSearchRepository';
 import { UserDbCollectionName } from '../db/UserDbCollectionName';
 import { PasswordHasher } from '../security/PasswordHasher';
+import { PostUserV1RequestToUserCreationQueryConverter } from '../server/converter/PostUserV1RequestToUserCreationQueryConverter';
 import { PostAuthTokenV1RequestHandler } from '../server/reqHandler/PostAuthUserTokenV1RequestHandler';
 import { PostUserV1RequestHandler } from '../server/reqHandler/PostUserV1RequestHandler';
 import { AuthRouter } from '../server/router/AuthRouter';
@@ -76,6 +77,10 @@ function bindAdapters(bind: interfaces.Bind) {
   bind(USER_ADAPTER_TYPES.db.filter.POST_USER_DB_SEARCH_FILTER).to(
     PostUserDbSearchFilter,
   );
+  bind(
+    USER_ADAPTER_TYPES.server.converter
+      .POST_USER_V1_REQUEST_TO_USER_CREATION_QUERY_CONVERTER,
+  ).to(PostUserV1RequestToUserCreationQueryConverter);
   bind(
     USER_ADAPTER_TYPES.server.reqHandler
       .POST_AUTH_USER_TOKEN_V1_REQUEST_HANDLER,
