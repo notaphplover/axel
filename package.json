@@ -48,11 +48,6 @@
   "engines": {
     "node": ">=12"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.ts": [
       "prettier --write",
