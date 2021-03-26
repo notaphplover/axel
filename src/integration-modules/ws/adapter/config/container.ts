@@ -1,12 +1,7 @@
 import { ContainerModule, interfaces } from 'inversify';
 
-import { WsRoomInMemoryManager } from '../room/WsRoomInMemoryManager';
-import { WS_ADAPTER_TYPES } from './types';
-
-function bindAdapter(bind: interfaces.Bind): void {
-  bind(WS_ADAPTER_TYPES.room.WS_ROOM_MANAGER)
-    .to(WsRoomInMemoryManager)
-    .inSingletonScope();
+function bindAdapter(_bind: interfaces.Bind): void {
+  return undefined;
 }
 
 export const wsContainer: ContainerModule = new ContainerModule(
