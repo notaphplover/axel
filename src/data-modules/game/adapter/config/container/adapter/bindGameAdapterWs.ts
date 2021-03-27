@@ -1,7 +1,7 @@
 import { interfaces } from 'inversify';
 
-import { JoinLiveGameRoomMessageWsApiV1ToJoinLiveGameRoomMessageConverter } from '../../../ws/converter/JoinLiveGameRoomMessageWsApiV1ToJoinLiveGameRoomMessageConverter';
-import { MessageWsApiToJoinLiveGameRoomMessageConverter } from '../../../ws/converter/MessageWsApiToJoinLiveGameRoomMessageConverter';
+import { JoinLiveGameRoomMessageWsApiV1ToUpsertLiveGameRoomQueryConverter } from '../../../ws/converter/JoinLiveGameRoomMessageWsApiV1ToUpsertLiveGameRoomQueryConverter';
+import { MessageWsApiToUpsertLiveGameRoomQueryConverter } from '../../../ws/converter/MessageWsApiToUpsertLiveGameRoomQueryConverter';
 import { JoinLiveGameRoomMessageWsApiV1SemanticValidator } from '../../../ws/validator/message/JoinLiveGameRoomMessageWsApiV1SemanticValidator';
 import { JoinLiveGameRoomMessageWsApiV1Validator } from '../../../ws/validator/message/JoinLiveGameRoomMessageWsApiV1Validator';
 import { joinLiveGameRoomMessageWsApiV1JoiValidatorSchema } from '../../../ws/validator/schema/message/joinLiveGameRoomMessageWsApiV1JoiValidatorSchema';
@@ -10,12 +10,12 @@ import { GAME_ADAPTER_TYPES } from '../../types';
 export function bindGameAdapterWs(bind: interfaces.Bind): void {
   bind(
     GAME_ADAPTER_TYPES.ws.converter
-      .JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_TO_JOIN_LIVE_GAME_ROOM_MESSAGE_CONVERTER,
-  ).to(JoinLiveGameRoomMessageWsApiV1ToJoinLiveGameRoomMessageConverter);
+      .JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_TO_UPSERT_LIVE_GAME_ROOM_QUERY_CONVERTER,
+  ).to(JoinLiveGameRoomMessageWsApiV1ToUpsertLiveGameRoomQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.ws.converter
-      .MESSAGE_WS_API_TO_JOIN_LIVE_GAME_ROOM_MESSAGE_CONVERTER,
-  ).to(MessageWsApiToJoinLiveGameRoomMessageConverter);
+      .MESSAGE_WS_API_TO_UPSERT_LIVE_GAME_ROOM_QUERY_CONVERTER,
+  ).to(MessageWsApiToUpsertLiveGameRoomQueryConverter);
 
   bind(
     GAME_ADAPTER_TYPES.ws.validator.message

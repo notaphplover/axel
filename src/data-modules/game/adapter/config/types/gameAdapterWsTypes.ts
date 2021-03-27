@@ -1,10 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_ADAPTER_WS_TYPES = {
   converter: {
-    JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_TO_JOIN_LIVE_GAME_ROOM_MESSAGE_CONVERTER: Symbol(
+    JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_TO_UPSERT_LIVE_GAME_ROOM_QUERY_CONVERTER: Symbol(
       'JoinLiveGameRoomMessageWsApiV1ToJoinLiveGameRoomMessageConverter',
     ),
-    MESSAGE_WS_API_TO_JOIN_LIVE_GAME_ROOM_MESSAGE_CONVERTER: Symbol(
+    MESSAGE_WS_API_TO_UPSERT_LIVE_GAME_ROOM_QUERY_CONVERTER: Symbol(
       'MessageWsApiToJoinLiveGameRoomMessageConverter',
     ),
   },

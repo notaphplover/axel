@@ -6,10 +6,12 @@ import {
   Validator,
   ValueOrErrors,
 } from '../../../../../common/domain';
-import { AppWsRequestContext } from '../../../../app-ws/adapter';
-import { MessageWsApiToMessageConverter } from '../../../../app-ws/adapter/converter/MessageWsApiToMessageConverter';
+import {
+  AppWsRequestContext,
+  MessageWsApiToQueryConverter,
+} from '../../../../app-ws/adapter';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
-import { JoinLiveGameRoomMessage } from '../../../domain/message/JoinLiveGameRoomMessage';
+import { UpsertLiveGameRoomQuery } from '../../../domain/message/UpsertLiveGameRoomQuery';
 import { LiveGame } from '../../../domain/model/live/LiveGame';
 import { LiveGameFindQuery } from '../../../domain/query/live/LiveGameFindQuery';
 import { GAME_ADAPTER_TYPES } from '../../config/types';
@@ -17,9 +19,9 @@ import { JoinLiveGameRoomMessageWsApiV1 } from '../message/JoinLiveGameRoomMessa
 import { JoinLiveGameRoomMessageWsApiV1ValidationContext } from '../validator/message/JoinLiveGameRoomMessageWsApiV1ValidationContext';
 
 @injectable()
-export class MessageWsApiToJoinLiveGameRoomMessageConverter extends MessageWsApiToMessageConverter<
+export class MessageWsApiToUpsertLiveGameRoomQueryConverter extends MessageWsApiToQueryConverter<
   JoinLiveGameRoomMessageWsApiV1,
-  JoinLiveGameRoomMessage,
+  UpsertLiveGameRoomQuery,
   JoinLiveGameRoomMessageWsApiV1ValidationContext
 > {
   constructor(
@@ -34,11 +36,11 @@ export class MessageWsApiToJoinLiveGameRoomMessageConverter extends MessageWsApi
     >,
     @inject(
       GAME_ADAPTER_TYPES.ws.converter
-        .JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_TO_JOIN_LIVE_GAME_ROOM_MESSAGE_CONVERTER,
+        .JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_TO_UPSERT_LIVE_GAME_ROOM_QUERY_CONVERTER,
     )
     joinLiveGameRoomMessageWsApiV1ToJoinLiveGameRoomMessageConverter: Converter<
       JoinLiveGameRoomMessageWsApiV1,
-      Promise<JoinLiveGameRoomMessage>,
+      Promise<UpsertLiveGameRoomQuery>,
       JoinLiveGameRoomMessageWsApiV1ValidationContext
     >,
     @inject(
