@@ -29,11 +29,12 @@ export class JoinLiveGameRoomMessageWsApiV1SemanticValidator
       !context.liveGame.playerAreas.some(
         (playerArea: LiveGamePlayerArea) =>
           playerArea.player.targetId ===
-          joinLiveGameRoomMessageWsApiV1.playerId,
+            joinLiveGameRoomMessageWsApiV1.playerId &&
+          playerArea.player.userId === context.user.id,
       )
     ) {
       errorMessages.push(
-        `No player"${joinLiveGameRoomMessageWsApiV1.playerId}" was found on game "${context.liveGame.id}"`,
+        `No player"${joinLiveGameRoomMessageWsApiV1.playerId}" is owned by user "${context.user.id}" on game "${context.liveGame.id}"`,
       );
     }
 
