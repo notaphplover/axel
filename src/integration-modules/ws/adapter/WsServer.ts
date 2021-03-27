@@ -5,6 +5,7 @@ import WebSocket from 'ws';
 import { Converter, ValueOrErrors } from '../../../common/domain';
 import { Server } from '../../../layer-modules/server/domain';
 import { WsMessageHandler } from './msgHandler/WsMessageHandler';
+import { WsRequestContext } from './WsRequestContext';
 
 export class WsServer<TRequestContext> implements Server {
   private webSocketServer: WebSocket.Server | undefined;
@@ -13,7 +14,8 @@ export class WsServer<TRequestContext> implements Server {
     private readonly port: number,
     private readonly webSocketConnectionRequestToRequestContextTransformer: Converter<
       http.IncomingMessage,
-      Promise<ValueOrErrors<TRequestContext>>
+      Promise<ValueOrErrors<TRequestContext>>,
+      WsRequestContext
     >,
     private readonly wsMessageHandler: WsMessageHandler<
       unknown,
@@ -109,6 +111,7 @@ export class WsServer<TRequestContext> implements Server {
 
     const validationResult: ValueOrErrors<TRequestContext> = await this.webSocketConnectionRequestToRequestContextTransformer.transform(
       request,
+      { socket },
     );
 
     if (validationResult.isEither) {

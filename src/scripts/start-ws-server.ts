@@ -8,6 +8,7 @@ import { Container } from 'inversify';
 import { AppWsMessageRouter } from '../data-modules/app-ws/adapter';
 import { appAdapter, AppEnvVariables } from '../data-modules/app/adapter';
 import { WsMessageHandler, WsServer } from '../integration-modules/ws/adapter';
+import { WsRequestContext } from '../integration-modules/ws/adapter/WsRequestContext';
 import { configAdapter } from '../layer-modules/config/adapter';
 import { EnvLoader } from '../layer-modules/env/domain';
 
@@ -27,7 +28,10 @@ void (async () => {
   const wsServer: WsServer<void> = new WsServer(
     appEnvLoader.index.WS_SERVER_PORT,
     {
-      transform: async (_message: http.IncomingMessage) => ({
+      transform: async (
+        _message: http.IncomingMessage,
+        _context: WsRequestContext,
+      ) => ({
         isEither: false,
         value: undefined,
       }),

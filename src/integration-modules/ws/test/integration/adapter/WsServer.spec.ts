@@ -8,6 +8,7 @@ import {
   ValueOrErrors,
 } from '../../../../../common/domain';
 import { WsMessageHandler } from '../../../adapter/msgHandler/WsMessageHandler';
+import { WsRequestContext } from '../../../adapter/WsRequestContext';
 import { WsServer } from '../../../adapter/WsServer';
 
 interface RequestContextMock {
@@ -30,7 +31,11 @@ describe(WsServer.name, () => {
     WsMessageHandler<unknown, RequestContextMock>
   >;
   let webSocketConnectionRequestToRequestContextTransformer: jest.Mocked<
-    Converter<http.IncomingMessage, Promise<ValueOrErrors<RequestContextMock>>>
+    Converter<
+      http.IncomingMessage,
+      Promise<ValueOrErrors<RequestContextMock>>,
+      WsRequestContext
+    >
   >;
 
   beforeAll(() => {
