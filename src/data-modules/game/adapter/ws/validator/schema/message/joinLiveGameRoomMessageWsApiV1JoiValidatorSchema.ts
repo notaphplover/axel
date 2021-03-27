@@ -10,5 +10,6 @@ export const joinLiveGameRoomMessageWsApiV1JoiValidatorSchema: Joi.ObjectSchema<
       .strict()
       .required(),
     liveGameId: Joi.string().strict().required(),
+    playerId: Joi.string().strict().required(),
   },
 );

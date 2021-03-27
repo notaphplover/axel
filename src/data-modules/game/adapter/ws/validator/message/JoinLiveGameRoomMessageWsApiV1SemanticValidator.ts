@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 
 import { ValidationResult, Validator } from '../../../../../../common/domain';
+import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
 import { JoinLiveGameRoomMessageWsApiV1 } from '../../message/JoinLiveGameRoomMessageWsApiV1';
 import { JoinLiveGameRoomMessageWsApiV1ValidationContext } from './JoinLiveGameRoomMessageWsApiV1ValidationContext';
 
@@ -21,6 +22,18 @@ export class JoinLiveGameRoomMessageWsApiV1SemanticValidator
     if (joinLiveGameRoomMessageWsApiV1.liveGameId !== context.liveGame.id) {
       errorMessages.push(
         `Expected a game with id "${context.liveGame.id}", found "${joinLiveGameRoomMessageWsApiV1.liveGameId}"`,
+      );
+    }
+
+    if (
+      !context.liveGame.playerAreas.some(
+        (playerArea: LiveGamePlayerArea) =>
+          playerArea.player.targetId ===
+          joinLiveGameRoomMessageWsApiV1.playerId,
+      )
+    ) {
+      errorMessages.push(
+        `No player"${joinLiveGameRoomMessageWsApiV1.playerId}" was found on game "${context.liveGame.id}"`,
       );
     }
 
