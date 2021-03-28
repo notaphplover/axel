@@ -19,7 +19,7 @@ import { JoinLiveGameRoomMessageWsApiV1 } from '../message/JoinLiveGameRoomMessa
 import { JoinLiveGameRoomMessageWsApiV1ValidationContext } from '../validator/message/JoinLiveGameRoomMessageWsApiV1ValidationContext';
 
 @injectable()
-export class MessageWsApiToUpsertLiveGameRoomQueryConverter extends QueryWsApiToQueryConverter<
+export class QueryWsApiToUpsertLiveGameRoomQueryConverter extends QueryWsApiToQueryConverter<
   JoinLiveGameRoomMessageWsApiV1,
   UpsertLiveGameRoomQuery,
   JoinLiveGameRoomMessageWsApiV1ValidationContext
