@@ -7,10 +7,10 @@ import {
   ValueEither,
   ValueOrErrors,
 } from '../../../../../../common/domain';
-import { MessageWsApi, AppWsRequestContext } from '../../../../adapter';
+import { AppWsRequestContext, QueryWsApi } from '../../../../adapter';
 import { MessageWsApiToQueryConverter } from '../../../../adapter/converter/MessageWsApiToQueryConverter';
 
-interface MessageWsApiFixture extends MessageWsApi {
+interface MessageWsApiFixture extends QueryWsApi {
   messageApiField: string;
 }
 
@@ -40,7 +40,7 @@ class AppWsMessageApiToMessageConverterMock extends MessageWsApiToQueryConverter
       Promise<MessageFixture>,
       ValidationContextFixture
     >,
-    syntaxValidator: Validator<MessageWsApiFixture, MessageWsApi>,
+    syntaxValidator: Validator<MessageWsApiFixture, QueryWsApi>,
     private readonly validationContextMockOrErrorsGenerator: (
       messageWsApi: MessageWsApiFixture,
       requestContext: AppWsRequestContext,
@@ -81,9 +81,7 @@ describe(MessageWsApiToQueryConverter.name, () => {
     >
   >;
 
-  let syntaxValidator: jest.Mocked<
-    Validator<MessageWsApiFixture, MessageWsApi>
-  >;
+  let syntaxValidator: jest.Mocked<Validator<MessageWsApiFixture, QueryWsApi>>;
 
   let validationContextMockOrErrorsGenerator: jest.Mock<
     ValueOrErrors<ValidationContextFixture>,

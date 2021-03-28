@@ -1,8 +1,8 @@
 import { WsMessageHandler } from '../../../../integration-modules/ws/adapter';
-import { MessageWsApi } from '../model/MessageWsApi';
+import { QueryWsApi } from '../model/QueryWsApi';
 
 export interface AppWsMessageHandler<
-  TMessage extends MessageWsApi = MessageWsApi,
+  TMessage extends QueryWsApi = QueryWsApi,
   TContext = void
 > extends WsMessageHandler<TMessage, TContext> {
   readonly messageTypes: string[];

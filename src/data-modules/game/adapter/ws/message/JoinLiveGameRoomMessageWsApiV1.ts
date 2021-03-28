@@ -1,7 +1,7 @@
-import { MessageWsApi } from '../../../../app-ws/adapter';
+import { QueryWsApi } from '../../../../app-ws/adapter';
 import { GameMessageTypes } from './GameMessageTypes';
 
-export interface JoinLiveGameRoomMessageWsApiV1 extends MessageWsApi {
+export interface JoinLiveGameRoomMessageWsApiV1 extends QueryWsApi {
   type: GameMessageTypes.JoinLiveGameRoom;
   liveGameId: string;
   playerId: string;

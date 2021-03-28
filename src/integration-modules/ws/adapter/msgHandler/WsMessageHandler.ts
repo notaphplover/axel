@@ -1,9 +1,5 @@
 import WebSocket from 'ws';
 
-export interface WsMessageHandler<TMessage = unknown, TContext = void> {
-  handle(
-    socket: WebSocket,
-    message: TMessage,
-    context: TContext,
-  ): Promise<void>;
+export interface WsMessageHandler<TQuery = unknown, TContext = void> {
+  handle(socket: WebSocket, query: TQuery, context: TContext): Promise<void>;
 }

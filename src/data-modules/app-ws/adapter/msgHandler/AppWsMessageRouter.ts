@@ -1,24 +1,24 @@
 import WebSocket from 'ws';
 
 import { WsMessageHandler } from '../../../../integration-modules/ws/adapter';
-import { MessageWsApi } from '../model/MessageWsApi';
+import { QueryWsApi } from '../model/QueryWsApi';
 import { AppWsMessageHandler } from './AppWsMessageHandler';
 
 export class AppWsMessageRouter<
-  TMessage extends MessageWsApi = MessageWsApi,
+  TQueryWsApi extends QueryWsApi = QueryWsApi,
   TContext = void
-> implements WsMessageHandler<TMessage, TContext> {
+> implements WsMessageHandler<TQueryWsApi, TContext> {
   private readonly messageTypeToMessageHandlersMap: Map<
     string,
-    AppWsMessageHandler<MessageWsApi, TContext>[]
+    AppWsMessageHandler<QueryWsApi, TContext>[]
   >;
 
   constructor(
-    appWsMessageHandlers: Iterable<AppWsMessageHandler<MessageWsApi, TContext>>,
+    appWsMessageHandlers: Iterable<AppWsMessageHandler<QueryWsApi, TContext>>,
   ) {
     this.messageTypeToMessageHandlersMap = new Map<
       string,
-      AppWsMessageHandler<MessageWsApi, TContext>[]
+      AppWsMessageHandler<QueryWsApi, TContext>[]
     >();
 
     this.setMessageTypeToMessageHandlersMap(appWsMessageHandlers);
@@ -33,7 +33,7 @@ export class AppWsMessageRouter<
     }
 
     const appWsMessageHandlers:
-      | AppWsMessageHandler<MessageWsApi, TContext>[]
+      | AppWsMessageHandler<QueryWsApi, TContext>[]
       | undefined = this.messageTypeToMessageHandlersMap.get(message.type);
 
     if (appWsMessageHandlers === undefined) {
@@ -43,7 +43,7 @@ export class AppWsMessageRouter<
     await Promise.all(
       appWsMessageHandlers.map(
         async (
-          appWsMessageHandler: AppWsMessageHandler<MessageWsApi, TContext>,
+          appWsMessageHandler: AppWsMessageHandler<QueryWsApi, TContext>,
         ): Promise<void> =>
           appWsMessageHandler.handle(socket, message, context),
       ),
@@ -51,12 +51,12 @@ export class AppWsMessageRouter<
   }
 
   private setMessageTypeToMessageHandlersMap(
-    appWsMessageHandlers: Iterable<AppWsMessageHandler<MessageWsApi, TContext>>,
+    appWsMessageHandlers: Iterable<AppWsMessageHandler<QueryWsApi, TContext>>,
   ) {
     for (const appWsMessageHandler of appWsMessageHandlers) {
       for (const type of appWsMessageHandler.messageTypes) {
         let typeAppWsMessageHandlers:
-          | AppWsMessageHandler<MessageWsApi, TContext>[]
+          | AppWsMessageHandler<QueryWsApi, TContext>[]
           | undefined = this.messageTypeToMessageHandlersMap.get(type);
 
         if (typeAppWsMessageHandlers === undefined) {
@@ -73,10 +73,10 @@ export class AppWsMessageRouter<
     }
   }
 
-  private isAppWsMessage(message: unknown): message is MessageWsApi {
+  private isAppWsMessage(message: unknown): message is QueryWsApi {
     return (
       typeof message === 'object' &&
-      typeof (message as MessageWsApi).type === 'string'
+      typeof (message as QueryWsApi).type === 'string'
     );
   }
 }
