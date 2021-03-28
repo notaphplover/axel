@@ -1,3 +1,3 @@
-export enum GameMessageTypes {
+export enum GameQueryWsTypes {
   JoinLiveGameRoom = 'joinLiveGameRoom',
 }

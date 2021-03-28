@@ -1,12 +1,12 @@
 import Joi from 'joi';
 
-import { GameMessageTypes } from '../../../message/GameMessageTypes';
+import { GameQueryWsTypes } from '../../../message/GameQueryWsTypes';
 import { JoinLiveGameRoomMessageWsApiV1 } from '../../../message/JoinLiveGameRoomMessageWsApiV1';
 
 export const joinLiveGameRoomMessageWsApiV1JoiValidatorSchema: Joi.ObjectSchema<JoinLiveGameRoomMessageWsApiV1> = Joi.object(
   {
     type: Joi.string()
-      .valid(GameMessageTypes.JoinLiveGameRoom)
+      .valid(GameQueryWsTypes.JoinLiveGameRoom)
       .strict()
       .required(),
     liveGameId: Joi.string().strict().required(),

@@ -1,8 +1,8 @@
 import { QueryWsApi } from '../../../../app-ws/adapter';
-import { GameMessageTypes } from './GameMessageTypes';
+import { GameQueryWsTypes } from './GameQueryWsTypes';
 
 export interface JoinLiveGameRoomMessageWsApiV1 extends QueryWsApi {
-  type: GameMessageTypes.JoinLiveGameRoom;
+  type: GameQueryWsTypes.JoinLiveGameRoom;
   liveGameId: string;
   playerId: string;
 }
