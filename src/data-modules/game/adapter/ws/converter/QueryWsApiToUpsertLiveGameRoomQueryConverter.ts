@@ -16,23 +16,23 @@ import { LiveGame } from '../../../domain/model/live/LiveGame';
 import { LiveGameFindQuery } from '../../../domain/query/live/LiveGameFindQuery';
 import { GAME_ADAPTER_TYPES } from '../../config/types';
 import { UpsertLiveGameRoomQueryWsApiV1 } from '../query/UpsertLiveGameRoomQueryWsApiV1';
-import { JoinLiveGameRoomMessageWsApiV1ValidationContext } from '../validator/message/JoinLiveGameRoomMessageWsApiV1ValidationContext';
+import { UpsertLiveGameRoomQueryWsApiV1ValidationContext } from '../validator/query/UpsertLiveGameRoomQueryWsApiV1ValidationContext';
 
 @injectable()
 export class QueryWsApiToUpsertLiveGameRoomQueryConverter extends QueryWsApiToQueryConverter<
   UpsertLiveGameRoomQueryWsApiV1,
   UpsertLiveGameRoomQuery,
-  JoinLiveGameRoomMessageWsApiV1ValidationContext
+  UpsertLiveGameRoomQueryWsApiV1ValidationContext
 > {
   constructor(
     @inject(
-      GAME_ADAPTER_TYPES.ws.validator.message
-        .JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_SEMANTIC_VALIDATOR,
+      GAME_ADAPTER_TYPES.ws.validator.query
+        .UPSERT_LIVE_GAME_ROOM_QUERY_WS_API_V1_SEMANTIC_VALIDATOR,
     )
     joinLiveGameRoomMessageWsApiV1SemanticValidator: Validator<
       UpsertLiveGameRoomQueryWsApiV1,
       UpsertLiveGameRoomQueryWsApiV1,
-      JoinLiveGameRoomMessageWsApiV1ValidationContext
+      UpsertLiveGameRoomQueryWsApiV1ValidationContext
     >,
     @inject(
       GAME_ADAPTER_TYPES.ws.converter
@@ -41,11 +41,11 @@ export class QueryWsApiToUpsertLiveGameRoomQueryConverter extends QueryWsApiToQu
     joinLiveGameRoomMessageWsApiV1ToJoinLiveGameRoomMessageConverter: Converter<
       UpsertLiveGameRoomQueryWsApiV1,
       Promise<UpsertLiveGameRoomQuery>,
-      JoinLiveGameRoomMessageWsApiV1ValidationContext
+      UpsertLiveGameRoomQueryWsApiV1ValidationContext
     >,
     @inject(
-      GAME_ADAPTER_TYPES.ws.validator.message
-        .JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_VALIDATOR,
+      GAME_ADAPTER_TYPES.ws.validator.query
+        .UPSERT_LIVE_GAME_ROOM_QUERY_WS_API_V1_VALIDATOR,
     )
     joinLiveGameRoomMessageWsApiV1Validator: Validator<UpsertLiveGameRoomQueryWsApiV1>,
     @inject(GAME_DOMAIN_TYPES.interactor.live.FIND_GAME_INTERACTOR)
@@ -64,7 +64,7 @@ export class QueryWsApiToUpsertLiveGameRoomQueryConverter extends QueryWsApiToQu
   protected async getValidationContextOrErrors(
     messageWsApi: UpsertLiveGameRoomQueryWsApiV1,
     requestContext: AppWsRequestContext,
-  ): Promise<ValueOrErrors<JoinLiveGameRoomMessageWsApiV1ValidationContext>> {
+  ): Promise<ValueOrErrors<UpsertLiveGameRoomQueryWsApiV1ValidationContext>> {
     const liveGameFindQuery: LiveGameFindQuery = {
       id: messageWsApi.liveGameId,
     };

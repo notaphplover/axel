@@ -3,19 +3,19 @@ import { injectable } from 'inversify';
 import { ValidationResult, Validator } from '../../../../../../common/domain';
 import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
 import { UpsertLiveGameRoomQueryWsApiV1 } from '../../query/UpsertLiveGameRoomQueryWsApiV1';
-import { JoinLiveGameRoomMessageWsApiV1ValidationContext } from './JoinLiveGameRoomMessageWsApiV1ValidationContext';
+import { UpsertLiveGameRoomQueryWsApiV1ValidationContext } from './UpsertLiveGameRoomQueryWsApiV1ValidationContext';
 
 @injectable()
-export class JoinLiveGameRoomMessageWsApiV1SemanticValidator
+export class UpsertLiveGameRoomQueryWsApiV1SemanticValidator
   implements
     Validator<
       UpsertLiveGameRoomQueryWsApiV1,
       UpsertLiveGameRoomQueryWsApiV1,
-      JoinLiveGameRoomMessageWsApiV1ValidationContext
+      UpsertLiveGameRoomQueryWsApiV1ValidationContext
     > {
   public validate(
     upsertLiveGameRoomQueryWsApiV1: UpsertLiveGameRoomQueryWsApiV1,
-    context: JoinLiveGameRoomMessageWsApiV1ValidationContext,
+    context: UpsertLiveGameRoomQueryWsApiV1ValidationContext,
   ): ValidationResult<UpsertLiveGameRoomQueryWsApiV1> {
     const errorMessages: string[] = [];
 

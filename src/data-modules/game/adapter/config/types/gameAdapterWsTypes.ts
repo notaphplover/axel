@@ -9,12 +9,12 @@ export const GAME_ADAPTER_WS_TYPES = {
     ),
   },
   validator: {
-    message: {
-      JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_SEMANTIC_VALIDATOR: Symbol(
-        'JoinLiveGameRoomMessageWsApiV1SemanticValidator',
+    query: {
+      UPSERT_LIVE_GAME_ROOM_QUERY_WS_API_V1_SEMANTIC_VALIDATOR: Symbol(
+        'UpsertLiveGameRoomQueryWsApiV1SemanticValidator',
       ),
-      JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_VALIDATOR: Symbol(
-        'JoinLiveGameRoomMessageWsApiV1Validator',
+      UPSERT_LIVE_GAME_ROOM_QUERY_WS_API_V1_VALIDATOR: Symbol(
+        'UpsertLiveGameRoomQueryWsApiV1Validator',
       ),
     },
     schema: {

@@ -6,7 +6,7 @@ import { GAME_ADAPTER_TYPES } from '../../../config/types';
 import { UpsertLiveGameRoomQueryWsApiV1 } from '../../query/UpsertLiveGameRoomQueryWsApiV1';
 
 @injectable()
-export class JoinLiveGameRoomMessageWsApiV1Validator extends JoiObjectValidator<UpsertLiveGameRoomQueryWsApiV1> {
+export class UpsertLiveGameRoomQueryWsApiV1Validator extends JoiObjectValidator<UpsertLiveGameRoomQueryWsApiV1> {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
     @inject(
