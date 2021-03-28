@@ -36,7 +36,7 @@ export class QueryWsApiToUpsertLiveGameRoomQueryConverter extends QueryWsApiToQu
     >,
     @inject(
       GAME_ADAPTER_TYPES.ws.converter
-        .JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_TO_UPSERT_LIVE_GAME_ROOM_QUERY_CONVERTER,
+        .UPSERT_LIVE_GAME_ROOM_QUERY_WS_API_V1_TO_UPSERT_LIVE_GAME_ROOM_QUERY_CONVERTER,
     )
     joinLiveGameRoomMessageWsApiV1ToJoinLiveGameRoomMessageConverter: Converter<
       UpsertLiveGameRoomQueryWsApiV1,

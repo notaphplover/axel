@@ -6,7 +6,7 @@ import { UpsertLiveGameRoomQueryWsApiV1 } from '../query/UpsertLiveGameRoomQuery
 import { UpsertLiveGameRoomQueryWsApiV1ValidationContext } from '../validator/query/UpsertLiveGameRoomQueryWsApiV1ValidationContext';
 
 @injectable()
-export class JoinLiveGameRoomMessageWsApiV1ToUpsertLiveGameRoomQueryConverter
+export class UpsertLiveGameRoomQueryWsApiV1ToUpsertLiveGameRoomQueryConverter
   implements
     Converter<
       UpsertLiveGameRoomQueryWsApiV1,
