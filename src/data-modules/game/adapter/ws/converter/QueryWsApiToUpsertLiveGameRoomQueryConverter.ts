@@ -11,9 +11,9 @@ import {
   QueryWsApiToQueryConverter,
 } from '../../../../app-ws/adapter';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
-import { UpsertLiveGameRoomQuery } from '../../../domain/message/UpsertLiveGameRoomQuery';
 import { LiveGame } from '../../../domain/model/live/LiveGame';
 import { LiveGameFindQuery } from '../../../domain/query/live/LiveGameFindQuery';
+import { UpsertLiveGameRoomQuery } from '../../../domain/query/live/room/UpsertLiveGameRoomQuery';
 import { GAME_ADAPTER_TYPES } from '../../config/types';
 import { UpsertLiveGameRoomQueryWsApiV1 } from '../query/UpsertLiveGameRoomQueryWsApiV1';
 import { UpsertLiveGameRoomQueryWsApiV1ValidationContext } from '../validator/query/UpsertLiveGameRoomQueryWsApiV1ValidationContext';

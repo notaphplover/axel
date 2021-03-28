@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 
 import { Converter } from '../../../../../common/domain';
-import { UpsertLiveGameRoomQuery } from '../../../domain/message/UpsertLiveGameRoomQuery';
+import { UpsertLiveGameRoomQuery } from '../../../domain/query/live/room/UpsertLiveGameRoomQuery';
 import { UpsertLiveGameRoomQueryWsApiV1 } from '../query/UpsertLiveGameRoomQueryWsApiV1';
 import { UpsertLiveGameRoomQueryWsApiV1ValidationContext } from '../validator/query/UpsertLiveGameRoomQueryWsApiV1ValidationContext';
 
