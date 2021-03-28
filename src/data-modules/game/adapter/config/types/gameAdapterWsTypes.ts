@@ -18,9 +18,9 @@ export const GAME_ADAPTER_WS_TYPES = {
       ),
     },
     schema: {
-      message: {
-        JOIN_LIVE_GAME_ROOM_MESSAGE_WS_API_V1_JOI_VALIDATOR_SCHEMA: Symbol(
-          'joinLiveGameRoomMessageWsApiV1JoiValidatorSchema',
+      query: {
+        UPSERT_LIVE_GAME_ROOM_QUERY_WS_API_V1_JOI_VALIDATOR_SCHEMA: Symbol(
+          'upsertLiveGameRoomQueryWsApiV1JoiValidatorSchema',
         ),
       },
     },

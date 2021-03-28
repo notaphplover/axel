@@ -2,26 +2,26 @@ import { injectable } from 'inversify';
 
 import { ValidationResult, Validator } from '../../../../../../common/domain';
 import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
-import { JoinLiveGameRoomMessageWsApiV1 } from '../../message/JoinLiveGameRoomMessageWsApiV1';
+import { UpsertLiveGameRoomQueryWsApiV1 } from '../../query/UpsertLiveGameRoomQueryWsApiV1';
 import { JoinLiveGameRoomMessageWsApiV1ValidationContext } from './JoinLiveGameRoomMessageWsApiV1ValidationContext';
 
 @injectable()
 export class JoinLiveGameRoomMessageWsApiV1SemanticValidator
   implements
     Validator<
-      JoinLiveGameRoomMessageWsApiV1,
-      JoinLiveGameRoomMessageWsApiV1,
+      UpsertLiveGameRoomQueryWsApiV1,
+      UpsertLiveGameRoomQueryWsApiV1,
       JoinLiveGameRoomMessageWsApiV1ValidationContext
     > {
   public validate(
-    joinLiveGameRoomMessageWsApiV1: JoinLiveGameRoomMessageWsApiV1,
+    upsertLiveGameRoomQueryWsApiV1: UpsertLiveGameRoomQueryWsApiV1,
     context: JoinLiveGameRoomMessageWsApiV1ValidationContext,
-  ): ValidationResult<JoinLiveGameRoomMessageWsApiV1> {
+  ): ValidationResult<UpsertLiveGameRoomQueryWsApiV1> {
     const errorMessages: string[] = [];
 
-    if (joinLiveGameRoomMessageWsApiV1.liveGameId !== context.liveGame.id) {
+    if (upsertLiveGameRoomQueryWsApiV1.liveGameId !== context.liveGame.id) {
       errorMessages.push(
-        `Expected a game with id "${context.liveGame.id}", found "${joinLiveGameRoomMessageWsApiV1.liveGameId}"`,
+        `Expected a game with id "${context.liveGame.id}", found "${upsertLiveGameRoomQueryWsApiV1.liveGameId}"`,
       );
     }
 
@@ -29,18 +29,18 @@ export class JoinLiveGameRoomMessageWsApiV1SemanticValidator
       !context.liveGame.playerAreas.some(
         (playerArea: LiveGamePlayerArea) =>
           playerArea.player.targetId ===
-            joinLiveGameRoomMessageWsApiV1.playerId &&
+            upsertLiveGameRoomQueryWsApiV1.playerId &&
           playerArea.player.userId === context.user.id,
       )
     ) {
       errorMessages.push(
-        `No player"${joinLiveGameRoomMessageWsApiV1.playerId}" is owned by user "${context.user.id}" on game "${context.liveGame.id}"`,
+        `No player"${upsertLiveGameRoomQueryWsApiV1.playerId}" is owned by user "${context.user.id}" on game "${context.liveGame.id}"`,
       );
     }
 
     if (errorMessages.length === 0) {
       return {
-        model: joinLiveGameRoomMessageWsApiV1,
+        model: upsertLiveGameRoomQueryWsApiV1,
         result: true,
       };
     } else {
