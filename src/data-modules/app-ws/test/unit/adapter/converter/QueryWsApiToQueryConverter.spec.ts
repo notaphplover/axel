@@ -8,94 +8,86 @@ import {
   ValueOrErrors,
 } from '../../../../../../common/domain';
 import { AppWsRequestContext, QueryWsApi } from '../../../../adapter';
-import { MessageWsApiToQueryConverter } from '../../../../adapter/converter/MessageWsApiToQueryConverter';
+import { QueryWsApiToQueryConverter } from '../../../../adapter/converter/QueryWsApiToQueryConverter';
 
-interface MessageWsApiFixture extends QueryWsApi {
-  messageApiField: string;
+interface QueryWsApiFixture extends QueryWsApi {
+  queryApiField: string;
 }
 
-interface MessageFixture {
-  messageField: string;
+interface QueryFixture {
+  queryField: string;
 }
 
 interface ValidationContextFixture {
   validationContextField: string;
 }
 
-class AppWsMessageApiToMessageConverterMock extends MessageWsApiToQueryConverter<
-  MessageWsApiFixture,
-  MessageFixture,
+class QueryWsApiToQueryConverterMock extends QueryWsApiToQueryConverter<
+  QueryWsApiFixture,
+  QueryFixture,
   ValidationContextFixture
 > {
   constructor(
     contextBasedValidator:
       | Validator<
-          MessageWsApiFixture,
-          MessageWsApiFixture,
+          QueryWsApiFixture,
+          QueryWsApiFixture,
           ValidationContextFixture
         >
       | undefined,
-    messageWsApiToMessageConverter: Converter<
-      MessageWsApiFixture,
-      Promise<MessageFixture>,
+    queryWsApiToQueryConverter: Converter<
+      QueryWsApiFixture,
+      Promise<QueryFixture>,
       ValidationContextFixture
     >,
-    syntaxValidator: Validator<MessageWsApiFixture, QueryWsApi>,
+    syntaxValidator: Validator<QueryWsApiFixture, QueryWsApi>,
     private readonly validationContextMockOrErrorsGenerator: (
-      messageWsApi: MessageWsApiFixture,
+      queryWsApi: QueryWsApiFixture,
       requestContext: AppWsRequestContext,
     ) => ValueOrErrors<ValidationContextFixture>,
   ) {
-    super(
-      contextBasedValidator,
-      messageWsApiToMessageConverter,
-      syntaxValidator,
-    );
+    super(contextBasedValidator, queryWsApiToQueryConverter, syntaxValidator);
   }
 
   protected async getValidationContextOrErrors(
-    messageWsApi: MessageWsApiFixture,
+    queryWsApi: QueryWsApiFixture,
     requestContext: AppWsRequestContext,
   ): Promise<ValueOrErrors<ValidationContextFixture>> {
     return this.validationContextMockOrErrorsGenerator(
-      messageWsApi,
+      queryWsApi,
       requestContext,
     );
   }
 }
 
-describe(MessageWsApiToQueryConverter.name, () => {
+describe(QueryWsApiToQueryConverter.name, () => {
   let contextBasedValidator: jest.Mocked<
-    Validator<
-      MessageWsApiFixture,
-      MessageWsApiFixture,
-      ValidationContextFixture
-    >
+    Validator<QueryWsApiFixture, QueryWsApiFixture, ValidationContextFixture>
   >;
 
-  let messageWsApiToMessageConverter: jest.Mocked<
+  let queryWsApiToQueryConverter: jest.Mocked<
     Converter<
-      MessageWsApiFixture,
-      Promise<MessageFixture>,
+      QueryWsApiFixture,
+      Promise<QueryFixture>,
       ValidationContextFixture
     >
   >;
 
-  let syntaxValidator: jest.Mocked<Validator<MessageWsApiFixture, QueryWsApi>>;
+  let syntaxValidator: jest.Mocked<Validator<QueryWsApiFixture, QueryWsApi>>;
 
   let validationContextMockOrErrorsGenerator: jest.Mock<
     ValueOrErrors<ValidationContextFixture>,
-    [MessageWsApiFixture, AppWsRequestContext]
+    [QueryWsApiFixture, AppWsRequestContext]
   >;
 
-  let appWsMessageApiToMessageConverterMock: AppWsMessageApiToMessageConverterMock;
+  let queryWsApiToQueryConverterMock: QueryWsApiToQueryConverterMock;
 
   beforeAll(() => {
     contextBasedValidator = {
       validate: jest.fn(),
     };
 
-    messageWsApiToMessageConverter = {
+    queryWsApiToQueryConverter = {
       transform: jest.fn(),
     };
 
@@ -105,12 +97,12 @@ describe(MessageWsApiToQueryConverter.name, () => {
 
     validationContextMockOrErrorsGenerator = jest.fn<
       ValueOrErrors<ValidationContextFixture>,
-      [MessageWsApiFixture, AppWsRequestContext]
+      [QueryWsApiFixture, AppWsRequestContext]
     >();
 
-    appWsMessageApiToMessageConverterMock = new AppWsMessageApiToMessageConverterMock(
+    queryWsApiToQueryConverterMock = new QueryWsApiToQueryConverterMock(
       contextBasedValidator,
-      messageWsApiToMessageConverter,
+      queryWsApiToQueryConverter,
       syntaxValidator,
       validationContextMockOrErrorsGenerator,
     );
@@ -118,36 +110,36 @@ describe(MessageWsApiToQueryConverter.name, () => {
 
   describe('.transform()', () => {
     let validationContextFixture: ValidationContextFixture;
-    let messageFixture: MessageFixture;
-    let messageWsApiFixture: MessageWsApiFixture;
+    let queryFixture: QueryFixture;
+    let queryWsApiFixture: QueryWsApiFixture;
     let requestContextFixture: AppWsRequestContext;
 
-    let messageWsApiValidationSuccessFixture: ValidationSuccess<MessageWsApiFixture>;
+    let queryWsApiValidationSuccessFixture: ValidationSuccess<QueryWsApiFixture>;
 
-    let messageValue: ValueEither<MessageFixture>;
+    let queryValue: ValueEither<QueryFixture>;
     let validationContextValue: ValueEither<ValidationContextFixture>;
 
     beforeAll(() => {
       validationContextFixture = {
         validationContextField: 'validationContextFieldValue',
       };
-      messageFixture = {
-        messageField: 'messageFieldValue',
+      queryFixture = {
+        queryField: 'queryFieldValue',
       };
-      messageWsApiFixture = {
-        messageApiField: 'messageApiFieldValue',
+      queryWsApiFixture = {
+        queryApiField: 'queryApiFieldValue',
         type: 'sample-type',
       };
       requestContextFixture = ({} as Partial<AppWsRequestContext>) as AppWsRequestContext;
 
-      messageWsApiValidationSuccessFixture = {
-        model: messageWsApiFixture,
+      queryWsApiValidationSuccessFixture = {
+        model: queryWsApiFixture,
         result: true,
       };
 
-      messageValue = {
+      queryValue = {
         isEither: false,
-        value: messageFixture,
+        value: queryFixture,
       };
       validationContextValue = {
         isEither: false,
@@ -160,7 +152,7 @@ describe(MessageWsApiToQueryConverter.name, () => {
 
       beforeAll(async () => {
         syntaxValidator.validate.mockReturnValueOnce(
-          messageWsApiValidationSuccessFixture,
+          queryWsApiValidationSuccessFixture,
         );
 
         validationContextMockOrErrorsGenerator.mockReturnValueOnce(
@@ -168,15 +160,15 @@ describe(MessageWsApiToQueryConverter.name, () => {
         );
 
         contextBasedValidator.validate.mockReturnValueOnce(
-          messageWsApiValidationSuccessFixture,
+          queryWsApiValidationSuccessFixture,
         );
 
-        messageWsApiToMessageConverter.transform.mockResolvedValueOnce(
-          messageFixture,
+        queryWsApiToQueryConverter.transform.mockResolvedValueOnce(
+          queryFixture,
         );
 
-        result = await appWsMessageApiToMessageConverterMock.transform(
-          messageWsApiFixture,
+        result = await queryWsApiToQueryConverterMock.transform(
+          queryWsApiFixture,
           requestContextFixture,
         );
       });
@@ -185,20 +177,20 @@ describe(MessageWsApiToQueryConverter.name, () => {
         syntaxValidator.validate.mockClear();
         validationContextMockOrErrorsGenerator.mockClear();
         contextBasedValidator.validate.mockClear();
-        messageWsApiToMessageConverter.transform.mockClear();
+        queryWsApiToQueryConverter.transform.mockClear();
       });
 
       it('must call syntaxValidator.validate()', () => {
         expect(syntaxValidator.validate).toHaveBeenCalledTimes(1);
         expect(syntaxValidator.validate).toHaveBeenCalledWith(
-          messageWsApiFixture,
+          queryWsApiFixture,
         );
       });
 
       it('must call getValidationContextOrErrors', () => {
         expect(validationContextMockOrErrorsGenerator).toHaveBeenCalledTimes(1);
         expect(validationContextMockOrErrorsGenerator).toHaveBeenCalledWith(
-          messageWsApiFixture,
+          queryWsApiFixture,
           requestContextFixture,
         );
       });
@@ -206,23 +198,21 @@ describe(MessageWsApiToQueryConverter.name, () => {
       it('must call contextBasedValidator.validate()', () => {
         expect(contextBasedValidator.validate).toHaveBeenCalledTimes(1);
         expect(contextBasedValidator.validate).toHaveBeenCalledWith(
-          messageWsApiFixture,
+          queryWsApiFixture,
           validationContextFixture,
         );
       });
 
-      it('must call messageWsApiToMessageConverter.transform()', () => {
-        expect(messageWsApiToMessageConverter.transform).toHaveBeenCalledTimes(
-          1,
-        );
-        expect(messageWsApiToMessageConverter.transform).toHaveBeenCalledWith(
-          messageWsApiFixture,
+      it('must call queryWsApiToQueryConverter.transform()', () => {
+        expect(queryWsApiToQueryConverter.transform).toHaveBeenCalledTimes(1);
+        expect(queryWsApiToQueryConverter.transform).toHaveBeenCalledWith(
+          queryWsApiFixture,
           validationContextFixture,
         );
       });
 
-      it('must return message data', () => {
-        expect(result).toStrictEqual(messageValue);
+      it('must return query data', () => {
+        expect(result).toStrictEqual(queryValue);
       });
     });
   });

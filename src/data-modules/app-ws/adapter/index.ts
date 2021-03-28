@@ -1,4 +1,4 @@
-import { MessageWsApiToQueryConverter } from './converter/MessageWsApiToQueryConverter';
+import { QueryWsApiToQueryConverter } from './converter/QueryWsApiToQueryConverter';
 import { AppWsRequestContext } from './model/AppWsRequestContext';
 import { QueryWsApi } from './model/QueryWsApi';
 import { AppWsMessageHandler } from './msgHandler/AppWsMessageHandler';
@@ -6,7 +6,7 @@ import { AppWsMessageRouter } from './msgHandler/AppWsMessageRouter';
 
 export {
   QueryWsApi,
-  MessageWsApiToQueryConverter,
+  QueryWsApiToQueryConverter,
   AppWsMessageHandler,
   AppWsMessageRouter,
   AppWsRequestContext,

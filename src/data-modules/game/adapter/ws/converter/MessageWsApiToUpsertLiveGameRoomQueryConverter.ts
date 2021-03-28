@@ -8,7 +8,7 @@ import {
 } from '../../../../../common/domain';
 import {
   AppWsRequestContext,
-  MessageWsApiToQueryConverter,
+  QueryWsApiToQueryConverter,
 } from '../../../../app-ws/adapter';
 import { GAME_DOMAIN_TYPES } from '../../../domain/config/types';
 import { UpsertLiveGameRoomQuery } from '../../../domain/message/UpsertLiveGameRoomQuery';
@@ -19,7 +19,7 @@ import { JoinLiveGameRoomMessageWsApiV1 } from '../message/JoinLiveGameRoomMessa
 import { JoinLiveGameRoomMessageWsApiV1ValidationContext } from '../validator/message/JoinLiveGameRoomMessageWsApiV1ValidationContext';
 
 @injectable()
-export class MessageWsApiToUpsertLiveGameRoomQueryConverter extends MessageWsApiToQueryConverter<
+export class MessageWsApiToUpsertLiveGameRoomQueryConverter extends QueryWsApiToQueryConverter<
   JoinLiveGameRoomMessageWsApiV1,
   UpsertLiveGameRoomQuery,
   JoinLiveGameRoomMessageWsApiV1ValidationContext

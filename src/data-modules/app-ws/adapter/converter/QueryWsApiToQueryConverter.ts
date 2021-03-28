@@ -10,8 +10,8 @@ import { AppWsRequestContext } from '../model/AppWsRequestContext';
 import { QueryWsApi } from '../model/QueryWsApi';
 
 @injectable()
-export abstract class MessageWsApiToQueryConverter<
-  TMessageWsApi,
+export abstract class QueryWsApiToQueryConverter<
+  TQueryWsApi,
   TMessage,
   TValidationContext = void
 > implements
@@ -23,24 +23,24 @@ export abstract class MessageWsApiToQueryConverter<
   constructor(
     @unmanaged()
     private readonly contextBasedValidator:
-      | Validator<TMessageWsApi, TMessageWsApi, TValidationContext>
+      | Validator<TQueryWsApi, TQueryWsApi, TValidationContext>
       | undefined,
     @unmanaged()
     private readonly messageWsApiToMessageConverter: Converter<
-      TMessageWsApi,
+      TQueryWsApi,
       Promise<TMessage>,
       TValidationContext
     >,
     @unmanaged()
-    private readonly syntaxValidator: Validator<TMessageWsApi, QueryWsApi>,
+    private readonly syntaxValidator: Validator<TQueryWsApi, QueryWsApi>,
   ) {}
 
   public async transform(
-    appWsMessage: QueryWsApi,
+    queryWsApi: QueryWsApi,
     requestContext: AppWsRequestContext,
   ): Promise<ValueOrErrors<TMessage>> {
-    const syntaxValidationResult: ValidationResult<TMessageWsApi> = this.syntaxValidator.validate(
-      appWsMessage,
+    const syntaxValidationResult: ValidationResult<TQueryWsApi> = this.syntaxValidator.validate(
+      queryWsApi,
     );
 
     if (!syntaxValidationResult.result) {
@@ -52,7 +52,7 @@ export abstract class MessageWsApiToQueryConverter<
       return validationError;
     }
 
-    const messageWsApi: TMessageWsApi = syntaxValidationResult.model;
+    const messageWsApi: TQueryWsApi = syntaxValidationResult.model;
 
     const validationContextOrErrors: ValueOrErrors<TValidationContext> = await this.getValidationContextOrErrors(
       messageWsApi,
@@ -67,7 +67,7 @@ export abstract class MessageWsApiToQueryConverter<
       validationContextOrErrors.value;
 
     if (this.contextBasedValidator !== undefined) {
-      const semanticValidationResult: ValidationResult<TMessageWsApi> = this.contextBasedValidator.validate(
+      const semanticValidationResult: ValidationResult<TQueryWsApi> = this.contextBasedValidator.validate(
         messageWsApi,
         validationContext,
       );
@@ -96,7 +96,7 @@ export abstract class MessageWsApiToQueryConverter<
   }
 
   protected abstract getValidationContextOrErrors(
-    messageWsApi: TMessageWsApi,
+    messageWsApi: TQueryWsApi,
     requestContext: AppWsRequestContext,
   ): Promise<ValueOrErrors<TValidationContext>>;
 }
