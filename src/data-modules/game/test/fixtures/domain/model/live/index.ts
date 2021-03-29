@@ -1,15 +1,15 @@
 import {
   DeepCloneFixtureFactory,
   FixtureFactory,
-} from '../../../../../../common/test';
-import { ResourceType } from '../../../../domain/model/card/ResourceType';
-import { GameFormat } from '../../../../domain/model/GameFormat';
-import { LiveGameConnections } from '../../../../domain/model/live/connection/LiveGameConnections';
-import { GameState } from '../../../../domain/model/live/GameState';
-import { LiveGame } from '../../../../domain/model/live/LiveGame';
-import { LiveGamePlayerArea } from '../../../../domain/model/live/LiveGamePlayerArea';
-import { cardDeck } from './deck';
-import { playerSetup } from './setup';
+} from '../../../../../../../common/test';
+import { ResourceType } from '../../../../../domain/model/card/ResourceType';
+import { GameFormat } from '../../../../../domain/model/GameFormat';
+import { LiveGameConnections } from '../../../../../domain/model/live/connection/LiveGameConnections';
+import { GameState } from '../../../../../domain/model/live/GameState';
+import { LiveGame } from '../../../../../domain/model/live/LiveGame';
+import { LiveGamePlayerArea } from '../../../../../domain/model/live/LiveGamePlayerArea';
+import { cardDeck } from '../deck';
+import { playerSetup } from '../setup';
 
 export const playerArea: LiveGamePlayerArea = {
   battlefield: {
