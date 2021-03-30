@@ -60,6 +60,7 @@ describe(AppWsMessageRouter.name, () => {
 
       beforeAll(() => {
         appWsMessageFixture = {
+          id: 'sample-id',
           type: 'sample-unregistered-message-type',
         };
       });
@@ -98,6 +99,7 @@ describe(AppWsMessageRouter.name, () => {
 
       beforeAll(() => {
         appWsMessageFixture = {
+          id: 'sample-id',
           type: appWsMessageHandlerMock.messageTypes[0] as string,
         };
       });

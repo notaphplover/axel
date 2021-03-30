@@ -76,6 +76,7 @@ export class AppWsMessageRouter<
   private isAppWsMessage(message: unknown): message is QueryWsApi {
     return (
       typeof message === 'object' &&
+      typeof (message as QueryWsApi).id === 'string' &&
       typeof (message as QueryWsApi).type === 'string'
     );
   }

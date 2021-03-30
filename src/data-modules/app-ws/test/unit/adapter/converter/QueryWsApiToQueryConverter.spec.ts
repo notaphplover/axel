@@ -127,6 +127,7 @@ describe(QueryWsApiToQueryConverter.name, () => {
         queryField: 'queryFieldValue',
       };
       queryWsApiFixture = {
+        id: 'sample-id',
         queryApiField: 'queryApiFieldValue',
         type: 'sample-type',
       };
