@@ -9,6 +9,7 @@ import { FindCardDecksInteractor } from '../../../../domain/interactor/deck/Find
 import { CreateLiveGamesConnectionsInteractor } from '../../../../domain/interactor/live/connection/CreateLiveGamesConnectionsInteractor';
 import { CreateLiveGamesInteractor } from '../../../../domain/interactor/live/CreateLiveGamesInteractor';
 import { FindLiveGameInteractor } from '../../../../domain/interactor/live/FindLiveGameInteractor';
+import { UpsertLiveGameRoomInteractor } from '../../../../domain/interactor/live/room/UpsertLiveGameRoomInteractor';
 import { CreateGameSetupsInteractor } from '../../../../domain/interactor/setup/CreateGameSetupsInteractor';
 import { DeleteGameSetupsInteractor } from '../../../../domain/interactor/setup/DeleteGameSetupsInteractor';
 import { FindGameSetupsInteractor } from '../../../../domain/interactor/setup/FindGameSetupsInteractor';
@@ -19,6 +20,9 @@ export function bindGameDomainInteractor(bind: interfaces.Bind): void {
     GAME_DOMAIN_TYPES.interactor.live.connection
       .CREATE_LIVE_GAMES_CONNECTIONS_INTERACTOR,
   ).to(CreateLiveGamesConnectionsInteractor);
+  bind(
+    GAME_DOMAIN_TYPES.interactor.live.room.UPSERT_LIVE_GAME_ROOM_INTERACTOR,
+  ).to(UpsertLiveGameRoomInteractor);
   bind(GAME_DOMAIN_TYPES.interactor.live.CREATE_LIVE_GAMES_INTERACTOR).to(
     CreateLiveGamesInteractor,
   );

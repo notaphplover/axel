@@ -23,6 +23,11 @@ export const GAME_DOMAIN_TYPES = {
           'CreateLiveGamesConnectionsInteractor',
         ),
       },
+      room: {
+        UPSERT_LIVE_GAME_ROOM_INTERACTOR: Symbol(
+          'UpsertLiveGameRoomInteractor',
+        ),
+      },
       CREATE_LIVE_GAMES_INTERACTOR: Symbol('CreateLiveGamesInteractor'),
       FIND_GAME_INTERACTOR: Symbol('FindGameInteractor'),
     },
