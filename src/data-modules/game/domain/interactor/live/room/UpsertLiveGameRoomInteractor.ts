@@ -13,11 +13,11 @@ import { LiveGameRoomCreationQuery } from '../../../query/live/room/LiveGameRoom
 import { LiveGameRoomFindQuery } from '../../../query/live/room/LiveGameRoomFindQuery';
 import { LiveGameRoomUpdateQuery } from '../../../query/live/room/LiveGameRoomUpdateQuery';
 import { LiveGameRoomUpdateQueryType } from '../../../query/live/room/LiveGameRoomUpdateQueryType';
-import { UpsertLiveGameRoomQuery } from '../../../query/live/room/UpsertLiveGameRoomQuery';
+import { LiveGameRoomUpsertQuery } from '../../../query/live/room/LiveGameRoomUpsertQuery';
 
 @injectable()
 export class UpsertLiveGameRoomInteractor
-  implements Interactor<UpsertLiveGameRoomQuery, Promise<LiveGameRoom>> {
+  implements Interactor<LiveGameRoomUpsertQuery, Promise<LiveGameRoom>> {
   constructor(
     @inject(
       GAME_DOMAIN_TYPES.repository.live.room
@@ -32,10 +32,10 @@ export class UpsertLiveGameRoomInteractor
   ) {}
 
   public async interact(
-    upsertLiveGameRoomQuery: UpsertLiveGameRoomQuery,
+    liveGameRoomUpsertQuery: LiveGameRoomUpsertQuery,
   ): Promise<LiveGameRoom> {
     const liveGameRoomFindQuery: LiveGameRoomFindQuery = {
-      liveGameId: upsertLiveGameRoomQuery.liveGame.id,
+      liveGameId: liveGameRoomUpsertQuery.liveGame.id,
     };
 
     const liveGameRoom: LiveGameRoom | null = await this.liveGameRoomRepository.findOne(
@@ -44,16 +44,16 @@ export class UpsertLiveGameRoomInteractor
 
     if (liveGameRoom === null) {
       const liveGameRoomCreationQuery: LiveGameRoomCreationQuery = {
-        liveGameId: upsertLiveGameRoomQuery.liveGame.id,
+        liveGameId: liveGameRoomUpsertQuery.liveGame.id,
       };
 
       await this.liveGameRoomRepository.insert(liveGameRoomCreationQuery);
     }
 
     const updateLiveGameRoomquery: AddPlayerToLiveGameRoomQuery = {
-      liveGameId: upsertLiveGameRoomQuery.liveGame.id,
-      playerGategay: upsertLiveGameRoomQuery.playerGateway,
-      playerId: upsertLiveGameRoomQuery.playerId,
+      liveGameId: liveGameRoomUpsertQuery.liveGame.id,
+      playerGategay: liveGameRoomUpsertQuery.playerGateway,
+      playerId: liveGameRoomUpsertQuery.playerId,
       type: LiveGameRoomUpdateQueryType.AddPlayerToLiveGameRoom,
     };
 

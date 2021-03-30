@@ -1,9 +1,9 @@
 import Joi from 'joi';
 
 import { GameQueryWsTypes } from '../../../query/GameQueryWsTypes';
-import { UpsertLiveGameRoomQueryWsApiV1 } from '../../../query/UpsertLiveGameRoomQueryWsApiV1';
+import { LiveGameRoomUpsertQueryWsApiV1 } from '../../../query/LiveGameRoomUpsertQueryWsApiV1';
 
-export const upsertLiveGameRoomQueryWsApiV1JoiValidatorSchema: Joi.ObjectSchema<UpsertLiveGameRoomQueryWsApiV1> = Joi.object(
+export const liveGameRoomUpsertQueryWsApiV1JoiValidatorSchema: Joi.ObjectSchema<LiveGameRoomUpsertQueryWsApiV1> = Joi.object(
   {
     type: Joi.string()
       .valid(GameQueryWsTypes.JoinLiveGameRoom)

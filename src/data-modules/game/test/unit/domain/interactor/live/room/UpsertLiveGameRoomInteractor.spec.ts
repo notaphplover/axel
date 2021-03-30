@@ -13,7 +13,7 @@ import { LiveGameRoomCreationQuery } from '../../../../../../domain/query/live/r
 import { LiveGameRoomFindQuery } from '../../../../../../domain/query/live/room/LiveGameRoomFindQuery';
 import { LiveGameRoomUpdateQuery } from '../../../../../../domain/query/live/room/LiveGameRoomUpdateQuery';
 import { LiveGameRoomUpdateQueryType } from '../../../../../../domain/query/live/room/LiveGameRoomUpdateQueryType';
-import { UpsertLiveGameRoomQuery } from '../../../../../../domain/query/live/room/UpsertLiveGameRoomQuery';
+import { LiveGameRoomUpsertQuery } from '../../../../../../domain/query/live/room/LiveGameRoomUpsertQuery';
 import { liveGameFixtureFactory } from '../../../../../fixtures/domain/model/live';
 import { LiveGameRoomFixtures } from '../../../../../fixtures/domain/model/live/room/LiveGameRoomFixtures';
 
@@ -45,12 +45,12 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
     });
 
     describe('when no live game room with the liveGameId provided exists', () => {
-      let upsertLiveGameRoomQueryFixture: UpsertLiveGameRoomQuery;
+      let liveGameRoomUpsertQueryFixture: LiveGameRoomUpsertQuery;
 
       let liveGameRoomUpdated: LiveGameRoom;
 
       beforeAll(() => {
-        upsertLiveGameRoomQueryFixture = {
+        liveGameRoomUpsertQueryFixture = {
           liveGame: liveGameFixtureFactory.get(),
           playerGateway: { send: jest.fn() },
           playerId: (liveGameFixtureFactory.get()
@@ -61,17 +61,17 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
         liveGameRoomRepository.findOne.mockResolvedValueOnce(null);
         liveGameRoomRepository.insert.mockResolvedValueOnce([
           LiveGameRoomFixtures.withEmptyPlayerIdToPlayerGategayMap(
-            upsertLiveGameRoomQueryFixture.liveGame.id,
+            liveGameRoomUpsertQueryFixture.liveGame.id,
           ),
         ]);
 
         liveGameRoomUpdated = LiveGameRoomFixtures.withEmptyPlayerIdToPlayerGategayMap(
-          upsertLiveGameRoomQueryFixture.liveGame.id,
+          liveGameRoomUpsertQueryFixture.liveGame.id,
         );
 
         liveGameRoomUpdated.playerIdToPlayerGatewayMap.set(
-          upsertLiveGameRoomQueryFixture.playerId,
-          upsertLiveGameRoomQueryFixture.playerGateway,
+          liveGameRoomUpsertQueryFixture.playerId,
+          liveGameRoomUpsertQueryFixture.playerGateway,
         );
 
         liveGameRoomRepository.updateOneAndSelect.mockResolvedValueOnce(
@@ -84,7 +84,7 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
 
         beforeAll(async () => {
           result = await upsertLiveGameRoomInteractor.interact(
-            upsertLiveGameRoomQueryFixture,
+            liveGameRoomUpsertQueryFixture,
           );
         });
 
@@ -96,7 +96,7 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
 
         it('must call liveGameRoomRepository.findOne()', () => {
           const expected: LiveGameRoomFindQuery = {
-            liveGameId: upsertLiveGameRoomQueryFixture.liveGame.id,
+            liveGameId: liveGameRoomUpsertQueryFixture.liveGame.id,
           };
 
           expect(liveGameRoomRepository.findOne).toHaveBeenCalledTimes(1);
@@ -105,7 +105,7 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
 
         it('must call liveGameRoomRepository.insert()', () => {
           const expected: LiveGameRoomCreationQuery = {
-            liveGameId: upsertLiveGameRoomQueryFixture.liveGame.id,
+            liveGameId: liveGameRoomUpsertQueryFixture.liveGame.id,
           };
 
           expect(liveGameRoomRepository.insert).toHaveBeenCalledTimes(1);
@@ -114,9 +114,9 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
 
         it('must call liveGameRoomRepository.updateOneAndSelect()', () => {
           const expected: AddPlayerToLiveGameRoomQuery = {
-            liveGameId: upsertLiveGameRoomQueryFixture.liveGame.id,
-            playerGategay: upsertLiveGameRoomQueryFixture.playerGateway,
-            playerId: upsertLiveGameRoomQueryFixture.playerId,
+            liveGameId: liveGameRoomUpsertQueryFixture.liveGame.id,
+            playerGategay: liveGameRoomUpsertQueryFixture.playerGateway,
+            playerId: liveGameRoomUpsertQueryFixture.playerId,
             type: LiveGameRoomUpdateQueryType.AddPlayerToLiveGameRoom,
           };
 
@@ -135,12 +135,12 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
     });
 
     describe('when a live game room with the liveGameId provided exists', () => {
-      let upsertLiveGameRoomQueryFixture: UpsertLiveGameRoomQuery;
+      let liveGameRoomUpsertQueryFixture: LiveGameRoomUpsertQuery;
 
       let liveGameRoomUpdated: LiveGameRoom;
 
       beforeAll(() => {
-        upsertLiveGameRoomQueryFixture = {
+        liveGameRoomUpsertQueryFixture = {
           liveGame: liveGameFixtureFactory.get(),
           playerGateway: { send: jest.fn() },
           playerId: (liveGameFixtureFactory.get()
@@ -150,17 +150,17 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
 
         liveGameRoomRepository.findOne.mockResolvedValueOnce(
           LiveGameRoomFixtures.withEmptyPlayerIdToPlayerGategayMap(
-            upsertLiveGameRoomQueryFixture.liveGame.id,
+            liveGameRoomUpsertQueryFixture.liveGame.id,
           ),
         );
 
         liveGameRoomUpdated = LiveGameRoomFixtures.withEmptyPlayerIdToPlayerGategayMap(
-          upsertLiveGameRoomQueryFixture.liveGame.id,
+          liveGameRoomUpsertQueryFixture.liveGame.id,
         );
 
         liveGameRoomUpdated.playerIdToPlayerGatewayMap.set(
-          upsertLiveGameRoomQueryFixture.playerId,
-          upsertLiveGameRoomQueryFixture.playerGateway,
+          liveGameRoomUpsertQueryFixture.playerId,
+          liveGameRoomUpsertQueryFixture.playerGateway,
         );
 
         liveGameRoomRepository.updateOneAndSelect.mockResolvedValueOnce(
@@ -173,7 +173,7 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
 
         beforeAll(async () => {
           result = await upsertLiveGameRoomInteractor.interact(
-            upsertLiveGameRoomQueryFixture,
+            liveGameRoomUpsertQueryFixture,
           );
         });
 
@@ -185,7 +185,7 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
 
         it('must call liveGameRoomRepository.findOne()', () => {
           const expected: LiveGameRoomFindQuery = {
-            liveGameId: upsertLiveGameRoomQueryFixture.liveGame.id,
+            liveGameId: liveGameRoomUpsertQueryFixture.liveGame.id,
           };
 
           expect(liveGameRoomRepository.findOne).toHaveBeenCalledTimes(1);
@@ -198,9 +198,9 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
 
         it('must call liveGameRoomRepository.updateOneAndSelect()', () => {
           const expected: AddPlayerToLiveGameRoomQuery = {
-            liveGameId: upsertLiveGameRoomQueryFixture.liveGame.id,
-            playerGategay: upsertLiveGameRoomQueryFixture.playerGateway,
-            playerId: upsertLiveGameRoomQueryFixture.playerId,
+            liveGameId: liveGameRoomUpsertQueryFixture.liveGame.id,
+            playerGategay: liveGameRoomUpsertQueryFixture.playerGateway,
+            playerId: liveGameRoomUpsertQueryFixture.playerId,
             type: LiveGameRoomUpdateQueryType.AddPlayerToLiveGameRoom,
           };
 

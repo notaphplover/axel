@@ -1,26 +1,26 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_ADAPTER_WS_TYPES = {
   converter: {
-    UPSERT_LIVE_GAME_ROOM_QUERY_WS_API_V1_TO_UPSERT_LIVE_GAME_ROOM_QUERY_CONVERTER: Symbol(
-      'UpsertLiveGameRoomQueryWsApiV1ToJoinLiveGameRoomMessageConverter',
+    LIVE_GAME_ROOM_UPSERT_QUERY_WS_API_V1_TO_LIVE_GAME_ROOM_UPSERT_QUERY_CONVERTER: Symbol(
+      'LiveGameRoomUpsertQueryWsApiV1ToLiveGameRoomUpsertQueryConverter',
     ),
-    QUERY_WS_API_TO_UPSERT_LIVE_GAME_ROOM_QUERY_CONVERTER: Symbol(
-      'QueryWsApiToJoinLiveGameRoomMessageConverter',
+    QUERY_WS_API_TO_LIVE_GAME_ROOM_UPSERT_QUERY_CONVERTER: Symbol(
+      'QueryWsApiToLiveGameRoomUpsertQueryConverter',
     ),
   },
   validator: {
     query: {
-      UPSERT_LIVE_GAME_ROOM_QUERY_WS_API_V1_SEMANTIC_VALIDATOR: Symbol(
-        'UpsertLiveGameRoomQueryWsApiV1SemanticValidator',
+      LIVE_GAME_ROOM_UPSERT_QUERY_WS_API_V1_SEMANTIC_VALIDATOR: Symbol(
+        'LiveGameRoomUpsertQueryWsApiV1SemanticValidator',
       ),
-      UPSERT_LIVE_GAME_ROOM_QUERY_WS_API_V1_VALIDATOR: Symbol(
-        'UpsertLiveGameRoomQueryWsApiV1Validator',
+      LIVE_GAME_ROOM_UPSERT_QUERY_WS_API_V1_VALIDATOR: Symbol(
+        'LiveGameRoomUpsertQueryWsApiV1Validator',
       ),
     },
     schema: {
       query: {
-        UPSERT_LIVE_GAME_ROOM_QUERY_WS_API_V1_JOI_VALIDATOR_SCHEMA: Symbol(
-          'upsertLiveGameRoomQueryWsApiV1JoiValidatorSchema',
+        LIVE_GAME_ROOM_UPSERT_QUERY_WS_API_V1_JOI_VALIDATOR_SCHEMA: Symbol(
+          'liveGameRoomUpsertQueryWsApiV1JoiValidatorSchema',
         ),
       },
     },
