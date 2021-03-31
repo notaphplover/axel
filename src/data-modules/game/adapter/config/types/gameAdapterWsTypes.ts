@@ -8,6 +8,11 @@ export const GAME_ADAPTER_WS_TYPES = {
       'QueryWsApiToLiveGameRoomUpsertQueryConverter',
     ),
   },
+  msgHandler: {
+    LIVE_GAME_ROOM_UPSERT_QUERY_WS_API_V1_HANDLER: Symbol(
+      'LiveGameRoomUpsertQueryWsApiV1Handler',
+    ),
+  },
   validator: {
     query: {
       LIVE_GAME_ROOM_UPSERT_QUERY_WS_API_V1_SEMANTIC_VALIDATOR: Symbol(

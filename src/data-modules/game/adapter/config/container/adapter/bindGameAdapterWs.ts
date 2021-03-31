@@ -2,6 +2,7 @@ import { interfaces } from 'inversify';
 
 import { LiveGameRoomUpsertQueryWsApiV1ToLiveGameRoomUpsertQueryConverter } from '../../../ws/converter/LiveGameRoomUpsertQueryWsApiV1ToLiveGameRoomUpsertQueryConverter';
 import { QueryWsApiToLiveGameRoomUpsertQueryConverter } from '../../../ws/converter/QueryWsApiToLiveGameRoomUpsertQueryConverter';
+import { LiveGameRoomUpsertQueryWsApiV1Handler } from '../../../ws/msgHandler/LiveGameRoomUpsertQueryWsApiV1Handler';
 import { LiveGameRoomUpsertQueryWsApiV1SemanticValidator } from '../../../ws/validator/query/LiveGameRoomUpsertQueryWsApiV1SemanticValidator';
 import { LiveGameRoomUpsertQueryWsApiV1Validator } from '../../../ws/validator/query/LiveGameRoomUpsertQueryWsApiV1Validator';
 import { liveGameRoomUpsertQueryWsApiV1JoiValidatorSchema } from '../../../ws/validator/schema/message/liveGameRoomUpsertQueryWsApiV1JoiValidatorSchema';
@@ -16,6 +17,11 @@ export function bindGameAdapterWs(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.ws.converter
       .QUERY_WS_API_TO_LIVE_GAME_ROOM_UPSERT_QUERY_CONVERTER,
   ).to(QueryWsApiToLiveGameRoomUpsertQueryConverter);
+
+  bind(
+    GAME_ADAPTER_TYPES.ws.msgHandler
+      .LIVE_GAME_ROOM_UPSERT_QUERY_WS_API_V1_HANDLER,
+  ).to(LiveGameRoomUpsertQueryWsApiV1Handler);
 
   bind(
     GAME_ADAPTER_TYPES.ws.validator.query
