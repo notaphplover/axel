@@ -14,4 +14,4 @@ RUN npm run build && npm run setup:local
 
 RUN npm ci --prod
 
-CMD [ "npm", "run", "start:docker"]
+CMD [ "npm", "run", "api-server:start:docker"]

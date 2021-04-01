@@ -8,4 +8,4 @@ RUN npm ci --quiet
 
 COPY . .
 
-CMD [ "npm", "run", "start"]
+CMD [ "npm", "run", "api-server:start"]

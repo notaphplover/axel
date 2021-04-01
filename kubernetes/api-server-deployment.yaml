@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.axel/name: axel-backend
-  name: backend-deployment
+    app.axel/name: axel-api-server
+  name: api-server-deployment
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app.axel/name: axel-backend
+      app.axel/name: axel-api-server
   template:
     metadata:
       labels:
-        app.axel/name: axel-backend
+        app.axel/name: axel-api-server
     spec:
       containers:
       - image: ghcr.io/notaphplover/axel/backend-node:latest

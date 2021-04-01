@@ -103,8 +103,8 @@ Now you can load the config
 kubectl apply -f ./kubernetes
 ```
 
-Wait for the pods to be ready. Once they are, the API should be accesed through the external IP of the `backend-service` service
+Wait for the pods to be ready. Once they are, the API should be accesed through the external IP of the `api-server-service` service
 
 ```
-kubectl get services backend-service
+kubectl get services api-server-service
 ```
