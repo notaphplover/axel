@@ -1,9 +1,8 @@
-import http from 'http';
-
 import WebSocket from 'ws';
 
 import {
   Converter,
+  EitherEither,
   ValueEither,
   ValueOrErrors,
 } from '../../../../../common/domain';
@@ -30,9 +29,9 @@ describe(WsServer.name, () => {
   let wsMessageHandler: jest.Mocked<
     WsMessageHandler<unknown, RequestContextMock>
   >;
-  let webSocketConnectionRequestToRequestContextTransformer: jest.Mocked<
+  let webSocketMessageDataToRequestContextTransformer: jest.Mocked<
     Converter<
-      http.IncomingMessage,
+      WebSocket.Data,
       Promise<ValueOrErrors<RequestContextMock>>,
       WsRequestContext
     >
@@ -43,16 +42,14 @@ describe(WsServer.name, () => {
       handle: jest.fn().mockResolvedValue(undefined),
     };
 
-    webSocketConnectionRequestToRequestContextTransformer = {
+    webSocketMessageDataToRequestContextTransformer = {
       transform: jest.fn(),
     };
   });
 
   describe('.bootstrap()', () => {
-    describe('having a valid incoming message', () => {
+    describe('having an incoming message', () => {
       let requestContextOrErrorsFixture: ValueEither<RequestContextMock>;
-
-      let finishValidation: () => void;
 
       beforeAll(() => {
         requestContextOrErrorsFixture = {
@@ -61,22 +58,6 @@ describe(WsServer.name, () => {
             context: undefined,
           },
         };
-
-        webSocketConnectionRequestToRequestContextTransformer.transform.mockImplementation(
-          async (): Promise<ValueOrErrors<RequestContextMock>> => {
-            return new Promise(
-              (
-                resolve: (
-                  validationResult: ValueOrErrors<RequestContextMock>,
-                ) => void,
-              ) => {
-                finishValidation = () => {
-                  resolve(requestContextOrErrorsFixture);
-                };
-              },
-            );
-          },
-        );
       });
 
       describe('when called', () => {
@@ -90,7 +71,7 @@ describe(WsServer.name, () => {
 
           wsServer = new WsServer(
             port,
-            webSocketConnectionRequestToRequestContextTransformer,
+            webSocketMessageDataToRequestContextTransformer,
             wsMessageHandler,
           );
 
@@ -104,7 +85,6 @@ describe(WsServer.name, () => {
             webSocketOnUpgradeHandlerMock = jest
               .fn()
               .mockImplementationOnce(() => {
-                finishValidation();
                 resolve();
               });
 
@@ -125,113 +105,232 @@ describe(WsServer.name, () => {
           expect(webSocketOnUpgradeHandlerMock).toHaveBeenCalledTimes(1);
         });
 
-        describe('when the client sends a message', () => {
+        describe('when the client sends a first message', () => {
           describe('when the message is handled successfully', () => {
             let message: string;
 
             beforeAll(async () => {
               message = '{ "text": "sample message" }';
 
+              await waitSocketConnected(webSocket);
+
               return new Promise<void>((resolve: () => void) => {
-                wsMessageHandler.handle.mockImplementationOnce(async () => {
-                  resolve();
-                });
+                webSocketMessageDataToRequestContextTransformer.transform.mockImplementationOnce(
+                  async (): Promise<ValueOrErrors<RequestContextMock>> => {
+                    resolve();
+
+                    return requestContextOrErrorsFixture;
+                  },
+                );
+
                 webSocket.send(message);
               });
             });
 
             afterAll(() => {
-              wsMessageHandler.handle.mockClear();
-              webSocketConnectionRequestToRequestContextTransformer.transform.mockClear();
+              webSocketMessageDataToRequestContextTransformer.transform.mockClear();
             });
 
             it('must handle the message', () => {
-              expect(wsMessageHandler.handle).toHaveBeenCalledTimes(1);
-              expect(wsMessageHandler.handle).toHaveBeenCalledWith(
-                expect.any(WebSocket),
-                JSON.parse(message),
-                requestContextOrErrorsFixture.value,
-              );
-            });
-          });
-
-          describe('when the message is not a valid JSON', () => {
-            let webSocketOnMessageHandlerMock: jest.Mock;
-
-            beforeAll(async () => {
-              return new Promise<void>((resolve: () => void) => {
-                webSocketOnMessageHandlerMock = jest
-                  .fn()
-                  .mockImplementation(() => {
-                    resolve();
-                  });
-
-                webSocket.on('message', webSocketOnMessageHandlerMock);
-
-                webSocket.send('sample message');
+              expect(
+                webSocketMessageDataToRequestContextTransformer.transform,
+              ).toHaveBeenCalledTimes(1);
+              expect(
+                webSocketMessageDataToRequestContextTransformer.transform,
+              ).toHaveBeenCalledWith(message, {
+                socket: expect.any(WebSocket) as WebSocket,
               });
             });
 
-            afterAll(() => {
-              wsMessageHandler.handle.mockClear();
-              webSocketConnectionRequestToRequestContextTransformer.transform.mockClear();
+            describe('when a message which is not a valid JSON is sent', () => {
+              let webSocketOnMessageHandlerMock: jest.Mock;
+
+              beforeAll(async () => {
+                return new Promise<void>((resolve: () => void) => {
+                  webSocketOnMessageHandlerMock = jest
+                    .fn()
+                    .mockImplementation(() => {
+                      resolve();
+                    });
+
+                  webSocket.on('message', webSocketOnMessageHandlerMock);
+
+                  webSocket.send('sample message');
+                });
+              });
+
+              afterAll(() => {
+                wsMessageHandler.handle.mockClear();
+              });
+
+              it('must not handle the message', () => {
+                expect(wsMessageHandler.handle).toHaveBeenCalledTimes(0);
+              });
+
+              it('must receive an error message', () => {
+                expect(webSocketOnMessageHandlerMock).toHaveBeenCalledTimes(1);
+                expect(webSocketOnMessageHandlerMock).toHaveBeenCalledWith(
+                  expect.stringContaining('Unable to parse message'),
+                );
+              });
             });
 
-            it('must not handle the message', () => {
-              expect(wsMessageHandler.handle).toHaveBeenCalledTimes(0);
+            describe('when a message is sent and is not handled successfully', () => {
+              let message: string;
+
+              let webSocketOnMessageHandlerMock: jest.Mock;
+
+              beforeAll(async () => {
+                message = '{ "message": "sample message" }';
+
+                wsMessageHandler.handle.mockRejectedValueOnce(
+                  new Error('Test when handler fails'),
+                );
+
+                return new Promise<void>((resolve: () => void) => {
+                  webSocketOnMessageHandlerMock = jest
+                    .fn()
+                    .mockImplementation(() => {
+                      resolve();
+                    });
+
+                  webSocket.on('message', webSocketOnMessageHandlerMock);
+
+                  webSocket.send(message);
+                });
+              });
+
+              afterAll(() => {
+                wsMessageHandler.handle.mockClear();
+              });
+
+              it('must handle the message', () => {
+                expect(wsMessageHandler.handle).toHaveBeenCalledTimes(1);
+                expect(wsMessageHandler.handle).toHaveBeenCalledWith(
+                  expect.any(WebSocket),
+                  JSON.parse(message),
+                  requestContextOrErrorsFixture.value,
+                );
+              });
+
+              it('must receive an error message', () => {
+                expect(webSocketOnMessageHandlerMock).toHaveBeenCalledTimes(1);
+                expect(webSocketOnMessageHandlerMock).toHaveBeenCalledWith(
+                  expect.stringContaining('Unable to parse message'),
+                );
+              });
             });
 
-            it('must receive an error message', () => {
-              expect(webSocketOnMessageHandlerMock).toHaveBeenCalledTimes(1);
-              expect(webSocketOnMessageHandlerMock).toHaveBeenCalledWith(
-                expect.stringContaining('Unable to parse message'),
-              );
+            describe('when a message is sent and is handled successfully', () => {
+              let message: string;
+
+              beforeAll(async () => {
+                message = '{ "message": "sample message" }';
+
+                return new Promise<void>((resolve: () => void) => {
+                  wsMessageHandler.handle.mockImplementationOnce(async () => {
+                    resolve();
+                  });
+
+                  webSocket.send(message);
+                });
+              });
+
+              afterAll(() => {
+                wsMessageHandler.handle.mockClear();
+              });
+
+              it('must handle the message', () => {
+                expect(wsMessageHandler.handle).toHaveBeenCalledTimes(1);
+                expect(wsMessageHandler.handle).toHaveBeenCalledWith(
+                  expect.any(WebSocket),
+                  JSON.parse(message),
+                  requestContextOrErrorsFixture.value,
+                );
+              });
             });
           });
 
           describe('when the message is not handled successfully', () => {
+            let requestContextOrErrorsFixture: EitherEither<string[]>;
+
+            let webSocketMessageDataToRequestContextTransformer: jest.Mocked<
+              Converter<
+                WebSocket.Data,
+                Promise<ValueOrErrors<RequestContextMock>>,
+                WsRequestContext
+              >
+            >;
+
+            let wsServer: WsServer<RequestContextMock>;
+            let webSocket: WebSocket;
+            let webSocketOnOpenHandlerMock: jest.Mock;
+            let webSocketOnUpgradeHandlerMock: jest.Mock;
+
             let message: string;
 
-            let webSocketOnMessageHandlerMock: jest.Mock;
-
             beforeAll(async () => {
-              message = '{ "message": "sample message" }';
+              requestContextOrErrorsFixture = {
+                isEither: true,
+                value: ['sample error message'],
+              };
 
-              wsMessageHandler.handle.mockRejectedValueOnce(
-                new Error('Test when handler fails'),
+              const port: number = 25613;
+
+              webSocketMessageDataToRequestContextTransformer = {
+                transform: jest
+                  .fn()
+                  .mockResolvedValueOnce(requestContextOrErrorsFixture),
+              };
+
+              wsServer = new WsServer(
+                port,
+                webSocketMessageDataToRequestContextTransformer,
+                wsMessageHandler,
               );
 
+              void wsServer.bootstrap();
+
+              webSocket = new WebSocket(`ws://localhost:${port}`);
+
+              webSocketOnOpenHandlerMock = jest.fn();
+
+              webSocketOnUpgradeHandlerMock = jest.fn();
+
+              webSocket.on('open', webSocketOnOpenHandlerMock);
+              webSocket.on('upgrade', webSocketOnUpgradeHandlerMock);
+
+              message = '{ "text": "sample message" }';
+
+              await waitSocketConnected(webSocket);
+
               return new Promise<void>((resolve: () => void) => {
-                webSocketOnMessageHandlerMock = jest
-                  .fn()
-                  .mockImplementation(() => {
-                    resolve();
-                  });
-
-                webSocket.on('message', webSocketOnMessageHandlerMock);
-
                 webSocket.send(message);
+
+                webSocket.once('close', () => {
+                  resolve();
+                });
               });
             });
 
-            afterAll(() => {
-              wsMessageHandler.handle.mockClear();
-              webSocketConnectionRequestToRequestContextTransformer.transform.mockClear();
+            afterAll(async () => {
+              await wsServer.close();
             });
 
-            it('must handle the message', () => {
-              expect(wsMessageHandler.handle).toHaveBeenCalledTimes(1);
-              expect(wsMessageHandler.handle).toHaveBeenCalledWith(
-                expect.any(WebSocket),
-                JSON.parse(message),
-                requestContextOrErrorsFixture.value,
-              );
+            it('must call webSocketMessageDataToRequestContextTransformer.transform', () => {
+              expect(
+                webSocketMessageDataToRequestContextTransformer.transform,
+              ).toHaveBeenCalledTimes(1);
+              expect(
+                webSocketMessageDataToRequestContextTransformer.transform,
+              ).toHaveBeenCalledWith(message, {
+                socket: expect.any(WebSocket) as WebSocket,
+              });
             });
 
-            it('must receive an error message', () => {
-              expect(webSocketOnMessageHandlerMock).toHaveBeenCalledTimes(1);
-              expect(webSocketOnMessageHandlerMock).toHaveBeenCalledWith(
-                expect.stringContaining('Unable to parse message'),
+            it('must close the connection', () => {
+              expect([WebSocket.CLOSING, WebSocket.CLOSED]).toContain(
+                webSocket.readyState,
               );
             });
           });
@@ -252,7 +351,7 @@ describe(WsServer.name, () => {
 
           wsServer = new WsServer(
             port,
-            webSocketConnectionRequestToRequestContextTransformer,
+            webSocketMessageDataToRequestContextTransformer,
             wsMessageHandler,
           );
 
@@ -266,24 +365,35 @@ describe(WsServer.name, () => {
             });
 
             webSocketOnOpenHandlerMock = jest.fn();
-
-            webSocketOnUpgradeHandlerMock = jest
-              .fn()
-              .mockImplementationOnce(() => {
-                void (async () => {
-                  await waitSocketConnected(webSocket);
-                  webSocket.send(messageFixture, () => {
-                    finishValidation();
-                  });
-                })();
-              });
+            webSocketOnUpgradeHandlerMock = jest.fn();
 
             webSocket.on('open', webSocketOnOpenHandlerMock);
             webSocket.on('upgrade', webSocketOnUpgradeHandlerMock);
+
+            void waitSocketConnected(webSocket).then(() => {
+              webSocket.send(messageFixture, () => {
+                webSocketMessageDataToRequestContextTransformer.transform.mockImplementationOnce(
+                  async (): Promise<ValueOrErrors<RequestContextMock>> => {
+                    return new Promise(
+                      (
+                        resolve: (
+                          validationResult: ValueOrErrors<RequestContextMock>,
+                        ) => void,
+                      ) => {
+                        webSocket.send(messageFixture, () => {
+                          resolve(requestContextOrErrorsFixture);
+                        });
+                      },
+                    );
+                  },
+                );
+              });
+            });
           });
         });
 
         afterAll(async () => {
+          webSocketMessageDataToRequestContextTransformer.transform.mockClear();
           wsMessageHandler.handle.mockClear();
 
           await wsServer.close();
@@ -308,96 +418,6 @@ describe(WsServer.name, () => {
 
         it('must not close the connection', () => {
           expect([WebSocket.CLOSING, WebSocket.CLOSED]).not.toContain(
-            webSocket.readyState,
-          );
-        });
-      });
-    });
-
-    describe('having an invalid incoming message', () => {
-      let finishValidation: () => void;
-
-      beforeAll(() => {
-        webSocketConnectionRequestToRequestContextTransformer.transform.mockImplementation(
-          async (): Promise<ValueOrErrors<RequestContextMock>> => {
-            return new Promise(
-              (
-                resolve: (
-                  validationResult: ValueOrErrors<RequestContextMock>,
-                ) => void,
-              ) => {
-                finishValidation = () => {
-                  resolve({
-                    value: ['Error when an invalid incoming message is sent'],
-                    isEither: true,
-                  });
-                };
-              },
-            );
-          },
-        );
-      });
-
-      describe('when called, and a message is receive before the validator gets the validation result', () => {
-        let wsServer: WsServer<RequestContextMock>;
-        let webSocket: WebSocket;
-        let webSocketOnOpenHandlerMock: jest.Mock;
-        let webSocketOnUpgradeHandlerMock: jest.Mock;
-
-        beforeAll(async () => {
-          const port: number = 25613;
-
-          wsServer = new WsServer(
-            port,
-            webSocketConnectionRequestToRequestContextTransformer,
-            wsMessageHandler,
-          );
-
-          void wsServer.bootstrap();
-
-          webSocket = new WebSocket(`ws://localhost:${port}`);
-
-          return new Promise<void>((resolve: () => void) => {
-            webSocketOnOpenHandlerMock = jest.fn();
-
-            webSocketOnUpgradeHandlerMock = jest
-              .fn()
-              .mockImplementationOnce(() => {
-                void (async () => {
-                  await waitSocketConnected(webSocket);
-                  webSocket.send('{ "text": "sample message" }', () => {
-                    finishValidation();
-                  });
-
-                  webSocket.once('close', () => {
-                    resolve();
-                  });
-                })();
-              });
-
-            webSocket.on('open', webSocketOnOpenHandlerMock);
-            webSocket.on('upgrade', webSocketOnUpgradeHandlerMock);
-          });
-        });
-
-        afterAll(async () => {
-          await wsServer.close();
-        });
-
-        it('websocket open event must be raised', () => {
-          expect(webSocketOnOpenHandlerMock).toHaveBeenCalledTimes(1);
-        });
-
-        it('websocket upgrade event must be raised', () => {
-          expect(webSocketOnUpgradeHandlerMock).toHaveBeenCalledTimes(1);
-        });
-
-        it('must not handle the message', () => {
-          expect(wsMessageHandler.handle).not.toHaveBeenCalled();
-        });
-
-        it('must close the connection', () => {
-          expect([WebSocket.CLOSING, WebSocket.CLOSED]).toContain(
             webSocket.readyState,
           );
         });

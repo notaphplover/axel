@@ -12,8 +12,8 @@ export class WsServer<TRequestContext> implements Server {
 
   constructor(
     private readonly port: number,
-    private readonly webSocketConnectionRequestToRequestContextTransformer: Converter<
-      http.IncomingMessage,
+    private readonly webSocketDataToRequestContextTransformer: Converter<
+      WebSocket.Data,
       Promise<ValueOrErrors<TRequestContext>>,
       WsRequestContext
     >,
@@ -35,8 +35,8 @@ export class WsServer<TRequestContext> implements Server {
 
       this.webSocketServer.on(
         'connection',
-        (socket: WebSocket, request: http.IncomingMessage): void => {
-          void this.webSocketServerOnConnectionHandler(socket, request);
+        (socket: WebSocket, _request: http.IncomingMessage): void => {
+          void this.webSocketServerOnConnectionHandler(socket);
         },
       );
     });
@@ -97,7 +97,6 @@ export class WsServer<TRequestContext> implements Server {
 
   private async webSocketServerOnConnectionHandler(
     socket: WebSocket,
-    request: http.IncomingMessage,
   ): Promise<void> {
     const messagesQueue: WebSocket.Data[] = [];
 
@@ -107,11 +106,28 @@ export class WsServer<TRequestContext> implements Server {
       messagesQueue.push(data);
     };
 
-    socket.on('message', preValidationWebSocketOnMessageHandler);
+    const validationResult: ValueOrErrors<TRequestContext> = await new Promise<
+      ValueOrErrors<TRequestContext>
+    >(
+      (
+        resolve: (
+          requestContextOrErrors: ValueOrErrors<TRequestContext>,
+        ) => void,
+      ) => {
+        const firstWebSocketMessageHandler: (data: WebSocket.Data) => void = (
+          data: WebSocket.Data,
+        ): void => {
+          socket.on('message', preValidationWebSocketOnMessageHandler);
 
-    const validationResult: ValueOrErrors<TRequestContext> = await this.webSocketConnectionRequestToRequestContextTransformer.transform(
-      request,
-      { socket },
+          void this.webSocketDataToRequestContextTransformer
+            .transform(data, {
+              socket,
+            })
+            .then(resolve);
+        };
+
+        socket.once('message', firstWebSocketMessageHandler);
+      },
     );
 
     if (validationResult.isEither) {
