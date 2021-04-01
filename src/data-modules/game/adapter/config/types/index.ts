@@ -34,4 +34,11 @@ export const GAME_ADAPTER_PUBLIC_TYPES = {
       },
     },
   },
+  ws: {
+    msgHandler: {
+      LIVE_GAME_ROOM_UPSERT_QUERY_WS_API_V1_HANDLER:
+        GAME_ADAPTER_TYPES.ws.msgHandler
+          .LIVE_GAME_ROOM_UPSERT_QUERY_WS_API_V1_HANDLER,
+    },
+  },
 };
