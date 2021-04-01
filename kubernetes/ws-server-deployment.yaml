@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.axel/name: axel-ws-server
+  name: ws-server-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app.axel/name: axel-ws-server
+  template:
+    metadata:
+      labels:
+        app.axel/name: axel-ws-server
+    spec:
+      containers:
+      - image: ghcr.io/notaphplover/axel/backend-node:latest
+        args: ["npm", "run", "ws-server:start:docker"]
+        env:
+        - name: APP_ENV
+          value: "kubernetes"
+        name: backend
+        ports:
+        - containerPort: 3001
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+      initContainers:
+        - name: init-db
+          image: busybox:1.32
+          command: ['sh', '-c', "until nc -z db-service 27017; do echo waiting for db; sleep 2; done"]
