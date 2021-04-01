@@ -39,6 +39,7 @@
     "test:unit:js:ci": "npm run test:unit:js -- --ci",
     "ws-server:delete:prod": "pm2 delete \"axel-ws-server\"",
     "ws-server:start": "TS_NODE_FILES=true ts-node ./src/scripts/start-ws-server.ts",
+    "ws-server:start:docker": "pm2-runtime start ./dist/scripts/start-ws-server.js --watch --name \"axel-ws-server\"",
     "ws-server:start:prod": "pm2 start ./dist/scripts/start-ws-server.js --watch --name \"axel-ws-server\"",
     "ws-server:stop:prod": "pm2 stop \"axel-ws-server\"",
     "prepare": "husky install || exit 0"
