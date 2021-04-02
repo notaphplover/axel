@@ -1,0 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/typedef
+export const IOREDIS_ADAPTER_TYPES = {
+  builder: {
+    IoredisClientBuilder: Symbol('IoredisClientBuilder'),
+  },
+  IoredisClientSingleton: Symbol('IoredisClientSingleton'),
+  IoredisSubscriber: Symbol('IoredisSubscriber'),
+};
+
+// eslint-disable-next-line @typescript-eslint/typedef
+export const IOREDIS_ADAPTER_PUBLIC_TYPES = {};
