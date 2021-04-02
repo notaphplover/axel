@@ -29,4 +29,4 @@ spec:
       initContainers:
         - name: init-db
           image: busybox:1.32
-          command: ['sh', '-c', "until nc -z db-service 27017; do echo waiting for db; sleep 2; done"]
+          command: ['sh', '-c', "until nc -z db-service 27017 && nc -z redis-service 6379; do echo waiting for db and redis; sleep 2; done"]
