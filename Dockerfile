@@ -1,4 +1,4 @@
-FROM node:12.19.0-alpine
+FROM node:12.22.0-alpine
 
 LABEL org.opencontainers.image.source https://github.com/notaphplover/axel
 
