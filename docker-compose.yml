@@ -7,3 +7,8 @@ services:
     image: mongo:4.4.1-bionic
     ports:
       - 29056:27017
+
+  redis:
+    image: redis:6.2.1-alpine
+    ports:
+      - '6379:6379'
