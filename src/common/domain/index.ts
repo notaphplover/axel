@@ -1,3 +1,4 @@
+import { Builder } from './builder/Builder';
 import { Converter } from './converter/Converter';
 import { Either, EitherEither, ValueEither } from './either/Either';
 import { ValueOrErrors } from './either/ValueOrErrors';
@@ -28,6 +29,7 @@ import { Validator } from './validator/Validator';
 
 export {
   AsyncValidator,
+  Builder,
   Capsule,
   Converter,
   Either,
