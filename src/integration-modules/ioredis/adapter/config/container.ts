@@ -12,6 +12,9 @@ function bindAdapter(bind: interfaces.Bind): void {
   bind(IOREDIS_ADAPTER_TYPES.IoredisClientSingleton)
     .to(IoredisClientSingleton)
     .inSingletonScope();
+  bind(IOREDIS_ADAPTER_TYPES.IoredisSubscriberClientSingleton)
+    .to(IoredisClientSingleton)
+    .inSingletonScope();
 }
 
 export const ioredisContainer: ContainerModule = new ContainerModule(

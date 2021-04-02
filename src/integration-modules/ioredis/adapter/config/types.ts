@@ -5,6 +5,7 @@ export const IOREDIS_ADAPTER_TYPES = {
   },
   IoredisClientSingleton: Symbol('IoredisClientSingleton'),
   IoredisSubscriber: Symbol('IoredisSubscriber'),
+  IoredisSubscriberClientSingleton: Symbol('IoredisSubscriberClientSingleton'),
 };
 
 // eslint-disable-next-line @typescript-eslint/typedef
