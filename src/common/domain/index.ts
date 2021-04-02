@@ -16,6 +16,7 @@ import { Capsule } from './model/Capsule';
 import { Writable } from './model/Writable';
 import { floatToInt } from './parse/floatToInt';
 import { PaginationQuery } from './query/PaginationQuery';
+import { Singleton } from './singleton/Singleton';
 import { hasOneElement } from './utils/hasOneElement';
 import { hasValue } from './utils/hasValue';
 import { waitMs } from './utils/waitMs';
@@ -38,6 +39,7 @@ export {
   Interactor,
   Messenger,
   PaginationQuery,
+  Singleton,
   ValidationFail,
   ValidationResult,
   ValidationSuccess,
