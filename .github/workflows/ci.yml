@@ -47,11 +47,11 @@ jobs:
         run: npm run setup:local
 
       - name: Launch docker images (Linux)
-        run: npm run docker:up:ci:linux
+        run: npm run docker:up:ci:node-${{ matrix.node-version }}:linux
         if: ${{ matrix.os == 'ubuntu-latest' }}
 
       - name: Launch docker images (Non Linux Docker friendly OS)
-        run: npm run docker:up:ci
+        run: npm run docker:up:ci:node-${{ matrix.node-version }}
         if: ${{ false }}
 
       - name: Wait test server (Docker friendly OS)
