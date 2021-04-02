@@ -7,11 +7,16 @@
 .vscode
 CODE_OF_CONDUCT.md
 Dockerfile
+Dockerfile-node-14
+Dockerfile-node-14-Linux
 Dockerfile-Linux
+Dockerfile-Test
 README.md
 coverage
 dist
 docker-compose.test.ci.linux.yml
+docker-compose.test.ci.node14.linux.yml
+docker-compose.test.ci.node14.yml
 docker-compose.test.ci.yml
 docker-compose.test.yml
 docker-compose.yml
