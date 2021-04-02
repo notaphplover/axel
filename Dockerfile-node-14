@@ -1,0 +1,17 @@
+FROM node:14.16.0-alpine
+
+LABEL org.opencontainers.image.source https://github.com/notaphplover/axel
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm ci --quiet
+
+COPY . .
+
+RUN npm run build && npm run setup:local
+
+RUN npm ci --prod
+
+CMD [ "npm", "run", "api-server:start:docker"]

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile-node-14
+    environment:
+      APP_ENV: docker
+    ports:
+      - "${APP_SERVER_PORT}:${APP_SERVER_PORT}"
+    volumes:
+      - .:/app
+      - /app/node_modules/
+    depends_on:
+      - db
