@@ -75,12 +75,12 @@ describe(IoredisSubscriber.name, () => {
         beforeAll(async () => {
           message = 'sample-message';
 
-          await ioredisClient.publish(channel, message);
-
           await new Promise<void>((resolve: () => void) => {
             messageFromChannelHandler.mockImplementationOnce(async () => {
               resolve();
             });
+
+            void ioredisClient.publish(channel, message);
           });
         });
 
