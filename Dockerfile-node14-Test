@@ -1,0 +1,11 @@
+FROM node:14.16.0-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm ci --quiet
+
+COPY . .
+
+CMD [ "npm", "run", "api-server:start"]

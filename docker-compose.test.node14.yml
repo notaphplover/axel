@@ -3,7 +3,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile-node12-Test
+      dockerfile: Dockerfile-node14-Test
     environment:
       APP_ENV: docker
     ports:

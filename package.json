@@ -25,6 +25,7 @@
     "docker:up:ci:node-14": "docker-compose -f docker-compose.yml -f docker-compose.test.ci.node14.yml up -d",
     "docker:up:ci:node-14:linux": "docker-compose -f docker-compose.yml -f docker-compose.test.ci.node14.linux.yml up -d",
     "docker:up:test:node12": "docker-compose -f docker-compose.yml -f docker-compose.test.node12.yml up",
+    "docker:up:test:node14": "docker-compose -f docker-compose.yml -f docker-compose.test.node14.yml up",
     "lint": "eslint src",
     "prebuild": "rimraf dist",
     "setup:local": "node ./dist/scripts/setUpLocalEnv.js",
