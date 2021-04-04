@@ -3,7 +3,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile-Linux
+      dockerfile: Dockerfile-node-12-Linux
     environment:
       APP_ENV: docker
     ports:

@@ -6,10 +6,10 @@
 .husky
 .vscode
 CODE_OF_CONDUCT.md
-Dockerfile
+Dockerfile-node-12
+Dockerfile-node-12-Linux
 Dockerfile-node-14
 Dockerfile-node-14-Linux
-Dockerfile-Linux
 Dockerfile-Test
 README.md
 coverage

@@ -1,7 +1,9 @@
 version: '3'
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile-node-12
     environment:
       APP_ENV: docker
     ports:
