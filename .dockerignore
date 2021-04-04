@@ -14,11 +14,11 @@ Dockerfile-Test
 README.md
 coverage
 dist
-docker-compose.test.ci.linux.yml
+docker-compose.test.ci.node12.linux.yml
 docker-compose.test.ci.node14.linux.yml
 docker-compose.test.ci.node14.yml
-docker-compose.test.ci.yml
-docker-compose.test.yml
+docker-compose.test.ci.node12.yml
+docker-compose.test.node12.yml
 docker-compose.yml
 kubernetes
 node_modules
