@@ -8,12 +8,16 @@ import { IOREDIS_ADAPTER_TYPES } from '../../../adapter/config/types';
 import { IoredisClientSingleton } from '../../../adapter/IoredisClientSingleton';
 import { IoredisSubscriber } from '../../../adapter/IoredisSubscriber';
 
-class IoredisSubscriberMock extends IoredisSubscriber {
+interface ContextFixture {
+  foo: string;
+}
+
+class IoredisSubscriberMock extends IoredisSubscriber<ContextFixture> {
   constructor(
     redisClient: IORedis.Redis,
     private readonly messageFromChannelHandler: jest.Mock<
       Promise<void>,
-      [string, string]
+      [string, string, ContextFixture]
     >,
   ) {
     super(redisClient);
@@ -22,15 +26,19 @@ class IoredisSubscriberMock extends IoredisSubscriber {
   protected async handleMessageFromChannel(
     channel: string,
     message: string,
+    context: ContextFixture,
   ): Promise<void> {
-    await this.messageFromChannelHandler(channel, message);
+    await this.messageFromChannelHandler(channel, message, context);
   }
 }
 
 describe(IoredisSubscriber.name, () => {
   let ioredisClient: IORedis.Redis;
   let ioredisSubscriberClient: IORedis.Redis;
-  let messageFromChannelHandler: jest.Mock<Promise<void>, [string, string]>;
+  let messageFromChannelHandler: jest.Mock<
+    Promise<void>,
+    [string, string, ContextFixture]
+  >;
 
   let ioredisSubscriber: IoredisSubscriberMock;
 
@@ -49,7 +57,10 @@ describe(IoredisSubscriber.name, () => {
 
     ioredisSubscriberClient = ioredisSubscriberClientSingleton.get();
 
-    messageFromChannelHandler = jest.fn<Promise<void>, [string, string]>();
+    messageFromChannelHandler = jest.fn<
+      Promise<void>,
+      [string, string, ContextFixture]
+    >();
 
     ioredisSubscriber = new IoredisSubscriberMock(
       ioredisSubscriberClient,
@@ -65,8 +76,12 @@ describe(IoredisSubscriber.name, () => {
     });
 
     describe('when called', () => {
+      let contextFixture: ContextFixture;
+
       beforeAll(async () => {
-        await ioredisSubscriber.subscribe(channel);
+        contextFixture = { foo: 'bar' };
+
+        await ioredisSubscriber.subscribe(channel, contextFixture);
       });
 
       describe('when a message is published to the channel', () => {
@@ -94,6 +109,7 @@ describe(IoredisSubscriber.name, () => {
           expect(messageFromChannelHandler).toHaveBeenCalledWith(
             channel,
             message,
+            contextFixture,
           );
         });
       });

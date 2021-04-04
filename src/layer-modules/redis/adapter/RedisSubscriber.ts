@@ -1,5 +1,5 @@
-export interface RedisSubscriber {
-  subscribe(channel: string): Promise<void>;
+export interface RedisSubscriber<TContext = void> {
+  subscribe(channel: string, context: TContext): Promise<void>;
 
   unsubscribe(channel: string): Promise<void>;
 }
