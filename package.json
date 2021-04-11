@@ -20,6 +20,7 @@
     "docker:rebuild:app:ci:node12": "docker-compose -f docker-compose.yml -f docker-compose.test.ci.node12.yml rm -fv app && docker-compose -f docker-compose.yml -f docker-compose.test.ci.node12.yml build app",
     "docker:rebuild:app:ci:node12:linux": "docker-compose -f docker-compose.yml -f docker-compose.test.ci.node12.linux.yml rm -fv app && docker-compose -f docker-compose.yml -f docker-compose.test.ci.node12.linux.yml build app",
     "docker:rebuild:app:test:node12": "docker-compose -f docker-compose.yml -f docker-compose.test.node12.yml rm -fv app && docker-compose -f docker-compose.yml -f docker-compose.test.node12.yml build app",
+    "docker:rebuild:app:test:node14": "docker-compose -f docker-compose.yml -f docker-compose.test.node14.yml rm -fv app && docker-compose -f docker-compose.yml -f docker-compose.test.node14.yml build app",
     "docker:up:ci:node-12": "docker-compose -f docker-compose.yml -f docker-compose.test.ci.node12.yml up -d",
     "docker:up:ci:node-12:linux": "docker-compose -f docker-compose.yml -f docker-compose.test.ci.node12.linux.yml up -d",
     "docker:up:ci:node-14": "docker-compose -f docker-compose.yml -f docker-compose.test.ci.node14.yml up -d",
