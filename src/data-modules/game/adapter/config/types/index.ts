@@ -1,4 +1,5 @@
 import { GAME_ADAPTER_API_TYPES } from './gameAdapterApiTypes';
+import { GAME_ADAPTER_BROKER_TYPES } from './gameAdapterBrokerTypes';
 import { GAME_ADAPTER_DB_TYPES } from './gameAdapterDbTypes';
 import { GAME_ADAPTER_SERVER_TYPES } from './gameAdapterServerTypes';
 import { GAME_ADAPTER_WS_TYPES } from './gameAdapterWsTypes';
@@ -6,6 +7,7 @@ import { GAME_ADAPTER_WS_TYPES } from './gameAdapterWsTypes';
 // eslint-disable-next-line @typescript-eslint/typedef
 export const GAME_ADAPTER_TYPES = {
   api: GAME_ADAPTER_API_TYPES,
+  broker: GAME_ADAPTER_BROKER_TYPES,
   db: GAME_ADAPTER_DB_TYPES,
   server: GAME_ADAPTER_SERVER_TYPES,
   ws: GAME_ADAPTER_WS_TYPES,
