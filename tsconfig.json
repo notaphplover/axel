@@ -4,7 +4,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["es2018"],
+    "lib": ["ES2019"],
     "module": "CommonJS",
     "moduleResolution": "Node",
     "noUncheckedIndexedAccess": true,
@@ -14,7 +14,7 @@
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "ES2018"
+    "target": "ES2019"
   },
   "include": [
     "src"
