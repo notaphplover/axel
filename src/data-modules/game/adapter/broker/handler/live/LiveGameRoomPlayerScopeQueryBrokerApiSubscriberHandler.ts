@@ -7,7 +7,9 @@ import { GameBrokerSubscriptionContextScope } from '../../GameBrokerSubscription
 @injectable()
 export class LiveGameRoomPlayerScopeQueryBrokerApiSubscriberHandler
   implements BrokerSubscriberHandler {
-  public scope: string = GameBrokerSubscriptionContextScope.LiveGameRoomPlayer;
+  public scopes: string[] = [
+    GameBrokerSubscriptionContextScope.LiveGameRoomPlayer,
+  ];
 
   public async handle(_query: QueryBrokerApi): Promise<void> {
     return undefined;
