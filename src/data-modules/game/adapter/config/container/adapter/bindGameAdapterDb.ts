@@ -9,6 +9,7 @@ import { CardDeckFindQueryToCardDeckDbFilterQueryConverter } from '../../../db/c
 import { LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter } from '../../../db/converter/live/connection/LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter';
 import { LiveGameConnectionsDbToLiveGameConnectionsConverter } from '../../../db/converter/live/connection/LiveGameConnectionsDbToLiveGameConnectionsConverter';
 import { LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbFilterQueryConverter } from '../../../db/converter/live/connection/LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbFilterQueryConverter';
+import { LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbUpdateQueryConverter } from '../../../db/converter/live/connection/LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbUpdateQueryConverter';
 import { LiveGameDbToLiveGameConverter } from '../../../db/converter/live/GameDbToLiveGameConverter';
 import { LiveGameCreationQueryToLiveGameDbsConverter } from '../../../db/converter/live/LiveGameCreationQueryToLiveGameDbsConverter';
 import { LiveGameFindQueryToLiveGameDbFilterQueryConverter } from '../../../db/converter/live/LiveGameFindQueryToLiveGameDbFilterQueryConverter';
@@ -52,6 +53,12 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
       .LIVE_GAME_CONNECTIONS_UPDATE_QUERY_TO_LIVE_GAME_CONNECTIONS_DB_FILTER_QUERY_CONVERTER,
   ).to(
     LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbFilterQueryConverter,
+  );
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.live.connection
+      .LIVE_GAME_CONNECTIONS_UPDATE_QUERY_TO_LIVE_GAME_CONNECTIONS_DB_UPDATE_QUERY_CONVERTER,
+  ).to(
+    LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbUpdateQueryConverter,
   );
   bind(
     GAME_ADAPTER_TYPES.db.converter.live.connection

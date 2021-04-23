@@ -46,6 +46,9 @@ export const GAME_ADAPTER_DB_TYPES = {
         LIVE_GAME_CONNECTIONS_UPDATE_QUERY_TO_LIVE_GAME_CONNECTIONS_DB_FILTER_QUERY_CONVERTER: Symbol(
           'LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbFilterQueryConverter',
         ),
+        LIVE_GAME_CONNECTIONS_UPDATE_QUERY_TO_LIVE_GAME_CONNECTIONS_DB_UPDATE_QUERY_CONVERTER: Symbol(
+          'LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbUpdateQueryConverter',
+        ),
         LIVE_GAME_CONNECTIONS_DB_TO_LIVE_GAME_CONNECTIONS_CONVERTER: Symbol(
           'LiveGameConnectionsDbToLiveGameConnectionsConverter',
         ),
