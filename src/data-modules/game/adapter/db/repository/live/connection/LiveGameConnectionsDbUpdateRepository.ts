@@ -44,6 +44,10 @@ export class LiveGameConnectionsDbUpdateRepository extends MongoDbUpdateReposito
       | mongodb.FilterQuery<LiveGameConnectionsDb>
       | Promise<mongodb.FilterQuery<LiveGameConnectionsDb>>
     >,
+    @inject(
+      GAME_ADAPTER_TYPES.db.converter.live.connection
+        .LIVE_GAME_CONNECTIONS_UPDATE_QUERY_TO_LIVE_GAME_CONNECTIONS_DB_UPDATE_QUERY_CONVERTER,
+    )
     queryToUpdateQueryConverter: Converter<
       LiveGameConnectionsUpdateQuery,
       | mongodb.UpdateQuery<LiveGameConnectionsDb>
