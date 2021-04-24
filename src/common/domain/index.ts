@@ -7,6 +7,7 @@ import { ValidatorFunctionBasedFilter } from './filter/ValidatorFunctionBasedFil
 import { CreateEntitiesInteractor } from './interactor/CreateEntitiesInteractor';
 import { CreateEntityInteractor } from './interactor/CreateEntityInteractor';
 import { Interactor } from './interactor/Interactor';
+import { UpdateEntityInteractor } from './interactor/UpdateEntityInteractor';
 import { getDirectories } from './io/directory/getDirectories';
 import { isDirectory } from './io/directory/isDirectory';
 import { getFiles } from './io/file/getFiles';
@@ -44,6 +45,7 @@ export {
   Messenger,
   PaginationQuery,
   Singleton,
+  UpdateEntityInteractor,
   ValidationFail,
   ValidationResult,
   ValidationSuccess,

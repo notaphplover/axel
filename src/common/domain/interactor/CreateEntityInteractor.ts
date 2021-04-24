@@ -1,6 +1,6 @@
-import { Interactor } from '..';
 import { InsertRepository } from '../../../layer-modules/db/domain';
 import { getInstanceTypeName } from '../utils/getInstanceTypeName';
+import { Interactor } from './Interactor';
 
 export class CreateEntityInteractor<TEntity, TQuery>
   implements Interactor<TQuery, Promise<TEntity>> {
