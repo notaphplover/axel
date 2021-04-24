@@ -6,6 +6,8 @@ import { Filter } from './filter/Filter';
 import { ValidatorFunctionBasedFilter } from './filter/ValidatorFunctionBasedFilter';
 import { CreateEntitiesInteractor } from './interactor/CreateEntitiesInteractor';
 import { CreateEntityInteractor } from './interactor/CreateEntityInteractor';
+import { FindEntitiesInteractor } from './interactor/FindEntitiesInteractor';
+import { FindEntityInteractor } from './interactor/FindEntityInteractor';
 import { Interactor } from './interactor/Interactor';
 import { UpdateEntityInteractor } from './interactor/UpdateEntityInteractor';
 import { getDirectories } from './io/directory/getDirectories';
@@ -41,6 +43,8 @@ export {
   Either,
   EitherEither,
   Filter,
+  FindEntityInteractor,
+  FindEntitiesInteractor,
   Interactor,
   Messenger,
   PaginationQuery,
