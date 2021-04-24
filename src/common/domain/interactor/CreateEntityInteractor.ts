@@ -1,7 +1,10 @@
+import { injectable } from 'inversify';
+
 import { InsertRepository } from '../../../layer-modules/db/domain';
 import { getInstanceTypeName } from '../utils/getInstanceTypeName';
 import { Interactor } from './Interactor';
 
+@injectable()
 export class CreateEntityInteractor<TEntity, TQuery>
   implements Interactor<TQuery, Promise<TEntity>> {
   constructor(
