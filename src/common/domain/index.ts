@@ -4,6 +4,7 @@ import { Either, EitherEither, ValueEither } from './either/Either';
 import { ValueOrErrors } from './either/ValueOrErrors';
 import { Filter } from './filter/Filter';
 import { ValidatorFunctionBasedFilter } from './filter/ValidatorFunctionBasedFilter';
+import { CreateEntitiesInteractor } from './interactor/CreateEntitiesInteractor';
 import { CreateEntityInteractor } from './interactor/CreateEntityInteractor';
 import { Interactor } from './interactor/Interactor';
 import { getDirectories } from './io/directory/getDirectories';
@@ -34,6 +35,7 @@ export {
   Builder,
   Capsule,
   Converter,
+  CreateEntitiesInteractor,
   CreateEntityInteractor,
   Either,
   EitherEither,
