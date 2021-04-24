@@ -52,6 +52,9 @@ export const GAME_DOMAIN_TYPES = {
         LIVE_GAME_CONNECTIONS_INSERT_REPOSITORY: Symbol(
           'LiveGameConnectionsInsertRepository',
         ),
+        LIVE_GAME_CONNECTIONS_UPDATE_REPOSITORY: Symbol(
+          'LiveGameConnectionsUpdateRepository',
+        ),
       },
       room: {
         LIVE_GAME_ROOM_IN_MEMORY_REPOSITORY: Symbol(

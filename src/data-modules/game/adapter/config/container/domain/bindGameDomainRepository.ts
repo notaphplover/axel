@@ -7,6 +7,7 @@ import { CardDbSearchRepository } from '../../../db/repository/card/CardDbSearch
 import { CardDeckDbInsertRepository } from '../../../db/repository/deck/CardDeckDbInsertRepository';
 import { CardDeckDbSearchRepository } from '../../../db/repository/deck/CardDeckDbSearchRepository';
 import { LiveGameConnectionsDbInsertRepository } from '../../../db/repository/live/connection/LiveGameConnectionsDbInsertRepository';
+import { LiveGameConnectionsDbUpdateRepository } from '../../../db/repository/live/connection/LiveGameConnectionsDbUpdateRepository';
 import { LiveGameDbInsertRepository } from '../../../db/repository/live/LiveGameDbInsertRepository';
 import { LiveGameDbSearchRepository } from '../../../db/repository/live/LiveGameDbSearchRepository';
 import { GameSetupDbDeleteRepository } from '../../../db/repository/setup/GameSetupDbDeleteRepository';
@@ -33,6 +34,10 @@ export function bindGameDomainRepository(bind: interfaces.Bind): void {
     GAME_DOMAIN_TYPES.repository.live.connection
       .LIVE_GAME_CONNECTIONS_INSERT_REPOSITORY,
   ).to(LiveGameConnectionsDbInsertRepository);
+  bind(
+    GAME_DOMAIN_TYPES.repository.live.connection
+      .LIVE_GAME_CONNECTIONS_UPDATE_REPOSITORY,
+  ).to(LiveGameConnectionsDbUpdateRepository);
   bind(
     GAME_DOMAIN_TYPES.repository.live.room.LIVE_GAME_ROOM_IN_MEMORY_REPOSITORY,
   ).to(LiveGameRoomInMemoryRepository);

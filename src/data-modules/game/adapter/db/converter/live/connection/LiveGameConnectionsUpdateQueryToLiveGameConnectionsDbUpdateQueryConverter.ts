@@ -42,7 +42,7 @@ export class LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbUpdateQueryCon
         connections: {
           $concatArrays: [
             '$connections',
-            liveGameConnectionsUpdateQuery.liveGameConnection,
+            [liveGameConnectionsUpdateQuery.liveGameConnection],
           ],
         },
       },
