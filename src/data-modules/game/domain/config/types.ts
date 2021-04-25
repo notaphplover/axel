@@ -22,6 +22,9 @@ export const GAME_DOMAIN_TYPES = {
         CREATE_LIVE_GAMES_CONNECTIONS_INTERACTOR: Symbol(
           'CreateLiveGamesConnectionsInteractor',
         ),
+        FIND_LIVE_GAME_CONNECTIONS_INTERACTOR: Symbol(
+          'FindLiveGameConnectionsInteractor',
+        ),
         UPDATE_LIVE_GAME_CONNECTIONS_INTERACTOR: Symbol(
           'CreateLiveGameConnectionsInteractor',
         ),
@@ -57,6 +60,9 @@ export const GAME_DOMAIN_TYPES = {
         ),
         LIVE_GAME_CONNECTIONS_UPDATE_REPOSITORY: Symbol(
           'LiveGameConnectionsUpdateRepository',
+        ),
+        LIVE_GAME_CONNECTIONS_SEARCH_REPOSITORY: Symbol(
+          'LiveGameConnectionsDbSearchRepository',
         ),
       },
       room: {

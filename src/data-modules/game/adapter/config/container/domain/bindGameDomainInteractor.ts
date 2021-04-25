@@ -7,6 +7,7 @@ import { CreateCardDecksInteractor } from '../../../../domain/interactor/deck/Cr
 import { FindCardDeckInteractor } from '../../../../domain/interactor/deck/FindCardDeckInteractor';
 import { FindCardDecksInteractor } from '../../../../domain/interactor/deck/FindCardDecksInteractor';
 import { CreateLiveGamesConnectionsInteractor } from '../../../../domain/interactor/live/connection/CreateLiveGamesConnectionsInteractor';
+import { FindLiveGameConnectionsInteractor } from '../../../../domain/interactor/live/connection/FindLiveGameConnectionsInteractor';
 import { UpdateLiveGameConnectionsInteractor } from '../../../../domain/interactor/live/connection/UpdateLiveGameConnectionsInteractor';
 import { CreateLiveGamesInteractor } from '../../../../domain/interactor/live/CreateLiveGamesInteractor';
 import { FindLiveGameInteractor } from '../../../../domain/interactor/live/FindLiveGameInteractor';
@@ -21,6 +22,10 @@ export function bindGameDomainInteractor(bind: interfaces.Bind): void {
     GAME_DOMAIN_TYPES.interactor.live.connection
       .CREATE_LIVE_GAMES_CONNECTIONS_INTERACTOR,
   ).to(CreateLiveGamesConnectionsInteractor);
+  bind(
+    GAME_DOMAIN_TYPES.interactor.live.connection
+      .FIND_LIVE_GAME_CONNECTIONS_INTERACTOR,
+  ).to(FindLiveGameConnectionsInteractor);
   bind(
     GAME_DOMAIN_TYPES.interactor.live.connection
       .UPDATE_LIVE_GAME_CONNECTIONS_INTERACTOR,
