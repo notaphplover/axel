@@ -8,6 +8,7 @@ import { CardDeckDbToCardDeckConverter } from '../../../db/converter/deck/CardDe
 import { CardDeckFindQueryToCardDeckDbFilterQueryConverter } from '../../../db/converter/deck/CardDeckFindQueryToCardDeckDbFilterQueryConverter';
 import { LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter } from '../../../db/converter/live/connection/LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter';
 import { LiveGameConnectionsDbToLiveGameConnectionsConverter } from '../../../db/converter/live/connection/LiveGameConnectionsDbToLiveGameConnectionsConverter';
+import { LiveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter } from '../../../db/converter/live/connection/LiveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter';
 import { LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbFilterQueryConverter } from '../../../db/converter/live/connection/LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbFilterQueryConverter';
 import { LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbUpdateQueryConverter } from '../../../db/converter/live/connection/LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbUpdateQueryConverter';
 import { LiveGameDbToLiveGameConverter } from '../../../db/converter/live/GameDbToLiveGameConverter';
@@ -48,6 +49,10 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
     GAME_ADAPTER_TYPES.db.converter.live.connection
       .LIVE_GAME_CONNECTIONS_CREATION_QUERY_TO_LIVE_GAME_CONNECTIONS_CONVERTER,
   ).to(LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter);
+  bind(
+    GAME_ADAPTER_TYPES.db.converter.live.connection
+      .LIVE_GAME_CONNECTIONS_FIND_QUERY_TO_LIVE_GAME_CONNECTIONS_DB_FILTER_QUERY_CONVERTER,
+  ).to(LiveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.live.connection
       .LIVE_GAME_CONNECTIONS_UPDATE_QUERY_TO_LIVE_GAME_CONNECTIONS_DB_FILTER_QUERY_CONVERTER,
