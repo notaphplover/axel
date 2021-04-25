@@ -6,7 +6,7 @@ import { LiveGameConnectionsCreationQuery } from '../../../../../domain/query/li
 import { LiveGameConnectionsDb } from '../../../model/live/connection/LiveGameConnectionsDb';
 
 @injectable()
-export class LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter
+export class LiveGameConnectionsCreationQueryToLiveGameConnectionsDbConverter
   implements
     Converter<
       LiveGameConnectionsCreationQuery,

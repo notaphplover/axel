@@ -6,7 +6,7 @@ import { CardFindQueryToCardDbFilterQueryConverter } from '../../../db/converter
 import { CardDeckCreationQueryToCardDeckDbsConverter } from '../../../db/converter/deck/CardDeckCreationQueryToCardDeckDbsConverter';
 import { CardDeckDbToCardDeckConverter } from '../../../db/converter/deck/CardDeckDbToCardDeckConverter';
 import { CardDeckFindQueryToCardDeckDbFilterQueryConverter } from '../../../db/converter/deck/CardDeckFindQueryToCardDeckDbFilterQueryConverter';
-import { LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter } from '../../../db/converter/live/connection/LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter';
+import { LiveGameConnectionsCreationQueryToLiveGameConnectionsDbConverter } from '../../../db/converter/live/connection/LiveGameConnectionsCreationQueryToLiveGameConnectionsDbConverter';
 import { LiveGameConnectionsDbToLiveGameConnectionsConverter } from '../../../db/converter/live/connection/LiveGameConnectionsDbToLiveGameConnectionsConverter';
 import { LiveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter } from '../../../db/converter/live/connection/LiveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter';
 import { LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbFilterQueryConverter } from '../../../db/converter/live/connection/LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbFilterQueryConverter';
@@ -47,8 +47,8 @@ export function bindGameAdapterDb(bind: interfaces.Bind): void {
 
   bind(
     GAME_ADAPTER_TYPES.db.converter.live.connection
-      .LIVE_GAME_CONNECTIONS_CREATION_QUERY_TO_LIVE_GAME_CONNECTIONS_CONVERTER,
-  ).to(LiveGameConnectionsCreationQueryToLiveGameConnectionsConverter);
+      .LIVE_GAME_CONNECTIONS_CREATION_QUERY_TO_LIVE_GAME_CONNECTIONS_DB_CONVERTER,
+  ).to(LiveGameConnectionsCreationQueryToLiveGameConnectionsDbConverter);
   bind(
     GAME_ADAPTER_TYPES.db.converter.live.connection
       .LIVE_GAME_CONNECTIONS_FIND_QUERY_TO_LIVE_GAME_CONNECTIONS_DB_FILTER_QUERY_CONVERTER,
