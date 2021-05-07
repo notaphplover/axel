@@ -95,7 +95,7 @@
   },
   "dependencies": {
     "argon2": "^0.27.2",
-    "dotenv": "^8.2.0",
+    "dotenv": "^9.0.0",
     "fastify": "^3.15.1",
     "http-status-codes": "^2.1.4",
     "inversify": "^5.1.1",
