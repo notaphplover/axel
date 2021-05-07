@@ -8,7 +8,6 @@ import { EnvLoader, Index } from '../../../../layer-modules/env/domain';
 import { AppEnvVariables, appAdapter } from '../../../app/adapter';
 import { JwtDotEnvVariables } from './JwtDotEnvVariables';
 
-
 const CONFIG_DIR: string = join(__dirname, '..', '..', 'env');
 
 @injectable()

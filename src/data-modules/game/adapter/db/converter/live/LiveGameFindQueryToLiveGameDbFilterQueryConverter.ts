@@ -1,10 +1,9 @@
 import { injectable } from 'inversify';
 import mongodb from 'mongodb';
 
-import { Converter , commonDomain } from '../../../../../../common/domain';
+import { Converter, commonDomain } from '../../../../../../common/domain';
 import { LiveGameFindQuery } from '../../../../domain/query/live/LiveGameFindQuery';
 import { LiveGameDb } from '../../model/live/LiveGameDb';
-
 
 const hasValue: <TType>(
   value: TType,

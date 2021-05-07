@@ -12,7 +12,6 @@ import {
 import { EnvLoader } from '../../../../../../layer-modules/env/domain';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
-
 @injectable()
 export class CardDbCollectionInitializer extends MongoDbCollectionInitializer {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
