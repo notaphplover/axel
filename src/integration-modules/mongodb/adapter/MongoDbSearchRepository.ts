@@ -5,7 +5,6 @@ import { Converter, Filter } from '../../../common/domain';
 import { SearchRepository } from '../../../layer-modules/db/domain';
 import { MongoDbConnector } from './MongoDbConnector';
 
-
 @injectable()
 export abstract class MongoDbSearchRepository<
   TModel,

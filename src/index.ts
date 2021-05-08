@@ -12,10 +12,10 @@ import {
 import {
   MongoDbConnector,
   MongoDbInitializer,
- mongodbAdapter } from './integration-modules/mongodb/adapter';
+  mongodbAdapter,
+} from './integration-modules/mongodb/adapter';
 import { configAdapter } from './layer-modules/config/adapter';
 import { EnvLoader } from './layer-modules/env/domain';
-
 
 const container: Container = configAdapter.container;
 

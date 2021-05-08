@@ -11,10 +11,12 @@ import {
   FastifyRouter,
 } from '../../../../../../integration-modules/fastify/adapter';
 import { ApiVersion } from '../../../../../../layer-modules/api/adapter';
-import { FastifyUserAuthenticator , userAdapter } from '../../../../../user/adapter';
+import {
+  FastifyUserAuthenticator,
+  userAdapter,
+} from '../../../../../user/adapter';
 import { UserRole } from '../../../../../user/domain/model/UserRole';
 import { GAME_ADAPTER_TYPES } from '../../../config/types';
-
 
 const CARD_ROUTER_PATH_PREFIX: string = 'cards';
 

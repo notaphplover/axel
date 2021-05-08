@@ -7,8 +7,6 @@ import { AppEnvVariables, appAdapter } from '../data-modules/app/adapter';
 import { configAdapter } from '../layer-modules/config/adapter';
 import { EnvLoader } from '../layer-modules/env/domain';
 
-
-
 const container: Container = configAdapter.container;
 
 const appEnvLoader: EnvLoader<AppEnvVariables> = container.get(

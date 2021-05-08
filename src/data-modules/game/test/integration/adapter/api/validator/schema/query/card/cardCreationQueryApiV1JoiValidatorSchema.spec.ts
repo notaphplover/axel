@@ -61,7 +61,7 @@ describe('cardCreationQueryApiV1JoiValidatorSchema', () => {
     );
 
     describe.each(invalidCardCreationQueryApiV1Fixtures)(
-      'when called, with a valid CardCreationQueryApiV1',
+      'when called, with an invalid CardCreationQueryApiV1',
       (invalidCardCreationQueryApiV1Fixture: unknown) => {
         let result: Joi.ValidationResult;
 

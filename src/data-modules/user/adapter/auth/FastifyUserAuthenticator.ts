@@ -6,7 +6,6 @@ import { FastifyAuthenticator } from '../../../../integration-modules/fastify/ad
 import { User } from '../../domain';
 import { UserRole } from '../../domain/model/UserRole';
 
-
 @injectable()
 export class FastifyUserAuthenticator extends FastifyAuthenticator<User> {
   public async authenticate(

@@ -11,7 +11,6 @@ import { DotEnvLoader } from '../../../../integration-modules/dotenv/adapter';
 import { EnvLoader, Index } from '../../../env/domain';
 import { DbDotEnvVariables } from './DbDotEnvVariables';
 
-
 const CONFIG_DIR: string = join(__dirname, '..', '..', 'env');
 
 @injectable()

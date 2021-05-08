@@ -9,7 +9,6 @@ import { PlayerSetup } from '../../../../domain/model/setup/PlayerSetup';
 import { GameSetupUpdateQuery } from '../../../../domain/query/setup/GameSetupUpdateQuery';
 import { GameSetupDb } from '../../model/setup/GameSetupDb';
 
-
 @injectable()
 export class GameSetupUpdateQueryToGameSetupDbFilterQueryConverter
   implements Converter<GameSetupUpdateQuery, mongodb.FilterQuery<GameSetupDb>> {
