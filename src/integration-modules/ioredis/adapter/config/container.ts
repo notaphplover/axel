@@ -2,6 +2,7 @@ import { ContainerModule, interfaces } from 'inversify';
 
 import { IoredisClientBuilder } from '../builder/IoredisClientBuilder';
 import { IoredisClientSingleton } from '../IoredisClientSingleton';
+import { IoredisPublisher } from '../IoredisPublisher';
 import { IOREDIS_ADAPTER_TYPES } from './types';
 
 function bindAdapter(bind: interfaces.Bind): void {
@@ -11,6 +12,9 @@ function bindAdapter(bind: interfaces.Bind): void {
 
   bind(IOREDIS_ADAPTER_TYPES.IoredisClientSingleton)
     .to(IoredisClientSingleton)
+    .inSingletonScope();
+  bind(IOREDIS_ADAPTER_TYPES.IoredisPublisher)
+    .to(IoredisPublisher)
     .inSingletonScope();
   bind(IOREDIS_ADAPTER_TYPES.IoredisSubscriberClientSingleton)
     .to(IoredisClientSingleton)

@@ -4,6 +4,7 @@ export const IOREDIS_ADAPTER_TYPES = {
     IoredisClientBuilder: Symbol('IoredisClientBuilder'),
   },
   IoredisClientSingleton: Symbol('IoredisClientSingleton'),
+  IoredisPublisher: Symbol('IoredisPublisher'),
   IoredisSubscriber: Symbol('IoredisSubscriber'),
   IoredisSubscriberClientSingleton: Symbol('IoredisSubscriberClientSingleton'),
 };

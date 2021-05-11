@@ -24,7 +24,7 @@ describe(IoredisPublisher.name, () => {
 
     ioredisClient = ioredisClientSingleton.get();
 
-    ioredisPublisher = new IoredisPublisher(ioredisClient);
+    ioredisPublisher = new IoredisPublisher(ioredisClientSingleton);
   });
 
   describe('.publish', () => {

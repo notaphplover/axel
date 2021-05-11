@@ -2,6 +2,7 @@ import 'reflect-metadata';
 
 import IORedis from 'ioredis';
 
+import { IoredisClientSingleton } from '../../../adapter/IoredisClientSingleton';
 import { IoredisPublisher } from '../../../adapter/IoredisPublisher';
 
 describe(IoredisPublisher.name, () => {
@@ -14,7 +15,11 @@ describe(IoredisPublisher.name, () => {
       publish: jest.fn(),
     } as Partial<jest.Mocked<IORedis.Redis>>) as jest.Mocked<IORedis.Redis>;
 
-    ioredisPublisher = new IoredisPublisher(redisClientMock);
+    const redisClientSingleton: IoredisClientSingleton = ({
+      get: () => redisClientMock,
+    } as Partial<IoredisClientSingleton>) as IoredisClientSingleton;
+
+    ioredisPublisher = new IoredisPublisher(redisClientSingleton);
   });
 
   describe('.publish', () => {
