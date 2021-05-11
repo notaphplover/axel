@@ -15,7 +15,8 @@ export class LiveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConve
     Converter<
       LiveGameConnectionsFindQuery,
       mongodb.FilterQuery<LiveGameConnectionsDb>
-    > {
+    >
+{
   public transform(
     liveGameConnectionsFindQuery: LiveGameConnectionsFindQuery,
   ): mongodb.FilterQuery<LiveGameConnectionsDb> {

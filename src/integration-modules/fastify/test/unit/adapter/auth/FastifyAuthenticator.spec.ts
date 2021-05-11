@@ -40,11 +40,11 @@ describe(FastifyAuthenticator.name, () => {
 
         jwtTokenFixture = 'test-jwt-token';
 
-        const requestFixture: FastifyRequest = ({
+        const requestFixture: FastifyRequest = {
           headers: {
             authorization: 'Bearer ' + jwtTokenFixture,
           },
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<FastifyRequest> as FastifyRequest;
 
         const replyFixture: FastifyReply = fastifyReplyFixtureFactory.get();
 
@@ -74,9 +74,9 @@ describe(FastifyAuthenticator.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        const requestFixture: FastifyRequest = ({
+        const requestFixture: FastifyRequest = {
           headers: {},
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<FastifyRequest> as FastifyRequest;
         replyFixture = fastifyReplyFixtureFactory.get();
 
         result = await fastifyAuthenticator.authenticate(
@@ -109,11 +109,11 @@ describe(FastifyAuthenticator.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        const requestFixture: FastifyRequest = ({
+        const requestFixture: FastifyRequest = {
           headers: {
             authorization: 'Not a Bearer token',
           },
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<FastifyRequest> as FastifyRequest;
         replyFixture = fastifyReplyFixtureFactory.get();
 
         result = await fastifyAuthenticator.authenticate(
@@ -150,11 +150,11 @@ describe(FastifyAuthenticator.name, () => {
           'Test when jwt manager fails to parse',
         );
 
-        const requestFixture: FastifyRequest = ({
+        const requestFixture: FastifyRequest = {
           headers: {
             authorization: 'Bearer test-jwt-token',
           },
-        } as Partial<FastifyRequest>) as FastifyRequest;
+        } as Partial<FastifyRequest> as FastifyRequest;
         replyFixture = fastifyReplyFixtureFactory.get();
 
         result = await fastifyAuthenticator.authenticate(

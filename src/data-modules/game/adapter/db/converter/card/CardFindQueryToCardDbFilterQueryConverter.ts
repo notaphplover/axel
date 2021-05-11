@@ -12,7 +12,8 @@ const hasValue: <TType>(
 
 @injectable()
 export class CardFindQueryToCardDbFilterQueryConverter
-  implements Converter<CardFindQuery, mongodb.FilterQuery<CardDb>> {
+  implements Converter<CardFindQuery, mongodb.FilterQuery<CardDb>>
+{
   public transform(input: CardFindQuery): mongodb.FilterQuery<CardDb> {
     const andFilterQuery: mongodb.FilterQuery<CardDb>[] = [];
 

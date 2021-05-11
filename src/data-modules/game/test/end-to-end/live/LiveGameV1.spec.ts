@@ -63,39 +63,30 @@ async function prepareData(): Promise<E2EComponents> {
     .bind(commonTest.config.types.taskGraph.CURRENT_TASK_GRAPH)
     .toConstantValue(taskGraph);
 
-  const createUserTokenTaskGraphNode: TaskGraphNode<
-    symbol,
-    UserToken
-  > = e2eContainer.get(
-    userTest.config.types.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
-  );
+  const createUserTokenTaskGraphNode: TaskGraphNode<symbol, UserToken> =
+    e2eContainer.get(
+      userTest.config.types.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
+    );
 
-  const createCardDeckOfCreatureGraphNode: TaskGraphNode<
-    symbol,
-    CardDeck
-  > = e2eContainer.get(
-    GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_CREATURE_TASK_GRAPH_NODE,
-  );
+  const createCardDeckOfCreatureGraphNode: TaskGraphNode<symbol, CardDeck> =
+    e2eContainer.get(
+      GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_CREATURE_TASK_GRAPH_NODE,
+    );
 
-  const createGameSetupOfOnePlayerGraphNode: TaskGraphNode<
-    symbol,
-    GameSetup
-  > = e2eContainer.get(
-    GAME_E2E_TYPES.setup.CREATE_GAME_SETUP_OF_ONE_PLAYER_GRAPH_NODE,
-  );
+  const createGameSetupOfOnePlayerGraphNode: TaskGraphNode<symbol, GameSetup> =
+    e2eContainer.get(
+      GAME_E2E_TYPES.setup.CREATE_GAME_SETUP_OF_ONE_PLAYER_GRAPH_NODE,
+    );
 
-  const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor = new InversifyContainerTaskGraphNodeExtractor(
-    e2eContainer,
-    [
+  const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor =
+    new InversifyContainerTaskGraphNodeExtractor(e2eContainer, [
       createUserTokenTaskGraphNode,
       createCardDeckOfCreatureGraphNode,
       createGameSetupOfOnePlayerGraphNode,
-    ],
-  );
+    ]);
 
-  const extractedNodes: Iterable<
-    TaskGraphNode<symbol, unknown>
-  > = inversifyContainerTaskGraphNodeExtractor.extract();
+  const extractedNodes: Iterable<TaskGraphNode<symbol, unknown>> =
+    inversifyContainerTaskGraphNodeExtractor.extract();
 
   taskGraph.addTasks(extractedNodes);
 

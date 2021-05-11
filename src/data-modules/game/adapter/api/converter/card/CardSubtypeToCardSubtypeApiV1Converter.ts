@@ -18,7 +18,8 @@ const cardSubtypeToCardSubtypeApiV1Map: {
 
 @injectable()
 export class CardSubtypeToCardSubtypeApiV1Converter
-  implements Converter<CardSubtype, CardSubtypeApiV1> {
+  implements Converter<CardSubtype, CardSubtypeApiV1>
+{
   public transform(input: CardSubtype): CardSubtypeApiV1 {
     return cardSubtypeToCardSubtypeApiV1Map[input];
   }

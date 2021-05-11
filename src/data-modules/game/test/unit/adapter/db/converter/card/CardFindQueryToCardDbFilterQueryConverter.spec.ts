@@ -8,7 +8,8 @@ describe(CardFindQueryToCardDbFilterQueryConverter.name, () => {
   let cardFindQueryToCardDbFilterQueryConverter: CardFindQueryToCardDbFilterQueryConverter;
 
   beforeAll(() => {
-    cardFindQueryToCardDbFilterQueryConverter = new CardFindQueryToCardDbFilterQueryConverter();
+    cardFindQueryToCardDbFilterQueryConverter =
+      new CardFindQueryToCardDbFilterQueryConverter();
   });
 
   describe('.transform', () => {
@@ -21,9 +22,10 @@ describe(CardFindQueryToCardDbFilterQueryConverter.name, () => {
           offset: 0,
         };
 
-        result = cardFindQueryToCardDbFilterQueryConverter.transform(
-          cardFindQueryFixture,
-        );
+        result =
+          cardFindQueryToCardDbFilterQueryConverter.transform(
+            cardFindQueryFixture,
+          );
       });
 
       it('must return a query with no $and property', () => {
@@ -41,9 +43,10 @@ describe(CardFindQueryToCardDbFilterQueryConverter.name, () => {
           types: [],
         };
 
-        result = cardFindQueryToCardDbFilterQueryConverter.transform(
-          cardFindQueryFixture,
-        );
+        result =
+          cardFindQueryToCardDbFilterQueryConverter.transform(
+            cardFindQueryFixture,
+          );
       });
 
       it('must return a query with no $and property', () => {

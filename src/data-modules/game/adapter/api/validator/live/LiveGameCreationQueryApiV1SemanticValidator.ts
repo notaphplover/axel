@@ -11,7 +11,8 @@ export class LiveGameCreationQueryApiV1SemanticValidator
       LiveGameCreationQueryApiV1,
       LiveGameCreationQueryApiV1,
       LiveGameCreationQueryApiV1ValidationContext
-    > {
+    >
+{
   public validate(
     value: LiveGameCreationQueryApiV1,
     context: LiveGameCreationQueryApiV1ValidationContext,

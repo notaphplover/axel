@@ -6,7 +6,8 @@ import { Interactor } from './Interactor';
 
 @injectable()
 export class CreateEntityInteractor<TEntity, TQuery>
-  implements Interactor<TQuery, Promise<TEntity>> {
+  implements Interactor<TQuery, Promise<TEntity>>
+{
   constructor(
     private readonly entityInsertRepository: InsertRepository<TEntity, TQuery>,
   ) {}

@@ -74,7 +74,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             ])
           ).ops as LiveGameConnectionsDb[] & [LiveGameConnectionsDb];
 
-          liveGameConnectionsUpdateQueryFixture = liveGameConnectionsUpdateQueryFixtureFactory.get();
+          liveGameConnectionsUpdateQueryFixture =
+            liveGameConnectionsUpdateQueryFixtureFactory.get();
 
           liveGameConnectionsUpdateQueryFixture.liveGameId =
             liveGameConnectionsDbInserted.liveGameId;

@@ -13,15 +13,13 @@ export const cardDeckCreationQuery: CardDeckCreationQuery = {
   sections: cardDeck.sections,
 };
 
-export const cardDeckCreationQueryFixtureFactory: FixtureFactory<CardDeckCreationQuery> = new DeepCloneFixtureFactory(
-  cardDeckCreationQuery,
-);
+export const cardDeckCreationQueryFixtureFactory: FixtureFactory<CardDeckCreationQuery> =
+  new DeepCloneFixtureFactory(cardDeckCreationQuery);
 
 export const cardDeckFindQuery: CardDeckFindQuery = {
   id: cardDeck.id,
   ids: [cardDeck.id],
 };
 
-export const cardDeckFindQueryFixtureFactory: FixtureFactory<CardDeckFindQuery> = new DeepCloneFixtureFactory(
-  cardDeckFindQuery,
-);
+export const cardDeckFindQueryFixtureFactory: FixtureFactory<CardDeckFindQuery> =
+  new DeepCloneFixtureFactory(cardDeckFindQuery);

@@ -12,7 +12,8 @@ export class LiveGameRoomUpsertQueryWsApiV1ToLiveGameRoomUpsertQueryConverter
       LiveGameRoomUpsertQueryWsApiV1,
       Promise<LiveGameRoomUpsertQuery>,
       LiveGameRoomUpsertQueryWsApiV1ValidationContext
-    > {
+    >
+{
   public async transform(
     input: LiveGameRoomUpsertQueryWsApiV1,
     context: LiveGameRoomUpsertQueryWsApiV1ValidationContext,

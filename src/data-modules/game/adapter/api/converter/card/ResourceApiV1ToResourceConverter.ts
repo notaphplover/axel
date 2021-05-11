@@ -6,7 +6,8 @@ import { ResourceApiV1 } from '../../model/card/ResourceApiV1';
 
 @injectable()
 export class ResourceApiV1ToResourceConverter
-  implements Converter<ResourceApiV1, Resource> {
+  implements Converter<ResourceApiV1, Resource>
+{
   public transform(input: ResourceApiV1): Resource {
     return {
       black: input.black,

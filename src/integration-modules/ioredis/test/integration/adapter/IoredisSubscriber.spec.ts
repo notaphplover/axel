@@ -49,18 +49,15 @@ describe(IoredisSubscriber.name, () => {
       IOREDIS_ADAPTER_TYPES.IoredisClientSingleton,
     );
 
-    const ioredisSubscriberClientSingleton: IoredisClientSingleton = container.get(
-      IOREDIS_ADAPTER_TYPES.IoredisSubscriberClientSingleton,
-    );
+    const ioredisSubscriberClientSingleton: IoredisClientSingleton =
+      container.get(IOREDIS_ADAPTER_TYPES.IoredisSubscriberClientSingleton);
 
     ioredisClient = ioredisClientSingleton.get();
 
     ioredisSubscriberClient = ioredisSubscriberClientSingleton.get();
 
-    messageFromChannelHandler = jest.fn<
-      Promise<void>,
-      [string, string, ContextFixture]
-    >();
+    messageFromChannelHandler =
+      jest.fn<Promise<void>, [string, string, ContextFixture]>();
 
     ioredisSubscriber = new IoredisSubscriberMock(
       ioredisSubscriberClient,

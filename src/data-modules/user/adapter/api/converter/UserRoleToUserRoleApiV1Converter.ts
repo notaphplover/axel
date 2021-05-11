@@ -11,7 +11,8 @@ const userRoleToUserRoleApiV1Map: { [TKey in UserRole]: UserRoleApiV1 } = {
 
 @injectable()
 export class UserRoleToUserRoleApiV1Converter
-  implements Converter<UserRole, UserRoleApiV1> {
+  implements Converter<UserRole, UserRoleApiV1>
+{
   public transform(input: UserRole): UserRoleApiV1 {
     if (input in userRoleToUserRoleApiV1Map) {
       return userRoleToUserRoleApiV1Map[input];

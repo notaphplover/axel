@@ -9,7 +9,8 @@ import { CardFindQueryApiV1 } from '../../query/card/CardFindQueryApiV1';
 
 @injectable()
 export class CardFindQueryApiV1ToCardFindQueryConverter
-  implements Converter<CardFindQueryApiV1, CardFindQuery> {
+  implements Converter<CardFindQueryApiV1, CardFindQuery>
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.card

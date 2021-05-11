@@ -63,13 +63,12 @@ export class GameSetupRouter implements FastifyRouter {
   private async injectRoutesV1(server: FastifyInstance): Promise<void> {
     server.post(`/${GAME_SETUP_ROUTER_PATH_PREFIX}`, {
       onRequest: async (request: FastifyRequest, reply: FastifyReply) => {
-        const user: User | null = await this.fastifyUserAuthenticator.authenticate(
-          request,
-          reply,
-          [UserRole.CLIENT],
-        );
+        const user: User | null =
+          await this.fastifyUserAuthenticator.authenticate(request, reply, [
+            UserRole.CLIENT,
+          ]);
         if (user !== null) {
-          ((request as unknown) as UserContainer).user = user;
+          (request as unknown as UserContainer).user = user;
         }
       },
       handler: async (request: FastifyRequest, reply: FastifyReply) =>
@@ -81,13 +80,12 @@ export class GameSetupRouter implements FastifyRouter {
 
     server.patch(`/${GAME_SETUP_ROUTER_PATH_PREFIX}/:gameSetupId`, {
       onRequest: async (request: FastifyRequest, reply: FastifyReply) => {
-        const user: User | null = await this.fastifyUserAuthenticator.authenticate(
-          request,
-          reply,
-          [UserRole.CLIENT],
-        );
+        const user: User | null =
+          await this.fastifyUserAuthenticator.authenticate(request, reply, [
+            UserRole.CLIENT,
+          ]);
         if (user !== null) {
-          ((request as unknown) as UserContainer).user = user;
+          (request as unknown as UserContainer).user = user;
         }
       },
       handler: async (request: FastifyRequest, reply: FastifyReply) =>

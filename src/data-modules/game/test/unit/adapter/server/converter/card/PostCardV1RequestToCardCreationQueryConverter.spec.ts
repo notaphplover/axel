@@ -36,10 +36,11 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
         validate: jest.fn(),
       };
 
-      postCardV1RequestToCardCreationQueryConverter = new PostCardV1RequestToCardCreationQueryConverter(
-        queryApiToQueryConverter,
-        syntaxValidator,
-      );
+      postCardV1RequestToCardCreationQueryConverter =
+        new PostCardV1RequestToCardCreationQueryConverter(
+          queryApiToQueryConverter,
+          syntaxValidator,
+        );
     });
 
     describe('having a request with a CardCreationQueryApiV1 with power, toughness and creature type', () => {
@@ -55,9 +56,9 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
           types: [CardTypeApiV1.Artifact, CardTypeApiV1.Creature],
         };
 
-        requestFixture = ({
+        requestFixture = {
           body: cardCreationQueryApiV1Fixture,
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
       });
 
       describe('when called', () => {
@@ -69,9 +70,10 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
             result: true,
           });
 
-          result = await postCardV1RequestToCardCreationQueryConverter.transform(
-            requestFixture,
-          );
+          result =
+            await postCardV1RequestToCardCreationQueryConverter.transform(
+              requestFixture,
+            );
         });
 
         it('should return no validation error', () => {
@@ -93,9 +95,9 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
           types: [CardTypeApiV1.Enchantment],
         };
 
-        requestFixture = ({
+        requestFixture = {
           body: cardCreationQueryApiV1Fixture,
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
       });
 
       describe('when called', () => {
@@ -107,9 +109,10 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
             result: true,
           });
 
-          result = await postCardV1RequestToCardCreationQueryConverter.transform(
-            requestFixture,
-          );
+          result =
+            await postCardV1RequestToCardCreationQueryConverter.transform(
+              requestFixture,
+            );
         });
 
         it('should return no validation error', () => {
@@ -131,9 +134,9 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
           types: [],
         };
 
-        requestFixture = ({
+        requestFixture = {
           body: cardCreationQueryApiV1Fixture,
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
       });
 
       describe('when called', () => {
@@ -145,9 +148,10 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
             result: true,
           });
 
-          result = await postCardV1RequestToCardCreationQueryConverter.transform(
-            requestFixture,
-          );
+          result =
+            await postCardV1RequestToCardCreationQueryConverter.transform(
+              requestFixture,
+            );
         });
 
         it('should return a validation error', () => {
@@ -171,9 +175,9 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
           types: [CardTypeApiV1.Artifact],
         };
 
-        requestFixture = ({
+        requestFixture = {
           body: cardCreationQueryApiV1Fixture,
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
       });
 
       describe('when called', () => {
@@ -185,9 +189,10 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
             result: true,
           });
 
-          result = await postCardV1RequestToCardCreationQueryConverter.transform(
-            requestFixture,
-          );
+          result =
+            await postCardV1RequestToCardCreationQueryConverter.transform(
+              requestFixture,
+            );
         });
 
         it('should return a validation error', () => {
@@ -211,9 +216,9 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
           types: [CardTypeApiV1.Artifact],
         };
 
-        requestFixture = ({
+        requestFixture = {
           body: cardCreationQueryApiV1Fixture,
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
       });
 
       describe('when called', () => {
@@ -225,9 +230,10 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
             result: true,
           });
 
-          result = await postCardV1RequestToCardCreationQueryConverter.transform(
-            requestFixture,
-          );
+          result =
+            await postCardV1RequestToCardCreationQueryConverter.transform(
+              requestFixture,
+            );
         });
 
         it('should return a validation error', () => {
@@ -251,9 +257,9 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
           types: [CardTypeApiV1.Artifact, CardTypeApiV1.Creature],
         };
 
-        requestFixture = ({
+        requestFixture = {
           body: cardCreationQueryApiV1Fixture,
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
       });
 
       describe('when called', () => {
@@ -265,9 +271,10 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
             result: true,
           });
 
-          result = await postCardV1RequestToCardCreationQueryConverter.transform(
-            requestFixture,
-          );
+          result =
+            await postCardV1RequestToCardCreationQueryConverter.transform(
+              requestFixture,
+            );
         });
 
         it('should return a validation error', () => {
@@ -291,9 +298,9 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
           types: [CardTypeApiV1.Artifact, CardTypeApiV1.Creature],
         };
 
-        requestFixture = ({
+        requestFixture = {
           body: cardCreationQueryApiV1Fixture,
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
       });
 
       describe('when called', () => {
@@ -305,9 +312,10 @@ describe(PostCardV1RequestToCardCreationQueryConverter.name, () => {
             result: true,
           });
 
-          result = await postCardV1RequestToCardCreationQueryConverter.transform(
-            requestFixture,
-          );
+          result =
+            await postCardV1RequestToCardCreationQueryConverter.transform(
+              requestFixture,
+            );
         });
 
         it('should return a validation error', () => {

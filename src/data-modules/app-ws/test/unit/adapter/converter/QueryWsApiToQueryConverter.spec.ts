@@ -95,10 +95,11 @@ describe(QueryWsApiToQueryConverter.name, () => {
       validate: jest.fn(),
     };
 
-    validationContextMockOrErrorsGenerator = jest.fn<
-      ValueOrErrors<ValidationContextFixture>,
-      [QueryWsApiFixture, AppWsRequestContext]
-    >();
+    validationContextMockOrErrorsGenerator =
+      jest.fn<
+        ValueOrErrors<ValidationContextFixture>,
+        [QueryWsApiFixture, AppWsRequestContext]
+      >();
 
     queryWsApiToQueryConverterMock = new QueryWsApiToQueryConverterMock(
       contextBasedValidator,
@@ -131,7 +132,8 @@ describe(QueryWsApiToQueryConverter.name, () => {
         queryApiField: 'queryApiFieldValue',
         type: 'sample-type',
       };
-      requestContextFixture = ({} as Partial<AppWsRequestContext>) as AppWsRequestContext;
+      requestContextFixture =
+        {} as Partial<AppWsRequestContext> as AppWsRequestContext;
 
       queryWsApiValidationSuccessFixture = {
         model: queryWsApiFixture,

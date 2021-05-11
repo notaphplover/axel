@@ -26,13 +26,13 @@ export const gameSetupCreationQueryApiV1: GameSetupCreationQueryApiV1 = {
   playerSlots: 2,
 };
 
-export const gameSetupCreationQueryApiV1FixtureFactory: FixtureFactory<GameSetupCreationQueryApiV1> = new DeepCloneFixtureFactory(
-  gameSetupCreationQueryApiV1,
-);
+export const gameSetupCreationQueryApiV1FixtureFactory: FixtureFactory<GameSetupCreationQueryApiV1> =
+  new DeepCloneFixtureFactory(gameSetupCreationQueryApiV1);
 
-export const gameSetupFindQueryPlayerSetupApiV1: GameSetupFindQueryPlayerSetupApiV1 = {
-  userId: gameSetupFindQuery.ownerUserId,
-};
+export const gameSetupFindQueryPlayerSetupApiV1: GameSetupFindQueryPlayerSetupApiV1 =
+  {
+    userId: gameSetupFindQuery.ownerUserId,
+  };
 
 export const gameSetupFindQueryApiV1: Required<GameSetupFindQueryApiV1> = {
   format: GameFormatApiV1.UNRESTRICTED,
@@ -44,9 +44,8 @@ export const gameSetupFindQueryApiV1: Required<GameSetupFindQueryApiV1> = {
   playerSlots: gameSetupFindQuery.playerSlots,
 };
 
-export const gameSetupFindQueryApiV1FixtureFactory: FixtureFactory<GameSetupFindQueryApiV1> = new DeepCloneFixtureFactory(
-  gameSetupFindQueryApiV1,
-);
+export const gameSetupFindQueryApiV1FixtureFactory: FixtureFactory<GameSetupFindQueryApiV1> =
+  new DeepCloneFixtureFactory(gameSetupFindQueryApiV1);
 
 export const gameSetupUpdateQueryApiV1: GameSetupUpdateQueryApiV1 = {
   id: gameSetupUpdateQuery.id,
@@ -63,6 +62,5 @@ export const gameSetupUpdateQueryApiV1: GameSetupUpdateQueryApiV1 = {
   ],
 };
 
-export const gameSetupUpdateQueryApiV1FixtureFactory: FixtureFactory<GameSetupUpdateQueryApiV1> = new DeepCloneFixtureFactory(
-  gameSetupUpdateQueryApiV1,
-);
+export const gameSetupUpdateQueryApiV1FixtureFactory: FixtureFactory<GameSetupUpdateQueryApiV1> =
+  new DeepCloneFixtureFactory(gameSetupUpdateQueryApiV1);

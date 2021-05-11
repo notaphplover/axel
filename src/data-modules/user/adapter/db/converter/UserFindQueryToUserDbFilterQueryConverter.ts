@@ -11,7 +11,8 @@ const hasValue: <TType>(
 
 @injectable()
 export class UserFindQueryToUserDbFilterQueryConverter
-  implements Converter<UserFindQuery, mongodb.FilterQuery<UserDb>> {
+  implements Converter<UserFindQuery, mongodb.FilterQuery<UserDb>>
+{
   public transform(input: UserFindQuery): mongodb.FilterQuery<UserDb> {
     const filterQuery: mongodb.FilterQuery<UserDb> = {};
 

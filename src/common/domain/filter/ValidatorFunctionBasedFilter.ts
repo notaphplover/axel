@@ -4,7 +4,8 @@ import { Filter } from './Filter';
 
 @injectable()
 export abstract class ValidatorFunctionBasedFilter<TModel, TQuery>
-  implements Filter<TModel, TQuery> {
+  implements Filter<TModel, TQuery>
+{
   public async filter(models: TModel[], filter: TQuery): Promise<TModel[]> {
     const modelComplainments: [TModel, boolean][] = await Promise.all(
       models.map(async (model: TModel) =>

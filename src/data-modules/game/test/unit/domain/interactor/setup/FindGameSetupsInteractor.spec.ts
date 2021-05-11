@@ -14,11 +14,11 @@ describe(FindGameSetupsInteractor.name, () => {
   let findGameSetupsInteractor: FindGameSetupsInteractor;
 
   beforeAll(() => {
-    gameSetupSearchRepository = ({
+    gameSetupSearchRepository = {
       find: jest.fn(),
     } as Partial<
       SearchRepository<GameSetup, GameSetupFindQuery>
-    >) as SearchRepository<GameSetup, GameSetupFindQuery>;
+    > as SearchRepository<GameSetup, GameSetupFindQuery>;
 
     findGameSetupsInteractor = new FindGameSetupsInteractor(
       gameSetupSearchRepository,

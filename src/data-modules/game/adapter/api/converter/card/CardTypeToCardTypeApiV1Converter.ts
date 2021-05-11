@@ -13,7 +13,8 @@ const cardTypeToCardTypeApiV1Map: { [TKey in CardType]: CardTypeApiV1 } = {
 
 @injectable()
 export class CardTypeToCardTypeApiV1Converter
-  implements Converter<CardType, CardTypeApiV1> {
+  implements Converter<CardType, CardTypeApiV1>
+{
   public transform(input: CardType): CardTypeApiV1 {
     if (input in cardTypeToCardTypeApiV1Map) {
       return cardTypeToCardTypeApiV1Map[input];

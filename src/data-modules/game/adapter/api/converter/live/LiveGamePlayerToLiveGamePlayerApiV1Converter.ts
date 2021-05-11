@@ -11,7 +11,8 @@ import { LiveGamePlayerApiV1 } from '../../model/live/LiveGamePlayerApiV1';
 
 @injectable()
 export class LiveGamePlayerToLiveGamePlayerApiV1Converter
-  implements Converter<LiveGamePlayer, LiveGamePlayerApiV1> {
+  implements Converter<LiveGamePlayer, LiveGamePlayerApiV1>
+{
   constructor(
     @inject(GAME_ADAPTER_TYPES.api.converter.live.HAND_TO_HAND_API_V1_CONVERTER)
     private readonly handToHandApiV1Converter: Converter<Hand, HandApiV1>,

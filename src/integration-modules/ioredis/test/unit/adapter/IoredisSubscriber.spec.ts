@@ -39,16 +39,14 @@ describe(IoredisSubscriber.name, () => {
   let ioredisSubscriber: IoredisSubscriberMock;
 
   beforeAll(() => {
-    redisClientMock = ({
+    redisClientMock = {
       on: jest.fn(),
       subscribe: jest.fn(),
       unsubscribe: jest.fn(),
-    } as Partial<jest.Mocked<IORedis.Redis>>) as jest.Mocked<IORedis.Redis>;
+    } as Partial<jest.Mocked<IORedis.Redis>> as jest.Mocked<IORedis.Redis>;
 
-    messageFromChannelHandler = jest.fn<
-      Promise<void>,
-      [string, string, ContextFixture]
-    >();
+    messageFromChannelHandler =
+      jest.fn<Promise<void>, [string, string, ContextFixture]>();
 
     ioredisSubscriber = new IoredisSubscriberMock(
       redisClientMock,

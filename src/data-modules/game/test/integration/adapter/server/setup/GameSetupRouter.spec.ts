@@ -26,9 +26,9 @@ const fastifyIntegrationDescribeGenerator: (
 
 const fastifyServerTestOutputParam: FastifyServerTestOutputParam = {};
 
-const fastifyUserAuthenticator: FastifyUserAuthenticator = ({
+const fastifyUserAuthenticator: FastifyUserAuthenticator = {
   authenticate: jest.fn(),
-} as Partial<FastifyUserAuthenticator>) as FastifyUserAuthenticator;
+} as Partial<FastifyUserAuthenticator> as FastifyUserAuthenticator;
 
 const postGameSetupsSearchesV1RequestHandler: FastifyRequestHandler = {
   handle: jest.fn(),
@@ -61,8 +61,9 @@ fastifyIntegrationDescribeGenerator(
 
   describe('GameSetupRouter based server', () => {
     beforeAll(async () => {
-      fastifyInstance = (fastifyServerTestOutputParam.value as FastifyServerTest)
-        .fastify as FastifyInstance;
+      fastifyInstance = (
+        fastifyServerTestOutputParam.value as FastifyServerTest
+      ).fastify as FastifyInstance;
     });
 
     describe('PATCH GameSetups', () => {
@@ -75,11 +76,13 @@ fastifyIntegrationDescribeGenerator(
             foo: 'bar',
           };
 
-          (fastifyUserAuthenticator.authenticate as jest.Mock).mockResolvedValueOnce(
-            userFixtureFactory.get(),
-          );
+          (
+            fastifyUserAuthenticator.authenticate as jest.Mock
+          ).mockResolvedValueOnce(userFixtureFactory.get());
 
-          (patchGameSetupByIdV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
+          (
+            patchGameSetupByIdV1RequestHandlerMock.handle as jest.Mock
+          ).mockImplementationOnce(
             async (
               request: FastifyRequest,
               reply: FastifyReply,
@@ -96,18 +99,20 @@ fastifyIntegrationDescribeGenerator(
 
         afterAll(async () => {
           (fastifyUserAuthenticator.authenticate as jest.Mock).mockClear();
-          (patchGameSetupByIdV1RequestHandlerMock.handle as jest.Mock).mockClear();
+          (
+            patchGameSetupByIdV1RequestHandlerMock.handle as jest.Mock
+          ).mockClear();
         });
 
         it('must call fastifyUserAuthenticator.authenticate with admin role', async () => {
           expect(fastifyUserAuthenticator.authenticate).toHaveBeenCalledTimes(
             1,
           );
-          expect(
-            fastifyUserAuthenticator.authenticate,
-          ).toHaveBeenCalledWith(expect.anything(), expect.anything(), [
-            UserRole.CLIENT,
-          ]);
+          expect(fastifyUserAuthenticator.authenticate).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            [UserRole.CLIENT],
+          );
         });
 
         it('must call patchGameSetupV1RequestHandlerMock.handle to handle the request', () => {
@@ -130,7 +135,9 @@ fastifyIntegrationDescribeGenerator(
             message: 'test PATCH GameSetup with wrong auth',
           };
 
-          (fastifyUserAuthenticator.authenticate as jest.Mock).mockImplementationOnce(
+          (
+            fastifyUserAuthenticator.authenticate as jest.Mock
+          ).mockImplementationOnce(
             async (request: FastifyRequest, reply: FastifyReply) => {
               await reply
                 .status(fastifyUserAuthenticatorCodeSent)
@@ -175,11 +182,13 @@ fastifyIntegrationDescribeGenerator(
             foo: 'bar',
           };
 
-          (fastifyUserAuthenticator.authenticate as jest.Mock).mockResolvedValueOnce(
-            userFixtureFactory.get(),
-          );
+          (
+            fastifyUserAuthenticator.authenticate as jest.Mock
+          ).mockResolvedValueOnce(userFixtureFactory.get());
 
-          (postGameSetupV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
+          (
+            postGameSetupV1RequestHandlerMock.handle as jest.Mock
+          ).mockImplementationOnce(
             async (
               request: FastifyRequest,
               reply: FastifyReply,
@@ -203,11 +212,11 @@ fastifyIntegrationDescribeGenerator(
           expect(fastifyUserAuthenticator.authenticate).toHaveBeenCalledTimes(
             1,
           );
-          expect(
-            fastifyUserAuthenticator.authenticate,
-          ).toHaveBeenCalledWith(expect.anything(), expect.anything(), [
-            UserRole.CLIENT,
-          ]);
+          expect(fastifyUserAuthenticator.authenticate).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            [UserRole.CLIENT],
+          );
         });
 
         it('must call postGameSetupV1RequestHandlerMock.handle to handle the request', () => {
@@ -230,7 +239,9 @@ fastifyIntegrationDescribeGenerator(
             message: 'test POST GameSetup with wrong auth',
           };
 
-          (fastifyUserAuthenticator.authenticate as jest.Mock).mockImplementationOnce(
+          (
+            fastifyUserAuthenticator.authenticate as jest.Mock
+          ).mockImplementationOnce(
             async (request: FastifyRequest, reply: FastifyReply) => {
               await reply
                 .status(fastifyUserAuthenticatorCodeSent)
@@ -275,11 +286,13 @@ fastifyIntegrationDescribeGenerator(
             foo: 'bar',
           };
 
-          (fastifyUserAuthenticator.authenticate as jest.Mock).mockResolvedValueOnce(
-            userFixtureFactory.get(),
-          );
+          (
+            fastifyUserAuthenticator.authenticate as jest.Mock
+          ).mockResolvedValueOnce(userFixtureFactory.get());
 
-          (postGameSetupsSearchesV1RequestHandler.handle as jest.Mock).mockImplementationOnce(
+          (
+            postGameSetupsSearchesV1RequestHandler.handle as jest.Mock
+          ).mockImplementationOnce(
             async (
               request: FastifyRequest,
               reply: FastifyReply,
@@ -296,18 +309,20 @@ fastifyIntegrationDescribeGenerator(
 
         afterAll(async () => {
           (fastifyUserAuthenticator.authenticate as jest.Mock).mockClear();
-          (postGameSetupsSearchesV1RequestHandler.handle as jest.Mock).mockClear();
+          (
+            postGameSetupsSearchesV1RequestHandler.handle as jest.Mock
+          ).mockClear();
         });
 
         it('must call fastifyUserAuthenticator.authenticate with admin role', async () => {
           expect(fastifyUserAuthenticator.authenticate).toHaveBeenCalledTimes(
             1,
           );
-          expect(
-            fastifyUserAuthenticator.authenticate,
-          ).toHaveBeenCalledWith(expect.anything(), expect.anything(), [
-            UserRole.CLIENT,
-          ]);
+          expect(fastifyUserAuthenticator.authenticate).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            [UserRole.CLIENT],
+          );
         });
 
         it('must call getGameSetupsV1RequestHandler.handle to handle the request', () => {
@@ -330,7 +345,9 @@ fastifyIntegrationDescribeGenerator(
             message: 'test GET GameSetups with wrong auth',
           };
 
-          (fastifyUserAuthenticator.authenticate as jest.Mock).mockImplementationOnce(
+          (
+            fastifyUserAuthenticator.authenticate as jest.Mock
+          ).mockImplementationOnce(
             async (request: FastifyRequest, reply: FastifyReply) => {
               await reply
                 .status(fastifyUserAuthenticatorCodeSent)

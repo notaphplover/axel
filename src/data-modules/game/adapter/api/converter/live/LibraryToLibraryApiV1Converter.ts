@@ -9,7 +9,8 @@ import { LibraryApiV1 } from '../../model/live/LibraryApiV1';
 
 @injectable()
 export class LibraryToLibraryApiV1Converter
-  implements Converter<Library, LibraryApiV1> {
+  implements Converter<Library, LibraryApiV1>
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.deck

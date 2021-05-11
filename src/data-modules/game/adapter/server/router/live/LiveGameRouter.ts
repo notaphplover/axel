@@ -60,13 +60,12 @@ export class LiveGameRouter implements FastifyRouter {
         request: fastify.FastifyRequest,
         reply: fastify.FastifyReply,
       ) => {
-        const user: User | null = await this.fastifyUserAuthenticator.authenticate(
-          request,
-          reply,
-          [UserRole.CLIENT],
-        );
+        const user: User | null =
+          await this.fastifyUserAuthenticator.authenticate(request, reply, [
+            UserRole.CLIENT,
+          ]);
         if (user !== null) {
-          ((request as unknown) as UserContainer).user = user;
+          (request as unknown as UserContainer).user = user;
         }
       },
       handler: async (

@@ -15,7 +15,8 @@ import { LiveGamePlayerAreaApiV1 } from '../../model/live/LiveGamePlayerAreaApiV
 
 @injectable()
 export class LiveGamePlayerAreaToLiveGamePlayerAreaApiV1Converter
-  implements Converter<LiveGamePlayerArea, LiveGamePlayerAreaApiV1> {
+  implements Converter<LiveGamePlayerArea, LiveGamePlayerAreaApiV1>
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.live

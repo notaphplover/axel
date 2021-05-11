@@ -35,12 +35,10 @@ export class CreateCardDeckOfCreatureGraphNode extends BaseTaskGraphNode<
   }
 
   protected async innerPerform(): Promise<CardDeck> {
-    const createCreatureTaskGraphNode: TaskGraphNode<
-      symbol,
-      Card
-    > = this.currentTaskGraph.getNode(
-      GAME_E2E_TYPES.card.CREATE_CREATURE_TASK_GRAPH_NODE,
-    ) as TaskGraphNode<symbol, Card>;
+    const createCreatureTaskGraphNode: TaskGraphNode<symbol, Card> =
+      this.currentTaskGraph.getNode(
+        GAME_E2E_TYPES.card.CREATE_CREATURE_TASK_GRAPH_NODE,
+      ) as TaskGraphNode<symbol, Card>;
 
     const creature: Card = createCreatureTaskGraphNode.getOutput();
 
@@ -58,9 +56,8 @@ export class CreateCardDeckOfCreatureGraphNode extends BaseTaskGraphNode<
       },
     };
 
-    const cardDecksOfCreatureLand: CardDeck[] = await this.createCardDecksInteractor.interact(
-      cardDeckCreationQuery,
-    );
+    const cardDecksOfCreatureLand: CardDeck[] =
+      await this.createCardDecksInteractor.interact(cardDeckCreationQuery);
 
     if (commonDomain.utils.hasOneElement(cardDecksOfCreatureLand)) {
       const [cardDeckOfCreatureLand]: [CardDeck] = cardDecksOfCreatureLand;

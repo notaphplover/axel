@@ -16,8 +16,9 @@ export abstract class PostEntityRequestHandler<
   TEntity,
   TEntityApi,
   TCreationQuery,
-  TRequest extends fastify.FastifyRequest = fastify.FastifyRequest
-> implements FastifyRequestHandler<TRequest> {
+  TRequest extends fastify.FastifyRequest = fastify.FastifyRequest,
+> implements FastifyRequestHandler<TRequest>
+{
   constructor(
     @unmanaged()
     private readonly entityToEntityApiConverter: Converter<TEntity, TEntityApi>,
@@ -37,9 +38,10 @@ export abstract class PostEntityRequestHandler<
     request: TRequest,
     reply: fastify.FastifyReply,
   ): Promise<void> {
-    const queryOrErrors: ValueOrErrors<TCreationQuery> = await this.postEntityRequestToEntityCreationQueryConverter.transform(
-      request,
-    );
+    const queryOrErrors: ValueOrErrors<TCreationQuery> =
+      await this.postEntityRequestToEntityCreationQueryConverter.transform(
+        request,
+      );
 
     if (queryOrErrors.isEither) {
       await reply
@@ -49,18 +51,16 @@ export abstract class PostEntityRequestHandler<
       try {
         const entityCreationQuery: TCreationQuery = queryOrErrors.value;
 
-        const entitiesCreated: TEntity[] = await this.createEntitiesInteractor.interact(
-          entityCreationQuery,
-        );
+        const entitiesCreated: TEntity[] =
+          await this.createEntitiesInteractor.interact(entityCreationQuery);
 
         if (commonDomain.utils.hasOneElement(entitiesCreated)) {
           const [entityCreated]: TEntity[] = entitiesCreated;
 
           await this.onEntityCreated(entityCreationQuery, entityCreated);
 
-          const entityApiV1Created: TEntityApi = this.entityToEntityApiConverter.transform(
-            entityCreated,
-          );
+          const entityApiV1Created: TEntityApi =
+            this.entityToEntityApiConverter.transform(entityCreated);
 
           await reply.code(StatusCodes.CREATED).send(entityApiV1Created);
         } else {

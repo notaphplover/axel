@@ -83,13 +83,14 @@ describe(PostLiveGameV1RequestHandler.name, () => {
           value: liveGameCreationQueryFixtureFactory.get(),
         };
 
-        requestFixture = ({
+        requestFixture = {
           body: liveGameCreationQueryApiV1FixtureFactory.get(),
           user: userFixtureFactory.get(),
         } as Partial<
           fastify.FastifyRequest & UserContainer
-        >) as fastify.FastifyRequest & UserContainer;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        > as fastify.FastifyRequest & UserContainer;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         createGamesInteractor.interact.mockResolvedValueOnce([
           liveGameFixtureFactory.get(),

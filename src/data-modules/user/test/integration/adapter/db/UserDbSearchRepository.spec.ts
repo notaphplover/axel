@@ -61,9 +61,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let result: unknown;
 
         beforeAll(async () => {
-          const userDbCollection: mongodb.Collection<UserDb> = mongoDbConnector.db.collection(
-            collectionName,
-          );
+          const userDbCollection: mongodb.Collection<UserDb> =
+            mongoDbConnector.db.collection(collectionName);
 
           // eslint-disable-next-line @typescript-eslint/typedef
           [userDbInserted] = (
@@ -85,9 +84,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             userFixtureFactory.get(),
           );
 
-          (userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            userDbFilterQuery,
-          );
+          (
+            userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(userDbFilterQuery);
 
           (postUserDbSearchFilter.filter as jest.Mock).mockResolvedValueOnce([
             userDbInserted,
@@ -102,7 +101,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
         afterAll(() => {
           (userDbToUserConverter.transform as jest.Mock).mockClear();
-          (userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (
+            userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock
+          ).mockClear();
           (postUserDbSearchFilter.filter as jest.Mock).mockClear();
         });
 
@@ -132,9 +133,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             userFixtureFactory.get(),
           );
 
-          (userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            userDbFilterQuery,
-          );
+          (
+            userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(userDbFilterQuery);
 
           (postUserDbSearchFilter.filter as jest.Mock).mockResolvedValueOnce(
             [],
@@ -149,7 +150,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
         afterAll(() => {
           (userDbToUserConverter.transform as jest.Mock).mockClear();
-          (userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (
+            userFindQueryToUserDbFilterQueryConverter.transform as jest.Mock
+          ).mockClear();
           (postUserDbSearchFilter.filter as jest.Mock).mockClear();
         });
 

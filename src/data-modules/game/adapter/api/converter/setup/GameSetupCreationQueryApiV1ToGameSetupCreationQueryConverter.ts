@@ -16,7 +16,8 @@ import { GameSetupCreationQueryPlayerSetupApiV1 } from '../../query/setup/GameSe
 @injectable()
 export class GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter
   implements
-    Converter<GameSetupCreationQueryApiV1, Promise<GameSetupsCreationQuery>> {
+    Converter<GameSetupCreationQueryApiV1, Promise<GameSetupsCreationQuery>>
+{
   constructor(
     @inject(GAME_DOMAIN_TYPES.interactor.deck.FIND_CARD_DECKS_INTERACTOR)
     private readonly findCardDecksInteractor: Interactor<
@@ -45,9 +46,10 @@ export class GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter
       ids: gameSetupPlayerSetupsDeckIds,
     };
 
-    const gameSetupPlayerSetupsDecks: CardDeck[] = await this.findCardDecksInteractor.interact(
-      gameSetupPlayerSetupsDecksFindQuery,
-    );
+    const gameSetupPlayerSetupsDecks: CardDeck[] =
+      await this.findCardDecksInteractor.interact(
+        gameSetupPlayerSetupsDecksFindQuery,
+      );
 
     const gameSetupsCreationQuery: GameSetupsCreationQuery = {
       format: this.gameFormatApiV1ToGameFormatConverter.transform(input.format),
@@ -56,12 +58,11 @@ export class GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter
         (
           gameSetupCreationQueryPlayerSetupApiV1: GameSetupCreationQueryPlayerSetupApiV1,
         ): PlayerSetup => {
-          const playerSetupDeck:
-            | CardDeck
-            | undefined = gameSetupPlayerSetupsDecks.find(
-            (cardDeck: CardDeck) =>
-              cardDeck.id === gameSetupCreationQueryPlayerSetupApiV1.deckId,
-          );
+          const playerSetupDeck: CardDeck | undefined =
+            gameSetupPlayerSetupsDecks.find(
+              (cardDeck: CardDeck) =>
+                cardDeck.id === gameSetupCreationQueryPlayerSetupApiV1.deckId,
+            );
 
           if (playerSetupDeck === undefined) {
             throw new EntitiesNotFoundError(

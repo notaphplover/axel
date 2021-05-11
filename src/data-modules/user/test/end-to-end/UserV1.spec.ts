@@ -25,7 +25,8 @@ const APP_URL_PORT: number = dockerAppEnvLoader.index.APP_SERVER_PORT;
 const TEST_FIXTURES_DISCRIMINATOR: string = uuidv4();
 
 function getAuthCreationQueryApiV1(): AuthCreationQueryApiV1 {
-  const authCreationQueryApiV1: AuthCreationQueryApiV1 = authCreationQueryApiV1FixtureFactory.get();
+  const authCreationQueryApiV1: AuthCreationQueryApiV1 =
+    authCreationQueryApiV1FixtureFactory.get();
 
   authCreationQueryApiV1.username += TEST_FIXTURES_DISCRIMINATOR;
 
@@ -33,7 +34,8 @@ function getAuthCreationQueryApiV1(): AuthCreationQueryApiV1 {
 }
 
 function getUserCreationQueryApiV1(): UserCreationQueryApiV1 {
-  const userCreationQueryApiV1Fixture: UserCreationQueryApiV1 = userCreationQueryApiV1FixtureFactory.get();
+  const userCreationQueryApiV1Fixture: UserCreationQueryApiV1 =
+    userCreationQueryApiV1FixtureFactory.get();
 
   userCreationQueryApiV1Fixture.email =
     TEST_FIXTURES_DISCRIMINATOR + userCreationQueryApiV1Fixture.email;
@@ -95,9 +97,10 @@ describe('User V1', () => {
 
       beforeAll(async () => {
         try {
-          const authCreationQueryApiV1: AuthCreationQueryApiV1 = getAuthCreationQueryApiV1();
+          const authCreationQueryApiV1: AuthCreationQueryApiV1 =
+            getAuthCreationQueryApiV1();
 
-          authCreationQueryApiV1.password = (undefined as unknown) as string;
+          authCreationQueryApiV1.password = undefined as unknown as string;
 
           postAuthV1Response = await client.post(
             `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/auth/tokens`,

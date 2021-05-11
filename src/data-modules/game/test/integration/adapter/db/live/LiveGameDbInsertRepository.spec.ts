@@ -69,9 +69,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             gameFixture,
           );
 
-          (gameCreationQueryToGameDbsConverter.transform as jest.Mock).mockReturnValueOnce(
-            [gameDbFixture],
-          );
+          (
+            gameCreationQueryToGameDbsConverter.transform as jest.Mock
+          ).mockReturnValueOnce([gameDbFixture]);
 
           result = await gameDbInsertRepository.insert(
             liveGameCreationQueryFixtureFactory.get(),
@@ -80,7 +80,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
         afterAll(async () => {
           (gameDbToGameConverter.transform as jest.Mock).mockClear();
-          (gameCreationQueryToGameDbsConverter.transform as jest.Mock).mockClear();
+          (
+            gameCreationQueryToGameDbsConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must call gameDbToGameConverter.transform with the db entities found', () => {

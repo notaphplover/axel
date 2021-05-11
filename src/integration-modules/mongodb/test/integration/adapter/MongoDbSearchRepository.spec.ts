@@ -82,9 +82,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
       let queryDbToFindInsertedModel: mongodb.FilterQuery<ModelMockDb>;
 
       beforeAll(async () => {
-        const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
-          collectionName,
-        );
+        const collection: mongodb.Collection<ModelMockDb> =
+          mongoDbConnector.db.collection(collectionName);
 
         const insertionResult: mongodb.InsertOneWriteOpResult<
           mongodb.WithId<ModelMockDb>
@@ -112,9 +111,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
             expectedModel,
           );
-          (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            queryDbToFindInsertedModel,
-          );
+          (
+            queryToFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(queryDbToFindInsertedModel);
 
           result = await mongoDbSearchRepository.find(queryToFindInsertedModel);
         });
@@ -146,9 +145,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
       let queryDbToFindInsertedModel: mongodb.FilterQuery<ModelMockDb>;
 
       beforeAll(async () => {
-        const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
-          collectionName,
-        );
+        const collection: mongodb.Collection<ModelMockDb> =
+          mongoDbConnector.db.collection(collectionName);
 
         const insertionResult: mongodb.InsertOneWriteOpResult<
           mongodb.WithId<ModelMockDb>
@@ -176,9 +174,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           (modelDbToModelConverter.transform as jest.Mock).mockReturnValueOnce(
             expectedModel,
           );
-          (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            queryDbToFindInsertedModel,
-          );
+          (
+            queryToFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(queryDbToFindInsertedModel);
 
           result = await mongoDbSearchRepository.findOne(
             queryToFindInsertedModel,

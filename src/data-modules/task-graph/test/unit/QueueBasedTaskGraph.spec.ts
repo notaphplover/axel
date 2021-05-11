@@ -18,9 +18,8 @@ describe(QueueBasedTaskGraph.name, () => {
           perform: async () => undefined,
         };
 
-        const queueBasedTaskGraph: QueueBasedTaskGraph<number> = new QueueBasedTaskGraph(
-          [nodeFixture],
-        );
+        const queueBasedTaskGraph: QueueBasedTaskGraph<number> =
+          new QueueBasedTaskGraph([nodeFixture]);
 
         result = queueBasedTaskGraph.getNode(nodeFixture.id);
       });
@@ -34,9 +33,8 @@ describe(QueueBasedTaskGraph.name, () => {
       let result: unknown;
 
       beforeAll(() => {
-        const queueBasedTaskGraph: QueueBasedTaskGraph<number> = new QueueBasedTaskGraph(
-          [],
-        );
+        const queueBasedTaskGraph: QueueBasedTaskGraph<number> =
+          new QueueBasedTaskGraph([]);
 
         const unexistentNodeId: number = 3;
 
@@ -54,9 +52,8 @@ describe(QueueBasedTaskGraph.name, () => {
       let result: unknown;
 
       beforeAll(async () => {
-        const queueBasedTaskGraph: QueueBasedTaskGraph<number> = new QueueBasedTaskGraph(
-          [],
-        );
+        const queueBasedTaskGraph: QueueBasedTaskGraph<number> =
+          new QueueBasedTaskGraph([]);
 
         result = await queueBasedTaskGraph.performTasks();
       });
@@ -91,9 +88,8 @@ describe(QueueBasedTaskGraph.name, () => {
         let result: unknown;
 
         beforeAll(async () => {
-          (taskGraphNode as Writable<
-            TaskGraphNode<number, number>
-          >).dependsOn = [taskGraphNode.id];
+          (taskGraphNode as Writable<TaskGraphNode<number, number>>).dependsOn =
+            [taskGraphNode.id];
 
           try {
             result = await queueBasedTaskGraph.performTasks();
@@ -115,9 +111,8 @@ describe(QueueBasedTaskGraph.name, () => {
         });
 
         afterAll(() => {
-          (taskGraphNode as Writable<
-            TaskGraphNode<number, number>
-          >).dependsOn = [];
+          (taskGraphNode as Writable<TaskGraphNode<number, number>>).dependsOn =
+            [];
 
           (taskGraphNode.perform as jest.Mock).mockClear();
         });
@@ -133,17 +128,17 @@ describe(QueueBasedTaskGraph.name, () => {
             let result: unknown;
 
             beforeAll(async () => {
-              (taskGraphNode as Writable<
-                TaskGraphNode<number, number>
-              >).dependsOn = [];
-              (taskGraphNode as Writable<
-                TaskGraphNode<number, number>
-              >).status = status;
+              (
+                taskGraphNode as Writable<TaskGraphNode<number, number>>
+              ).dependsOn = [];
+              (
+                taskGraphNode as Writable<TaskGraphNode<number, number>>
+              ).status = status;
               (taskGraphNode.perform as jest.Mock).mockImplementationOnce(
                 async () => {
-                  (taskGraphNode as Writable<
-                    TaskGraphNode<number, number>
-                  >).status = TaskGraphNodeStatus.Ended;
+                  (
+                    taskGraphNode as Writable<TaskGraphNode<number, number>>
+                  ).status = TaskGraphNodeStatus.Ended;
                 },
               );
 
@@ -151,12 +146,12 @@ describe(QueueBasedTaskGraph.name, () => {
             });
 
             afterAll(() => {
-              (taskGraphNode as Writable<
-                TaskGraphNode<number, number>
-              >).dependsOn = [];
-              (taskGraphNode as Writable<
-                TaskGraphNode<number, number>
-              >).status = TaskGraphNodeStatus.NotStarted;
+              (
+                taskGraphNode as Writable<TaskGraphNode<number, number>>
+              ).dependsOn = [];
+              (
+                taskGraphNode as Writable<TaskGraphNode<number, number>>
+              ).status = TaskGraphNodeStatus.NotStarted;
 
               (taskGraphNode.perform as jest.Mock).mockClear();
             });
@@ -182,17 +177,17 @@ describe(QueueBasedTaskGraph.name, () => {
             let result: unknown;
 
             beforeAll(async () => {
-              (taskGraphNode as Writable<
-                TaskGraphNode<number, number>
-              >).dependsOn = [];
-              (taskGraphNode as Writable<
-                TaskGraphNode<number, number>
-              >).status = status;
+              (
+                taskGraphNode as Writable<TaskGraphNode<number, number>>
+              ).dependsOn = [];
+              (
+                taskGraphNode as Writable<TaskGraphNode<number, number>>
+              ).status = status;
               (taskGraphNode.perform as jest.Mock).mockImplementationOnce(
                 async () => {
-                  (taskGraphNode as Writable<
-                    TaskGraphNode<number, number>
-                  >).status = TaskGraphNodeStatus.Error;
+                  (
+                    taskGraphNode as Writable<TaskGraphNode<number, number>>
+                  ).status = TaskGraphNodeStatus.Error;
                 },
               );
 
@@ -200,12 +195,12 @@ describe(QueueBasedTaskGraph.name, () => {
             });
 
             afterAll(() => {
-              (taskGraphNode as Writable<
-                TaskGraphNode<number, number>
-              >).dependsOn = [];
-              (taskGraphNode as Writable<
-                TaskGraphNode<number, number>
-              >).status = TaskGraphNodeStatus.NotStarted;
+              (
+                taskGraphNode as Writable<TaskGraphNode<number, number>>
+              ).dependsOn = [];
+              (
+                taskGraphNode as Writable<TaskGraphNode<number, number>>
+              ).status = TaskGraphNodeStatus.NotStarted;
 
               (taskGraphNode.perform as jest.Mock).mockClear();
             });
@@ -225,9 +220,9 @@ describe(QueueBasedTaskGraph.name, () => {
           let result: unknown;
 
           beforeAll(async () => {
-            (taskGraphNode as Writable<
-              TaskGraphNode<number, number>
-            >).dependsOn = [];
+            (
+              taskGraphNode as Writable<TaskGraphNode<number, number>>
+            ).dependsOn = [];
             (taskGraphNode as Writable<TaskGraphNode<number, number>>).status =
               TaskGraphNodeStatus.Error;
 
@@ -235,9 +230,9 @@ describe(QueueBasedTaskGraph.name, () => {
           });
 
           afterAll(() => {
-            (taskGraphNode as Writable<
-              TaskGraphNode<number, number>
-            >).dependsOn = [];
+            (
+              taskGraphNode as Writable<TaskGraphNode<number, number>>
+            ).dependsOn = [];
             (taskGraphNode as Writable<TaskGraphNode<number, number>>).status =
               TaskGraphNodeStatus.NotStarted;
 
@@ -312,9 +307,9 @@ describe(QueueBasedTaskGraph.name, () => {
 
           (taskGraphNode.perform as jest.Mock).mockImplementationOnce(
             async () => {
-              (taskGraphNode as Writable<
-                TaskGraphNode<number, number>
-              >).status = taskGraphNodeStatus;
+              (
+                taskGraphNode as Writable<TaskGraphNode<number, number>>
+              ).status = taskGraphNodeStatus;
             },
           );
 
@@ -328,9 +323,11 @@ describe(QueueBasedTaskGraph.name, () => {
 
           (taskGraphNodeDependent.perform as jest.Mock).mockImplementationOnce(
             async () => {
-              (taskGraphNodeDependent as Writable<
-                TaskGraphNode<number, number>
-              >).status = taskGraphNodeDependantStatus;
+              (
+                taskGraphNodeDependent as Writable<
+                  TaskGraphNode<number, number>
+                >
+              ).status = taskGraphNodeDependantStatus;
             },
           );
 
@@ -343,20 +340,19 @@ describe(QueueBasedTaskGraph.name, () => {
         });
 
         afterAll(() => {
-          (taskGraphNode as Writable<
-            TaskGraphNode<number, number>
-          >).dependsOn = [];
+          (taskGraphNode as Writable<TaskGraphNode<number, number>>).dependsOn =
+            [];
           (taskGraphNode as Writable<TaskGraphNode<number, number>>).status =
             TaskGraphNodeStatus.NotStarted;
 
           (taskGraphNode.perform as jest.Mock).mockClear();
 
-          (taskGraphNodeDependent as Writable<
-            TaskGraphNode<number, number>
-          >).dependsOn = [];
-          (taskGraphNodeDependent as Writable<
-            TaskGraphNode<number, number>
-          >).status = TaskGraphNodeStatus.NotStarted;
+          (
+            taskGraphNodeDependent as Writable<TaskGraphNode<number, number>>
+          ).dependsOn = [];
+          (
+            taskGraphNodeDependent as Writable<TaskGraphNode<number, number>>
+          ).status = TaskGraphNodeStatus.NotStarted;
 
           (taskGraphNodeDependent.perform as jest.Mock).mockClear();
         });
@@ -378,10 +374,14 @@ describe(QueueBasedTaskGraph.name, () => {
           taskGraphNodeDependantPerformCalls === 1
         ) {
           it('must call taskGraphNode.perform before taskGraphNodeDependent.perform', () => {
-            const taskGraphNodePerformOrder: number = ((taskGraphNode.perform as jest.Mock)
-              .mock.invocationCallOrder as number[] & [number])[0];
-            const taskGraphNodeDependentPerformOrder: number = ((taskGraphNodeDependent.perform as jest.Mock)
-              .mock.invocationCallOrder as number[] & [number])[0];
+            const taskGraphNodePerformOrder: number = (
+              (taskGraphNode.perform as jest.Mock).mock
+                .invocationCallOrder as number[] & [number]
+            )[0];
+            const taskGraphNodeDependentPerformOrder: number = (
+              (taskGraphNodeDependent.perform as jest.Mock).mock
+                .invocationCallOrder as number[] & [number]
+            )[0];
             expect(taskGraphNodePerformOrder).toBeLessThan(
               taskGraphNodeDependentPerformOrder,
             );

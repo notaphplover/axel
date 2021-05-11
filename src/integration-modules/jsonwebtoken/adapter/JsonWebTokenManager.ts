@@ -10,7 +10,8 @@ import { EnvLoader } from '../../../layer-modules/env/domain';
 
 @injectable()
 export class JsonWebTokenManager<TToken extends Record<string, unknown>>
-  implements JwtManager<TToken> {
+  implements JwtManager<TToken>
+{
   private readonly privateKey: string;
   private readonly publicKey: string;
 

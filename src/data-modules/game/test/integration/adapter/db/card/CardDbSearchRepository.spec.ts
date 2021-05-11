@@ -62,9 +62,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           beforeAll(async () => {
             const creatureFixture: Card = creatureFixtureFactory.get();
 
-            const cardDbCollection: mongodb.Collection<CardDb> = mongoDbConnector.db.collection(
-              collectionName,
-            );
+            const cardDbCollection: mongodb.Collection<CardDb> =
+              mongoDbConnector.db.collection(collectionName);
 
             // eslint-disable-next-line @typescript-eslint/typedef
             [creatureDbInserted] = (
@@ -93,9 +92,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
               _id: new mongodb.ObjectID(creatureCardFindQueryFixture.id),
             };
 
-            (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-              cardDbFilterQuery,
-            );
+            (
+              cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock
+            ).mockReturnValueOnce(cardDbFilterQuery);
 
             creatureResult = await cardDbSearchRepository.find(
               creatureCardFindQueryFixture,
@@ -104,7 +103,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
           afterAll(() => {
             (cardDbToCardConverter.transform as jest.Mock).mockClear();
-            (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockClear();
+            (
+              cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock
+            ).mockClear();
           });
 
           it('must call cardDbToCardConverter.transform with the db entities found', () => {
@@ -134,16 +135,18 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             id: (cardDbFilterQuery._id as mongodb.ObjectID).toHexString(),
           };
 
-          (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            cardDbFilterQuery,
-          );
+          (
+            cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(cardDbFilterQuery);
 
           result = await cardDbSearchRepository.find(cardFindQueryFixture);
         });
 
         afterAll(() => {
           (cardDbToCardConverter.transform as jest.Mock).mockClear();
-          (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (
+            cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must call cardDbToCardConverter.transform with the db entities found', () => {
@@ -161,9 +164,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         beforeAll(async () => {
           const creatureFixture: Card = creatureFixtureFactory.get();
 
-          const cardDbCollection: mongodb.Collection<CardDb> = mongoDbConnector.db.collection(
-            collectionName,
-          );
+          const cardDbCollection: mongodb.Collection<CardDb> =
+            mongoDbConnector.db.collection(collectionName);
 
           await cardDbCollection.insertMany([
             {
@@ -188,16 +190,18 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
           const cardDbFilterQuery: mongodb.FilterQuery<CardDb> = {};
 
-          (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            cardDbFilterQuery,
-          );
+          (
+            cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(cardDbFilterQuery);
 
           result = await cardDbSearchRepository.find(cardFindQueryFixture);
         });
 
         afterAll(() => {
           (cardDbToCardConverter.transform as jest.Mock).mockClear();
-          (cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (
+            cardFindQueryToCardDbFilterQueryConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must call cardDbToCardConverter.transform with the db entities found', () => {

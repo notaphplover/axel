@@ -46,17 +46,17 @@ describe(MongoDbSearchRepository.name, () => {
   let noPostSearchFilterMongoDbSearchRepository: MongoDbSearchRepositoryMock;
 
   beforeAll(() => {
-    collectionMock = ({
+    collectionMock = {
       find: jest.fn(),
       findOne: jest.fn(),
     } as Partial<
       mongodb.Collection<ModelMockDb>
-    >) as mongodb.Collection<ModelMockDb>;
+    > as mongodb.Collection<ModelMockDb>;
 
     mongoDbConnector = {
-      db: ({
+      db: {
         collection: jest.fn().mockReturnValue(collectionMock),
-      } as Partial<mongodb.Db>) as mongodb.Db,
+      } as Partial<mongodb.Db> as mongodb.Db,
     } as MongoDbConnector;
 
     modelDbToModelConverter = {
@@ -111,11 +111,11 @@ describe(MongoDbSearchRepository.name, () => {
           _id: expectedModelDb._id,
         };
 
-        const findCursorMock: mongodb.Cursor<ModelMockDb> = ({
+        const findCursorMock: mongodb.Cursor<ModelMockDb> = {
           toArray: jest.fn().mockResolvedValueOnce([expectedModelDb]),
         } as Partial<
           mongodb.Cursor<ModelMockDb>
-        >) as mongodb.Cursor<ModelMockDb>;
+        > as mongodb.Cursor<ModelMockDb>;
 
         (collectionMock.find as jest.Mock).mockReturnValueOnce(findCursorMock);
 
@@ -127,9 +127,9 @@ describe(MongoDbSearchRepository.name, () => {
           expectedModel,
         );
 
-        (queryToFilterQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
-          expectedDbQuery,
-        );
+        (
+          queryToFilterQueryConverter.transform as jest.Mock
+        ).mockResolvedValueOnce(expectedDbQuery);
 
         (postSearchFilter.filter as jest.Mock).mockResolvedValueOnce([
           expectedModelDb,
@@ -201,11 +201,11 @@ describe(MongoDbSearchRepository.name, () => {
           _id: expectedModelDb._id,
         };
 
-        const findCursorMock: mongodb.Cursor<ModelMockDb> = ({
+        const findCursorMock: mongodb.Cursor<ModelMockDb> = {
           toArray: jest.fn().mockResolvedValueOnce([expectedModelDb]),
         } as Partial<
           mongodb.Cursor<ModelMockDb>
-        >) as mongodb.Cursor<ModelMockDb>;
+        > as mongodb.Cursor<ModelMockDb>;
 
         (collectionMock.find as jest.Mock).mockReturnValueOnce(findCursorMock);
 
@@ -217,9 +217,9 @@ describe(MongoDbSearchRepository.name, () => {
           expectedModel,
         );
 
-        (queryToFilterQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
-          expectedDbQuery,
-        );
+        (
+          queryToFilterQueryConverter.transform as jest.Mock
+        ).mockResolvedValueOnce(expectedDbQuery);
 
         result = await noPostSearchFilterMongoDbSearchRepository.find(
           expectedQuery,
@@ -294,9 +294,9 @@ describe(MongoDbSearchRepository.name, () => {
           expectedModel,
         );
 
-        (queryToFilterQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
-          expectedDbQuery,
-        );
+        (
+          queryToFilterQueryConverter.transform as jest.Mock
+        ).mockResolvedValueOnce(expectedDbQuery);
 
         (postSearchFilter.filterOne as jest.Mock).mockResolvedValueOnce(
           expectedModelDb,
@@ -383,9 +383,9 @@ describe(MongoDbSearchRepository.name, () => {
           expectedModel,
         );
 
-        (queryToFilterQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
-          expectedDbQuery,
-        );
+        (
+          queryToFilterQueryConverter.transform as jest.Mock
+        ).mockResolvedValueOnce(expectedDbQuery);
 
         result = await noPostSearchFilterMongoDbSearchRepository.findOne(
           expectedQuery,

@@ -17,8 +17,9 @@ describe(GetStatusV1RequestHandler.name, () => {
       let replyFixture: FastifyReply;
 
       beforeAll(async () => {
-        requestFixture = ({} as Partial<FastifyRequest>) as FastifyRequest;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        requestFixture = {} as Partial<FastifyRequest> as FastifyRequest;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         await getStatusV1RequestHandler.handle(requestFixture, replyFixture);
       });

@@ -10,7 +10,8 @@ import { GraveyardApiV1 } from '../../model/live/GraveyardApiV1';
 
 @injectable()
 export class GraveyardToGraveyardApiV1Converter
-  implements Converter<Graveyard, GraveyardApiV1> {
+  implements Converter<Graveyard, GraveyardApiV1>
+{
   constructor(
     @inject(GAME_ADAPTER_TYPES.api.converter.card.CARD_TO_CARD_API_V1_CONVERTER)
     private readonly cardToCardApiV1Converter: Converter<Card, CardApiV1>,

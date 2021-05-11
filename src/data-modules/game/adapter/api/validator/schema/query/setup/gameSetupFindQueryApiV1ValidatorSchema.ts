@@ -6,8 +6,8 @@ import { gameSetupFindQueryPlayerSetupApiV1JoiValidatorSchema } from './gameSetu
 
 const GAME_SETUP_FIND_QUERY_API_V1_LIMIT_MAX_VALUE: number = 100;
 
-export const gameSetupFindQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameSetupFindQueryApiV1> = Joi.object<GameSetupFindQueryApiV1>(
-  {
+export const gameSetupFindQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameSetupFindQueryApiV1> =
+  Joi.object<GameSetupFindQueryApiV1>({
     format: gameFormatApiV1JoiValidatorSchema.optional(),
     id: Joi.string().optional(),
     limit: Joi.number()
@@ -22,5 +22,4 @@ export const gameSetupFindQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameSet
       .items(gameSetupFindQueryPlayerSetupApiV1JoiValidatorSchema)
       .optional(),
     playerSlots: Joi.number().integer().positive().optional(),
-  },
-);
+  });

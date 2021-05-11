@@ -10,7 +10,8 @@ import { BattlefieldApiV1 } from '../../model/live/BattlefieldApiV1';
 
 @injectable()
 export class BattlefieldToBattlefieldApiV1Converter
-  implements Converter<Battlefield, BattlefieldApiV1> {
+  implements Converter<Battlefield, BattlefieldApiV1>
+{
   constructor(
     @inject(GAME_ADAPTER_TYPES.api.converter.card.CARD_TO_CARD_API_V1_CONVERTER)
     private readonly cardToCardApiV1Converter: Converter<Card, CardApiV1>,

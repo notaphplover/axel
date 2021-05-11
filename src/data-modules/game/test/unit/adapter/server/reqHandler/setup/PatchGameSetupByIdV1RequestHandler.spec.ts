@@ -66,11 +66,12 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
       let gameSetupUpdateQueryOrErrors: ValueOrErrors<GameSetupUpdateQuery>;
 
       beforeAll(async () => {
-        const requestFixtureBody: Partial<GameSetupUpdateQueryApiV1> = gameSetupUpdateQueryApiV1FixtureFactory.get();
+        const requestFixtureBody: Partial<GameSetupUpdateQueryApiV1> =
+          gameSetupUpdateQueryApiV1FixtureFactory.get();
 
         delete requestFixtureBody.id;
 
-        requestFixture = ({
+        requestFixture = {
           body: requestFixtureBody,
           params: {
             gameSetupId: gameSetupUpdateQueryApiV1FixtureFactory.get().id,
@@ -78,9 +79,10 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
           user: userFixtureFactory.get(),
         } as Partial<
           fastify.FastifyRequest & UserContainer
-        >) as fastify.FastifyRequest & UserContainer;
+        > as fastify.FastifyRequest & UserContainer;
 
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         gameSetupUpdateQueryOrErrors = {
           isEither: false,
@@ -142,11 +144,12 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
       let gameSetupUpdateQueryOrErrors: ValueOrErrors<GameSetupUpdateQuery>;
 
       beforeAll(async () => {
-        const requestFixtureBody: Partial<GameSetupUpdateQueryApiV1> = gameSetupUpdateQueryApiV1FixtureFactory.get();
+        const requestFixtureBody: Partial<GameSetupUpdateQueryApiV1> =
+          gameSetupUpdateQueryApiV1FixtureFactory.get();
 
         delete requestFixtureBody.id;
 
-        requestFixture = ({
+        requestFixture = {
           body: requestFixtureBody,
           params: {
             gameSetupId: gameSetupUpdateQueryApiV1FixtureFactory.get().id,
@@ -154,9 +157,10 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
           user: userFixtureFactory.get(),
         } as Partial<
           fastify.FastifyRequest & UserContainer
-        >) as fastify.FastifyRequest & UserContainer;
+        > as fastify.FastifyRequest & UserContainer;
 
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         gameSetupUpdateQueryOrErrors = {
           isEither: false,
@@ -205,11 +209,12 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
       let gameSetupUpdateQueryOrErrors: EitherEither<string[]>;
 
       beforeAll(async () => {
-        const requestFixtureBody: Partial<GameSetupUpdateQueryApiV1> = gameSetupUpdateQueryApiV1FixtureFactory.get();
+        const requestFixtureBody: Partial<GameSetupUpdateQueryApiV1> =
+          gameSetupUpdateQueryApiV1FixtureFactory.get();
 
         delete requestFixtureBody.id;
 
-        requestFixture = ({
+        requestFixture = {
           body: requestFixtureBody,
           params: {
             gameSetupId: gameSetupUpdateQueryApiV1FixtureFactory.get().id,
@@ -217,8 +222,9 @@ describe(PatchGameSetupByIdV1RequestHandler.name, () => {
           user: userFixtureFactory.get(),
         } as Partial<
           fastify.FastifyRequest & UserContainer
-        >) as fastify.FastifyRequest & UserContainer;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        > as fastify.FastifyRequest & UserContainer;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         gameSetupUpdateQueryOrErrors = {
           value: ['sample-error-message'],

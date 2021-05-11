@@ -49,9 +49,8 @@ export const liveGame: LiveGame = {
   state: GameState.NOT_STARTED,
 };
 
-export const liveGameFixtureFactory: FixtureFactory<LiveGame> = new DeepCloneFixtureFactory(
-  liveGame,
-);
+export const liveGameFixtureFactory: FixtureFactory<LiveGame> =
+  new DeepCloneFixtureFactory(liveGame);
 
 export const liveGameConnections: LiveGameConnections = {
   connections: [],
@@ -59,6 +58,5 @@ export const liveGameConnections: LiveGameConnections = {
   liveGameId: liveGame.id,
 };
 
-export const liveGameConnectionsFixtureFactory: FixtureFactory<LiveGameConnections> = new DeepCloneFixtureFactory(
-  liveGameConnections,
-);
+export const liveGameConnectionsFixtureFactory: FixtureFactory<LiveGameConnections> =
+  new DeepCloneFixtureFactory(liveGameConnections);

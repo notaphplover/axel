@@ -6,7 +6,8 @@ import { CardSetReferencesApiV1 } from '../../model/deck/CardSetReferencesApiV1'
 
 @injectable()
 export class CardSetReferencesToCardSetReferencesApiV1Converter
-  implements Converter<CardSetReferences, CardSetReferencesApiV1> {
+  implements Converter<CardSetReferences, CardSetReferencesApiV1>
+{
   public transform(input: CardSetReferences): CardSetReferencesApiV1 {
     return {
       references: [...input.references],

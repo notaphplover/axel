@@ -21,9 +21,8 @@ export const cardCreationQueryApiV1: CardCreationQueryApiV1 = {
   types: [CardTypeApiV1.Creature],
 };
 
-export const cardCreationQueryApiV1FixtureFactory: FixtureFactory<CardCreationQueryApiV1> = new DeepCloneFixtureFactory(
-  cardCreationQueryApiV1,
-);
+export const cardCreationQueryApiV1FixtureFactory: FixtureFactory<CardCreationQueryApiV1> =
+  new DeepCloneFixtureFactory(cardCreationQueryApiV1);
 
 export const creatureFindQueryApiV1: CardFindQueryApiV1 = {
   id: creatureFindQuery.id,
@@ -32,14 +31,12 @@ export const creatureFindQueryApiV1: CardFindQueryApiV1 = {
   types: CardTypeApiV1.Creature,
 };
 
-export const creatureFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQueryApiV1> = new DeepCloneFixtureFactory(
-  creatureFindQueryApiV1,
-);
+export const creatureFindQueryApiV1FixtureFactory: FixtureFactory<CardFindQueryApiV1> =
+  new DeepCloneFixtureFactory(creatureFindQueryApiV1);
 
 const liveGameCreationQueryApiV1: LiveGameCreationQueryApiV1 = {
   gameSetupId: gameSetupApiV1.id,
 };
 
-export const liveGameCreationQueryApiV1FixtureFactory: FixtureFactory<LiveGameCreationQueryApiV1> = new DeepCloneFixtureFactory(
-  liveGameCreationQueryApiV1,
-);
+export const liveGameCreationQueryApiV1FixtureFactory: FixtureFactory<LiveGameCreationQueryApiV1> =
+  new DeepCloneFixtureFactory(liveGameCreationQueryApiV1);

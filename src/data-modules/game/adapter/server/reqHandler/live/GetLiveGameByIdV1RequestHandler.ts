@@ -41,9 +41,10 @@ export class GetLiveGameByIdV1RequestHandler implements FastifyRequestHandler {
     request: fastify.FastifyRequest,
     reply: fastify.FastifyReply,
   ): Promise<void> {
-    const liveGameFindQueryOrErrors: ValueOrErrors<LiveGameFindQuery> = await this.getLiveGameV1RequestToLiveGameFindQueryConverter.transform(
-      request,
-    );
+    const liveGameFindQueryOrErrors: ValueOrErrors<LiveGameFindQuery> =
+      await this.getLiveGameV1RequestToLiveGameFindQueryConverter.transform(
+        request,
+      );
 
     if (liveGameFindQueryOrErrors.isEither) {
       await reply
@@ -53,9 +54,8 @@ export class GetLiveGameByIdV1RequestHandler implements FastifyRequestHandler {
       const liveGameFindQuery: LiveGameFindQuery =
         liveGameFindQueryOrErrors.value;
 
-      const findResult: LiveGame | null = await this.findGameInteractor.interact(
-        liveGameFindQuery,
-      );
+      const findResult: LiveGame | null =
+        await this.findGameInteractor.interact(liveGameFindQuery);
 
       if (findResult === null) {
         await reply.code(StatusCodes.NOT_FOUND).send({

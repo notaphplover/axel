@@ -7,7 +7,8 @@ import { GameSetupDb } from '../../model/setup/GameSetupDb';
 
 @injectable()
 export class GameSetupDbToGameSetupConverter
-  implements Converter<GameSetupDb, GameSetup> {
+  implements Converter<GameSetupDb, GameSetup>
+{
   public transform(input: GameSetupDb): GameSetup {
     return {
       format: input.format,

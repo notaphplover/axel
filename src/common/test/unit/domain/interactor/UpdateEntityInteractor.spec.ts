@@ -22,11 +22,11 @@ describe(UpdateEntityInteractor.name, () => {
   >;
 
   beforeAll(() => {
-    entityUpdateRepository = ({
+    entityUpdateRepository = {
       updateOneAndSelect: jest.fn(),
     } as Partial<
       jest.Mocked<UpdateRepository<EntityFixture, QueryFixture>>
-    >) as jest.Mocked<UpdateRepository<EntityFixture, QueryFixture>>;
+    > as jest.Mocked<UpdateRepository<EntityFixture, QueryFixture>>;
 
     updateEntityInteractor = new UpdateEntityInteractor<
       EntityFixture,

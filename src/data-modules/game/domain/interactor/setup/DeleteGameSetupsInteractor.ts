@@ -7,7 +7,8 @@ import { GameSetupDeletionQuery } from '../../query/setup/GameSetupDeletionQuery
 
 @injectable()
 export class DeleteGameSetupsInteractor
-  implements Interactor<GameSetupDeletionQuery, Promise<void>> {
+  implements Interactor<GameSetupDeletionQuery, Promise<void>>
+{
   constructor(
     @inject(GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_DELETE_REPOSITORY)
     private readonly gameSetupDbDeleteRepository: DeleteRepository<GameSetupDeletionQuery>,

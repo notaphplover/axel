@@ -10,7 +10,8 @@ export class GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupCo
     Converter<
       GameSetupFindQueryPlayerSetupApiV1,
       GameSetupFindQueryPlayerSetup
-    > {
+    >
+{
   public transform(
     input: GameSetupFindQueryPlayerSetupApiV1,
   ): GameSetupFindQueryPlayerSetup {

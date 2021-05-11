@@ -11,13 +11,13 @@ describe(IoredisPublisher.name, () => {
   let ioredisPublisher: IoredisPublisher;
 
   beforeAll(() => {
-    redisClientMock = ({
+    redisClientMock = {
       publish: jest.fn(),
-    } as Partial<jest.Mocked<IORedis.Redis>>) as jest.Mocked<IORedis.Redis>;
+    } as Partial<jest.Mocked<IORedis.Redis>> as jest.Mocked<IORedis.Redis>;
 
-    const redisClientSingleton: IoredisClientSingleton = ({
+    const redisClientSingleton: IoredisClientSingleton = {
       get: () => redisClientMock,
-    } as Partial<IoredisClientSingleton>) as IoredisClientSingleton;
+    } as Partial<IoredisClientSingleton> as IoredisClientSingleton;
 
     ioredisPublisher = new IoredisPublisher(redisClientSingleton);
   });

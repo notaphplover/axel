@@ -29,9 +29,9 @@ const getCardDeckByIdV1RequestHandlerMock: FastifyRequestHandler = {
   handle: jest.fn(),
 };
 
-const fastifyUserAuthenticator: FastifyUserAuthenticator = ({
+const fastifyUserAuthenticator: FastifyUserAuthenticator = {
   authenticate: jest.fn(),
-} as Partial<FastifyUserAuthenticator>) as FastifyUserAuthenticator;
+} as Partial<FastifyUserAuthenticator> as FastifyUserAuthenticator;
 
 const postDeckV1RequestHandlerMock: FastifyRequestHandler = {
   handle: jest.fn(),
@@ -50,8 +50,9 @@ fastifyIntegrationDescribeGenerator(deckRouter, fastifyServerTestOutputParam)(
 
     describe('DeckRouter based server', () => {
       beforeAll(async () => {
-        fastifyInstance = (fastifyServerTestOutputParam.value as FastifyServerTest)
-          .fastify as FastifyInstance;
+        fastifyInstance = (
+          fastifyServerTestOutputParam.value as FastifyServerTest
+        ).fastify as FastifyInstance;
       });
 
       describe('GET Decks', () => {
@@ -64,7 +65,9 @@ fastifyIntegrationDescribeGenerator(deckRouter, fastifyServerTestOutputParam)(
               foo: 'bar',
             };
 
-            (getCardDeckByIdV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
+            (
+              getCardDeckByIdV1RequestHandlerMock.handle as jest.Mock
+            ).mockImplementationOnce(
               async (
                 request: FastifyRequest,
                 reply: FastifyReply,
@@ -81,7 +84,9 @@ fastifyIntegrationDescribeGenerator(deckRouter, fastifyServerTestOutputParam)(
 
           afterAll(async () => {
             (fastifyUserAuthenticator.authenticate as jest.Mock).mockClear();
-            (getCardDeckByIdV1RequestHandlerMock.handle as jest.Mock).mockClear();
+            (
+              getCardDeckByIdV1RequestHandlerMock.handle as jest.Mock
+            ).mockClear();
           });
 
           it('must call getDecksV1RequestHandlerMock.handle to handle the request', () => {
@@ -105,11 +110,13 @@ fastifyIntegrationDescribeGenerator(deckRouter, fastifyServerTestOutputParam)(
               foo: 'bar',
             };
 
-            (fastifyUserAuthenticator.authenticate as jest.Mock).mockResolvedValueOnce(
-              userFixtureFactory.get(),
-            );
+            (
+              fastifyUserAuthenticator.authenticate as jest.Mock
+            ).mockResolvedValueOnce(userFixtureFactory.get());
 
-            (postDeckV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
+            (
+              postDeckV1RequestHandlerMock.handle as jest.Mock
+            ).mockImplementationOnce(
               async (
                 request: FastifyRequest,
                 reply: FastifyReply,
@@ -133,11 +140,11 @@ fastifyIntegrationDescribeGenerator(deckRouter, fastifyServerTestOutputParam)(
             expect(fastifyUserAuthenticator.authenticate).toHaveBeenCalledTimes(
               1,
             );
-            expect(
-              fastifyUserAuthenticator.authenticate,
-            ).toHaveBeenCalledWith(expect.anything(), expect.anything(), [
-              UserRole.ADMIN,
-            ]);
+            expect(fastifyUserAuthenticator.authenticate).toHaveBeenCalledWith(
+              expect.anything(),
+              expect.anything(),
+              [UserRole.ADMIN],
+            );
           });
 
           it('must call postDeckV1RequestHandlerMock.handle to handle the request', () => {
@@ -162,7 +169,9 @@ fastifyIntegrationDescribeGenerator(deckRouter, fastifyServerTestOutputParam)(
               message: 'test POST Deck with wrong auth',
             };
 
-            (fastifyUserAuthenticator.authenticate as jest.Mock).mockImplementationOnce(
+            (
+              fastifyUserAuthenticator.authenticate as jest.Mock
+            ).mockImplementationOnce(
               async (request: FastifyRequest, reply: FastifyReply) => {
                 await reply
                   .status(fastifyUserAuthenticatorCodeSent)

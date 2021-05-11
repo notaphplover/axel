@@ -32,10 +32,8 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
 
   public async performTasks(): Promise<PerformTasksResult> {
     try {
-      const tasksSchedule: TaskGraphNode<
-        TId,
-        unknown
-      >[][] = this.buildTasksSchedule();
+      const tasksSchedule: TaskGraphNode<TId, unknown>[][] =
+        this.buildTasksSchedule();
 
       await this.processTaskSchedule(tasksSchedule);
 
@@ -64,10 +62,11 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
     const nodesWithNoDependency: TaskGraphNodeWithDependencies<TId>[] = [];
 
     for (const taskGraphNode of this.taskGraphNodesMap.values()) {
-      const taskGraphNodeWithDependencies: TaskGraphNodeWithDependencies<TId> = {
-        node: taskGraphNode,
-        dependencies: new Set(taskGraphNode.dependsOn),
-      };
+      const taskGraphNodeWithDependencies: TaskGraphNodeWithDependencies<TId> =
+        {
+          node: taskGraphNode,
+          dependencies: new Set(taskGraphNode.dependsOn),
+        };
 
       switch (taskGraphNode.status) {
         case TaskGraphNodeStatus.NotStarted:
@@ -171,11 +170,10 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
     const newNodesWithNoDependency: TaskGraphNodeWithDependencies<TId>[] = [];
 
     for (const nodeWithDependencies of taskGraphNodeSchedulingState.nodesWithNoDependency) {
-      const dependentNodes:
-        | TaskGraphNodeWithDependencies<TId>[]
-        | undefined = taskGraphNodeSchedulingState.nodesByDependentNodeMap.get(
-        nodeWithDependencies.node.id,
-      );
+      const dependentNodes: TaskGraphNodeWithDependencies<TId>[] | undefined =
+        taskGraphNodeSchedulingState.nodesByDependentNodeMap.get(
+          nodeWithDependencies.node.id,
+        );
 
       if (dependentNodes !== undefined) {
         for (const dependentNode of dependentNodes) {
@@ -191,11 +189,13 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
       }
     }
 
-    taskGraphNodeSchedulingState.nodesWithNoDependency = newNodesWithNoDependency;
+    taskGraphNodeSchedulingState.nodesWithNoDependency =
+      newNodesWithNoDependency;
   }
 
   private buildTasksSchedule(): TaskGraphNode<TId, unknown>[][] {
-    const taskGraphNodeSchedulingState: TaskGraphNodeSchedulingState<TId> = this.buildInitialTaskGraphNodeSchedulingState();
+    const taskGraphNodeSchedulingState: TaskGraphNodeSchedulingState<TId> =
+      this.buildInitialTaskGraphNodeSchedulingState();
 
     const tasksSchedule: TaskGraphNode<TId, unknown>[][] = [];
 
@@ -208,13 +208,11 @@ export class QueueBasedTaskGraph<TId> implements TaskGraph<TId> {
         );
       }
 
-      const nodesWithNoDependency: TaskGraphNode<
-        TId,
-        unknown
-      >[] = taskGraphNodeSchedulingState.nodesWithNoDependency.map(
-        (nodeWithDependency: TaskGraphNodeWithDependencies<TId>) =>
-          nodeWithDependency.node,
-      );
+      const nodesWithNoDependency: TaskGraphNode<TId, unknown>[] =
+        taskGraphNodeSchedulingState.nodesWithNoDependency.map(
+          (nodeWithDependency: TaskGraphNodeWithDependencies<TId>) =>
+            nodeWithDependency.node,
+        );
 
       tasksSchedule.push(nodesWithNoDependency);
 

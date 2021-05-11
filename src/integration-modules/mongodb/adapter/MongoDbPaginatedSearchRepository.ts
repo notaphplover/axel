@@ -11,7 +11,7 @@ export abstract class MongoDbPaginatedSearchRepository<
   TModel,
   TModelDb,
   TOutputModelDb,
-  TQuery extends PaginationQuery
+  TQuery extends PaginationQuery,
 > extends MongoDbSearchRepository<TModel, TModelDb, TOutputModelDb, TQuery> {
   protected buildFindCursor(
     query: TQuery,

@@ -8,7 +8,8 @@ import { MongoDbConnector } from './MongoDbConnector';
 
 @injectable()
 export abstract class MongoDbDeleteRepository<TQuery, TModelDb extends Document>
-  implements DeleteRepository<TQuery> {
+  implements DeleteRepository<TQuery>
+{
   private innerCollection: mongodb.Collection<TModelDb> | undefined;
 
   constructor(
@@ -34,9 +35,8 @@ export abstract class MongoDbDeleteRepository<TQuery, TModelDb extends Document>
   }
 
   public async delete(query: TQuery): Promise<void> {
-    const filterQuery: mongodb.FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
-      query,
-    );
+    const filterQuery: mongodb.FilterQuery<TModelDb> =
+      await this.queryToFilterQueryConverter.transform(query);
 
     await this.collection.deleteMany(filterQuery);
   }

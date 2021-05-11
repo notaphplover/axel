@@ -16,7 +16,8 @@ import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
 @injectable()
 export class PostGameSetupsSearchesV1RequestHandler
-  implements FastifyRequestHandler {
+  implements FastifyRequestHandler
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.setup
@@ -45,9 +46,10 @@ export class PostGameSetupsSearchesV1RequestHandler
     request: fastify.FastifyRequest,
     reply: fastify.FastifyReply,
   ): Promise<void> {
-    const gameSetupFindQueryOrErrors: ValueOrErrors<GameSetupFindQuery> = await this.postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter.transform(
-      request,
-    );
+    const gameSetupFindQueryOrErrors: ValueOrErrors<GameSetupFindQuery> =
+      await this.postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter.transform(
+        request,
+      );
 
     if (gameSetupFindQueryOrErrors.isEither) {
       await reply
@@ -57,14 +59,13 @@ export class PostGameSetupsSearchesV1RequestHandler
       const gameSetupFindQuery: GameSetupFindQuery =
         gameSetupFindQueryOrErrors.value;
 
-      const gameSetupsFound: GameSetup[] = await this.findGameSetupsInteractor.interact(
-        gameSetupFindQuery,
-      );
+      const gameSetupsFound: GameSetup[] =
+        await this.findGameSetupsInteractor.interact(gameSetupFindQuery);
 
-      const basicGameSetypsApiV1Found: BasicGameSetupApiV1[] = gameSetupsFound.map(
-        (gameSetup: GameSetup) =>
+      const basicGameSetypsApiV1Found: BasicGameSetupApiV1[] =
+        gameSetupsFound.map((gameSetup: GameSetup) =>
           this.gameSetupToBasicGameSetupApiV1Converter.transform(gameSetup),
-      );
+        );
 
       await reply.send(basicGameSetypsApiV1Found);
     }

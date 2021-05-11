@@ -9,14 +9,14 @@ let fastifyInstance: FastifyInstance;
 
 jest.mock('fastify', () =>
   jest.fn().mockImplementation(() => {
-    const fastifyInstanceMock: FastifyInstance = ({
+    const fastifyInstanceMock: FastifyInstance = {
       close: jest.fn().mockResolvedValue(undefined),
       listen: jest.fn().mockResolvedValue(undefined),
-      log: ({
+      log: {
         error: jest.fn(),
-      } as Partial<FastifyLoggerInstance>) as FastifyLoggerInstance,
+      } as Partial<FastifyLoggerInstance> as FastifyLoggerInstance,
       register: jest.fn(),
-    } as Partial<FastifyInstance>) as FastifyInstance;
+    } as Partial<FastifyInstance> as FastifyInstance;
 
     (fastifyInstanceMock.register as jest.Mock).mockImplementation(
       async (

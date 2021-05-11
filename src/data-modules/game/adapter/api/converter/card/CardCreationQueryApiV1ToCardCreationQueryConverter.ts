@@ -13,7 +13,8 @@ import { CardCreationQueryApiV1 } from '../../query/card/CardCreationQueryApiV1'
 
 @injectable()
 export class CardCreationQueryApiV1ToCardCreationQueryConverter
-  implements Converter<CardCreationQueryApiV1, Promise<CardCreationQuery>> {
+  implements Converter<CardCreationQueryApiV1, Promise<CardCreationQuery>>
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.card

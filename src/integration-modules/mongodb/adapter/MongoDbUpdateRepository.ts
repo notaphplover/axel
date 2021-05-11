@@ -14,8 +14,9 @@ const hasValue: <TType>(
 export abstract class MongoDbUpdateRepository<
   TModel,
   TQuery,
-  TModelDb extends Document
-> implements UpdateRepository<TModel, TQuery> {
+  TModelDb extends Document,
+> implements UpdateRepository<TModel, TQuery>
+{
   private innerCollection: mongodb.Collection<TModelDb> | undefined;
 
   constructor(
@@ -51,12 +52,10 @@ export abstract class MongoDbUpdateRepository<
   }
 
   public async update(query: TQuery): Promise<void> {
-    const filterQuery: mongodb.FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
-      query,
-    );
-    const updateQuery: mongodb.UpdateQuery<TModelDb> = await this.queryToUpdateQueryConverter.transform(
-      query,
-    );
+    const filterQuery: mongodb.FilterQuery<TModelDb> =
+      await this.queryToFilterQueryConverter.transform(query);
+    const updateQuery: mongodb.UpdateQuery<TModelDb> =
+      await this.queryToUpdateQueryConverter.transform(query);
 
     await this.collection.updateMany(filterQuery, updateQuery);
   }
@@ -76,20 +75,19 @@ export abstract class MongoDbUpdateRepository<
      * 5. Return entities updated.
      */
 
-    const filterQuery: mongodb.FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
-      query,
-    );
-    const updateQuery: mongodb.UpdateQuery<TModelDb> = await this.queryToUpdateQueryConverter.transform(
-      query,
-    );
+    const filterQuery: mongodb.FilterQuery<TModelDb> =
+      await this.queryToFilterQueryConverter.transform(query);
+    const updateQuery: mongodb.UpdateQuery<TModelDb> =
+      await this.queryToUpdateQueryConverter.transform(query);
 
     const entitiesDbToBeUpdated: TModelDb[] = await this.collection
       .find<TModelDb>(filterQuery, {})
       .toArray();
 
-    const entitiesDbToBeUpdatedIds: mongodb.ObjectID[] = entitiesDbToBeUpdated.map(
-      (entityToBeUpdated: TModelDb) => entityToBeUpdated._id,
-    );
+    const entitiesDbToBeUpdatedIds: mongodb.ObjectID[] =
+      entitiesDbToBeUpdated.map(
+        (entityToBeUpdated: TModelDb) => entityToBeUpdated._id,
+      );
 
     const filterEntitiesByIdsQuery: mongodb.FilterQuery<TModelDb> = {
       _id: {
@@ -114,31 +112,24 @@ export abstract class MongoDbUpdateRepository<
   }
 
   public async updateOne(query: TQuery): Promise<void> {
-    const filterQuery: mongodb.FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
-      query,
-    );
-    const updateQuery: mongodb.UpdateQuery<TModelDb> = await this.queryToUpdateQueryConverter.transform(
-      query,
-    );
+    const filterQuery: mongodb.FilterQuery<TModelDb> =
+      await this.queryToFilterQueryConverter.transform(query);
+    const updateQuery: mongodb.UpdateQuery<TModelDb> =
+      await this.queryToUpdateQueryConverter.transform(query);
 
     await this.collection.updateOne(filterQuery, updateQuery);
   }
 
   public async updateOneAndSelect(query: TQuery): Promise<TModel | null> {
-    const filterQuery: mongodb.FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
-      query,
-    );
-    const updateQuery: mongodb.UpdateQuery<TModelDb> = await this.queryToUpdateQueryConverter.transform(
-      query,
-    );
+    const filterQuery: mongodb.FilterQuery<TModelDb> =
+      await this.queryToFilterQueryConverter.transform(query);
+    const updateQuery: mongodb.UpdateQuery<TModelDb> =
+      await this.queryToUpdateQueryConverter.transform(query);
 
-    const entityDbUpdatedResult: mongodb.FindAndModifyWriteOpResultObject<TModelDb> = await this.collection.findOneAndUpdate(
-      filterQuery,
-      updateQuery,
-      {
+    const entityDbUpdatedResult: mongodb.FindAndModifyWriteOpResultObject<TModelDb> =
+      await this.collection.findOneAndUpdate(filterQuery, updateQuery, {
         returnOriginal: false,
-      },
-    );
+      });
 
     const entityUpdated: TModel | null =
       entityDbUpdatedResult.ok === 1 && hasValue(entityDbUpdatedResult.value)

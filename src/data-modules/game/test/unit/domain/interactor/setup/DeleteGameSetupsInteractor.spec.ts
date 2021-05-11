@@ -12,11 +12,11 @@ describe(DeleteGameSetupsInteractor.name, () => {
   let deleteGameSetupsInteractor: DeleteGameSetupsInteractor;
 
   beforeAll(() => {
-    gameSetupDeleteRepository = ({
+    gameSetupDeleteRepository = {
       delete: jest.fn(),
     } as Partial<
       jest.Mocked<DeleteRepository<GameSetupDeletionQuery>>
-    >) as jest.Mocked<DeleteRepository<GameSetupDeletionQuery>>;
+    > as jest.Mocked<DeleteRepository<GameSetupDeletionQuery>>;
 
     deleteGameSetupsInteractor = new DeleteGameSetupsInteractor(
       gameSetupDeleteRepository,

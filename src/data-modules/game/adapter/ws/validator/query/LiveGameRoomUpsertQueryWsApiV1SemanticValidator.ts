@@ -12,7 +12,8 @@ export class LiveGameRoomUpsertQueryWsApiV1SemanticValidator
       LiveGameRoomUpsertQueryWsApiV1,
       LiveGameRoomUpsertQueryWsApiV1,
       LiveGameRoomUpsertQueryWsApiV1ValidationContext
-    > {
+    >
+{
   public validate(
     liveGameRoomUpsertQueryWsApiV1: LiveGameRoomUpsertQueryWsApiV1,
     context: LiveGameRoomUpsertQueryWsApiV1ValidationContext,

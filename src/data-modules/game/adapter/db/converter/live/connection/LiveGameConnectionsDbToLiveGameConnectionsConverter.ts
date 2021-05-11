@@ -7,7 +7,8 @@ import { LiveGameConnectionsDb } from '../../../model/live/connection/LiveGameCo
 
 @injectable()
 export class LiveGameConnectionsDbToLiveGameConnectionsConverter
-  implements Converter<LiveGameConnectionsDb, LiveGameConnections> {
+  implements Converter<LiveGameConnectionsDb, LiveGameConnections>
+{
   public transform(
     liveGameConnectionsDb: LiveGameConnectionsDb,
   ): LiveGameConnections {

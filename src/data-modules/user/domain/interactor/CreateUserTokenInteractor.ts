@@ -7,7 +7,8 @@ import { UserToken } from '../model/UserToken';
 
 @injectable()
 export class CreateUserTokenInteractor
-  implements Interactor<User, Promise<UserToken>> {
+  implements Interactor<User, Promise<UserToken>>
+{
   constructor(
     @inject(jwtDomain.types.JWT_MANAGER)
     private readonly jwtManager: JwtManager<User>,

@@ -54,10 +54,11 @@ describe(GetLiveGameByIdV1RequestHandler.name, () => {
       let liveGameFindQueryOrErrorsFixture: ValueEither<LiveGameFindQuery>;
 
       beforeAll(async () => {
-        requestFixture = ({
+        requestFixture = {
           params: { gameId: 'test-game-id' },
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         liveGameFindQueryOrErrorsFixture = {
           isEither: false,
@@ -123,10 +124,11 @@ describe(GetLiveGameByIdV1RequestHandler.name, () => {
       let liveGameFindQueryOrErrorsFixture: ValueEither<LiveGameFindQuery>;
 
       beforeAll(async () => {
-        requestFixture = ({
+        requestFixture = {
           params: { gameId: 'test-game-id' },
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         liveGameFindQueryOrErrorsFixture = {
           isEither: false,

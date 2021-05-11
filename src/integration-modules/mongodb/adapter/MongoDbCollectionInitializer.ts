@@ -8,7 +8,8 @@ import { MongoDbInitializer } from './MongoDbInitializer';
 
 @injectable()
 export abstract class MongoDbCollectionInitializer
-  implements MongoDbInitializer {
+  implements MongoDbInitializer
+{
   constructor(
     @unmanaged() private readonly collectionName: string,
     @unmanaged()

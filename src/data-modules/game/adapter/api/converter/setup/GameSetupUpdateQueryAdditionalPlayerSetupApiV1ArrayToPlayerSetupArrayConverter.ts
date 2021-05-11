@@ -14,7 +14,8 @@ export class GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArr
     Converter<
       GameSetupUpdateQueryAdditionalPlayerSetupApiV1[],
       Promise<PlayerSetup[]>
-    > {
+    >
+{
   constructor(
     @inject(GAME_DOMAIN_TYPES.interactor.deck.FIND_CARD_DECKS_INTERACTOR)
     private readonly findCardDecksInteractor: Interactor<
@@ -35,21 +36,21 @@ export class GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArr
       ids: gameSetupPlayerSetupsDeckIds,
     };
 
-    const gameSetupPlayerSetupsDecks: CardDeck[] = await this.findCardDecksInteractor.interact(
-      gameSetupPlayerSetupsDecksFindQuery,
-    );
+    const gameSetupPlayerSetupsDecks: CardDeck[] =
+      await this.findCardDecksInteractor.interact(
+        gameSetupPlayerSetupsDecksFindQuery,
+      );
 
     return input.map(
       (
         gameSetupUpdateQueryAdditionalPlayerSetupApiV1: GameSetupUpdateQueryAdditionalPlayerSetupApiV1,
       ): PlayerSetup => {
-        const playerSetupDeck:
-          | CardDeck
-          | undefined = gameSetupPlayerSetupsDecks.find(
-          (cardDeck: CardDeck) =>
-            cardDeck.id ===
-            gameSetupUpdateQueryAdditionalPlayerSetupApiV1.deckId,
-        );
+        const playerSetupDeck: CardDeck | undefined =
+          gameSetupPlayerSetupsDecks.find(
+            (cardDeck: CardDeck) =>
+              cardDeck.id ===
+              gameSetupUpdateQueryAdditionalPlayerSetupApiV1.deckId,
+          );
 
         if (playerSetupDeck === undefined) {
           throw new EntitiesNotFoundError(

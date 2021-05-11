@@ -75,9 +75,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             supertypes: [],
           };
 
-          (cardCreationQueryToCardDbsConverter.transform as jest.Mock).mockReturnValueOnce(
-            [cardDbFixture],
-          );
+          (
+            cardCreationQueryToCardDbsConverter.transform as jest.Mock
+          ).mockReturnValueOnce([cardDbFixture]);
 
           result = await creatureDbInsertRepository.insert(
             cardCreationQueryFixtureFactory.get(),
@@ -86,7 +86,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
         afterAll(() => {
           (cardDbToCardConverter.transform as jest.Mock).mockClear();
-          (cardCreationQueryToCardDbsConverter.transform as jest.Mock).mockClear();
+          (
+            cardCreationQueryToCardDbsConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must call cardDbToCardConverter.transform with the db entities found', () => {

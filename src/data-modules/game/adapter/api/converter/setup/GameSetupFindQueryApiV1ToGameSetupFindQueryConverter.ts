@@ -15,7 +15,8 @@ const hasValue: <TType>(
 
 @injectable()
 export class GameSetupFindQueryApiV1ToGameSetupFindQueryConverter
-  implements Converter<GameSetupFindQueryApiV1, GameSetupFindQuery> {
+  implements Converter<GameSetupFindQueryApiV1, GameSetupFindQuery>
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter

@@ -13,7 +13,8 @@ const cardSupertypeToCardSupertypeApiV1Map: {
 
 @injectable()
 export class CardSupertypeToCardSupertypeApiV1Converter
-  implements Converter<CardSupertype, CardSupertypeApiV1> {
+  implements Converter<CardSupertype, CardSupertypeApiV1>
+{
   public transform(input: CardSupertype): CardSupertypeApiV1 {
     return cardSupertypeToCardSupertypeApiV1Map[input];
   }

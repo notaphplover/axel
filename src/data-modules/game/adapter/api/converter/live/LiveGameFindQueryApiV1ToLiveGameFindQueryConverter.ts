@@ -6,7 +6,8 @@ import { LiveGameFindQueryApiV1 } from '../../query/live/LiveGameFindQueryApiV1'
 
 @injectable()
 export class LiveGameFindQueryApiV1ToLiveGameFindQueryConverter
-  implements Converter<LiveGameFindQueryApiV1, Promise<LiveGameFindQuery>> {
+  implements Converter<LiveGameFindQueryApiV1, Promise<LiveGameFindQuery>>
+{
   public async transform(
     input: LiveGameFindQueryApiV1,
   ): Promise<LiveGameFindQuery> {

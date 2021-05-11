@@ -12,7 +12,8 @@ import { CardDeckCreationQueryApiV1 } from '../../query/deck/CardDeckCreationQue
 @injectable()
 export class CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter
   implements
-    Converter<CardDeckCreationQueryApiV1, Promise<CardDeckCreationQuery>> {
+    Converter<CardDeckCreationQueryApiV1, Promise<CardDeckCreationQuery>>
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.deck

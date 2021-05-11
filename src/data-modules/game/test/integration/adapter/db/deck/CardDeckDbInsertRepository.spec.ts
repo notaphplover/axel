@@ -59,9 +59,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         beforeAll(async () => {
           cardDeckFixture = cardDeckFixtureFactory.get();
 
-          (cardDeckDbToCardDeckConverter.transform as jest.Mock).mockReturnValueOnce(
-            cardDeckFixture,
-          );
+          (
+            cardDeckDbToCardDeckConverter.transform as jest.Mock
+          ).mockReturnValueOnce(cardDeckFixture);
 
           cardDeckDbFixture = {
             description: cardDeckFixture.description,
@@ -70,9 +70,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             sections: cardDeckFixture.sections,
           };
 
-          (cardDeckCreationQueryToCardDeckDbsConverter.transform as jest.Mock).mockReturnValueOnce(
-            [cardDeckDbFixture],
-          );
+          (
+            cardDeckCreationQueryToCardDeckDbsConverter.transform as jest.Mock
+          ).mockReturnValueOnce([cardDeckDbFixture]);
 
           result = await cardDeckDbInsertRepository.insert(
             cardDeckCreationQueryFixtureFactory.get(),

@@ -25,9 +25,9 @@ const fastifyIntegrationDescribeGenerator: (
 
 const fastifyServerTestOutputParam: FastifyServerTestOutputParam = {};
 
-const fastifyUserAuthenticator: FastifyUserAuthenticator = ({
+const fastifyUserAuthenticator: FastifyUserAuthenticator = {
   authenticate: jest.fn(),
-} as Partial<FastifyUserAuthenticator>) as FastifyUserAuthenticator;
+} as Partial<FastifyUserAuthenticator> as FastifyUserAuthenticator;
 
 const postCardV1RequestHandlerMock: FastifyRequestHandler = {
   handle: jest.fn(),
@@ -50,8 +50,9 @@ fastifyIntegrationDescribeGenerator(cardRouter, fastifyServerTestOutputParam)(
 
     describe('CardRouter based server', () => {
       beforeAll(async () => {
-        fastifyInstance = (fastifyServerTestOutputParam.value as FastifyServerTest)
-          .fastify as FastifyInstance;
+        fastifyInstance = (
+          fastifyServerTestOutputParam.value as FastifyServerTest
+        ).fastify as FastifyInstance;
       });
 
       describe('POST Cards', () => {
@@ -64,11 +65,13 @@ fastifyIntegrationDescribeGenerator(cardRouter, fastifyServerTestOutputParam)(
               foo: 'bar',
             };
 
-            (fastifyUserAuthenticator.authenticate as jest.Mock).mockResolvedValueOnce(
-              userFixtureFactory.get(),
-            );
+            (
+              fastifyUserAuthenticator.authenticate as jest.Mock
+            ).mockResolvedValueOnce(userFixtureFactory.get());
 
-            (postCardV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
+            (
+              postCardV1RequestHandlerMock.handle as jest.Mock
+            ).mockImplementationOnce(
               async (
                 request: FastifyRequest,
                 reply: FastifyReply,
@@ -92,11 +95,11 @@ fastifyIntegrationDescribeGenerator(cardRouter, fastifyServerTestOutputParam)(
             expect(fastifyUserAuthenticator.authenticate).toHaveBeenCalledTimes(
               1,
             );
-            expect(
-              fastifyUserAuthenticator.authenticate,
-            ).toHaveBeenCalledWith(expect.anything(), expect.anything(), [
-              UserRole.ADMIN,
-            ]);
+            expect(fastifyUserAuthenticator.authenticate).toHaveBeenCalledWith(
+              expect.anything(),
+              expect.anything(),
+              [UserRole.ADMIN],
+            );
           });
 
           it('must call postCardV1RequestHandlerMock.handle to handle the request', () => {
@@ -121,7 +124,9 @@ fastifyIntegrationDescribeGenerator(cardRouter, fastifyServerTestOutputParam)(
               message: 'test POST Card with wrong auth',
             };
 
-            (fastifyUserAuthenticator.authenticate as jest.Mock).mockImplementationOnce(
+            (
+              fastifyUserAuthenticator.authenticate as jest.Mock
+            ).mockImplementationOnce(
               async (request: FastifyRequest, reply: FastifyReply) => {
                 await reply
                   .status(fastifyUserAuthenticatorCodeSent)
@@ -164,7 +169,9 @@ fastifyIntegrationDescribeGenerator(cardRouter, fastifyServerTestOutputParam)(
               foo: 'bar',
             };
 
-            (postCardsSearchesV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
+            (
+              postCardsSearchesV1RequestHandlerMock.handle as jest.Mock
+            ).mockImplementationOnce(
               async (
                 request: FastifyRequest,
                 reply: FastifyReply,
@@ -181,7 +188,9 @@ fastifyIntegrationDescribeGenerator(cardRouter, fastifyServerTestOutputParam)(
 
           afterAll(async () => {
             (fastifyUserAuthenticator.authenticate as jest.Mock).mockClear();
-            (postCardsSearchesV1RequestHandlerMock.handle as jest.Mock).mockClear();
+            (
+              postCardsSearchesV1RequestHandlerMock.handle as jest.Mock
+            ).mockClear();
           });
 
           it('must call getCardsV1RequestHandlerMock.handle to handle the request', () => {

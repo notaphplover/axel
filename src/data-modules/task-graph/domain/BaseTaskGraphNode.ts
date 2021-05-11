@@ -5,7 +5,8 @@ import { TaskGraphNode, TaskGraphNodeStatus } from './TaskGraphNode';
 
 @injectable()
 export abstract class BaseTaskGraphNode<TId, TOutput>
-  implements TaskGraphNode<TId, TOutput> {
+  implements TaskGraphNode<TId, TOutput>
+{
   private innerOutput: Capsule<TOutput> | null;
   private innerPerformPromise: Promise<null | Capsule<TOutput>> | undefined;
   private innerStatus: TaskGraphNodeStatus;

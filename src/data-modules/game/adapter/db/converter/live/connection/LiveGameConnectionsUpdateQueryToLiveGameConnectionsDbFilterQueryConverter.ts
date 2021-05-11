@@ -11,13 +11,15 @@ export class LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbFilterQueryCon
     Converter<
       LiveGameConnectionsUpdateQuery,
       mongodb.FilterQuery<LiveGameConnectionsDb>
-    > {
+    >
+{
   public transform(
     liveGameConnectionsUpdateQuery: LiveGameConnectionsUpdateQuery,
   ): mongodb.FilterQuery<LiveGameConnectionsDb> {
-    const liveGameConnectionsDbFilterQuery: mongodb.FilterQuery<LiveGameConnectionsDb> = {
-      liveGameId: liveGameConnectionsUpdateQuery.liveGameId,
-    };
+    const liveGameConnectionsDbFilterQuery: mongodb.FilterQuery<LiveGameConnectionsDb> =
+      {
+        liveGameId: liveGameConnectionsUpdateQuery.liveGameId,
+      };
 
     return liveGameConnectionsDbFilterQuery;
   }

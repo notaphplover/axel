@@ -13,6 +13,5 @@ const dbDotEnvVariables: DbDotEnvVariables = {
   MONGO_CONNECTION_USER: 'user',
 };
 
-export const dbDotEnvVariablesFixtureFactory: FixtureFactory<DbDotEnvVariables> = new DeepCloneFixtureFactory(
-  dbDotEnvVariables,
-);
+export const dbDotEnvVariablesFixtureFactory: FixtureFactory<DbDotEnvVariables> =
+  new DeepCloneFixtureFactory(dbDotEnvVariables);

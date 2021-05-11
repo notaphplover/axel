@@ -13,13 +13,13 @@ const hasValue: <TType>(
 
 @injectable()
 export abstract class JoiObjectValidator<TObject>
-  implements Validator<TObject> {
+  implements Validator<TObject>
+{
   constructor(private readonly joiValidatorSchema: Joi.AnySchema) {}
 
   public validate(value: unknown): ValidationResult<TObject> {
-    const joiValidationResult: Joi.ValidationResult = this.joiValidatorSchema.validate(
-      value,
-    );
+    const joiValidationResult: Joi.ValidationResult =
+      this.joiValidatorSchema.validate(value);
 
     if (hasValue(joiValidationResult.error)) {
       return {

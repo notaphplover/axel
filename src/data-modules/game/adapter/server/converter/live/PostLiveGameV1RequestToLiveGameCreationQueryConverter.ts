@@ -76,9 +76,8 @@ export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends Reque
     queryApi: LiveGameCreationQueryApiV1,
   ): Promise<ValueOrErrors<LiveGameCreationQueryApiV1ValidationContext>> {
     try {
-      const gameSetupOrErrors: ValueOrErrors<GameSetup> = await this.getGameSetupFromQueryApi(
-        queryApi,
-      );
+      const gameSetupOrErrors: ValueOrErrors<GameSetup> =
+        await this.getGameSetupFromQueryApi(queryApi);
 
       if (gameSetupOrErrors.isEither) {
         return gameSetupOrErrors;
@@ -87,10 +86,8 @@ export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends Reque
       const user: User = this.getUserFromRequest(request);
 
       const gameSetup: GameSetup = gameSetupOrErrors.value;
-      const deckIdTodeckMap: Map<
-        string,
-        CardDeck
-      > = await this.getDeckIdToDeckMapFromGameSetup(gameSetup);
+      const deckIdTodeckMap: Map<string, CardDeck> =
+        await this.getDeckIdToDeckMapFromGameSetup(gameSetup);
 
       const context: LiveGameCreationQueryApiV1ValidationContext = {
         deckIdToDeckMap: deckIdTodeckMap,
@@ -98,17 +95,19 @@ export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends Reque
         user: user,
       };
 
-      const contextOrErrors: ValueOrErrors<LiveGameCreationQueryApiV1ValidationContext> = {
-        isEither: false,
-        value: context,
-      };
+      const contextOrErrors: ValueOrErrors<LiveGameCreationQueryApiV1ValidationContext> =
+        {
+          isEither: false,
+          value: context,
+        };
 
       return contextOrErrors;
     } catch (err: unknown) {
-      const contextOrErrors: ValueOrErrors<LiveGameCreationQueryApiV1ValidationContext> = {
-        isEither: true,
-        value: [(err as Error).message],
-      };
+      const contextOrErrors: ValueOrErrors<LiveGameCreationQueryApiV1ValidationContext> =
+        {
+          isEither: true,
+          value: [(err as Error).message],
+        };
 
       return contextOrErrors;
     }
@@ -141,9 +140,8 @@ export class PostLiveGameV1RequestToLiveGameCreationQueryConverter extends Reque
       id: queryApi.gameSetupId,
     };
 
-    const gamesSetup: GameSetup[] = await this.findGameSetupsInteractor.interact(
-      gameSetupFindQuery,
-    );
+    const gamesSetup: GameSetup[] =
+      await this.findGameSetupsInteractor.interact(gameSetupFindQuery);
 
     if (commonDomain.utils.hasOneElement(gamesSetup)) {
       const [gameSetup]: GameSetup[] = gamesSetup;

@@ -48,9 +48,8 @@ export class PostAuthTokenV1RequestHandler implements FastifyRequestHandler {
     request: FastifyRequest,
     reply: FastifyReply,
   ): Promise<void> {
-    const validationResult: ValidationResult<AuthCreationQueryApiV1> = this.authCreationQueryApiV1Validator.validate(
-      request.body,
-    );
+    const validationResult: ValidationResult<AuthCreationQueryApiV1> =
+      this.authCreationQueryApiV1Validator.validate(request.body);
     if (validationResult.result) {
       const userFindQuery: UserFindQuery = {
         password: validationResult.model.password,
@@ -68,13 +67,11 @@ export class PostAuthTokenV1RequestHandler implements FastifyRequestHandler {
         return;
       }
 
-      const userToken: UserToken = await this.createUserTokenInteractor.interact(
-        userFound,
-      );
+      const userToken: UserToken =
+        await this.createUserTokenInteractor.interact(userFound);
 
-      const userTokenApiV1: UserTokenApiV1 = this.userTokenToUserTokenApiV1Converter.transform(
-        userToken,
-      );
+      const userTokenApiV1: UserTokenApiV1 =
+        this.userTokenToUserTokenApiV1Converter.transform(userToken);
 
       await reply.send(userTokenApiV1);
     } else {

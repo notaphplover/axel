@@ -19,10 +19,8 @@ describe(TaskGraphNodeExtractor.name, () => {
       let result: unknown;
 
       beforeAll(() => {
-        const taskGraphNodeExtractor: TaskGraphNodeExtractorMock = new TaskGraphNodeExtractorMock(
-          new Map(),
-          [],
-        );
+        const taskGraphNodeExtractor: TaskGraphNodeExtractorMock =
+          new TaskGraphNodeExtractorMock(new Map(), []);
 
         result = [...taskGraphNodeExtractor.extract()];
       });
@@ -38,18 +36,16 @@ describe(TaskGraphNodeExtractor.name, () => {
       let result: unknown;
 
       beforeAll(() => {
-        node = ({
+        node = {
           dependsOn: [],
           id: 'sample-id',
-        } as Partial<TaskGraphNode<string, unknown>>) as TaskGraphNode<
+        } as Partial<TaskGraphNode<string, unknown>> as TaskGraphNode<
           string,
           unknown
         >;
 
-        const taskGraphNodeExtractor: TaskGraphNodeExtractorMock = new TaskGraphNodeExtractorMock(
-          new Map(),
-          [node],
-        );
+        const taskGraphNodeExtractor: TaskGraphNodeExtractorMock =
+          new TaskGraphNodeExtractorMock(new Map(), [node]);
 
         result = [...taskGraphNodeExtractor.extract()];
       });
@@ -70,20 +66,18 @@ describe(TaskGraphNodeExtractor.name, () => {
 
       beforeAll(() => {
         nodeDependency = 'missing-id';
-        const node: TaskGraphNode<string, unknown> = ({
+        const node: TaskGraphNode<string, unknown> = {
           dependsOn: [nodeDependency],
           id: 'sample-id',
-        } as Partial<TaskGraphNode<string, unknown>>) as TaskGraphNode<
+        } as Partial<TaskGraphNode<string, unknown>> as TaskGraphNode<
           string,
           unknown
         >;
 
         source = new Map<string, TaskGraphNode<string, unknown>>();
 
-        const taskGraphNodeExtractor: TaskGraphNodeExtractorMock = new TaskGraphNodeExtractorMock(
-          source,
-          [node],
-        );
+        const taskGraphNodeExtractor: TaskGraphNodeExtractorMock =
+          new TaskGraphNodeExtractorMock(source, [node]);
 
         extractNodeSpy = jest.spyOn(taskGraphNodeExtractor, 'extractNode');
 
@@ -118,17 +112,17 @@ describe(TaskGraphNodeExtractor.name, () => {
 
       beforeAll(() => {
         nodeDependency = 'sample-dependent-id';
-        node = ({
+        node = {
           dependsOn: [nodeDependency],
           id: 'sample-id',
-        } as Partial<TaskGraphNode<string, unknown>>) as TaskGraphNode<
+        } as Partial<TaskGraphNode<string, unknown>> as TaskGraphNode<
           string,
           unknown
         >;
-        dependentNode = ({
+        dependentNode = {
           dependsOn: [],
           id: nodeDependency,
-        } as Partial<TaskGraphNode<string, unknown>>) as TaskGraphNode<
+        } as Partial<TaskGraphNode<string, unknown>> as TaskGraphNode<
           string,
           unknown
         >;
@@ -136,10 +130,8 @@ describe(TaskGraphNodeExtractor.name, () => {
         source = new Map<string, TaskGraphNode<string, unknown>>();
         source.set(nodeDependency, dependentNode);
 
-        const taskGraphNodeExtractor: TaskGraphNodeExtractorMock = new TaskGraphNodeExtractorMock(
-          source,
-          [node],
-        );
+        const taskGraphNodeExtractor: TaskGraphNodeExtractorMock =
+          new TaskGraphNodeExtractorMock(source, [node]);
 
         extractNodeSpy = jest.spyOn(taskGraphNodeExtractor, 'extractNode');
 
@@ -178,24 +170,24 @@ describe(TaskGraphNodeExtractor.name, () => {
         nodeDependency = 'sample-dependent-id';
         nodeThirdDependency = 'sample-third-dependent-id';
 
-        node = ({
+        node = {
           dependsOn: [nodeDependency],
           id: 'sample-id',
-        } as Partial<TaskGraphNode<string, unknown>>) as TaskGraphNode<
+        } as Partial<TaskGraphNode<string, unknown>> as TaskGraphNode<
           string,
           unknown
         >;
-        dependentNode = ({
+        dependentNode = {
           dependsOn: [nodeThirdDependency],
           id: nodeDependency,
-        } as Partial<TaskGraphNode<string, unknown>>) as TaskGraphNode<
+        } as Partial<TaskGraphNode<string, unknown>> as TaskGraphNode<
           string,
           unknown
         >;
-        thirdDependentNode = ({
+        thirdDependentNode = {
           dependsOn: [],
           id: nodeThirdDependency,
-        } as Partial<TaskGraphNode<string, unknown>>) as TaskGraphNode<
+        } as Partial<TaskGraphNode<string, unknown>> as TaskGraphNode<
           string,
           unknown
         >;
@@ -204,10 +196,8 @@ describe(TaskGraphNodeExtractor.name, () => {
         source.set(nodeDependency, dependentNode);
         source.set(nodeThirdDependency, thirdDependentNode);
 
-        const taskGraphNodeExtractor: TaskGraphNodeExtractorMock = new TaskGraphNodeExtractorMock(
-          source,
-          [node],
-        );
+        const taskGraphNodeExtractor: TaskGraphNodeExtractorMock =
+          new TaskGraphNodeExtractorMock(source, [node]);
 
         extractNodeSpy = jest.spyOn(taskGraphNodeExtractor, 'extractNode');
 

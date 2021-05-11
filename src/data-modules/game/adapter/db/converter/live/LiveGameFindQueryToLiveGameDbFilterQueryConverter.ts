@@ -11,7 +11,8 @@ const hasValue: <TType>(
 
 @injectable()
 export class LiveGameFindQueryToLiveGameDbFilterQueryConverter
-  implements Converter<LiveGameFindQuery, mongodb.FilterQuery<LiveGameDb>> {
+  implements Converter<LiveGameFindQuery, mongodb.FilterQuery<LiveGameDb>>
+{
   public transform(input: LiveGameFindQuery): mongodb.FilterQuery<LiveGameDb> {
     const filterQuery: mongodb.FilterQuery<LiveGameDb> = {};
 

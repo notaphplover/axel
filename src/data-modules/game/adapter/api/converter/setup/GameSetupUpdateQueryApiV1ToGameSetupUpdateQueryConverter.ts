@@ -12,7 +12,8 @@ import { GameSetupUpdateQueryAdditionalPlayerSetupApiV1 } from '../../query/setu
 @injectable()
 export class GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter
   implements
-    Converter<GameSetupUpdateQueryApiV1, Promise<GameSetupUpdateQuery>> {
+    Converter<GameSetupUpdateQueryApiV1, Promise<GameSetupUpdateQuery>>
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.setup
@@ -50,9 +51,10 @@ export class GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter
     if (input.additionalPlayerSetups === undefined) {
       additionalPlayerSetups = undefined;
     } else {
-      additionalPlayerSetups = await this.gameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter.transform(
-        input.additionalPlayerSetups,
-      );
+      additionalPlayerSetups =
+        await this.gameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter.transform(
+          input.additionalPlayerSetups,
+        );
     }
 
     return additionalPlayerSetups;

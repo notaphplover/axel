@@ -10,7 +10,8 @@ import { UserDb } from '../model/UserDb';
 @injectable()
 export class UserCreationQueryToUserDbsConverter
   implements
-    Converter<UserCreationQuery, Promise<mongodb.OptionalId<UserDb>[]>> {
+    Converter<UserCreationQuery, Promise<mongodb.OptionalId<UserDb>[]>>
+{
   constructor(
     @inject(USER_ADAPTER_TYPES.security.PASSWORD_HASHER)
     private readonly passwordHasher: PasswordHasher,

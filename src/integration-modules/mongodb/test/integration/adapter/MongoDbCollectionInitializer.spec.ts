@@ -71,13 +71,15 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let indexExists: unknown;
 
         beforeAll(async () => {
-          const mongoDbConnector: MongoDbConnector = outputParam.elem as MongoDbConnector;
+          const mongoDbConnector: MongoDbConnector =
+            outputParam.elem as MongoDbConnector;
 
-          const collectionsMatchingNameBeforeCall: unknown[] = await mongoDbConnector.db
-            .listCollections({
-              name: collectionName,
-            })
-            .toArray();
+          const collectionsMatchingNameBeforeCall: unknown[] =
+            await mongoDbConnector.db
+              .listCollections({
+                name: collectionName,
+              })
+              .toArray();
 
           if (collectionsMatchingNameBeforeCall.length !== 0) {
             await mongoDbConnector.db.dropCollection(collectionName);

@@ -27,9 +27,8 @@ export const gameSetupApiV1: ExtendedGameSetupApiV1 = {
   playerSlots: gameSetup.playerSlots,
 };
 
-export const extendedGameSetupApiV1FixtureFactory: FixtureFactory<ExtendedGameSetupApiV1> = new DeepCloneFixtureFactory(
-  gameSetupApiV1,
-);
+export const extendedGameSetupApiV1FixtureFactory: FixtureFactory<ExtendedGameSetupApiV1> =
+  new DeepCloneFixtureFactory(gameSetupApiV1);
 
 export const basicGameSetupApiV1: BasicGameSetupApiV1 = {
   format: GameFormatApiV1.UNRESTRICTED,
@@ -39,6 +38,5 @@ export const basicGameSetupApiV1: BasicGameSetupApiV1 = {
   playerSlots: gameSetup.playerSlots,
 };
 
-export const basicGameSetupApiV1FixtureFactory: FixtureFactory<BasicGameSetupApiV1> = new DeepCloneFixtureFactory(
-  basicGameSetupApiV1,
-);
+export const basicGameSetupApiV1FixtureFactory: FixtureFactory<BasicGameSetupApiV1> =
+  new DeepCloneFixtureFactory(basicGameSetupApiV1);

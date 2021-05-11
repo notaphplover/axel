@@ -36,8 +36,9 @@ fastifyIntegrationDescribeGenerator(statusRouter, fastifyServerTestOutputParam)(
 
     describe('StatusRouter based server', () => {
       beforeAll(async () => {
-        fastifyInstance = (fastifyServerTestOutputParam.value as FastifyServerTest)
-          .fastify as FastifyInstance;
+        fastifyInstance = (
+          fastifyServerTestOutputParam.value as FastifyServerTest
+        ).fastify as FastifyInstance;
       });
 
       describe('GET Status', () => {
@@ -50,7 +51,9 @@ fastifyIntegrationDescribeGenerator(statusRouter, fastifyServerTestOutputParam)(
               foo: 'bar',
             };
 
-            (getStatusV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
+            (
+              getStatusV1RequestHandlerMock.handle as jest.Mock
+            ).mockImplementationOnce(
               async (
                 request: FastifyRequest,
                 reply: FastifyReply,

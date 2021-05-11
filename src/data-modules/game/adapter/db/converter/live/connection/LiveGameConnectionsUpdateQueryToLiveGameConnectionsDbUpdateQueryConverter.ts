@@ -11,7 +11,8 @@ export class LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbUpdateQueryCon
     Converter<
       LiveGameConnectionsUpdateQuery,
       mongodb.UpdateQuery<LiveGameConnectionsDb>
-    > {
+    >
+{
   public transform(
     liveGameConnectionsUpdateQuery: LiveGameConnectionsUpdateQuery,
   ): mongodb.UpdateQuery<LiveGameConnectionsDb> {
@@ -48,6 +49,6 @@ export class LiveGameConnectionsUpdateQueryToLiveGameConnectionsDbUpdateQueryCon
       },
     });
 
-    return (liveGameConnectionsDbUpdateQuery as unknown) as mongodb.UpdateQuery<LiveGameConnectionsDb>;
+    return liveGameConnectionsDbUpdateQuery as unknown as mongodb.UpdateQuery<LiveGameConnectionsDb>;
   }
 }

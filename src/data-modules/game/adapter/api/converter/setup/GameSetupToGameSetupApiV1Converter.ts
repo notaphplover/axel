@@ -9,7 +9,8 @@ import { GameSetupApiV1 } from '../../model/setup/GameSetupApiV1';
 
 @injectable()
 export abstract class GameSetupToGameSetupApiV1Converter<TOutput>
-  implements Converter<GameSetup, GameSetupApiV1<TOutput>> {
+  implements Converter<GameSetup, GameSetupApiV1<TOutput>>
+{
   constructor(
     private readonly gameFormatToGameFormatApiV1Converter: Converter<
       GameFormat,

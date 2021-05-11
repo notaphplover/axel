@@ -19,6 +19,5 @@ export const cardDeckCreationQueryApiV1: CardDeckCreationQueryApiV1 = {
   },
 };
 
-export const cardDeckCreationQueryApiV1FixtureFactory: FixtureFactory<CardDeckCreationQueryApiV1> = new DeepCloneFixtureFactory(
-  cardDeckCreationQueryApiV1,
-);
+export const cardDeckCreationQueryApiV1FixtureFactory: FixtureFactory<CardDeckCreationQueryApiV1> =
+  new DeepCloneFixtureFactory(cardDeckCreationQueryApiV1);

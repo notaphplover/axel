@@ -13,14 +13,12 @@ export const user: User = {
   username: 'sample-username',
 };
 
-export const userFixtureFactory: FixtureFactory<User> = new DeepCloneFixtureFactory(
-  user,
-);
+export const userFixtureFactory: FixtureFactory<User> =
+  new DeepCloneFixtureFactory(user);
 
 export const userToken: UserToken = {
   token: 'sample-token',
 };
 
-export const userTokenFixtureFactory: FixtureFactory<UserToken> = new DeepCloneFixtureFactory(
-  userToken,
-);
+export const userTokenFixtureFactory: FixtureFactory<UserToken> =
+  new DeepCloneFixtureFactory(userToken);

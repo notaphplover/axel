@@ -6,7 +6,8 @@ import { CardDeckDb } from '../../model/deck/CardDeckDb';
 
 @injectable()
 export class CardDeckDbToCardDeckConverter
-  implements Converter<CardDeckDb, CardDeck> {
+  implements Converter<CardDeckDb, CardDeck>
+{
   public transform(input: CardDeckDb): CardDeck {
     return {
       description: input.description,

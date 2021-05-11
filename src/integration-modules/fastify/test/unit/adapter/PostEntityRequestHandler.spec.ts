@@ -91,9 +91,9 @@ describe(PostEntityRequestHandler.name, () => {
         fooApi: 'fooValue',
       };
 
-      requestFixture = ({
+      requestFixture = {
         body: entityCreationQueryFixtureApi,
-      } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
+      } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
 
       replyFixture = fastifyReplyFixtureFactory.get();
     });

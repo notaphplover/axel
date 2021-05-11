@@ -8,7 +8,8 @@ import { GameSetupDb } from '../../model/setup/GameSetupDb';
 @injectable()
 export class GameSetupDeletionQueryToGameSetupDbFilterConverter
   implements
-    Converter<GameSetupDeletionQuery, mongodb.FilterQuery<GameSetupDb>> {
+    Converter<GameSetupDeletionQuery, mongodb.FilterQuery<GameSetupDb>>
+{
   public transform(
     input: GameSetupDeletionQuery,
   ): mongodb.FilterQuery<GameSetupDb> {

@@ -3,7 +3,7 @@ import { QueryWsApi } from '../model/QueryWsApi';
 
 export interface AppWsMessageHandler<
   TMessage extends QueryWsApi = QueryWsApi,
-  TContext = void
+  TContext = void,
 > extends WsMessageHandler<TMessage, TContext> {
   readonly messageTypes: string[];
 }

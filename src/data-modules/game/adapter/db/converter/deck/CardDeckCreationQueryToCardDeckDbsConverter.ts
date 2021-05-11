@@ -7,8 +7,8 @@ import { CardDeckDb } from '../../model/deck/CardDeckDb';
 
 @injectable()
 export class CardDeckCreationQueryToCardDeckDbsConverter
-  implements
-    Converter<CardDeckCreationQuery, mongodb.OptionalId<CardDeckDb>[]> {
+  implements Converter<CardDeckCreationQuery, mongodb.OptionalId<CardDeckDb>[]>
+{
   public transform(
     input: CardDeckCreationQuery,
   ): mongodb.OptionalId<CardDeckDb>[] {

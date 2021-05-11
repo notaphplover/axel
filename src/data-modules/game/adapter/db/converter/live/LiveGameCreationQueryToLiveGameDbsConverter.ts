@@ -18,15 +18,16 @@ const hasValue: <TType>(
 
 @injectable()
 export class LiveGameCreationQueryToLiveGameDbsConverter
-  implements
-    Converter<LiveGameCreationQuery, mongodb.OptionalId<LiveGameDb>[]> {
+  implements Converter<LiveGameCreationQuery, mongodb.OptionalId<LiveGameDb>[]>
+{
   public transform(
     liveGameCreationQuery: LiveGameCreationQuery,
   ): mongodb.OptionalId<LiveGameDb>[] {
-    const playerAreas: LiveGamePlayerArea[] = liveGameCreationQuery.gameSetup.playerSetups.map(
-      (playerSetup: PlayerSetup) =>
-        this.createLiveGamePlayerArea(liveGameCreationQuery, playerSetup),
-    );
+    const playerAreas: LiveGamePlayerArea[] =
+      liveGameCreationQuery.gameSetup.playerSetups.map(
+        (playerSetup: PlayerSetup) =>
+          this.createLiveGamePlayerArea(liveGameCreationQuery, playerSetup),
+      );
 
     return [
       {
@@ -42,11 +43,8 @@ export class LiveGameCreationQueryToLiveGameDbsConverter
     liveGameCreationQuery: LiveGameCreationQuery,
     playerSetup: PlayerSetup,
   ): LiveGamePlayerArea {
-    const deck:
-      | CardDeck
-      | undefined = liveGameCreationQuery.deckIdToDeckMap.get(
-      playerSetup.deckId,
-    );
+    const deck: CardDeck | undefined =
+      liveGameCreationQuery.deckIdToDeckMap.get(playerSetup.deckId);
 
     if (!hasValue(deck)) {
       throw new EntitiesNotFoundError(

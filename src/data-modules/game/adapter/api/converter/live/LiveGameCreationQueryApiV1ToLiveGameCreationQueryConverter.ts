@@ -12,7 +12,8 @@ export class LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter
       LiveGameCreationQueryApiV1,
       LiveGameCreationQuery,
       LiveGameCreationQueryApiV1ValidationContext
-    > {
+    >
+{
   public transform(
     _liveGameCreationQueryApiV1: LiveGameCreationQueryApiV1,
     context: LiveGameCreationQueryApiV1ValidationContext,

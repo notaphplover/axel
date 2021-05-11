@@ -58,10 +58,11 @@ describe(GetCardDeckByIdV1RequestHandler.name, () => {
       beforeAll(async () => {
         const cardDeckId: string = 'test-cardDeck-id';
 
-        requestFixture = ({
+        requestFixture = {
           params: { cardDeckId: cardDeckId },
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         cardDeckFindQueryValueEither = {
           isEither: false,
@@ -124,10 +125,11 @@ describe(GetCardDeckByIdV1RequestHandler.name, () => {
       let cardDeckFindQueryValueEither: ValueEither<CardDeckFindQuery>;
 
       beforeAll(async () => {
-        requestFixture = ({
+        requestFixture = {
           params: { cardDeckId: 'test-cardDeck-id' },
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         cardDeckFindQueryValueEither = {
           isEither: false,

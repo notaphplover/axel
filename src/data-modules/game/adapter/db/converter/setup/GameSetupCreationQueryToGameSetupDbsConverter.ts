@@ -9,7 +9,8 @@ import { GameSetupDb } from '../../model/setup/GameSetupDb';
 @injectable()
 export class GameSetupCreationQueryToGameSetupDbsConverter
   implements
-    Converter<GameSetupsCreationQuery, mongodb.OptionalId<GameSetupDb>[]> {
+    Converter<GameSetupsCreationQuery, mongodb.OptionalId<GameSetupDb>[]>
+{
   public transform(
     input: GameSetupsCreationQuery,
   ): mongodb.OptionalId<GameSetupDb>[] {

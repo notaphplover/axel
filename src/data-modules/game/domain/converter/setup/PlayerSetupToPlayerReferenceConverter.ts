@@ -6,7 +6,8 @@ import { PlayerSetup } from '../../model/setup/PlayerSetup';
 
 @injectable()
 export class PlayerSetupToPlayerReferenceConverter
-  implements Converter<PlayerSetup, PlayerReference> {
+  implements Converter<PlayerSetup, PlayerReference>
+{
   public transform(input: PlayerSetup): PlayerReference {
     return {
       userId: input.userId,

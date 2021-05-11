@@ -41,16 +41,18 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         transform: jest.fn(),
       };
       mongoDbConnector = outputParam.elem as MongoDbConnector;
-      liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter = {
-        transform: jest.fn(),
-      };
+      liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter =
+        {
+          transform: jest.fn(),
+        };
 
-      liveGameConnectionsDbSearchRepository = new LiveGameConnectionsDbSearchRepository(
-        collectionName,
-        liveGameConnectionsDbToLiveGameConnectionsConverter,
-        mongoDbConnector,
-        liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter,
-      );
+      liveGameConnectionsDbSearchRepository =
+        new LiveGameConnectionsDbSearchRepository(
+          collectionName,
+          liveGameConnectionsDbToLiveGameConnectionsConverter,
+          mongoDbConnector,
+          liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter,
+        );
     });
 
     describe('.find()', () => {
@@ -60,11 +62,11 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let result: unknown;
 
         beforeAll(async () => {
-          const liveGameConnectionsFixture: LiveGameConnections = liveGameConnectionsFixtureFactory.get();
+          const liveGameConnectionsFixture: LiveGameConnections =
+            liveGameConnectionsFixtureFactory.get();
 
-          const gameDbCollection: mongodb.Collection<LiveGameConnectionsDb> = mongoDbConnector.db.collection(
-            collectionName,
-          );
+          const gameDbCollection: mongodb.Collection<LiveGameConnectionsDb> =
+            mongoDbConnector.db.collection(collectionName);
 
           // eslint-disable-next-line @typescript-eslint/typedef
           [liveGameConnectionsDbInserted] = (
@@ -76,22 +78,24 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             ])
           ).ops as LiveGameConnectionsDb[] & [LiveGameConnectionsDb];
 
-          const liveGameConnectionsFindQueryFixture: LiveGameConnectionsFindQuery = {
-            ...liveGameConnectionsFindQueryFixtureFactory.get(),
-            id: liveGameConnectionsDbInserted._id.toHexString(),
-          };
+          const liveGameConnectionsFindQueryFixture: LiveGameConnectionsFindQuery =
+            {
+              ...liveGameConnectionsFindQueryFixtureFactory.get(),
+              id: liveGameConnectionsDbInserted._id.toHexString(),
+            };
 
-          (liveGameConnectionsDbToLiveGameConnectionsConverter.transform as jest.Mock).mockReturnValueOnce(
-            liveGameConnectionsFixture,
-          );
+          (
+            liveGameConnectionsDbToLiveGameConnectionsConverter.transform as jest.Mock
+          ).mockReturnValueOnce(liveGameConnectionsFixture);
 
-          const liveGameConnectionsDbFilterQuery: mongodb.FilterQuery<LiveGameConnectionsDb> = {
-            _id: liveGameConnectionsDbInserted._id,
-          };
+          const liveGameConnectionsDbFilterQuery: mongodb.FilterQuery<LiveGameConnectionsDb> =
+            {
+              _id: liveGameConnectionsDbInserted._id,
+            };
 
-          (liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            liveGameConnectionsDbFilterQuery,
-          );
+          (
+            liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(liveGameConnectionsDbFilterQuery);
 
           result = await liveGameConnectionsDbSearchRepository.find(
             liveGameConnectionsFindQueryFixture,
@@ -99,8 +103,12 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         });
 
         afterAll(async () => {
-          (liveGameConnectionsDbToLiveGameConnectionsConverter.transform as jest.Mock).mockClear();
-          (liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (
+            liveGameConnectionsDbToLiveGameConnectionsConverter.transform as jest.Mock
+          ).mockClear();
+          (
+            liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must call liveGameConnectionsDbToLiveGameConnectionsConverter.transform with the db entities found', () => {
@@ -125,13 +133,14 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         beforeAll(async () => {
           const mongoDbId: mongodb.ObjectID = new mongodb.ObjectID();
 
-          const liveGameConnectionsDbFilterQuery: mongodb.FilterQuery<LiveGameConnectionsDb> = {
-            _id: mongoDbId,
-          };
+          const liveGameConnectionsDbFilterQuery: mongodb.FilterQuery<LiveGameConnectionsDb> =
+            {
+              _id: mongoDbId,
+            };
 
-          (liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            liveGameConnectionsDbFilterQuery,
-          );
+          (
+            liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(liveGameConnectionsDbFilterQuery);
 
           const gameFindQueryFixture: LiveGameConnectionsFindQuery = {
             id: mongoDbId.toHexString(),
@@ -143,7 +152,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         });
 
         afterAll(async () => {
-          (liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (
+            liveGameConnectionsFindQueryToLiveGameConnectionsDbFilterQueryConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must return no live game connection', () => {

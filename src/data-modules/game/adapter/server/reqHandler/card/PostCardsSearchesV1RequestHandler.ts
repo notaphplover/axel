@@ -16,7 +16,8 @@ import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
 @injectable()
 export class PostCardsSearchesV1RequestHandler
-  implements FastifyRequestHandler {
+  implements FastifyRequestHandler
+{
   constructor(
     @inject(GAME_ADAPTER_TYPES.api.converter.card.CARD_TO_CARD_API_V1_CONVERTER)
     private readonly cardToCardApiV1Converter: Converter<Card, CardApiV1>,
@@ -39,9 +40,10 @@ export class PostCardsSearchesV1RequestHandler
     request: fastify.FastifyRequest,
     reply: fastify.FastifyReply,
   ): Promise<void> {
-    const queryOrErrors: ValueOrErrors<CardFindQuery> = await this.postCardsSearchesV1RequestToCardFindQueryConverter.transform(
-      request,
-    );
+    const queryOrErrors: ValueOrErrors<CardFindQuery> =
+      await this.postCardsSearchesV1RequestToCardFindQueryConverter.transform(
+        request,
+      );
 
     if (queryOrErrors.isEither) {
       await reply

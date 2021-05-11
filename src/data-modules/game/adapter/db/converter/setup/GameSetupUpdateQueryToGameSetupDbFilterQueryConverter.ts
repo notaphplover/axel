@@ -11,7 +11,8 @@ import { GameSetupDb } from '../../model/setup/GameSetupDb';
 
 @injectable()
 export class GameSetupUpdateQueryToGameSetupDbFilterQueryConverter
-  implements Converter<GameSetupUpdateQuery, mongodb.FilterQuery<GameSetupDb>> {
+  implements Converter<GameSetupUpdateQuery, mongodb.FilterQuery<GameSetupDb>>
+{
   public transform(
     input: GameSetupUpdateQuery,
   ): mongodb.FilterQuery<GameSetupDb> {
@@ -19,9 +20,8 @@ export class GameSetupUpdateQueryToGameSetupDbFilterQueryConverter
       _id: new mongodb.ObjectID(input.id),
     };
 
-    let playerSetupUserIdFilter:
-      | mongodb.Condition<string[]>
-      | undefined = undefined;
+    let playerSetupUserIdFilter: mongodb.Condition<string[]> | undefined =
+      undefined;
 
     playerSetupUserIdFilter = this.transformAdditionalPlayerSetups(
       input,

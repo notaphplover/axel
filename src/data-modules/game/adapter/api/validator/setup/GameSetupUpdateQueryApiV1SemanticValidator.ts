@@ -15,7 +15,8 @@ export class GameSetupUpdateQueryApiV1SemanticValidator
       GameSetupUpdateQueryApiV1,
       GameSetupUpdateQueryApiV1,
       GameSetupUpdateQueryApiV1ValidationContext
-    > {
+    >
+{
   public validate(
     gameSetupUpdateQuery: GameSetupUpdateQueryApiV1,
     context: GameSetupUpdateQueryApiV1ValidationContext,

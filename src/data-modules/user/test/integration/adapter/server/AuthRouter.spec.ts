@@ -34,8 +34,9 @@ fastifyIntegrationDescribeGenerator(authRouter, fastifyServerTestOutputParam)(
 
     describe('POST auth', () => {
       beforeAll(async () => {
-        fastifyInstance = (fastifyServerTestOutputParam.value as FastifyServerTest)
-          .fastify as FastifyInstance;
+        fastifyInstance = (
+          fastifyServerTestOutputParam.value as FastifyServerTest
+        ).fastify as FastifyInstance;
       });
 
       describe('when called', () => {
@@ -46,7 +47,9 @@ fastifyIntegrationDescribeGenerator(authRouter, fastifyServerTestOutputParam)(
           responseBodyFixture = {
             foo: 'bar',
           };
-          (postAuthV1RequestHandlerMock.handle as jest.Mock).mockImplementationOnce(
+          (
+            postAuthV1RequestHandlerMock.handle as jest.Mock
+          ).mockImplementationOnce(
             async (
               request: FastifyRequest,
               reply: FastifyReply,

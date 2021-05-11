@@ -13,9 +13,8 @@ export const playerSetup: PlayerSetup = {
   userId: user.id,
 };
 
-export const playerSetupFixtureFactory: FixtureFactory<PlayerSetup> = new DeepCloneFixtureFactory(
-  playerSetup,
-);
+export const playerSetupFixtureFactory: FixtureFactory<PlayerSetup> =
+  new DeepCloneFixtureFactory(playerSetup);
 
 export const gameSetup: GameSetup = {
   format: GameFormat.UNRESTRICTED,
@@ -25,6 +24,5 @@ export const gameSetup: GameSetup = {
   playerSlots: 1,
 };
 
-export const gameSetupFixtureFactory: FixtureFactory<GameSetup> = new DeepCloneFixtureFactory(
-  gameSetup,
-);
+export const gameSetupFixtureFactory: FixtureFactory<GameSetup> =
+  new DeepCloneFixtureFactory(gameSetup);

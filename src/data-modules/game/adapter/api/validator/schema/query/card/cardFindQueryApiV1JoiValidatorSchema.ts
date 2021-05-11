@@ -5,8 +5,8 @@ import { cardTypeApiV1JoiValidatorSchema } from '../../model/card/cardTypeApiV1J
 
 const CARD_FIND_QUERY_API_V1_LIMIT_MAX_VALUE: number = 100;
 
-export const cardFindQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<CardFindQueryApiV1> = Joi.object<CardFindQueryApiV1>(
-  {
+export const cardFindQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<CardFindQueryApiV1> =
+  Joi.object<CardFindQueryApiV1>({
     id: Joi.string().optional(),
     limit: Joi.number()
       .strict()
@@ -19,5 +19,4 @@ export const cardFindQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<CardFindQuer
       cardTypeApiV1JoiValidatorSchema,
       Joi.array().items(cardTypeApiV1JoiValidatorSchema),
     ).optional(),
-  },
-);
+  });

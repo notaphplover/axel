@@ -16,17 +16,15 @@ export const gameSetupsCreationQuery: GameSetupsCreationQuery = {
   playerSlots: gameSetup.playerSlots,
 };
 
-export const gameSetupsCreationQueryFixtureFactory: FixtureFactory<GameSetupsCreationQuery> = new DeepCloneFixtureFactory(
-  gameSetupsCreationQuery,
-);
+export const gameSetupsCreationQueryFixtureFactory: FixtureFactory<GameSetupsCreationQuery> =
+  new DeepCloneFixtureFactory(gameSetupsCreationQuery);
 
 export const gameSetupDeletionQuery: GameSetupDeletionQuery = {
   id: gameSetup.id,
 };
 
-export const gameSetupDeletionQueryFixtureFactory: FixtureFactory<GameSetupDeletionQuery> = new DeepCloneFixtureFactory(
-  gameSetupDeletionQuery,
-);
+export const gameSetupDeletionQueryFixtureFactory: FixtureFactory<GameSetupDeletionQuery> =
+  new DeepCloneFixtureFactory(gameSetupDeletionQuery);
 
 export const gameSetupUpdateQuery: GameSetupUpdateQuery = {
   additionalPlayerSetups: gameSetup.playerSetups,
@@ -36,9 +34,8 @@ export const gameSetupUpdateQuery: GameSetupUpdateQuery = {
   }),
 };
 
-export const gameSetupUpdateQueryFixtureFactory: FixtureFactory<GameSetupUpdateQuery> = new DeepCloneFixtureFactory(
-  gameSetupUpdateQuery,
-);
+export const gameSetupUpdateQueryFixtureFactory: FixtureFactory<GameSetupUpdateQuery> =
+  new DeepCloneFixtureFactory(gameSetupUpdateQuery);
 
 export const gameSetupFindQuery: Required<GameSetupFindQuery> = {
   format: gameSetup.format,
@@ -52,6 +49,5 @@ export const gameSetupFindQuery: Required<GameSetupFindQuery> = {
   playerSlots: gameSetup.playerSlots,
 };
 
-export const gameSetupFindQueryFixtureFactory: FixtureFactory<GameSetupFindQuery> = new DeepCloneFixtureFactory(
-  gameSetupFindQuery,
-);
+export const gameSetupFindQueryFixtureFactory: FixtureFactory<GameSetupFindQuery> =
+  new DeepCloneFixtureFactory(gameSetupFindQuery);

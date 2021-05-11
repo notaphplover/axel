@@ -12,7 +12,7 @@ const MONGODB_DUPLICATED_KEY_ERR_CODE: number = 11000;
 export abstract class MongoDbInsertRepository<
   TModel,
   TModelDb extends Document,
-  TQuery
+  TQuery,
 > {
   private innerCollection: mongodb.Collection<TModelDb> | undefined;
 
@@ -43,9 +43,8 @@ export abstract class MongoDbInsertRepository<
   }
 
   public async insert(query: TQuery): Promise<TModel[]> {
-    const entitiesDbToInsert: mongodb.OptionalId<TModelDb>[] = await this.queryToInputModelDbs.transform(
-      query,
-    );
+    const entitiesDbToInsert: mongodb.OptionalId<TModelDb>[] =
+      await this.queryToInputModelDbs.transform(query);
 
     let entitiesDbCreated: TModelDb[];
     try {

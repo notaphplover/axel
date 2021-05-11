@@ -46,11 +46,12 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
       transform: jest.fn(),
     };
 
-    postGameSetupsSearchesV1RequestHandler = new PostGameSetupsSearchesV1RequestHandler(
-      gameSetupToBasicGameSetupApiV1Converter,
-      findGameSetupsInteractor,
-      postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter,
-    );
+    postGameSetupsSearchesV1RequestHandler =
+      new PostGameSetupsSearchesV1RequestHandler(
+        gameSetupToBasicGameSetupApiV1Converter,
+        findGameSetupsInteractor,
+        postGameSetupsSearchesV1RequestToGameSetupFindQueryConverter,
+      );
   });
 
   describe('.handle()', () => {
@@ -61,10 +62,11 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
       let gameSetupFindQueryOrErrors: ValueEither<GameSetupFindQuery>;
 
       beforeAll(async () => {
-        requestFixture = ({
+        requestFixture = {
           body: gameSetupFindQueryApiV1FixtureFactory.get(),
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         gameSetupFindQueryOrErrors = {
           isEither: false,
@@ -126,10 +128,11 @@ describe(PostGameSetupsSearchesV1RequestHandler.name, () => {
       let errorsFixture: EitherEither<string[]>;
 
       beforeAll(async () => {
-        requestFixture = ({
+        requestFixture = {
           body: gameSetupFindQueryApiV1FixtureFactory.get(),
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         errorsFixture = {
           value: ['sample-error-message'],

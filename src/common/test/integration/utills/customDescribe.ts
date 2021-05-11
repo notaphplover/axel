@@ -19,26 +19,27 @@ function innerEachWrapper(
   setupCallback: () => void,
 ): jest.Each {
   return (
-    casesOrStrings: ReadonlyArray<any> | TemplateStringsArray,
-    ...placeholders: any[]
-  ) => (name: string, fn: (...args: any[]) => any, timeout?: number): void => {
-    innerDescribeWrapper(
-      describeFn,
-      name,
-      () => {
-        if (placeholders.length === 0) {
-          describeFn.each(casesOrStrings)(name, fn, timeout);
-        } else {
-          describeFn.each(
-            casesOrStrings as TemplateStringsArray,
-            ...placeholders,
-          )(name, fn, timeout);
-        }
-      },
-      setupName,
-      setupCallback,
-    );
-  };
+      casesOrStrings: ReadonlyArray<any> | TemplateStringsArray,
+      ...placeholders: any[]
+    ) =>
+    (name: string, fn: (...args: any[]) => any, timeout?: number): void => {
+      innerDescribeWrapper(
+        describeFn,
+        name,
+        () => {
+          if (placeholders.length === 0) {
+            describeFn.each(casesOrStrings)(name, fn, timeout);
+          } else {
+            describeFn.each(
+              casesOrStrings as TemplateStringsArray,
+              ...placeholders,
+            )(name, fn, timeout);
+          }
+        },
+        setupName,
+        setupCallback,
+      );
+    };
 }
 
 export const customDescribe: (
@@ -77,10 +78,9 @@ export const customDescribe: (
         case 'skip':
           return customDescribe(target.skip, setupName, setupCallback);
         default:
-          return ((target as unknown) as Record<
-            string,
-            jest.Describe | jest.Each
-          >)[handler] as jest.Describe | jest.Each;
+          return (
+            target as unknown as Record<string, jest.Describe | jest.Each>
+          )[handler] as jest.Describe | jest.Each;
       }
     },
   });

@@ -17,9 +17,8 @@ export const cardCreationQuery: CardCreationQuery = {
   toughness: creature.toughness,
 };
 
-export const cardCreationQueryFixtureFactory: FixtureFactory<CardCreationQuery> = new DeepCloneFixtureFactory(
-  cardCreationQuery,
-);
+export const cardCreationQueryFixtureFactory: FixtureFactory<CardCreationQuery> =
+  new DeepCloneFixtureFactory(cardCreationQuery);
 
 export const creatureFindQuery: Required<CardFindQuery> = {
   id: creature.id,
@@ -28,15 +27,13 @@ export const creatureFindQuery: Required<CardFindQuery> = {
   types: CardType.Creature,
 };
 
-export const creatureFindQueryFixtureFactory: FixtureFactory<CardFindQuery> = new DeepCloneFixtureFactory(
-  creatureFindQuery,
-);
+export const creatureFindQueryFixtureFactory: FixtureFactory<CardFindQuery> =
+  new DeepCloneFixtureFactory(creatureFindQuery);
 
 export const gameFindQuery: LiveGameFindQuery = {
   id: liveGame.id,
   round: liveGame.round,
 };
 
-export const gameFindQueryFixtureFactory: FixtureFactory<LiveGameFindQuery> = new DeepCloneFixtureFactory(
-  gameFindQuery,
-);
+export const gameFindQueryFixtureFactory: FixtureFactory<LiveGameFindQuery> =
+  new DeepCloneFixtureFactory(gameFindQuery);

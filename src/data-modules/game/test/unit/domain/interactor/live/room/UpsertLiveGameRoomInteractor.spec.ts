@@ -31,13 +31,13 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
     let upsertLiveGameRoomInteractor: UpsertLiveGameRoomInteractor;
 
     beforeAll(() => {
-      liveGameRoomRepository = ({
+      liveGameRoomRepository = {
         findOne: jest.fn(),
         insert: jest.fn(),
         updateOneAndSelect: jest.fn(),
       } as Partial<
         jest.Mocked<LiveGameRoomRepository>
-      >) as jest.Mocked<LiveGameRoomRepository>;
+      > as jest.Mocked<LiveGameRoomRepository>;
 
       upsertLiveGameRoomInteractor = new UpsertLiveGameRoomInteractor(
         liveGameRoomRepository,
@@ -53,9 +53,10 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
         liveGameRoomUpsertQueryFixture = {
           liveGame: liveGameFixtureFactory.get(),
           playerGateway: { send: jest.fn() },
-          playerId: (liveGameFixtureFactory.get()
-            .playerAreas as LiveGamePlayerArea[] & [LiveGamePlayerArea])[0]
-            .player.userId,
+          playerId: (
+            liveGameFixtureFactory.get().playerAreas as LiveGamePlayerArea[] &
+              [LiveGamePlayerArea]
+          )[0].player.userId,
         };
 
         liveGameRoomRepository.findOne.mockResolvedValueOnce(null);
@@ -65,9 +66,10 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
           ),
         ]);
 
-        liveGameRoomUpdated = LiveGameRoomFixtures.withEmptyPlayerIdToPlayerGategayMap(
-          liveGameRoomUpsertQueryFixture.liveGame.id,
-        );
+        liveGameRoomUpdated =
+          LiveGameRoomFixtures.withEmptyPlayerIdToPlayerGategayMap(
+            liveGameRoomUpsertQueryFixture.liveGame.id,
+          );
 
         liveGameRoomUpdated.playerIdToPlayerGatewayMap.set(
           liveGameRoomUpsertQueryFixture.playerId,
@@ -143,9 +145,10 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
         liveGameRoomUpsertQueryFixture = {
           liveGame: liveGameFixtureFactory.get(),
           playerGateway: { send: jest.fn() },
-          playerId: (liveGameFixtureFactory.get()
-            .playerAreas as LiveGamePlayerArea[] & [LiveGamePlayerArea])[0]
-            .player.userId,
+          playerId: (
+            liveGameFixtureFactory.get().playerAreas as LiveGamePlayerArea[] &
+              [LiveGamePlayerArea]
+          )[0].player.userId,
         };
 
         liveGameRoomRepository.findOne.mockResolvedValueOnce(
@@ -154,9 +157,10 @@ describe(UpsertLiveGameRoomInteractor.name, () => {
           ),
         );
 
-        liveGameRoomUpdated = LiveGameRoomFixtures.withEmptyPlayerIdToPlayerGategayMap(
-          liveGameRoomUpsertQueryFixture.liveGame.id,
-        );
+        liveGameRoomUpdated =
+          LiveGameRoomFixtures.withEmptyPlayerIdToPlayerGategayMap(
+            liveGameRoomUpsertQueryFixture.liveGame.id,
+          );
 
         liveGameRoomUpdated.playerIdToPlayerGatewayMap.set(
           liveGameRoomUpsertQueryFixture.playerId,

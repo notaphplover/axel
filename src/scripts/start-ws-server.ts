@@ -32,12 +32,10 @@ void (async () => {
       .LIVE_GAME_ROOM_UPSERT_QUERY_WS_API_V1_HANDLER,
   );
 
-  const appWsMessageRouter: WsMessageHandler<
-    QueryWsApi,
-    AppWsRequestContext
-  > = new AppWsMessageRouter<QueryWsApi, AppWsRequestContext>([
-    liveGameRoomUpsertQueryWsApiV1Handler,
-  ]);
+  const appWsMessageRouter: WsMessageHandler<QueryWsApi, AppWsRequestContext> =
+    new AppWsMessageRouter<QueryWsApi, AppWsRequestContext>([
+      liveGameRoomUpsertQueryWsApiV1Handler,
+    ]);
 
   const appEnvLoader: EnvLoader<AppEnvVariables> = container.get(
     appAdapter.config.types.env.APP_ENV_LOADER,
@@ -47,11 +45,12 @@ void (async () => {
     `Launching Websocked server to listen port ${appEnvLoader.index.WS_SERVER_PORT}`,
   );
 
-  const wsServer: WsServer<AppWsRequestContext> = new WsServer<AppWsRequestContext>(
-    appEnvLoader.index.WS_SERVER_PORT,
-    new WebSocketDataToAppWsRequestcontextConverter(jwtManager),
-    appWsMessageRouter,
-  );
+  const wsServer: WsServer<AppWsRequestContext> =
+    new WsServer<AppWsRequestContext>(
+      appEnvLoader.index.WS_SERVER_PORT,
+      new WebSocketDataToAppWsRequestcontextConverter(jwtManager),
+      appWsMessageRouter,
+    );
 
   await wsServer.bootstrap();
 

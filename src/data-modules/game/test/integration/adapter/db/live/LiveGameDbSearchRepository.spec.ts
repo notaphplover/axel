@@ -59,9 +59,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         beforeAll(async () => {
           const gameFixture: LiveGame = liveGameFixtureFactory.get();
 
-          const gameDbCollection: mongodb.Collection<LiveGameDb> = mongoDbConnector.db.collection(
-            collectionName,
-          );
+          const gameDbCollection: mongodb.Collection<LiveGameDb> =
+            mongoDbConnector.db.collection(collectionName);
 
           // eslint-disable-next-line @typescript-eslint/typedef
           [gameDbInserted] = (
@@ -88,16 +87,18 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             _id: gameDbInserted._id,
           };
 
-          (gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            gameDbFilterQuery,
-          );
+          (
+            gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(gameDbFilterQuery);
 
           result = await gameDbSearchRepository.find(gameFindQueryFixture);
         });
 
         afterAll(async () => {
           (gameDbToGameConverter.transform as jest.Mock).mockClear();
-          (gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (
+            gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must call gameDbToGameConverter.transform with the db entities found', () => {
@@ -122,9 +123,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             _id: mongoDbId,
           };
 
-          (gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            gameDbFilterQuery,
-          );
+          (
+            gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(gameDbFilterQuery);
 
           const gameFindQueryFixture: LiveGameFindQuery = {
             id: mongoDbId.toHexString(),
@@ -134,7 +135,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         });
 
         afterAll(async () => {
-          (gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (
+            gameFindQueryToGameDbFilterQueryConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must return no game', () => {

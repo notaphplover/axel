@@ -3,7 +3,7 @@ import { ValidationResult } from './ValidationResult';
 export interface AsyncValidator<
   TResult = unknown,
   TValue = unknown,
-  TContext = void
+  TContext = void,
 > {
   validate(
     value: TValue,

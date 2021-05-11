@@ -11,7 +11,8 @@ export class LiveGameConnectionsCreationQueryToLiveGameConnectionsDbConverter
     Converter<
       LiveGameConnectionsCreationQuery,
       mongodb.OptionalId<LiveGameConnectionsDb>[]
-    > {
+    >
+{
   public transform(
     liveGameConnectionsCreationQuery: LiveGameConnectionsCreationQuery,
   ): mongodb.OptionalId<LiveGameConnectionsDb>[] {

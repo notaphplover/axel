@@ -31,9 +31,9 @@ describe(AppWsMessageRouter.name, () => {
 
         beforeAll(async () => {
           try {
-            const webSocketMock: jest.Mocked<WebSocket> = ({} as Partial<
+            const webSocketMock: jest.Mocked<WebSocket> = {} as Partial<
               jest.Mocked<WebSocket>
-            >) as jest.Mocked<WebSocket>;
+            > as jest.Mocked<WebSocket>;
 
             await appWsMessageRouter.handle(webSocketMock, appWsMessageFixture);
           } catch (err: unknown) {
@@ -70,9 +70,9 @@ describe(AppWsMessageRouter.name, () => {
 
         beforeAll(async () => {
           try {
-            const webSocketMock: jest.Mocked<WebSocket> = ({} as Partial<
+            const webSocketMock: jest.Mocked<WebSocket> = {} as Partial<
               jest.Mocked<WebSocket>
-            >) as jest.Mocked<WebSocket>;
+            > as jest.Mocked<WebSocket>;
 
             await appWsMessageRouter.handle(webSocketMock, appWsMessageFixture);
           } catch (err: unknown) {
@@ -108,9 +108,9 @@ describe(AppWsMessageRouter.name, () => {
         let webSocketMock: jest.Mocked<WebSocket>;
 
         beforeAll(async () => {
-          webSocketMock = ({} as Partial<
+          webSocketMock = {} as Partial<
             jest.Mocked<WebSocket>
-          >) as jest.Mocked<WebSocket>;
+          > as jest.Mocked<WebSocket>;
 
           await appWsMessageRouter.handle(webSocketMock, appWsMessageFixture);
         });

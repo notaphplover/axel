@@ -7,8 +7,8 @@ import { gameSetupUpdateQueryAdditionalPlayerSetupApiV1ValidatorSchema } from '.
 const ADDITIONAL_PLAYER_SETUPS_LENGTH: number = 1;
 const REMOVE_PLAYER_SETUPS_LENGTH: number = 1;
 
-export const gameSetupUpdateQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameSetupUpdateQueryApiV1> = Joi.object<GameSetupUpdateQueryApiV1>(
-  {
+export const gameSetupUpdateQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameSetupUpdateQueryApiV1> =
+  Joi.object<GameSetupUpdateQueryApiV1>({
     additionalPlayerSetups: Joi.array()
       .items(gameSetupUpdateQueryAdditionalPlayerSetupApiV1ValidatorSchema)
       .length(ADDITIONAL_PLAYER_SETUPS_LENGTH)
@@ -18,5 +18,4 @@ export const gameSetupUpdateQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameS
       .items(playerReferenceApiV1JoiValidatorSchema)
       .length(REMOVE_PLAYER_SETUPS_LENGTH)
       .optional(),
-  },
-);
+  });

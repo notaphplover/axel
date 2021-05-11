@@ -6,7 +6,8 @@ import { LiveGameDb } from '../../model/live/LiveGameDb';
 
 @injectable()
 export class LiveGameDbToLiveGameConverter
-  implements Converter<LiveGameDb, LiveGame> {
+  implements Converter<LiveGameDb, LiveGame>
+{
   public transform(input: LiveGameDb): LiveGame {
     return {
       format: input.format,

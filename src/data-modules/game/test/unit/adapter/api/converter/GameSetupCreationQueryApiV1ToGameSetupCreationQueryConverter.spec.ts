@@ -34,10 +34,11 @@ describe(
         transform: jest.fn(),
       };
 
-      gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter = new GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter(
-        findCardDecksInteractor,
-        gameFormatApiV1ToGameFormatConverter,
-      );
+      gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter =
+        new GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter(
+          findCardDecksInteractor,
+          gameFormatApiV1ToGameFormatConverter,
+        );
     });
 
     describe('.transform()', () => {
@@ -48,18 +49,23 @@ describe(
           (findCardDecksInteractor.interact as jest.Mock).mockResolvedValueOnce(
             [cardDeckFixtureFactory.get()],
           );
-          (gameFormatApiV1ToGameFormatConverter.transform as jest.Mock).mockReturnValueOnce(
+          (
+            gameFormatApiV1ToGameFormatConverter.transform as jest.Mock
+          ).mockReturnValueOnce(
             gameSetupsCreationQueryFixtureFactory.get().format,
           );
 
-          result = await gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform(
-            gameSetupCreationQueryApiV1FixtureFactory.get(),
-          );
+          result =
+            await gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform(
+              gameSetupCreationQueryApiV1FixtureFactory.get(),
+            );
         });
 
         afterAll(() => {
           (findCardDecksInteractor.interact as jest.Mock).mockClear();
-          (gameFormatApiV1ToGameFormatConverter.transform as jest.Mock).mockClear();
+          (
+            gameFormatApiV1ToGameFormatConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must call findCardDecksInteractor.interact with a gameSetupPlayerSetupsDecksFindQuery', () => {
@@ -74,8 +80,10 @@ describe(
         });
 
         it('must return a gameSetupsCreationQuery', () => {
-          const expected: GameSetupsCreationQuery = gameSetupsCreationQueryFixtureFactory.get();
-          expected.playerSlots = gameSetupCreationQueryApiV1FixtureFactory.get().playerSlots;
+          const expected: GameSetupsCreationQuery =
+            gameSetupsCreationQueryFixtureFactory.get();
+          expected.playerSlots =
+            gameSetupCreationQueryApiV1FixtureFactory.get().playerSlots;
 
           expect(result).toStrictEqual(expected);
         });
@@ -88,14 +96,17 @@ describe(
           (findCardDecksInteractor.interact as jest.Mock).mockResolvedValueOnce(
             [],
           );
-          (gameFormatApiV1ToGameFormatConverter.transform as jest.Mock).mockReturnValueOnce(
+          (
+            gameFormatApiV1ToGameFormatConverter.transform as jest.Mock
+          ).mockReturnValueOnce(
             gameSetupsCreationQueryFixtureFactory.get().format,
           );
 
           try {
-            result = await gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform(
-              gameSetupCreationQueryApiV1FixtureFactory.get(),
-            );
+            result =
+              await gameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter.transform(
+                gameSetupCreationQueryApiV1FixtureFactory.get(),
+              );
           } catch (err) {
             result = err;
           }
@@ -103,7 +114,9 @@ describe(
 
         afterAll(() => {
           (findCardDecksInteractor.interact as jest.Mock).mockClear();
-          (gameFormatApiV1ToGameFormatConverter.transform as jest.Mock).mockClear();
+          (
+            gameFormatApiV1ToGameFormatConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must throw an error', () => {

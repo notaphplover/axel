@@ -66,26 +66,22 @@ async function prepareData(): Promise<E2EComponents> {
     .bind(commonTest.config.types.taskGraph.CURRENT_TASK_GRAPH)
     .toConstantValue(taskGraph);
 
-  const createUserTokenTaskGraphNode: TaskGraphNode<
-    symbol,
-    UserToken
-  > = e2eContainer.get(
-    userTest.config.types.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
-  );
+  const createUserTokenTaskGraphNode: TaskGraphNode<symbol, UserToken> =
+    e2eContainer.get(
+      userTest.config.types.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
+    );
 
-  const createCreatureTaskGraphNode: TaskGraphNode<
-    symbol,
-    Card
-  > = e2eContainer.get(GAME_E2E_TYPES.card.CREATE_CREATURE_TASK_GRAPH_NODE);
+  const createCreatureTaskGraphNode: TaskGraphNode<symbol, Card> =
+    e2eContainer.get(GAME_E2E_TYPES.card.CREATE_CREATURE_TASK_GRAPH_NODE);
 
-  const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor = new InversifyContainerTaskGraphNodeExtractor(
-    e2eContainer,
-    [createUserTokenTaskGraphNode, createCreatureTaskGraphNode],
-  );
+  const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor =
+    new InversifyContainerTaskGraphNodeExtractor(e2eContainer, [
+      createUserTokenTaskGraphNode,
+      createCreatureTaskGraphNode,
+    ]);
 
-  const extractedNodes: Iterable<
-    TaskGraphNode<symbol, unknown>
-  > = inversifyContainerTaskGraphNodeExtractor.extract();
+  const extractedNodes: Iterable<TaskGraphNode<symbol, unknown>> =
+    inversifyContainerTaskGraphNodeExtractor.extract();
 
   taskGraph.addTasks(extractedNodes);
 

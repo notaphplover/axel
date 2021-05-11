@@ -9,7 +9,8 @@ describe(GameSetupFindQueryToGameSetupDbFilterQueryConverter.name, () => {
   let gameSetupFindQueryToGameSetupDbFilterQueryConverter: GameSetupFindQueryToGameSetupDbFilterQueryConverter;
 
   beforeAll(() => {
-    gameSetupFindQueryToGameSetupDbFilterQueryConverter = new GameSetupFindQueryToGameSetupDbFilterQueryConverter();
+    gameSetupFindQueryToGameSetupDbFilterQueryConverter =
+      new GameSetupFindQueryToGameSetupDbFilterQueryConverter();
   });
 
   describe('.transform', () => {

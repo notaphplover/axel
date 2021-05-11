@@ -59,19 +59,21 @@ describe(PostAuthTokenV1RequestHandler.name, () => {
       let replyFixture: FastifyReply;
 
       beforeAll(async () => {
-        requestFixture = ({
+        requestFixture = {
           body: authCreationQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        } as Partial<FastifyRequest> as FastifyRequest;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        const authCreationQueryApiV1ValidatorValidationResult: ValidationResult<AuthCreationQueryApiV1> = {
-          model: authCreationQueryApiV1FixtureFactory.get(),
-          result: true,
-        };
+        const authCreationQueryApiV1ValidatorValidationResult: ValidationResult<AuthCreationQueryApiV1> =
+          {
+            model: authCreationQueryApiV1FixtureFactory.get(),
+            result: true,
+          };
 
-        (authCreationQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
-          authCreationQueryApiV1ValidatorValidationResult,
-        );
+        (
+          authCreationQueryApiV1Validator.validate as jest.Mock
+        ).mockReturnValueOnce(authCreationQueryApiV1ValidatorValidationResult);
 
         (findUserInteractor.interact as jest.Mock).mockResolvedValueOnce(
           userFixtureFactory.get(),
@@ -80,9 +82,9 @@ describe(PostAuthTokenV1RequestHandler.name, () => {
         (createUserTokenInteractor.interact as jest.Mock).mockResolvedValueOnce(
           userTokenFixtureFactory.get(),
         );
-        (userTokenToUserTokenApiV1Converter.transform as jest.Mock).mockReturnValueOnce(
-          userTokenFixtureFactory.get(),
-        );
+        (
+          userTokenToUserTokenApiV1Converter.transform as jest.Mock
+        ).mockReturnValueOnce(userTokenFixtureFactory.get());
 
         await postAuthTokenV1RequestHandler.handle(
           requestFixture,
@@ -145,19 +147,21 @@ describe(PostAuthTokenV1RequestHandler.name, () => {
       let replyFixture: FastifyReply;
 
       beforeAll(async () => {
-        requestFixture = ({
+        requestFixture = {
           body: authCreationQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        } as Partial<FastifyRequest> as FastifyRequest;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
-        const authCreationQueryApiV1ValidatorValidationResult: ValidationResult<AuthCreationQueryApiV1> = {
-          model: authCreationQueryApiV1FixtureFactory.get(),
-          result: true,
-        };
+        const authCreationQueryApiV1ValidatorValidationResult: ValidationResult<AuthCreationQueryApiV1> =
+          {
+            model: authCreationQueryApiV1FixtureFactory.get(),
+            result: true,
+          };
 
-        (authCreationQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
-          authCreationQueryApiV1ValidatorValidationResult,
-        );
+        (
+          authCreationQueryApiV1Validator.validate as jest.Mock
+        ).mockReturnValueOnce(authCreationQueryApiV1ValidatorValidationResult);
 
         (findUserInteractor.interact as jest.Mock).mockResolvedValueOnce(null);
 
@@ -194,19 +198,20 @@ describe(PostAuthTokenV1RequestHandler.name, () => {
       let authCreationQueryApiV1ValidatorValidationResult: ValidationFail;
 
       beforeAll(async () => {
-        requestFixture = ({
+        requestFixture = {
           body: authCreationQueryApiV1FixtureFactory.get(),
-        } as Partial<FastifyRequest>) as FastifyRequest;
-        replyFixture = commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
+        } as Partial<FastifyRequest> as FastifyRequest;
+        replyFixture =
+          commonTest.fixtures.adapter.server.fastifyReplyFixtureFactory.get();
 
         authCreationQueryApiV1ValidatorValidationResult = {
           errorMessage: 'tample-error-message',
           result: false,
         };
 
-        (authCreationQueryApiV1Validator.validate as jest.Mock).mockReturnValueOnce(
-          authCreationQueryApiV1ValidatorValidationResult,
-        );
+        (
+          authCreationQueryApiV1Validator.validate as jest.Mock
+        ).mockReturnValueOnce(authCreationQueryApiV1ValidatorValidationResult);
 
         await postAuthTokenV1RequestHandler.handle(
           requestFixture,

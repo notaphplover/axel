@@ -17,35 +17,32 @@ export const liveGameCreationQuery: LiveGameCreationQuery = {
   gameSetup: gameSetup,
 };
 
-export const liveGameCreationQueryFixtureFactory: FixtureFactory<LiveGameCreationQuery> = new DeepCloneFixtureFactory(
-  liveGameCreationQuery,
-);
+export const liveGameCreationQueryFixtureFactory: FixtureFactory<LiveGameCreationQuery> =
+  new DeepCloneFixtureFactory(liveGameCreationQuery);
 
 export const liveGameFindQuery: LiveGameFindQuery = {
   id: liveGame.id,
   round: liveGame.round,
 };
 
-export const liveGameFindQueryFixtureFactory: FixtureFactory<LiveGameFindQuery> = new DeepCloneFixtureFactory(
-  liveGameFindQuery,
-);
+export const liveGameFindQueryFixtureFactory: FixtureFactory<LiveGameFindQuery> =
+  new DeepCloneFixtureFactory(liveGameFindQuery);
 
-export const liveGameConnectionsCreationQuery: LiveGameConnectionsCreationQuery = {
-  liveGameId: liveGame.id,
-};
+export const liveGameConnectionsCreationQuery: LiveGameConnectionsCreationQuery =
+  {
+    liveGameId: liveGame.id,
+  };
 
-export const liveGameConnectionsCreationQueryFixtureFactory: FixtureFactory<LiveGameConnectionsCreationQuery> = new DeepCloneFixtureFactory(
-  liveGameConnectionsCreationQuery,
-);
+export const liveGameConnectionsCreationQueryFixtureFactory: FixtureFactory<LiveGameConnectionsCreationQuery> =
+  new DeepCloneFixtureFactory(liveGameConnectionsCreationQuery);
 
 export const liveGameConnectionsFindQuery: LiveGameConnectionsFindQuery = {
   id: liveGameConnections.id,
   liveGameId: liveGame.id,
 };
 
-export const liveGameConnectionsFindQueryFixtureFactory: FixtureFactory<LiveGameConnectionsFindQuery> = new DeepCloneFixtureFactory(
-  liveGameConnectionsFindQuery,
-);
+export const liveGameConnectionsFindQueryFixtureFactory: FixtureFactory<LiveGameConnectionsFindQuery> =
+  new DeepCloneFixtureFactory(liveGameConnectionsFindQuery);
 
 export const liveGameConnectionsUpdateQuery: LiveGameConnectionsUpdateQuery = {
   liveGameConnection: {
@@ -55,6 +52,5 @@ export const liveGameConnectionsUpdateQuery: LiveGameConnectionsUpdateQuery = {
   liveGameId: liveGame.id,
 };
 
-export const liveGameConnectionsUpdateQueryFixtureFactory: FixtureFactory<LiveGameConnectionsUpdateQuery> = new DeepCloneFixtureFactory(
-  liveGameConnectionsUpdateQuery,
-);
+export const liveGameConnectionsUpdateQueryFixtureFactory: FixtureFactory<LiveGameConnectionsUpdateQuery> =
+  new DeepCloneFixtureFactory(liveGameConnectionsUpdateQuery);

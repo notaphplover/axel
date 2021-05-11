@@ -95,9 +95,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let modelDbUpdated: ModelMockDb;
 
         beforeAll(async () => {
-          const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
-            collectionName,
-          );
+          const collection: mongodb.Collection<ModelMockDb> =
+            mongoDbConnector.db.collection(collectionName);
 
           const insertionResult: mongodb.InsertOneWriteOpResult<
             mongodb.WithId<ModelMockDb>
@@ -112,13 +111,13 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
           findQueryMockDbFixture = { _id: modelDbInserted._id };
 
-          (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            findQueryMockDbFixture,
-          );
+          (
+            queryToFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(findQueryMockDbFixture);
 
-          (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            updateQueryMockDbFixture,
-          );
+          (
+            queryToUpdateQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(updateQueryMockDbFixture);
 
           result = await mongoDbUpdateRepository.update(updateQueryMockFixture);
 
@@ -172,9 +171,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let expectedModelDbUpdated: ModelMockDb;
 
         beforeAll(async () => {
-          const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
-            collectionName,
-          );
+          const collection: mongodb.Collection<ModelMockDb> =
+            mongoDbConnector.db.collection(collectionName);
 
           const inertionResult: mongodb.InsertOneWriteOpResult<
             mongodb.WithId<ModelMockDb>
@@ -188,17 +186,17 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           };
           expectedModelUpdated = { ...expectedModelDbUpdated };
 
-          (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            findQueryMockDbFixture,
-          );
+          (
+            queryToFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(findQueryMockDbFixture);
 
-          (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            updateQueryMockDbFixture,
-          );
+          (
+            queryToUpdateQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(updateQueryMockDbFixture);
 
-          (modelDbToModelConverter.transform as jest.Mock).mockResolvedValueOnce(
-            expectedModelUpdated,
-          );
+          (
+            modelDbToModelConverter.transform as jest.Mock
+          ).mockResolvedValueOnce(expectedModelUpdated);
 
           result = await mongoDbUpdateRepository.updateAndSelect(
             updateQueryMockFixture,
@@ -255,9 +253,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let expectedModelDbUpdated: ModelMockDb;
 
         beforeAll(async () => {
-          const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
-            collectionName,
-          );
+          const collection: mongodb.Collection<ModelMockDb> =
+            mongoDbConnector.db.collection(collectionName);
 
           const inertionResult: mongodb.InsertOneWriteOpResult<
             mongodb.WithId<ModelMockDb>
@@ -271,17 +268,17 @@ mongodbIntegrationDescribeGenerator(outputParam)(
           };
           expectedModelUpdated = { ...expectedModelDbUpdated };
 
-          (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            findQueryMockDbFixture,
-          );
+          (
+            queryToFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(findQueryMockDbFixture);
 
-          (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            updateQueryMockDbFixture,
-          );
+          (
+            queryToUpdateQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(updateQueryMockDbFixture);
 
-          (modelDbToModelConverter.transform as jest.Mock).mockResolvedValueOnce(
-            expectedModelUpdated,
-          );
+          (
+            modelDbToModelConverter.transform as jest.Mock
+          ).mockResolvedValueOnce(expectedModelUpdated);
 
           result = await mongoDbUpdateRepository.updateOneAndSelect(
             updateQueryMockFixture,
@@ -338,9 +335,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let modelDbUpdated: ModelMockDb;
 
         beforeAll(async () => {
-          const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
-            collectionName,
-          );
+          const collection: mongodb.Collection<ModelMockDb> =
+            mongoDbConnector.db.collection(collectionName);
 
           const inertionResult: mongodb.InsertOneWriteOpResult<
             mongodb.WithId<ModelMockDb>
@@ -355,13 +351,13 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
           findQueryMockDbFixture = { _id: modelDbInserted._id };
 
-          (queryToFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            findQueryMockDbFixture,
-          );
+          (
+            queryToFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(findQueryMockDbFixture);
 
-          (queryToUpdateQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            updateQueryMockDbFixture,
-          );
+          (
+            queryToUpdateQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(updateQueryMockDbFixture);
 
           result = await mongoDbUpdateRepository.updateOne(
             updateQueryMockFixture,

@@ -12,7 +12,8 @@ const hasValue: <TType>(
 
 @injectable()
 export class GameSetupFindQueryToGameSetupDbFilterQueryConverter
-  implements Converter<GameSetupFindQuery, mongodb.FilterQuery<GameSetupDb>> {
+  implements Converter<GameSetupFindQuery, mongodb.FilterQuery<GameSetupDb>>
+{
   public transform(
     input: GameSetupFindQuery,
   ): mongodb.FilterQuery<GameSetupDb> {
@@ -31,11 +32,10 @@ export class GameSetupFindQueryToGameSetupDbFilterQueryConverter
     }
 
     if (hasValue(input.playerSetups) && input.playerSetups.length > 0) {
-      const playerSetupsFilterQuery: mongodb.FilterQuery<GameSetupDb>[] = input.playerSetups.map(
-        (playerSetup: GameSetupFindQueryPlayerSetup) => {
+      const playerSetupsFilterQuery: mongodb.FilterQuery<GameSetupDb>[] =
+        input.playerSetups.map((playerSetup: GameSetupFindQueryPlayerSetup) => {
           return { 'playerSetups.userId': playerSetup.userId };
-        },
-      );
+        });
 
       andFilterQuery.push({ $and: playerSetupsFilterQuery });
     }

@@ -12,8 +12,9 @@ export abstract class RequestToQueryConverter<
   TRequest,
   TQuery,
   TQueryApi,
-  TContext = void
-> implements Converter<TRequest, Promise<ValueOrErrors<TQuery>>> {
+  TContext = void,
+> implements Converter<TRequest, Promise<ValueOrErrors<TQuery>>>
+{
   constructor(
     @unmanaged()
     private readonly contextBasedValidator:
@@ -32,9 +33,8 @@ export abstract class RequestToQueryConverter<
   public async transform(request: TRequest): Promise<ValueOrErrors<TQuery>> {
     const requestQuery: unknown = this.extractRequestQuery(request);
 
-    const syntaxValidationResult: ValidationResult<TQueryApi> = this.syntaxValidator.validate(
-      requestQuery,
-    );
+    const syntaxValidationResult: ValidationResult<TQueryApi> =
+      this.syntaxValidator.validate(requestQuery);
 
     if (!syntaxValidationResult.result) {
       const validationError: ValueOrErrors<TQuery> = {
@@ -47,10 +47,8 @@ export abstract class RequestToQueryConverter<
 
     const queryApi: TQueryApi = syntaxValidationResult.model;
 
-    const contextOrErrors: ValueOrErrors<TContext> = await this.getContextOrErrors(
-      request,
-      queryApi,
-    );
+    const contextOrErrors: ValueOrErrors<TContext> =
+      await this.getContextOrErrors(request, queryApi);
 
     if (contextOrErrors.isEither) {
       return contextOrErrors;
@@ -59,10 +57,8 @@ export abstract class RequestToQueryConverter<
     const context: TContext = contextOrErrors.value;
 
     if (this.contextBasedValidator !== undefined) {
-      const semanticValidationResult: ValidationResult<TQueryApi> = this.contextBasedValidator.validate(
-        queryApi,
-        context,
-      );
+      const semanticValidationResult: ValidationResult<TQueryApi> =
+        this.contextBasedValidator.validate(queryApi, context);
 
       if (!semanticValidationResult.result) {
         const validationError: ValueOrErrors<TQuery> = {

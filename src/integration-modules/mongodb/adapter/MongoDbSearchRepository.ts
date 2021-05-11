@@ -10,8 +10,9 @@ export abstract class MongoDbSearchRepository<
   TModel,
   TModelDb,
   TOutputModelDb,
-  TQuery
-> implements SearchRepository<TModel, TQuery> {
+  TQuery,
+> implements SearchRepository<TModel, TQuery>
+{
   private innerCollection: mongodb.Collection<TModelDb> | undefined;
 
   constructor(
@@ -47,9 +48,8 @@ export abstract class MongoDbSearchRepository<
   }
 
   public async find(query: TQuery): Promise<TModel[]> {
-    const mongoDbQuery: mongodb.FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
-      query,
-    );
+    const mongoDbQuery: mongodb.FilterQuery<TModelDb> =
+      await this.queryToFilterQueryConverter.transform(query);
 
     let entitiesDbFound: TOutputModelDb[] = await this.buildFindCursor(
       query,
@@ -73,14 +73,14 @@ export abstract class MongoDbSearchRepository<
   }
 
   public async findOne(query: TQuery): Promise<TModel | null> {
-    const mongoDbQuery: mongodb.FilterQuery<TModelDb> = await this.queryToFilterQueryConverter.transform(
-      query,
-    );
+    const mongoDbQuery: mongodb.FilterQuery<TModelDb> =
+      await this.queryToFilterQueryConverter.transform(query);
 
-    let entityDbFound: TOutputModelDb | null = await this.collection.findOne<TOutputModelDb>(
-      mongoDbQuery,
-      this.getFindOptions(),
-    );
+    let entityDbFound: TOutputModelDb | null =
+      await this.collection.findOne<TOutputModelDb>(
+        mongoDbQuery,
+        this.getFindOptions(),
+      );
     if (entityDbFound !== null && this.postSearchFilter !== null) {
       entityDbFound = await this.postSearchFilter.filterOne(
         entityDbFound,

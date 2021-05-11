@@ -17,7 +17,8 @@ import { GAME_ADAPTER_TYPES } from '../../../config/types';
 
 @injectable()
 export class PatchGameSetupByIdV1RequestHandler
-  implements FastifyRequestHandler<fastify.FastifyRequest & UserContainer> {
+  implements FastifyRequestHandler<fastify.FastifyRequest & UserContainer>
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.setup
@@ -46,9 +47,10 @@ export class PatchGameSetupByIdV1RequestHandler
     request: fastify.FastifyRequest & UserContainer,
     reply: fastify.FastifyReply,
   ): Promise<void> {
-    const gameSetupUpdateQueryOrErrors: ValueOrErrors<GameSetupUpdateQuery> = await this.patchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter.transform(
-      request,
-    );
+    const gameSetupUpdateQueryOrErrors: ValueOrErrors<GameSetupUpdateQuery> =
+      await this.patchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter.transform(
+        request,
+      );
 
     if (gameSetupUpdateQueryOrErrors.isEither) {
       await reply
@@ -58,18 +60,18 @@ export class PatchGameSetupByIdV1RequestHandler
       const gameSetupUpdateQuery: GameSetupUpdateQuery =
         gameSetupUpdateQueryOrErrors.value;
 
-      const gameSetupUpdated: GameSetup | null = await this.updateGameSetupInteractor.interact(
-        gameSetupUpdateQuery,
-      );
+      const gameSetupUpdated: GameSetup | null =
+        await this.updateGameSetupInteractor.interact(gameSetupUpdateQuery);
 
       if (gameSetupUpdated === null) {
         await reply
           .code(StatusCodes.NOT_FOUND)
           .send({ message: 'No game setup was found to be updated' });
       } else {
-        const basicGameSetupApiV1Updated: BasicGameSetupApiV1 = this.gameSetupToBasicGameSetupApiV1Converter.transform(
-          gameSetupUpdated,
-        );
+        const basicGameSetupApiV1Updated: BasicGameSetupApiV1 =
+          this.gameSetupToBasicGameSetupApiV1Converter.transform(
+            gameSetupUpdated,
+          );
 
         await reply.send(basicGameSetupApiV1Updated);
       }

@@ -6,7 +6,8 @@ import { UserTokenApiV1 } from '../model/UserTokenApiV1';
 
 @injectable()
 export class UserTokenToUserTokenApiV1Converter
-  implements Converter<UserToken, UserTokenApiV1> {
+  implements Converter<UserToken, UserTokenApiV1>
+{
   public transform(input: UserToken): UserTokenApiV1 {
     return {
       token: input.token,

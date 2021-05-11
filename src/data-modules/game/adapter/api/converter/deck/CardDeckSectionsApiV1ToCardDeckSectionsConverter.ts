@@ -9,7 +9,8 @@ import { CardSetReferencesApiV1 } from '../../model/deck/CardSetReferencesApiV1'
 
 @injectable()
 export class CardDeckSectionsApiV1ToCardDeckSectionsConverter
-  implements Converter<CardDeckSectionsApiV1, CardDeckSections> {
+  implements Converter<CardDeckSectionsApiV1, CardDeckSections>
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.deck
@@ -26,9 +27,10 @@ export class CardDeckSectionsApiV1ToCardDeckSectionsConverter
       core: this.cardSetReferencesApiV1ToCardSetReferencesConverter.transform(
         input.core,
       ),
-      sideboard: this.cardSetReferencesApiV1ToCardSetReferencesConverter.transform(
-        input.sideboard,
-      ),
+      sideboard:
+        this.cardSetReferencesApiV1ToCardSetReferencesConverter.transform(
+          input.sideboard,
+        ),
     };
   }
 }

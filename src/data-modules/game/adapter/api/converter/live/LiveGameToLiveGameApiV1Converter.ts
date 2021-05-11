@@ -13,7 +13,8 @@ import { LiveGamePlayerAreaApiV1 } from '../../model/live/LiveGamePlayerAreaApiV
 
 @injectable()
 export class LiveGameToLiveGameApiV1Converter
-  implements Converter<LiveGame, LiveGameApiV1> {
+  implements Converter<LiveGame, LiveGameApiV1>
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter

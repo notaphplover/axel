@@ -65,14 +65,16 @@ export class PatchGameSetupByIdV1RequestToGameSetupUpdateQueryConverter extends 
   protected async getContextOrErrors(
     request: fastify.FastifyRequest & UserContainer,
   ): Promise<ValueOrErrors<GameSetupUpdateQueryApiV1ValidationContext>> {
-    const gameSetupUpdateQueryApiV1ValidationContext: GameSetupUpdateQueryApiV1ValidationContext = {
-      user: request.user,
-    };
+    const gameSetupUpdateQueryApiV1ValidationContext: GameSetupUpdateQueryApiV1ValidationContext =
+      {
+        user: request.user,
+      };
 
-    const contextOrErrors: ValueOrErrors<GameSetupUpdateQueryApiV1ValidationContext> = {
-      isEither: false,
-      value: gameSetupUpdateQueryApiV1ValidationContext,
-    };
+    const contextOrErrors: ValueOrErrors<GameSetupUpdateQueryApiV1ValidationContext> =
+      {
+        isEither: false,
+        value: gameSetupUpdateQueryApiV1ValidationContext,
+      };
 
     return contextOrErrors;
   }

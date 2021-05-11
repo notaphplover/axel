@@ -13,13 +13,14 @@ import { QueryWsApi } from '../model/QueryWsApi';
 export abstract class QueryWsApiToQueryConverter<
   TQueryWsApi,
   TMessage,
-  TValidationContext = void
+  TValidationContext = void,
 > implements
     Converter<
       QueryWsApi,
       Promise<ValueOrErrors<TMessage>>,
       AppWsRequestContext
-    > {
+    >
+{
   constructor(
     @unmanaged()
     private readonly contextBasedValidator:
@@ -39,9 +40,8 @@ export abstract class QueryWsApiToQueryConverter<
     queryWsApi: QueryWsApi,
     requestContext: AppWsRequestContext,
   ): Promise<ValueOrErrors<TMessage>> {
-    const syntaxValidationResult: ValidationResult<TQueryWsApi> = this.syntaxValidator.validate(
-      queryWsApi,
-    );
+    const syntaxValidationResult: ValidationResult<TQueryWsApi> =
+      this.syntaxValidator.validate(queryWsApi);
 
     if (!syntaxValidationResult.result) {
       const validationError: ValueOrErrors<TMessage> = {
@@ -54,10 +54,8 @@ export abstract class QueryWsApiToQueryConverter<
 
     const messageWsApi: TQueryWsApi = syntaxValidationResult.model;
 
-    const validationContextOrErrors: ValueOrErrors<TValidationContext> = await this.getValidationContextOrErrors(
-      messageWsApi,
-      requestContext,
-    );
+    const validationContextOrErrors: ValueOrErrors<TValidationContext> =
+      await this.getValidationContextOrErrors(messageWsApi, requestContext);
 
     if (validationContextOrErrors.isEither) {
       return validationContextOrErrors;
@@ -67,10 +65,8 @@ export abstract class QueryWsApiToQueryConverter<
       validationContextOrErrors.value;
 
     if (this.contextBasedValidator !== undefined) {
-      const semanticValidationResult: ValidationResult<TQueryWsApi> = this.contextBasedValidator.validate(
-        messageWsApi,
-        validationContext,
-      );
+      const semanticValidationResult: ValidationResult<TQueryWsApi> =
+        this.contextBasedValidator.validate(messageWsApi, validationContext);
 
       if (!semanticValidationResult.result) {
         const validationError: ValueOrErrors<TMessage> = {
@@ -82,10 +78,11 @@ export abstract class QueryWsApiToQueryConverter<
       }
     }
 
-    const message: TMessage = await this.messageWsApiToMessageConverter.transform(
-      messageWsApi,
-      validationContext,
-    );
+    const message: TMessage =
+      await this.messageWsApiToMessageConverter.transform(
+        messageWsApi,
+        validationContext,
+      );
 
     const messageOrErrors: ValueOrErrors<TMessage> = {
       isEither: false,

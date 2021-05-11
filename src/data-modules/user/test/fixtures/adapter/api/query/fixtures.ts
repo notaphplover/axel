@@ -14,9 +14,8 @@ export const authCreationQueryApiV1: AuthCreationQueryApiV1 = {
   username: userFindQuery.username as string,
 };
 
-export const authCreationQueryApiV1FixtureFactory: FixtureFactory<AuthCreationQueryApiV1> = new DeepCloneFixtureFactory(
-  authCreationQueryApiV1,
-);
+export const authCreationQueryApiV1FixtureFactory: FixtureFactory<AuthCreationQueryApiV1> =
+  new DeepCloneFixtureFactory(authCreationQueryApiV1);
 
 export const userCreationQueryApiV1: UserCreationQueryApiV1 = {
   email: userCreationQuery.email,
@@ -24,6 +23,5 @@ export const userCreationQueryApiV1: UserCreationQueryApiV1 = {
   username: userCreationQuery.username,
 };
 
-export const userCreationQueryApiV1FixtureFactory: FixtureFactory<UserCreationQueryApiV1> = new DeepCloneFixtureFactory(
-  userCreationQueryApiV1,
-);
+export const userCreationQueryApiV1FixtureFactory: FixtureFactory<UserCreationQueryApiV1> =
+  new DeepCloneFixtureFactory(userCreationQueryApiV1);

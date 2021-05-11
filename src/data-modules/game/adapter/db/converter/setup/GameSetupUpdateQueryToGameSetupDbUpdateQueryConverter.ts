@@ -8,7 +8,8 @@ import { GameSetupDb } from '../../model/setup/GameSetupDb';
 
 @injectable()
 export class GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter
-  implements Converter<GameSetupUpdateQuery, mongodb.UpdateQuery<GameSetupDb>> {
+  implements Converter<GameSetupUpdateQuery, mongodb.UpdateQuery<GameSetupDb>>
+{
   public transform(
     input: GameSetupUpdateQuery,
   ): mongodb.UpdateQuery<GameSetupDb> {
@@ -51,6 +52,6 @@ export class GameSetupUpdateQueryToGameSetupDbUpdateQueryConverter
       });
     }
 
-    return (updateQuery as unknown) as mongodb.UpdateQuery<GameSetupDb>;
+    return updateQuery as unknown as mongodb.UpdateQuery<GameSetupDb>;
   }
 }

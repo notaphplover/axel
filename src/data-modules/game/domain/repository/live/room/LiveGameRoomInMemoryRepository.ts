@@ -19,7 +19,8 @@ export class LiveGameRoomInMemoryRepository
   implements
     SearchRepository<LiveGameRoom, LiveGameRoomFindQuery>,
     InsertRepository<LiveGameRoom, LiveGameRoomCreationQuery>,
-    UpdateRepository<LiveGameRoom, LiveGameRoomUpdateQuery> {
+    UpdateRepository<LiveGameRoom, LiveGameRoomUpdateQuery>
+{
   private readonly liveGameIdToLiveGameRoomMap: Map<string, LiveGameRoom>;
 
   constructor() {
@@ -46,9 +47,8 @@ export class LiveGameRoomInMemoryRepository
   }
 
   public async find(query: LiveGameRoomFindQuery): Promise<LiveGameRoom[]> {
-    const liveGameRoomOrUndefined:
-      | LiveGameRoom
-      | undefined = this.liveGameIdToLiveGameRoomMap.get(query.liveGameId);
+    const liveGameRoomOrUndefined: LiveGameRoom | undefined =
+      this.liveGameIdToLiveGameRoomMap.get(query.liveGameId);
 
     const liveGameRooms: LiveGameRoom[] = [];
 
@@ -102,9 +102,8 @@ export class LiveGameRoomInMemoryRepository
   private async innerUpdate(
     query: LiveGameRoomUpdateQuery,
   ): Promise<LiveGameRoom | null> {
-    const liveGameRoomOrUndefined:
-      | LiveGameRoom
-      | undefined = this.liveGameIdToLiveGameRoomMap.get(query.liveGameId);
+    const liveGameRoomOrUndefined: LiveGameRoom | undefined =
+      this.liveGameIdToLiveGameRoomMap.get(query.liveGameId);
 
     if (liveGameRoomOrUndefined === undefined) {
       return null;

@@ -11,7 +11,7 @@ import { UserToken } from '../../domain/model/UserToken';
 
 @injectable()
 export abstract class CreateUserTokenTaskGraphNode<
-  TId
+  TId,
 > extends BaseTaskGraphNode<TId, UserToken> {
   constructor(
     @unmanaged()
@@ -32,12 +32,10 @@ export abstract class CreateUserTokenTaskGraphNode<
   }
 
   protected async innerPerform(): Promise<UserToken> {
-    const createUserTaskGraphNode: TaskGraphNode<
-      TId,
-      User
-    > = this.currentTaskGraph.getNode(
-      this.createUserTaskGraphNodeId,
-    ) as TaskGraphNode<TId, User>;
+    const createUserTaskGraphNode: TaskGraphNode<TId, User> =
+      this.currentTaskGraph.getNode(
+        this.createUserTaskGraphNodeId,
+      ) as TaskGraphNode<TId, User>;
     const userFromTaskGraphNode: User = createUserTaskGraphNode.getOutput();
 
     return this.createUserTokenInteractor.interact(userFromTaskGraphNode);

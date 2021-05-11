@@ -77,9 +77,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let modelDbFoundAfterDeletion: ModelMockDb | null;
 
         beforeAll(async () => {
-          const collection: mongodb.Collection<ModelMockDb> = mongoDbConnector.db.collection(
-            collectionName,
-          );
+          const collection: mongodb.Collection<ModelMockDb> =
+            mongoDbConnector.db.collection(collectionName);
 
           const insertionResult: mongodb.InsertOneWriteOpResult<
             mongodb.WithId<ModelMockDb>

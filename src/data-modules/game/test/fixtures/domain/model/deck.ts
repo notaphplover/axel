@@ -45,6 +45,5 @@ export const cardDeck: CardDeck = {
   sections: cardDeckSections,
 };
 
-export const cardDeckFixtureFactory: FixtureFactory<CardDeck> = new DeepCloneFixtureFactory(
-  cardDeck,
-);
+export const cardDeckFixtureFactory: FixtureFactory<CardDeck> =
+  new DeepCloneFixtureFactory(cardDeck);

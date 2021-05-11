@@ -12,7 +12,8 @@ export class WebSocketDataToAppWsRequestcontextConverter
       WebSocket.Data,
       Promise<ValueOrErrors<AppWsRequestContext>>,
       WsRequestContext
-    > {
+    >
+{
   constructor(private readonly jwtManager: JwtManager<User>) {}
 
   public async transform(

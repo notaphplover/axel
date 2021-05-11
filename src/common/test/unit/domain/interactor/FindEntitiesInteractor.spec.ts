@@ -22,11 +22,11 @@ describe(FindEntitiesInteractor.name, () => {
   >;
 
   beforeAll(() => {
-    entitySearchRepository = ({
+    entitySearchRepository = {
       find: jest.fn(),
     } as Partial<
       jest.Mocked<SearchRepository<EntityFixture, QueryFixture>>
-    >) as jest.Mocked<SearchRepository<EntityFixture, QueryFixture>>;
+    > as jest.Mocked<SearchRepository<EntityFixture, QueryFixture>>;
 
     findEntitiesInteractor = new FindEntitiesInteractor<
       EntityFixture,

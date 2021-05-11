@@ -7,7 +7,8 @@ import { UserCreationQueryApiV1 } from '../query/UserCreationQueryApiV1';
 
 @injectable()
 export class UserCreationQueryApiV1ToUserCreationQueryConverter
-  implements Converter<UserCreationQueryApiV1, Promise<UserCreationQuery>> {
+  implements Converter<UserCreationQueryApiV1, Promise<UserCreationQuery>>
+{
   public async transform(
     userCreationQueryApiV1: UserCreationQueryApiV1,
   ): Promise<UserCreationQuery> {

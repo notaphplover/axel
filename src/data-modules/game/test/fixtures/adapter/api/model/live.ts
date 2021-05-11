@@ -48,6 +48,5 @@ const liveGameApiV1: LiveGameApiV1 = {
   state: GameStateApiV1.NOT_STARTED,
 };
 
-export const liveGameApiV1FixtureFactory: FixtureFactory<LiveGameApiV1> = new DeepCloneFixtureFactory(
-  liveGameApiV1,
-);
+export const liveGameApiV1FixtureFactory: FixtureFactory<LiveGameApiV1> =
+  new DeepCloneFixtureFactory(liveGameApiV1);

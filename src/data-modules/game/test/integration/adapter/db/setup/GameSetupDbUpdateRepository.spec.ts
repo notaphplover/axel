@@ -73,15 +73,21 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             ])
           ).ops as GameSetupDb[] & [GameSetupDb];
 
-          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
+          gameSetupUpdateQueryFixture =
+            gameSetupUpdateQueryFixtureFactory.get();
 
-          gameSetupUpdateQueryFixture.id = gameSetupDbInserted._id.toHexString();
+          gameSetupUpdateQueryFixture.id =
+            gameSetupDbInserted._id.toHexString();
 
-          const additionalPlayerSetupUserId: string = (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[] &
-            [PlayerSetup])[0].userId;
+          const additionalPlayerSetupUserId: string = (
+            gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[] &
+              [PlayerSetup]
+          )[0].userId;
 
-          (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[] &
-            [PlayerSetup])[0].userId = (
+          (
+            gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[] &
+              [PlayerSetup]
+          )[0].userId = (
             parseInt(additionalPlayerSetupUserId, 16) + 1
           ).toString(16);
 
@@ -133,13 +139,16 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
           const childContainer: Container = container.createChild();
 
-          const gameSetupDbUpdateRepository: GameSetupDbUpdateRepository = childContainer.get(
-            GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_UPDATE_REPOSITORY,
-          );
+          const gameSetupDbUpdateRepository: GameSetupDbUpdateRepository =
+            childContainer.get(
+              GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_UPDATE_REPOSITORY,
+            );
 
-          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
+          gameSetupUpdateQueryFixture =
+            gameSetupUpdateQueryFixtureFactory.get();
 
-          gameSetupUpdateQueryFixture.id = gameSetupDbInserted._id.toHexString();
+          gameSetupUpdateQueryFixture.id =
+            gameSetupDbInserted._id.toHexString();
 
           result = await gameSetupDbUpdateRepository.updateAndSelect(
             gameSetupUpdateQueryFixture,
@@ -179,21 +188,28 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
           const childContainer: Container = container.createChild();
 
-          const gameSetupDbUpdateRepository: GameSetupDbUpdateRepository = childContainer.get(
-            GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_UPDATE_REPOSITORY,
+          const gameSetupDbUpdateRepository: GameSetupDbUpdateRepository =
+            childContainer.get(
+              GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_UPDATE_REPOSITORY,
+            );
+
+          gameSetupUpdateQueryFixture =
+            gameSetupUpdateQueryFixtureFactory.get();
+
+          gameSetupUpdateQueryFixture.id =
+            gameSetupDbInserted._id.toHexString();
+
+          const removePlayerSetupUserId: string = (
+            gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[] &
+              [PlayerSetup]
+          )[0].userId;
+
+          (
+            gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[] &
+              [PlayerSetup]
+          )[0].userId = (parseInt(removePlayerSetupUserId, 16) + 1).toString(
+            16,
           );
-
-          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
-
-          gameSetupUpdateQueryFixture.id = gameSetupDbInserted._id.toHexString();
-
-          const removePlayerSetupUserId: string = (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[] &
-            [PlayerSetup])[0].userId;
-
-          (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[] &
-            [PlayerSetup])[0].userId = (
-            parseInt(removePlayerSetupUserId, 16) + 1
-          ).toString(16);
 
           result = await gameSetupDbUpdateRepository.updateAndSelect(
             gameSetupUpdateQueryFixture,
@@ -256,15 +272,21 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             ])
           ).ops as GameSetupDb[] & [GameSetupDb];
 
-          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
+          gameSetupUpdateQueryFixture =
+            gameSetupUpdateQueryFixtureFactory.get();
 
-          gameSetupUpdateQueryFixture.id = gameSetupDbInserted._id.toHexString();
+          gameSetupUpdateQueryFixture.id =
+            gameSetupDbInserted._id.toHexString();
 
-          const additionalPlayerSetupUserId: string = (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[] &
-            [PlayerSetup])[0].userId;
+          const additionalPlayerSetupUserId: string = (
+            gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[] &
+              [PlayerSetup]
+          )[0].userId;
 
-          (gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[] &
-            [PlayerSetup])[0].userId = (
+          (
+            gameSetupUpdateQueryFixture.additionalPlayerSetups as PlayerSetup[] &
+              [PlayerSetup]
+          )[0].userId = (
             parseInt(additionalPlayerSetupUserId, 16) + 1
           ).toString(16);
 
@@ -311,13 +333,16 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
           const childContainer: Container = container.createChild();
 
-          const gameSetupDbUpdateRepository: GameSetupDbUpdateRepository = childContainer.get(
-            GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_UPDATE_REPOSITORY,
-          );
+          const gameSetupDbUpdateRepository: GameSetupDbUpdateRepository =
+            childContainer.get(
+              GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_UPDATE_REPOSITORY,
+            );
 
-          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
+          gameSetupUpdateQueryFixture =
+            gameSetupUpdateQueryFixtureFactory.get();
 
-          gameSetupUpdateQueryFixture.id = gameSetupDbInserted._id.toHexString();
+          gameSetupUpdateQueryFixture.id =
+            gameSetupDbInserted._id.toHexString();
 
           result = await gameSetupDbUpdateRepository.updateOneAndSelect(
             gameSetupUpdateQueryFixture,
@@ -356,21 +381,28 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
           const childContainer: Container = container.createChild();
 
-          const gameSetupDbUpdateRepository: GameSetupDbUpdateRepository = childContainer.get(
-            GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_UPDATE_REPOSITORY,
+          const gameSetupDbUpdateRepository: GameSetupDbUpdateRepository =
+            childContainer.get(
+              GAME_DOMAIN_TYPES.repository.setup.GAME_SETUP_UPDATE_REPOSITORY,
+            );
+
+          gameSetupUpdateQueryFixture =
+            gameSetupUpdateQueryFixtureFactory.get();
+
+          gameSetupUpdateQueryFixture.id =
+            gameSetupDbInserted._id.toHexString();
+
+          const removePlayerSetupUserId: string = (
+            gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[] &
+              [PlayerSetup]
+          )[0].userId;
+
+          (
+            gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[] &
+              [PlayerSetup]
+          )[0].userId = (parseInt(removePlayerSetupUserId, 16) + 1).toString(
+            16,
           );
-
-          gameSetupUpdateQueryFixture = gameSetupUpdateQueryFixtureFactory.get();
-
-          gameSetupUpdateQueryFixture.id = gameSetupDbInserted._id.toHexString();
-
-          const removePlayerSetupUserId: string = (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[] &
-            [PlayerSetup])[0].userId;
-
-          (gameSetupUpdateQueryFixture.removePlayerSetups as PlayerSetup[] &
-            [PlayerSetup])[0].userId = (
-            parseInt(removePlayerSetupUserId, 16) + 1
-          ).toString(16);
 
           result = await gameSetupDbUpdateRepository.updateOneAndSelect(
             gameSetupUpdateQueryFixture,

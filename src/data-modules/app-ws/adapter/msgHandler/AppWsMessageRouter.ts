@@ -6,8 +6,9 @@ import { AppWsMessageHandler } from './AppWsMessageHandler';
 
 export class AppWsMessageRouter<
   TQueryWsApi extends QueryWsApi = QueryWsApi,
-  TContext = void
-> implements WsMessageHandler<TQueryWsApi, TContext> {
+  TContext = void,
+> implements WsMessageHandler<TQueryWsApi, TContext>
+{
   private readonly messageTypeToMessageHandlersMap: Map<
     string,
     AppWsMessageHandler<QueryWsApi, TContext>[]

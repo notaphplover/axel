@@ -39,19 +39,15 @@ export class CreateGameSetupOfOnePlayerGraphNode extends BaseTaskGraphNode<
   }
 
   protected async innerPerform(): Promise<GameSetup> {
-    const createCardDeckOfCreatureGraphNode: TaskGraphNode<
-      symbol,
-      CardDeck
-    > = this.currentTaskGraph.getNode(
-      GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_CREATURE_TASK_GRAPH_NODE,
-    ) as TaskGraphNode<symbol, CardDeck>;
+    const createCardDeckOfCreatureGraphNode: TaskGraphNode<symbol, CardDeck> =
+      this.currentTaskGraph.getNode(
+        GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_CREATURE_TASK_GRAPH_NODE,
+      ) as TaskGraphNode<symbol, CardDeck>;
 
-    const createFirstUserGraphNode: TaskGraphNode<
-      symbol,
-      User
-    > = this.currentTaskGraph.getNode(
-      USER_E2E_TYPES.CREATE_FIRST_USER_TASK_GRAPH_NODE,
-    ) as TaskGraphNode<symbol, User>;
+    const createFirstUserGraphNode: TaskGraphNode<symbol, User> =
+      this.currentTaskGraph.getNode(
+        USER_E2E_TYPES.CREATE_FIRST_USER_TASK_GRAPH_NODE,
+      ) as TaskGraphNode<symbol, User>;
 
     const cardDeck: CardDeck = createCardDeckOfCreatureGraphNode.getOutput();
     const user: User = createFirstUserGraphNode.getOutput();
@@ -68,9 +64,8 @@ export class CreateGameSetupOfOnePlayerGraphNode extends BaseTaskGraphNode<
       playerSlots: 1,
     };
 
-    const gameSetups: GameSetup[] = await this.createGameSetupsInteractor.interact(
-      gameSetupCreationQuery,
-    );
+    const gameSetups: GameSetup[] =
+      await this.createGameSetupsInteractor.interact(gameSetupCreationQuery);
 
     if (commonDomain.utils.hasOneElement(gameSetups)) {
       const [gameSetup]: [GameSetup] = gameSetups;

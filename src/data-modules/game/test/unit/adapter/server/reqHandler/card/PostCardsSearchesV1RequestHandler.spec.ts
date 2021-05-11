@@ -52,9 +52,9 @@ describe(PostCardsSearchesV1RequestHandler.name, () => {
       let cardFindQueryOrErrors: ValueOrErrors<CardFindQuery>;
 
       beforeAll(async () => {
-        requestFixture = ({
+        requestFixture = {
           body: creatureFindQueryApiV1FixtureFactory.get(),
-        } as Partial<fastify.FastifyRequest>) as fastify.FastifyRequest;
+        } as Partial<fastify.FastifyRequest> as fastify.FastifyRequest;
 
         replyFixture = fastifyReplyFixtureFactory.get();
 
@@ -69,9 +69,9 @@ describe(PostCardsSearchesV1RequestHandler.name, () => {
         (findCardsInteractor.interact as jest.Mock).mockResolvedValueOnce([
           creatureFixtureFactory.get(),
         ]);
-        (postCardsSearchesV1RequestToCardFindQueryConverter.transform as jest.Mock).mockResolvedValueOnce(
-          cardFindQueryOrErrors,
-        );
+        (
+          postCardsSearchesV1RequestToCardFindQueryConverter.transform as jest.Mock
+        ).mockResolvedValueOnce(cardFindQueryOrErrors);
 
         await getCardsV1RequestHandler.handle(requestFixture, replyFixture);
       });

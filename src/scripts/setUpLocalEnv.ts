@@ -132,9 +132,8 @@ async function copyEnvToDist(): Promise<void> {
   const copyPromises: Promise<void>[] = [];
 
   for (const [srcModuleName, srcModulePath] of srcModulePathsByFolder) {
-    const distModulePath: string | undefined = distModulePathsByFolder.get(
-      srcModuleName,
-    );
+    const distModulePath: string | undefined =
+      distModulePathsByFolder.get(srcModuleName);
 
     if (distModulePath !== undefined) {
       const srcGeneratedJsonSchemaAdapterFolder: string = join(

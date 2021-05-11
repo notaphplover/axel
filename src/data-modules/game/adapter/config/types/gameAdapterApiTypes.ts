@@ -41,9 +41,8 @@ export const GAME_ADAPTER_API_TYPES = {
       ),
     },
     deck: {
-      CARD_DECK_CREATION_QUERY_API_V1_TO_CARD_DECK_CREATION_QUERY_CONVERTER: Symbol(
-        'CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter',
-      ),
+      CARD_DECK_CREATION_QUERY_API_V1_TO_CARD_DECK_CREATION_QUERY_CONVERTER:
+        Symbol('CardDeckCreationQueryApiV1ToCardDeckCreationQueryConverter'),
       CARD_DECK_FIND_QUERY_API_V1_TO_CARD_DECK_FIND_QUERY_CONVERTER: Symbol(
         'CardDeckFindQueryApiV1ToCardDeckFindQueryConverter',
       ),
@@ -77,9 +76,8 @@ export const GAME_ADAPTER_API_TYPES = {
       LIBRARY_TO_LIBRARY_API_V1_CONVERTER: Symbol(
         'LibraryToLibraryApiV1Converter',
       ),
-      LIVE_GAME_CREATION_QUERY_API_V1_TO_LIVE_GAME_CREATION_QUERY_CONVERTER: Symbol(
-        'LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter',
-      ),
+      LIVE_GAME_CREATION_QUERY_API_V1_TO_LIVE_GAME_CREATION_QUERY_CONVERTER:
+        Symbol('LiveGameCreationQueryApiV1ToLiveGameCreationQueryConverter'),
       LIVE_GAME_FIND_QUERY_API_V1_TO_LIVE_GAME_FIND_QUERY_CONVERTER: Symbol(
         'LiveGameFindQueryApiV1ToLiveGameFindQueryConverter',
       ),
@@ -100,21 +98,21 @@ export const GAME_ADAPTER_API_TYPES = {
       GAME_SETUP_TO_EXTENDED_GAME_SETUP_API_V1_CONVERTER: Symbol(
         'GameSetupToExtendedGameSetupApiV1Converter',
       ),
-      GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER: Symbol(
-        'GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter',
-      ),
+      GAME_SETUP_CREATION_QUERY_API_V1_TO_GAME_SETUP_CREATION_QUERY_CONVERTER:
+        Symbol('GameSetupCreationQueryApiV1ToGameSetupCreationQueryConverter'),
       GAME_SETUP_FIND_QUERY_API_V1_TO_GAME_SETUP_FIND_QUERY_CONVERTER: Symbol(
         'GameSetupFindQueryApiV1ToGameSetupFindQueryConverter',
       ),
-      GAME_SETUP_FIND_QUERY_PLAYER_SETUP_API_V1_TO_GAME_SETUP_FIND_QUERY_PLAYER_SETUP_CONVERTER: Symbol(
-        'GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter',
-      ),
-      GAME_SETUP_UPDATE_QUERY_ADDITIONAL_PLAYER_SETUP_API_V1_ARRAY_TO_PLAYER_SETUP_ARRAY_CONVERTER: Symbol(
-        'GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter',
-      ),
-      GAME_SETUP_UPDATE_QUERY_API_V1_TO_GAME_SETUP_UPDATE_QUERY_CONVERTER: Symbol(
-        'GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter',
-      ),
+      GAME_SETUP_FIND_QUERY_PLAYER_SETUP_API_V1_TO_GAME_SETUP_FIND_QUERY_PLAYER_SETUP_CONVERTER:
+        Symbol(
+          'GameSetupFindQueryPlayerSetupApiV1ToGameSetupFindQueryPlayerSetupConverter',
+        ),
+      GAME_SETUP_UPDATE_QUERY_ADDITIONAL_PLAYER_SETUP_API_V1_ARRAY_TO_PLAYER_SETUP_ARRAY_CONVERTER:
+        Symbol(
+          'GameSetupUpdateQueryAdditionalPlayerSetupApiV1ArrayToPlayerSetupArrayConverter',
+        ),
+      GAME_SETUP_UPDATE_QUERY_API_V1_TO_GAME_SETUP_UPDATE_QUERY_CONVERTER:
+        Symbol('GameSetupUpdateQueryApiV1ToGameSetupUpdateQueryConverter'),
       PLAYER_REFERENCE_API_V1_TO_PLAYER_REFERENCE_CONVERTER: Symbol(
         'PlayerReferenceApiV1ToPlayerReferenceConverter',
       ),

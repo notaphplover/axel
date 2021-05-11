@@ -56,10 +56,11 @@ export class PostGameSetupV1RequestToGameSetupsCreationQueryConverter extends Re
   protected async getContextOrErrors(
     request: fastify.FastifyRequest & UserContainer,
   ): Promise<ValueOrErrors<GameSetupCreationQueryApiV1ValidationContext>> {
-    const contextOrErrors: ValueOrErrors<GameSetupCreationQueryApiV1ValidationContext> = {
-      isEither: false,
-      value: { user: request.user },
-    };
+    const contextOrErrors: ValueOrErrors<GameSetupCreationQueryApiV1ValidationContext> =
+      {
+        isEither: false,
+        value: { user: request.user },
+      };
 
     return contextOrErrors;
   }

@@ -6,7 +6,8 @@ import { CardDetailApiV1 } from '../../model/card/CardDetailApiV1';
 
 @injectable()
 export class CardDetailToCardDetailV1Converter
-  implements Converter<CardDetail, CardDetailApiV1> {
+  implements Converter<CardDetail, CardDetailApiV1>
+{
   public transform(input: CardDetail): CardDetailApiV1 {
     return {
       description: input.description,

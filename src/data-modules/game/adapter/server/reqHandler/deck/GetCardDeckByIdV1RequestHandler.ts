@@ -44,9 +44,10 @@ export class GetCardDeckByIdV1RequestHandler implements FastifyRequestHandler {
     request: fastify.FastifyRequest,
     reply: fastify.FastifyReply,
   ): Promise<void> {
-    const findCardDeckQueryOrErrors: ValueOrErrors<CardDeckFindQuery> = await this.getCardDeckV1RequestToCardDeckFindQueryConverter.transform(
-      request,
-    );
+    const findCardDeckQueryOrErrors: ValueOrErrors<CardDeckFindQuery> =
+      await this.getCardDeckV1RequestToCardDeckFindQueryConverter.transform(
+        request,
+      );
 
     if (findCardDeckQueryOrErrors.isEither) {
       await reply
@@ -56,9 +57,8 @@ export class GetCardDeckByIdV1RequestHandler implements FastifyRequestHandler {
       const findCardDeckQuery: CardDeckFindQuery =
         findCardDeckQueryOrErrors.value;
 
-      const findResult: CardDeck | null = await this.findCardDeckInteractor.interact(
-        findCardDeckQuery,
-      );
+      const findResult: CardDeck | null =
+        await this.findCardDeckInteractor.interact(findCardDeckQuery);
 
       if (findResult === null) {
         await reply.code(StatusCodes.NOT_FOUND).send({

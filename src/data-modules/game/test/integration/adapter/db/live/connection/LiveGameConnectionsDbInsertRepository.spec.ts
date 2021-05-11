@@ -44,12 +44,13 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         transform: jest.fn(),
       };
 
-      liveGameConnectionsDbInsertRepository = new LiveGameConnectionsDbInsertRepository(
-        collectionName,
-        liveGameConnectionsDbToLiveGameConnectionsConverter,
-        mongoDbConnector,
-        gameCreationQueryToGameDbsConverter,
-      );
+      liveGameConnectionsDbInsertRepository =
+        new LiveGameConnectionsDbInsertRepository(
+          collectionName,
+          liveGameConnectionsDbToLiveGameConnectionsConverter,
+          mongoDbConnector,
+          gameCreationQueryToGameDbsConverter,
+        );
     });
 
     describe('.insert()', () => {
@@ -67,13 +68,13 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             liveGameId: liveGameConnectionsFixture.liveGameId,
           };
 
-          (liveGameConnectionsDbToLiveGameConnectionsConverter.transform as jest.Mock).mockReturnValueOnce(
-            liveGameConnectionsFixture,
-          );
+          (
+            liveGameConnectionsDbToLiveGameConnectionsConverter.transform as jest.Mock
+          ).mockReturnValueOnce(liveGameConnectionsFixture);
 
-          (gameCreationQueryToGameDbsConverter.transform as jest.Mock).mockReturnValueOnce(
-            [gameDbFixture],
-          );
+          (
+            gameCreationQueryToGameDbsConverter.transform as jest.Mock
+          ).mockReturnValueOnce([gameDbFixture]);
 
           result = await liveGameConnectionsDbInsertRepository.insert(
             liveGameConnectionsCreationQueryFixtureFactory.get(),
@@ -81,8 +82,12 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         });
 
         afterAll(async () => {
-          (liveGameConnectionsDbToLiveGameConnectionsConverter.transform as jest.Mock).mockClear();
-          (gameCreationQueryToGameDbsConverter.transform as jest.Mock).mockClear();
+          (
+            liveGameConnectionsDbToLiveGameConnectionsConverter.transform as jest.Mock
+          ).mockClear();
+          (
+            gameCreationQueryToGameDbsConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must call gameDbToGameConverter.transform with the db entities found', () => {

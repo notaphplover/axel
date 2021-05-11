@@ -12,7 +12,8 @@ export class GameSetupCreationQueryApiV1SemanticValidator
       GameSetupCreationQueryApiV1,
       GameSetupCreationQueryApiV1,
       GameSetupCreationQueryApiV1ValidationContext
-    > {
+    >
+{
   public validate(
     gameSetupCreationQuery: GameSetupCreationQueryApiV1,
     context: GameSetupCreationQueryApiV1ValidationContext,
@@ -29,10 +30,11 @@ export class GameSetupCreationQueryApiV1SemanticValidator
       };
     }
 
-    const isEverySetupOwned: boolean = gameSetupCreationQuery.playerSetups.every(
-      (playerSetup: GameSetupCreationQueryPlayerSetupApiV1) =>
-        playerSetup.userId === userId,
-    );
+    const isEverySetupOwned: boolean =
+      gameSetupCreationQuery.playerSetups.every(
+        (playerSetup: GameSetupCreationQueryPlayerSetupApiV1) =>
+          playerSetup.userId === userId,
+      );
 
     if (!isEverySetupOwned) {
       return {

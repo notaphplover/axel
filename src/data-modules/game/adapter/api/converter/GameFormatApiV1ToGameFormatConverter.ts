@@ -13,7 +13,8 @@ const gameFormatApiV1ToGameFormatMap: {
 
 @injectable()
 export class GameFormatApiV1ToGameFormatConverter
-  implements Converter<GameFormatApiV1, GameFormat> {
+  implements Converter<GameFormatApiV1, GameFormat>
+{
   public transform(input: GameFormatApiV1): GameFormat {
     if (input in gameFormatApiV1ToGameFormatMap) {
       return gameFormatApiV1ToGameFormatMap[input];

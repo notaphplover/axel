@@ -46,9 +46,8 @@ describe(IoredisPublisher.name, () => {
 
       ioredisSubscriberClientMessageHandler = jest.fn<void, [string, string]>();
 
-      const ioredisSubscriberClientSingleton: IoredisClientSingleton = container.get(
-        IOREDIS_ADAPTER_TYPES.IoredisSubscriberClientSingleton,
-      );
+      const ioredisSubscriberClientSingleton: IoredisClientSingleton =
+        container.get(IOREDIS_ADAPTER_TYPES.IoredisSubscriberClientSingleton);
 
       ioredisSubscriberClient = ioredisSubscriberClientSingleton.get();
 

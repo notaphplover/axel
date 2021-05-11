@@ -69,9 +69,8 @@ export class QueryWsApiToLiveGameRoomUpsertQueryConverter extends QueryWsApiToQu
       id: messageWsApi.liveGameId,
     };
 
-    const liveGame: LiveGame | null = await this.findLiveGameInteractor.interact(
-      liveGameFindQuery,
-    );
+    const liveGame: LiveGame | null =
+      await this.findLiveGameInteractor.interact(liveGameFindQuery);
 
     if (liveGame === null) {
       return {

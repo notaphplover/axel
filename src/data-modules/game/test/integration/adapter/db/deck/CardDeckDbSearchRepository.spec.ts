@@ -58,9 +58,8 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         beforeAll(async () => {
           const cardDeckFixture: CardDeck = cardDeckFixtureFactory.get();
 
-          const cardDeckDbCollection: mongodb.Collection<CardDeckDb> = mongoDbConnector.db.collection(
-            collectionName,
-          );
+          const cardDeckDbCollection: mongodb.Collection<CardDeckDb> =
+            mongoDbConnector.db.collection(collectionName);
 
           // eslint-disable-next-line @typescript-eslint/typedef
           [cardDeckDbInserted] = (
@@ -74,24 +73,26 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             ])
           ).ops as CardDeckDb[] & [CardDeckDb];
 
-          const cardDeckFindQueryFixture: CardDeckFindQuery = cardDeckFindQueryFixtureFactory.get();
+          const cardDeckFindQueryFixture: CardDeckFindQuery =
+            cardDeckFindQueryFixtureFactory.get();
 
-          const cardDeckDbInsertedId: string = cardDeckDbInserted._id.toHexString();
+          const cardDeckDbInsertedId: string =
+            cardDeckDbInserted._id.toHexString();
 
           cardDeckFindQueryFixture.id = cardDeckDbInsertedId;
           cardDeckFindQueryFixture.ids = [cardDeckDbInsertedId];
 
-          (cardDeckDbToCardDeckConverter.transform as jest.Mock).mockReturnValueOnce(
-            cardDeckFixture,
-          );
+          (
+            cardDeckDbToCardDeckConverter.transform as jest.Mock
+          ).mockReturnValueOnce(cardDeckFixture);
 
           const cardDeckDbFilterQuery: mongodb.FilterQuery<CardDeckDb> = {
             _id: cardDeckDbInserted._id,
           };
 
-          (cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            cardDeckDbFilterQuery,
-          );
+          (
+            cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(cardDeckDbFilterQuery);
 
           result = await cardDeckDbSearchRepository.find(
             cardDeckFindQueryFixture,
@@ -100,7 +101,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
         afterAll(() => {
           (cardDeckDbToCardDeckConverter.transform as jest.Mock).mockClear();
-          (cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (
+            cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must call cardDeckDbToCardDeckConverter.transform with the db entities found', () => {
@@ -131,16 +134,18 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             _id: cardDeckId,
           };
 
-          (cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock).mockReturnValueOnce(
-            cardDeckDbFilterQuery,
-          );
+          (
+            cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock
+          ).mockReturnValueOnce(cardDeckDbFilterQuery);
 
           result = await cardDeckDbSearchRepository.find(cardDeckFindQuery);
         });
 
         afterAll(() => {
           (cardDeckDbToCardDeckConverter.transform as jest.Mock).mockClear();
-          (cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock).mockClear();
+          (
+            cardDeckFindQueryToCardDeckDbFilterQueryConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must not call cardDeckDbToCardDeckConverter.transform with the db entities found', () => {

@@ -72,53 +72,38 @@ async function prepareData(): Promise<E2EComponents> {
     .bind(commonTest.config.types.taskGraph.CURRENT_TASK_GRAPH)
     .toConstantValue(taskGraph);
 
-  const createFirstUserTaskGraphNode: TaskGraphNode<
-    symbol,
-    User
-  > = e2eContainer.get(userTest.config.types.CREATE_FIRST_USER_TASK_GRAPH_NODE);
+  const createFirstUserTaskGraphNode: TaskGraphNode<symbol, User> =
+    e2eContainer.get(userTest.config.types.CREATE_FIRST_USER_TASK_GRAPH_NODE);
 
-  const createFirstUserTokenTaskGraphNode: TaskGraphNode<
-    symbol,
-    UserToken
-  > = e2eContainer.get(
-    userTest.config.types.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
-  );
+  const createFirstUserTokenTaskGraphNode: TaskGraphNode<symbol, UserToken> =
+    e2eContainer.get(
+      userTest.config.types.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
+    );
 
-  const createCardDeckOfCreatureTaskGraphNode: TaskGraphNode<
-    symbol,
-    CardDeck
-  > = e2eContainer.get(
-    GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_CREATURE_TASK_GRAPH_NODE,
-  );
+  const createCardDeckOfCreatureTaskGraphNode: TaskGraphNode<symbol, CardDeck> =
+    e2eContainer.get(
+      GAME_E2E_TYPES.deck.CREATE_CARD_DECK_OF_CREATURE_TASK_GRAPH_NODE,
+    );
 
-  const createSecondUserTaskGraphNode: TaskGraphNode<
-    symbol,
-    User
-  > = e2eContainer.get(
-    userTest.config.types.CREATE_SECOND_USER_TASK_GRAPH_NODE,
-  );
+  const createSecondUserTaskGraphNode: TaskGraphNode<symbol, User> =
+    e2eContainer.get(userTest.config.types.CREATE_SECOND_USER_TASK_GRAPH_NODE);
 
-  const createSecondUserTokenTaskGraphNode: TaskGraphNode<
-    symbol,
-    UserToken
-  > = e2eContainer.get(
-    userTest.config.types.CREATE_SECOND_USER_TOKEN_TASK_GRAPH_NODE,
-  );
+  const createSecondUserTokenTaskGraphNode: TaskGraphNode<symbol, UserToken> =
+    e2eContainer.get(
+      userTest.config.types.CREATE_SECOND_USER_TOKEN_TASK_GRAPH_NODE,
+    );
 
-  const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor = new InversifyContainerTaskGraphNodeExtractor(
-    e2eContainer,
-    [
+  const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor =
+    new InversifyContainerTaskGraphNodeExtractor(e2eContainer, [
       createFirstUserTaskGraphNode,
       createFirstUserTokenTaskGraphNode,
       createCardDeckOfCreatureTaskGraphNode,
       createSecondUserTaskGraphNode,
       createSecondUserTokenTaskGraphNode,
-    ],
-  );
+    ]);
 
-  const extractedNodes: Iterable<
-    TaskGraphNode<symbol, unknown>
-  > = inversifyContainerTaskGraphNodeExtractor.extract();
+  const extractedNodes: Iterable<TaskGraphNode<symbol, unknown>> =
+    inversifyContainerTaskGraphNodeExtractor.extract();
 
   taskGraph.addTasks(extractedNodes);
 
@@ -164,9 +149,8 @@ describe('GameSetup V1', () => {
     let postGameSetupsV1ResponsePlayerSetup: PlayerSetupApiV1;
 
     beforeAll(async () => {
-      gameSetupCreationQueryApiV1 = getGameSetupCreationQueryApiV1(
-        e2eComponents,
-      );
+      gameSetupCreationQueryApiV1 =
+        getGameSetupCreationQueryApiV1(e2eComponents);
       postGameSetupsV1Response = await client.post(
         `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/game-setups`,
         gameSetupCreationQueryApiV1,
@@ -178,10 +162,9 @@ describe('GameSetup V1', () => {
       );
 
       // eslint-disable-next-line @typescript-eslint/typedef
-      [
-        postGameSetupsV1ResponsePlayerSetup,
-      ] = (postGameSetupsV1Response.data as ExtendedGameSetupApiV1)
-        .playerSetups as PlayerSetupApiV1[] & [PlayerSetupApiV1];
+      [postGameSetupsV1ResponsePlayerSetup] = (
+        postGameSetupsV1Response.data as ExtendedGameSetupApiV1
+      ).playerSetups as PlayerSetupApiV1[] & [PlayerSetupApiV1];
     });
 
     it('must return a response with the gameSetup created', () => {
@@ -228,7 +211,9 @@ describe('GameSetup V1', () => {
       it('must return a response with the gameSetup created', () => {
         const expectedBasicGameSetupApiV1: BasicGameSetupApiV1 = {
           ...(postGameSetupsV1Response.data as ExtendedGameSetupApiV1),
-          playerSetups: (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).playerSetups.map(
+          playerSetups: (
+            postGameSetupsV1Response.data as ExtendedGameSetupApiV1
+          ).playerSetups.map(
             (playerSetupApiV1: PlayerSetupApiV1): PlayerReferenceApiV1 => ({
               userId: playerSetupApiV1.userId,
             }),
@@ -244,14 +229,15 @@ describe('GameSetup V1', () => {
         let patchGameSetupsByIdV1Response: axios.AxiosResponse;
 
         beforeAll(async () => {
-          const gameSetupUpdateQueryApiV1: Partial<GameSetupUpdateQueryApiV1> = {
-            additionalPlayerSetups: [
-              {
-                deckId: e2eComponents.cardDeck.id,
-                userId: e2eComponents.secondUser.id,
-              },
-            ],
-          };
+          const gameSetupUpdateQueryApiV1: Partial<GameSetupUpdateQueryApiV1> =
+            {
+              additionalPlayerSetups: [
+                {
+                  deckId: e2eComponents.cardDeck.id,
+                  userId: e2eComponents.secondUser.id,
+                },
+              ],
+            };
 
           patchGameSetupsByIdV1Response = await client.patch(
             `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/game-setups/${gameSetupId}`,
@@ -268,7 +254,9 @@ describe('GameSetup V1', () => {
           const expectedBasicGameSetupApiV1: BasicGameSetupApiV1 = {
             ...(postGameSetupsV1Response.data as ExtendedGameSetupApiV1),
             playerSetups: [
-              ...(postGameSetupsV1Response.data as ExtendedGameSetupApiV1).playerSetups.map(
+              ...(
+                postGameSetupsV1Response.data as ExtendedGameSetupApiV1
+              ).playerSetups.map(
                 (playerSetupApiV1: PlayerSetupApiV1): PlayerReferenceApiV1 => ({
                   userId: playerSetupApiV1.userId,
                 }),
@@ -288,13 +276,14 @@ describe('GameSetup V1', () => {
           let patchGameSetupsByIdV1Response: axios.AxiosResponse;
 
           beforeAll(async () => {
-            const gameSetupUpdateQueryApiV1: Partial<GameSetupUpdateQueryApiV1> = {
-              removePlayerSetups: [
-                {
-                  userId: e2eComponents.secondUser.id,
-                },
-              ],
-            };
+            const gameSetupUpdateQueryApiV1: Partial<GameSetupUpdateQueryApiV1> =
+              {
+                removePlayerSetups: [
+                  {
+                    userId: e2eComponents.secondUser.id,
+                  },
+                ],
+              };
 
             patchGameSetupsByIdV1Response = await client.patch(
               `${APP_URL_PROTOCOL}${APP_URL_HOST}:${APP_URL_PORT}/v1/game-setups/${gameSetupId}`,
@@ -310,7 +299,9 @@ describe('GameSetup V1', () => {
           it('must return a response with the gameSetup updated', () => {
             const expectedBasicGameSetupApiV1: BasicGameSetupApiV1 = {
               ...(postGameSetupsV1Response.data as ExtendedGameSetupApiV1),
-              playerSetups: (postGameSetupsV1Response.data as ExtendedGameSetupApiV1).playerSetups.map(
+              playerSetups: (
+                postGameSetupsV1Response.data as ExtendedGameSetupApiV1
+              ).playerSetups.map(
                 (playerSetupApiV1: PlayerSetupApiV1): PlayerReferenceApiV1 => ({
                   userId: playerSetupApiV1.userId,
                 }),

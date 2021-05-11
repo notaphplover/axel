@@ -13,9 +13,8 @@ export const cardDetail: CardDetail = {
   title: 'Sample title',
 };
 
-export const cardDetailFixtureFactory: FixtureFactory<CardDetail> = new DeepCloneFixtureFactory(
-  cardDetail,
-);
+export const cardDetailFixtureFactory: FixtureFactory<CardDetail> =
+  new DeepCloneFixtureFactory(cardDetail);
 
 export const resource: Resource = {
   black: 1,
@@ -26,9 +25,8 @@ export const resource: Resource = {
   white: 6,
 };
 
-export const resourceFixtureFactory: FixtureFactory<Resource> = new DeepCloneFixtureFactory(
-  resource,
-);
+export const resourceFixtureFactory: FixtureFactory<Resource> =
+  new DeepCloneFixtureFactory(resource);
 
 export const creature: Card = {
   cost: resource,
@@ -41,6 +39,5 @@ export const creature: Card = {
   types: [CardType.Creature],
 };
 
-export const creatureFixtureFactory: FixtureFactory<Card> = new DeepCloneFixtureFactory(
-  creature,
-);
+export const creatureFixtureFactory: FixtureFactory<Card> =
+  new DeepCloneFixtureFactory(creature);

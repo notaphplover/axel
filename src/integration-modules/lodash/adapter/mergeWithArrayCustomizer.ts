@@ -5,6 +5,6 @@ export function mergeWithArrayCustomizer<T>(
   srcValue: T,
 ): T | undefined {
   if (_.isArray(objValue)) {
-    return (objValue.concat(srcValue) as unknown) as T;
+    return objValue.concat(srcValue) as unknown as T;
   }
 }

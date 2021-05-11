@@ -19,22 +19,18 @@ export const mongoDbIntegrationDescribeGenerator: (
     (): void => {
       let mongodbConnector: MongoDbConnector;
 
-      beforeAll(
-        async (): Promise<void> => {
-          mongodbConnector = container.get(
-            mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
-          );
+      beforeAll(async (): Promise<void> => {
+        mongodbConnector = container.get(
+          mongodbAdapter.config.types.db.MONGODB_CONNECTOR,
+        );
 
-          await mongodbConnector.connect();
+        await mongodbConnector.connect();
 
-          output.elem = mongodbConnector;
-        },
-      );
+        output.elem = mongodbConnector;
+      });
 
-      afterAll(
-        async (): Promise<void> => {
-          await mongodbConnector.close();
-        },
-      );
+      afterAll(async (): Promise<void> => {
+        await mongodbConnector.close();
+      });
     },
   );

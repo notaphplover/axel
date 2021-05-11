@@ -5,7 +5,8 @@ import { RedisSubscriber } from '../../../layer-modules/redis/adapter';
 
 @injectable()
 export abstract class IoredisSubscriber<TContext = void>
-  implements RedisSubscriber<TContext> {
+  implements RedisSubscriber<TContext>
+{
   private readonly channelToContextMap: Map<string, TContext>;
 
   constructor(@unmanaged() private readonly redisClient: IORedis.Redis) {

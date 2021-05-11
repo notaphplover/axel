@@ -46,21 +46,18 @@ async function prepareData(): Promise<E2EComponents> {
     .bind(commonTest.config.types.taskGraph.CURRENT_TASK_GRAPH)
     .toConstantValue(taskGraph);
 
-  const createUserTokenTaskGraphNode: TaskGraphNode<
-    symbol,
-    UserToken
-  > = e2eContainer.get(
-    userTest.config.types.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
-  );
+  const createUserTokenTaskGraphNode: TaskGraphNode<symbol, UserToken> =
+    e2eContainer.get(
+      userTest.config.types.CREATE_FIRST_USER_TOKEN_TASK_GRAPH_NODE,
+    );
 
-  const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor = new InversifyContainerTaskGraphNodeExtractor(
-    e2eContainer,
-    [createUserTokenTaskGraphNode],
-  );
+  const inversifyContainerTaskGraphNodeExtractor: InversifyContainerTaskGraphNodeExtractor =
+    new InversifyContainerTaskGraphNodeExtractor(e2eContainer, [
+      createUserTokenTaskGraphNode,
+    ]);
 
-  const extractedNodes: Iterable<
-    TaskGraphNode<symbol, unknown>
-  > = inversifyContainerTaskGraphNodeExtractor.extract();
+  const extractedNodes: Iterable<TaskGraphNode<symbol, unknown>> =
+    inversifyContainerTaskGraphNodeExtractor.extract();
 
   taskGraph.addTasks(extractedNodes);
 
@@ -152,9 +149,8 @@ describe('Card V1', () => {
         );
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/typedef
-        [
-          postCardsSearchesByIdV1ResponseBodyFirstElement,
-        ] = postCardsSearchesByIdV1Response.data;
+        [postCardsSearchesByIdV1ResponseBodyFirstElement] =
+          postCardsSearchesByIdV1Response.data;
       });
 
       it('must return a response with the card created', () => {

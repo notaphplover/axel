@@ -11,7 +11,8 @@ import { GameFormatApiV1 } from '../../model/GameFormatApiV1';
 
 @injectable()
 export class CardDeckToCardDeckApiV1Converter
-  implements Converter<CardDeck, CardDeckApiV1> {
+  implements Converter<CardDeck, CardDeckApiV1>
+{
   constructor(
     @inject(
       GAME_ADAPTER_TYPES.api.converter.deck

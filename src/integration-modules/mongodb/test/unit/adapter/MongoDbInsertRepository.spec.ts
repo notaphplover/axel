@@ -41,20 +41,20 @@ describe(MongoDbInsertRepository.name, () => {
   let mongoDbInsertRepository: MongoDbInsertRepositoryMock;
 
   beforeAll(() => {
-    collectionMock = ({
+    collectionMock = {
       insertMany: jest.fn(),
     } as Partial<
       mongodb.Collection<ModelMockDb>
-    >) as mongodb.Collection<ModelMockDb>;
+    > as mongodb.Collection<ModelMockDb>;
 
     modelDbToModelConverter = {
       transform: jest.fn(),
     };
 
     mongoDbConnector = {
-      db: ({
+      db: {
         collection: jest.fn().mockReturnValue(collectionMock),
-      } as Partial<mongodb.Db>) as mongodb.Db,
+      } as Partial<mongodb.Db> as mongodb.Db,
     } as MongoDbConnector;
 
     queryToInputModelDbs = {
@@ -98,12 +98,12 @@ describe(MongoDbInsertRepository.name, () => {
           modelMockFixture,
         );
 
-        insertResultMock = ({
+        insertResultMock = {
           insertedCount: 1,
           ops: [modelMockDbFixture],
         } as Partial<
           mongodb.InsertWriteOpResult<mongodb.WithId<ModelMockDb>>
-        >) as mongodb.InsertWriteOpResult<mongodb.WithId<ModelMockDb>>;
+        > as mongodb.InsertWriteOpResult<mongodb.WithId<ModelMockDb>>;
 
         (collectionMock.insertMany as jest.Mock).mockResolvedValueOnce(
           insertResultMock,

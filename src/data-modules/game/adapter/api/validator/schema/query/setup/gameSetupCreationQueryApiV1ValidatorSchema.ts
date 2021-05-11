@@ -9,8 +9,8 @@ const GAME_SETUP_CREATION_QUERY_PLAYER_SETUPS_LENGTH: number = 1;
 const GAME_SETUP_CREATION_QUERY_PLAYER_SLOTS_MAX: number = 2;
 const GAME_SETUP_CREATION_QUERY_PLAYER_SLOTS_MIN: number = 2;
 
-export const gameSetupCreationQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameSetupCreationQueryApiV1> = Joi.object<GameSetupCreationQueryApiV1>(
-  {
+export const gameSetupCreationQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<GameSetupCreationQueryApiV1> =
+  Joi.object<GameSetupCreationQueryApiV1>({
     format: gameFormatApiV1JoiValidatorSchema.required(),
     ownerUserId: Joi.string().required(),
     playerSetups: Joi.array()
@@ -23,5 +23,4 @@ export const gameSetupCreationQueryApiV1JoiValidatorSchema: Joi.ObjectSchema<Gam
       .min(GAME_SETUP_CREATION_QUERY_PLAYER_SLOTS_MIN)
       .max(GAME_SETUP_CREATION_QUERY_PLAYER_SLOTS_MAX)
       .required(),
-  },
-);
+  });

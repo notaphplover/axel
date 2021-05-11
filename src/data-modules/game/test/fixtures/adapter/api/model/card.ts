@@ -14,9 +14,8 @@ export const cardDetailApiV1: CardDetailApiV1 = {
   title: cardDetail.title,
 };
 
-export const cardDetailApiV1FixtureFactory: FixtureFactory<CardDetailApiV1> = new DeepCloneFixtureFactory(
-  cardDetailApiV1,
-);
+export const cardDetailApiV1FixtureFactory: FixtureFactory<CardDetailApiV1> =
+  new DeepCloneFixtureFactory(cardDetailApiV1);
 
 export const resourceApiV1: ResourceApiV1 = {
   black: resource.black,
@@ -27,9 +26,8 @@ export const resourceApiV1: ResourceApiV1 = {
   white: resource.white,
 };
 
-export const resourceApiV1FixtureFactory: FixtureFactory<ResourceApiV1> = new DeepCloneFixtureFactory(
-  resourceApiV1,
-);
+export const resourceApiV1FixtureFactory: FixtureFactory<ResourceApiV1> =
+  new DeepCloneFixtureFactory(resourceApiV1);
 
 export const creatureApiV1: CardApiV1 = {
   cost: resourceApiV1,
@@ -42,6 +40,5 @@ export const creatureApiV1: CardApiV1 = {
   types: [CardTypeApiV1.Creature],
 };
 
-export const creatureApiV1FixtureFactory: FixtureFactory<CardApiV1> = new DeepCloneFixtureFactory(
-  creatureApiV1,
-);
+export const creatureApiV1FixtureFactory: FixtureFactory<CardApiV1> =
+  new DeepCloneFixtureFactory(creatureApiV1);

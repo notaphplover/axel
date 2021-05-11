@@ -14,14 +14,12 @@ export const userApiV1: UserApiV1 = {
   username: user.username,
 };
 
-export const userApiV1FixtureFactory: FixtureFactory<UserApiV1> = new DeepCloneFixtureFactory(
-  userApiV1,
-);
+export const userApiV1FixtureFactory: FixtureFactory<UserApiV1> =
+  new DeepCloneFixtureFactory(userApiV1);
 
 export const userTokenApiV1: UserTokenApiV1 = {
   token: userToken.token,
 };
 
-export const userTokenApiV1FixtureFactory: FixtureFactory<UserTokenApiV1> = new DeepCloneFixtureFactory(
-  userTokenApiV1,
-);
+export const userTokenApiV1FixtureFactory: FixtureFactory<UserTokenApiV1> =
+  new DeepCloneFixtureFactory(userTokenApiV1);

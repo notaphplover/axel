@@ -17,7 +17,8 @@ import { LiveGameRoomUpsertQuery } from '../../../query/live/room/LiveGameRoomUp
 
 @injectable()
 export class UpsertLiveGameRoomInteractor
-  implements Interactor<LiveGameRoomUpsertQuery, Promise<LiveGameRoom>> {
+  implements Interactor<LiveGameRoomUpsertQuery, Promise<LiveGameRoom>>
+{
   constructor(
     @inject(
       GAME_DOMAIN_TYPES.repository.live.room
@@ -38,9 +39,8 @@ export class UpsertLiveGameRoomInteractor
       liveGameId: liveGameRoomUpsertQuery.liveGame.id,
     };
 
-    const liveGameRoom: LiveGameRoom | null = await this.liveGameRoomRepository.findOne(
-      liveGameRoomFindQuery,
-    );
+    const liveGameRoom: LiveGameRoom | null =
+      await this.liveGameRoomRepository.findOne(liveGameRoomFindQuery);
 
     if (liveGameRoom === null) {
       const liveGameRoomCreationQuery: LiveGameRoomCreationQuery = {
@@ -57,9 +57,10 @@ export class UpsertLiveGameRoomInteractor
       type: LiveGameRoomUpdateQueryType.AddPlayerToLiveGameRoom,
     };
 
-    const liveGameRoomUpdated: LiveGameRoom | null = await this.liveGameRoomRepository.updateOneAndSelect(
-      updateLiveGameRoomquery,
-    );
+    const liveGameRoomUpdated: LiveGameRoom | null =
+      await this.liveGameRoomRepository.updateOneAndSelect(
+        updateLiveGameRoomquery,
+      );
 
     if (liveGameRoomUpdated === null) {
       throw new Error('Expected a non null game room');

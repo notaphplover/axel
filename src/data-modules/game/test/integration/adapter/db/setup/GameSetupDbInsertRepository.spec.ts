@@ -56,9 +56,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
         let result: unknown;
 
         beforeAll(async () => {
-          (gameSetupDbToGameSetupConverter.transform as jest.Mock).mockReturnValueOnce(
-            gameSetupFixtureFactory.get(),
-          );
+          (
+            gameSetupDbToGameSetupConverter.transform as jest.Mock
+          ).mockReturnValueOnce(gameSetupFixtureFactory.get());
 
           gameSetupDb = {
             format: gameSetupFixtureFactory.get().format,
@@ -67,9 +67,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             playerSlots: gameSetupFixtureFactory.get().playerSlots,
           };
 
-          (gameSetupCreationQueryToGameSetupDbsConverter.transform as jest.Mock).mockReturnValueOnce(
-            [gameSetupDb],
-          );
+          (
+            gameSetupCreationQueryToGameSetupDbsConverter.transform as jest.Mock
+          ).mockReturnValueOnce([gameSetupDb]);
 
           result = await gameSetupDbInsertRepository.insert(
             gameSetupsCreationQueryFixtureFactory.get(),
@@ -78,7 +78,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
 
         afterAll(() => {
           (gameSetupDbToGameSetupConverter.transform as jest.Mock).mockClear();
-          (gameSetupCreationQueryToGameSetupDbsConverter.transform as jest.Mock).mockClear();
+          (
+            gameSetupCreationQueryToGameSetupDbsConverter.transform as jest.Mock
+          ).mockClear();
         });
 
         it('must call gameSetupDbToGameSetupConverter.transform with the db entities created', () => {

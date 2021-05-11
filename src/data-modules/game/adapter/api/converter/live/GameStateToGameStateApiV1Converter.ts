@@ -15,7 +15,8 @@ const gameStateToGameStateApiV1Map: {
 
 @injectable()
 export class GameStateToGameStateApiV1Converter
-  implements Converter<GameState, GameStateApiV1> {
+  implements Converter<GameState, GameStateApiV1>
+{
   public transform(gameState: GameState): GameStateApiV1 {
     return gameStateToGameStateApiV1Map[gameState];
   }

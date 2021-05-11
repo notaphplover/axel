@@ -13,9 +13,8 @@ export const userCreationQuery: UserCreationQuery = {
   password: 'sample-password',
 };
 
-export const userCreationQueryFixtureFactory: FixtureFactory<UserCreationQuery> = new DeepCloneFixtureFactory(
-  userCreationQuery,
-);
+export const userCreationQueryFixtureFactory: FixtureFactory<UserCreationQuery> =
+  new DeepCloneFixtureFactory(userCreationQuery);
 
 export const userFindQuery: UserFindQuery = {
   email: user.email,
@@ -24,6 +23,5 @@ export const userFindQuery: UserFindQuery = {
   password: 'sample-password',
 };
 
-export const userFindQueryFixtureFactory: FixtureFactory<UserFindQuery> = new DeepCloneFixtureFactory(
-  userFindQuery,
-);
+export const userFindQueryFixtureFactory: FixtureFactory<UserFindQuery> =
+  new DeepCloneFixtureFactory(userFindQuery);

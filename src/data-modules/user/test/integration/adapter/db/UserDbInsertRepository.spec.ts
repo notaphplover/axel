@@ -70,9 +70,9 @@ mongodbIntegrationDescribeGenerator(outputParam)(
             username: userFixture.username,
           };
 
-          (userCreationQueryToUserDbsConverter.transform as jest.Mock).mockResolvedValueOnce(
-            [userDbFixture],
-          );
+          (
+            userCreationQueryToUserDbsConverter.transform as jest.Mock
+          ).mockResolvedValueOnce([userDbFixture]);
 
           result = await userDbInsertRepository.insert(
             userCreationQueryFixtureFactory.get(),

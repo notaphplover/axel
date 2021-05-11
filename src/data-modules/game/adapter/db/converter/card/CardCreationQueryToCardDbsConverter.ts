@@ -7,7 +7,8 @@ import { CardDb } from '../../model/card/CardDb';
 
 @injectable()
 export class CardCreationQueryToCardDbsConverter
-  implements Converter<CardCreationQuery, mongodb.OptionalId<CardDb>[]> {
+  implements Converter<CardCreationQuery, mongodb.OptionalId<CardDb>[]>
+{
   public transform(input: CardCreationQuery): mongodb.OptionalId<CardDb>[] {
     return [
       {
