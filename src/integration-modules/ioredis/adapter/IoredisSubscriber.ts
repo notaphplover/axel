@@ -1,7 +1,7 @@
 import { injectable, unmanaged } from 'inversify';
 import IORedis from 'ioredis';
 
-import { RedisSubscriber } from '../../../layer-modules/redis/adapter';
+import { RedisSubscriber } from '../../../layer-modules/redis/domain';
 
 @injectable()
 export abstract class IoredisSubscriber<TContext = void>
