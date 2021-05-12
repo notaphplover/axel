@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import IORedis from 'ioredis';
 
-import { RedisPublisher } from '../../../layer-modules/redis/adapter';
+import { RedisPublisher } from '../../../layer-modules/redis/domain';
 import { IOREDIS_ADAPTER_TYPES } from './config/types';
 import { IoredisClientSingleton } from './IoredisClientSingleton';
 
