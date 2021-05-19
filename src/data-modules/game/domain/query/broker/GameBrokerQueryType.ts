@@ -1,3 +1,3 @@
-export enum GameQueryBrokerApiTypes {
+export enum GameBrokerQueryType {
   sendActivationMessage = 'sendActivationMessage',
 }

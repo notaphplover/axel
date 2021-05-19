@@ -1,6 +1,6 @@
 import { AppBrokerSubscriptionContext } from '../../../../../app-broker/adapter';
-import { LiveGameRoom } from '../../../../domain/model/live/room/LiveGameRoom';
-import { GameBrokerSubscriptionContextScope } from '../../GameBrokerSubscriptionContextScope';
+import { LiveGameRoom } from '../../live/room/LiveGameRoom';
+import { GameBrokerSubscriptionContextScope } from '../GameBrokerSubscriptionContextScope';
 
 export interface LiveGameRoomBrokerSubscriptionContext
   extends AppBrokerSubscriptionContext {

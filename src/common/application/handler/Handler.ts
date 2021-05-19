@@ -1,3 +1,3 @@
-export interface Handler<TModel, TQuery> {
-  handle(query: TQuery): Promise<TModel>;
+export interface Handler<TInput, TOutput> {
+  handle(query: TInput): TOutput;
 }
