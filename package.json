@@ -66,10 +66,10 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@types/ioredis": "^4.26.3",
+    "@types/ioredis": "^4.26.4",
     "@types/jest": "^26.0.23",
     "@types/jsonwebtoken": "^8.5.1",
-    "@types/lodash": "^4.14.168",
+    "@types/lodash": "^4.14.169",
     "@types/mongodb": "^3.6.12",
     "@types/ncp": "^2.0.4",
     "@types/node": "^14.14.41",
