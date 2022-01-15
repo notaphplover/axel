@@ -22,6 +22,10 @@ export abstract class BaseTaskGraphNode<TId, TOutput>
     this.innerStatus = TaskGraphNodeStatus.NotStarted;
   }
 
+  public get status(): TaskGraphNodeStatus {
+    return this.innerStatus;
+  }
+
   public getOutput(): TOutput {
     if (this.innerOutput === null) {
       throw new Error(
@@ -42,10 +46,6 @@ export abstract class BaseTaskGraphNode<TId, TOutput>
     } else {
       await this.innerPerformPromise;
     }
-  }
-
-  public get status(): TaskGraphNodeStatus {
-    return this.innerStatus;
   }
 
   private async getPerformPromise(): Promise<null | Capsule<TOutput>> {

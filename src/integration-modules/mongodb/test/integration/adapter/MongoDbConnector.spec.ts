@@ -37,7 +37,7 @@ describe(MongoDbConnector.name, () => {
       });
 
       it('must establish a connection', () => {
-        expect(testCommand).not.toBeUndefined();
+        expect(testCommand).toBeDefined();
       });
     });
   });

@@ -72,7 +72,7 @@ describe('cardCreationQueryApiV1JoiValidatorSchema', () => {
         });
 
         it('should return validation errors', () => {
-          expect(result.error).not.toBeUndefined();
+          expect(result.error).toBeDefined();
         });
       },
     );

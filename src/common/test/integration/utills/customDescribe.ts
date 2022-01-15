@@ -32,6 +32,7 @@ function innerEachWrapper(
           } else {
             describeFn.each(
               casesOrStrings as TemplateStringsArray,
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
               ...placeholders,
             )(name, fn, timeout);
           }

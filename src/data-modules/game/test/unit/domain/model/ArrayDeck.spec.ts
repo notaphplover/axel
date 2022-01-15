@@ -85,7 +85,7 @@ describe(ArrayDeck.name, () => {
       });
 
       it('must return a card', () => {
-        expect(result).toStrictEqual(3);
+        expect(result).toBe(3);
       });
     });
 
